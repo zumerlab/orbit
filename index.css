@@ -39,9 +39,7 @@
   .item.transparent {
     border: none;
   }
-  body {
-    /* perspective: 800px; */
-  }
+
   .ring {
     display: grid;
     grid-template-columns: 1fr;
