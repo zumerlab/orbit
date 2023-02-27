@@ -1,0 +1,182 @@
+:root {
+    --angle: 1;
+    --distance: 100px;
+    --distance2: 190px;
+    --xxs: 8px;
+    --xs: 18px;
+    --sm: 30px;
+    --m: 60px;
+    --l: 100px;
+    --xl: 120px;
+  }
+  
+  @property --angle {
+    syntax: "<number>";
+    initial-value: 1;
+    inherits: false;
+  }
+  
+  @keyframes progress {
+    50% {
+      --angle: 160;
+    }
+  }
+  
+  .item {
+    animation: 16s progress infinite;
+  }
+  
+  .item.box {
+    border-radius: 0%;
+  }
+  .item.rounded {
+    border-radius: 25%;
+  }
+  .item,
+  .item.circle {
+    border-radius: 50%;
+  }
+  .item.transparent {
+    border: none;
+  }
+  body {
+    /* perspective: 800px; */
+  }
+  .ring {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 500px;
+    align-items: center;
+    justify-items: center;
+    border: 1px dashed black;
+    /* transform: rotateX(45deg); */
+    /* transform-style: preserve-3d; */
+  }
+  .items-1 > .item {
+    --angle: calc(360 / 1);
+  }
+  .items-2 > .item {
+    --angle: calc(360 / 2);
+  }
+  .items-3 > .item {
+    --angle: calc(360 / 3);
+  }
+  .items-4 > .item {
+    --angle: calc(360 / 4);
+  }
+  .items-5 > .item {
+    --angle: calc(360 / 5);
+  }
+  
+  .level-1,
+  .level-2 {
+    display: grid;
+    border-radius: 50%;
+    border: 1px dashed rgba(155, 155, 155, 0.5);
+    align-items: center;
+    justify-items: center;
+    grid-area: 1/1/1/1;
+  }
+  
+  .item {
+    width: var(--m);
+    height: var(--m);
+    display: grid;
+    background-color: white;
+    border: 1px solid black;
+    align-items: center;
+    justify-items: center;
+    grid-area: 1/1/1/1;
+  }
+  .level-1 {
+    width: calc(var(--distance) * 2);
+    height: calc(var(--distance) * 2);
+  }
+  .level-2 {
+    width: calc(var(--distance2) * 2);
+    height: calc(var(--distance2) * 2);
+  }
+  .item:nth-child(1),
+  .item.level-1:nth-child(1),
+  .item.level-2:nth-child(1) {
+    --item-number: 1;
+  }
+  .item:nth-child(2),
+  .item.level-1:nth-child(2),
+  .item.level-2:nth-child(2) {
+    --item-number: 2;
+  }
+  .item:nth-child(3),
+  .item.level-1:nth-child(3),
+  .item.level-2:nth-child(3) {
+    --item-number: 3;
+  }
+  .item:nth-child(4),
+  .item.level-1:nth-child(4),
+  .item.level-2:nth-child(4) {
+    --item-number: 4;
+  }
+  .item:nth-child(5),
+  .item.level-1:nth-child(5),
+  .item.level-2:nth-child(5) {
+    --item-number: 5;
+  }
+  .item:nth-child(6),
+  .item.level-1:nth-child(6) {
+    --item-number: 6;
+  }
+  
+  .item,
+  .item.level-1 {
+    transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
+      translate(var(--distance), 0)
+      rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+  }
+  .item.orbit,
+  .item.level-1.orbit {
+    --p1: calc(var(--angle) * var(--item-number) * 1deg);
+    transform: rotate(var(--p1))
+      translate(var(--distance), 0);
+  }
+
+  .level-2 > .item {
+    transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
+      translate(var(--distance2), 0)
+      rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+  }
+  
+  .item.d50 {
+    --distance: 50px;
+  }
+ 
+  .item.d15 {
+    --distance: 15px;
+  }
+  .item.d10 {
+    --distance: 10px;
+  }
+  .item.a10 {
+    --angle: 77;
+  }
+  .item.s,
+  item.sm {
+    width: var(--sm);
+    height: var(--sm);
+  }
+  .item.xxs {
+    width: var(--xxs);
+    height: var(--xxs);
+  }
+  .item.xs {
+    width: var(--xs);
+    height: var(--xs);
+  }
+  .item.m {
+    width: var(--m);
+    height: var(--m);
+  }
+  .item.xl {
+    width: var(--xl);
+    height: var(--xl);
+  }
+  
