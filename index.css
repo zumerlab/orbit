@@ -1,7 +1,7 @@
 :root {
     --angle: 1;
-    --distance: 100px;
-    --distance2: 190px;
+    --distance: 90px;
+    --distance2: 220px;
     --xxs: 8px;
     --xs: 18px;
     --sm: 30px;
@@ -86,6 +86,12 @@
     justify-items: center;
     grid-area: 1/1/1/1;
   }
+  .orbit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+  }
   .level-1 {
     width: calc(var(--distance) * 2);
     height: calc(var(--distance) * 2);
@@ -130,7 +136,7 @@
       translate(var(--distance), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
-  .item.orbit,
+  .item.orbit, .pepe.orbit,
   .item.level-1.orbit {
     --p1: calc(var(--angle) * var(--item-number) * 1deg);
     transform: rotate(var(--p1))
@@ -157,7 +163,7 @@
     --angle: 77;
   }
   .item.s,
-  item.sm {
+  .item.sm {
     width: var(--sm);
     height: var(--sm);
   }
