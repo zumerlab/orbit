@@ -96,7 +96,7 @@
   .level-1 {
     width: 40px;
     height: 300px;
-    rotate: -90deg;
+    rotate: 0deg;
   }
   .level-2 {
     width: calc(var(--distance2) * 2);
@@ -197,19 +197,19 @@
     grid-area: 1/1/1/1;
   }
   .rad:nth-child(1) {
-    transform: translate(20px, 0)
+    transform: translate(16px, 152px)
   }
   .rad:nth-child(2) {
-    transform: translate(17.320508075688775px, 74.99999999999999px)
+    transform: translate(-26px, 98px)
   }
   .rad:nth-child(3) {
-    transform: translate(10.000000000000002px, 129.9038105676658px)
+    transform: translate(-26px,-98px)
   }
   .rad:nth-child(4) {
-    transform: translate(1.2246467991473533px, 150px)
+    transform: translate(16px, -152px)
   }
   .rad:nth-child(5) {
-    transform: translate(-9.999999999999996px, 129.9px)
+    transform: translate(30px, -13px)
   }
   .rad:nth-child(6) {
     transform: translate(-10px, -129px)
