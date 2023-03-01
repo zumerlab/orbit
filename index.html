@@ -11,21 +11,17 @@
     <div class="ring">
         <div class="level-1 items-3">
           <div class="item m">
-            <div class="line"></div>
-            <div class="content">One</div>
+           one
           </div>
-          <div class="item m items-1">
-            <div class="item xs d50 transparent orbit">
-              <svg  width='50' height='1'><line x1='0' y1='0' x2='50' y2='0' stroke='red'/></svg>
-              <span style="transform: rotate(90deg); color: red">⧩</span>
-            </div>
-            
-           
+          <div class="item  m">
+            <!-- prototipo de label -->
+            <div  class="item d50  transparent orbit a45 box" style="width: 50px; height: 1px; background-color: red;"></div>
+            <div class="item   box a45" style="border-color: red;width: 50px; height: 21px; --item-number:1; --distance: 70px; color: red">text</div>
           </div>
           <div class="item m items-4">
             <div class="item xs d50">4</div>
             <div class="item xs d50">5</div>
-            <div class="item xs d50">6</div>
+            <div class="item xs d50 transparent orbit" style="color: red">◃</div>
             <div class="item xs d50 items-3">
               <div class="item xxs d15"></div>
               <div class="item xxs d15"></div>
@@ -41,7 +37,10 @@
           <div class="item sm d50">e</div>
         </div>
       </div>
-      
+      <script>
+        let element = document.querySelector('.giros')
+        console.log(getComputedStyle(element).getPropertyValue('transform'))
+      </script>
       
        
 </body>

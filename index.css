@@ -8,6 +8,7 @@
     --m: 60px;
     --l: 100px;
     --xl: 120px;
+    --item-number: 1;
   }
   
   @property --angle {
@@ -18,13 +19,16 @@
   
   @keyframes progress {
     50% {
-      --angle: 160;
+      --angle: 130;
     }
   }
+
   
   .item {
     animation: 16s progress infinite;
   }
+
+  
   
   .item.box {
     border-radius: 0%;
@@ -51,7 +55,7 @@
     /* transform-style: preserve-3d; */
   }
   .items-1 > .item {
-    --angle: calc(360 / 1);
+    --angle: calc(360 / 11);
   }
   .items-2 > .item {
     --angle: calc(360 / 2);
@@ -65,6 +69,8 @@
   .items-5 > .item {
     --angle: calc(360 / 5);
   }
+
+ 
   
   .level-1,
   .level-2 {
@@ -86,14 +92,9 @@
     justify-items: center;
     grid-area: 1/1/1/1;
   }
-  .orbit {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-  }
+  
   .level-1 {
-    width: calc(var(--distance) * 2);
+    width: calc(var(--distance) * 2) + 100;
     height: calc(var(--distance) * 2);
   }
   .level-2 {
@@ -136,10 +137,9 @@
       translate(var(--distance), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
-  .item.orbit, .pepe.orbit,
+  .item.orbit,
   .item.level-1.orbit {
-    --p1: calc(var(--angle) * var(--item-number) * 1deg);
-    transform: rotate(var(--p1))
+    transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
       translate(var(--distance), 0);
   }
 
@@ -148,6 +148,7 @@
       translate(var(--distance2), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
+
   
   .item.d50 {
     --distance: 50px;
@@ -159,8 +160,8 @@
   .item.d10 {
     --distance: 10px;
   }
-  .item.a10 {
-    --angle: 77;
+  .item.a45 {
+    --angle: -45;
   }
   .item.s,
   .item.sm {
