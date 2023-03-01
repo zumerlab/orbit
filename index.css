@@ -94,8 +94,9 @@
   }
   
   .level-1 {
-    width: calc(var(--distance) * 2) + 100;
-    height: calc(var(--distance) * 2);
+    width: 40px;
+    height: 300px;
+    rotate: -90deg;
   }
   .level-2 {
     width: calc(var(--distance2) * 2);
@@ -183,5 +184,37 @@
   .item.xl {
     width: var(--xl);
     height: var(--xl);
+  }
+  .rad {
+    width: 1px;
+    height: 1px;
+    border-radius: 50%;
+    display: grid;
+    background-color: rgb(152, 21, 21);
+    border: 1px solid black;
+    align-items: center;
+    justify-items: center;
+    grid-area: 1/1/1/1;
+  }
+  .rad:nth-child(1) {
+    transform: translate(20px, 0)
+  }
+  .rad:nth-child(2) {
+    transform: translate(17.320508075688775px, 74.99999999999999px)
+  }
+  .rad:nth-child(3) {
+    transform: translate(10.000000000000002px, 129.9038105676658px)
+  }
+  .rad:nth-child(4) {
+    transform: translate(1.2246467991473533px, 150px)
+  }
+  .rad:nth-child(5) {
+    transform: translate(-9.999999999999996px, 129.9px)
+  }
+  .rad:nth-child(6) {
+    transform: translate(-10px, -129px)
+  }
+  .rad:nth-child(7) {
+    transform: translate(10px, -129px)
   }
   
