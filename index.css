@@ -186,8 +186,8 @@
     height: var(--xl);
   }
   .rad {
-    width: 1px;
-    height: 1px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     display: grid;
     background-color: rgb(152, 21, 21);

@@ -4,23 +4,24 @@
 ## LAYOUT
 
 ### Radial Grid
-- rows
-- columns
-- angles & distances
-- span rows
-- span cols
-- initial angle
-- diameter
-- quadrants?
-- geostationary/gyroscope
-- responsiveness
-- alignment
+- rows: Son rings o levels
+- columns: sectors
+- angles & distances: se pueden definir independientemte (a32; d453)
+- initial angle: importantes para saber desde donde empieza
+- diameter: importante para estabelcer tamano del arco 90° o 360° x ej.
+- quadrants? una forma de ubicar elementis: q1, q2... 
+- geostationary/gyroscope: comportamiento de lo selementos
+- responsiveness: con media queries
+- alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo
+- distribucion: ver tipo flex-bos
+- draw rings and sectors
 
 ## ELEMENTS
 
 
 ## COMPONENTS
 - progress
+- sectors svg
 - modals
 - labels
 - tooltips
@@ -46,3 +47,8 @@ function getEllipsePoints(width, height, n, dist) {
   }
   return points;
 }
+
+
+### css first
+por eso elipsis solo andan en ffox
+anim en chrome.
