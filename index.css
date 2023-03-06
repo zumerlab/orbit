@@ -1,6 +1,6 @@
 :root {
     --angle: 1;
-    --distance: 90px;
+    --distance: max(min(5vw, 50px), 10vw, 150px); 
     --distance2: 220px;
     --xxs: 8px;
     --xs: 18px;
@@ -23,10 +23,10 @@
     }
   }
 
-  
+/*   
   .item {
     animation: 16s progress infinite;
-  }
+  } */
 
   
   
@@ -46,7 +46,7 @@
 
   .ring {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(var(--distance), 1fr);
     height: 500px;
     align-items: center;
     justify-items: center;
@@ -72,13 +72,15 @@
 
  
   
-  .level-1,
+  .level-0,.level-1,
   .level-2 {
     display: grid;
     border-radius: 50%;
     border: 1px dashed rgba(155, 155, 155, 0.5);
     align-items: center;
     justify-items: center;
+    align-content: center;
+    justify-content: center;
     grid-area: 1/1/1/1;
   }
   
@@ -92,11 +94,13 @@
     justify-items: center;
     grid-area: 1/1/1/1;
   }
-  
+  .level-0 {
+    width: calc(20px * 2);
+    height: calc(20px * 2);
+  }
   .level-1 {
-    width: 40px;
-    height: 300px;
-    rotate: 0deg;
+    width: calc(var(--distance) * 2);
+    height: calc(var(--distance) * 2);
   }
   .level-2 {
     width: calc(var(--distance2) * 2);
@@ -138,6 +142,7 @@
       translate(var(--distance), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
+  
   .item.orbit,
   .item.level-1.orbit {
     transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
@@ -149,8 +154,14 @@
       translate(var(--distance2), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
+  .level-0 > .item {
+    transform: rotate(calc(var(--angle) * 1deg))
+      translate(0, 0)
+  }
 
-  
+  .item.d0 {
+    --distance: 1px;
+  }
   .item.d50 {
     --distance: 50px;
   }
@@ -161,8 +172,17 @@
   .item.d10 {
     --distance: 10px;
   }
+  .item.a0 {
+    --angle: 0;
+  }
   .item.a45 {
-    --angle: -45;
+    --angle: 45;
+  }
+  .item.a90 {
+    --angle: 90;
+  }
+  .item.a135{
+    --angle:135;
   }
   .item.s,
   .item.sm {

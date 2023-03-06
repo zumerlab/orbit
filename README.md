@@ -11,13 +11,13 @@
 - diameter: importante para estabelcer tamano del arco 90° o 360° x ej.
 - quadrants? una forma de ubicar elementis: q1, q2... 
 - geostationary/gyroscope: comportamiento de lo selementos
-- responsiveness: con media queries
+- responsiveness: con media queries, overlapping.. usar vars...
 - alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo
 - distribucion: ver tipo flex-bos
 - draw rings and sectors
 
 ## ELEMENTS
-
+- shapes
 
 ## COMPONENTS
 - progress
