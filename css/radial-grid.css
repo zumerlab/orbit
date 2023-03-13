@@ -1,17 +1,19 @@
 .z-container {
     display: grid;
-    grid-template-columns: minmax(var(--radio), 1fr);
+    grid-template-columns: minmax(var(--radius), 1fr);
     height: 500px;
     align-items: center;
     justify-items: center;
     border: 1px dashed black;
+    align-content: center;
+    justify-content: center;
     /* transform: rotateX(45deg); */
     /* transform-style: preserve-3d; */
   }
  
-  .z-container > .ring-0,
-  .z-container > .ring-1,
-  .z-container > .ring-2 {
+.ring-0,
+.ring-1,
+.ring-2 {
     display: grid;
     border-radius: 50%;
     border: 1px dashed rgba(155, 155, 155, 0.5);
@@ -21,18 +23,7 @@
     justify-content: center;
     grid-area: 1/1/1/1;
   }
-  .item > .ring-0,
-  .item > .ring-1,
-  .item > .ring-2
-   {
-    display: grid;
-    border-radius: 50%;
-    border: 1px dashed rgba(155, 45, 155, 0.5);
-    align-items: center;
-    justify-items: center;
-    
-    grid-area: 1/1/1/1;
-  }
+  
 
  
   .items-1 > .item {
@@ -53,29 +44,138 @@
 
  
   .z-container > .ring-0 {
-    width: calc(var(--radio) * 2);
-    height: calc(var(--radio) * 2);
+    width: calc(var(--radius) * 2 * var(--ring-0-factor));
+    height: calc(var(--radius) * 2 * var(--ring-0-factor));
   }
   .z-container > .ring-1 {
-    width: calc(var(--radio) * 2);
-    height: calc(var(--radio) * 2);
+    width: calc(var(--radius) * 2 * var(--ring-1-factor));
+    height: calc(var(--radius) * 2 * var(--ring-1-factor));
   }
   .z-container > .ring-2 {
-    width: calc(var(--radio) * 6);
-    height: calc(var(--radio)  * 6);
+    width: calc(var(--radius) * 2 * var(--ring-2-factor));
+    height: calc(var(--radius)  * 2 * var(--ring-2-factor));
   }
-  .item > .ring-0 {
-    width: calc(var(--radio) * 2);
-    height: calc(var(--radio) * 2);
-  }
-  .item > .ring-1 {
-    width: 100px;
-    height: 100px;
-  }
-  .item > .ring-2 {
-    width: 280px;
-    height: 280px;
-  }
+
+/* Sizes */
+.item.xxs > .ring-0 {
+  width: calc(var(--xxs) * var(--ring-0-factor));
+  height: calc(var(--xxs) * var(--ring-0-factor));
+}
+.item.s > .ring-0,
+.item.small > .ring-0 {
+  width: calc(var(--s) * var(--ring-0-factor));
+  height: calc(var(--s) * var(--ring-0-factor));
+}
+
+.item.xs > .ring-0,
+.item.extra-small > .ring-0 {
+  width: calc(var(--xs) * var(--ring-0-factor));
+  height: calc(var(--xs) * var(--ring-0-factor));
+}
+
+.item > .ring-0,
+.item.m > .ring-0,
+.item.medium > .ring-0 {
+  width: calc(var(--m) * var(--ring-0-factor));
+  height: calc(var(--m) * var(--ring-0-factor));
+}
+
+.item.l > .ring-0,
+.item.large > .ring-0 {
+  width: calc(var(--l) * var(--ring-0-factor));
+  height: calc(var(--l) * var(--ring-0-factor));
+}
+
+.item.xl > .ring-0,
+.item.extra-large > .ring-0 {
+  width: calc(var(--xl) * var(--ring-0-factor));
+  height: calc(var(--xl) * var(--ring-0-factor));
+}
+
+.item.xxl > .ring-0 {
+  width: calc(var(--xxl) * var(--ring-0-factor));
+  height: calc(var(--xxl) * var(--ring-0-factor));
+}
+
+.item.xxs > .ring-1 {
+  width: calc(var(--xxs) * var(--ring-1-factor));
+  height: calc(var(--xxs) * var(--ring-1-factor));
+}
+.item.s > .ring-1,
+.item.small > .ring-1 {
+  width: calc(var(--s) * var(--ring-1-factor));
+  height: calc(var(--s) * var(--ring-1-factor));
+}
+
+.item.xs > .ring-1,
+.item.extra-small > .ring-1 {
+  width: calc(var(--xs) * var(--ring-1-factor));
+  height: calc(var(--xs) * var(--ring-1-factor));
+}
+
+.item > .ring-1,
+.item.m > .ring-1,
+.item.medium > .ring-1 {
+  width: calc(var(--m) * var(--ring-1-factor));
+  height: calc(var(--m) * var(--ring-1-factor));
+}
+
+.item.l > .ring-1,
+.item.large > .ring-1 {
+  width: calc(var(--l) * var(--ring-1-factor));
+  height: calc(var(--l) * var(--ring-1-factor));
+}
+
+.item.xl > .ring-1,
+.item.extra-large > .ring-1 {
+  width: calc(var(--xl) * var(--ring-1-factor));
+  height: calc(var(--xl) * var(--ring-1-factor));
+}
+
+.item.xxl > .ring-1 {
+  width: calc(var(--xxl) * var(--ring-1-factor));
+  height: calc(var(--xxl) * var(--ring-1-factor));
+}
+
+.item.xxs > .ring-2 {
+  width: calc(var(--xxs) * var(--ring-2-factor));
+  height: calc(var(--xxs) * var(--ring-2-factor));
+}
+.item.s > .ring-2,
+.item.small > .ring-2 {
+  width: calc(var(--s) * var(--ring-2-factor));
+  height: calc(var(--s) * var(--ring-2-factor));
+}
+
+.item.xs > .ring-2,
+.item.extra-small > .ring-2 {
+  width: calc(var(--xs) * var(--ring-2-factor));
+  height: calc(var(--xs) * var(--ring-2-factor));
+}
+
+.item > .ring-2,
+.item.m > .ring-2,
+.item.medium > .ring-2 {
+  width: calc(var(--m) * var(--ring-2-factor));
+  height: calc(var(--m) * var(--ring-2-factor));
+}
+
+.item.l > .ring-2,
+.item.large > .ring-2 {
+  width: calc(var(--l) * var(--ring-2-factor));
+  height: calc(var(--l) * var(--ring-2-factor));
+}
+
+.item.xl > .ring-2,
+.item.extra-large > .ring-2 {
+  width: calc(var(--xl) * var(--ring-2-factor));
+  height: calc(var(--xl) * var(--ring-2-factor));
+}
+
+.item.xxl > .ring-2 {
+  width: calc(var(--xxl) * var(--ring-2-factor));
+  height: calc(var(--xxl) * var(--ring-2-factor));
+}
   .item:nth-child(1) {
     --item-number: 1;
   }
@@ -98,7 +198,7 @@
   
   .item.orbital {
     transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
-      translate(var(--radio), 0);
+      translate(var(--radius), 0);
   }
 
   .ring-0 > .item {
@@ -108,19 +208,36 @@
 
   .z-container > .ring-1 > .item {
     transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
-      translate(calc(var(--radio)), 0)
+      translate(calc(var(--radius)), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
 
   .z-container > .ring-2 > .item {
     transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
-      translate(calc(var(--radio) * 3), 0)
+      translate(calc(var(--radius) * 2), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
 
-  .item > .ring-1 > .item {
+  .item.xxs > .ring-1 > .item {
+    --x: calc(var(--xxs) / 2 * var(--ring-1-factor));
     transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
-      translate(30px, 0)
+      translate(var(--x), 0)
+      rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+  }
+  
+  .item.xs > .ring-1 > .item,
+  .item.extra-small > .ring-1 > .item {
+    --x: calc(var(--xs) / 2 * var(--ring-1-factor));
+    transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
+      translate(var(--x), 0)
+      rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+  }
+  .item > .ring-1 > .item,
+  .item.m > .ring-1 > .item,
+  .item.medium > .ring-1 > .item {
+    --x: calc(var(--m) / 2 * var(--ring-1-factor));
+    transform: rotate(calc(var(--angle) * var(--item-number) * 1deg))
+      translate(var(--x), 0)
       rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
   }
 
@@ -132,17 +249,17 @@
 
 
 /*   .item.d0 {
-    --radio: 1px;
+    --radius: 1px;
   }
   .item.d50 {
-    --radio: 50px;
+    --radius: 50px;
   }
  
   .item.d15 {
-    --radio: 15px;
+    --radius: 15px;
   }
   .item.d10 {
-    --radio: 10px;
+    --radius: 10px;
   } */
   .item.a0 {
     --angle: 0;

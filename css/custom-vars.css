@@ -1,9 +1,12 @@
 .z-container {
     /* Layout vars */
     --angle: 1;
-    --radio: 100px;
+    --radius: 100px;
     --item-number: 1;
-    --ratio: 1.8;
+    --radius-padding: 8px;
+    --ring-0-factor: 1;
+    --ring-1-factor: 2;
+    --ring-2-factor: 3;
     /* Shape sizes */
     --xxs: 8px;
     --xs: 24px;

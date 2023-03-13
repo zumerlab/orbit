@@ -1,9 +1,11 @@
 .item {
   display: grid;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.151);
   border: 1px solid black;
   align-items: center;
   justify-items: center;
+  align-content: center;
+    justify-content: center;
   grid-area: 1/1/1/1;
 }
 /* Shapes */
@@ -46,8 +48,8 @@
 
 .item.l,
 .item.large {
-  width: var(--m);
-  height: var(--m);
+  width: var(--l);
+  height: var(--l);
 }
 
 .item.xl,
