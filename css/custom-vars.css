@@ -1,0 +1,15 @@
+.z-container {
+    /* Layout vars */
+    --angle: 1;
+    --radio: 100px;
+    --item-number: 1;
+    --ratio: 1.8;
+    /* Shape sizes */
+    --xxs: 8px;
+    --xs: 24px;
+    --s: 44px;
+    --m: 68px;
+    --l: 110px;
+    --xl: 180px;
+    --xxl: 288px;
+  }

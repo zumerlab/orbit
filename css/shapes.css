@@ -1,0 +1,62 @@
+.item {
+  display: grid;
+  background-color: white;
+  border: 1px solid black;
+  align-items: center;
+  justify-items: center;
+  grid-area: 1/1/1/1;
+}
+/* Shapes */
+.item,
+.item.circle {
+  border-radius: 50%;
+}
+.item.box {
+  border-radius: 0%;
+}
+.item.rounded {
+  border-radius: 25%;
+}
+.item.transparent {
+  border: none;
+}
+/* Sizes */
+.item.xxs {
+  width: var(--xxs);
+  height: var(--xxs);
+}
+.item.s,
+.item.small {
+  width: var(--s);
+  height: var(--s);
+}
+
+.item.xs,
+.item.extra-small {
+  width: var(--xs);
+  height: var(--xs);
+}
+
+.item,
+.item.m,
+.item.medium {
+  width: var(--m);
+  height: var(--m);
+}
+
+.item.l,
+.item.large {
+  width: var(--m);
+  height: var(--m);
+}
+
+.item.xl,
+.item.extra-large {
+  width: var(--xl);
+  height: var(--xl);
+}
+
+.item.xxl {
+  width: var(--xxl);
+  height: var(--xxl);
+}

@@ -1,53 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css" type="text/css"/>
-    <title>Document</title>
-</head>
-<body>
-    <div class="ring">
-      <div class="level-0">
-        <div  class="item transparent orbit a0 box" style="width: 500px; height: 1px; border-top: 1px dashed  rgba(155, 155, 155, 0.5);"></div>
-        <div  class="item transparent orbit a45 box" style="width: 500px; height: 1px; border-top: 1px dashed  rgba(155, 155, 155, 0.5);"></div>
-        <div  class="item transparent orbit a90 box" style="width: 500px; height: 1px; border-top: 1px dashed  rgba(155, 155, 155, 0.5);"></div>
-        <div  class="item transparent orbit a135 box" style="width: 500px; height: 1px; border-top: 1px dashed  rgba(155, 155, 155, 0.5);"></div>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/index.css" type="text/css" />
+    <title>Radial grid layout - css only</title>
+  </head>
+  <body>
+    <div class="z-container">
+      <div class="ring-0">
+        <div
+          class="item transparent orbital a0 box"
+          style="
+            width: 500px;
+            height: 1px;
+            border-top: 1px dashed rgba(155, 155, 155, 0.5);
+          "
+        ></div>
+        <div
+          class="item transparent orbital a45 box"
+          style="
+            width: 500px;
+            height: 1px;
+            border-top: 1px dashed rgba(155, 155, 155, 0.5);
+          "
+        ></div>
+        <div
+          class="item transparent orbital a90 box"
+          style="
+            width: 500px;
+            height: 1px;
+            border-top: 1px dashed rgba(155, 155, 155, 0.5);
+          "
+        ></div>
+        <div
+          class="item transparent orbital a135 box"
+          style="
+            width: 500px;
+            height: 1px;
+            border-top: 1px dashed rgba(155, 155, 155, 0.5);
+          "
+        ></div>
       </div>
-        <div class="level-1 items-3">
-        
-          <div class="item m">
-           one
+      <div class="ring-1 items-3">
+        <div class="item m">one</div>
+        <div class="item m">
+          <!-- prototipo de label -->
+          <div
+            class="item d50 transparent orbital a45 box"
+            style="width: 50px; height: 1px; background-color: red"
+          ></div>
+          <div
+            class="item box a45"
+            style="
+              border-color: red;
+              width: 50px;
+              height: 21px;
+              --item-number: 1;
+              --radio: 70px;
+              color: red;
+            "
+          >
+            text
           </div>
-          <div class="item  m">
-            <!-- prototipo de label -->
-            <div  class="item d50  transparent orbit a45 box" style="width: 50px; height: 1px; background-color: red;"></div>
-            <div class="item   box a45" style="border-color: red;width: 50px; height: 21px; --item-number:1; --distance: 70px; color: red">text</div>
-          </div>
-          <div class="item m items-4">
+        </div>
+        <div class="item xs">
+          <div class="ring-1 items-4">
             <div class="item xs d50">4</div>
             <div class="item xs d50">5</div>
-            <div class="item xs d50 transparent orbit" style="color: red">◃</div>
-            <div class="item xs d50 items-3">
-              <div class="item xxs d15"></div>
-              <div class="item xxs d15"></div>
-              <div class="item xxs d15"></div>
+            <div class="item xs d50 transparent orbital" style="color: red">◃</div>
+            <div class="item xs d50">
+              <div class="ring-1 items-3">
+                <div class="item xxs d15"></div>
+                <div class="item xxs d15"></div>
+                <div class="item xxs d15"></div>
+              </div>
+              
             </div>
           </div>
-        </div>
-        <div class="level-2 items-5">
-         
-          <div class="item sm d50 box">a</div>
-          <div class="item sm d50 rounded">b</div>
-          <div class="item sm d50">c</div>
-          <div class="item sm d50">d</div>
-          <div class="item sm d50">e</div>
+          
         </div>
       </div>
-      
-      
-       
-</body>
+      <div class="ring-2 items-5">
+        <div class="item sm d50 box">a</div>
+        <div class="item sm d50 rounded">b</div>
+        <div class="item sm d50">c</div>
+        <div class="item sm d50">d</div>
+        <div class="item sm d50">e</div>
+      </div>
+    </div>
+  </body>
 </html>
