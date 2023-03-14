@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/index.css" type="text/css" />
+    <link rel="stylesheet" href="./src/index.css" type="text/css" />
     <title>Radial grid layout - css only</title>
   </head>
   <body>
     <div class="z-container">
       <div class="ring-0">
         <div
-          class="item transparent orbital a0 box"
+          class="item m transparent stationary a0 box"
           style="
             width: 500px;
             height: 1px;
@@ -19,7 +19,7 @@
           "
         ></div>
         <div
-          class="item transparent orbital a45 box"
+          class="item m transparent stationary a45 box"
           style="
             width: 500px;
             height: 1px;
@@ -27,7 +27,7 @@
           "
         ></div>
         <div
-          class="item transparent orbital a90 box"
+          class="item m transparent stationary a90 box"
           style="
             width: 500px;
             height: 1px;
@@ -35,7 +35,7 @@
           "
         ></div>
         <div
-          class="item transparent orbital a135 box"
+          class="item m transparent stationary a135 box"
           style="
             width: 500px;
             height: 1px;
@@ -48,7 +48,7 @@
         <!-- <div class="item m">
           
           <div
-            class="item d50 transparent orbital a45 box"
+            class="item d50 transparent stationary a45 box"
             style="width: 50px; height: 1px; background-color: red"
           ></div>
           <div
@@ -69,8 +69,8 @@
           <div class="ring-1 items-4">
             <div class="item xs d50">4</div>
             <div class="item xs d50">5</div>
-            <div class="item xs d50  orbital" >◃</div>
-            <div class="item  d50">
+            <div class="item xs d50  stationary" >◃</div>
+            <div class="item s d50">
               <div class="ring-1 items-3">
                 <div class="item xxs d15"></div>
                 <div class="item xxs d15"></div>
@@ -82,11 +82,11 @@
         </div>
       </div>
       <div class="ring-2 items-5">
-        <div class="item sm d50 box">a</div>
-        <div class="item sm d50 rounded">b</div>
-        <div class="item sm d50">c</div>
-        <div class="item sm d50">d</div>
-        <div class="item sm d50">e</div>
+        <div class="item s d50 box">a</div>
+        <div class="item s d50 rounded">b</div>
+        <div class="item s d50">c</div>
+        <div class="item s d50">d</div>
+        <div class="item s d50">e</div>
       </div>
     </div>
   </body>
