@@ -4,17 +4,17 @@
 ## LAYOUT
 
 ### Radial Grid
-- rows: Son rings o levels
-- columns: sectors
-- angles & distances: se pueden definir independientemte (a32; d453)
+
+- OK rows: rings OR orbit
+- columns: sectors relates to angles. quadrants... cordinal points...
+- angles & distances: definir independientemte (a32; d453)?
 - initial angle: importantes para saber desde donde empieza
 - diameter: importante para estabelcer tamano del arco 90° o 360° x ej.
-- quadrants? una forma de ubicar elementis: q1, q2... 
-- geostationary/gyroscope: comportamiento de lo selementos
-- responsiveness: con media queries, overlapping.. usar vars...
+- OK Stationary- geostationary/gyroscope: comportamiento de lo selementos
+- responsiveness: crear dos versiones? media query & rem units? ...
 - alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo
 - distribucion: ver tipo flex-bos
-- draw rings and sectors
+- OK draw rings and sectors
 
 ## ELEMENTS
 - shapes
@@ -63,6 +63,20 @@ function getEllipsePoints(width, height, n, dist) {
 .item, .label__text, .label__conector {
   animation: 16s progress infinite;
 }
+
+article::before {
+  content: attr(data-parent);
+}
+
+You can also use the attribute selectors in CSS to change styles according to the data:
+
+article[data-columns="3"] {
+  width: 400px;
+}
+article[data-columns="4"] {
+  width: 600px;
+}
+
 
 ### css first
 por eso elipsis solo andan en ffox

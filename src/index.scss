@@ -1,9 +1,4 @@
  /* Variables */
- * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 $sizes: "xxs" var(--xxs),
   "xs" var(--xs),
   "s" var(--s),
@@ -15,6 +10,25 @@ $sizes: "xxs" var(--xxs),
 $min: 0;
 $max: 6;
 
+$sectors:
+  "offset-1" 0,
+  "offset-2" 45,
+  "offset-3" 90,
+  "offset-4" 135,
+  "offset-5" 180,
+  "offset-6" 225,
+  "offset-7" 270,
+  "offset-8" 315;
+$arcs:
+  "arc-1" 45,
+  "arc-2" 90,
+  "arc-3" 135,
+  "arc-4" 180,
+  "arc-5" 225,
+  "arc-6" 270,
+  "arc-7" 315,
+  "arc-8" 360;
+
 $coords: "top" -90deg "0 0",
   "top-right" -45deg "0 0",
   "right" 0deg "0 0",
@@ -24,9 +38,17 @@ $coords: "top" -90deg "0 0",
   "left" 180deg "0 0",
   "top-left" -135deg "0 0";
 
+ /* Initial Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
  /* Main elements */
 .z-container {
   /* Layout vars */
+  --arc: 360;
+  --offset-angle: 0;
   --angle: 1;
   --radius: 100px;
   --item-number: 1;
@@ -189,12 +211,28 @@ $var in $sizes {
     --item-number:#{$i};
   }
 }
-
 @for $i from $min through $max {
-  .items-#{$i}>.item {
-    --angle: calc(360 / #{$i});
+  @each $sector,
+  $angle in $sectors {
+    .ring-#{$i}.#{$sector} {
+      --offset-angle: #{$angle};
+    }
   }
 }
+@for $i from $min through $max {
+  @each $arc,
+  $value in $arcs {
+    .ring-#{$i}.#{$arc} {
+      --arc: #{$value};
+    }
+  }
+}
+@for $i from $min through $max {
+  .items-#{$i}>.item {
+    --angle: calc((var(--offset-angle) + var(--arc)) / #{$i});
+  }
+}
+
 @for $i from $min + 1 through $max {
   .z-container>.ring-#{$i}>.item {
     transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));

@@ -1,4 +1,5 @@
 /* Variables */
+/* Initial Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,6 +9,8 @@
 /* Main elements */
 .z-container {
   /* Layout vars */
+  --arc: 360;
+  --offset-angle: 0;
   --angle: 1;
   --radius: 100px;
   --item-number: 1;
@@ -763,32 +766,480 @@ div[class^=ring] {
   --item-number:6;
 }
 
+.ring-0.offset-1 {
+  --offset-angle: 0;
+}
+
+.ring-0.offset-2 {
+  --offset-angle: 45;
+}
+
+.ring-0.offset-3 {
+  --offset-angle: 90;
+}
+
+.ring-0.offset-4 {
+  --offset-angle: 135;
+}
+
+.ring-0.offset-5 {
+  --offset-angle: 180;
+}
+
+.ring-0.offset-6 {
+  --offset-angle: 225;
+}
+
+.ring-0.offset-7 {
+  --offset-angle: 270;
+}
+
+.ring-0.offset-8 {
+  --offset-angle: 315;
+}
+
+.ring-1.offset-1 {
+  --offset-angle: 0;
+}
+
+.ring-1.offset-2 {
+  --offset-angle: 45;
+}
+
+.ring-1.offset-3 {
+  --offset-angle: 90;
+}
+
+.ring-1.offset-4 {
+  --offset-angle: 135;
+}
+
+.ring-1.offset-5 {
+  --offset-angle: 180;
+}
+
+.ring-1.offset-6 {
+  --offset-angle: 225;
+}
+
+.ring-1.offset-7 {
+  --offset-angle: 270;
+}
+
+.ring-1.offset-8 {
+  --offset-angle: 315;
+}
+
+.ring-2.offset-1 {
+  --offset-angle: 0;
+}
+
+.ring-2.offset-2 {
+  --offset-angle: 45;
+}
+
+.ring-2.offset-3 {
+  --offset-angle: 90;
+}
+
+.ring-2.offset-4 {
+  --offset-angle: 135;
+}
+
+.ring-2.offset-5 {
+  --offset-angle: 180;
+}
+
+.ring-2.offset-6 {
+  --offset-angle: 225;
+}
+
+.ring-2.offset-7 {
+  --offset-angle: 270;
+}
+
+.ring-2.offset-8 {
+  --offset-angle: 315;
+}
+
+.ring-3.offset-1 {
+  --offset-angle: 0;
+}
+
+.ring-3.offset-2 {
+  --offset-angle: 45;
+}
+
+.ring-3.offset-3 {
+  --offset-angle: 90;
+}
+
+.ring-3.offset-4 {
+  --offset-angle: 135;
+}
+
+.ring-3.offset-5 {
+  --offset-angle: 180;
+}
+
+.ring-3.offset-6 {
+  --offset-angle: 225;
+}
+
+.ring-3.offset-7 {
+  --offset-angle: 270;
+}
+
+.ring-3.offset-8 {
+  --offset-angle: 315;
+}
+
+.ring-4.offset-1 {
+  --offset-angle: 0;
+}
+
+.ring-4.offset-2 {
+  --offset-angle: 45;
+}
+
+.ring-4.offset-3 {
+  --offset-angle: 90;
+}
+
+.ring-4.offset-4 {
+  --offset-angle: 135;
+}
+
+.ring-4.offset-5 {
+  --offset-angle: 180;
+}
+
+.ring-4.offset-6 {
+  --offset-angle: 225;
+}
+
+.ring-4.offset-7 {
+  --offset-angle: 270;
+}
+
+.ring-4.offset-8 {
+  --offset-angle: 315;
+}
+
+.ring-5.offset-1 {
+  --offset-angle: 0;
+}
+
+.ring-5.offset-2 {
+  --offset-angle: 45;
+}
+
+.ring-5.offset-3 {
+  --offset-angle: 90;
+}
+
+.ring-5.offset-4 {
+  --offset-angle: 135;
+}
+
+.ring-5.offset-5 {
+  --offset-angle: 180;
+}
+
+.ring-5.offset-6 {
+  --offset-angle: 225;
+}
+
+.ring-5.offset-7 {
+  --offset-angle: 270;
+}
+
+.ring-5.offset-8 {
+  --offset-angle: 315;
+}
+
+.ring-6.offset-1 {
+  --offset-angle: 0;
+}
+
+.ring-6.offset-2 {
+  --offset-angle: 45;
+}
+
+.ring-6.offset-3 {
+  --offset-angle: 90;
+}
+
+.ring-6.offset-4 {
+  --offset-angle: 135;
+}
+
+.ring-6.offset-5 {
+  --offset-angle: 180;
+}
+
+.ring-6.offset-6 {
+  --offset-angle: 225;
+}
+
+.ring-6.offset-7 {
+  --offset-angle: 270;
+}
+
+.ring-6.offset-8 {
+  --offset-angle: 315;
+}
+
+.ring-0.arc-1 {
+  --arc: 45;
+}
+
+.ring-0.arc-2 {
+  --arc: 90;
+}
+
+.ring-0.arc-3 {
+  --arc: 135;
+}
+
+.ring-0.arc-4 {
+  --arc: 180;
+}
+
+.ring-0.arc-5 {
+  --arc: 225;
+}
+
+.ring-0.arc-6 {
+  --arc: 270;
+}
+
+.ring-0.arc-7 {
+  --arc: 315;
+}
+
+.ring-0.arc-8 {
+  --arc: 360;
+}
+
+.ring-1.arc-1 {
+  --arc: 45;
+}
+
+.ring-1.arc-2 {
+  --arc: 90;
+}
+
+.ring-1.arc-3 {
+  --arc: 135;
+}
+
+.ring-1.arc-4 {
+  --arc: 180;
+}
+
+.ring-1.arc-5 {
+  --arc: 225;
+}
+
+.ring-1.arc-6 {
+  --arc: 270;
+}
+
+.ring-1.arc-7 {
+  --arc: 315;
+}
+
+.ring-1.arc-8 {
+  --arc: 360;
+}
+
+.ring-2.arc-1 {
+  --arc: 45;
+}
+
+.ring-2.arc-2 {
+  --arc: 90;
+}
+
+.ring-2.arc-3 {
+  --arc: 135;
+}
+
+.ring-2.arc-4 {
+  --arc: 180;
+}
+
+.ring-2.arc-5 {
+  --arc: 225;
+}
+
+.ring-2.arc-6 {
+  --arc: 270;
+}
+
+.ring-2.arc-7 {
+  --arc: 315;
+}
+
+.ring-2.arc-8 {
+  --arc: 360;
+}
+
+.ring-3.arc-1 {
+  --arc: 45;
+}
+
+.ring-3.arc-2 {
+  --arc: 90;
+}
+
+.ring-3.arc-3 {
+  --arc: 135;
+}
+
+.ring-3.arc-4 {
+  --arc: 180;
+}
+
+.ring-3.arc-5 {
+  --arc: 225;
+}
+
+.ring-3.arc-6 {
+  --arc: 270;
+}
+
+.ring-3.arc-7 {
+  --arc: 315;
+}
+
+.ring-3.arc-8 {
+  --arc: 360;
+}
+
+.ring-4.arc-1 {
+  --arc: 45;
+}
+
+.ring-4.arc-2 {
+  --arc: 90;
+}
+
+.ring-4.arc-3 {
+  --arc: 135;
+}
+
+.ring-4.arc-4 {
+  --arc: 180;
+}
+
+.ring-4.arc-5 {
+  --arc: 225;
+}
+
+.ring-4.arc-6 {
+  --arc: 270;
+}
+
+.ring-4.arc-7 {
+  --arc: 315;
+}
+
+.ring-4.arc-8 {
+  --arc: 360;
+}
+
+.ring-5.arc-1 {
+  --arc: 45;
+}
+
+.ring-5.arc-2 {
+  --arc: 90;
+}
+
+.ring-5.arc-3 {
+  --arc: 135;
+}
+
+.ring-5.arc-4 {
+  --arc: 180;
+}
+
+.ring-5.arc-5 {
+  --arc: 225;
+}
+
+.ring-5.arc-6 {
+  --arc: 270;
+}
+
+.ring-5.arc-7 {
+  --arc: 315;
+}
+
+.ring-5.arc-8 {
+  --arc: 360;
+}
+
+.ring-6.arc-1 {
+  --arc: 45;
+}
+
+.ring-6.arc-2 {
+  --arc: 90;
+}
+
+.ring-6.arc-3 {
+  --arc: 135;
+}
+
+.ring-6.arc-4 {
+  --arc: 180;
+}
+
+.ring-6.arc-5 {
+  --arc: 225;
+}
+
+.ring-6.arc-6 {
+  --arc: 270;
+}
+
+.ring-6.arc-7 {
+  --arc: 315;
+}
+
+.ring-6.arc-8 {
+  --arc: 360;
+}
+
 .items-0 > .item {
-  --angle: calc(360 / 0);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 0);
 }
 
 .items-1 > .item {
-  --angle: calc(360 / 1);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 1);
 }
 
 .items-2 > .item {
-  --angle: calc(360 / 2);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 2);
 }
 
 .items-3 > .item {
-  --angle: calc(360 / 3);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 3);
 }
 
 .items-4 > .item {
-  --angle: calc(360 / 4);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 4);
 }
 
 .items-5 > .item {
-  --angle: calc(360 / 5);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 5);
 }
 
 .items-6 > .item {
-  --angle: calc(360 / 6);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 6);
 }
 
 .z-container > .ring-1 > .item {
