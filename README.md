@@ -8,8 +8,8 @@
 - OK rows: rings OR orbit
 - columns: sectors relates to angles. quadrants... cordinal points...
 - angles & distances: definir independientemte (a32; d453)?
-- initial angle: importantes para saber desde donde empieza
-- diameter: importante para estabelcer tamano del arco 90° o 360° x ej.
+- OK initial angle: importantes para saber desde donde empieza
+- OK diameter: importante para estabelcer tamano del arco 90° o 360° x ej.
 - OK Stationary- geostationary/gyroscope: comportamiento de lo selementos
 - responsiveness: crear dos versiones? media query & rem units? ...
 - alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo

@@ -158,13 +158,14 @@ div[class^="ring"] {
       .item.#{$size} > .label.#{$coord} {
       transform: rotate(#{$pos}) translate(calc(#{$var} / 1.8), 0);
       }
-      .label.#{$coord} > .label__text {
-        transform-origin: #{$to};
-        transform: translate(calc(40px), 0) rotate(calc(#{$pos} * -1));
-      }
     }
   }
-
+  @each $coord, $pos, $to in $coords {
+    .label.#{$coord} > .label__text {
+      transform-origin: #{$to};
+      transform: translate(calc(40px), 0) rotate(calc(#{$pos} * -1));
+    }
+  }
 .label__conector {
   transform-origin: 0 0;
   border: transparent;
@@ -184,13 +185,6 @@ div[class^="ring"] {
   height: 20px;
   color: red;
 }
-
-@each $coord, $pos in $coords {
-  .label__text {
-    transform: translate(calc(40px), 0) rotate(calc(#{$pos} * -1));
-  }
-}
-
  
 @each $size,
 $var in $sizes {
