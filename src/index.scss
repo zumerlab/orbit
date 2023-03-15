@@ -15,6 +15,15 @@ $sizes: "xxs" var(--xxs),
 $min: 0;
 $max: 6;
 
+$coords: "top" -90deg "0 0",
+  "top-right" -45deg "0 0",
+  "right" 0deg "0 0",
+  "bottom" 90deg "0 0",
+  "bottom-right" 45deg "0 0",
+  "bottom-left" 135deg "0 0",
+  "left" 180deg "0 0",
+  "top-left" -135deg "0 0";
+
  /* Main elements */
 .z-container {
   /* Layout vars */
@@ -116,14 +125,21 @@ div[class^="ring"] {
 .label {
   display: block;
   border: 1px solid red;
-  width: 1px;
-  height: 1px;
+  border-radius: 50;
+  width: 4px;
+  height: 4px;
 }
 
   @each $size,
   $var in $sizes {
-    .item.#{$size} > .label {
-    transform: translate(calc(#{$var} / 2), 0);
+    @each $coord, $pos, $to in $coords {
+      .item.#{$size} > .label.#{$coord} {
+      transform: rotate(#{$pos}) translate(calc(#{$var} / 1.8), 0);
+      }
+      .label.#{$coord} > .label__text {
+        transform-origin: #{$to};
+        transform: translate(calc(40px), 0) rotate(calc(#{$pos} * -1));
+      }
     }
   }
 
@@ -131,7 +147,7 @@ div[class^="ring"] {
   transform-origin: 0 0;
   border: transparent;
   border-top: 1px solid red;
-  width: 50px;
+  width: 40px;
 }
 .label__text {
   display: grid;
@@ -147,13 +163,12 @@ div[class^="ring"] {
   color: red;
 }
 
+@each $coord, $pos in $coords {
+  .label__text {
+    transform: translate(calc(40px), 0) rotate(calc(#{$pos} * -1));
+  }
+}
 
-.label__text {
-  transform: rotate(calc(-45 * 1deg)) translate(calc(50px), 0) rotate(calc(-45 * -1deg));
-}
-.label__conector {
-  transform: rotate(calc(-45 * 1deg));
-}
  
 @each $size,
 $var in $sizes {

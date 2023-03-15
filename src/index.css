@@ -108,43 +108,520 @@ div[class^=ring] {
 .label {
   display: block;
   border: 1px solid red;
-  width: 1px;
-  height: 1px;
+  border-radius: 50;
+  width: 4px;
+  height: 4px;
 }
 
-.item.xxs > .label {
-  transform: translate(calc(var(--xxs) / 2), 0);
+.item.xxs > .label.top {
+  transform: rotate(-90deg) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xs > .label {
-  transform: translate(calc(var(--xs) / 2), 0);
+.label.top > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
 }
 
-.item.s > .label {
-  transform: translate(calc(var(--s) / 2), 0);
+.item.xxs > .label.top-right {
+  transform: rotate(-45deg) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.m > .label {
-  transform: translate(calc(var(--m) / 2), 0);
+.label.top-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
 }
 
-.item.l > .label {
-  transform: translate(calc(var(--l) / 2), 0);
+.item.xxs > .label.right {
+  transform: rotate(0deg) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xl > .label {
-  transform: translate(calc(var(--xl) / 2), 0);
+.label.right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
 }
 
-.item.xxl > .label {
-  transform: translate(calc(var(--xxl) / 2), 0);
+.item.xxs > .label.bottom {
+  transform: rotate(90deg) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.label.bottom > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.item.xxs > .label.bottom-right {
+  transform: rotate(45deg) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.label.bottom-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.item.xxs > .label.bottom-left {
+  transform: rotate(135deg) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.label.bottom-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.item.xxs > .label.left {
+  transform: rotate(180deg) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.label.left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.item.xxs > .label.top-left {
+  transform: rotate(-135deg) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.label.top-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
+}
+
+.item.xs > .label.top {
+  transform: rotate(-90deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.top > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
+}
+
+.item.xs > .label.top-right {
+  transform: rotate(-45deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.top-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+}
+
+.item.xs > .label.right {
+  transform: rotate(0deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
+}
+
+.item.xs > .label.bottom {
+  transform: rotate(90deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.bottom > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.item.xs > .label.bottom-right {
+  transform: rotate(45deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.bottom-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.item.xs > .label.bottom-left {
+  transform: rotate(135deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.bottom-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.item.xs > .label.left {
+  transform: rotate(180deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.item.xs > .label.top-left {
+  transform: rotate(-135deg) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.label.top-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
+}
+
+.item.s > .label.top {
+  transform: rotate(-90deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.top > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
+}
+
+.item.s > .label.top-right {
+  transform: rotate(-45deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.top-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+}
+
+.item.s > .label.right {
+  transform: rotate(0deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
+}
+
+.item.s > .label.bottom {
+  transform: rotate(90deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.bottom > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.item.s > .label.bottom-right {
+  transform: rotate(45deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.bottom-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.item.s > .label.bottom-left {
+  transform: rotate(135deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.bottom-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.item.s > .label.left {
+  transform: rotate(180deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.item.s > .label.top-left {
+  transform: rotate(-135deg) translate(calc(var(--s) / 1.8), 0);
+}
+
+.label.top-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
+}
+
+.item.m > .label.top {
+  transform: rotate(-90deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.top > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
+}
+
+.item.m > .label.top-right {
+  transform: rotate(-45deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.top-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+}
+
+.item.m > .label.right {
+  transform: rotate(0deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
+}
+
+.item.m > .label.bottom {
+  transform: rotate(90deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.bottom > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.item.m > .label.bottom-right {
+  transform: rotate(45deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.bottom-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.item.m > .label.bottom-left {
+  transform: rotate(135deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.bottom-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.item.m > .label.left {
+  transform: rotate(180deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.item.m > .label.top-left {
+  transform: rotate(-135deg) translate(calc(var(--m) / 1.8), 0);
+}
+
+.label.top-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
+}
+
+.item.l > .label.top {
+  transform: rotate(-90deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.top > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
+}
+
+.item.l > .label.top-right {
+  transform: rotate(-45deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.top-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+}
+
+.item.l > .label.right {
+  transform: rotate(0deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
+}
+
+.item.l > .label.bottom {
+  transform: rotate(90deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.bottom > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.item.l > .label.bottom-right {
+  transform: rotate(45deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.bottom-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.item.l > .label.bottom-left {
+  transform: rotate(135deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.bottom-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.item.l > .label.left {
+  transform: rotate(180deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.item.l > .label.top-left {
+  transform: rotate(-135deg) translate(calc(var(--l) / 1.8), 0);
+}
+
+.label.top-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
+}
+
+.item.xl > .label.top {
+  transform: rotate(-90deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.top > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
+}
+
+.item.xl > .label.top-right {
+  transform: rotate(-45deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.top-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+}
+
+.item.xl > .label.right {
+  transform: rotate(0deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
+}
+
+.item.xl > .label.bottom {
+  transform: rotate(90deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.bottom > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.item.xl > .label.bottom-right {
+  transform: rotate(45deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.bottom-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.item.xl > .label.bottom-left {
+  transform: rotate(135deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.bottom-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.item.xl > .label.left {
+  transform: rotate(180deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.item.xl > .label.top-left {
+  transform: rotate(-135deg) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.label.top-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
+}
+
+.item.xxl > .label.top {
+  transform: rotate(-90deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.top > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
+}
+
+.item.xxl > .label.top-right {
+  transform: rotate(-45deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.top-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+}
+
+.item.xxl > .label.right {
+  transform: rotate(0deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
+}
+
+.item.xxl > .label.bottom {
+  transform: rotate(90deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.bottom > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.item.xxl > .label.bottom-right {
+  transform: rotate(45deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.bottom-right > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.item.xxl > .label.bottom-left {
+  transform: rotate(135deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.bottom-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.item.xxl > .label.left {
+  transform: rotate(180deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.item.xxl > .label.top-left {
+  transform: rotate(-135deg) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.top-left > .label__text {
+  transform-origin: 0 0;
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
 }
 
 .label__conector {
   transform-origin: 0 0;
   border: transparent;
   border-top: 1px solid red;
-  width: 50px;
+  width: 40px;
 }
 
 .label__text {
@@ -162,11 +639,35 @@ div[class^=ring] {
 }
 
 .label__text {
-  transform: rotate(-45deg) translate(50px, 0) rotate(45deg);
+  transform: translate(40px, 0) rotate(calc(-90deg * -1));
 }
 
-.label__conector {
-  transform: rotate(-45deg);
+.label__text {
+  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+}
+
+.label__text {
+  transform: translate(40px, 0) rotate(calc(0deg * -1));
+}
+
+.label__text {
+  transform: translate(40px, 0) rotate(calc(90deg * -1));
+}
+
+.label__text {
+  transform: translate(40px, 0) rotate(calc(45deg * -1));
+}
+
+.label__text {
+  transform: translate(40px, 0) rotate(calc(135deg * -1));
+}
+
+.label__text {
+  transform: translate(40px, 0) rotate(calc(180deg * -1));
+}
+
+.label__text {
+  transform: translate(40px, 0) rotate(calc(-135deg * -1));
 }
 
 .item.xxs {

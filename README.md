@@ -48,6 +48,21 @@ function getEllipsePoints(width, height, n, dist) {
   return points;
 }
 
+@property --angle {
+  syntax: "<number>";
+  initial-value: 1;
+  inherits: false;
+}
+
+@keyframes progress {
+  50% {
+    --angle: 360;
+  }
+}
+
+.item, .label__text, .label__conector {
+  animation: 16s progress infinite;
+}
 
 ### css first
 por eso elipsis solo andan en ffox
