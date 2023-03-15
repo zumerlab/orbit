@@ -10,6 +10,7 @@
 - angles & distances: definir independientemte (a32; d453)?
 - OK initial angle: importantes para saber desde donde empieza
 - OK diameter: importante para estabelcer tamano del arco 90° o 360° x ej.
+- OK Reverse angle...
 - OK Stationary- geostationary/gyroscope: comportamiento de lo selementos
 - responsiveness: crear dos versiones? media query & rem units? ...
 - alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo

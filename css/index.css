@@ -11,6 +11,7 @@
   /* Layout vars */
   --arc: 360;
   --offset-angle: 0;
+  --direction: 1;
   --angle: 1;
   --radius: 100px;
   --item-number: 1;
@@ -30,15 +31,18 @@
   --l: 110px;
   --xl: 180px;
   --xxl: 288px;
+  /* width connector */
+  --connector-width: 40px;
+  --label-width: 50px;
 }
 
 .z-container {
   display: grid;
   grid-template-columns: minmax(var(--radius), 1fr);
   grid-template-rows: minmax(var(--radius), 1fr);
+  border: 1px dashed black;
   align-items: center;
   justify-items: center;
-  border: 1px dashed black;
   align-content: center;
   justify-content: center;
 }
@@ -56,11 +60,11 @@
   display: grid;
   background-color: rgba(255, 255, 255, 0.151);
   border: 1px solid black;
+  grid-area: 1/1/1/1;
   align-items: center;
   justify-items: center;
   align-content: center;
   justify-content: center;
-  grid-area: 1/1/1/1;
 }
 
 /* Shapes */
@@ -101,11 +105,11 @@ div[class^=ring] {
   display: grid;
   border-radius: 50%;
   border: 1px dashed rgba(155, 155, 155, 0.5);
+  grid-area: 1/1/1/1;
   align-items: center;
   justify-items: center;
   align-content: center;
   justify-content: center;
-  grid-area: 1/1/1/1;
 }
 
 .label {
@@ -116,289 +120,283 @@ div[class^=ring] {
   height: 4px;
 }
 
-.item.xxs > .label.top {
-  transform: rotate(-90deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xxs > .label.top-right {
-  transform: rotate(-45deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xxs > .label.right {
-  transform: rotate(0deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xxs > .label.bottom {
-  transform: rotate(90deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xxs > .label.bottom-right {
-  transform: rotate(45deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xxs > .label.bottom-left {
-  transform: rotate(135deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xxs > .label.left {
-  transform: rotate(180deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xxs > .label.top-left {
-  transform: rotate(-135deg) translate(calc(var(--xxs) / 1.8), 0);
+.item.xxs > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
 }
 
-.item.xs > .label.top {
-  transform: rotate(-90deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.xs > .label.top-right {
-  transform: rotate(-45deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.xs > .label.right {
-  transform: rotate(0deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.xs > .label.bottom {
-  transform: rotate(90deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.xs > .label.bottom-right {
-  transform: rotate(45deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.xs > .label.bottom-left {
-  transform: rotate(135deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.xs > .label.left {
-  transform: rotate(180deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.xs > .label.top-left {
-  transform: rotate(-135deg) translate(calc(var(--xs) / 1.8), 0);
+.item.xs > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
 }
 
-.item.s > .label.top {
-  transform: rotate(-90deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.s > .label.top-right {
-  transform: rotate(-45deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.s > .label.right {
-  transform: rotate(0deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.s > .label.bottom {
-  transform: rotate(90deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.s > .label.bottom-right {
-  transform: rotate(45deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.s > .label.bottom-left {
-  transform: rotate(135deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.s > .label.left {
-  transform: rotate(180deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.s > .label.top-left {
-  transform: rotate(-135deg) translate(calc(var(--s) / 1.8), 0);
+.item.s > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--s) / 1.8), 0);
 }
 
-.item.m > .label.top {
-  transform: rotate(-90deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.m > .label.top-right {
-  transform: rotate(-45deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.m > .label.right {
-  transform: rotate(0deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.m > .label.bottom {
-  transform: rotate(90deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.m > .label.bottom-right {
-  transform: rotate(45deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.m > .label.bottom-left {
-  transform: rotate(135deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.m > .label.left {
-  transform: rotate(180deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.m > .label.top-left {
-  transform: rotate(-135deg) translate(calc(var(--m) / 1.8), 0);
+.item.m > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--m) / 1.8), 0);
 }
 
-.item.l > .label.top {
-  transform: rotate(-90deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.l > .label.top-right {
-  transform: rotate(-45deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.l > .label.right {
-  transform: rotate(0deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.l > .label.bottom {
-  transform: rotate(90deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.l > .label.bottom-right {
-  transform: rotate(45deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.l > .label.bottom-left {
-  transform: rotate(135deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.l > .label.left {
-  transform: rotate(180deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.l > .label.top-left {
-  transform: rotate(-135deg) translate(calc(var(--l) / 1.8), 0);
+.item.l > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--l) / 1.8), 0);
 }
 
-.item.xl > .label.top {
-  transform: rotate(-90deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xl > .label.top-right {
-  transform: rotate(-45deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xl > .label.right {
-  transform: rotate(0deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xl > .label.bottom {
-  transform: rotate(90deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xl > .label.bottom-right {
-  transform: rotate(45deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xl > .label.bottom-left {
-  transform: rotate(135deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xl > .label.left {
-  transform: rotate(180deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xl > .label.top-left {
-  transform: rotate(-135deg) translate(calc(var(--xl) / 1.8), 0);
+.item.xl > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
 }
 
-.item.xxl > .label.top {
-  transform: rotate(-90deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.item.xxl > .label.top-right {
-  transform: rotate(-45deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.item.xxl > .label.right {
-  transform: rotate(0deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.item.xxl > .label.bottom {
-  transform: rotate(90deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.item.xxl > .label.bottom-right {
-  transform: rotate(45deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.item.xxl > .label.bottom-left {
-  transform: rotate(135deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.item.xxl > .label.left {
-  transform: rotate(180deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.item.xxl > .label.top-left {
-  transform: rotate(-135deg) translate(calc(var(--xxl) / 1.8), 0);
+.item.xxl > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
 }
 
-.label.top > .label__text {
-  transform-origin: 0 0;
-  transform: translate(40px, 0) rotate(calc(-90deg * -1));
+.label.pos-0 > .label__text {
+  transform: translate(calc(var(--connector-width)), 0) rotate(calc(360 * -1deg));
 }
 
-.label.top-right > .label__text {
-  transform-origin: 0 0;
-  transform: translate(40px, 0) rotate(calc(-45deg * -1));
+.label.pos-45 > .label__text {
+  transform: translate(calc(var(--connector-width)), 0) rotate(calc(45 * -1deg));
 }
 
-.label.right > .label__text {
-  transform-origin: 0 0;
-  transform: translate(40px, 0) rotate(calc(0deg * -1));
+.label.pos-90 > .label__text {
+  transform: translate(calc(var(--connector-width)), 0) rotate(calc(90 * -1deg));
 }
 
-.label.bottom > .label__text {
-  transform-origin: 0 0;
-  transform: translate(40px, 0) rotate(calc(90deg * -1));
+.label.pos-135 > .label__text {
+  transform: translate(calc(var(--connector-width)), 0) rotate(calc(135 * -1deg));
 }
 
-.label.bottom-right > .label__text {
-  transform-origin: 0 0;
-  transform: translate(40px, 0) rotate(calc(45deg * -1));
+.label.pos-180 > .label__text {
+  transform: translate(calc(var(--connector-width) + var(--label-width)), 0) rotate(calc(180 * -1deg));
 }
 
-.label.bottom-left > .label__text {
-  transform-origin: 0 0;
-  transform: translate(40px, 0) rotate(calc(135deg * -1));
+.label.pos-225 > .label__text {
+  transform: translate(calc(var(--connector-width)), 0) rotate(calc(225 * -1deg));
 }
 
-.label.left > .label__text {
-  transform-origin: 0 0;
-  transform: translate(90px, 0) rotate(calc(180deg * -1));
+.label.pos-270 > .label__text {
+  transform: translate(calc(var(--connector-width)), 0) rotate(calc(270 * -1deg));
 }
 
-.label.top-left > .label__text {
-  transform-origin: 0 0;
-  transform: translate(50px, 0) rotate(calc(-135deg * -1));
+.label.pos-315 > .label__text {
+  transform: translate(calc(var(--connector-width)), 0) rotate(calc(315 * -1deg));
 }
 
-.label__conector {
+.label__connector {
   transform-origin: 0 0;
   border: transparent;
   border-top: 1px solid red;
-  width: 40px;
+  width: var(--connector-width);
 }
 
 .label__text {
+  transform-origin: 0 0;
   display: grid;
   border: 1px solid black;
+  grid-area: 1/1/1/1;
+  background-color: white;
+  border-color: red;
+  width: var(--label-width);
+  height: 20px;
+  color: red;
   align-items: center;
   justify-items: center;
   align-content: center;
   justify-content: center;
-  grid-area: 1/1/1/1;
-  border-color: red;
-  width: 50px;
-  height: 20px;
-  color: red;
 }
 
 .item.xxs {
@@ -494,480 +492,452 @@ div[class^=ring] {
   --item-number:6;
 }
 
-.ring-0.offset-1 {
-  --offset-angle: 0;
-}
-
-.ring-0.offset-2 {
+.ring-0.offset-45 {
   --offset-angle: 45;
 }
 
-.ring-0.offset-3 {
+.ring-0.offset-90 {
   --offset-angle: 90;
 }
 
-.ring-0.offset-4 {
+.ring-0.offset-135 {
   --offset-angle: 135;
 }
 
-.ring-0.offset-5 {
+.ring-0.offset-180 {
   --offset-angle: 180;
 }
 
-.ring-0.offset-6 {
+.ring-0.offset-225 {
   --offset-angle: 225;
 }
 
-.ring-0.offset-7 {
+.ring-0.offset-270 {
   --offset-angle: 270;
 }
 
-.ring-0.offset-8 {
+.ring-0.offset-315 {
   --offset-angle: 315;
 }
 
-.ring-1.offset-1 {
-  --offset-angle: 0;
-}
-
-.ring-1.offset-2 {
+.ring-1.offset-45 {
   --offset-angle: 45;
 }
 
-.ring-1.offset-3 {
+.ring-1.offset-90 {
   --offset-angle: 90;
 }
 
-.ring-1.offset-4 {
+.ring-1.offset-135 {
   --offset-angle: 135;
 }
 
-.ring-1.offset-5 {
+.ring-1.offset-180 {
   --offset-angle: 180;
 }
 
-.ring-1.offset-6 {
+.ring-1.offset-225 {
   --offset-angle: 225;
 }
 
-.ring-1.offset-7 {
+.ring-1.offset-270 {
   --offset-angle: 270;
 }
 
-.ring-1.offset-8 {
+.ring-1.offset-315 {
   --offset-angle: 315;
 }
 
-.ring-2.offset-1 {
-  --offset-angle: 0;
-}
-
-.ring-2.offset-2 {
+.ring-2.offset-45 {
   --offset-angle: 45;
 }
 
-.ring-2.offset-3 {
+.ring-2.offset-90 {
   --offset-angle: 90;
 }
 
-.ring-2.offset-4 {
+.ring-2.offset-135 {
   --offset-angle: 135;
 }
 
-.ring-2.offset-5 {
+.ring-2.offset-180 {
   --offset-angle: 180;
 }
 
-.ring-2.offset-6 {
+.ring-2.offset-225 {
   --offset-angle: 225;
 }
 
-.ring-2.offset-7 {
+.ring-2.offset-270 {
   --offset-angle: 270;
 }
 
-.ring-2.offset-8 {
+.ring-2.offset-315 {
   --offset-angle: 315;
 }
 
-.ring-3.offset-1 {
-  --offset-angle: 0;
-}
-
-.ring-3.offset-2 {
+.ring-3.offset-45 {
   --offset-angle: 45;
 }
 
-.ring-3.offset-3 {
+.ring-3.offset-90 {
   --offset-angle: 90;
 }
 
-.ring-3.offset-4 {
+.ring-3.offset-135 {
   --offset-angle: 135;
 }
 
-.ring-3.offset-5 {
+.ring-3.offset-180 {
   --offset-angle: 180;
 }
 
-.ring-3.offset-6 {
+.ring-3.offset-225 {
   --offset-angle: 225;
 }
 
-.ring-3.offset-7 {
+.ring-3.offset-270 {
   --offset-angle: 270;
 }
 
-.ring-3.offset-8 {
+.ring-3.offset-315 {
   --offset-angle: 315;
 }
 
-.ring-4.offset-1 {
-  --offset-angle: 0;
-}
-
-.ring-4.offset-2 {
+.ring-4.offset-45 {
   --offset-angle: 45;
 }
 
-.ring-4.offset-3 {
+.ring-4.offset-90 {
   --offset-angle: 90;
 }
 
-.ring-4.offset-4 {
+.ring-4.offset-135 {
   --offset-angle: 135;
 }
 
-.ring-4.offset-5 {
+.ring-4.offset-180 {
   --offset-angle: 180;
 }
 
-.ring-4.offset-6 {
+.ring-4.offset-225 {
   --offset-angle: 225;
 }
 
-.ring-4.offset-7 {
+.ring-4.offset-270 {
   --offset-angle: 270;
 }
 
-.ring-4.offset-8 {
+.ring-4.offset-315 {
   --offset-angle: 315;
 }
 
-.ring-5.offset-1 {
-  --offset-angle: 0;
-}
-
-.ring-5.offset-2 {
+.ring-5.offset-45 {
   --offset-angle: 45;
 }
 
-.ring-5.offset-3 {
+.ring-5.offset-90 {
   --offset-angle: 90;
 }
 
-.ring-5.offset-4 {
+.ring-5.offset-135 {
   --offset-angle: 135;
 }
 
-.ring-5.offset-5 {
+.ring-5.offset-180 {
   --offset-angle: 180;
 }
 
-.ring-5.offset-6 {
+.ring-5.offset-225 {
   --offset-angle: 225;
 }
 
-.ring-5.offset-7 {
+.ring-5.offset-270 {
   --offset-angle: 270;
 }
 
-.ring-5.offset-8 {
+.ring-5.offset-315 {
   --offset-angle: 315;
 }
 
-.ring-6.offset-1 {
-  --offset-angle: 0;
-}
-
-.ring-6.offset-2 {
+.ring-6.offset-45 {
   --offset-angle: 45;
 }
 
-.ring-6.offset-3 {
+.ring-6.offset-90 {
   --offset-angle: 90;
 }
 
-.ring-6.offset-4 {
+.ring-6.offset-135 {
   --offset-angle: 135;
 }
 
-.ring-6.offset-5 {
+.ring-6.offset-180 {
   --offset-angle: 180;
 }
 
-.ring-6.offset-6 {
+.ring-6.offset-225 {
   --offset-angle: 225;
 }
 
-.ring-6.offset-7 {
+.ring-6.offset-270 {
   --offset-angle: 270;
 }
 
-.ring-6.offset-8 {
+.ring-6.offset-315 {
   --offset-angle: 315;
 }
 
-.ring-0.arc-1 {
+.ring-0.arc-45 {
   --arc: 45;
 }
 
-.ring-0.arc-2 {
+.ring-0.arc-90 {
   --arc: 90;
 }
 
-.ring-0.arc-3 {
+.ring-0.arc-135 {
   --arc: 135;
 }
 
-.ring-0.arc-4 {
+.ring-0.arc-180 {
   --arc: 180;
 }
 
-.ring-0.arc-5 {
+.ring-0.arc-225 {
   --arc: 225;
 }
 
-.ring-0.arc-6 {
+.ring-0.arc-270 {
   --arc: 270;
 }
 
-.ring-0.arc-7 {
+.ring-0.arc-315 {
   --arc: 315;
 }
 
-.ring-0.arc-8 {
-  --arc: 360;
-}
-
-.ring-1.arc-1 {
+.ring-1.arc-45 {
   --arc: 45;
 }
 
-.ring-1.arc-2 {
+.ring-1.arc-90 {
   --arc: 90;
 }
 
-.ring-1.arc-3 {
+.ring-1.arc-135 {
   --arc: 135;
 }
 
-.ring-1.arc-4 {
+.ring-1.arc-180 {
   --arc: 180;
 }
 
-.ring-1.arc-5 {
+.ring-1.arc-225 {
   --arc: 225;
 }
 
-.ring-1.arc-6 {
+.ring-1.arc-270 {
   --arc: 270;
 }
 
-.ring-1.arc-7 {
+.ring-1.arc-315 {
   --arc: 315;
 }
 
-.ring-1.arc-8 {
-  --arc: 360;
-}
-
-.ring-2.arc-1 {
+.ring-2.arc-45 {
   --arc: 45;
 }
 
-.ring-2.arc-2 {
+.ring-2.arc-90 {
   --arc: 90;
 }
 
-.ring-2.arc-3 {
+.ring-2.arc-135 {
   --arc: 135;
 }
 
-.ring-2.arc-4 {
+.ring-2.arc-180 {
   --arc: 180;
 }
 
-.ring-2.arc-5 {
+.ring-2.arc-225 {
   --arc: 225;
 }
 
-.ring-2.arc-6 {
+.ring-2.arc-270 {
   --arc: 270;
 }
 
-.ring-2.arc-7 {
+.ring-2.arc-315 {
   --arc: 315;
 }
 
-.ring-2.arc-8 {
-  --arc: 360;
-}
-
-.ring-3.arc-1 {
+.ring-3.arc-45 {
   --arc: 45;
 }
 
-.ring-3.arc-2 {
+.ring-3.arc-90 {
   --arc: 90;
 }
 
-.ring-3.arc-3 {
+.ring-3.arc-135 {
   --arc: 135;
 }
 
-.ring-3.arc-4 {
+.ring-3.arc-180 {
   --arc: 180;
 }
 
-.ring-3.arc-5 {
+.ring-3.arc-225 {
   --arc: 225;
 }
 
-.ring-3.arc-6 {
+.ring-3.arc-270 {
   --arc: 270;
 }
 
-.ring-3.arc-7 {
+.ring-3.arc-315 {
   --arc: 315;
 }
 
-.ring-3.arc-8 {
-  --arc: 360;
-}
-
-.ring-4.arc-1 {
+.ring-4.arc-45 {
   --arc: 45;
 }
 
-.ring-4.arc-2 {
+.ring-4.arc-90 {
   --arc: 90;
 }
 
-.ring-4.arc-3 {
+.ring-4.arc-135 {
   --arc: 135;
 }
 
-.ring-4.arc-4 {
+.ring-4.arc-180 {
   --arc: 180;
 }
 
-.ring-4.arc-5 {
+.ring-4.arc-225 {
   --arc: 225;
 }
 
-.ring-4.arc-6 {
+.ring-4.arc-270 {
   --arc: 270;
 }
 
-.ring-4.arc-7 {
+.ring-4.arc-315 {
   --arc: 315;
 }
 
-.ring-4.arc-8 {
-  --arc: 360;
-}
-
-.ring-5.arc-1 {
+.ring-5.arc-45 {
   --arc: 45;
 }
 
-.ring-5.arc-2 {
+.ring-5.arc-90 {
   --arc: 90;
 }
 
-.ring-5.arc-3 {
+.ring-5.arc-135 {
   --arc: 135;
 }
 
-.ring-5.arc-4 {
+.ring-5.arc-180 {
   --arc: 180;
 }
 
-.ring-5.arc-5 {
+.ring-5.arc-225 {
   --arc: 225;
 }
 
-.ring-5.arc-6 {
+.ring-5.arc-270 {
   --arc: 270;
 }
 
-.ring-5.arc-7 {
+.ring-5.arc-315 {
   --arc: 315;
 }
 
-.ring-5.arc-8 {
-  --arc: 360;
-}
-
-.ring-6.arc-1 {
+.ring-6.arc-45 {
   --arc: 45;
 }
 
-.ring-6.arc-2 {
+.ring-6.arc-90 {
   --arc: 90;
 }
 
-.ring-6.arc-3 {
+.ring-6.arc-135 {
   --arc: 135;
 }
 
-.ring-6.arc-4 {
+.ring-6.arc-180 {
   --arc: 180;
 }
 
-.ring-6.arc-5 {
+.ring-6.arc-225 {
   --arc: 225;
 }
 
-.ring-6.arc-6 {
+.ring-6.arc-270 {
   --arc: 270;
 }
 
-.ring-6.arc-7 {
+.ring-6.arc-315 {
   --arc: 315;
 }
 
-.ring-6.arc-8 {
-  --arc: 360;
+.ring-0.ccw {
+  --direction: -1;
+}
+
+.ring-1.ccw {
+  --direction: -1;
+}
+
+.ring-2.ccw {
+  --direction: -1;
+}
+
+.ring-3.ccw {
+  --direction: -1;
+}
+
+.ring-4.ccw {
+  --direction: -1;
+}
+
+.ring-5.ccw {
+  --direction: -1;
+}
+
+.ring-6.ccw {
+  --direction: -1;
 }
 
 .items-0 > .item {
-  --angle: calc((var(--offset-angle) + var(--arc)) / 0);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 0 * var(--direction));
 }
 
 .items-1 > .item {
-  --angle: calc((var(--offset-angle) + var(--arc)) / 1);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 1 * var(--direction));
 }
 
 .items-2 > .item {
-  --angle: calc((var(--offset-angle) + var(--arc)) / 2);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 2 * var(--direction));
 }
 
 .items-3 > .item {
-  --angle: calc((var(--offset-angle) + var(--arc)) / 3);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 3 * var(--direction));
 }
 
 .items-4 > .item {
-  --angle: calc((var(--offset-angle) + var(--arc)) / 4);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 4 * var(--direction));
 }
 
 .items-5 > .item {
-  --angle: calc((var(--offset-angle) + var(--arc)) / 5);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 5 * var(--direction));
 }
 
 .items-6 > .item {
-  --angle: calc((var(--offset-angle) + var(--arc)) / 6);
+  --angle: calc((var(--offset-angle) + var(--arc)) / 6 * var(--direction));
 }
 
 .z-container > .ring-1 > .item {

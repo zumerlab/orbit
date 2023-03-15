@@ -11,33 +11,38 @@ $min: 0;
 $max: 6;
 
 $sectors:
-  "offset-1" 0,
-  "offset-2" 45,
-  "offset-3" 90,
-  "offset-4" 135,
-  "offset-5" 180,
-  "offset-6" 225,
-  "offset-7" 270,
-  "offset-8" 315;
+  "offset-45" 45,
+  "offset-90" 90,
+  "offset-135" 135,
+  "offset-180" 180,
+  "offset-225" 225,
+  "offset-270" 270,
+  "offset-315" 315;
 $arcs:
-  "arc-1" 45,
-  "arc-2" 90,
-  "arc-3" 135,
-  "arc-4" 180,
-  "arc-5" 225,
-  "arc-6" 270,
-  "arc-7" 315,
-  "arc-8" 360;
+  "arc-45" 45,
+  "arc-90" 90,
+  "arc-135" 135,
+  "arc-180" 180,
+  "arc-225" 225,
+  "arc-270" 270,
+  "arc-315" 315;
 
-$coords: "top" -90deg "0 0",
-  "top-right" -45deg "0 0",
-  "right" 0deg "0 0",
-  "bottom" 90deg "0 0",
-  "bottom-right" 45deg "0 0",
-  "bottom-left" 135deg "0 0",
-  "left" 180deg "0 0",
-  "top-left" -135deg "0 0";
+$position: 
+  "pos-0" 360,
+  "pos-45" 45,
+  "pos-90" 90,
+  "pos-135" 135,
+  "pos-180" 180,
+  "pos-225" 225,
+  "pos-270" 270,
+  "pos-315" 315;
 
+@mixin alignment {
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+}
  /* Initial Reset */
 * {
   box-sizing: border-box;
@@ -49,6 +54,7 @@ $coords: "top" -90deg "0 0",
   /* Layout vars */
   --arc: 360;
   --offset-angle: 0;
+  --direction: 1;
   --angle: 1;
   --radius: 100px;
   --item-number: 1;
@@ -66,17 +72,18 @@ $coords: "top" -90deg "0 0",
   --l: 110px;
   --xl: 180px;
   --xxl: 288px;
+
+  /* width connector */
+  --connector-width: 40px;
+  --label-width: 50px;
 }
 
 .z-container {
   display: grid;
   grid-template-columns: minmax(var(--radius), 1fr);
   grid-template-rows: minmax(var(--radius), 1fr);
-  align-items: center;
-  justify-items: center;
   border: 1px dashed black;
-  align-content: center;
-  justify-content: center;
+  @include alignment;
 }
 
 .z-container > .ring-0 {
@@ -92,11 +99,8 @@ $coords: "top" -90deg "0 0",
   display: grid;
   background-color: rgba(255, 255, 255, 0.151);
   border: 1px solid black;
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
   grid-area: 1/1/1/1;
+  @include alignment;
 }
 
 /* Shapes */
@@ -137,11 +141,8 @@ div[class^="ring"] {
   display: grid;
   border-radius: 50%;
   border: 1px dashed rgba(155, 155, 155, 0.5);
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
   grid-area: 1/1/1/1;
+  @include alignment;
 }
 
 .label {
@@ -154,36 +155,39 @@ div[class^="ring"] {
 
   @each $size,
   $var in $sizes {
-    @each $coord, $pos, $to in $coords {
-      .item.#{$size} > .label.#{$coord} {
-      transform: rotate(#{$pos}) translate(calc(#{$var} / 1.8), 0);
+    @each $pos, $angle in $position {
+      .item.#{$size} > .label.#{$pos} {
+      transform: rotate(calc(#{$angle} * 1deg)) translate(calc(#{$var} / 1.8), 0);
       }
     }
   }
-  @each $coord, $pos, $to in $coords {
-    .label.#{$coord} > .label__text {
-      transform-origin: #{$to};
-      transform: translate(calc(40px), 0) rotate(calc(#{$pos} * -1));
+  @each $pos, $angle in $position {
+    .label.#{$pos} > .label__text {
+      @if $pos != "pos-180" {
+        transform: translate(calc(var(--connector-width)), 0) rotate(calc(#{$angle} * -1deg));
+      } @else {
+        transform: translate(calc(var(--connector-width) + var(--label-width)), 0) rotate(calc(#{$angle} * -1deg));
+      }
+      
     }
   }
-.label__conector {
+.label__connector {
   transform-origin: 0 0;
   border: transparent;
   border-top: 1px solid red;
-  width: 40px;
+  width: var(--connector-width);
 }
 .label__text {
+  transform-origin: 0 0;
   display: grid;
   border: 1px solid black;
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
   grid-area: 1/1/1/1;
+  background-color: white;
   border-color: red;
-  width: 50px;
+  width: var(--label-width);
   height: 20px;
   color: red;
+  @include alignment;
 }
  
 @each $size,
@@ -222,8 +226,13 @@ $var in $sizes {
   }
 }
 @for $i from $min through $max {
+    .ring-#{$i}.ccw {
+      --direction: -1;
+  }
+}
+@for $i from $min through $max {
   .items-#{$i}>.item {
-    --angle: calc((var(--offset-angle) + var(--arc)) / #{$i});
+    --angle: calc((var(--offset-angle) + var(--arc)) / #{$i} * var(--direction));
   }
 }
 
