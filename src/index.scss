@@ -1,280 +1,323 @@
  /* Variables */
-$sizes: "xxs" var(--xxs),
-  "xs" var(--xs),
-  "s" var(--s),
-  "m" var(--m),
-  "l" var(--l),
-  "xl" var(--xl),
-  "xxl" var(--xxl);
+ $sizes: "xxs" var(--xxs),
+   "xs" var(--xs),
+   "s" var(--s),
+   "m" var(--m),
+   "l" var(--l),
+   "xl" var(--xl),
+   "xxl" var(--xxl);
 
-$align: 
-  "" "",
-  ".upper",
-  ".lower";
-  
-$min: 0;
-$max: 6;
+ $align: "" "",
+   ".upper",
+   ".lower";
 
-$sectors:
-  "offset-45" 45,
-  "offset-90" 90,
-  "offset-135" 135,
-  "offset-180" 180,
-  "offset-225" 225,
-  "offset-270" 270,
-  "offset-315" 315;
-$arcs:
-  "arc-45" 45,
-  "arc-90" 90,
-  "arc-135" 135,
-  "arc-180" 180,
-  "arc-225" 225,
-  "arc-270" 270,
-  "arc-315" 315;
+ $min: 1;
+ $max: 6;
 
-$position: 
-  "pos-0" 360,
-  "pos-45" 45,
-  "pos-90" 90,
-  "pos-135" 135,
-  "pos-180" 180,
-  "pos-225" 225,
-  "pos-270" 270,
-  "pos-315" 315;
+ $sectors: "offset-45" 45,
+   "offset-90" 90,
+   "offset-135" 135,
+   "offset-180" 180,
+   "offset-225" 225,
+   "offset-270" 270,
+   "offset-315" 315;
+ $arcs: "arc-45" 45,
+   "arc-90" 90,
+   "arc-135" 135,
+   "arc-180" 180,
+   "arc-225" 225,
+   "arc-270" 270,
+   "arc-315" 315;
 
-@mixin alignment {
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
-}
+ $position: "pos-0" 360,
+   "pos-45" 45,
+   "pos-90" 90,
+   "pos-135" 135,
+   "pos-180" 180,
+   "pos-225" 225,
+   "pos-270" 270,
+   "pos-315" 315;
+
+ @mixin alignment {
+   align-items: center;
+   justify-items: center;
+   align-content: center;
+   justify-content: center;
+ }
+
  /* Initial Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+ * {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+ }
+
  /* Main elements */
-.z-container {
-  /* Layout vars */
-  --arc: 360;
-  --offset-angle: 0;
-  --direction: 1;
-  --angle: 1;
-  --radius: 100px;
-  --item-number: 1;
-  --radius-padding: 8px;
-  
-@for $i from $min through $max {
-    --ring-#{$i}-factor: #{$i};
-}
+ .z-container {
+   /* Layout vars */
+   --arc: 360;
+   --offset-angle: 0;
+   --direction: 1;
+   --angle: 1;
+   --radius: 10vw;
+   --item-number: 1;
+   --radius-padding: 8px;
 
-  /* Shape sizes */
-  --xxs: 8px;
-  --xs: 24px;
-  --s: 44px;
-  --m: 68px;
-  --l: 110px;
-  --xl: 180px;
-  --xxl: 288px;
+   @for $i from $min through $max {
+     --ring-#{$i}-factor: #{$i};
+   }
 
-  /* width connector */
-  --connector-width: 40px;
-  --label-width: 50px;
-}
+   /* Shape sizes */
+   --xxs: 8px;
+   --xs: 24px;
+   --s: 44px;
+   --m: 68px;
+   --l: 110px;
+   --xl: 180px;
+   --xxl: 288px;
 
-.z-container {
-  display: grid;
-  grid-template-columns: minmax(var(--radius), 1fr);
-  grid-template-rows: minmax(var(--radius), 1fr);
-  border: 1px dashed black;
-  @include alignment;
-}
+   /* width connector */
+   --connector-width: 40px;
+   --label-width: 50px;
+ }
 
-.z-container > .ring-0 {
-  width: 1px;
-  height: 1px;
-}
+ .z-container {
+   display: grid;
+   grid-template-columns: minmax(var(--radius), 1fr);
+   grid-template-rows: minmax(var(--radius), 1fr);
+   border: 1px dashed black;
+   @include alignment;
+ }
 
-.ring-0 > .item {
-  transform: rotate(calc(var(--angle) * 1deg));
-}
+ .item {
+   display: grid;
+   background-color: rgba(255, 255, 255, 0.151);
+   border: 1px solid black;
+   grid-area: 1/1/1/1;
+   @include alignment;
+ }
 
-.item {
-  display: grid;
-  background-color: rgba(255, 255, 255, 0.151);
-  border: 1px solid black;
-  grid-area: 1/1/1/1;
-  @include alignment;
-}
+ /* Shapes */
+ .item,
+ .item.circle {
+   border-radius: 50%;
+ }
 
-/* Shapes */
-.item,
-.item.circle {
-  border-radius: 50%;
-}
+ .item.box {
+   border-radius: 0%;
+ }
 
-.item.box {
-  border-radius: 0%;
-}
+ .item.rounded {
+   border-radius: 25%;
+ }
 
-.item.rounded {
-  border-radius: 25%;
-}
+ .item.transparent {
+   border: none;
+ }
 
-.item.transparent {
-  border: none;
-}
+ .item.a0 {
+   --angle: 0;
+ }
 
-.item.a0 {
-  --angle: 0;
-}
+ .item.a45 {
+   --angle: 45;
+ }
 
-.item.a45 {
-  --angle: 45;
-}
+ .item.a90 {
+   --angle: 90;
+ }
 
-.item.a90 {
-  --angle: 90;
-}
+ .item.a135 {
+   --angle: 135;
+ }
 
-.item.a135 {
-  --angle: 135;
-}
+ .core {
+    width: 1px;
+   height: 1px;
+   display: grid;
+   border-radius: 50%;
+   border: 1px dashed rgba(155, 155, 155, 0.5);
+   grid-area: 1/1/1/1;
+   @include alignment;
+ }
 
-div[class^="ring"] {
-  display: grid;
-  border-radius: 50%;
-  border: 1px dashed rgba(155, 155, 155, 0.5);
-  grid-area: 1/1/1/1;
-  @include alignment;
-}
+ div[class^="ring"] {
+   display: grid;
+   border-radius: 50%;
+   border: 1px dashed rgba(155, 155, 155, 0.5);
+   grid-area: 1/1/1/1;
+   @include alignment;
+ }
 
-.label {
-  display: block;
-  border: 1px solid red;
-  border-radius: 50;
-  width: 4px;
-  height: 4px;
-}
+ .label {
+   display: block;
+   border: 1px solid red;
+   border-radius: 50;
+   width: 4px;
+   height: 4px;
+ }
 
-  @each $size,
-  $var in $sizes {
-    @each $pos, $angle in $position {
-      .item.#{$size} > .label.#{$pos} {
-      transform: rotate(calc(#{$angle} * 1deg)) translate(calc(#{$var} / 1.8), 0);
-      }
-    }
+ .label__connector {
+   transform-origin: 0 0;
+   border: transparent;
+   border-top: 1px solid red;
+   width: var(--connector-width);
+ }
+
+ .label__text {
+   transform-origin: 0 0;
+   display: grid;
+   border: 1px solid black;
+   grid-area: 1/1/1/1;
+   background-color: white;
+   border-color: red;
+   width: var(--label-width);
+   height: 20px;
+   color: red;
+   @include alignment;
+ }
+
+ @each $size,
+ $var in $sizes {
+
+   @each $pos,
+   $angle in $position {
+     .item.#{$size}>.label.#{$pos} {
+       transform: rotate(calc(#{$angle} * 1deg)) translate(calc(#{$var} / 1.8), 0);
+     }
+   }
+ }
+
+ @each $pos,
+ $angle in $position {
+   .label.#{$pos}>.label__text {
+     @if $pos !="pos-180" {
+       transform: translate(calc(var(--connector-width)), 0) rotate(calc(#{$angle} * -1deg));
+     }
+
+     @else {
+       transform: translate(calc(var(--connector-width) + var(--label-width)), 0) rotate(calc(#{$angle} * -1deg));
+     }
+
+   }
+ }
+
+
+ @each $size,
+ $var in $sizes {
+   .item.#{$size} {
+     width: $var;
+     height: $var;
+   }
+ }
+
+ @each $arc,
+ $value in $arcs {
+   .core.#{$arc} {
+     --arc: #{$value};
+   }
+ }
+
+ .core.ccw {
+   --direction: -1;
   }
-  @each $pos, $angle in $position {
-    .label.#{$pos} > .label__text {
-      @if $pos != "pos-180" {
-        transform: translate(calc(var(--connector-width)), 0) rotate(calc(#{$angle} * -1deg));
-      } @else {
-        transform: translate(calc(var(--connector-width) + var(--label-width)), 0) rotate(calc(#{$angle} * -1deg));
-      }
-      
-    }
-  }
-.label__connector {
-  transform-origin: 0 0;
-  border: transparent;
-  border-top: 1px solid red;
-  width: var(--connector-width);
-}
-.label__text {
-  transform-origin: 0 0;
-  display: grid;
-  border: 1px solid black;
-  grid-area: 1/1/1/1;
-  background-color: white;
-  border-color: red;
-  width: var(--label-width);
-  height: 20px;
-  color: red;
-  @include alignment;
-}
- 
-@each $size,
-$var in $sizes {
-  .item.#{$size} {
-    width: $var;
-    height: $var;
-  }
-}
 
-@for $i from $min + 1 through $max {
-  .z-container>.ring-#{$i} {
-    width: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
-    height: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
-  }
-}
-@for $i from $min through $max {
-  .item:nth-child(#{$i}) {
-    --item-number:#{$i};
-  }
-}
-@for $i from $min through $max {
   @each $sector,
-  $angle in $sectors {
-    .ring-#{$i}.#{$sector} {
-      --offset-angle: #{$angle};
-    }
-  }
-}
-@for $i from $min through $max {
-  @each $arc,
-  $value in $arcs {
-    .ring-#{$i}.#{$arc} {
-      --arc: #{$value};
-    }
-  }
-}
-@for $i from $min through $max {
-    .ring-#{$i}.ccw {
-      --direction: -1;
-  }
-}
-@for $i from $min through $max {
-  .items-#{$i}>.item {
-    --angle: calc((var(--offset-angle) + var(--arc)) / #{$i} * var(--direction));
-  }
-}
+   $angle in $sectors {
+     .core.#{$sector} {
+       --offset-angle: #{$angle};
+     }
+   }
 
-@for $i from $min + 1 through $max {
-  @each $class in $align {
-    .z-container>.ring-#{$i}>.item#{$class} {
-      transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
-    }
-    .z-container>.ring-#{$i}>.item#{$class}.stationary {
-      transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0);
-    }
-  }
-}
-@for $i from $min through $max {
-  @each $size,
-  $var in $sizes {
-    .item.#{$size}>.ring-#{$i} {
-      width: calc(#{$var} * var(--ring-#{$i}-factor));
-      height: calc(#{$var} * var(--ring-#{$i}-factor));
-    }
-    @each $class in $align {
-      $math: "";
-      @if $class == ".upper" {
-        $math: "+ (calc(#{$var} / 4))";
-      }
-      @if $class == ".lower" {
-        $math: "- (calc(#{$var} / 4))";
-      }
-      .item.#{$size}>.ring-#{$i}>.item#{$class}  {
-        --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
-        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
-      }
-    
-      .item.#{$size}>.ring-#{$i}>.item#{$class}.stationary {
-        --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
-        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
-      }
-    }
-  }
-}
+ @for $i from $min through $max {
+   .z-container>.ring-#{$i} {
+     width: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
+     height: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
+   }
+ }
+
+ @for $i from $min through $max {
+   .item:nth-child(#{$i}) {
+     --item-number:#{$i};
+   }
+ }
+
+ @for $i from $min through $max {
+
+   @each $sector,
+   $angle in $sectors {
+     .ring-#{$i}.#{$sector} {
+       --offset-angle: #{$angle};
+     }
+   }
+ }
+
+ @for $i from $min through $max {
+
+   @each $arc,
+   $value in $arcs {
+     .ring-#{$i}.#{$arc} {
+       --arc: #{$value};
+     }
+   }
+ }
+
+ @for $i from $min through $max {
+   .ring-#{$i}.ccw {
+     --direction: -1;
+   }
+ }
+
+ @for $i from $min through $max {
+   .items-#{$i}>.item {
+     --angle: calc((var(--offset-angle) + var(--arc)) / #{$i} * var(--direction));
+   }
+ }
+
+ @for $i from $min through $max {
+   @each $class in $align {
+     .z-container>.ring-#{$i}>.item#{$class} {
+       transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+     }
+
+     .z-container>.ring-#{$i}>.item#{$class}.stationary {
+       transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0);
+     }
+   }
+ }
+ .core >.item {
+   transform:  rotate(calc(var(--angle) * var(--item-number) * 1deg)) 
+ }
+ @for $i from $min through $max {
+
+   @each $size,
+   $var in $sizes {
+     .item.#{$size}>.ring-#{$i} {
+       width: calc(#{$var} * var(--ring-#{$i}-factor));
+       height: calc(#{$var} * var(--ring-#{$i}-factor));
+     }
+
+     @each $class in $align {
+       $math: "";
+
+       @if $class ==".upper" {
+         $math: "+ (calc(#{$var} / 4))";
+       }
+
+       @if $class ==".lower" {
+         $math: "- (calc(#{$var} / 4))";
+       }
+
+       .item.#{$size}>.ring-#{$i}>.item#{$class} {
+         --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
+         transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+       }
+
+       .item.#{$size}>.ring-#{$i}>.item#{$class}.stationary {
+         --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
+         transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
+       }
+     }
+   }
+ }
+
