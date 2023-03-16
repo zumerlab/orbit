@@ -14,6 +14,9 @@
  $min: 1;
  $max: 6;
 
+ $minItems: 1;
+ $maxItems: 24;
+
  $sectors: "offset-45" 45,
    "offset-90" 90,
    "offset-135" 135,
@@ -87,6 +90,7 @@
    grid-template-rows: minmax(var(--radius), 1fr);
    border: 1px dashed black;
    @include alignment;
+   padding: 30px;
  }
 
  .item {
@@ -252,23 +256,21 @@
    }
  }
 
- @for $i from $min through $max {
+
 
    @each $arc,
    $value in $arcs {
-     .ring-#{$i}.#{$arc} {
+    div[class^="ring"].#{$arc} {
        --arc: #{$value};
      }
    }
- }
 
- @for $i from $min through $max {
-   .ring-#{$i}.ccw {
+ 
+  div[class^="ring"].ccw {
      --direction: -1;
    }
- }
 
- @for $i from $min through $max {
+ @for $i from $minItems through $maxItems {
    .items-#{$i}>.item {
      --angle: calc((var(--offset-angle) + var(--arc)) / #{$i} * var(--direction));
    }
@@ -276,11 +278,11 @@
 
  @for $i from $min through $max {
    @each $class in $align {
-     .z-container>.ring-#{$i}>.item#{$class} {
+     .z-container>.ring-#{$i}> .item#{$class} {
        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
      }
 
-     .z-container>.ring-#{$i}>.item#{$class}.stationary {
+     .z-container>.ring-#{$i}> .item.stationary#{$class} {
        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0);
      }
    }
@@ -313,7 +315,7 @@
          transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
        }
 
-       .item.#{$size}>.ring-#{$i}>.item#{$class}.stationary {
+       .item.#{$size}>.ring-#{$i}> .item.stationary#{$class}  {
          --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
          transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
        }

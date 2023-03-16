@@ -44,6 +44,7 @@
   justify-items: center;
   align-content: center;
   justify-content: center;
+  padding: 30px;
 }
 
 .item {
@@ -719,195 +720,35 @@ div[class^=ring] {
   --offset-angle: 315;
 }
 
-.ring-1.arc-45 {
+div[class^=ring].arc-45 {
   --arc: 45;
 }
 
-.ring-1.arc-90 {
+div[class^=ring].arc-90 {
   --arc: 90;
 }
 
-.ring-1.arc-135 {
+div[class^=ring].arc-135 {
   --arc: 135;
 }
 
-.ring-1.arc-180 {
+div[class^=ring].arc-180 {
   --arc: 180;
 }
 
-.ring-1.arc-225 {
+div[class^=ring].arc-225 {
   --arc: 225;
 }
 
-.ring-1.arc-270 {
+div[class^=ring].arc-270 {
   --arc: 270;
 }
 
-.ring-1.arc-315 {
+div[class^=ring].arc-315 {
   --arc: 315;
 }
 
-.ring-2.arc-45 {
-  --arc: 45;
-}
-
-.ring-2.arc-90 {
-  --arc: 90;
-}
-
-.ring-2.arc-135 {
-  --arc: 135;
-}
-
-.ring-2.arc-180 {
-  --arc: 180;
-}
-
-.ring-2.arc-225 {
-  --arc: 225;
-}
-
-.ring-2.arc-270 {
-  --arc: 270;
-}
-
-.ring-2.arc-315 {
-  --arc: 315;
-}
-
-.ring-3.arc-45 {
-  --arc: 45;
-}
-
-.ring-3.arc-90 {
-  --arc: 90;
-}
-
-.ring-3.arc-135 {
-  --arc: 135;
-}
-
-.ring-3.arc-180 {
-  --arc: 180;
-}
-
-.ring-3.arc-225 {
-  --arc: 225;
-}
-
-.ring-3.arc-270 {
-  --arc: 270;
-}
-
-.ring-3.arc-315 {
-  --arc: 315;
-}
-
-.ring-4.arc-45 {
-  --arc: 45;
-}
-
-.ring-4.arc-90 {
-  --arc: 90;
-}
-
-.ring-4.arc-135 {
-  --arc: 135;
-}
-
-.ring-4.arc-180 {
-  --arc: 180;
-}
-
-.ring-4.arc-225 {
-  --arc: 225;
-}
-
-.ring-4.arc-270 {
-  --arc: 270;
-}
-
-.ring-4.arc-315 {
-  --arc: 315;
-}
-
-.ring-5.arc-45 {
-  --arc: 45;
-}
-
-.ring-5.arc-90 {
-  --arc: 90;
-}
-
-.ring-5.arc-135 {
-  --arc: 135;
-}
-
-.ring-5.arc-180 {
-  --arc: 180;
-}
-
-.ring-5.arc-225 {
-  --arc: 225;
-}
-
-.ring-5.arc-270 {
-  --arc: 270;
-}
-
-.ring-5.arc-315 {
-  --arc: 315;
-}
-
-.ring-6.arc-45 {
-  --arc: 45;
-}
-
-.ring-6.arc-90 {
-  --arc: 90;
-}
-
-.ring-6.arc-135 {
-  --arc: 135;
-}
-
-.ring-6.arc-180 {
-  --arc: 180;
-}
-
-.ring-6.arc-225 {
-  --arc: 225;
-}
-
-.ring-6.arc-270 {
-  --arc: 270;
-}
-
-.ring-6.arc-315 {
-  --arc: 315;
-}
-
-.ring-1.ccw {
-  --direction: -1;
-}
-
-.ring-2.ccw {
-  --direction: -1;
-}
-
-.ring-3.ccw {
-  --direction: -1;
-}
-
-.ring-4.ccw {
-  --direction: -1;
-}
-
-.ring-5.ccw {
-  --direction: -1;
-}
-
-.ring-6.ccw {
+div[class^=ring].ccw {
   --direction: -1;
 }
 
@@ -935,11 +776,83 @@ div[class^=ring] {
   --angle: calc((var(--offset-angle) + var(--arc)) / 6 * var(--direction));
 }
 
+.items-7 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 7 * var(--direction));
+}
+
+.items-8 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 8 * var(--direction));
+}
+
+.items-9 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 9 * var(--direction));
+}
+
+.items-10 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 10 * var(--direction));
+}
+
+.items-11 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 11 * var(--direction));
+}
+
+.items-12 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 12 * var(--direction));
+}
+
+.items-13 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 13 * var(--direction));
+}
+
+.items-14 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 14 * var(--direction));
+}
+
+.items-15 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 15 * var(--direction));
+}
+
+.items-16 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 16 * var(--direction));
+}
+
+.items-17 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 17 * var(--direction));
+}
+
+.items-18 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 18 * var(--direction));
+}
+
+.items-19 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 19 * var(--direction));
+}
+
+.items-20 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 20 * var(--direction));
+}
+
+.items-21 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 21 * var(--direction));
+}
+
+.items-22 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 22 * var(--direction));
+}
+
+.items-23 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 23 * var(--direction));
+}
+
+.items-24 > .item {
+  --angle: calc((var(--offset-angle) + var(--arc)) / 24 * var(--direction));
+}
+
 .z-container > .ring-1 > .item {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 1), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-1 > .item .stationary {
+.z-container > .ring-1 > .item.stationary {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 1), 0);
 }
 
@@ -947,7 +860,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 1), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-1 > .item.upper.stationary {
+.z-container > .ring-1 > .item.stationary.upper {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 1), 0);
 }
 
@@ -955,7 +868,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 1), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-1 > .item.lower.stationary {
+.z-container > .ring-1 > .item.stationary.lower {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 1), 0);
 }
 
@@ -963,7 +876,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 2), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-2 > .item .stationary {
+.z-container > .ring-2 > .item.stationary {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 2), 0);
 }
 
@@ -971,7 +884,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 2), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-2 > .item.upper.stationary {
+.z-container > .ring-2 > .item.stationary.upper {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 2), 0);
 }
 
@@ -979,7 +892,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 2), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-2 > .item.lower.stationary {
+.z-container > .ring-2 > .item.stationary.lower {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 2), 0);
 }
 
@@ -987,7 +900,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 3), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-3 > .item .stationary {
+.z-container > .ring-3 > .item.stationary {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 3), 0);
 }
 
@@ -995,7 +908,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 3), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-3 > .item.upper.stationary {
+.z-container > .ring-3 > .item.stationary.upper {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 3), 0);
 }
 
@@ -1003,7 +916,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 3), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-3 > .item.lower.stationary {
+.z-container > .ring-3 > .item.stationary.lower {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 3), 0);
 }
 
@@ -1011,7 +924,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 4), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-4 > .item .stationary {
+.z-container > .ring-4 > .item.stationary {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 4), 0);
 }
 
@@ -1019,7 +932,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 4), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-4 > .item.upper.stationary {
+.z-container > .ring-4 > .item.stationary.upper {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 4), 0);
 }
 
@@ -1027,7 +940,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 4), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-4 > .item.lower.stationary {
+.z-container > .ring-4 > .item.stationary.lower {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 4), 0);
 }
 
@@ -1035,7 +948,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 5), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-5 > .item .stationary {
+.z-container > .ring-5 > .item.stationary {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 5), 0);
 }
 
@@ -1043,7 +956,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 5), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-5 > .item.upper.stationary {
+.z-container > .ring-5 > .item.stationary.upper {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 5), 0);
 }
 
@@ -1051,7 +964,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 5), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-5 > .item.lower.stationary {
+.z-container > .ring-5 > .item.stationary.lower {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 5), 0);
 }
 
@@ -1059,7 +972,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 6), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-6 > .item .stationary {
+.z-container > .ring-6 > .item.stationary {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 6), 0);
 }
 
@@ -1067,7 +980,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 6), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-6 > .item.upper.stationary {
+.z-container > .ring-6 > .item.stationary.upper {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 6), 0);
 }
 
@@ -1075,7 +988,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 6), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.z-container > .ring-6 > .item.lower.stationary {
+.z-container > .ring-6 > .item.stationary.lower {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * 6), 0);
 }
 
@@ -1093,7 +1006,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-1 > .item .stationary {
+.item.xxs > .ring-1 > .item.stationary {
   --x: calc((var(--xxs) / 2 * var(--ring-1-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1103,7 +1016,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-1 > .item.upper.stationary {
+.item.xxs > .ring-1 > .item.stationary.upper {
   --x: calc((var(--xxs) / 2 * var(--ring-1-factor)) + (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1113,7 +1026,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-1 > .item.lower.stationary {
+.item.xxs > .ring-1 > .item.stationary.lower {
   --x: calc((var(--xxs) / 2 * var(--ring-1-factor)) - (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1128,7 +1041,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-1 > .item .stationary {
+.item.xs > .ring-1 > .item.stationary {
   --x: calc((var(--xs) / 2 * var(--ring-1-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1138,7 +1051,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-1 > .item.upper.stationary {
+.item.xs > .ring-1 > .item.stationary.upper {
   --x: calc((var(--xs) / 2 * var(--ring-1-factor)) + (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1148,7 +1061,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-1 > .item.lower.stationary {
+.item.xs > .ring-1 > .item.stationary.lower {
   --x: calc((var(--xs) / 2 * var(--ring-1-factor)) - (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1163,7 +1076,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-1 > .item .stationary {
+.item.s > .ring-1 > .item.stationary {
   --x: calc((var(--s) / 2 * var(--ring-1-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1173,7 +1086,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-1 > .item.upper.stationary {
+.item.s > .ring-1 > .item.stationary.upper {
   --x: calc((var(--s) / 2 * var(--ring-1-factor)) + (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1183,7 +1096,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-1 > .item.lower.stationary {
+.item.s > .ring-1 > .item.stationary.lower {
   --x: calc((var(--s) / 2 * var(--ring-1-factor)) - (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1198,7 +1111,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-1 > .item .stationary {
+.item.m > .ring-1 > .item.stationary {
   --x: calc((var(--m) / 2 * var(--ring-1-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1208,7 +1121,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-1 > .item.upper.stationary {
+.item.m > .ring-1 > .item.stationary.upper {
   --x: calc((var(--m) / 2 * var(--ring-1-factor)) + (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1218,7 +1131,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-1 > .item.lower.stationary {
+.item.m > .ring-1 > .item.stationary.lower {
   --x: calc((var(--m) / 2 * var(--ring-1-factor)) - (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1233,7 +1146,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-1 > .item .stationary {
+.item.l > .ring-1 > .item.stationary {
   --x: calc((var(--l) / 2 * var(--ring-1-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1243,7 +1156,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-1 > .item.upper.stationary {
+.item.l > .ring-1 > .item.stationary.upper {
   --x: calc((var(--l) / 2 * var(--ring-1-factor)) + (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1253,7 +1166,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-1 > .item.lower.stationary {
+.item.l > .ring-1 > .item.stationary.lower {
   --x: calc((var(--l) / 2 * var(--ring-1-factor)) - (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1268,7 +1181,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-1 > .item .stationary {
+.item.xl > .ring-1 > .item.stationary {
   --x: calc((var(--xl) / 2 * var(--ring-1-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1278,7 +1191,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-1 > .item.upper.stationary {
+.item.xl > .ring-1 > .item.stationary.upper {
   --x: calc((var(--xl) / 2 * var(--ring-1-factor)) + (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1288,7 +1201,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-1 > .item.lower.stationary {
+.item.xl > .ring-1 > .item.stationary.lower {
   --x: calc((var(--xl) / 2 * var(--ring-1-factor)) - (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1303,7 +1216,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-1 > .item .stationary {
+.item.xxl > .ring-1 > .item.stationary {
   --x: calc((var(--xxl) / 2 * var(--ring-1-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1313,7 +1226,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-1 > .item.upper.stationary {
+.item.xxl > .ring-1 > .item.stationary.upper {
   --x: calc((var(--xxl) / 2 * var(--ring-1-factor)) + (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1323,7 +1236,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-1 > .item.lower.stationary {
+.item.xxl > .ring-1 > .item.stationary.lower {
   --x: calc((var(--xxl) / 2 * var(--ring-1-factor)) - (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1338,7 +1251,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-2 > .item .stationary {
+.item.xxs > .ring-2 > .item.stationary {
   --x: calc((var(--xxs) / 2 * var(--ring-2-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1348,7 +1261,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-2 > .item.upper.stationary {
+.item.xxs > .ring-2 > .item.stationary.upper {
   --x: calc((var(--xxs) / 2 * var(--ring-2-factor)) + (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1358,7 +1271,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-2 > .item.lower.stationary {
+.item.xxs > .ring-2 > .item.stationary.lower {
   --x: calc((var(--xxs) / 2 * var(--ring-2-factor)) - (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1373,7 +1286,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-2 > .item .stationary {
+.item.xs > .ring-2 > .item.stationary {
   --x: calc((var(--xs) / 2 * var(--ring-2-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1383,7 +1296,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-2 > .item.upper.stationary {
+.item.xs > .ring-2 > .item.stationary.upper {
   --x: calc((var(--xs) / 2 * var(--ring-2-factor)) + (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1393,7 +1306,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-2 > .item.lower.stationary {
+.item.xs > .ring-2 > .item.stationary.lower {
   --x: calc((var(--xs) / 2 * var(--ring-2-factor)) - (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1408,7 +1321,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-2 > .item .stationary {
+.item.s > .ring-2 > .item.stationary {
   --x: calc((var(--s) / 2 * var(--ring-2-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1418,7 +1331,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-2 > .item.upper.stationary {
+.item.s > .ring-2 > .item.stationary.upper {
   --x: calc((var(--s) / 2 * var(--ring-2-factor)) + (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1428,7 +1341,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-2 > .item.lower.stationary {
+.item.s > .ring-2 > .item.stationary.lower {
   --x: calc((var(--s) / 2 * var(--ring-2-factor)) - (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1443,7 +1356,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-2 > .item .stationary {
+.item.m > .ring-2 > .item.stationary {
   --x: calc((var(--m) / 2 * var(--ring-2-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1453,7 +1366,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-2 > .item.upper.stationary {
+.item.m > .ring-2 > .item.stationary.upper {
   --x: calc((var(--m) / 2 * var(--ring-2-factor)) + (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1463,7 +1376,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-2 > .item.lower.stationary {
+.item.m > .ring-2 > .item.stationary.lower {
   --x: calc((var(--m) / 2 * var(--ring-2-factor)) - (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1478,7 +1391,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-2 > .item .stationary {
+.item.l > .ring-2 > .item.stationary {
   --x: calc((var(--l) / 2 * var(--ring-2-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1488,7 +1401,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-2 > .item.upper.stationary {
+.item.l > .ring-2 > .item.stationary.upper {
   --x: calc((var(--l) / 2 * var(--ring-2-factor)) + (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1498,7 +1411,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-2 > .item.lower.stationary {
+.item.l > .ring-2 > .item.stationary.lower {
   --x: calc((var(--l) / 2 * var(--ring-2-factor)) - (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1513,7 +1426,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-2 > .item .stationary {
+.item.xl > .ring-2 > .item.stationary {
   --x: calc((var(--xl) / 2 * var(--ring-2-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1523,7 +1436,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-2 > .item.upper.stationary {
+.item.xl > .ring-2 > .item.stationary.upper {
   --x: calc((var(--xl) / 2 * var(--ring-2-factor)) + (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1533,7 +1446,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-2 > .item.lower.stationary {
+.item.xl > .ring-2 > .item.stationary.lower {
   --x: calc((var(--xl) / 2 * var(--ring-2-factor)) - (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1548,7 +1461,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-2 > .item .stationary {
+.item.xxl > .ring-2 > .item.stationary {
   --x: calc((var(--xxl) / 2 * var(--ring-2-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1558,7 +1471,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-2 > .item.upper.stationary {
+.item.xxl > .ring-2 > .item.stationary.upper {
   --x: calc((var(--xxl) / 2 * var(--ring-2-factor)) + (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1568,7 +1481,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-2 > .item.lower.stationary {
+.item.xxl > .ring-2 > .item.stationary.lower {
   --x: calc((var(--xxl) / 2 * var(--ring-2-factor)) - (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1583,7 +1496,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-3 > .item .stationary {
+.item.xxs > .ring-3 > .item.stationary {
   --x: calc((var(--xxs) / 2 * var(--ring-3-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1593,7 +1506,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-3 > .item.upper.stationary {
+.item.xxs > .ring-3 > .item.stationary.upper {
   --x: calc((var(--xxs) / 2 * var(--ring-3-factor)) + (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1603,7 +1516,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-3 > .item.lower.stationary {
+.item.xxs > .ring-3 > .item.stationary.lower {
   --x: calc((var(--xxs) / 2 * var(--ring-3-factor)) - (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1618,7 +1531,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-3 > .item .stationary {
+.item.xs > .ring-3 > .item.stationary {
   --x: calc((var(--xs) / 2 * var(--ring-3-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1628,7 +1541,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-3 > .item.upper.stationary {
+.item.xs > .ring-3 > .item.stationary.upper {
   --x: calc((var(--xs) / 2 * var(--ring-3-factor)) + (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1638,7 +1551,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-3 > .item.lower.stationary {
+.item.xs > .ring-3 > .item.stationary.lower {
   --x: calc((var(--xs) / 2 * var(--ring-3-factor)) - (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1653,7 +1566,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-3 > .item .stationary {
+.item.s > .ring-3 > .item.stationary {
   --x: calc((var(--s) / 2 * var(--ring-3-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1663,7 +1576,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-3 > .item.upper.stationary {
+.item.s > .ring-3 > .item.stationary.upper {
   --x: calc((var(--s) / 2 * var(--ring-3-factor)) + (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1673,7 +1586,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-3 > .item.lower.stationary {
+.item.s > .ring-3 > .item.stationary.lower {
   --x: calc((var(--s) / 2 * var(--ring-3-factor)) - (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1688,7 +1601,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-3 > .item .stationary {
+.item.m > .ring-3 > .item.stationary {
   --x: calc((var(--m) / 2 * var(--ring-3-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1698,7 +1611,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-3 > .item.upper.stationary {
+.item.m > .ring-3 > .item.stationary.upper {
   --x: calc((var(--m) / 2 * var(--ring-3-factor)) + (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1708,7 +1621,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-3 > .item.lower.stationary {
+.item.m > .ring-3 > .item.stationary.lower {
   --x: calc((var(--m) / 2 * var(--ring-3-factor)) - (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1723,7 +1636,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-3 > .item .stationary {
+.item.l > .ring-3 > .item.stationary {
   --x: calc((var(--l) / 2 * var(--ring-3-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1733,7 +1646,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-3 > .item.upper.stationary {
+.item.l > .ring-3 > .item.stationary.upper {
   --x: calc((var(--l) / 2 * var(--ring-3-factor)) + (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1743,7 +1656,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-3 > .item.lower.stationary {
+.item.l > .ring-3 > .item.stationary.lower {
   --x: calc((var(--l) / 2 * var(--ring-3-factor)) - (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1758,7 +1671,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-3 > .item .stationary {
+.item.xl > .ring-3 > .item.stationary {
   --x: calc((var(--xl) / 2 * var(--ring-3-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1768,7 +1681,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-3 > .item.upper.stationary {
+.item.xl > .ring-3 > .item.stationary.upper {
   --x: calc((var(--xl) / 2 * var(--ring-3-factor)) + (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1778,7 +1691,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-3 > .item.lower.stationary {
+.item.xl > .ring-3 > .item.stationary.lower {
   --x: calc((var(--xl) / 2 * var(--ring-3-factor)) - (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1793,7 +1706,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-3 > .item .stationary {
+.item.xxl > .ring-3 > .item.stationary {
   --x: calc((var(--xxl) / 2 * var(--ring-3-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1803,7 +1716,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-3 > .item.upper.stationary {
+.item.xxl > .ring-3 > .item.stationary.upper {
   --x: calc((var(--xxl) / 2 * var(--ring-3-factor)) + (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1813,7 +1726,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-3 > .item.lower.stationary {
+.item.xxl > .ring-3 > .item.stationary.lower {
   --x: calc((var(--xxl) / 2 * var(--ring-3-factor)) - (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1828,7 +1741,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-4 > .item .stationary {
+.item.xxs > .ring-4 > .item.stationary {
   --x: calc((var(--xxs) / 2 * var(--ring-4-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1838,7 +1751,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-4 > .item.upper.stationary {
+.item.xxs > .ring-4 > .item.stationary.upper {
   --x: calc((var(--xxs) / 2 * var(--ring-4-factor)) + (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1848,7 +1761,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-4 > .item.lower.stationary {
+.item.xxs > .ring-4 > .item.stationary.lower {
   --x: calc((var(--xxs) / 2 * var(--ring-4-factor)) - (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1863,7 +1776,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-4 > .item .stationary {
+.item.xs > .ring-4 > .item.stationary {
   --x: calc((var(--xs) / 2 * var(--ring-4-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1873,7 +1786,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-4 > .item.upper.stationary {
+.item.xs > .ring-4 > .item.stationary.upper {
   --x: calc((var(--xs) / 2 * var(--ring-4-factor)) + (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1883,7 +1796,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-4 > .item.lower.stationary {
+.item.xs > .ring-4 > .item.stationary.lower {
   --x: calc((var(--xs) / 2 * var(--ring-4-factor)) - (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1898,7 +1811,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-4 > .item .stationary {
+.item.s > .ring-4 > .item.stationary {
   --x: calc((var(--s) / 2 * var(--ring-4-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1908,7 +1821,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-4 > .item.upper.stationary {
+.item.s > .ring-4 > .item.stationary.upper {
   --x: calc((var(--s) / 2 * var(--ring-4-factor)) + (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1918,7 +1831,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-4 > .item.lower.stationary {
+.item.s > .ring-4 > .item.stationary.lower {
   --x: calc((var(--s) / 2 * var(--ring-4-factor)) - (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1933,7 +1846,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-4 > .item .stationary {
+.item.m > .ring-4 > .item.stationary {
   --x: calc((var(--m) / 2 * var(--ring-4-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1943,7 +1856,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-4 > .item.upper.stationary {
+.item.m > .ring-4 > .item.stationary.upper {
   --x: calc((var(--m) / 2 * var(--ring-4-factor)) + (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1953,7 +1866,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-4 > .item.lower.stationary {
+.item.m > .ring-4 > .item.stationary.lower {
   --x: calc((var(--m) / 2 * var(--ring-4-factor)) - (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1968,7 +1881,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-4 > .item .stationary {
+.item.l > .ring-4 > .item.stationary {
   --x: calc((var(--l) / 2 * var(--ring-4-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1978,7 +1891,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-4 > .item.upper.stationary {
+.item.l > .ring-4 > .item.stationary.upper {
   --x: calc((var(--l) / 2 * var(--ring-4-factor)) + (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -1988,7 +1901,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-4 > .item.lower.stationary {
+.item.l > .ring-4 > .item.stationary.lower {
   --x: calc((var(--l) / 2 * var(--ring-4-factor)) - (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2003,7 +1916,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-4 > .item .stationary {
+.item.xl > .ring-4 > .item.stationary {
   --x: calc((var(--xl) / 2 * var(--ring-4-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2013,7 +1926,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-4 > .item.upper.stationary {
+.item.xl > .ring-4 > .item.stationary.upper {
   --x: calc((var(--xl) / 2 * var(--ring-4-factor)) + (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2023,7 +1936,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-4 > .item.lower.stationary {
+.item.xl > .ring-4 > .item.stationary.lower {
   --x: calc((var(--xl) / 2 * var(--ring-4-factor)) - (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2038,7 +1951,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-4 > .item .stationary {
+.item.xxl > .ring-4 > .item.stationary {
   --x: calc((var(--xxl) / 2 * var(--ring-4-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2048,7 +1961,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-4 > .item.upper.stationary {
+.item.xxl > .ring-4 > .item.stationary.upper {
   --x: calc((var(--xxl) / 2 * var(--ring-4-factor)) + (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2058,7 +1971,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-4 > .item.lower.stationary {
+.item.xxl > .ring-4 > .item.stationary.lower {
   --x: calc((var(--xxl) / 2 * var(--ring-4-factor)) - (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2073,7 +1986,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-5 > .item .stationary {
+.item.xxs > .ring-5 > .item.stationary {
   --x: calc((var(--xxs) / 2 * var(--ring-5-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2083,7 +1996,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-5 > .item.upper.stationary {
+.item.xxs > .ring-5 > .item.stationary.upper {
   --x: calc((var(--xxs) / 2 * var(--ring-5-factor)) + (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2093,7 +2006,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-5 > .item.lower.stationary {
+.item.xxs > .ring-5 > .item.stationary.lower {
   --x: calc((var(--xxs) / 2 * var(--ring-5-factor)) - (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2108,7 +2021,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-5 > .item .stationary {
+.item.xs > .ring-5 > .item.stationary {
   --x: calc((var(--xs) / 2 * var(--ring-5-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2118,7 +2031,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-5 > .item.upper.stationary {
+.item.xs > .ring-5 > .item.stationary.upper {
   --x: calc((var(--xs) / 2 * var(--ring-5-factor)) + (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2128,7 +2041,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-5 > .item.lower.stationary {
+.item.xs > .ring-5 > .item.stationary.lower {
   --x: calc((var(--xs) / 2 * var(--ring-5-factor)) - (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2143,7 +2056,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-5 > .item .stationary {
+.item.s > .ring-5 > .item.stationary {
   --x: calc((var(--s) / 2 * var(--ring-5-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2153,7 +2066,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-5 > .item.upper.stationary {
+.item.s > .ring-5 > .item.stationary.upper {
   --x: calc((var(--s) / 2 * var(--ring-5-factor)) + (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2163,7 +2076,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-5 > .item.lower.stationary {
+.item.s > .ring-5 > .item.stationary.lower {
   --x: calc((var(--s) / 2 * var(--ring-5-factor)) - (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2178,7 +2091,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-5 > .item .stationary {
+.item.m > .ring-5 > .item.stationary {
   --x: calc((var(--m) / 2 * var(--ring-5-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2188,7 +2101,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-5 > .item.upper.stationary {
+.item.m > .ring-5 > .item.stationary.upper {
   --x: calc((var(--m) / 2 * var(--ring-5-factor)) + (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2198,7 +2111,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-5 > .item.lower.stationary {
+.item.m > .ring-5 > .item.stationary.lower {
   --x: calc((var(--m) / 2 * var(--ring-5-factor)) - (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2213,7 +2126,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-5 > .item .stationary {
+.item.l > .ring-5 > .item.stationary {
   --x: calc((var(--l) / 2 * var(--ring-5-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2223,7 +2136,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-5 > .item.upper.stationary {
+.item.l > .ring-5 > .item.stationary.upper {
   --x: calc((var(--l) / 2 * var(--ring-5-factor)) + (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2233,7 +2146,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-5 > .item.lower.stationary {
+.item.l > .ring-5 > .item.stationary.lower {
   --x: calc((var(--l) / 2 * var(--ring-5-factor)) - (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2248,7 +2161,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-5 > .item .stationary {
+.item.xl > .ring-5 > .item.stationary {
   --x: calc((var(--xl) / 2 * var(--ring-5-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2258,7 +2171,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-5 > .item.upper.stationary {
+.item.xl > .ring-5 > .item.stationary.upper {
   --x: calc((var(--xl) / 2 * var(--ring-5-factor)) + (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2268,7 +2181,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-5 > .item.lower.stationary {
+.item.xl > .ring-5 > .item.stationary.lower {
   --x: calc((var(--xl) / 2 * var(--ring-5-factor)) - (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2283,7 +2196,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-5 > .item .stationary {
+.item.xxl > .ring-5 > .item.stationary {
   --x: calc((var(--xxl) / 2 * var(--ring-5-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2293,7 +2206,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-5 > .item.upper.stationary {
+.item.xxl > .ring-5 > .item.stationary.upper {
   --x: calc((var(--xxl) / 2 * var(--ring-5-factor)) + (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2303,7 +2216,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-5 > .item.lower.stationary {
+.item.xxl > .ring-5 > .item.stationary.lower {
   --x: calc((var(--xxl) / 2 * var(--ring-5-factor)) - (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2318,7 +2231,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-6 > .item .stationary {
+.item.xxs > .ring-6 > .item.stationary {
   --x: calc((var(--xxs) / 2 * var(--ring-6-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2328,7 +2241,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-6 > .item.upper.stationary {
+.item.xxs > .ring-6 > .item.stationary.upper {
   --x: calc((var(--xxs) / 2 * var(--ring-6-factor)) + (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2338,7 +2251,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxs > .ring-6 > .item.lower.stationary {
+.item.xxs > .ring-6 > .item.stationary.lower {
   --x: calc((var(--xxs) / 2 * var(--ring-6-factor)) - (calc(var(--xxs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2353,7 +2266,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-6 > .item .stationary {
+.item.xs > .ring-6 > .item.stationary {
   --x: calc((var(--xs) / 2 * var(--ring-6-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2363,7 +2276,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-6 > .item.upper.stationary {
+.item.xs > .ring-6 > .item.stationary.upper {
   --x: calc((var(--xs) / 2 * var(--ring-6-factor)) + (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2373,7 +2286,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xs > .ring-6 > .item.lower.stationary {
+.item.xs > .ring-6 > .item.stationary.lower {
   --x: calc((var(--xs) / 2 * var(--ring-6-factor)) - (calc(var(--xs) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2388,7 +2301,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-6 > .item .stationary {
+.item.s > .ring-6 > .item.stationary {
   --x: calc((var(--s) / 2 * var(--ring-6-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2398,7 +2311,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-6 > .item.upper.stationary {
+.item.s > .ring-6 > .item.stationary.upper {
   --x: calc((var(--s) / 2 * var(--ring-6-factor)) + (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2408,7 +2321,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.s > .ring-6 > .item.lower.stationary {
+.item.s > .ring-6 > .item.stationary.lower {
   --x: calc((var(--s) / 2 * var(--ring-6-factor)) - (calc(var(--s) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2423,7 +2336,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-6 > .item .stationary {
+.item.m > .ring-6 > .item.stationary {
   --x: calc((var(--m) / 2 * var(--ring-6-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2433,7 +2346,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-6 > .item.upper.stationary {
+.item.m > .ring-6 > .item.stationary.upper {
   --x: calc((var(--m) / 2 * var(--ring-6-factor)) + (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2443,7 +2356,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.m > .ring-6 > .item.lower.stationary {
+.item.m > .ring-6 > .item.stationary.lower {
   --x: calc((var(--m) / 2 * var(--ring-6-factor)) - (calc(var(--m) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2458,7 +2371,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-6 > .item .stationary {
+.item.l > .ring-6 > .item.stationary {
   --x: calc((var(--l) / 2 * var(--ring-6-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2468,7 +2381,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-6 > .item.upper.stationary {
+.item.l > .ring-6 > .item.stationary.upper {
   --x: calc((var(--l) / 2 * var(--ring-6-factor)) + (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2478,7 +2391,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.l > .ring-6 > .item.lower.stationary {
+.item.l > .ring-6 > .item.stationary.lower {
   --x: calc((var(--l) / 2 * var(--ring-6-factor)) - (calc(var(--l) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2493,7 +2406,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-6 > .item .stationary {
+.item.xl > .ring-6 > .item.stationary {
   --x: calc((var(--xl) / 2 * var(--ring-6-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2503,7 +2416,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-6 > .item.upper.stationary {
+.item.xl > .ring-6 > .item.stationary.upper {
   --x: calc((var(--xl) / 2 * var(--ring-6-factor)) + (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2513,7 +2426,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xl > .ring-6 > .item.lower.stationary {
+.item.xl > .ring-6 > .item.stationary.lower {
   --x: calc((var(--xl) / 2 * var(--ring-6-factor)) - (calc(var(--xl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2528,7 +2441,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-6 > .item .stationary {
+.item.xxl > .ring-6 > .item.stationary {
   --x: calc((var(--xxl) / 2 * var(--ring-6-factor)) );
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2538,7 +2451,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-6 > .item.upper.stationary {
+.item.xxl > .ring-6 > .item.stationary.upper {
   --x: calc((var(--xxl) / 2 * var(--ring-6-factor)) + (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }
@@ -2548,7 +2461,7 @@ div[class^=ring] {
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
 }
 
-.item.xxl > .ring-6 > .item.lower.stationary {
+.item.xxl > .ring-6 > .item.stationary.lower {
   --x: calc((var(--xxl) / 2 * var(--ring-6-factor)) - (calc(var(--xxl) / 4)));
   transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
 }/*# sourceMappingURL=index.css.map */
