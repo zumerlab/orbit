@@ -261,18 +261,18 @@ $var in $sizes {
     @each $class in $align {
       $math: "";
       @if $class == ".upper" {
-        $math: "+ (calc(#{$var} / 2))";
+        $math: "+ (calc(#{$var} / 4))";
       }
       @if $class == ".lower" {
-        $math: "- (calc(#{$var} / 2))";
+        $math: "- (calc(#{$var} / 4))";
       }
       .item.#{$size}>.ring-#{$i}>.item#{$class}  {
-        --x: calc(#{$var} / 2 #{$math}  * var(--ring-#{$i}-factor));
+        --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
         transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
       }
     
       .item.#{$size}>.ring-#{$i}>.item#{$class}.stationary {
-        --x: calc(#{$var}/ 2  #{$math} * var(--ring-#{$i}-factor));
+        --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
         transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
       }
     }
