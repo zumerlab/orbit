@@ -6,6 +6,11 @@ $sizes: "xxs" var(--xxs),
   "l" var(--l),
   "xl" var(--xl),
   "xxl" var(--xxl);
+
+$align: 
+  "" "",
+  ".upper",
+  ".lower";
   
 $min: 0;
 $max: 6;
@@ -237,12 +242,13 @@ $var in $sizes {
 }
 
 @for $i from $min + 1 through $max {
-  .z-container>.ring-#{$i}>.item {
-    transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
-  }
-
-  .z-container>.ring-#{$i}>.item.stationary {
-    transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0);
+  @each $class in $align {
+    .z-container>.ring-#{$i}>.item#{$class} {
+      transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+    }
+    .z-container>.ring-#{$i}>.item#{$class}.stationary {
+      transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0);
+    }
   }
 }
 @for $i from $min through $max {
@@ -252,15 +258,23 @@ $var in $sizes {
       width: calc(#{$var} * var(--ring-#{$i}-factor));
       height: calc(#{$var} * var(--ring-#{$i}-factor));
     }
-
-    .item.#{$size}>.ring-#{$i}>.item {
-      --x: calc(#{$var} / 2 * var(--ring-#{$i}-factor));
-      transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
-    }
-
-    .item.#{$size}>.ring-#{$i}>.item.stationary {
-      --x: calc(#{$var}/ 2 * var(--ring-#{$i}-factor));
-      transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
+    @each $class in $align {
+      $math: "";
+      @if $class == ".upper" {
+        $math: "+ (calc(#{$var} / 2))";
+      }
+      @if $class == ".lower" {
+        $math: "- (calc(#{$var} / 2))";
+      }
+      .item.#{$size}>.ring-#{$i}>.item#{$class}  {
+        --x: calc(#{$var} / 2 #{$math}  * var(--ring-#{$i}-factor));
+        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+      }
+    
+      .item.#{$size}>.ring-#{$i}>.item#{$class}.stationary {
+        --x: calc(#{$var}/ 2  #{$math} * var(--ring-#{$i}-factor));
+        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(var(--x), 0);
+      }
     }
   }
 }
