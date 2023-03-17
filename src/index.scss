@@ -11,11 +11,11 @@
    ".upper",
    ".lower";
 
- $min: 1;
- $max: 6;
+ $min-rings: 1;
+ $max-rings: 6;
 
- $minItems: 1;
- $maxItems: 24;
+ $min-items: 1;
+ $max-items: 24;
 
  $sectors: "offset-45" 45,
    "offset-90" 90,
@@ -47,6 +47,7 @@
    align-content: center;
    justify-content: center;
  }
+ 
 
  /* Initial Reset */
  * {
@@ -66,7 +67,7 @@
    --item-number: 1;
    --radius-padding: 8px;
 
-   @for $i from $min through $max {
+   @for $i from $min-rings through $max-rings {
      --ring-#{$i}-factor: #{$i};
    }
 
@@ -101,8 +102,9 @@
    @include alignment;
  }
  .item.line {
-  width: 600px;
-  height: 1px;
+  transform-origin: 0 0;
+  width: calc(var(--radius) * var(--ring-3-factor));
+  border-radius: 0%;
   border: none;
   border-top: 1px dashed rgba(155, 155, 155, 0.5);
  }
@@ -141,13 +143,14 @@
  }
 
  .core {
-    width: 1px;
+  width: 1px;
    height: 1px;
    display: grid;
    border-radius: 50%;
-   border: 1px dashed rgba(155, 155, 155, 0.5);
+   border: 1px solid rgb(255, 5, 5);
    grid-area: 1/1/1/1;
-   @include alignment;
+   align-items: center;
+   align-content: center;
  }
 
  div[class^="ring"] {
@@ -238,20 +241,20 @@
      }
    }
 
- @for $i from $min through $max {
+ @for $i from $min-rings through $max-rings {
    .z-container>.ring-#{$i} {
      width: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
      height: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
    }
  }
 
- @for $i from $minItems through $maxItems {
+ @for $i from $min-items through $max-items {
    .item:nth-child(#{$i}) {
      --item-number:#{$i};
    }
  }
 
- @for $i from $min through $max {
+ @for $i from $min-rings through $max-rings {
 
    @each $sector,
    $angle in $sectors {
@@ -275,27 +278,41 @@
      --direction: -1;
    }
 
- @for $i from $minItems through $maxItems {
+ @for $i from $min-items through $max-items {
    .items-#{$i}>.item {
      --angle: calc((var(--offset-angle) + var(--arc)) / #{$i} * var(--direction));
    }
  }
 
- @for $i from $min through $max {
-   @each $class in $align {
-     .z-container>.ring-#{$i}> .item#{$class} {
-       transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
-     }
+ @for $i from $min-rings through $max-rings {
+  @each $size,
+   $var in $sizes {
+    @each $class in $align {
+      $math: "";
 
-     .z-container>.ring-#{$i}> .item.stationary#{$class} {
-       transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i}), 0);
-     }
+       @if $class ==".upper" {
+         $math: "+ (calc(#{$var} / 2))";
+       }
+
+       @if $class ==".lower" {
+         $math: "- (calc(#{$var} / 2))";
+       }
+
+      .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
+        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+      }
+ 
+      .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
+        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0);
+      }
+    }
    }
+ 
  }
  .core >.item {
    transform:  rotate(calc(var(--angle) * var(--item-number) * 1deg)) 
  }
- @for $i from $min through $max {
+ @for $i from $min-rings through $max-rings {
 
    @each $size,
    $var in $sizes {

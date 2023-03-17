@@ -5,17 +5,22 @@
 
 ### Radial Grid
 
-- OK rows: rings OR orbit
+- OK rows: rings OR orbits
 - columns: sectors relates to angles. quadrants... cordinal points...
 - angles & distances: definir independientemte (a32; d453)?
 - OK initial angle: importantes para saber desde donde empieza
-- OK diameter: importante para estabelcer tamano del arco 90° o 360° x ej.
+- OK arc: importante para estabelcer tamano del arco 90° o 360° x ej.
 - OK Reverse angle...
+- OK orbit alignment> lower upper
 - OK Stationary- geostationary/gyroscope: comportamiento de lo selementos
-- responsiveness: crear dos versiones? media query & rem units? ...
-- alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo
-- distribucion: ver tipo flex-bos
+- responsiveness: crear dos versiones? media query & vh vw units? ...
+- dentro de los items ver alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo
 - OK draw rings and sectors
+- Armar defaults
+- Abstraer variables de color, backgrpund etc
+- separar grid, de otras cosas
+- armar progress en svg
+- 
 
 ## ELEMENTS
 - shapes
