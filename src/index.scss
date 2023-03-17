@@ -80,6 +80,11 @@
    --xl: 180px;
    --xxl: 288px;
 
+  /* Color */
+  --transparent: transparent;
+  --white: white;
+  --black: black;
+
    /* width connector */
    --connector-width: 40px;
    --label-width: 50px;
@@ -96,11 +101,24 @@
 
  .item {
    display: grid;
-   background-color: rgba(255, 255, 255, 0.151);
+   background-color: rgba(247, 0, 0, 0.363);
    border: 1px solid black;
    grid-area: 1/1/1/1;
    @include alignment;
+   z-index: 1;
  }
+ .content {
+  padding: 5px;
+  width: inherit;
+  height: inherit;
+  display: grid;
+  border-radius: inherit;
+  background-color: rgba(0, 170, 248, 0.815);
+  grid-area: 1/1/1/1;
+  @include alignment;
+  overflow: hidden;
+  z-index: 10;
+}
  .item.line {
   transform-origin: 0 0;
   width: calc(var(--radius) * var(--ring-3-factor));

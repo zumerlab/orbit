@@ -13,7 +13,7 @@
 - OK orbit alignment> lower upper
 - OK Stationary- geostationary/gyroscope: comportamiento de lo selementos
 - responsiveness: crear dos versiones? media query & vh vw units? ...
-- dentro de los items ver alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo
+- OK layer para contenido dentro de los items. Todo lo referido a alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo qued aara el usuario o algo para armar especialemnte
 - OK draw rings and sectors
 - Armar defaults
 - Abstraer variables de color, backgrpund etc
