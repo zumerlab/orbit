@@ -88,6 +88,12 @@
    /* width connector */
    --connector-width: 40px;
    --label-width: 50px;
+
+   /* svg */
+   --val: 0;
+   --diam: 180;
+   --stroke: 12;
+
  }
 
  .z-container {
@@ -362,4 +368,45 @@
      }
    }
  }
+
+ // Progress
+
+
+svg {
+  transform: rotate(-90deg);
+  width: calc(var(--diam) * 1px);
+  height: calc(var(--diam) * 1px);
+}
+
+.base {
+  cx: calc(var(--diam) / 2);
+  cy: calc(var(--diam) / 2);
+  r: calc(var(--diam) / 2 - var(--stroke));
+  fill: none;
+  stroke: #e6e6e6;
+  stroke-width: var(--stroke); 
+}
+.percent {
+  cx: calc(var(--diam) / 2);
+  cy: calc(var(--diam) / 2);
+  r: calc(var(--diam) / 2 - var(--stroke));
+  fill: none;
+  stroke: #186ddd;
+  stroke-width: var(--stroke); 
+  stroke-dasharray: 100;
+  stroke-linecap: round;
+  stroke-dashoffset: calc(100 - var(--val));
+}
+
+.p50 {
+  --val: 28;
+}
+
+.sixty {
+  --val: 60;
+}
+
+.ninety {
+  --val: 90;
+}
 
