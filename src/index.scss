@@ -100,7 +100,12 @@
    grid-area: 1/1/1/1;
    @include alignment;
  }
-
+ .item.line {
+  width: 600px;
+  height: 1px;
+  border: none;
+  border-top: 1px dashed rgba(155, 155, 155, 0.5);
+ }
  /* Shapes */
  .item,
  .item.circle {
@@ -240,7 +245,7 @@
    }
  }
 
- @for $i from $min through $max {
+ @for $i from $minItems through $maxItems {
    .item:nth-child(#{$i}) {
      --item-number:#{$i};
    }

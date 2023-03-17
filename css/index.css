@@ -58,6 +58,14 @@
   justify-content: center;
 }
 
+.item.line {
+  width: 600px;
+  height: 1px;
+  border: none;
+  border-radius: 0%;
+  border-top: 1px dashed rgba(155, 155, 155, 0.5);
+}
+
 /* Shapes */
 .item,
 .item.circle {
@@ -550,6 +558,78 @@ div[class^=ring] {
 
 .item:nth-child(6) {
   --item-number:6;
+}
+
+.item:nth-child(7) {
+  --item-number:7;
+}
+
+.item:nth-child(8) {
+  --item-number:8;
+}
+
+.item:nth-child(9) {
+  --item-number:9;
+}
+
+.item:nth-child(10) {
+  --item-number:10;
+}
+
+.item:nth-child(11) {
+  --item-number:11;
+}
+
+.item:nth-child(12) {
+  --item-number:12;
+}
+
+.item:nth-child(13) {
+  --item-number:13;
+}
+
+.item:nth-child(14) {
+  --item-number:14;
+}
+
+.item:nth-child(15) {
+  --item-number:15;
+}
+
+.item:nth-child(16) {
+  --item-number:16;
+}
+
+.item:nth-child(17) {
+  --item-number:17;
+}
+
+.item:nth-child(18) {
+  --item-number:18;
+}
+
+.item:nth-child(19) {
+  --item-number:19;
+}
+
+.item:nth-child(20) {
+  --item-number:20;
+}
+
+.item:nth-child(21) {
+  --item-number:21;
+}
+
+.item:nth-child(22) {
+  --item-number:22;
+}
+
+.item:nth-child(23) {
+  --item-number:23;
+}
+
+.item:nth-child(24) {
+  --item-number:24;
 }
 
 .ring-1.offset-45 {
