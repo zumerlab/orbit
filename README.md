@@ -1,6 +1,5 @@
 # grid
 
-
 ## LAYOUT
 
 ### Radial Grid
@@ -20,12 +19,13 @@
 - Abstraer variables de color, backgrpund etc
 - separar grid, de otras cosas
 - armar progress en svg
-- 
 
 ## ELEMENTS
+
 - shapes
 
 ## COMPONENTS
+
 - progress
 - sectors svg
 - modals
@@ -37,8 +37,7 @@
 
 ## UTILITIES
 
-
-
+```js
 function getEllipsePoints(width, height, n, dist) {
   const a = width / 2;
   const b = height / 2;
@@ -82,8 +81,9 @@ article[data-columns="3"] {
 article[data-columns="4"] {
   width: 600px;
 }
-
+```
 
 ### css first
+
 por eso elipsis solo andan en ffox
 anim en chrome.
