@@ -3440,24 +3440,24 @@ svg {
 }
 
 .base {
-  cx: calc(var(--diam) / 2);
-  cy: calc(var(--diam) / 2);
-  r: calc(var(--diam) / 2 - var(--stroke));
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
   stroke: #e6e6e6;
   stroke-width: var(--stroke);
 }
 
 .percent {
-  cx: calc(var(--diam) / 2);
-  cy: calc(var(--diam) / 2);
-  r: calc(var(--diam) / 2 - var(--stroke));
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
   stroke: #186ddd;
   stroke-width: var(--stroke);
   stroke-dasharray: 100;
   stroke-linecap: round;
-  stroke-dashoffset: calc(100 - var(--val));
+  stroke-dashoffset: calc((100 - var(--val)) * 1px);
 }
 
 .p50 {
