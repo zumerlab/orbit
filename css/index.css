@@ -39,8 +39,8 @@
   --label-width: 50px;
   /* svg */
   --val: 0;
-  --diam: 180;
-  --stroke: 12;
+  --diam: 600;
+  --stroke: 10;
 }
 
 .z-container {
@@ -81,6 +81,21 @@
   justify-content: center;
   overflow: hidden;
   z-index: 10;
+}
+
+.content1 {
+  padding: 5px;
+  width: inherit;
+  height: inherit;
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: -10;
 }
 
 .item.line {
@@ -150,16 +165,17 @@ div[class^=ring] {
 .label {
   display: block;
   border: 1px solid red;
-  border-radius: 50;
+  border-radius: 50%;
   width: 4px;
   height: 4px;
 }
 
-.label__connector {
-  transform-origin: 0 0;
-  border: transparent;
-  border-top: 1px solid red;
+.label::before {
+  content: "";
+  display: block;
+  border-bottom: 1px solid red;
   width: var(--connector-width);
+  height: 1px;
 }
 
 .label__text {
@@ -168,6 +184,7 @@ div[class^=ring] {
   border: 1px solid black;
   grid-area: 1/1/1/1;
   background-color: white;
+  border-radius: 4px;
   border-color: red;
   width: var(--label-width);
   height: 20px;
@@ -403,35 +420,35 @@ div[class^=ring] {
 }
 
 .label.pos-0 > .label__text {
-  transform: translate(calc(var(--connector-width)), 0) rotate(calc(360 * -1deg));
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(360 * -1deg));
 }
 
 .label.pos-45 > .label__text {
-  transform: translate(calc(var(--connector-width)), 0) rotate(calc(45 * -1deg));
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(45 * -1deg));
 }
 
 .label.pos-90 > .label__text {
-  transform: translate(calc(var(--connector-width)), 0) rotate(calc(90 * -1deg));
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(90 * -1deg));
 }
 
 .label.pos-135 > .label__text {
-  transform: translate(calc(var(--connector-width)), 0) rotate(calc(135 * -1deg));
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(135 * -1deg));
 }
 
 .label.pos-180 > .label__text {
-  transform: translate(calc(var(--connector-width) + var(--label-width)), 0) rotate(calc(180 * -1deg));
+  transform: translate(calc(var(--connector-width) + var(--label-width)), 5px) rotate(calc(180 * -1deg));
 }
 
 .label.pos-225 > .label__text {
-  transform: translate(calc(var(--connector-width)), 0) rotate(calc(225 * -1deg));
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(225 * -1deg));
 }
 
 .label.pos-270 > .label__text {
-  transform: translate(calc(var(--connector-width)), 0) rotate(calc(270 * -1deg));
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(270 * -1deg));
 }
 
 .label.pos-315 > .label__text {
-  transform: translate(calc(var(--connector-width)), 0) rotate(calc(315 * -1deg));
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(315 * -1deg));
 }
 
 .item.xxs {
@@ -3434,7 +3451,13 @@ div[class^=ring].ccw {
 }
 
 svg {
-  transform: rotate(-90deg);
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
   width: calc(var(--diam) * 1px);
   height: calc(var(--diam) * 1px);
 }
@@ -3445,6 +3468,7 @@ svg {
   r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
   stroke: #e6e6e6;
+  stroke-dasharray: 52 20;
   stroke-width: var(--stroke);
 }
 
@@ -3456,12 +3480,11 @@ svg {
   stroke: #186ddd;
   stroke-width: var(--stroke);
   stroke-dasharray: 100;
-  stroke-linecap: round;
   stroke-dashoffset: calc((100 - var(--val)) * 1px);
 }
 
 .p50 {
-  --val: 28;
+  --val: 50;
 }
 
 .sixty {

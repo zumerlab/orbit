@@ -91,8 +91,8 @@
 
    /* svg */
    --val: 0;
-   --diam: 180;
-   --stroke: 12;
+   --diam: 600;
+   --stroke: 10;
 
  }
 
@@ -124,6 +124,17 @@
   @include alignment;
   overflow: hidden;
   z-index: 10;
+}
+.content1 {
+  padding: 5px;
+  width: inherit;
+  height: inherit;
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  @include alignment;
+  overflow: hidden;
+  z-index: -10;
 }
  .item.line {
   transform-origin: 0 0;
@@ -188,24 +199,25 @@
  .label {
    display: block;
    border: 1px solid red;
-   border-radius: 50;
+   border-radius: 50%;
    width: 4px;
    height: 4px;
  }
 
- .label__connector {
-   transform-origin: 0 0;
-   border: transparent;
-   border-top: 1px solid red;
-   width: var(--connector-width);
- }
-
+ .label::before {
+  content: "";
+  display: block;
+  border-bottom: 1px solid red;
+  width: var(--connector-width);
+  height: 1px;
+}
  .label__text {
    transform-origin: 0 0;
    display: grid;
    border: 1px solid black;
    grid-area: 1/1/1/1;
    background-color: white;
+   border-radius: 4px;
    border-color: red;
    width: var(--label-width);
    height: 20px;
@@ -228,11 +240,11 @@
  $angle in $position {
    .label.#{$pos}>.label__text {
      @if $pos !="pos-180" {
-       transform: translate(calc(var(--connector-width)), 0) rotate(calc(#{$angle} * -1deg));
+       transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(#{$angle} * -1deg));
      }
 
      @else {
-       transform: translate(calc(var(--connector-width) + var(--label-width)), 0) rotate(calc(#{$angle} * -1deg));
+       transform: translate(calc(var(--connector-width) + var(--label-width)), +5px) rotate(calc(#{$angle} * -1deg));
      }
 
    }
@@ -373,9 +385,14 @@
 
 
 svg {
-  transform: rotate(-90deg);
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  @include alignment;
+  
   width: calc(var(--diam) * 1px);
   height: calc(var(--diam) * 1px);
+  
 }
 
 .base {
@@ -384,6 +401,7 @@ svg {
   r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
   stroke: #e6e6e6;
+  stroke-dasharray: calc(360/5 - 20) 20;
   stroke-width: var(--stroke); 
 }
 .percent {
@@ -394,12 +412,12 @@ svg {
   stroke: #186ddd;
   stroke-width: var(--stroke); 
   stroke-dasharray: 100;
-  stroke-linecap: round;
+  
   stroke-dashoffset: calc((100 - var(--val)) * 1px);
 }
 
 .p50 {
-  --val: 28;
+  --val: 50;
 }
 
 .sixty {
