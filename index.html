@@ -39,10 +39,10 @@
         <hr class="item line">
         <hr class="item line">
       </div>
-      <div class="ring-1 items-5 " style="background-color: aliceblue;">
+      <div class="ring-1 items-5 offset-180" style="background-color: rgb(131, 204, 35);">
         <div class="item s box">A</div>
         <div class="item s rounded">N</div>
-        <div class="item l"> 
+        <div class="item s"> D
       </div>
         <div class="item s">Y</div>
         <div class="item s">!</div>
@@ -86,6 +86,7 @@
       var el = document.querySelector(".minuto")
       var minuto = el.style.getPropertyValue("--angle")
       setInterval(() => {
+        minuto = minuto + 1.7
         el.style.setProperty("--angle", minuto++)
       }, 1000)
     </script>

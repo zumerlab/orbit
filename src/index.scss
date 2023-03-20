@@ -316,7 +316,7 @@
 
  @for $i from $min-items through $max-items {
    .items-#{$i}>.item {
-     --angle: calc((var(--offset-angle) + var(--arc)) / #{$i} * var(--direction));
+     --angle: calc((var(--arc) / #{$i})  * var(--direction));
    }
  }
 
@@ -335,11 +335,11 @@
        }
 
       .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
-        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0) rotate(calc(var(--angle) * var(--item-number) * 1deg * -1));
+        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg * -1));
       }
  
       .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
-        transform: rotate(calc(var(--angle) * var(--item-number) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0);
+        transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0);
       }
     }
    }
