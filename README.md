@@ -15,11 +15,11 @@
 - responsiveness: crear dos versiones? media query & vh vw units? ...
 - OK layer para contenido dentro de los items. Todo lo referido a alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo qued aara el usuario o algo para armar especialemnte
 - OK draw rings and sectors
-- Armar defaults
+- ~~Armar defaults~~
 - Abstraer variables de color, backgrpund etc
 - separar grid, de otras cosas
 - WIP armar progress en svg
-- FIX offset
+- ~~FIX offset~~
 - CHANGE NAMES
 
 ## ELEMENTS

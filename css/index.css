@@ -67,6 +67,12 @@
   z-index: 1;
 }
 
+.item {
+  width: var(--m);
+  height: var(--m);
+  border-radius: 50%;
+}
+
 .content {
   padding: 5px;
   width: inherit;
@@ -100,6 +106,7 @@
 
 .item.line {
   transform-origin: 0 0;
+  height: 0;
   width: calc(var(--radius) * var(--ring-3-factor));
   border-radius: 0%;
   border: none;
@@ -107,7 +114,6 @@
 }
 
 /* Shapes */
-.item,
 .item.circle {
   border-radius: 50%;
 }

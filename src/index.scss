@@ -113,6 +113,12 @@
    @include alignment;
    z-index: 1;
  }
+ //defaults
+ .item {
+  width: var(--m);
+  height: var(--m);
+  border-radius: 50%;
+ }
  .content {
   padding: 5px;
   width: inherit;
@@ -138,13 +144,13 @@
 }
  .item.line {
   transform-origin: 0 0;
+  height: 0;
   width: calc(var(--radius) * var(--ring-3-factor));
   border-radius: 0%;
   border: none;
   border-top: 1px dashed rgba(155, 155, 155, 0.5);
  }
  /* Shapes */
- .item,
  .item.circle {
    border-radius: 50%;
  }
