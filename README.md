@@ -18,7 +18,9 @@
 - Armar defaults
 - Abstraer variables de color, backgrpund etc
 - separar grid, de otras cosas
-- armar progress en svg
+- WIP armar progress en svg
+- FIX offset
+- CHANGE NAMES
 
 ## ELEMENTS
 
