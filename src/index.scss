@@ -335,18 +335,18 @@
        }
 
       .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
-        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg * -1));
+        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
       }
  
       .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
-        transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0);
+        transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0);
       }
     }
    }
  
  }
  .core >.item {
-   transform:  rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg))
+   transform:  rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg))
  }
  @for $i from $min-rings through $max-rings {
 
@@ -370,12 +370,12 @@
 
        .item.#{$size}>.ring-#{$i}>.item#{$class} {
          --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
-         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg)) translate(var(--x), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * -1deg));
+         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
        }
 
        .item.#{$size}>.ring-#{$i}> .item.stationary#{$class}  {
          --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
-         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg)) translate(var(--x), 0);
+         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0);
        }
      }
    }
