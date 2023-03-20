@@ -107,7 +107,7 @@
 
  .item {
    display: grid;
-   background-color: rgba(247, 0, 0, 0.363);
+   background-color: rgb(255, 255, 255);
    border: 1px solid black;
    grid-area: 1/1/1/1;
    @include alignment;

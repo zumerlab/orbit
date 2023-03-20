@@ -9,6 +9,26 @@
   </head>
   <body>
     <div class="z-container" >
+      <div class="core items-1">
+        <hr class="item line hora" style="width: 110px; height: 5px;  border:1px solid red; --angle: -90">
+        <hr class="item line minuto" style="width: 150px; height: 2px; border:1px solid red;  --angle: -45">
+      </div>
+      <div class="ring-2 items-12">
+        <div class="item xs">4</div>
+        <div class="item xs">5</div>
+        <div class="item xs">6</div>
+        <div class="item xs">7</div>
+        <div class="item xs">8</div>
+        <div class="item xs">9</div>
+        <div class="item xs">10</div>
+        <div class="item xs">11</div>
+        <div class="item xs">12</div>
+        <div class="item xs">1</div>
+        <div class="item xs">2</div>
+        <div class="item xs">3</div>
+      </div>
+    </div>
+    <div class="z-container" >
       <div class="core items-8">
         <hr class="item line">
         <hr class="item line">
@@ -18,34 +38,26 @@
         <hr class="item line">
         <hr class="item line">
         <hr class="item line">
-     
       </div>
-    
       <div class="ring-1 items-5 " style="background-color: aliceblue;">
         <div class="item s box">A</div>
         <div class="item s rounded">N</div>
         <div class="item l"> 
-          
-    </div>
+      </div>
         <div class="item s">Y</div>
         <div class="item s">!</div>
       </div>
-
       <div class="ring-3 items-3 ccw">
         <div class="item m box lower">
           <div class="content">ONU <br> dos</div>
         </div>
         <div class="item m">
           <div class="label pos-315">
-            
-            <div
-              class="label__text">
-                text
+            <div class="label__text">
+              text
             </div>
           </div>
-          
         </div> 
-        
         <div class="item m upper">
           <div class="content">sub 1 <br> sub2 sub 1 </div>
           <div class="ring-2 items-4 offset-45 arc-90">
@@ -64,13 +76,19 @@
           </div>
           
         </div>
-        
         <svg>
           <circle class="base" />
           <circle class="percent p50" pathLength="100" /> 
-      </svg>
+        </svg>
       </div>
-      
     </div>
+    <script>
+      var el = document.querySelector(".minuto")
+      var minuto = el.style.getPropertyValue("--angle")
+      setInterval(() => {
+        el.style.setProperty("--angle", minuto++)
+      }, 1000)
+    </script>
   </body>
+
 </html>
