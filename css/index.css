@@ -105,7 +105,7 @@
 }
 
 .item.line {
-  transform-origin: 0 0;
+  transform-origin: 0 50%;
   height: 0;
   width: calc(var(--radius) * var(--ring-3-factor));
   border-radius: 0%;

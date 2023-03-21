@@ -96,8 +96,8 @@
       var els = document.querySelector("hr.segundo")
       var segundo = els.style.getPropertyValue("--angle")
       function timeToDegrees(hours, minutes, seconds) {
-        const hourDegrees = (((hours / 12) * 360) - 90) + (((minutes / 60) * 360) - 90) / 60 + ( (((seconds / 60) * 360) - 90) / 3600);
-        const minuteDegrees = ((minutes / 60) * 360) - 90 + (((seconds / 60) * 360) - 90) / 60;
+        const hourDegrees = (((hours / 12) * 360)) + (((minutes / 60) * 360) ) / 60 - 90 ;
+        const minuteDegrees = ((minutes / 60) * 360) + (((seconds / 60) * 360)) / 360 - 90;
   const secondDegrees = ((seconds / 60) * 360) - 90;
         return {
           hour: hourDegrees,
