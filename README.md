@@ -21,6 +21,8 @@
 - WIP armar progress en svg
 - ~~FIX offset~~
 - CHANGE NAMES
+- issue core.item angle
+- add manual overrride of items-n
 
 ## ELEMENTS
 

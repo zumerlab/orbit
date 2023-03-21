@@ -147,14 +147,13 @@
 }
 
 .core {
-  width: 1px;
-  height: 1px;
+  width: 0px;
+  height: 0px;
   display: grid;
   border-radius: 50%;
   border: 1px solid rgb(255, 5, 5);
   grid-area: 1/1/1/1;
   align-items: center;
-  align-content: center;
 }
 
 div[class^=ring] {
