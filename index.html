@@ -87,9 +87,22 @@
     <script>
       var el = document.querySelector(".minuto")
       var minuto = el.style.getPropertyValue("--angle")
+      function timeToDegrees(hours, minutes, seconds) {
+        const hourDegrees = (hours % 12) * 30 + (minutes / 2) + (seconds / 120);
+        const minuteDegrees = minutes * 6 + (seconds / 10);
+        const secondDegrees = seconds * 6;
+        return {
+          hour: hourDegrees,
+          minute: minuteDegrees,
+          second: secondDegrees,
+        };
+      }
+
       setInterval(() => {
-        minuto = minuto + 1.7
-        el.style.setProperty("--angle", minuto++)
+        const now = new Date();
+        const degrees = timeToDegrees(now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+        el.style.setProperty("--angle", degrees.second)
+        
       }, 1000)
     </script>
   </body>
