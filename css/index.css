@@ -39,7 +39,7 @@
   --label-width: 50px;
   /* svg */
   --val: 0;
-  --diam: 600;
+  --diam: 400;
   --stroke: 10;
 }
 
@@ -128,6 +128,7 @@
 
 .item.transparent {
   border: none;
+  background-color: var(--transparent);
 }
 
 .item.a0 {
@@ -3463,6 +3464,7 @@ svg {
   justify-items: center;
   align-content: center;
   justify-content: center;
+  rotate: -90deg;
   width: calc(var(--diam) * 1px);
   height: calc(var(--diam) * 1px);
 }
@@ -3477,12 +3479,34 @@ svg {
   stroke-width: var(--stroke);
 }
 
-.percent {
+.percent.hour {
   cx: calc(var(--diam) / 2 * 1px);
   cy: calc(var(--diam) / 2 * 1px);
   r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
-  stroke: #186ddd;
+  stroke: #e02727;
+  stroke-width: var(--stroke);
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+}
+
+.percent.minute {
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  fill: none;
+  stroke: #bc26da;
+  stroke-width: var(--stroke);
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+}
+
+.percent.second {
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  fill: none;
+  stroke: #85e8a9;
   stroke-width: var(--stroke);
   stroke-dasharray: 100;
   stroke-dashoffset: calc((100 - var(--val)) * 1px);
