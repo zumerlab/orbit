@@ -4,23 +4,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/index.css" type="text/css" />
+    <link rel="stylesheet" href="./dist/css/index.min.css" type="text/css" defer/>
     <title>Radial grid layout - css only</title>
     <style>
       body {
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-family: 'Lucida Sans', Verdana, sans-serif;
       }
     </style>
   </head>
   <body>
     <div class="z-container" >
-      <div class="core">
-        <hr class="item line hora" style="width: 110px; height: 6px;  border:1px solid red; --angle: 0;  --item-number: 1;
-        transform: rotate(calc((var(--angle) * var(--item-number) ) * 1deg)) ;">
-        <hr class="item line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);  --angle: 0;  --item-number: 1;
-        transform: rotate(calc((var(--angle) * var(--item-number) ) * 1deg));">
-        <hr class="item line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);  --angle: 0;  --item-number: 1;
-        transform: rotate(calc((var(--angle) * var(--item-number) ) * 1deg));">
+      <div class="core offset-270 ">
+        <hr class="item line hora" style="width: 110px; height: 6px;  border:1px solid red; --angle: 0;  --item-number: 1;">
+        <hr class="item line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);  --angle: 0;  --item-number: 1;">
+        <hr class="item line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);  --angle: 0;  --item-number: 1;">
       </div>
       <div class="ring-1 items-3 offset-270 arc-90">
         <div class="item s upper d-h lower transparent"></div>
@@ -42,9 +39,19 @@
         <div class="item s lower">11</div>
         
         <svg>
-          <circle class="percent hour" pathLength="100" style="r: 190px"/> 
-          <circle class="percent minute" pathLength="100" style="r: 170px"/> 
-          <circle class="percent second" pathLength="100" style="r: 150px"/> 
+          <circle class="percent hour" pathLength="100" style="r: 30px"/> 
+          <circle class="percent minute" pathLength="100" style="r: 20px"/> 
+          <circle class="percent second" pathLength="100" style="r: 10px; "/> 
+          <circle  pathLength="100" style="
+          cx: calc(var(--diam) / 2 * 1px);
+          cy: calc(var(--diam) / 2 * 1px);
+          r: 140px;
+          fill: none;
+          stroke: #e7f70a;
+          stroke-width: 80px; 
+          stroke-dasharray: 5 1;
+          stroke-dashoffset: 82px;
+          "/> 
         </svg>
       </div>
     </div>
@@ -134,9 +141,9 @@
         const svgs = document.querySelector('.percent.second');
 
         // Set the transform style of each hand element with angle correction
-        hourHand.style.setProperty("--angle", hourAngle - 90)
-        minuteHand.style.setProperty("--angle", minuteAngle - 90)
-        secondHand.style.setProperty("--angle", secondAngle - 90)
+        hourHand.style.setProperty("--angle", hourAngle)
+        minuteHand.style.setProperty("--angle", minuteAngle)
+        secondHand.style.setProperty("--angle", secondAngle)
 
         svgh.style.setProperty("--val", hourPercentage)
         svgm.style.setProperty("--val", minutePercentage)

@@ -279,7 +279,7 @@
   @each $sector,
    $angle in $sectors {
      .core.#{$sector} {
-       --offset-angle: #{$angle};
+       --offset-angle:#{$angle};
      }
    }
 
@@ -301,7 +301,7 @@
    @each $sector,
    $angle in $sectors {
      .ring-#{$i}.#{$sector} {
-       --offset-angle: #{$angle};
+       --offset-angle:#{$angle};
      }
    }
  }
@@ -351,8 +351,8 @@
    }
  
  }
- .core >.item {
-   transform:  rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg))
+ .core>.item {
+   transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg));
  }
  @for $i from $min-rings through $max-rings {
 
@@ -436,7 +436,6 @@ svg {
   cy: calc(var(--diam) / 2 * 1px);
   r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
- 
   stroke: #85e8a9;
   stroke-width: var(--stroke); 
   stroke-dasharray: 100;

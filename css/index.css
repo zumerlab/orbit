@@ -525,31 +525,31 @@ div[class^=ring] {
 }
 
 .core.offset-45 {
-  --offset-angle: 45;
+  --offset-angle:45;
 }
 
 .core.offset-90 {
-  --offset-angle: 90;
+  --offset-angle:90;
 }
 
 .core.offset-135 {
-  --offset-angle: 135;
+  --offset-angle:135;
 }
 
 .core.offset-180 {
-  --offset-angle: 180;
+  --offset-angle:180;
 }
 
 .core.offset-225 {
-  --offset-angle: 225;
+  --offset-angle:225;
 }
 
 .core.offset-270 {
-  --offset-angle: 270;
+  --offset-angle:270;
 }
 
 .core.offset-315 {
-  --offset-angle: 315;
+  --offset-angle:315;
 }
 
 .z-container > .ring-1 {
@@ -679,171 +679,171 @@ div[class^=ring] {
 }
 
 .ring-1.offset-45 {
-  --offset-angle: 45;
+  --offset-angle:45;
 }
 
 .ring-1.offset-90 {
-  --offset-angle: 90;
+  --offset-angle:90;
 }
 
 .ring-1.offset-135 {
-  --offset-angle: 135;
+  --offset-angle:135;
 }
 
 .ring-1.offset-180 {
-  --offset-angle: 180;
+  --offset-angle:180;
 }
 
 .ring-1.offset-225 {
-  --offset-angle: 225;
+  --offset-angle:225;
 }
 
 .ring-1.offset-270 {
-  --offset-angle: 270;
+  --offset-angle:270;
 }
 
 .ring-1.offset-315 {
-  --offset-angle: 315;
+  --offset-angle:315;
 }
 
 .ring-2.offset-45 {
-  --offset-angle: 45;
+  --offset-angle:45;
 }
 
 .ring-2.offset-90 {
-  --offset-angle: 90;
+  --offset-angle:90;
 }
 
 .ring-2.offset-135 {
-  --offset-angle: 135;
+  --offset-angle:135;
 }
 
 .ring-2.offset-180 {
-  --offset-angle: 180;
+  --offset-angle:180;
 }
 
 .ring-2.offset-225 {
-  --offset-angle: 225;
+  --offset-angle:225;
 }
 
 .ring-2.offset-270 {
-  --offset-angle: 270;
+  --offset-angle:270;
 }
 
 .ring-2.offset-315 {
-  --offset-angle: 315;
+  --offset-angle:315;
 }
 
 .ring-3.offset-45 {
-  --offset-angle: 45;
+  --offset-angle:45;
 }
 
 .ring-3.offset-90 {
-  --offset-angle: 90;
+  --offset-angle:90;
 }
 
 .ring-3.offset-135 {
-  --offset-angle: 135;
+  --offset-angle:135;
 }
 
 .ring-3.offset-180 {
-  --offset-angle: 180;
+  --offset-angle:180;
 }
 
 .ring-3.offset-225 {
-  --offset-angle: 225;
+  --offset-angle:225;
 }
 
 .ring-3.offset-270 {
-  --offset-angle: 270;
+  --offset-angle:270;
 }
 
 .ring-3.offset-315 {
-  --offset-angle: 315;
+  --offset-angle:315;
 }
 
 .ring-4.offset-45 {
-  --offset-angle: 45;
+  --offset-angle:45;
 }
 
 .ring-4.offset-90 {
-  --offset-angle: 90;
+  --offset-angle:90;
 }
 
 .ring-4.offset-135 {
-  --offset-angle: 135;
+  --offset-angle:135;
 }
 
 .ring-4.offset-180 {
-  --offset-angle: 180;
+  --offset-angle:180;
 }
 
 .ring-4.offset-225 {
-  --offset-angle: 225;
+  --offset-angle:225;
 }
 
 .ring-4.offset-270 {
-  --offset-angle: 270;
+  --offset-angle:270;
 }
 
 .ring-4.offset-315 {
-  --offset-angle: 315;
+  --offset-angle:315;
 }
 
 .ring-5.offset-45 {
-  --offset-angle: 45;
+  --offset-angle:45;
 }
 
 .ring-5.offset-90 {
-  --offset-angle: 90;
+  --offset-angle:90;
 }
 
 .ring-5.offset-135 {
-  --offset-angle: 135;
+  --offset-angle:135;
 }
 
 .ring-5.offset-180 {
-  --offset-angle: 180;
+  --offset-angle:180;
 }
 
 .ring-5.offset-225 {
-  --offset-angle: 225;
+  --offset-angle:225;
 }
 
 .ring-5.offset-270 {
-  --offset-angle: 270;
+  --offset-angle:270;
 }
 
 .ring-5.offset-315 {
-  --offset-angle: 315;
+  --offset-angle:315;
 }
 
 .ring-6.offset-45 {
-  --offset-angle: 45;
+  --offset-angle:45;
 }
 
 .ring-6.offset-90 {
-  --offset-angle: 90;
+  --offset-angle:90;
 }
 
 .ring-6.offset-135 {
-  --offset-angle: 135;
+  --offset-angle:135;
 }
 
 .ring-6.offset-180 {
-  --offset-angle: 180;
+  --offset-angle:180;
 }
 
 .ring-6.offset-225 {
-  --offset-angle: 225;
+  --offset-angle:225;
 }
 
 .ring-6.offset-270 {
-  --offset-angle: 270;
+  --offset-angle:270;
 }
 
 .ring-6.offset-315 {
-  --offset-angle: 315;
+  --offset-angle:315;
 }
 
 div[class^=ring].arc-45 {
@@ -1983,7 +1983,7 @@ div[class^=ring].ccw {
 }
 
 .core > .item {
-  transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg));
+  transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg));
 }
 
 .item.xxs > .ring-1 {
