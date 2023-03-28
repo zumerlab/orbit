@@ -1,0 +1,29 @@
+/* 
+* based on item element
+*/
+
+.item.line {
+    transform-origin: 0 50%;
+    height: 0;
+    width: calc(var(--radius) * var(--ring-3-factor));
+    border-radius: 0%;
+    border: none;
+    border-top: 1px dashed rgba(155, 155, 155, 0.5);
+}
+
+.item.circle {
+    border-radius: 50%;
+}
+
+.item.box {
+    border-radius: 0%;
+}
+
+.item.rounded {
+    border-radius: 25%;
+}
+
+.item.transparent {
+    border: none;
+    background-color: var(--transparent);
+}

@@ -1,0 +1,59 @@
+@use "_variables.scss" as *;
+@use "_mixins.scss" as *;
+
+.label {
+   display: block;
+   border: 1px solid red;
+   border-radius: 50%;
+   width: 4px;
+   height: 4px;
+ }
+
+ .label::before {
+  content: "";
+  display: block;
+  border-bottom: 1px solid red;
+  width: var(--connector-width);
+  height: 1px;
+}
+ .label__text {
+   transform-origin: 0 0;
+   display: grid;
+   border: 1px solid black;
+   grid-area: 1/1/1/1;
+   background-color: white;
+   border-radius: 4px;
+   border-color: red;
+   width: var(--label-width);
+   height: 20px;
+   color: red;
+   @include alignment;
+ }
+
+ @each $size,
+ $var in $sizes {
+
+   @each $pos,
+   $angle in $position {
+     .item.#{$size}>.label.#{$pos} {
+       transform: rotate(calc(#{$angle} * 1deg)) translate(calc(#{$var} / 1.8), 0);
+     }
+   }
+ }
+
+ @each $pos,
+ $angle in $position {
+   .label.#{$pos}>.label__text {
+     @if $pos !="pos-180" {
+       transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(#{$angle} * -1deg));
+     }
+
+     @else {
+       transform: translate(calc(var(--connector-width) + var(--label-width)), +5px) rotate(calc(#{$angle} * -1deg));
+     }
+
+   }
+ }
+
+
+ 

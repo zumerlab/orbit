@@ -104,33 +104,6 @@
   z-index: -10;
 }
 
-.item.line {
-  transform-origin: 0 50%;
-  height: 0;
-  width: calc(var(--radius) * var(--ring-3-factor));
-  border-radius: 0%;
-  border: none;
-  border-top: 1px dashed rgba(155, 155, 155, 0.5);
-}
-
-/* Shapes */
-.item.circle {
-  border-radius: 50%;
-}
-
-.item.box {
-  border-radius: 0%;
-}
-
-.item.rounded {
-  border-radius: 25%;
-}
-
-.item.transparent {
-  border: none;
-  background-color: var(--transparent);
-}
-
 .item.a0 {
   --angle: 0;
 }
@@ -166,295 +139,6 @@ div[class^=ring] {
   justify-items: center;
   align-content: center;
   justify-content: center;
-}
-
-.label {
-  display: block;
-  border: 1px solid red;
-  border-radius: 50%;
-  width: 4px;
-  height: 4px;
-}
-
-.label::before {
-  content: "";
-  display: block;
-  border-bottom: 1px solid red;
-  width: var(--connector-width);
-  height: 1px;
-}
-
-.label__text {
-  transform-origin: 0 0;
-  display: grid;
-  border: 1px solid black;
-  grid-area: 1/1/1/1;
-  background-color: white;
-  border-radius: 4px;
-  border-color: red;
-  width: var(--label-width);
-  height: 20px;
-  color: red;
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
-}
-
-.item.xxs > .label.pos-0 {
-  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xxs > .label.pos-45 {
-  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xxs > .label.pos-90 {
-  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xxs > .label.pos-135 {
-  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xxs > .label.pos-180 {
-  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xxs > .label.pos-225 {
-  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xxs > .label.pos-270 {
-  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xxs > .label.pos-315 {
-  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-0 {
-  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-45 {
-  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-90 {
-  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-135 {
-  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-180 {
-  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-225 {
-  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-270 {
-  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.xs > .label.pos-315 {
-  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
-}
-
-.item.s > .label.pos-0 {
-  transform: rotate(calc(360 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.s > .label.pos-45 {
-  transform: rotate(calc(45 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.s > .label.pos-90 {
-  transform: rotate(calc(90 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.s > .label.pos-135 {
-  transform: rotate(calc(135 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.s > .label.pos-180 {
-  transform: rotate(calc(180 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.s > .label.pos-225 {
-  transform: rotate(calc(225 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.s > .label.pos-270 {
-  transform: rotate(calc(270 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.s > .label.pos-315 {
-  transform: rotate(calc(315 * 1deg)) translate(calc(var(--s) / 1.8), 0);
-}
-
-.item.m > .label.pos-0 {
-  transform: rotate(calc(360 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.m > .label.pos-45 {
-  transform: rotate(calc(45 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.m > .label.pos-90 {
-  transform: rotate(calc(90 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.m > .label.pos-135 {
-  transform: rotate(calc(135 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.m > .label.pos-180 {
-  transform: rotate(calc(180 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.m > .label.pos-225 {
-  transform: rotate(calc(225 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.m > .label.pos-270 {
-  transform: rotate(calc(270 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.m > .label.pos-315 {
-  transform: rotate(calc(315 * 1deg)) translate(calc(var(--m) / 1.8), 0);
-}
-
-.item.l > .label.pos-0 {
-  transform: rotate(calc(360 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.l > .label.pos-45 {
-  transform: rotate(calc(45 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.l > .label.pos-90 {
-  transform: rotate(calc(90 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.l > .label.pos-135 {
-  transform: rotate(calc(135 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.l > .label.pos-180 {
-  transform: rotate(calc(180 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.l > .label.pos-225 {
-  transform: rotate(calc(225 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.l > .label.pos-270 {
-  transform: rotate(calc(270 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.l > .label.pos-315 {
-  transform: rotate(calc(315 * 1deg)) translate(calc(var(--l) / 1.8), 0);
-}
-
-.item.xl > .label.pos-0 {
-  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xl > .label.pos-45 {
-  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xl > .label.pos-90 {
-  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xl > .label.pos-135 {
-  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xl > .label.pos-180 {
-  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xl > .label.pos-225 {
-  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xl > .label.pos-270 {
-  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xl > .label.pos-315 {
-  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-0 {
-  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-45 {
-  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-90 {
-  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-135 {
-  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-180 {
-  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-225 {
-  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-270 {
-  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.item.xxl > .label.pos-315 {
-  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
-}
-
-.label.pos-0 > .label__text {
-  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(360 * -1deg));
-}
-
-.label.pos-45 > .label__text {
-  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(45 * -1deg));
-}
-
-.label.pos-90 > .label__text {
-  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(90 * -1deg));
-}
-
-.label.pos-135 > .label__text {
-  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(135 * -1deg));
-}
-
-.label.pos-180 > .label__text {
-  transform: translate(calc(var(--connector-width) + var(--label-width)), 5px) rotate(calc(180 * -1deg));
-}
-
-.label.pos-225 > .label__text {
-  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(225 * -1deg));
-}
-
-.label.pos-270 > .label__text {
-  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(270 * -1deg));
-}
-
-.label.pos-315 > .label__text {
-  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(315 * -1deg));
 }
 
 .item.xxs {
@@ -3456,6 +3140,324 @@ div[class^=ring].ccw {
   transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0);
 }
 
+/* 
+* based on item element
+*/
+.item.line {
+  transform-origin: 0 50%;
+  height: 0;
+  width: calc(var(--radius) * var(--ring-3-factor));
+  border-radius: 0%;
+  border: none;
+  border-top: 1px dashed rgba(155, 155, 155, 0.5);
+}
+
+.item.circle {
+  border-radius: 50%;
+}
+
+.item.box {
+  border-radius: 0%;
+}
+
+.item.rounded {
+  border-radius: 25%;
+}
+
+.item.transparent {
+  border: none;
+  background-color: var(--transparent);
+}
+
+.label {
+  display: block;
+  border: 1px solid red;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+}
+
+.label::before {
+  content: "";
+  display: block;
+  border-bottom: 1px solid red;
+  width: var(--connector-width);
+  height: 1px;
+}
+
+.label__text {
+  transform-origin: 0 0;
+  display: grid;
+  border: 1px solid black;
+  grid-area: 1/1/1/1;
+  background-color: white;
+  border-radius: 4px;
+  border-color: red;
+  width: var(--label-width);
+  height: 20px;
+  color: red;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.item.xxs > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xxs > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xxs > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xxs > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xxs > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xxs > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xxs > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xxs > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xxs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.xs > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xs) / 1.8), 0);
+}
+
+.item.s > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.s > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.s > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.s > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.s > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.s > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.s > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.s > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--s) / 1.8), 0);
+}
+
+.item.m > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.m > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.m > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.m > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.m > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.m > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.m > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.m > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--m) / 1.8), 0);
+}
+
+.item.l > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.l > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.l > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.l > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.l > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.l > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.l > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.l > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--l) / 1.8), 0);
+}
+
+.item.xl > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xl > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xl > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xl > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xl > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xl > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xl > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xl > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-0 {
+  transform: rotate(calc(360 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-45 {
+  transform: rotate(calc(45 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-90 {
+  transform: rotate(calc(90 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-135 {
+  transform: rotate(calc(135 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-180 {
+  transform: rotate(calc(180 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-225 {
+  transform: rotate(calc(225 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-270 {
+  transform: rotate(calc(270 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.item.xxl > .label.pos-315 {
+  transform: rotate(calc(315 * 1deg)) translate(calc(var(--xxl) / 1.8), 0);
+}
+
+.label.pos-0 > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(360 * -1deg));
+}
+
+.label.pos-45 > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(45 * -1deg));
+}
+
+.label.pos-90 > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(90 * -1deg));
+}
+
+.label.pos-135 > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(135 * -1deg));
+}
+
+.label.pos-180 > .label__text {
+  transform: translate(calc(var(--connector-width) + var(--label-width)), 5px) rotate(calc(180 * -1deg));
+}
+
+.label.pos-225 > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(225 * -1deg));
+}
+
+.label.pos-270 > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(270 * -1deg));
+}
+
+.label.pos-315 > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(315 * -1deg));
+}
+
 svg {
   display: grid;
   border-radius: inherit;
@@ -3522,4 +3524,10 @@ svg {
 
 .ninety {
   --val: 90;
-}/*# sourceMappingURL=index.css.map */
+}
+
+/* Radial grid */
+/* Shapes */
+/* Components */
+/* label */
+/* progress *//*# sourceMappingURL=index.css.map */

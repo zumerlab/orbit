@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../dist/css/index.min.css" type="text/css" defer/>
+    <title>Radial grid layout - css only</title>
+    <style>
+      body {
+        font-family: 'Lucida Sans', Verdana, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="z-container" >
+      <div class="core items-8">
+        <hr class="item line">
+        <hr class="item line">
+        <hr class="item line">
+        <hr class="item line">
+        <hr class="item line">
+        <hr class="item line">
+        <hr class="item line">
+        <hr class="item line">
+      </div>
+      <div class="ring-1 items-5 offset-270 ccw" style="background-color: rgb(131, 204, 35);">
+        <div class="item s box">A</div>
+        <div class="item s rounded">N</div>
+        <div class="item s"> D
+      </div>
+        <div class="item s">Y</div>
+        <div class="item s">!</div>
+      </div>
+      <div class="ring-3 items-3 ccw">
+        <div class="item m box lower">
+          <div class="content">ONU <br> dos</div>
+        </div>
+        <div class="item m">
+          <div class="label pos-315">
+            <div class="label__text">
+              text
+            </div>
+          </div>
+        </div> 
+        <div class="item m upper">
+          <div class="content">sub 1 <br> sub2 sub 1 </div>
+          <div class="ring-2 items-4 offset-45 arc-90">
+            <div class="item xs ">U</div>
+            <div class="item xs ">L</div>
+            <div class="item xs stationary" >N</div>
+            <div class="item xs">
+              <div class="ring-3 items-3"> 
+                <div class="item xxs upper"></div>
+                <div class="item xxs"></div>
+                <div class="item xxs upper">
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <svg>
+          <circle class="base" />
+          <circle class="percent p50" pathLength="100" /> 
+        </svg>
+      </div>
+    </div>
+  </body>
+
+</html>

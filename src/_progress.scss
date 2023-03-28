@@ -1,0 +1,67 @@
+@use "_mixins.scss" as *;
+@use "_variables.scss" as *;
+// Progress
+svg {
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  @include alignment;
+  rotate: -90deg;
+  width: calc(var(--diam) * 1px);
+  height: calc(var(--diam) * 1px);
+  
+}
+
+.base {
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  fill: none;
+  stroke: #e6e6e6;
+  stroke-dasharray: calc(360/5 - 20) 20;
+  stroke-width: var(--stroke); 
+}
+.percent.hour {
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  fill: none;
+  stroke: #e02727;
+  stroke-width: var(--stroke); 
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+}
+.percent.minute {
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  fill: none;
+  stroke: #bc26da;
+ 
+  stroke-width: var(--stroke); 
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+}
+.percent.second {
+  cx: calc(var(--diam) / 2 * 1px);
+  cy: calc(var(--diam) / 2 * 1px);
+  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  fill: none;
+  stroke: #85e8a9;
+  stroke-width: var(--stroke); 
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+}
+
+.p50 {
+  --val: 50;
+}
+
+.sixty {
+  --val: 60;
+}
+
+.ninety {
+  --val: 90;
+}
+

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../dist/css/index.min.css" type="text/css" defer/>
+    <title>Radial grid layout - css only</title>
+    <style>
+      body {
+        font-family: 'Lucida Sans', Verdana, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="z-container" >
+      <div class="core offset-270 ">
+        <hr class="item line hora" style="width: 110px; height: 6px;  border:1px solid red; --angle: 0;  --item-number: 1;">
+        <hr class="item line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);  --angle: 0;  --item-number: 1;">
+        <hr class="item line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);  --angle: 0;  --item-number: 1;">
+      </div>
+      <div class="ring-1 items-3 offset-270 arc-90">
+        <div class="item s upper d-h  transparent"></div>
+        <div class="item s upper d-m  transparent"></div>
+        <div class="item s upper d-s  transparent"></div>
+      </div>
+      <div class="ring-2 items-12 offset-270">
+        <div class="item xs ">12</div>
+        <div class="item xs ">1</div>
+        <div class="item xs ">2</div>
+        <div class="item xs ">3</div>
+        <div class="item xs ">4</div>
+        <div class="item xs ">5</div>
+        <div class="item xs ">6</div>
+        <div class="item xs ">7</div>
+        <div class="item xs ">8</div>
+        <div class="item xs ">9</div>
+        <div class="item xs ">10</div>
+        <div class="item xs ">11</div>
+        <svg>
+          <circle class="percent hour" pathLength="100" style="r: 110px"/> 
+          <circle class="percent minute" pathLength="100" style="r: 70px"/> 
+          <circle class="percent second" pathLength="100" style="r: 50px; "/> 
+          <circle  pathLength="100" style="
+          cx: calc(var(--diam) / 2 * 1px);
+          cy: calc(var(--diam) / 2 * 1px);
+          r: 140px;
+          fill: none;
+          stroke: #9119e069;
+          stroke-width: 10px; 
+          stroke-dasharray: 0.4 1;
+          stroke-dashoffset: 100px;
+          "/> 
+        </svg>
+      </div>
+    </div>
+    <script>
+      function analogWatch() {
+        // Get the current time
+        const now = new Date();
+
+        // Get the current hour, minute, and second
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const second = now.getSeconds();
+
+        // Calculate the angles of the hour, minute, and second hands
+        const hourAngle = (hour % 12) * 30 + minute / 2;
+        const minuteAngle = minute * 6;
+        const secondAngle = second * 6;
+        const hourPercentage = hourAngle / 360 * 100;
+        const minutePercentage = minuteAngle / 360 * 100;
+        const secondPercentage = secondAngle / 360 * 100;
+
+        // Get the hour, minute, and second hand elements
+        const hourHand = document.querySelector('.hora');
+        const minuteHand = document.querySelector('.minuto');
+        const secondHand = document.querySelector('.segundo');
+
+        const hourDigital = document.querySelector('.d-h');
+        const minuteDigital = document.querySelector('.d-m');
+        const secondDigital = document.querySelector('.d-s');
+
+        const svgh = document.querySelector('.percent.hour');
+        const svgm = document.querySelector('.percent.minute');
+        const svgs = document.querySelector('.percent.second');
+
+        // Set the transform style of each hand element with angle correction
+        hourHand.style.setProperty("--angle", hourAngle)
+        minuteHand.style.setProperty("--angle", minuteAngle)
+        secondHand.style.setProperty("--angle", secondAngle)
+
+        svgh.style.setProperty("--val", hourPercentage)
+        svgm.style.setProperty("--val", minutePercentage)
+        svgs.style.setProperty("--val", secondPercentage)
+
+        hourDigital.innerHTML = hour
+        minuteDigital.innerHTML = minute
+        secondDigital.innerHTML = second
+      }
+
+      // Call the analogWatch function every second
+      setInterval(analogWatch, 1000);
+
+    </script>
+  </body>
+
+</html>
