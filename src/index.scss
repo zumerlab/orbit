@@ -1,9 +1,11 @@
+/* Core elements */
+@use "./core-elements";
 /* Radial grid */
-@use "radial-grid.scss";
+@use "./radial-grid";
 /* Shapes */
-@use "shapes.scss";
+@use "./shapes";
 /* Components */
 /* label */
-@use "label.scss";
+@use "./components/label";
 /* progress */
-@use "progress.scss";
+@use "./components/progress";

@@ -1,5 +1,5 @@
-@use "_mixins.scss" as *;
-@use "_variables.scss" as *;
+@use "../_mixins.scss" as *;
+@use "../_variables.scss" as *;
 // Progress
 svg {
   display: grid;

@@ -1,48 +1,4 @@
 /* Variables */
-/* Initial Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Main elements */
-.z-container {
-  /* Layout vars */
-  --arc: 360;
-  --offset-angle: 0;
-  --direction: 1;
-  --angle: 1;
-  --radius: 10vw;
-  --item-number: 1;
-  --radius-padding: 8px;
-  --ring-1-factor: 1;
-  --ring-2-factor: 2;
-  --ring-3-factor: 3;
-  --ring-4-factor: 4;
-  --ring-5-factor: 5;
-  --ring-6-factor: 6;
-  /* Shape sizes */
-  --xxs: 8px;
-  --xs: 24px;
-  --s: 44px;
-  --m: 68px;
-  --l: 110px;
-  --xl: 180px;
-  --xxl: 288px;
-  /* Color */
-  --transparent: transparent;
-  --white: white;
-  --black: black;
-  /* width connector */
-  --connector-width: 40px;
-  --label-width: 50px;
-  /* svg */
-  --val: 0;
-  --diam: 400;
-  --stroke: 10;
-}
-
 .z-container {
   display: grid;
   grid-template-columns: minmax(var(--radius), 1fr);
@@ -560,6 +516,50 @@ div[class^=ring].arc-315 {
 
 div[class^=ring].ccw {
   --direction: -1;
+}
+
+/* Initial Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main elements */
+.z-container {
+  /* Layout vars */
+  --arc: 360;
+  --offset-angle: 0;
+  --direction: 1;
+  --angle: 1;
+  --radius: 10vw;
+  --item-number: 1;
+  --radius-padding: 8px;
+  --ring-1-factor: 1;
+  --ring-2-factor: 2;
+  --ring-3-factor: 3;
+  --ring-4-factor: 4;
+  --ring-5-factor: 5;
+  --ring-6-factor: 6;
+  /* Shape sizes */
+  --xxs: 8px;
+  --xs: 24px;
+  --s: 44px;
+  --m: 68px;
+  --l: 110px;
+  --xl: 180px;
+  --xxl: 288px;
+  /* Color */
+  --transparent: transparent;
+  --white: white;
+  --black: black;
+  /* width connector */
+  --connector-width: 40px;
+  --label-width: 50px;
+  /* svg */
+  --val: 0;
+  --diam: 400;
+  --stroke: 10;
 }
 
 .items-1 > .item {
@@ -3526,6 +3526,7 @@ svg {
   --val: 90;
 }
 
+/* Core elements */
 /* Radial grid */
 /* Shapes */
 /* Components */
