@@ -47,9 +47,9 @@
 
  }
 
- @for $i from $min-items through $max-items {
+ @for $i from $min-items  through $max-items {
    .items-#{$i}>.item {
-     --angle: calc((var(--arc) / #{$i})  * var(--direction));
+     --angle: calc((var(--arc) / #{$i - 1})  * var(--direction));
    }
  }
 
