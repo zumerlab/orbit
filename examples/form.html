@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Update DOM with Settings Form</title>
+    <link rel="stylesheet" href="../dist/css/index.min.css" type="text/css" />
+    <style>
+        .item {
+            transition: transform 1s;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Settings Form</h1>
+    <form>
+      <fieldset>
+        <legend>Rings</legend>
+        <div id="rings-container">
+          <div class="ringf-container">
+            <fieldset>
+              <legend>Ring 1</legend>
+              <label for="ring1-arc">Arc:</label>
+              <input type="range" id="ring1-arc" name="ring1-arc" min="0" max="360" step="45" value="0">
+              <br>
+              <label for="ring1-offset">Offset:</label>
+              <input type="range" id="ring1-offset" name="ring1-offset" min="0" max="360" step="45" value="0">
+              <br>
+              <button type="button" class="add-item-button" data-ring="1">Add Item</button>
+              <div class="items-container" id="ring1-items-container"></div>
+            </fieldset>
+          </div>
+        </div>
+        <button type="button" id="add-ring-button">Add Ring</button>
+      </fieldset>
+    </form>
+    <div class="z-container"></div>
+    <script>
+      const form = document.querySelector('form');
+      const ringsContainer = document.querySelector('#rings-container');
+      const addRingButton = document.querySelector('#add-ring-button');
+      
+      const addItemButtonHandler = (event) => {
+        const ringNumber = event.target.dataset.ring;
+        const itemsContainer = document.querySelector(`#ring${ringNumber}-items-container`);
+        const newItem = document.createElement('div');
+        newItem.classList.add('item-container');
+        newItem.innerHTML = `
+          <fieldset>
+            <legend>Item ${itemsContainer.children.length + 1}</legend>
+            <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-size">Size:</label>
+            <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-size" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-size">
+            <option value="xxs">XX Small</option>
+            <option value="xs">X Small</option>
+              <option value="s">Small</option>
+              <option value="m">Medium</option>
+              <option value="l">Large</option>
+              <option value="xl">Extra Large</option>
+            </select>
+            <br>
+            <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment">Alignment:</label>
+            <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment">
+                <option value="">--</option>
+                <option value="upper">Upper</option>
+              <option value="lower">Lower</option>
+            </select>
+            <br>
+            <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">Stationary:</label>
+            <input type="checkbox" id="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">
+          </fieldset>
+        `;
+        itemsContainer.appendChild(newItem);
+        formChangeHandler()
+      };
+      
+      const addRingButtonHandler = () => {
+        const ringNumber = ringsContainer.children.length + 1;
+        const newRingContainer = document.createElement('div');
+        newRingContainer.classList.add('ringf-container');
+    newRingContainer.innerHTML = `
+      <fieldset>
+        <legend>Ring ${ringNumber}</legend>
+        <label for="ring${ringNumber}-arc">Arc:</label>
+        <input type="range" id="ring${ringNumber}-arc" name="ring${ringNumber}-arc" min="0" max="360" step="45" value="0">
+        <br>
+        <label for="ring${ringNumber}-offset">Offset:</label>
+        <input type="range" id="ring${ringNumber}-offset" name="ring${ringNumber}-offset" min="0" max="360" step="45" value="0">
+        <br>
+        <button type="button" class="add-item-button" data-ring="${ringNumber}">Add Item</button>
+        <div class="items-container" id="ring${ringNumber}-items-container"></div>
+      </fieldset>
+    `;
+    ringsContainer.appendChild(newRingContainer);
+    
+    const addItemButton = newRingContainer.querySelector('.add-item-button');
+    addItemButton.addEventListener('click', addItemButtonHandler);
+    formChangeHandler()
+  };
+  
+  const updateDOM = () => {
+    const rings = document.querySelectorAll('.ringf-container');
+    const html = Array.from(rings).map((ring) => {
+      const ringNumber = ring.querySelector('legend').textContent.split(' ')[1];
+      const arc = ring.querySelector(`#ring${ringNumber}-arc`).value;
+      const offset = ring.querySelector(`#ring${ringNumber}-offset`).value;
+      var iNumber = 0
+      const items = Array.from(ring.querySelectorAll('.item-container')).map((item) => {
+        const itemNumber = item.querySelector('legend').textContent.split(' ')[1];
+        iNumber = iNumber + 1
+        const size = item.querySelector(`#ring${ringNumber}-item${itemNumber}-size`).value;
+        const alignment = item.querySelector(`#ring${ringNumber}-item${itemNumber}-alignment`).value;
+        const stationary = item.querySelector(`#ring${ringNumber}-item${itemNumber}-stationary`).checked ? 'stationary' : '';
+        return `<div class="item ${size} ${alignment} ${stationary}"></div>`;
+      }).join('');
+      return `
+        <div class="ring-${ringNumber} items-${iNumber} ${arc ? `arc-${arc}` : ``} ${offset ? `offset-${offset}` : ``}">
+          ${items}
+        </div>
+      `;
+    }).join('');
+    const ringsContainer = document.querySelector('.z-container');
+    ringsContainer.innerHTML = html;
+  };
+  
+  const formChangeHandler = () => {
+    updateDOM();
+  };
+  
+  form.addEventListener('change', formChangeHandler);
+  addRingButton.addEventListener('click', addRingButtonHandler);
+  const addItemButtons = document.querySelectorAll('.add-item-button');
+  addItemButtons.forEach((addItemButton) => {
+    addItemButton.addEventListener('click', addItemButtonHandler);
+  });
+</script>

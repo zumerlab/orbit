@@ -77,7 +77,7 @@
     align-items: center;
 }
 
-div[class^="ring"] {
+div[class^="ring-"] {
     display: grid;
     border-radius: 50%;
     border: 1px dashed rgba(155, 155, 155, 0.5);
@@ -138,12 +138,12 @@ $angle in $sectors {
 
 @each $arc,
 $value in $arcs {
-    div[class^="ring"].#{$arc} {
+    div[class^="ring-"].#{$arc} {
         --arc: #{$value};
     }
 }
 
 
-div[class^="ring"].ccw {
+div[class^="ring-"].ccw {
     --direction: -1;
 }
