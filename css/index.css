@@ -563,99 +563,99 @@ div[class^=ring].ccw {
 }
 
 .items-1 > .item {
-  --angle: calc((var(--arc) / 1) * var(--direction));
+  --angle: calc((var(--arc) / 0) * var(--direction));
 }
 
 .items-2 > .item {
-  --angle: calc((var(--arc) / 2) * var(--direction));
+  --angle: calc((var(--arc) / 1) * var(--direction));
 }
 
 .items-3 > .item {
-  --angle: calc((var(--arc) / 3) * var(--direction));
+  --angle: calc((var(--arc) / 2) * var(--direction));
 }
 
 .items-4 > .item {
-  --angle: calc((var(--arc) / 4) * var(--direction));
+  --angle: calc((var(--arc) / 3) * var(--direction));
 }
 
 .items-5 > .item {
-  --angle: calc((var(--arc) / 5) * var(--direction));
+  --angle: calc((var(--arc) / 4) * var(--direction));
 }
 
 .items-6 > .item {
-  --angle: calc((var(--arc) / 6) * var(--direction));
+  --angle: calc((var(--arc) / 5) * var(--direction));
 }
 
 .items-7 > .item {
-  --angle: calc((var(--arc) / 7) * var(--direction));
+  --angle: calc((var(--arc) / 6) * var(--direction));
 }
 
 .items-8 > .item {
-  --angle: calc((var(--arc) / 8) * var(--direction));
+  --angle: calc((var(--arc) / 7) * var(--direction));
 }
 
 .items-9 > .item {
-  --angle: calc((var(--arc) / 9) * var(--direction));
+  --angle: calc((var(--arc) / 8) * var(--direction));
 }
 
 .items-10 > .item {
-  --angle: calc((var(--arc) / 10) * var(--direction));
+  --angle: calc((var(--arc) / 9) * var(--direction));
 }
 
 .items-11 > .item {
-  --angle: calc((var(--arc) / 11) * var(--direction));
+  --angle: calc((var(--arc) / 10) * var(--direction));
 }
 
 .items-12 > .item {
-  --angle: calc((var(--arc) / 12) * var(--direction));
+  --angle: calc((var(--arc) / 11) * var(--direction));
 }
 
 .items-13 > .item {
-  --angle: calc((var(--arc) / 13) * var(--direction));
+  --angle: calc((var(--arc) / 12) * var(--direction));
 }
 
 .items-14 > .item {
-  --angle: calc((var(--arc) / 14) * var(--direction));
+  --angle: calc((var(--arc) / 13) * var(--direction));
 }
 
 .items-15 > .item {
-  --angle: calc((var(--arc) / 15) * var(--direction));
+  --angle: calc((var(--arc) / 14) * var(--direction));
 }
 
 .items-16 > .item {
-  --angle: calc((var(--arc) / 16) * var(--direction));
+  --angle: calc((var(--arc) / 15) * var(--direction));
 }
 
 .items-17 > .item {
-  --angle: calc((var(--arc) / 17) * var(--direction));
+  --angle: calc((var(--arc) / 16) * var(--direction));
 }
 
 .items-18 > .item {
-  --angle: calc((var(--arc) / 18) * var(--direction));
+  --angle: calc((var(--arc) / 17) * var(--direction));
 }
 
 .items-19 > .item {
-  --angle: calc((var(--arc) / 19) * var(--direction));
+  --angle: calc((var(--arc) / 18) * var(--direction));
 }
 
 .items-20 > .item {
-  --angle: calc((var(--arc) / 20) * var(--direction));
+  --angle: calc((var(--arc) / 19) * var(--direction));
 }
 
 .items-21 > .item {
-  --angle: calc((var(--arc) / 21) * var(--direction));
+  --angle: calc((var(--arc) / 20) * var(--direction));
 }
 
 .items-22 > .item {
-  --angle: calc((var(--arc) / 22) * var(--direction));
+  --angle: calc((var(--arc) / 21) * var(--direction));
 }
 
 .items-23 > .item {
-  --angle: calc((var(--arc) / 23) * var(--direction));
+  --angle: calc((var(--arc) / 22) * var(--direction));
 }
 
 .items-24 > .item {
-  --angle: calc((var(--arc) / 24) * var(--direction));
+  --angle: calc((var(--arc) / 23) * var(--direction));
 }
 
 .z-container > .ring-1 > .item.xxs {

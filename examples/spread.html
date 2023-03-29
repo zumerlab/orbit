@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../dist/css/index.min.css" type="text/css" defer/>
+    <title>Radial grid layout - css only</title>
+    <style>
+      body {
+        font-family: 'Lucida Sans', Verdana, sans-serif;
+      }
+    </style>
+  </head>
+  <body style="background-color: slategray;">
+    <div class="menu">
+      <h1>Settings Form</h1>
+    <form>
+      <fieldset>
+        <legend>Number of Rings</legend>
+        <label for="numRings">Number of Rings:</label>
+        <input type="number" id="numRings" name="numRings" min="1" max="6" value="1">
+      </fieldset>
+      <fieldset>
+        <legend>Ring Settings</legend>
+        <p>Each ring can have up to 24 items:</p>
+        <label for="ringSize">Item Size:</label>
+        <select id="ringSize" name="ringSize">
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+          <option value="extra-large">Extra Large</option>
+        </select>
+        <br>
+        <label for="arc">Arc:</label>
+        <input type="range" id="arc" name="arc" min="0" max="360" step="45" value="0">
+        <br>
+        <label for="offset">Offset:</label>
+        <input type="range" id="offset" name="offset" min="0" max="270" step="45" value="0">
+      </fieldset>
+      <button type="submit">Update DOM</button>
+    </form>
+    <script>
+      const form = document.querySelector('form');
+      const numRingsInput = document.querySelector('#numRings');
+      const ringSizeInput = document.querySelector('#ringSize');
+      const arcInput = document.querySelector('#arc');
+      const offsetInput = document.querySelector('#offset');
+      
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        const numRings = numRingsInput.value;
+        const ringSize = ringSizeInput.value;
+        const arc = arcInput.value;
+        const offset = offsetInput.value;
+        
+        // Update DOM with settings here
+        console.log(`Number of Rings: ${numRings}`);
+        console.log(`Item Size: ${ringSize}`);
+        console.log(`Arc: ${arc}`);
+        console.log(`Offset: ${offset}`);
+      });
+    </script>
+    </div>
+    <div class="z-container" >
+      <div class="ring-1 items-5 arc-90">
+        <div class="item xxs" style="background-color: rgb(42, 165, 95);"></div>
+        <div class="item xxs" style="background-color: rgb(42, 165, 95);"></div>
+        <div class="item xxs" style="background-color: rgb(42, 165, 95);"></div>
+        <div class="item xxs" style="background-color: rgb(42, 165, 95);"></div>
+        <div class="item xxs" style="background-color: rgb(42, 165, 95);"></div>
+      </div>
+      <div class="ring-2 items-10 arc-180">
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+        <div class="item xs" style="background-color: rgb(69, 30, 177);"></div>
+      </div>
+      <div class="ring-3 items-15 arc-270">
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+        <div class="item s" style="background-color: rgb(227, 16, 65);"></div>
+      </div>
+      <div class="ring-4 items-20">
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+        <div class="item m" style="background-color: rgb(194, 212, 29);"></div>
+      </div>
+    </div>
+    <script>
+
+    </script>
+  </body>
+
+</html>
