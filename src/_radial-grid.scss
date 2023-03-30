@@ -48,10 +48,20 @@
  }
 
  @for $i from $min-items  through $max-items {
-   .items-#{$i}>.item {
+  @each $arc,
+  $value in $arcs {
+    .items-#{$i}.#{$arc}>.item {
+      --angle: calc((var(--arc) / #{$i - 1})  * var(--direction));
+    }
+  }
+}
+ @for $i from $min-items  through $max-items {
+  .items-#{$i}>.item {
      --angle: calc((var(--arc) / #{$i})  * var(--direction));
    }
  }
+
+
 
  @for $i from $min-rings through $max-rings {
   @each $size,
