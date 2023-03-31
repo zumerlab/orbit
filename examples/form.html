@@ -9,14 +9,42 @@
         font-family: 'Lucida Sans', Verdana, sans-serif;
         padding: 40px;
       }
+      .fieldc {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-column-gap: 15px;
+      }
+      #code {
+	position: absolute;
+	width: 800px;
+  height: 400px;
+	background: #000000;
+  font-size:10px;
+	appearance: none;
+	border: none;
+	resize: none;
+	outline: none;
+	overflow: hidden;
+	font: inherit;
+	padding: 0 1px;
+	margin: 0 -1px;
+	contain: strict;
+  color: aqua;
+	user-select: text;
+	white-space: pre !important;
+}
+      
         .item {
             transition: transform 1s;
         }
         form {
           float: right;
-          width: 300px;
+          width: 400px;
           padding: 10px;
           font-size: smaller;
+        }
+        select {
+          width: 100%;
         }
         #rings-container, .ringf-container > fieldset, .item-container > fieldset {
             padding: 10px;
@@ -36,14 +64,18 @@
           <div class="ringf-container">
             <fieldset>
               <legend>Ring 1</legend>
-              <label for="ring1-arc">Arc</label><br>
-              <input type="range" id="ring1-arc" name="ring1-arc" min="0" max="360" step="45" value="0">
-              <br>
-              <label for="ring1-offset">Offset</label><br>
-              <input type="range" id="ring1-offset" name="ring1-offset" min="0" max="360" step="45" value="0">
-              <br>
-              <button type="button" class="add-item-button" data-ring="1">Add Item</button>
-              <div class="items-container" id="ring1-items-container"></div>
+              <div class="fieldc">
+                <div class="fieldt">
+                  <label for="ring1-arc">Arc</label><br>
+                  <input type="range" id="ring1-arc" name="ring1-arc" min="0" max="360" step="45" value="0">
+                </div>
+                <div class="fieldt">
+                  <label for="ring1-offset">Offset</label><br>
+                  <input type="range" id="ring1-offset" name="ring1-offset" min="0" max="360" step="45" value="0">
+                </div>
+              </div>
+                <button type="button" class="add-item-button" data-ring="1">Add Item</button>
+                <div class="items-container" id="ring1-items-container"></div>
             </fieldset>
           </div>
         </div>
@@ -51,11 +83,13 @@
       </fieldset>
     </form>
     <div class="z-container"></div>
+    <textarea readonly name="" id="code">
+     
+    </textarea>
     <script>
       const form = document.querySelector('form');
       const ringsContainer = document.querySelector('#rings-container');
       const addRingButton = document.querySelector('#add-ring-button');
-      
       const addItemButtonHandler = (event) => {
         const ringNumber = event.target.dataset.ring;
         const itemsContainer = document.querySelector(`#ring${ringNumber}-items-container`);
@@ -64,33 +98,43 @@
         newItem.innerHTML = `
           <fieldset>
             <legend>Item ${itemsContainer.children.length + 1}</legend>
-            <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-size" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-size">
-              <option value="">Size</option>
-              <option value="xxs">XXS</option>
-              <option value="xs">XS</option>
-              <option value="s">S</option>
-              <option value="m" selected>M</option>
-              <option value="l">L</option>
-              <option value="xl">XL</option>
-              <option value="xxl">XXL</option>
-            </select>
-            <br>
-            <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape">
-                <option value="">Shape</option>
-                <option value="box">Box</option>
-                <option value="circle">Circle</option>
-                <option value="rounded">Rounded</option>
-                <option value="bubble">Bubble</option>
-            </select>
-            <br>
-            <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment">
-                <option value="">Alignment</option>
-                <option value="upper">Upper</option>
-                <option value="lower">Lower</option>
-            </select>
-            <br>
-            <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">Stationary </label>
-            <input type="checkbox" id="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">
+            <div class="fieldc">
+              <div class="fieldt">
+                <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-size">Size</label><br>
+                <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-size" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-size">
+                  <option value="xxs">XXS</option>
+                  <option value="xs">XS</option>
+                  <option value="s">S</option>
+                  <option value="m" selected>M</option>
+                  <option value="l">L</option>
+                  <option value="xl">XL</option>
+                  <option value="xxl">XXL</option>
+                </select>
+              </div>
+              <div class="fieldt">
+                <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape">Shape</label><br>
+                <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape">
+                    <option value="box">Box</option>
+                    <option value="circle" selected>Circle</option>
+                    <option value="rounded">Rounded</option>
+                    <option value="bubble">Bubble</option>
+                </select>
+              </div>
+              <div class="fieldt">
+                <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment">Alignment</label><br>
+                <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment">
+                    <option value="" selected>Center</option>
+                    <option value="upper">Upper</option>
+                    <option value="lower">Lower</option>
+                </select>
+              </div>
+            
+            
+            <div class="fieldt">
+              <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">Stationary </label>
+              <input type="checkbox" id="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">
+            </div>
+          </div>
           </fieldset>
         `;
         itemsContainer.appendChild(newItem);
@@ -104,12 +148,16 @@
     newRingContainer.innerHTML = `
       <fieldset>
         <legend>Ring ${ringNumber}</legend>
-        <label for="ring${ringNumber}-arc">Arc</label><br>
-        <input type="range" id="ring${ringNumber}-arc" name="ring${ringNumber}-arc" min="0" max="360" step="45" value="0">
-        <br>
-        <label for="ring${ringNumber}-offset">Offset</label><br>
-        <input type="range" id="ring${ringNumber}-offset" name="ring${ringNumber}-offset" min="0" max="360" step="45" value="0">
-        <br>
+        <div class="fieldc">
+            <div class="fieldt">
+              <label for="ring${ringNumber}-arc">Arc</label><br>
+              <input type="range" id="ring${ringNumber}-arc" name="ring${ringNumber}-arc" min="0" max="360" step="45" value="0">
+            </div>
+            <div class="fieldt">
+              <label for="ring${ringNumber}-offset">Offset</label><br>
+              <input type="range" id="ring${ringNumber}-offset" name="ring${ringNumber}-offset" min="0" max="360" step="45" value="0">
+            </div>
+          </div>
         <button type="button" class="add-item-button" data-ring="${ringNumber}">Add Item</button>
         <div class="items-container" id="ring${ringNumber}-items-container"></div>
       </fieldset>
@@ -145,6 +193,7 @@
     }).join('');
     const ringsContainer = document.querySelector('.z-container');
     ringsContainer.innerHTML = html;
+    document.querySelector('#code').innerHTML = html;
   };
   
   const formChangeHandler = () => {
