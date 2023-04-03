@@ -31,3 +31,7 @@
     border: none;
     background-color: var(--transparent);
 }
+
+div[class^="ring-"].transparent{
+    border: none;
+}
