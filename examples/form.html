@@ -9,35 +9,41 @@
         font-family: 'Lucida Sans', Verdana, sans-serif;
         padding: 40px;
       }
+      .layout {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+
+      }
       .fieldc {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr minmax(0px, 1fr);
         grid-column-gap: 15px;
       }
       #code {
-	position: absolute;
-	width: 800px;
-  height: 400px;
-	background: #000000;
-  font-size:10px;
-	appearance: none;
-	border: none;
-	resize: none;
-	outline: none;
-	overflow: hidden;
-	font: inherit;
-	padding: 0 1px;
-	margin: 0 -1px;
-	contain: strict;
-  color: aqua;
-	user-select: text;
-	white-space: pre !important;
-}
+       
+        width: 100%;
+        height: 400px;
+        background: #000000;
+        font-size:10px;
+        appearance: none;
+        border: none;
+        resize: none;
+        outline: none;
+        overflow: hidden;
+        font: inherit;
+        padding: 0 1px;
+        margin: 0 -1px;
+        contain: strict;
+        color: aqua;
+        user-select: text;
+        white-space: pre !important;
+      }
       
         .item {
             transition: transform 1s;
         }
         form {
+          z-index: 20;
           float: right;
           width: 400px;
           padding: 10px;
@@ -56,7 +62,9 @@
     </style>
   </head>
   <body>
-    <h1>Settings Form</h1>
+<div class="layout">
+  <div class="z-container"></div>
+  <div>
     <form>
       <fieldset>
         <legend>Rings</legend>
@@ -73,6 +81,14 @@
                   <label for="ring1-offset">Offset</label><br>
                   <input type="range" id="ring1-offset" name="ring1-offset" min="0" max="360" step="45" value="0">
                 </div>
+                <div class="fieldt">
+                  <label for="ring1-ccw">CCW </label>
+                  <input type="checkbox" id="ring1-ccw" name="ring1-ccw">
+                </div>
+                <div class="fieldt">
+                  <label for="ring1-visible">visible </label>
+                  <input type="checkbox" id="ring1-visible" name="ring1-visible" checked>
+                </div>
               </div>
                 <button type="button" class="add-item-button" data-ring="1">Add Item</button>
                 <div class="items-container" id="ring1-items-container"></div>
@@ -82,14 +98,29 @@
         <button type="button" id="add-ring-button">Add Ring</button>
       </fieldset>
     </form>
-    <div class="z-container"></div>
-    <textarea readonly name="" id="code">
+  </div>
+  <textarea readonly name="" id="code">
      
-    </textarea>
+  </textarea>
+
+ 
+ 
+</div>
+
     <script>
       const form = document.querySelector('form');
       const ringsContainer = document.querySelector('#rings-container');
       const addRingButton = document.querySelector('#add-ring-button');
+      const removeItemButtonHandler = (event) => {
+        // remove form element before update to do the trick
+        event.target.parentElement.parentElement.remove()
+        updateDOM()
+      }
+      const removeRingButtonHandler = (event) => {
+        // remove form element before update to do the trick
+        event.target.parentElement.parentElement.remove()
+        updateDOM()
+      }
       const addItemButtonHandler = (event) => {
         const ringNumber = event.target.dataset.ring;
         const itemsContainer = document.querySelector(`#ring${ringNumber}-items-container`);
@@ -128,82 +159,94 @@
                     <option value="lower">Lower</option>
                 </select>
               </div>
-            
-            
             <div class="fieldt">
               <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">Stationary </label>
               <input type="checkbox" id="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">
             </div>
+
           </div>
+          <button type="button" class="remove-item-button">remove</button>
           </fieldset>
         `;
         itemsContainer.appendChild(newItem);
+        const removeItemButton = newItem.querySelector('.remove-item-button');
+        removeItemButton.addEventListener('click', removeItemButtonHandler);
         formChangeHandler()
       };
-      
       const addRingButtonHandler = () => {
         const ringNumber = ringsContainer.children.length + 1;
         const newRingContainer = document.createElement('div');
         newRingContainer.classList.add('ringf-container');
-    newRingContainer.innerHTML = `
-      <fieldset>
-        <legend>Ring ${ringNumber}</legend>
-        <div class="fieldc">
-            <div class="fieldt">
-              <label for="ring${ringNumber}-arc">Arc</label><br>
-              <input type="range" id="ring${ringNumber}-arc" name="ring${ringNumber}-arc" min="0" max="360" step="45" value="0">
-            </div>
-            <div class="fieldt">
-              <label for="ring${ringNumber}-offset">Offset</label><br>
-              <input type="range" id="ring${ringNumber}-offset" name="ring${ringNumber}-offset" min="0" max="360" step="45" value="0">
-            </div>
-          </div>
-        <button type="button" class="add-item-button" data-ring="${ringNumber}">Add Item</button>
-        <div class="items-container" id="ring${ringNumber}-items-container"></div>
-      </fieldset>
-    `;
-    ringsContainer.appendChild(newRingContainer);
-    
-    const addItemButton = newRingContainer.querySelector('.add-item-button');
-    addItemButton.addEventListener('click', addItemButtonHandler);
-    formChangeHandler()
-  };
-  
-  const updateDOM = () => {
-    const rings = document.querySelectorAll('.ringf-container');
-    const html = Array.from(rings).map((ring) => {
-      const ringNumber = ring.querySelector('legend').textContent.split(' ')[1];
-      const arc = ring.querySelector(`#ring${ringNumber}-arc`).value;
-      const offset = ring.querySelector(`#ring${ringNumber}-offset`).value;
-      var iNumber = 0
-      const items = Array.from(ring.querySelectorAll('.item-container')).map((item) => {
-        const itemNumber = item.querySelector('legend').textContent.split(' ')[1];
-        iNumber = iNumber + 1
-        const size = item.querySelector(`#ring${ringNumber}-item${itemNumber}-size`).value;
-        const alignment = item.querySelector(`#ring${ringNumber}-item${itemNumber}-alignment`).value;
-        const shape = item.querySelector(`#ring${ringNumber}-item${itemNumber}-shape`).value;
-        const stationary = item.querySelector(`#ring${ringNumber}-item${itemNumber}-stationary`).checked ? 'stationary' : '';
-        return `<div class="item ${shape} ${size} ${alignment} ${stationary}">${itemNumber}</div>`;
-      }).join('');
-      return `
-        <div class="ring-${ringNumber} items-${iNumber} ${arc ? `arc-${arc}` : ``} ${offset ? `offset-${offset}` : ``}">
-          ${items}
-        </div>
-      `;
-    }).join('');
-    const ringsContainer = document.querySelector('.z-container');
-    ringsContainer.innerHTML = html;
-    document.querySelector('#code').innerHTML = html;
-  };
-  
-  const formChangeHandler = () => {
-    updateDOM();
-  };
-  
-  form.addEventListener('change', formChangeHandler);
-  addRingButton.addEventListener('click', addRingButtonHandler);
-  const addItemButtons = document.querySelectorAll('.add-item-button');
-  addItemButtons.forEach((addItemButton) => {
-    addItemButton.addEventListener('click', addItemButtonHandler);
-  });
+        newRingContainer.innerHTML = `
+          <fieldset>
+            <legend>Ring ${ringNumber}</legend>
+            <div class="fieldc">
+                <div class="fieldt">
+                  <label for="ring${ringNumber}-arc">Arc</label><br>
+                  <input type="range" id="ring${ringNumber}-arc" name="ring${ringNumber}-arc" min="0" max="360" step="45" value="0">
+                </div>
+                <div class="fieldt">
+                  <label for="ring${ringNumber}-offset">Offset</label><br>
+                  <input type="range" id="ring${ringNumber}-offset" name="ring${ringNumber}-offset" min="0" max="360" step="45" value="0">
+                </div>
+                <div class="fieldt">
+                  <label for="ring${ringNumber}-ccw">CCW </label>
+                  <input type="checkbox" id="ring${ringNumber}-ccw" name="ring${ringNumber}-ccw">
+                </div>
+                <div class="fieldt">
+                  <label for="ring${ringNumber}-visible">visible </label>
+                  <input type="checkbox" id="ring${ringNumber}-visible" name="ring${ringNumber}-visible" checked>
+                </div>
+              </div>
+            <button type="button" class="add-item-button" data-ring="${ringNumber}">Add Item</button>
+            <div class="items-container" id="ring${ringNumber}-items-container"></div>
+            <button type="button" class="remove-ring-button">remove</button>
+          </fieldset>
+        `;
+        ringsContainer.appendChild(newRingContainer);
+        const addItemButton = newRingContainer.querySelector('.add-item-button');
+        addItemButton.addEventListener('click', addItemButtonHandler);
+        const removeRingButton = newRingContainer.querySelector('.remove-ring-button');
+        removeRingButton.addEventListener('click', removeRingButtonHandler);
+        formChangeHandler()
+      };
+      const updateDOM = () => {
+        const rings = document.querySelectorAll('.ringf-container');
+        const html = Array.from(rings).map((ring) => {
+          const ringNumber = ring.querySelector('legend').textContent.split(' ')[1];
+          const ccw = ring.querySelector(`#ring${ringNumber}-ccw`).checked ? 'ccw' : '';
+          const visible = ring.querySelector(`#ring${ringNumber}-visible`).checked ? '' : 'transparent';
+          const arc = ring.querySelector(`#ring${ringNumber}-arc`).value;
+          const offset = ring.querySelector(`#ring${ringNumber}-offset`).value;
+          var iNumber = 0
+          const items = Array.from(ring.querySelectorAll('.item-container')).map((item) => {
+            const itemNumber = item.querySelector('legend').textContent.split(' ')[1];
+            iNumber = iNumber + 1
+            const size = item.querySelector(`#ring${ringNumber}-item${itemNumber}-size`).value;
+            const alignment = item.querySelector(`#ring${ringNumber}-item${itemNumber}-alignment`).value;
+            const shape = item.querySelector(`#ring${ringNumber}-item${itemNumber}-shape`).value;
+            const stationary = item.querySelector(`#ring${ringNumber}-item${itemNumber}-stationary`).checked ? 'stationary' : '';
+            return `<div class="item ${shape} ${size} ${alignment} ${stationary}">${itemNumber}</div>\n`;
+          }).join('');
+          return `
+    <div class="ring-${ringNumber} items-${iNumber} ${arc ? `arc-${arc}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
+      ${items}
+    </div>
+          `;
+        }).join('');
+        const ringsContainer = document.querySelector('.z-container');
+        ringsContainer.innerHTML = html;
+        document.querySelector('#code').innerHTML = html;
+      }; 
+      const formChangeHandler = () => {
+        updateDOM();
+      };
+      form.addEventListener('change', formChangeHandler);
+      addRingButton.addEventListener('click', addRingButtonHandler);
+      const addItemButtons = document.querySelectorAll('.add-item-button');
+      addItemButtons.forEach((addItemButton) => {
+        addItemButton.addEventListener('click', addItemButtonHandler);
+      });
+      
+      
 </script>
