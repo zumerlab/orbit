@@ -21,8 +21,9 @@
 - WIP armar progress en svg
 - ~~FIX offset~~
 - CHANGE NAMES
-- issue core.item angle
+- OK issue core.item angle
 - add manual overrride of items-n
+- Rings. permitir que cada ring tenga su ---radio pueda ser cmabiada por el usuario. Default que sea como hasta ahora 
 
 ## ELEMENTS
 
