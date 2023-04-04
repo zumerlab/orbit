@@ -14,12 +14,12 @@
    --offset-angle: 0;
    --direction: 1;
    --angle: 1;
-   --radius: 10vw;
+   --radius: 50px;
    --item-number: 1;
    --radius-padding: 8px;
 
    @for $i from $min-rings through $max-rings {
-     --ring-#{$i}-factor: #{$i};
+     --radius-#{$i}: var(--radius) * #{$i};
    }
 
    /* Shape sizes */

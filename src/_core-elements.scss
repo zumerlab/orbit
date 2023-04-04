@@ -113,8 +113,8 @@ $angle in $sectors {
 
 @for $i from $min-rings through $max-rings {
     .z-container>.ring-#{$i} {
-        width: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
-        height: calc(var(--radius) * 2 * var(--ring-#{$i}-factor));
+        width: calc(var(--radius-#{$i}) * 2);
+        height: calc(var(--radius-#{$i}) * 2);
     }
 }
 
