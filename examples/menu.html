@@ -237,8 +237,9 @@ myForm.addEventListener("submit", function(e) {
 itema.forEach(el => {
  el.addEventListener("click", function(e) {
   // Set themyForm position to the click coordinates
+ var tt = myForm.getBoundingClientRect()
  myForm.style.left = e.clientX + "px";
- myForm.style.top = e.clientY + "px";
+ myForm.style.top = e.clientY - tt.height + "px";
   
   // Show themyForm
  myForm.style.display = "block";
