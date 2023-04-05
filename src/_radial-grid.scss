@@ -1,5 +1,6 @@
 @use "./mixins" as *;
 @use "./variables" as *;
+
  /* Initial Reset */
  * {
    box-sizing: border-box;
@@ -78,11 +79,11 @@
        }
 
       .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
-        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
+        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
       }
  
       .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
-        transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius) * #{$i} #{$math}), 0);
+        transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0);
       }
     }
    }
@@ -96,8 +97,8 @@
    @each $size,
    $var in $sizes {
      .item.#{$size}>.ring-#{$i} {
-       width: calc(#{$var} * var(--ring-#{$i}-factor));
-       height: calc(#{$var} * var(--ring-#{$i}-factor));
+       width: calc(#{$var} * var(--ring-#{$i}));
+       height: calc(#{$var} * var(--ring-#{$i}));
      }
 
      @each $class in $align {
