@@ -70,8 +70,20 @@
         <legend>Rings</legend>
         <div id="rings-container">
           <div class="ringf-container">
+            <div class="fieldc">
+              <div class="fieldt">
+                <label for="rings-radius">Radius</label><br>
+                <input type="range" id="rings-radius" name="rings-radius" min="0" max="1000" step="1" value="">
+              </div>
+            </div>
             <fieldset>
               <legend>Ring 1</legend>
+              <div class="fieldc">
+                <div class="fieldt">
+                  <label for="ring1-radius">Radius</label><br>
+                  <input type="range" id="ring1-radius" name="ring1-radius" min="0" max="1000" step="1" value="">
+                </div>
+              </div>
               <div class="fieldc">
                 <div class="fieldt">
                   <label for="ring1-arc">Arc</label><br>
@@ -109,6 +121,12 @@
 
     <script>
       const form = document.querySelector('form');
+      const radius = document.querySelector('#rings-radius');
+      const rradius = document.querySelector('#ring1-radius');
+      const zContainer = document.querySelector('.z-container');
+      const range = getComputedStyle(zContainer).getPropertyValue('--radius');
+      radius.setAttribute('value', range.slice(0, -2).trim())
+      rradius.setAttribute('value', range.slice(0, -2).trim())
       const ringsContainer = document.querySelector('#rings-container');
       const addRingButton = document.querySelector('#add-ring-button');
       const removeItemButtonHandler = (event) => {
@@ -181,6 +199,13 @@
           <fieldset>
             <legend>Ring ${ringNumber}</legend>
             <div class="fieldc">
+              <div class="fieldt">
+                <label for="ring${ringNumber}-radius">Radius</label><br>
+                <input type="range" id="ring${ringNumber}-radius" name="ring${ringNumber}-radius" min="0" max="1000" step="1" value="">
+              </div>
+            </div>
+            <div class="fieldc">
+                
                 <div class="fieldt">
                   <label for="ring${ringNumber}-arc">Arc</label><br>
                   <input type="range" id="ring${ringNumber}-arc" name="ring${ringNumber}-arc" min="0" max="360" step="45" value="0">
@@ -204,6 +229,7 @@
           </fieldset>
         `;
         ringsContainer.appendChild(newRingContainer);
+        document.querySelector(`#ring${ringNumber}-radius`).setAttribute('value', Number(range.slice(0, -2).trim()))
         const addItemButton = newRingContainer.querySelector('.add-item-button');
         addItemButton.addEventListener('click', addItemButtonHandler);
         const removeRingButton = newRingContainer.querySelector('.remove-ring-button');
@@ -212,12 +238,16 @@
       };
       const updateDOM = () => {
         const rings = document.querySelectorAll('.ringf-container');
+        const ringsRadius = document.querySelector(`#rings-radius`).value
+        zContainer.style.setProperty('--radius', ringsRadius + 'px');
         const html = Array.from(rings).map((ring) => {
           const ringNumber = ring.querySelector('legend').textContent.split(' ')[1];
           const ccw = ring.querySelector(`#ring${ringNumber}-ccw`).checked ? 'ccw' : '';
           const visible = ring.querySelector(`#ring${ringNumber}-visible`).checked ? '' : 'transparent';
           const arc = ring.querySelector(`#ring${ringNumber}-arc`).value;
           const offset = ring.querySelector(`#ring${ringNumber}-offset`).value;
+          const ringRadius = ring.querySelector(`#ring${ringNumber}-radius`).value
+          zContainer.style.setProperty(`--radius-${ringNumber}`, ringRadius + 'px');
           var iNumber = 0
           const items = Array.from(ring.querySelectorAll('.item-container')).map((item) => {
             const itemNumber = item.querySelector('legend').textContent.split(' ')[1];
