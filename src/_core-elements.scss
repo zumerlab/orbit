@@ -84,7 +84,12 @@ div[class^="ring-"] {
     grid-area: 1/1/1/1;
     @include alignment;
 }
-
+.surface::before {
+    
+    width: 200px;
+    height: 200px;
+    background-color: green;
+}
 @each $size,
 $var in $sizes {
     .item.#{$size} {
