@@ -5,7 +5,7 @@
 .item.line {
     transform-origin: 0 50%;
     height: 0;
-    width: calc(var(--radius) * var(--ring-3-factor));
+    width: calc(var(--radius-3));
     border-radius: 0%;
     border: none;
     border-top: 1px dashed rgba(155, 155, 155, 0.5);
