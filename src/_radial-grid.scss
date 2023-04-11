@@ -97,8 +97,8 @@
    @each $size,
    $var in $sizes {
      .item.#{$size}>.ring-#{$i} {
-       width: calc(#{$var} * var(--ring-#{$i}));
-       height: calc(#{$var} * var(--ring-#{$i}));
+       width: calc(#{$var} * #{$i});
+       height: calc(#{$var} * #{$i});
      }
 
      @each $class in $align {
@@ -113,12 +113,12 @@
        }
 
        .item.#{$size}>.ring-#{$i}>.item#{$class} {
-         --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
+         --x: calc((#{$var} / 2 * #{$i}) #{$math});
          transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
        }
 
        .item.#{$size}>.ring-#{$i}> .item.stationary#{$class}  {
-         --x: calc((#{$var} / 2 * var(--ring-#{$i}-factor)) #{$math});
+         --x: calc((#{$var} / 2 * #{$i}) #{$math});
          transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0);
        }
      }
