@@ -75,6 +75,7 @@
     border: 1px solid rgb(255, 5, 5);
     grid-area: 1/1/1/1;
     align-items: center;
+    z-index: $max-rings;
 }
 
 div[class^="ring-"] {
@@ -87,11 +88,16 @@ div[class^="ring-"] {
 .surface:before {
     content: '';
     position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-    clip-path: url('../css/sector.svg#sector');
+    border: 4px solid purple;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 300px;
+   // rotate: 45deg;
+    background-color: aquamarine;
+   // border-radius: 0 100% 0 0;
+    //clip-path: polygon(50% 50%, 0% 100%, 300% 0%);
+    clip-path: url('dist/css/sector.svg#sector');
 }
 .surface:hover {
     background-color: red;
@@ -126,6 +132,7 @@ $angle in $sectors {
     .z-container>.ring-#{$i} {
         width: calc(var(--radius-#{$i}) * 2);
         height: calc(var(--radius-#{$i}) * 2);
+        z-index: $max-rings - $i;
     }
 }
 

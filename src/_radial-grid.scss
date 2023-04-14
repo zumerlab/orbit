@@ -99,6 +99,8 @@
      .item.#{$size}>.ring-#{$i} {
        width: calc(#{$var} * #{$i});
        height: calc(#{$var} * #{$i});
+       // test
+       z-index: $max-rings - $i;
      }
 
      @each $class in $align {
