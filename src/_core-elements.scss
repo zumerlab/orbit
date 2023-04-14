@@ -88,19 +88,24 @@ div[class^="ring-"] {
 .surface:before {
     content: '';
     position: absolute;
-    border: 4px solid purple;
-    top: 0;
-    left: 0;
-    width: 400px;
+    //border: 4px solid purple;
+    // calc with of element or distnace of element nis it raidus
+    width: 150px;
     height: 300px;
-   // rotate: 45deg;
-    background-color: aquamarine;
-   // border-radius: 0 100% 0 0;
-    //clip-path: polygon(50% 50%, 0% 100%, 300% 0%);
-    clip-path: url('dist/css/sector.svg#sector');
+    // 1/2 width - last rings r
+    left: -84px;
+    opacity: .6;
+    // rotate: 45deg;
+   // radial gradient
+    // background-color: aquamarine;
+    background-image: radial-gradient(circle at 0px 50%, rgba(255, 0, 0, 0) 0, rgba(255, 255, 255, 1) 50px, rgba(255, 193, 7, 1) 51px 100%);
+    // bordarc
+    border-radius: 0% 100% 100% 0% / 0% 50% 50% 0%;
+    // polygon
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
 }
-.surface:hover {
-    background-color: red;
+.surface:hover::before {
+    background-image: radial-gradient(circle at 0px 50%, rgba(255, 0, 0, 0) 0, rgba(255, 255, 255, 1) 50px, rgb(223, 28, 71) 51px 100%);
 }
 @each $size,
 $var in $sizes {
