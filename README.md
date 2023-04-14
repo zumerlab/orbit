@@ -23,7 +23,13 @@
 - CHANGE NAMES
 - OK issue core.item angle
 - add manual overrride of items-n
-- Rings. permitir que cada ring tenga su ---radio pueda ser cmabiada por el usuario. Default que sea como hasta ahora 
+- OK? Rings. permitir que cada ring tenga su ---radio pueda ser cmabiada por el usuario. Default que sea como hasta ahora
+- ARC BG:
+  1. OK (FALTA TESTEO) los rings tienen z-index el mas arriba siempre es el mas cercano al centro. (ver cóm osolucionar... porque es al reves, quizas ya setar en el css un orden de 10 a core y de ahi para abajo, o teneinedo en cta nro de rings...ESto :)
+  2. OK se crea un elemento con borde irrgulArc.
+  3. OK se crea un :before con tamano del ring, pero con transformOrigin al centro
+  4. OK se use un clip-path polygon y
+  5. OK un radial-gradient con hard stop al inicio de ring.
 
 ## ELEMENTS
 
