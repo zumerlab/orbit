@@ -65,8 +65,22 @@
 
 
  @for $i from $min-rings through $max-rings {
+    $resta: 1;
+    @if $i == 1 {
+      $resta: 0
+    }
   @each $size,
    $var in $sizes {
+    .z-container>.ring-#{$i}> .item.#{$size} {
+      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
+    }
+    .z-container>.ring-#{$i}> .item.#{$size}.surface:before {
+      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) - var(--radius-#{$i - $resta}) - #{$var}), 0);
+    }
+
+    .z-container>.ring-#{$i}> .item.stationary.#{$size} {
+      transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0);
+    }
     @each $class in $align {
       $math: "";
 
@@ -81,10 +95,15 @@
       .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
       }
- 
+      .z-container>.ring-#{$i}> .item.#{$size}#{$class}.surface:before {
+        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i - $resta}) #{$math}), 0);
+      }
+
       .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
         transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0);
       }
+      
+     
     }
    }
  
@@ -102,7 +121,15 @@
        // test
        z-index: $max-rings - $i;
      }
+     .item.#{$size}>.ring-#{$i}>.item {
+      --x: calc((#{$var} / 2 * #{$i}));
+      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
+    }
 
+    .item.#{$size}>.ring-#{$i}> .item.stationary  {
+      --x: calc((#{$var} / 2 * #{$i}));
+      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0);
+    }
      @each $class in $align {
        $math: "";
 
