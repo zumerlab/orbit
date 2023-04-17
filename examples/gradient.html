@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Update DOM with Settings Form</title>
+    <link rel="stylesheet" href="../dist/css/index.min.css" type="text/css" />
+    <style>
+      body {
+        background-color: orangered;
+      }
+      .circle {
+        border-radius: 50%;
+        width: 200px;
+        aspect-ratio: 1;
+        border: 3px solid rgb(255, 252, 252);
+      }
+      .conic {
+        background-image: conic-gradient(
+        transparent 0px, transparent 40px,
+        green 40px, green 100px,
+        transparent 0
+        );
+        background-size: cover;
+      }
+      .radial {
+        background-image: radial-gradient(
+        transparent 0%, transparent 23%,
+        green 23%, green 41%,
+        yellow 41%, yellow 75%,
+        rgb(50, 31, 188) 75%, rgb(50, 31, 188) 100%
+        );
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+<div class="circle radial"></div>
+  </body>
+</html>
+
+
