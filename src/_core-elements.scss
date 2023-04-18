@@ -88,6 +88,8 @@ div[class^="ring-"] {
 .surface:before {
     content: '';
     position: absolute;
+    z-index: -1;
+    //filter: blur(1.3px);
     // calc with of element or distnace of element nis it raidus
     //border: 1px solid black;
     // 1/2 width - last rings 

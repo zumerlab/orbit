@@ -77,9 +77,10 @@
     .z-container>.ring-#{$i}> .item.#{$size}.surface:before {
       transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) ;
       width: calc(#{$var} * 1.5);
-      height: calc(#{$var} * 1.7);
+      height: calc(#{$var} * 2);
       background-image: radial-gradient(circle at calc((var(--radius-#{$i}) * -1 + 2px)) 50%, transparent 0px calc(var(--radius-#{$i})), orange calc(var(--radius-#{$i})) calc(var(--radius-#{$i}) + #{$var} * 1.4), transparent 0);
-      mask-image: conic-gradient(from 45deg , black 25%, transparent 0);
+      //mask-image: polygon(0 calc((#{$var} * 1.5 / 2) - 25px), 100% 0, 100% 100%, 0 calc((#{$var} * 1.5 / 2) + 25px));
+      mask-image: conic-gradient(from 74deg at calc((#{$var} * 1.5) * -1) 50%, black 32deg, transparent 0)
     }
 
     .z-container>.ring-#{$i}> .item.#{$size}.surface:hover::before {
