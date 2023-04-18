@@ -76,9 +76,15 @@
     }
     .z-container>.ring-#{$i}> .item.#{$size}.surface:before {
       transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) ;
-      width: calc(var(--radius-#{$i}) - var(--radius-#{$i - $resta}) + 40px);
-      height: calc(#{$var} + 20px);
+      width: calc(#{$var} * 1.5);
+      height: calc(#{$var} * 1.7);
+      background-image: radial-gradient(circle at calc((var(--radius-#{$i}) * -1 + 2px)) 50%, transparent 0px calc(var(--radius-#{$i})), orange calc(var(--radius-#{$i})) calc(var(--radius-#{$i}) + #{$var} * 1.4), transparent 0);
+      mask-image: conic-gradient(from 45deg , black 25%, transparent 0);
     }
+
+    .z-container>.ring-#{$i}> .item.#{$size}.surface:hover::before {
+      background-image: radial-gradient(circle at calc((var(--radius-#{$i}) * -1 + 2px)) 50%, transparent 0px calc(var(--radius-#{$i})), rgb(72, 0, 255) calc(var(--radius-#{$i})) calc(var(--radius-#{$i}) + #{$var} * 1.4), transparent 0);
+  }
 
     .z-container>.ring-#{$i}> .item.stationary.#{$size} {
       transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0);
@@ -98,7 +104,7 @@
         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
       }
       .z-container>.ring-#{$i}> .item.#{$size}#{$class}.surface:before {
-        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i - $resta}) #{$math}), 0);
+        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg));
       }
 
       .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {

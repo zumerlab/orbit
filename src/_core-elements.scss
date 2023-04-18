@@ -89,18 +89,15 @@ div[class^="ring-"] {
     content: '';
     position: absolute;
     // calc with of element or distnace of element nis it raidus
-    border: 1px solid black;
+    //border: 1px solid black;
     // 1/2 width - last rings 
-    opacity: .6;
+   // opacity: .6;
    // radial gradient
-    background-image: radial-gradient(circle at -40px 50%, orange 0px 5px, transparent 5px 50px, orange 51px 90px, transparent 91px 100%);
+    
     // bordarc
     // border-radius: 0% 100% 100% 0% / 0% 50% 50% 0%;
     // polygon
-    clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
-}
-.surface:hover::before {
-    background-image: radial-gradient(circle at 0px 50%, orange 0px 5px, transparent 5px 50px, purple 51px 90px, transparent 91px 100%);
+    //clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
 }
 @each $size,
 $var in $sizes {
