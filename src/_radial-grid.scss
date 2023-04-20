@@ -75,18 +75,33 @@
       transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
     }
     .z-container>.ring-#{$i}> .item.#{$size}.surface:before {
-      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) ;
-      width: calc(#{$var} * 1.5);
-      height: calc(#{$var} * 2);
-      background-image: radial-gradient(circle at calc((var(--radius-#{$i}) * -1 + 2px)) 50%, transparent 0px calc(var(--radius-#{$i})), orange calc(var(--radius-#{$i})) calc(var(--radius-#{$i}) + #{$var} * 1.4), transparent 0);
-      //mask-image: polygon(0 calc((#{$var} * 1.5 / 2) - 25px), 100% 0, 100% 100%, 0 calc((#{$var} * 1.5 / 2) + 25px));
-      mask-image: conic-gradient(from 74deg at calc((#{$var} * 1.5) * -1) 50%, black 32deg, transparent 0)
+      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg));
+        z-index: -1;
+        --length: calc((var(--radius-#{$i}) - #{$var} * 2));
+        --length-percent: calc(var(--angle)  * 1px);
+        --color: orange;
+        --tickness: 1px;
+        aspect-ratio: 1;
+        content: "";
+        position: absolute;
+        rotate: 45deg;
+        background-color: transparent;
+        border: none;
+        border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
+        width: var(--length);
+        border-top: var(--tickness) solid var(--color);
+        border-right: var(--tickness) solid var(--color);
+        clip-path: polygon(
+          calc(100% - var(--length-percent)) 0,
+          100% 0,
+          100% var(--length-percent),
+          0 100%
+        );
     }
-
     .z-container>.ring-#{$i}> .item.#{$size}.surface:hover::before {
-      background-image: radial-gradient(circle at calc((var(--radius-#{$i}) * -1 + 2px)) 50%, transparent 0px calc(var(--radius-#{$i})), rgb(72, 0, 255) calc(var(--radius-#{$i})) calc(var(--radius-#{$i}) + #{$var} * 1.4), transparent 0);
-  }
-
+      border-top-color: coral;
+      border-right-color: coral;
+    }
     .z-container>.ring-#{$i}> .item.stationary.#{$size} {
       transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0);
     }

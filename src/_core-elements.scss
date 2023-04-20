@@ -85,22 +85,9 @@ div[class^="ring-"] {
     grid-area: 1/1/1/1;
     @include alignment;
 }
-.surface:before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    //filter: blur(1.3px);
-    // calc with of element or distnace of element nis it raidus
-    //border: 1px solid black;
-    // 1/2 width - last rings 
-   // opacity: .6;
-   // radial gradient
-    
-    // bordarc
-    // border-radius: 0% 100% 100% 0% / 0% 50% 50% 0%;
-    // polygon
-    //clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
-}
+.surface:hover:before {
+    border-top-color: coral;
+  }
 @each $size,
 $var in $sizes {
     .item.#{$size} {
