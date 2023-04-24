@@ -75,32 +75,35 @@
       transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
     }
     .z-container>.ring-#{$i}> .item.#{$size}.surface:before {
-      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg));
+      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(-32px, 32px);
         z-index: -1;
         position: absolute;
         content: "";
-        --length: calc(#{$var} * 4.5);
+        --length: 150px;
         /* radius * angle in rads == arc lenght*/
-        --length-percent: calc(var(--radius-#{$i}) * (var(--angle) * 3.14 / 180) * 1px);
+        --length-percent: calc(110 * (var(--angle) * 3.14 / 180) * 1px);
         --color: orange;
-        --tickness: 30px;
+        --tickness: 100px;
         width: var(--length);
         aspect-ratio: 1;
-        background-color: transparent;
-        //border: 6px solid white;
+        //background-color: gray;
+        border: none;
         border-top: var(--tickness) solid var(--color);
         border-right: var(--tickness) solid var(--color);
         rotate: 45deg;
         border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
         box-sizing: border-box;
+        filter: invert(6);
+        opacity: 0.3;
         //transform-origin: 0 100%;
         /* top | left*/
         clip-path: polygon(
           calc(100% - var(--length-percent)) 0,
           100% 0,
           100% var(--length-percent),
-          /* This point is key to adapt arcs to absolute center*/
-            calc(var(--length-percent) * -1) calc(var(--length-percent) + 100%)
+          0% 100%
+          /* This point is key to adapt arcs to absolute center
+            calc(var(--length-percent) * -1) calc(var(--length-percent) + 100%)*/
         );
     }
     .z-container>.ring-#{$i}> .item.#{$size}.surface:hover::before {
