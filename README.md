@@ -31,6 +31,10 @@
   4. OK se use un clip-path polygon y
   5. OK un radial-gradient con hard stop al inicio de ring.
 
+  https://bennettfeely.com/clippy/
+  https://9elements.github.io/fancy-border-radius/full-control.html#0.0.85.0-100.0.15.0-100.100
+
+
 ## ELEMENTS
 
 - shapes
