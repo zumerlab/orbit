@@ -79,9 +79,9 @@
         z-index: -1;
         position: absolute;
         content: "";
-        --length: 150px;
+        --length: calc(var(--radius-#{$i}));
         /* radius * angle in rads == arc lenght*/
-        --length-percent: calc(110 * (var(--angle) * 3.14 / 180) * 1px);
+        --length-percent: calc(calc(var(--radius-#{$i}) - #{$var}) * (var(--angle) * 3.14 / 180));
         --color: orange;
         --tickness: 100px;
         width: var(--length);
