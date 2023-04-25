@@ -76,34 +76,34 @@
     }
     .z-container>.ring-#{$i}> .item.#{$size}.surface:before {
       transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(-32px, 32px);
-        z-index: -1;
-        position: absolute;
-        content: "";
-        --length: calc(var(--radius-#{$i}));
-        /* radius * angle in rads == arc lenght*/
-        --length-percent: calc(calc(var(--radius-#{$i}) - #{$var}) * (var(--angle) * 3.14 / 180));
-        --color: orange;
-        --tickness: 100px;
-        width: var(--length);
-        aspect-ratio: 1;
-        //background-color: gray;
-        border: none;
-        border-top: var(--tickness) solid var(--color);
-        border-right: var(--tickness) solid var(--color);
-        rotate: 45deg;
-        border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
-        box-sizing: border-box;
-        filter: invert(6);
-        opacity: 0.3;
-        //transform-origin: 0 100%;
-        /* top | left*/
-        clip-path: polygon(
-          calc(100% - var(--length-percent)) 0,
-          100% 0,
-          100% var(--length-percent),
-          0% 100%
-          /* This point is key to adapt arcs to absolute center
-            calc(var(--length-percent) * -1) calc(var(--length-percent) + 100%)*/
+      z-index: -1;
+      position: absolute;
+      content: "";
+      --length: calc(var(--radius-#{$i}));
+      /* radius * angle in rads == arc length*/
+      --length-percent: calc(calc(var(--radius-#{$i})) / (var(--angle) * 3.14159265359 / (180)));
+      --color: orange;
+      --tickness: 100px;
+      width: var(--length);
+      aspect-ratio: 1;
+      //background-color: gray;
+      border: none;
+      border-top: var(--tickness) solid var(--color);
+      border-right: var(--tickness) solid var(--color);
+      rotate: 45deg;
+      border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
+      box-sizing: border-box;
+      filter: invert(6);
+      opacity: 0.3;
+      //transform-origin: 0 100%;
+      /* top | left*/
+      clip-path: polygon(
+        calc(100% - var(--length-percent)) 0,
+        100% 0,
+        100% var(--length-percent),
+        0% 100%
+        /* This point is key to adapt arcs to absolute center
+          calc(var(--length-percent) * -1) calc(var(--length-percent) + 100%)*/
         );
     }
     .z-container>.ring-#{$i}> .item.#{$size}.surface:hover::before {
@@ -115,20 +115,23 @@
     }
     @each $class in $align {
       $math: "";
+      $translate: "";
 
        @if $class ==".upper" {
          $math: "+ (calc(#{$var} / 2))";
+         $translate: "translate(-55px, 55px)";
        }
 
        @if $class ==".lower" {
          $math: "- (calc(#{$var} / 2))";
+         $translate: "translate(-8px, 8px)";
        }
 
       .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
       }
       .z-container>.ring-#{$i}> .item.#{$size}#{$class}.surface:before {
-        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg));
+        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) #{$translate};
       }
 
       .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
