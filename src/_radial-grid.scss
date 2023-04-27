@@ -80,8 +80,12 @@
       position: absolute;
       content: "";
       --length: calc(var(--radius-#{$i}));
-      /* radius * angle in rads == arc length*/
-      --length-percent: calc(calc(var(--radius-#{$i})) / (var(--angle) * 3.14159265359 / (180)));
+      /* radius * angle in rads == arc length
+       --length-percent: calc(150 * calc(var(--angle) / 90) * 1px);
+      */
+      --semi: calc((90 - var(--angle)) / 2 * 1deg);
+      --arc-gap: 1px;
+      --length-percent: calc(var(--radius-#{$i}) - var(--arc-gap) - var(--length) * tan(var(--semi)));
       --color: orange;
       --tickness: 100px;
       width: var(--length);
@@ -100,7 +104,7 @@
       clip-path: polygon(
         calc(100% - var(--length-percent)) 0,
         100% 0,
-        100% var(--length-percent),
+        100% calc(var(--length-percent)),
         0% 100%
         /* This point is key to adapt arcs to absolute center
           calc(var(--length-percent) * -1) calc(var(--length-percent) + 100%)*/
