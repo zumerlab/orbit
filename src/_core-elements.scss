@@ -26,6 +26,13 @@
     border-radius: 50%;
 }
 
+
+.arc {
+    display: grid;
+    grid-area: 1/1/1/1;
+    //@include alignment;
+    z-index: 1;
+}
 .content {
     padding: 5px;
     width: inherit;
@@ -39,17 +46,6 @@
     z-index: 10;
 }
 
-.content1 {
-    padding: 5px;
-    width: inherit;
-    height: inherit;
-    display: grid;
-    border-radius: inherit;
-    grid-area: 1/1/1/1;
-    @include alignment;
-    overflow: hidden;
-    z-index: -10;
-}
 
 .item.a0 {
     --angle: 0;
@@ -85,9 +81,7 @@ div[class^="ring-"] {
     grid-area: 1/1/1/1;
     @include alignment;
 }
-.surface:hover:before {
-    border-top-color: coral;
-  }
+
 @each $size,
 $var in $sizes {
     .item.#{$size} {
@@ -123,7 +117,7 @@ $angle in $sectors {
 }
 
 @for $i from $min-items through $max-items {
-    .item:nth-child(#{$i}) {
+    .item:nth-child(#{$i}), .arc:nth-child(#{$i}) {
         --item-number:#{$i};
     }
 }

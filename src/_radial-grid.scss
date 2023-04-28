@@ -62,6 +62,19 @@
    }
  }
 
+ @for $i from $min-items  through $max-items {
+  @each $arc,
+  $value in $arcs {
+    .items-#{$i}.#{$arc}>.arc {
+      --angle: calc((var(--arc) / #{$i - 1})  * var(--direction));
+    }
+  }
+}
+ @for $i from $min-items  through $max-items {
+  .items-#{$i}>.arc {
+     --angle: calc((var(--arc) / #{$i})  * var(--direction));
+   }
+ }
 
 
  @for $i from $min-rings through $max-rings {
@@ -71,48 +84,10 @@
     }
   @each $size,
    $var in $sizes {
-    .z-container>.ring-#{$i}> .item.#{$size} {
+    .z-container>.ring-#{$i}>.item.#{$size} {
       transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
     }
-    .z-container>.ring-#{$i}> .item.#{$size}.surface:before {
-      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(-32px, 32px);
-      z-index: -1;
-      position: absolute;
-      content: "";
-      --length: calc(var(--radius-#{$i}));
-      /* radius * angle in rads == arc length
-       --length-percent: calc(150 * calc(var(--angle) / 90) * 1px);
-      */
-      --semi: calc((90 - var(--angle)) / 2 * 1deg);
-      --arc-gap: 1px;
-      --length-percent: calc(var(--radius-#{$i}) - var(--arc-gap) - var(--length) * tan(var(--semi)));
-      --color: orange;
-      --tickness: 50px;
-      width: var(--length);
-      aspect-ratio: 1;
-      //background-color: gray;
-      border: none;
-      border-top: var(--tickness) solid var(--color);
-      border-right: var(--tickness) solid var(--color);
-      rotate: 45deg;
-      border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
-      box-sizing: border-box;
-      //transform-origin: 0 100%;
-      /* top | left*/
-      clip-path: polygon(
-        calc(100% - var(--length-percent)) 0,
-        100% 0,
-        100% calc(var(--length-percent)),
-        0% 100%
-        /* This point is key to adapt arcs to absolute center
-          calc(var(--length-percent) * -1) calc(var(--length-percent) + 100%)*/
-        );
-    }
-    .z-container>.ring-#{$i}> .item.#{$size}.surface:hover::before {
-      border-top-color: coral;
-      border-right-color: coral;
-    }
-    .z-container>.ring-#{$i}> .item.stationary.#{$size} {
+    .z-container>.ring-#{$i}>.item.stationary.#{$size} {
       transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0);
     }
     @each $class in $align {
@@ -132,9 +107,6 @@
       .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
       }
-      .z-container>.ring-#{$i}> .item.#{$size}#{$class}.surface:before {
-        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) #{$translate};
-      }
 
       .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
         transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0);
@@ -143,6 +115,35 @@
      
     }
    }
+
+   .z-container>.ring-#{$i}>.arc {
+    transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i - 1})), 0) rotate(45deg) ;
+    --length: calc(var(--radius-#{$i}));
+    --semi: calc((90 - var(--angle)) / 2 * 1deg);
+    --arc-gap: 1px;
+    --length-percent: calc(var(--radius-#{$i}) - var(--arc-gap) - var(--length) * tan(var(--semi)));
+    --color: orange;
+    --tickness: 5px;
+    width: var(--length);
+    aspect-ratio: 1;
+    border: none;
+    border-top: var(--tickness) solid var(--color);
+    border-right: var(--tickness) solid var(--color);
+    background-color: black;
+    border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
+    box-sizing: border-box;
+    /* top | left*/
+    clip-path: polygon(
+      calc(100% - var(--length-percent)) 0,
+      100% 0,
+      100% calc(var(--length-percent)),
+      0% 100%
+      );
+  }
+  .z-container>.ring-#{$i}>.arc:hover {
+    border-top-color: coral;
+    border-right-color: coral;
+  }
  
  }
  .core>.item {
@@ -188,6 +189,7 @@
          transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0);
        }
      }
+
    }
  }
 
