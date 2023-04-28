@@ -87,7 +87,7 @@
       --arc-gap: 1px;
       --length-percent: calc(var(--radius-#{$i}) - var(--arc-gap) - var(--length) * tan(var(--semi)));
       --color: orange;
-      --tickness: 100px;
+      --tickness: 50px;
       width: var(--length);
       aspect-ratio: 1;
       //background-color: gray;
@@ -97,8 +97,6 @@
       rotate: 45deg;
       border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
       box-sizing: border-box;
-      filter: invert(6);
-      opacity: 0.3;
       //transform-origin: 0 100%;
       /* top | left*/
       clip-path: polygon(
