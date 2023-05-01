@@ -117,28 +117,29 @@
    }
 
    .z-container>.ring-#{$i}>.arc {
-    transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i - 1})), 0) rotate(45deg) ;
-    --length: calc(var(--radius-#{$i}));
-    --semi: calc((90 - var(--angle)) / 2 * 1deg);
+    --length: calc(var(--radius-#{$i})*2);
+    --half: calc(var(--length)/2);
+    --quarter: calc(var(--half)/2);
+    transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--quarter), 0);
+    --semi: calc(var(--angle) / 2 * 1deg);
     --arc-gap: 1px;
-    --length-percent: calc(var(--radius-#{$i}) - var(--arc-gap) - var(--length) * tan(var(--semi)));
+    --length-percent: calc(var(--half) + var(--arc-gap) - var(--half) * tan(var(--semi)));
     --color: orange;
-    --tickness: 5px;
-    width: var(--length);
-    aspect-ratio: 1;
-    border: none;
-    border-top: var(--tickness) solid var(--color);
-    border-right: var(--tickness) solid var(--color);
-    background-color: black;
-    border-radius: 0% 100% 0% 0% / 0% 100% 0% 0%;
+    --tickness: 49px;
+    height: var(--length);
+    width: var(--half);
+    border: var(--tickness) solid var(--color);
+    border-left: none;
+    background-color: transparent;
+    border-radius: 0% 100% 100% 0% / 100% 50% 50% 0%;
     box-sizing: border-box;
-    /* top | left*/
     clip-path: polygon(
-      calc(100% - var(--length-percent)) 0,
-      100% 0,
-      100% calc(var(--length-percent)),
-      0% 100%
-      );
+      0 50%,
+    /* left center pivot*/ 100% calc(100% - var(--length-percent)),
+    /* right to bottom arc increase*/ 100% 100%,
+    /* right top corner*/ 100% 0,
+    /* right bottom corner*/ 100% var(--length-percent)
+    ); /* right to top ar decrease*/
   }
   .z-container>.ring-#{$i}>.arc:hover {
     border-top-color: coral;

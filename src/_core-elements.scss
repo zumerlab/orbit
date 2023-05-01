@@ -6,7 +6,7 @@
     grid-template-columns: minmax(var(--radius), 1fr);
     grid-template-rows: minmax(var(--radius), 1fr);
     border: 1px dashed black;
-    @include alignment;
+    place-items: center;
     padding: 30px;
 }
 
@@ -15,8 +15,8 @@
     background-color: rgb(255, 255, 255);
     border: 1px solid black;
     grid-area: 1/1/1/1;
-    @include alignment;
-    z-index: 1;
+    place-items: center;
+    //z-index: 1;
 }
 
 //defaults
@@ -30,8 +30,12 @@
 .arc {
     display: grid;
     grid-area: 1/1/1/1;
-    //@include alignment;
-    z-index: 1;
+}
+.arc:after {
+    content: "";
+    z-index: 70;
+    position:absolute;
+
 }
 .content {
     padding: 5px;
@@ -70,7 +74,7 @@
     border-radius: 50%;
     border: 1px solid rgb(255, 5, 5);
     grid-area: 1/1/1/1;
-    align-items: center;
+    place-items: center;
     z-index: $max-rings;
 }
 
@@ -79,8 +83,13 @@ div[class^="ring-"] {
     border-radius: 50%;
     border: 1px dashed rgba(155, 155, 155, 0.5);
     grid-area: 1/1/1/1;
-    @include alignment;
+    place-items: center;
 }
+/* hack doesnt work on ffox 
+div[class^="ring-"]:has(.item) {
+    place-items: center;
+}
+*/
 
 @each $size,
 $var in $sizes {
