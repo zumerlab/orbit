@@ -5,7 +5,7 @@
 ### Radial Grid
 
 - OK rows: rings OR orbits
-- columns: sectors relates to angles. quadrants... cordinal points... > ARCS
+- OK columns: sectors relates to angles. quadrants... cordinal points... > ARCS
 - angles & distances: definir independientemte (a32; d453)?
 - OK initial angle: importantes para saber desde donde empieza
 - OK arc: importante para estabelcer tamano del arco 90° o 360° x ej.
@@ -32,10 +32,9 @@
   5. ~~OK un radial-gradient con hard stop al inicio de ring.~~
   5. border curvo irregular en surface
   6. ARCS como elemento independiente.
-
   https://bennettfeely.com/clippy/
   https://9elements.github.io/fancy-border-radius/full-control.html#0.0.85.0-100.0.15.0-100.100
-
+- ~~ISSUE arc & arc-* same bug as items~~
 
 ## ELEMENTS
 
