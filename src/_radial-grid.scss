@@ -66,7 +66,8 @@
   @each $arc,
   $value in $arcs {
     .items-#{$i}.#{$arc}>.arc {
-      --angle: calc((var(--arc) / #{$i - 1})  * var(--direction));
+      // No hay que restar un angulo debido a la forma del arco
+      --angle: calc((var(--arc) / #{$i})  * var(--direction));
     }
   }
 }
@@ -120,7 +121,8 @@
     --length: calc(var(--radius-#{$i})*2);
     --half: calc(var(--length)/2);
     --quarter: calc(var(--half)/2);
-    transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--quarter), 0);
+    // ademas del offset el angulo debe dividirse por 2, distinto de item
+    transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - (var(--angle)/2)) * 1deg)) translate(var(--quarter), 0);
     --semi: calc(var(--angle) / 2 * 1deg);
     --arc-gap: 1px;
     --length-percent: calc(var(--half) + var(--arc-gap) - var(--half) * tan(var(--semi)));
