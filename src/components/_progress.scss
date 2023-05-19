@@ -2,6 +2,7 @@
 @use "../_variables.scss" as *;
 // Progress
 .progress {
+  --percentage: calc(var(--progress) * 3.6);
   display: grid;
   border-radius: 50%;
   //border: 10px solid rgba(248, 0, 0, 0.5);
@@ -12,7 +13,7 @@
   //background-color: #bc26da;
   background-image: 
   radial-gradient(circle, rgb(255, 255, 255) 55%, transparent 56%),
-  conic-gradient(transparent calc((var(--progress) - 1) * 1deg), rgba(0, 0, 0, 0.9)  calc(var(--progress) * 1deg));
+  conic-gradient(red calc((var(--percentage) - 1) * 1deg), rgba(255, 0, 0, 0.443)  calc(var(--percentage) * 1deg));
 }
 .progress::after {
   // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
