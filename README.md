@@ -30,20 +30,30 @@
   3. OK se crea un :before con tamano del ring, pero con transformOrigin al centro
   4. OK se use un clip-path polygon y
   5. ~~OK un radial-gradient con hard stop al inicio de ring.~~
-  5. border curvo irregular en surface
-  6. ARCS como elemento independiente.
-  https://bennettfeely.com/clippy/
-  https://9elements.github.io/fancy-border-radius/full-control.html#0.0.85.0-100.0.15.0-100.100
+  6. border curvo irregular en surface
+  7. ARCS como elemento independiente.
+  <https://bennettfeely.com/clippy/>
+  <https://9elements.github.io/fancy-border-radius/full-control.html#0.0.85.0-100.0.15.0-100.100>
+  Juices
+  <https://garden.bradwoods.io/notes/css/3d>
+  <https://garden.bradwoods.io/notes/css/blend-modes>
+
 - ~~ISSUE arc & arc-* same bug as items~~
 
 ## ELEMENTS
 
-- shapes
+- items: content containers with different #shapes flavor, #sizes, #aligment. Radial positioned. Nestable
+  - shapes: circle, box, rounded box, blob
+  - sizes: xxl, xl, l, m, s, xs, xxs
+  - alignemnt: upper, lower, middle
+- arcs: radial columns. visual support with basic interactivity and some cool customizations (gap, width, radius). Should be nestable
+- rings: radial rows. visual support. Nestable
+- labels: item label with optional conector and predefined positions
 
 ## COMPONENTS
 
 - progress
-- sectors svg
+- ~~sectors svg~~ css arcs
 - modals
 - labels
 - tooltips
