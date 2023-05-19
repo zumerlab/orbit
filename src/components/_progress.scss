@@ -1,6 +1,24 @@
 @use "../_mixins.scss" as *;
 @use "../_variables.scss" as *;
 // Progress
+.progress {
+  display: grid;
+  border-radius: 50%;
+  //border: 10px solid rgba(248, 0, 0, 0.5);
+  grid-area: 1/1/1/1;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  //background-color: #bc26da;
+  background-image: 
+  radial-gradient(circle, rgb(255, 255, 255) 55%, transparent 56%),
+  conic-gradient(transparent calc((var(--progress) - 1) * 1deg), rgba(0, 0, 0, 0.9)  calc(var(--progress) * 1deg));
+}
+.progress::after {
+  // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
+}
+
+//derepated
 svg {
   display: grid;
   border-radius: inherit;
