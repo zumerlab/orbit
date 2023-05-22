@@ -52,11 +52,13 @@
 
 ## COMPONENTS
 
-- progress
-- ~~sectors svg~~ css arcs
+- progress casi OK
+- knob casi OK
+- ~~sectors svg~~ css arcs OK
 - modals
-- labels
+- labels OK
 - tooltips
+
 - cards
 - buttons
 - forms
