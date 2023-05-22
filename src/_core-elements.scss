@@ -84,6 +84,7 @@ div[class^="ring-"] {
     border: 1px dashed rgba(155, 155, 155, 0.5);
     grid-area: 1/1/1/1;
     place-items: center;
+    box-sizing: content-box;
 }
 /* hack doesnt work on ffox 
 div[class^="ring-"]:has(.item) {
