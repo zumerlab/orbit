@@ -81,7 +81,7 @@
 div[class^="ring-"] {
     display: grid;
     border-radius: 50%;
-    border: 1px dashed rgba(155, 155, 155, 0.5);
+    border: 0.1px solid black;
     grid-area: 1/1/1/1;
     place-items: center;
     box-sizing: content-box;
