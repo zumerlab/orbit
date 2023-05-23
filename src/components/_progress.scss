@@ -1,7 +1,7 @@
 @use "../_mixins.scss" as *;
 @use "../_variables.scss" as *;
 // Progress
-.progress {
+.z-progress {
   --percentage: calc(var(--progress) * 3.6);
   display: grid;
   border-radius: 50%;
@@ -15,7 +15,7 @@
   radial-gradient(circle, rgb(255, 255, 255) 55%, transparent 56%),
   conic-gradient(red calc((var(--percentage) - 1) * 1deg), rgba(255, 0, 0, 0.443)  calc(var(--percentage) * 1deg));
 }
-.progress::after {
+.z-progress::after {
   // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
 }
 
