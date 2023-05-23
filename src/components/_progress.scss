@@ -12,7 +12,7 @@
   aspect-ratio: 1;
   //background-color: #bc26da;
   background-image: 
-  radial-gradient(circle, rgb(255, 255, 255) 55%, transparent 56%),
+  radial-gradient(circle, rgb(255, 255, 255) 63%, transparent 67%),
   conic-gradient(red calc((var(--percentage) - 1) * 1deg), rgba(255, 0, 0, 0.443)  calc(var(--percentage) * 1deg));
 }
 .z-progress::after {
