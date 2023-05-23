@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../dist/css/index.min.css" type="text/css" defer/>
     <title>Radial grid layout - css only</title>
     <style>
@@ -13,57 +14,93 @@
     </style>
   </head>
   <body>
-    <div class="z-container" >
-      <div class="core items-1">
-        <div class="item xs" style="transform: translate(-50%, -50%);"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="z-container" >
+            <div class="core items-1">
+              <div class="item xs" style="transform: translate(-50%, -50%);"></div>
+            </div>
+            <div class="ring-2 items-6 arc-90">
+              <div class="arc"></div>
+              <div class="arc"></div> 
+              <div class="arc"></div>
+              <div class="arc"></div>
+              <div class="arc"></div> 
+              <div class="arc"></div>
+            </div>
+            
+            <div class="ring-3 items-6">
+              <div class="arc"></div>
+              <div class="arc"></div> 
+              <div class="arc"></div>
+              <div class="arc"></div>
+              <div class="arc"></div> 
+              <div class="arc"></div>
+            </div>
+            <div class="ring-4 items-6">
+              <div class="arc"></div>
+              <div class="arc"></div> 
+              <div class="arc"></div>
+              <div class="arc"></div>
+              <div class="arc"></div> 
+              <div class="arc"></div>
+            </div>
+          </div>
+        </div>
+        
       </div>
-      <div class="ring-2 items-6 arc-90">
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
+     <div class="row">
+      <div class="col-sm-6">
+        <div class="z-container" >
+          <div class="core items-1">
+            <div class="item xs" style="transform: translate(-50%, -50%);"></div>
+          </div>
+          <div class="ring-1" style="width: 120px; height: 120px;">
+            <div class="z-progress" style="--progress: 75"></div>
+          </div>
+          <div class="ring-1 items-6">
+            <div class="arc"></div>
+            <div class="arc"></div> 
+            <div class="arc"></div>
+            <div class="arc"></div>
+            <div class="arc"></div> 
+            <div class="arc"></div>
+          </div>
+          
+         
+         
+          
+          
+        </div>
       </div>
+      <div class="col-sm-6">
+        <div class="z-container" >
+          <div class="core items-1">
+            <div class="item xs" style="transform: translate(-50%, -50%);"></div>
+          </div>
+          <div class="ring-1" style="width: 120px; height: 120px;">
+            <div class="z-progress" style="--progress: 75"></div>
+          </div>
+          <div class="ring-1 items-6">
+            <div class="arc"></div>
+            <div class="arc"></div> 
+            <div class="arc"></div>
+            <div class="arc"></div>
+            <div class="arc"></div> 
+            <div class="arc"></div>
+          </div>
+          
+         
+         
+          
+          
+        </div>
+      </div>
+     </div>
       
-      <div class="ring-3 items-3">
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
-      </div>
-      <div class="ring-4 items-6">
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
-      </div>
     </div>
-    <div class="z-container" >
-      <div class="core items-1">
-        <div class="item xs" style="transform: translate(-50%, -50%);"></div>
-      </div>
-      <div class="ring-1" style="width: 120px; height: 120px;">
-        <div class="progress" style="--progress: 75"></div>
-      </div>
-      <div class="ring-1 items-6">
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
-        <div class="arc"></div>
-        <div class="arc"></div> 
-        <div class="arc"></div>
-      </div>
-      
-     
-     
-      
-      
-    </div>
+
   </body>
 
 </html>
