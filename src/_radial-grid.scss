@@ -1,5 +1,6 @@
 @use "./mixins" as *;
 @use "./variables" as *;
+@use "./ui" as *;
 
  /* Initial Reset */
  * {
@@ -126,7 +127,7 @@
     --semi: calc(var(--angle) / 2 * 1deg);
     --arc-gap: 1px;
     --length-percent: calc(var(--half) + var(--arc-gap) - var(--half) * tan(var(--semi)));
-    --color: orange;
+    --color: var(--accent2);
     --tickness: 49px;
     height: var(--length);
     width: var(--half);
@@ -144,7 +145,7 @@
     ); /* right to top ar decrease*/
   }
   .z-container>.ring-#{$i}>.arc:hover {
-    border-color: coral;
+    border-color: var(--accent3);
   }
  
  }

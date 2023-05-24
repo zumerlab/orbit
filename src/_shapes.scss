@@ -1,3 +1,4 @@
+@use "./ui" as *;
 /* 
 * based on item element
 */
@@ -8,7 +9,7 @@
     width: calc(var(--radius-3));
     border-radius: 0%;
     border: none;
-    border-top: 1px dashed rgba(155, 155, 155, 0.5);
+    border-top: 1px dashed var(--dark);
 }
 
 .item.circle {

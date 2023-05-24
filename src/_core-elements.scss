@@ -1,19 +1,20 @@
 @use "./mixins" as *;
 @use "./variables" as *;
+@use "./ui" as *;
 
 .z-container {
     display: grid;
     grid-template-columns: minmax(var(--radius), 1fr);
     grid-template-rows: minmax(var(--radius), 1fr);
-    border: 1px dashed black;
+    border: 1px dashed var(--dark);
     place-items: center;
     padding: 30px;
 }
 
 .item {
     display: grid;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid black;
+    background-color: var(--light);
+    border: 1px solid var(--dark);
     grid-area: 1/1/1/1;
     place-items: center;
     //z-index: 1;
@@ -81,7 +82,7 @@
 div[class^="ring-"] {
     display: grid;
     border-radius: 50%;
-    border: 0.1px solid black;
+    border: 0.1px solid var(--dark);
     grid-area: 1/1/1/1;
     place-items: center;
     box-sizing: content-box;
