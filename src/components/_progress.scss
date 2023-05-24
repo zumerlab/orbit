@@ -13,8 +13,8 @@
   aspect-ratio: 1;
   //background-color: #bc26da;
   background-image: 
-  radial-gradient(circle, var(--light) 63%, transparent 67%),
-  conic-gradient(var(--accent1) calc((var(--percentage) - 1) * 1deg), rgba(255, 0, 0, 0.443)  calc(var(--percentage) * 1deg));
+  radial-gradient(circle, var(--light) 64%, transparent 65%),
+  conic-gradient(var(--primary) calc((var(--percentage) - 1) * 1deg), var(--secondary)  calc(var(--percentage) * 1deg));
 }
 .z-progress::after {
   // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
