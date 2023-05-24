@@ -1,5 +1,28 @@
 @use "./mixins" as *;
 @use "./variables" as *;
+@use "sass:map";
+
+$white: #ffffff;
+
+$theme-colors: (
+    "light":      #c7e9fe,
+    "dark":       #000300,
+    "primary":    #e23a48,
+    "secondary":  #685ca0,
+    "info":       #7085b7,
+    "accent1":    #a0dbf7,
+    "accent2":    #e7508a,
+    "accent3":    #ccc1d3,
+    "success":    #6fb72b,
+    "warning":    #fec785,
+    "danger":     #f8166b,
+);
+
+.alert {
+  // Instead of $theme-color-#{warning}
+  // https://huemint.com/bootstrap-plus/
+  background-color: map.get($theme-colors, "warning");
+}
 
  /* Initial Reset */
 
