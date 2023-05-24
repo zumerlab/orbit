@@ -1,0 +1,22 @@
+@use "./mixins" as *;
+@use "./variables" as *;
+
+ /* Initial Reset */
+
+ /* Main elements */
+ .z-container {
+   /* Layout vars */
+   --arc: 360;
+   --offset-angle: 0;
+   --direction: 1;
+   --angle: 1;
+   --radius: 50px;
+   --item-number: 1;
+   --radius-padding: 8px;
+
+
+  /* Color */
+  --transparent: transparent;
+  --white: white;
+  --black: black;
+ }
