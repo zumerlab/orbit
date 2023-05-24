@@ -1,45 +1,22 @@
 @use "./mixins" as *;
 @use "./variables" as *;
-@use "sass:map";
 
-$white: #ffffff;
-
-$theme-colors: (
-    "light":      #c7e9fe,
-    "dark":       #000300,
-    "primary":    #e23a48,
-    "secondary":  #685ca0,
-    "info":       #7085b7,
-    "accent1":    #a0dbf7,
-    "accent2":    #e7508a,
-    "accent3":    #ccc1d3,
-    "success":    #6fb72b,
-    "warning":    #fec785,
-    "danger":     #f8166b,
-);
-
-.alert {
   // Instead of $theme-color-#{warning}
   // https://huemint.com/bootstrap-plus/
-  background-color: map.get($theme-colors, "warning");
-}
+  //background-color: map.get($theme-colors, "warning");
 
- /* Initial Reset */
-
- /* Main elements */
  .z-container {
-   /* Layout vars */
-   --arc: 360;
-   --offset-angle: 0;
-   --direction: 1;
-   --angle: 1;
-   --radius: 50px;
-   --item-number: 1;
-   --radius-padding: 8px;
-
-
   /* Color */
   --transparent: transparent;
-  --white: white;
-  --black: black;
+  --light:      #c7e9fe;
+  --dark:       #000300;
+  --primary:    #e23a48;
+  --secondary:  #685ca0;
+  --info:       #7085b7;
+  --accent1:    #a0dbf7;
+  --accent2:    #e7508a;
+  --accent3:    #ccc1d3;
+  --success:    #6fb72b;
+  --warning:    #fec785;
+  --danger:     #f8166b;
  }
