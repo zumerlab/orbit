@@ -41,6 +41,19 @@
 - NEST ARCS 
 - ITEMS AND ARCS HARMONIC
 
+*******
+- Separar css custom flavor de css radial stuff (para que se pueda usar con otros css frameworks facil)
+- Terminar modal
+- Terminar popover o usar labels
+- Incluir opcion de translateZ by default en el core
+- js arc text (dsp?)
+- svg?
+- Armonizar toda la libreria 
+- Documentar en .md
+- Invitar a repo cerrado
+- Landing & Docs con Docusaurus
+*******
+
 ## ELEMENTS
 
 - items: content containers with different #shapes flavor, #sizes, #aligment. Radial positioned. Nestable
