@@ -41,6 +41,8 @@ svg {
   stroke-dasharray: calc(360/5 - 20) 20;
   stroke-width: var(--stroke); 
 }
+
+
 .percent.hour {
   cx: calc(var(--diam) / 2 * 1px);
   cy: calc(var(--diam) / 2 * 1px);
@@ -48,7 +50,7 @@ svg {
   fill: none;
   stroke: #e02727;
   stroke-width: var(--stroke); 
-  stroke-dasharray: 100;
+  stroke-dasharray: calc(100 * 3.1415);
   stroke-dashoffset: calc((100 - var(--val)) * 1px);
 }
 .percent.minute {
@@ -57,22 +59,22 @@ svg {
   r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
   stroke: #bc26da;
- 
+  stroke-dasharray: calc(200 * 3.1415);
   stroke-width: var(--stroke); 
-  stroke-dasharray: 100;
+  
   stroke-dashoffset: calc((100 - var(--val)) * 1px);
 }
 .percent.second {
   cx: calc(var(--diam) / 2 * 1px);
   cy: calc(var(--diam) / 2 * 1px);
-  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  //r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
   fill: none;
   stroke: #85e8a9;
   stroke-width: var(--stroke); 
-  stroke-dasharray: 100;
-  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+  stroke-dasharray: 0 calc(100 * 3.1415 *1px);
+  stroke-dashoffset: calc((calc(100 * 3.1415) - var(--val)) * 1px);
 }
-
+// https://codepen.io/arrayzero/pen/LbvJvW
 .p50 {
   --val: 50;
 }
