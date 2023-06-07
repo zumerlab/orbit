@@ -147,6 +147,10 @@
   .z-container>.ring-#{$i}>.arc:hover {
     border-color: var(--accent3);
   }
+
+  .z-container>.ring-#{$i}>svg {
+    --diam: calc(var(--radius-#{$i})*2);
+  }
  
  }
  .core>.item {
