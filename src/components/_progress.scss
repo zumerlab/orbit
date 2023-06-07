@@ -42,37 +42,45 @@ svg {
   stroke-width: var(--stroke); 
 }
 
-
+.markers {
+  cx: calc(var(--diam) / 2 * 1px);
+          cy: calc(var(--diam) / 2 * 1px);
+          r: 140px;
+          fill: none;
+          stroke: #9119e069;
+          stroke-width: 145; 
+          stroke-dasharray: calc((140 * 3.1415 * 2)/12 - 72) 72;
+}
 .percent.hour {
   cx: calc(var(--diam) / 2 * 1px);
   cy: calc(var(--diam) / 2 * 1px);
-  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  r: calc(var(--r));
   fill: none;
   stroke: #e02727;
   stroke-width: var(--stroke); 
-  stroke-dasharray: calc(100 * 3.1415);
-  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+  stroke-dasharray: calc(var(--r) * 3.1415 * 2);
+  stroke-dashoffset: calc((100 - var(--val))/100 * (var(--r) * 3.1415 * 2));
 }
 .percent.minute {
   cx: calc(var(--diam) / 2 * 1px);
   cy: calc(var(--diam) / 2 * 1px);
-  r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  r: calc(var(--r));
   fill: none;
   stroke: #bc26da;
   stroke-dasharray: calc(200 * 3.1415);
   stroke-width: var(--stroke); 
-  
-  stroke-dashoffset: calc((100 - var(--val)) * 1px);
+  stroke-dasharray: calc(var(--r) * 3.1415 * 2);
+  stroke-dashoffset: calc((100 - var(--val))/100 * (var(--r) * 3.1415 * 2));
 }
 .percent.second {
   cx: calc(var(--diam) / 2 * 1px);
   cy: calc(var(--diam) / 2 * 1px);
-  //r: calc((var(--diam) / 2 - var(--stroke)) * 1px);
+  r: calc(var(--r));
   fill: none;
   stroke: #85e8a9;
   stroke-width: var(--stroke); 
-  stroke-dasharray: 0 calc(100 * 3.1415 *1px);
-  stroke-dashoffset: calc((calc(100 * 3.1415) - var(--val)) * 1px);
+  stroke-dasharray: calc(var(--r) * 3.1415 * 2);
+  stroke-dashoffset: calc((100 - var(--val))/100 * (var(--r) * 3.1415 * 2));
 }
 // https://codepen.io/arrayzero/pen/LbvJvW
 .p50 {
