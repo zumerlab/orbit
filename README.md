@@ -47,7 +47,10 @@
 - Terminar popover o usar labels
 - Incluir opcion de translateZ by default en el core
 - js arc text (dsp?)
-- svg?
+- OK ADAPTAR ARC A RINGS
+- arcs as shapes with contenido???? ver
+- OK svg? SIP ADAPTAR A RINGS
+- REPLICAR MODELO DE SVG PERCENT. DESCARGAR LO SCAMBIOS A VARIABLES NO A TODO EL ELEMENTO
 - Armonizar toda la libreria 
 - Documentar en .md
 - Invitar a repo cerrado

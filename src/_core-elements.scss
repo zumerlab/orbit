@@ -11,33 +11,64 @@
     padding: 30px;
 }
 
+
+
 .item {
+    --rotation-angle: calc(var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle));
+    --rotate: calc(var(--rotation-angle) * 1deg);
     display: grid;
     background-color: var(--light);
     border: 1px solid var(--dark);
     grid-area: 1/1/1/1;
-    place-items: center;
+    place-content: center;
     //z-index: 1;
-}
-
-//defaults
-.item {
     width: var(--m);
     height: var(--m);
     border-radius: 50%;
 }
 
+.item {
+    --rotate-invert: calc(var(--rotation-angle) * -1deg);
+    transform: rotate(var(--rotate)) translate(var(--x), 0) rotate(var(--rotate-invert));
+}
+.item.stationary {
+    transform: rotate(var(--rotate)) translate(var(--x), 0);
+}
+.core>.item {
+    transform: rotate(var(--rotate));
+}
 
 .arc {
+    --half: calc(var(--length)/2);
+    --quarter: calc(var(--half)/2);
+    // ademas del offset el angulo debe dividirse por 2, distinto de item
+    --semi: calc(var(--angle) / 2 * 1deg);
+    --arc-gap: 1px;
+    --length-percent: calc(var(--half) + var(--arc-gap) - var(--half) * tan(var(--semi)));
+    --color: var(--accent2);
+    --tickness: 49px;
+    --rotate: calc((var(--angle) * var(--item-number) + var(--offset-angle) - (var(--angle)/2)) * 1deg); 
     display: grid;
     grid-area: 1/1/1/1;
+    height: var(--length);
+    width: var(--half);
+    border: var(--tickness) solid var(--color);
+    border-left: none;
+    background-color: transparent;
+    border-radius: 0% 100% 100% 0% / 100% 51% 51% 0%;
+    box-sizing: border-box;
+    clip-path: polygon(
+      0 50%,
+    /* left center pivot*/ 100% calc(100% - var(--length-percent)),
+    /* right to bottom arc increase*/ 100% 100%,
+    /* right top corner*/ 100% 0,
+    /* right bottom corner*/ 100% var(--length-percent)
+    ); /* right to top ar decrease*/
+    transform:rotate(var(--rotate)) translate(var(--quarter), 0);
 }
-.arc:after {
-    content: "";
-    z-index: 70;
-    position:absolute;
-
-}
+.arc:hover {
+    border-color: var(--accent3);
+  }
 .content {
     padding: 5px;
     width: inherit;
@@ -51,22 +82,6 @@
     z-index: 10;
 }
 
-
-.item.a0 {
-    --angle: 0;
-}
-
-.item.a45 {
-    --angle: 45;
-}
-
-.item.a90 {
-    --angle: 90;
-}
-
-.item.a135 {
-    --angle: 135;
-}
 
 .core {
     width: 0px;
@@ -86,6 +101,9 @@ div[class^="ring-"] {
     grid-area: 1/1/1/1;
     place-items: center;
     box-sizing: content-box;
+    width: var(--diam);
+    height: var(--diam);
+    z-index: var(--z-index);
 }
 /* hack doesnt work on ffox 
 div[class^="ring-"]:has(.item) {
@@ -101,29 +119,10 @@ $var in $sizes {
     }
 }
 
-@each $arc,
-$value in $arcs {
-    .core.#{$arc} {
-        --arc: #{$value};
-    }
-}
-
-.core.ccw {
-    --direction: -1;
-}
-
-@each $sector,
-$angle in $sectors {
-    .core.#{$sector} {
-        --offset-angle:#{$angle};
-    }
-}
-
 @for $i from $min-rings through $max-rings {
     .z-container>.ring-#{$i} {
-        width: calc(var(--radius-#{$i}) * 2);
-        height: calc(var(--radius-#{$i}) * 2);
-        z-index: $max-rings - $i;
+        --diam: calc(var(--radius-#{$i}) * 2);
+        --z-index:  $max-rings - $i;
     }
 }
 
@@ -133,26 +132,22 @@ $angle in $sectors {
     }
 }
 
-@for $i from $min-rings through $max-rings {
 
-    @each $sector,
-    $angle in $sectors {
-        .ring-#{$i}.#{$sector} {
-            --offset-angle:#{$angle};
-        }
+@each $sector,
+$angle in $sectors {
+    .#{$sector} {
+        --offset-angle:#{$angle};
     }
 }
 
-
-
 @each $arc,
 $value in $arcs {
-    div[class^="ring-"].#{$arc} {
+    .#{$arc} {
         --arc: #{$value};
     }
 }
 
 
-div[class^="ring-"].ccw {
+.ccw {
     --direction: -1;
 }

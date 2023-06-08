@@ -44,8 +44,8 @@
 
    /* svg */
    --val: 0;
-   --diam: 400;
    --stroke: 10;
+   --π: 3.14159265359;
 
  }
 
@@ -87,10 +87,7 @@
   @each $size,
    $var in $sizes {
     .z-container>.ring-#{$i}>.item.#{$size} {
-      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
-    }
-    .z-container>.ring-#{$i}>.item.stationary.#{$size} {
-      transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i})), 0);
+      --x: calc(var(--radius-#{$i}));
     }
     @each $class in $align {
       $math: "";
@@ -107,45 +104,13 @@
        }
 
       .z-container>.ring-#{$i}> .item.#{$size}#{$class} {
-        transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
+        --x: calc(var(--radius-#{$i}) #{$math});
       }
-
-      .z-container>.ring-#{$i}> .item.stationary.#{$size}#{$class} {
-        transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(calc(var(--radius-#{$i}) #{$math}), 0);
-      }
-      
-     
     }
    }
 
    .z-container>.ring-#{$i}>.arc {
-    --length: calc(var(--radius-#{$i})*2);
-    --half: calc(var(--length)/2);
-    --quarter: calc(var(--half)/2);
-    // ademas del offset el angulo debe dividirse por 2, distinto de item
-    transform:rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - (var(--angle)/2)) * 1deg)) translate(var(--quarter), 0);
-    --semi: calc(var(--angle) / 2 * 1deg);
-    --arc-gap: 1px;
-    --length-percent: calc(var(--half) + var(--arc-gap) - var(--half) * tan(var(--semi)));
-    --color: var(--accent2);
-    --tickness: 49px;
-    height: var(--length);
-    width: var(--half);
-    border: var(--tickness) solid var(--color);
-    border-left: none;
-    background-color: transparent;
-    border-radius: 0% 100% 100% 0% / 100% 51% 51% 0%;
-    box-sizing: border-box;
-    clip-path: polygon(
-      0 50%,
-    /* left center pivot*/ 100% calc(100% - var(--length-percent)),
-    /* right to bottom arc increase*/ 100% 100%,
-    /* right top corner*/ 100% 0,
-    /* right bottom corner*/ 100% var(--length-percent)
-    ); /* right to top ar decrease*/
-  }
-  .z-container>.ring-#{$i}>.arc:hover {
-    border-color: var(--accent3);
+    --length: calc(var(--radius-#{$i})*2); 
   }
 
   .z-container>.ring-#{$i}>svg {
@@ -153,31 +118,20 @@
   }
  
  }
- .core>.item {
-   transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle)) * 1deg));
- }
- @for $i from $min-rings through $max-rings {
 
+ @for $i from $min-rings through $max-rings {
    @each $size,
    $var in $sizes {
      .item.#{$size}>.ring-#{$i} {
-       width: calc(#{$var} * #{$i});
-       height: calc(#{$var} * #{$i});
-       // test
-       z-index: $max-rings - $i;
+       --diam: calc(#{$var} * #{$i});
+       --z-index: $max-rings - $i;
      }
      .item.#{$size}>.ring-#{$i}>.item {
       --x: calc((#{$var} / 2 * #{$i}));
-      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
     }
-
-    .item.#{$size}>.ring-#{$i}> .item.stationary  {
-      --x: calc((#{$var} / 2 * #{$i}));
-      transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0);
-    }
+    
      @each $class in $align {
        $math: "";
-
        @if $class ==".upper" {
          $math: "+ (calc(#{$var} / 4))";
        }
@@ -188,16 +142,22 @@
 
        .item.#{$size}>.ring-#{$i}>.item#{$class} {
          --x: calc((#{$var} / 2 * #{$i}) #{$math});
-         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0) rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * -1deg));
        }
 
-       .item.#{$size}>.ring-#{$i}> .item.stationary#{$class}  {
-         --x: calc((#{$var} / 2 * #{$i}) #{$math});
-         transform: rotate(calc((var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)) * 1deg)) translate(var(--x), 0);
-       }
      }
+     .item.#{$size}>.ring-#{$i}>svg {
+      --diam: calc(#{$var} * #{$i});
+    }
 
    }
  }
-
+//arcs nested
+@for $i from $min-rings through $max-rings {
+  @each $size,
+  $var in $sizes {
+    .item.#{$size}>.ring-#{$i}>.arc {
+      --length: calc(#{$var} * #{$i});
+    }
+  }
+}
  
