@@ -43,14 +43,17 @@ svg.z-svg {
 
 .markers {
   --markers: 12;
+  --marker-width: 1px;
+  --circumference: calc(var(--r) * var(--π) * 2);
+  --dash: calc(var(--circumference) / var(--markers) - var(--marker-width)); 
   --r: calc(var(--diam) / 2 );
-  cx: calc(var(--r));
-  cy: calc(var(--r));
-  r: calc(var(--r));
+  cx: var(--r);
+  cy: var(--r);
+  r: var(--r);
   fill: none;
   stroke: #9119e069;
-  stroke-width: calc(var(--r)); 
-  stroke-dasharray: calc((calc(var(--r)) * 3.1415 * 2) / calc(var(--markers)) - 72) 72;
+  stroke-width: calc(var(--radius) * 2); 
+  stroke-dasharray: var(--marker-width) var(--dash);
 }
 .percent {
   --r: calc(var(--diam) / 2 );
@@ -59,8 +62,8 @@ svg.z-svg {
   r: calc(var(--r));
   fill: none;
   stroke-width: var(--stroke); 
-  stroke-dasharray: calc(var(--r) * 3.1415 * 2);
-  stroke-dashoffset: calc((100 - var(--val))/100 * (var(--r) * 3.1415 * 2));
+  stroke-dasharray: calc(var(--r) * var(--π) * 2);
+  stroke-dashoffset: calc((100 - var(--val))/100 * (var(--r) * var(--π) * 2));
 }
 
 
