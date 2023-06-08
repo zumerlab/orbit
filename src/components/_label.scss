@@ -31,26 +31,36 @@
    @include alignment;
  }
 
- @each $size,
- $var in $sizes {
+ .item>.label {
+  transform: rotate(var(--label-angle)) translate(var(--x), 0);
+}
 
-   @each $pos,
-   $angle in $position {
-     .item.#{$size}>.label.#{$pos} {
-       transform: rotate(calc(#{$angle} * 1deg)) translate(calc(#{$var} / 1.8), 0);
-     }
-   }
- }
+.label>.label__text {
+  transform: translate(calc(var(--connector-width) - 5px), var(--label-box)) rotate(var(--label-angle-invert));
+}
+
+@each $size,
+$var in $sizes {
+
+  @each $pos,
+  $angle in $position {
+    .item.#{$size}>.label.#{$pos} {
+      --label-angle: calc(#{$angle} * 1deg);
+       --x: calc(#{$var} / 1.8);
+    }
+  }
+}
 
  @each $pos,
  $angle in $position {
    .label.#{$pos}>.label__text {
+    --label-angle-invert: calc(#{$angle} * -1deg);
      @if $pos !="pos-180" {
-       transform: translate(calc(var(--connector-width) - 5px), -5px) rotate(calc(#{$angle} * -1deg));
+       --label-box: -5px;
      }
 
      @else {
-       transform: translate(calc(var(--connector-width) + var(--label-width)), +5px) rotate(calc(#{$angle} * -1deg));
+      --label-box: -5px;
      }
 
    }
