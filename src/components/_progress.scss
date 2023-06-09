@@ -1,6 +1,6 @@
-@use "../_mixins.scss" as *;
-@use "../_variables.scss" as *;
-@use "../ui" as *;
+@use '../_mixins.scss' as *;
+@use '../_variables.scss' as *;
+@use '../ui' as *;
 // Progress
 .z-progress {
   --percentage: calc(var(--progress) * 3.6);
@@ -12,9 +12,11 @@
   width: 100%;
   aspect-ratio: 1;
   //background-color: #bc26da;
-  background-image: 
-  radial-gradient(circle, var(--light) 64%, transparent 65%),
-  conic-gradient(var(--primary) calc((var(--percentage) - 1) * 1deg), var(--secondary)  calc(var(--percentage) * 1deg));
+  background-image: radial-gradient(circle, var(--light) 64%, transparent 65%),
+    conic-gradient(
+      var(--primary) calc((var(--percentage) - 1) * 1deg),
+      var(--secondary) calc(var(--percentage) * 1deg)
+    );
 }
 .z-progress::after {
   // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
@@ -32,40 +34,39 @@ svg.z-svg {
 }
 
 .base {
-  cx: calc(var(--diam) / 2 );
-  cy: calc(var(--diam) / 2 );
-  r: calc((var(--diam) / 2 - var(--stroke)) );
+  cx: calc(var(--diam) / 2);
+  cy: calc(var(--diam) / 2);
+  r: calc((var(--diam) / 2 - var(--stroke)));
   fill: none;
   stroke: #e6e6e6;
-  stroke-dasharray: calc(360/5 - 20) 20;
-  stroke-width: var(--stroke); 
+  stroke-dasharray: calc(360 / 5 - 20) 20;
+  stroke-width: var(--stroke);
 }
 
 .markers {
   --markers: 12;
   --marker-width: 1px;
   --circumference: calc(var(--r) * var(--π) * 2);
-  --dash: calc(var(--circumference) / var(--markers) - var(--marker-width)); 
-  --r: calc(var(--diam) / 2 );
+  --dash: calc(var(--circumference) / var(--markers) - var(--marker-width));
+  --r: calc(var(--diam) / 2);
   cx: var(--r);
   cy: var(--r);
   r: var(--r);
   fill: none;
   stroke: #9119e069;
-  stroke-width: calc(var(--radius) * 2); 
+  stroke-width: calc(var(--radius) * 2);
   stroke-dasharray: var(--marker-width) var(--dash);
 }
 .percent {
-  --r: calc(var(--diam) / 2 );
+  --r: calc(var(--diam) / 2);
   cx: var(--r);
   cy: var(--r);
   r: calc(var(--r));
   fill: none;
-  stroke-width: var(--stroke); 
+  stroke-width: var(--stroke);
   stroke-dasharray: calc(var(--r) * var(--π) * 2);
-  stroke-dashoffset: calc((100 - var(--val))/100 * (var(--r) * var(--π) * 2));
+  stroke-dashoffset: calc((100 - var(--val)) / 100 * (var(--r) * var(--π) * 2));
 }
-
 
 // https://codepen.io/arrayzero/pen/LbvJvW
 .p50 {
@@ -79,4 +80,3 @@ svg.z-svg {
 .ninety {
   --val: 90;
 }
-

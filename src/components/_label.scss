@@ -1,70 +1,61 @@
-@use "../_variables.scss" as *;
-@use "../_mixins.scss" as *;
-@use "../ui" as *;
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+@use '../ui' as *;
 
 .label {
-   display: block;
-   border: 1px solid var(--info);
-   border-radius: 50%;
-   width: 4px;
-   height: 4px;
- }
+  display: block;
+  border: 1px solid var(--info);
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+}
 
- .label::before {
-  content: "";
+.label::before {
+  content: '';
   display: block;
   border-bottom: 1px solid var(--info);
   width: var(--connector-width);
   height: 1px;
 }
- .label__text {
-   transform-origin: 0 0;
-   display: grid;
-   border: 1px solid black;
-   grid-area: 1/1/1/1;
-   background-color: white;
-   border-radius: 4px;
-   border-color: var(--info);
-   width: var(--label-width);
-   height: 20px;
-   color: var(--info);
-   @include alignment;
- }
+.label__text {
+  transform-origin: 0 0;
+  display: grid;
+  border: 1px solid black;
+  grid-area: 1/1/1/1;
+  background-color: white;
+  border-radius: 4px;
+  border-color: var(--info);
+  width: var(--label-width);
+  height: 20px;
+  color: var(--info);
+  @include alignment;
+}
 
- .item>.label {
+.item > .label {
   transform: rotate(var(--label-angle)) translate(var(--x), 0);
 }
 
-.label>.label__text {
-  transform: translate(calc(var(--connector-width) - 5px), var(--label-box)) rotate(var(--label-angle-invert));
+.label > .label__text {
+  transform: translate(calc(var(--connector-width) - 5px), var(--label-box))
+    rotate(var(--label-angle-invert));
 }
 
-@each $size,
-$var in $sizes {
-
-  @each $pos,
-  $angle in $position {
-    .item.#{$size}>.label.#{$pos} {
+@each $size, $var in $sizes {
+  @each $pos, $angle in $position {
+    .item.#{$size} > .label.#{$pos} {
       --label-angle: calc(#{$angle} * 1deg);
-       --x: calc(#{$var} / 1.8);
+      --x: calc(#{$var} / 1.8);
     }
   }
 }
 
- @each $pos,
- $angle in $position {
-   .label.#{$pos}>.label__text {
+@each $pos, $angle in $position {
+  .label.#{$pos} > .label__text {
     --label-angle-invert: calc(#{$angle} * -1deg);
-     @if $pos !="pos-180" {
-       --label-box: -5px;
-     }
-
-     @else {
+    @if $pos != 'pos-180' {
       --label-box: -5px;
-     }
-
-   }
- }
-
-
- 
+    } @else {
+      --label-box: -5px;
+    }
+  }
+}

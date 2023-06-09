@@ -1,15 +1,8 @@
 /* Variables */
-$sizes: "xxs" var(--xxs),
-"xs" var(--xs),
-"s" var(--s),
-"m" var(--m),
-"l" var(--l),
-"xl" var(--xl),
-"xxl" var(--xxl);
+$sizes: 'xxs' var(--xxs), 'xs' var(--xs), 's' var(--s), 'm' var(--m),
+  'l' var(--l), 'xl' var(--xl), 'xxl' var(--xxl);
 
-$align:
-".upper",
-".lower";
+$align: '.upper', '.lower';
 
 $min-rings: 1;
 $max-rings: 6;
@@ -17,26 +10,10 @@ $max-rings: 6;
 $min-items: 1;
 $max-items: 24;
 
-$sectors: "offset-45" 45,
-"offset-90" 90,
-"offset-135" 135,
-"offset-180" 180,
-"offset-225" 225,
-"offset-270" 270,
-"offset-315" 315;
-$arcs: "arc-45" 45,
-"arc-90" 90,
-"arc-135" 135,
-"arc-180" 180,
-"arc-225" 225,
-"arc-270" 270,
-"arc-315" 315;
+$sectors: 'offset-45' 45, 'offset-90' 90, 'offset-135' 135, 'offset-180' 180,
+  'offset-225' 225, 'offset-270' 270, 'offset-315' 315;
+$arcs: 'arc-45' 45, 'arc-90' 90, 'arc-135' 135, 'arc-180' 180, 'arc-225' 225,
+  'arc-270' 270, 'arc-315' 315;
 
-$position: "pos-0" 360,
-"pos-45" 45,
-"pos-90" 90,
-"pos-135" 135,
-"pos-180" 180,
-"pos-225" 225,
-"pos-270" 270,
-"pos-315" 315;
+$position: 'pos-0' 360, 'pos-45' 45, 'pos-90' 90, 'pos-135' 135, 'pos-180' 180,
+  'pos-225' 225, 'pos-270' 270, 'pos-315' 315;
