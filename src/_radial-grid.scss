@@ -2,78 +2,20 @@
 @use './variables' as *;
 @use './ui' as *;
 
-/* Initial Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Main elements */
-.z-container {
-  /* Layout vars */
-  --arc: 360;
-  --offset-angle: 0;
-  --direction: 1;
-  --angle: 1;
-  --radius: 50px;
-  --item-number: 1;
-  --radius-padding: 8px;
-
-  @for $i from $min-rings through $max-rings {
-    --radius-#{$i}: var(--radius) * #{$i};
-  }
-
-  /* Shape sizes */
-  --xxs: 8px;
-  --xs: 24px;
-  --s: 44px;
-  --m: 68px;
-  --l: 110px;
-  --xl: 180px;
-  --xxl: 288px;
-
-  /* Color */
-  --transparent: transparent;
-  --white: white;
-  --black: black;
-
-  /* width connector */
-  --connector-width: 40px;
-  --label-width: 50px;
-
-  /* svg */
-  --val: 0;
-  --stroke: 10;
-  --π: 3.14159265359;
-}
 
 @for $i from $min-items through $max-items {
-  @each $arc, $value in $arcs {
-    .items-#{$i}.#{$arc} > .item {
+  .items-#{$i} > .item, .items-#{$i} > .arc {
+    --angle: calc((var(--arc) / #{$i}) * var(--direction));
+  }
+}
+@for $i from $min-items through $max-items {
+ 
+    .items-#{$i}[classˆ=arc-] > .item {
       --angle: calc((var(--arc) / #{$i - 1}) * var(--direction));
     }
-  }
-}
-@for $i from $min-items through $max-items {
-  .items-#{$i} > .item {
-    --angle: calc((var(--arc) / #{$i}) * var(--direction));
-  }
+ 
 }
 
-@for $i from $min-items through $max-items {
-  @each $arc, $value in $arcs {
-    .items-#{$i}.#{$arc} > .arc {
-      // No hay que restar un angulo debido a la forma del arco
-      --angle: calc((var(--arc) / #{$i}) * var(--direction));
-    }
-  }
-}
-@for $i from $min-items through $max-items {
-  .items-#{$i} > .arc {
-    --angle: calc((var(--arc) / #{$i}) * var(--direction));
-  }
-}
 
 @for $i from $min-rings through $max-rings {
   $resta: 1;
@@ -117,7 +59,7 @@
   @each $size, $var in $sizes {
     .item.#{$size} > .ring-#{$i} {
       --diam: calc(#{$var} * #{$i});
-      --z-index: $max-rings - $i;
+      --z-index: #{$max-rings - $i};
     }
     .item.#{$size} > .ring-#{$i} > .item {
       --x: calc((#{$var} / 2 * #{$i}));
@@ -149,4 +91,40 @@
       --length: calc(#{$var} * #{$i});
     }
   }
+}
+
+@each $size, $var in $sizes {
+  .item.#{$size} {
+    --size: #{$var};
+  }
+}
+
+@for $i from $min-rings through $max-rings {
+  .z-container > .ring-#{$i} {
+    --diam: calc(var(--radius-#{$i}) * 2);
+    --z-index: #{$max-rings - $i};
+  }
+}
+
+@for $i from $min-items through $max-items {
+  .item:nth-child(#{$i}),
+  .arc:nth-child(#{$i}) {
+    --item-number: #{$i};
+  }
+}
+
+@each $sector, $angle in $sectors {
+  .#{$sector} {
+    --offset-angle: #{$angle};
+  }
+}
+
+@each $arc, $value in $arcs {
+  .#{$arc} {
+    --arc: #{$value};
+  }
+}
+
+.ccw {
+  --direction: -1;
 }

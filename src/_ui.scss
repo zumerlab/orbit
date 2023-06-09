@@ -6,8 +6,40 @@
 //background-color: map.get($theme-colors, "warning");
 
 .z-container {
+    /* Layout vars */
+    --arc: 360;
+    --offset-angle: 0;
+    --direction: 1;
+    --angle: 1;
+    --radius: 50px;
+    --item-number: 1;
+    --radius-padding: 8px;
+    @for $i from $min-rings through $max-rings {
+      --radius-#{$i}: var(--radius) * #{$i};
+    }
+  
+    /* Shape sizes */
+    --xxs: 8px;
+    --xs: 24px;
+    --s: 44px;
+    --m: 68px;
+    --l: 110px;
+    --xl: 180px;
+    --xxl: 288px;
+  
+    /* width connector */
+    --connector-width: 40px;
+    --label-width: 50px;
+  
+    /* svg */
+    --val: 0;
+    --stroke: 10;
+    --π: 3.14159265359;
+
   /* Color */
   --transparent: transparent;
+  --white: white;
+  --black: black;
   --light: #c7e9fe;
   --dark: #000300;
   --primary: #e23a48;

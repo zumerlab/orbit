@@ -12,27 +12,27 @@
   border-top: 1px dashed var(--dark);
 }
 
-.item.circle {
-  border-radius: 50%;
+/* 
+* generic element
+*/
+.circle {
+  border-radius: 50% !important;
 }
 
-.item.box {
-  border-radius: 0%;
+.box {
+  border-radius: 0% !important;
 }
 
-.item.rounded {
-  border-radius: 25%;
+.rounded {
+  border-radius: 25% !important;
 }
 
-.item.bubble {
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+.bubble {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% !important;
 }
 
-.item.transparent {
-  border: none;
-  background-color: var(--transparent);
+.transparent {
+  border: none !important;
+  background-color: var(--transparent) !important;
 }
 
-div[class^='ring-'].transparent {
-  border: none;
-}
