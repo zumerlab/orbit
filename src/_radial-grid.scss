@@ -2,18 +2,30 @@
 @use './variables' as *;
 @use './ui' as *;
 
-
+@each $arc, $value in $arcs {
+ .#{$arc} > .item, .#{$arc} > .arc {
+    --arc: #{$value};
+  }
+}
+@each $sector, $angle in $sectors {
+  .#{$sector} > .item,  .#{$sector} > .arc {
+    --offset-angle: #{$angle};
+  }
+}
+.ccw {
+  --direction: -1;
+}
 @for $i from $min-items through $max-items {
   .items-#{$i} > .item, .items-#{$i} > .arc {
     --angle: calc((var(--arc) / #{$i}) * var(--direction));
   }
 }
 @for $i from $min-items through $max-items {
- 
-    .items-#{$i}[classˆ=arc-] > .item {
+  @each $arc, $value in $arcs {
+    .items-#{$i}.#{$arc}> .item {
       --angle: calc((var(--arc) / #{$i - 1}) * var(--direction));
     }
- 
+   }
 }
 
 
@@ -113,18 +125,5 @@
   }
 }
 
-@each $sector, $angle in $sectors {
-  .#{$sector} {
-    --offset-angle: #{$angle};
-  }
-}
 
-@each $arc, $value in $arcs {
-  .#{$arc} {
-    --arc: #{$value};
-  }
-}
 
-.ccw {
-  --direction: -1;
-}
