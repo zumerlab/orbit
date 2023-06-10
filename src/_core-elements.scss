@@ -64,7 +64,7 @@
   transform: rotate(var(--rotate));
 }
 
-div[class^='ring-'] {
+[class^='ring-'] {
   --arc: 360; // ensure reset to default. useful for nested
   --offset-angle: 0; // ensure reset to default. useful for nested
   display: grid;
@@ -78,7 +78,7 @@ div[class^='ring-'] {
   z-index: var(--z-index);
 }
 
-div[class^='ring-'] {
+[class^='ring-'] {
   border: 0.1px solid var(--dark);
 }
 
