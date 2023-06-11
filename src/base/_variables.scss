@@ -1,5 +1,4 @@
-@use './mixins' as *;
-@use './variables' as *;
+@use '../utilities/sass-variables' as *;
 
 // Instead of $theme-color-#{warning}
 // https://huemint.com/bootstrap-plus/
@@ -35,20 +34,4 @@
     --val: 0;
     --stroke: 10;
     --π: 3.14159265359;
-
-  /* Color */
-  --transparent: transparent;
-  --white: white;
-  --black: black;
-  --light: #c7e9fe;
-  --dark: #000300;
-  --primary: #e23a48;
-  --secondary: #685ca0;
-  --info: #7085b7;
-  --accent1: #a0dbf7;
-  --accent2: #e7508a;
-  --accent3: #ccc1d3;
-  --success: #6fb72b;
-  --warning: #fec785;
-  --danger: #f8166b;
 }

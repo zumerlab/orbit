@@ -1,0 +1,36 @@
+@use '../utilities/mixins' as *;
+
+.item {
+  --size: var(--m); // default
+  --rotation-angle: calc(
+    var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)
+  );
+  --rotate: calc(var(--rotation-angle) * 1deg);
+  --rotate-invert: calc(var(--rotation-angle) * -1deg);
+  display: grid;
+  border: 1px solid;
+  grid-area: 1/1/1/1;
+  place-content: center;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  transform: rotate(var(--rotate)) translate(var(--x), 0)
+    rotate(var(--rotate-invert));
+}
+
+.item.stationary {
+  transform: rotate(var(--rotate)) translate(var(--x), 0);
+}
+
+.item > .content {
+  padding: 5px;
+  width: inherit;
+  height: inherit;
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  @include alignment;
+  overflow: hidden;
+  z-index: 10;
+}
+

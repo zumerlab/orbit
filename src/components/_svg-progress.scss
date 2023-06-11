@@ -1,0 +1,10 @@
+/* svg progress */
+.z-svg > .svg-progress {
+  --r: calc(var(--diam) / 2);
+  cx: var(--r);
+  cy: var(--r);
+  r: calc(var(--r));
+  stroke-width: var(--stroke);
+  stroke-dasharray: calc(var(--r) * var(--π) * 2);
+  stroke-dashoffset: calc((100 - var(--val)) / 100 * (var(--r) * var(--π) * 2));
+}

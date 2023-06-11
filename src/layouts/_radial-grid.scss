@@ -1,6 +1,4 @@
-@use './mixins' as *;
-@use './variables' as *;
-@use './ui' as *;
+@use '../utilities/sass-variables' as *;
 
 @each $arc, $value in $arcs {
  .#{$arc} > .item, .#{$arc} > .arc {

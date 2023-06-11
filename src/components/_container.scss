@@ -1,0 +1,9 @@
+/* container */
+
+.z-container {
+  display: grid;
+  grid-template-columns: minmax(var(--radius), 1fr);
+  grid-template-rows: minmax(var(--radius), 1fr);
+  place-items: center;
+}
+

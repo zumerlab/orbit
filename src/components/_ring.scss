@@ -1,0 +1,18 @@
+
+[class^='ring-'] {
+  --arc: 360; // ensure reset to default. useful for nested
+  --offset-angle: 0; // ensure reset to default. useful for nested
+  display: grid;
+  border-radius: 50%;
+  border: 0.1px solid var(--dark);
+  grid-area: 1/1/1/1;
+  place-items: center;
+  box-sizing: content-box;
+  width: var(--diam);
+  height: var(--diam);
+  z-index: var(--z-index);
+}
+
+[class^='ring-'] {
+  border: 0.1px solid var(--dark);
+}

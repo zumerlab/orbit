@@ -1,7 +1,5 @@
-@use '../_variables.scss' as *;
-@use '../_mixins.scss' as *;
-@use '../_ui' as *;
-@use '../_shapes' as *;
+@use '../utilities/sass-variables' as *;
+@use '../utilities/mixins' as *;
 
  /* element structure */
 .label {

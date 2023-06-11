@@ -1,0 +1,9 @@
+/* item */
+.item {
+  background-color: var(--light);
+  border-color: var(--dark);
+}
+
+.item > .content {
+  background-color: var(--light);
+}

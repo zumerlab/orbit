@@ -1,0 +1,49 @@
+@use '../utilities/mixins' as *;
+
+/* z-progress */
+.z-progress {
+  --percentage: calc(var(--progress) * 3.6);
+  display: grid;
+  border-radius: 50%;
+  grid-area: 1/1/1/1;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.z-progress::after {
+  // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
+}
+
+/* z-svg */
+.z-svg {
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  @include alignment;
+  rotate: -90deg;
+  width: calc(var(--diam));
+  height: calc(var(--diam));
+}
+
+.z-svg > .markers {
+  --markers: 12;
+  --marker-width: 1px;
+  --circumference: calc(var(--r) * var(--π) * 2);
+  --dash: calc(var(--circumference) / var(--markers) - var(--marker-width));
+  --r: calc(var(--diam) / 2);
+  cx: var(--r);
+  cy: var(--r);
+  r: var(--r);
+  stroke-width: calc(var(--radius) * 2);
+  stroke-dasharray: var(--marker-width) var(--dash);
+}
+.z-svg > .svg-progress {
+  --r: calc(var(--diam) / 2);
+  cx: var(--r);
+  cy: var(--r);
+  r: calc(var(--r));
+  stroke-width: var(--stroke);
+  stroke-dasharray: calc(var(--r) * var(--π) * 2);
+  stroke-dashoffset: calc((100 - var(--val)) / 100 * (var(--r) * var(--π) * 2));
+}
