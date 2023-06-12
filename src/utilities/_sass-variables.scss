@@ -1,4 +1,6 @@
-/* Variables */
+// Sass variables
+$prefix: 'zr-';
+
 $sizes: 'xxs' var(--xxs), 'xs' var(--xs), 's' var(--s), 'm' var(--m),
   'l' var(--l), 'xl' var(--xl), 'xxl' var(--xxl);
 
@@ -12,6 +14,7 @@ $max-items: 24;
 
 $sectors: 'offset-45' 45, 'offset-90' 90, 'offset-135' 135, 'offset-180' 180,
   'offset-225' 225, 'offset-270' 270, 'offset-315' 315;
+
 $arcs: 'arc-45' 45, 'arc-90' 90, 'arc-135' 135, 'arc-180' 180, 'arc-225' 225,
   'arc-270' 270, 'arc-315' 315;
 

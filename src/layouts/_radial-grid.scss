@@ -1,31 +1,35 @@
 @use '../utilities/sass-variables' as *;
 
 @each $arc, $value in $arcs {
- .#{$arc} > .item, .#{$arc} > .arc {
+  .#{$arc} > .item,
+  .#{$arc} > .arc {
     --arc: #{$value};
   }
 }
 @each $sector, $angle in $sectors {
-  .#{$sector} > .item,  .#{$sector} > .arc {
+  .#{$sector} > .item,
+  .#{$sector} > .arc {
     --offset-angle: #{$angle};
   }
 }
+
 .ccw {
   --direction: -1;
 }
+
 @for $i from $min-items through $max-items {
-  .items-#{$i} > .item, .items-#{$i} > .arc {
+  .items-#{$i} > .item,
+  .items-#{$i} > .arc {
     --angle: calc((var(--arc) / #{$i}) * var(--direction));
   }
 }
 @for $i from $min-items through $max-items {
   @each $arc, $value in $arcs {
-    .items-#{$i}.#{$arc}> .item {
+    .items-#{$i}.#{$arc} > .item {
       --angle: calc((var(--arc) / #{$i - 1}) * var(--direction));
     }
-   }
+  }
 }
-
 
 @for $i from $min-rings through $max-rings {
   $resta: 1;
@@ -122,6 +126,3 @@
     --item-number: #{$i};
   }
 }
-
-
-
