@@ -94,6 +94,6 @@ LAS MINIMAS ARC TEXT
 ### css first
 
 por eso elipsis solo andan en ffox
-anim en chrome.
+anim en chrome.>>
 
 
