@@ -18,7 +18,17 @@ Elevate your projects and unleash your creativity with Zumer, your go-to CSS rad
 
 ## Status
 
-Zumer CSS is currently in a closed Beta stage.
+## Beta Stage
+
+Zumer CSS is currently in a closed Beta stage. We greatly value your ideas, discussions, and feedback as we continue to refine and expand the library.
+
+## Join the Discussion
+
+To actively participate in shaping the future of Zumer CSS, we encourage you to join the discussions [here](https://github.com/zumerlab/zumer-css/discussions). Share your thoughts, ask questions, and collaborate with the community to make Zumer even better.
+
+Your input and contributions are essential in creating a robust and user-friendly radial library. Let's work together to develop stunning and innovative circular designs with Zumer CSS.
+
+Join the discussion on  [here](https://github.com/zumerlab/zumer-css/discussions) page and be a part of the Zumer CSS community today!
 
 ## Usage
 
@@ -55,7 +65,7 @@ Basic documentation to understand and start with Zumer CSS.
 
 #### `z-container`
 
-The `z-container` serves as the root element to scaffold Zumer. It encapsulates the entire Zumer framework and defines the boundaries for its usage. Multiple `z-container` elements can coexist on the same page, allowing for modular and flexible implementation. 
+The `z-container` serves as the root element to scaffold Zumer. It encapsulates the entire Zumer framework and defines the boundaries for its usage. Multiple `z-container` elements can coexist on the same page, allowing for modular and flexible implementation.
 
 At the `z-container` level, major CSS variables are defined, providing a centralized and customizable approach to styling and theming Zumer components. These variables can be easily modified within each `z-container` instance, ensuring consistency and flexibility across different sections of your application.
 
@@ -164,9 +174,8 @@ The `svg markers` component, designed for rings, allows for the creation of mark
 
 ### `modal` (Coming Soon)
 
-The `modal` component, coming soon to Zumer, will provide a convenient way to display modal windows within the radial UI. 
+The `modal` component, coming soon to Zumer, will provide a convenient way to display modal windows within the radial UI.
 
 ### `popover` (Coming Soon)
 
 The `popover` component, also coming soon, will offer a user-friendly and customizable way to present popovers within the radial UI.
-
