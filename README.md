@@ -1,6 +1,6 @@
 <img  src="./docs/images/zumer.png" width=120 />
 
-# Zumer CSS - Effortless Circular UI Designs with CSS
+# Zumer - CSS radial library
 
 Zumer is a CSS radial library that empowers developers to easily create complex and captivating circular UI designs. Whether you're building circular menus, data visualization components, or unique circular interfaces, Zumer simplifies the process with its intuitive classes and lightweight structure.
 
