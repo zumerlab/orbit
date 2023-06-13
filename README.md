@@ -1,4 +1,4 @@
-<img  src="./docs/images/zumer.png" width=120 />
+<img  src="./assets/images/zumer.png" width=120 />
 
 # Zumer - CSS radial library
 
@@ -59,17 +59,17 @@ Folllowing code set a container and inside it a radial layout with three circles
 </html>
 ```
 
-### Guide
+## Guide
 
 Basic documentation to understand and start with Zumer CSS.
 
-#### `z-container`
+### `z-container`
 
 The `z-container` serves as the root element to scaffold Zumer. It encapsulates the entire Zumer framework and defines the boundaries for its usage. Multiple `z-container` elements can coexist on the same page, allowing for modular and flexible implementation.
 
 At the `z-container` level, major CSS variables are defined, providing a centralized and customizable approach to styling and theming Zumer components. These variables can be easily modified within each `z-container` instance, ensuring consistency and flexibility across different sections of your application.
 
-#### `ring-*` (probably orbit)
+### `ring-*` (probably orbit)
 
 The `ring-*` classes act as guides for positioning other elements within the Zumer radial grid. Think of them as rows in the grid structure. They play an important role in organizing and aligning elements within the circular layout of Zumer.
 
@@ -79,11 +79,11 @@ By leveraging the `ring-*` classes, you can easily position and arrange elements
 
 It is possible to use multiple same level `ring-*` to stack differente elements.
 
-#### `core`
+### `core`
 
 The `core` class functions similarly to a regular ring but is placed at the center of the container. It is particularly useful for positioning radial elements such as watch or gauge needles.
 
-#### `arc`
+### `arc`
 
 If rings resemble rows, the `arc` class can be thought of as columns in the Zumer radial grid. An `arc` is a radial segment that serves as the background support for radial designs, but also may work standalone as buttons for instance. It offers customizable options, allowing you to fine-tune its appearance to suit your specific needs.
 
@@ -106,9 +106,9 @@ In this example, three arcs are placed in a Ring. To draw three arcs that cover 
 - Use the `offset-*` class to specify the starting angle of the arcs within the ring.
 - Employ the `arc-*` class to define the length of the ring arc covered by the arcs.
 
-#### `item` (probably orbiter)
+### `item` (probably orbiter)
 
-The `item` class is used to position and contain content within the Zumer radial grid. It offers various customization options, including different sizes (`xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`), shapes (`line`, `circle`, `box`, `rounded`, `blob`), and relative ring positions (`middle`, `upper`, `lower`).
+The `item` class is used to position and contain content within the Zumer radial grid. It offers various customization options, including different sizes (`xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`), shapes (`line`, `circle`, `box`, `rounded`, `blob`), orbital position (`stationary`), and relative ring positions (`middle`, `upper`, `lower`).
 
 One of the notable features of Zumer is the ability to nest `item` elements, allowing for complex and layered radial designs.
 
