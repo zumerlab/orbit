@@ -30,6 +30,11 @@ Your input and contributions are essential in creating a robust and user-friendl
 
 Join the discussion on  [here](https://github.com/zumerlab/zumer-css/discussions) page and be a part of the Zumer CSS community today!
 
+## Quick start
+
+1. Clone the repository.
+2. Go to `examples` folder and open index.html with a browser. Server is not required because this examples are very simple and static.
+
 ## Usage
 
 1. Clone the repository.
@@ -44,7 +49,7 @@ Folllowing code set a container and inside it a radial layout with three circles
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../dist/css/index.min.css" type="text/css" defer/>
+    <link rel="stylesheet" href="../assets/css/index.css" type="text/css" defer/>
     <title>Zumer CSS Rocks!</title>
   </head>
   <body>
