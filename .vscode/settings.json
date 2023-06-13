@@ -3,7 +3,7 @@
         {
             "format": "expanded",
             "extensionName": ".css",
-            "savePath": "/css"
+            "savePath": "/dist/css"
         },
         {
             "extensionName": ".min.css",
