@@ -1,4 +1,4 @@
-<img  src="./docs/images/zumer.png" width=120 />
+<img  src="./assets/images/zumer.png" width=120 />
 
 # Zumer - CSS radial library
 
@@ -108,7 +108,7 @@ In this example, three arcs are placed in a Ring. To draw three arcs that cover 
 
 #### `item` (probably orbiter)
 
-The `item` class is used to position and contain content within the Zumer radial grid. It offers various customization options, including different sizes (`xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`), shapes (`line`, `circle`, `box`, `rounded`, `blob`), and relative ring positions (`middle`, `upper`, `lower`).
+The `item` class is used to position and contain content within the Zumer radial grid. It offers various customization options, including different sizes (`xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`), shapes (`line`, `circle`, `box`, `rounded`, `blob`), orbital position (`stationary`), and relative ring positions (`middle`, `upper`, `lower`).
 
 One of the notable features of Zumer is the ability to nest `item` elements, allowing for complex and layered radial designs.
 
