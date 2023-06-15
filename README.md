@@ -1,4 +1,4 @@
-<img  src="./assets/images/zumer.png" width=120 />
+<img  src="https://avatars.githubusercontent.com/u/103702169" width=120 />
 
 # Zumer - CSS radial library
 
