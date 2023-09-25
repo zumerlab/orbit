@@ -18,14 +18,15 @@
 }
 
 @for $i from $min-items through $max-items {
-  .items-#{$i} > .item,
-  .items-#{$i} > .arc {
+  .ring:has(.item:nth-child(#{$i})),
+  .ring:has(.arc:nth-child(#{$i})) {
     --angle: calc((var(--arc) / #{$i}) * var(--direction));
   }
 }
 @for $i from $min-items through $max-items {
   @each $arc, $value in $arcs {
-    .items-#{$i}.#{$arc} > .item {
+    .ring.#{$arc}:has(.item:nth-child(#{$i})) {
+      --arc: #{$value};
       --angle: calc((var(--arc) / #{$i - 1}) * var(--direction));
     }
   }
@@ -37,7 +38,7 @@
     $resta: 0;
   }
   @each $size, $var in $sizes {
-    .z-container > .ring-#{$i} > .item.#{$size} {
+    .z-container > .ring:nth-child(#{$i}) > .item.#{$size} {
       --x: calc(var(--radius-#{$i}));
     }
     @each $class in $align {
@@ -54,28 +55,28 @@
         $translate: 'translate(-8px, 8px)';
       }
 
-      .z-container > .ring-#{$i} > .item.#{$size}#{$class} {
+      .z-container > .ring:nth-child(#{$i}) > .item.#{$size}#{$class} {
         --x: calc(var(--radius-#{$i}) #{$math});
       }
     }
   }
 
-  .z-container > .ring-#{$i} > .arc {
+  .z-container > .ring:nth-child(#{$i}) > .arc {
     --length: calc(var(--radius-#{$i}) * 2);
   }
 
-  .z-container > .ring-#{$i} > svg {
+  .z-container > .ring:nth-child(#{$i}) > svg {
     --diam: calc(var(--radius-#{$i}) * 2);
   }
 }
 
 @for $i from $min-rings through $max-rings {
   @each $size, $var in $sizes {
-    .item.#{$size} > .ring-#{$i} {
+    .item.#{$size} > .ring:nth-child(#{$i}) {
       --diam: calc(#{$var} * #{$i});
       --z-index: #{$max-rings - $i};
     }
-    .item.#{$size} > .ring-#{$i} > .item {
+    .item.#{$size} > .ring:nth-child(#{$i}) > .item {
       --x: calc((#{$var} / 2 * #{$i}));
     }
 
@@ -89,11 +90,11 @@
         $math: '- (calc(#{$var} / 4))';
       }
 
-      .item.#{$size} > .ring-#{$i} > .item#{$class} {
+      .item.#{$size} > .ring:nth-child(#{$i}) > .item#{$class} {
         --x: calc((#{$var} / 2 * #{$i}) #{$math});
       }
     }
-    .item.#{$size} > .ring-#{$i} > svg {
+    .item.#{$size} > .ring:nth-child(#{$i}) > svg {
       --diam: calc(#{$var} * #{$i});
     }
   }
@@ -101,7 +102,7 @@
 //arcs nested
 @for $i from $min-rings through $max-rings {
   @each $size, $var in $sizes {
-    .item.#{$size} > .ring-#{$i} > .arc {
+    .item.#{$size} > .ring:nth-child(#{$i}) > .arc {
       --length: calc(#{$var} * #{$i});
     }
   }
@@ -114,7 +115,7 @@
 }
 
 @for $i from $min-rings through $max-rings {
-  .z-container > .ring-#{$i} {
+  .z-container > .ring:nth-child(#{$i}) {
     --diam: calc(var(--radius-#{$i}) * 2);
     --z-index: #{$max-rings - $i};
   }

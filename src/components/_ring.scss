@@ -1,5 +1,5 @@
 
-[class^='ring-'] {
+.ring {
   --arc: 360; // ensure reset to default. useful for nested
   --offset-angle: 0; // ensure reset to default. useful for nested
   display: grid;
@@ -13,6 +13,6 @@
   z-index: var(--z-index);
 }
 
-[class^='ring-'] {
+.ring {
   border: 0.1px solid var(--dark);
 }
