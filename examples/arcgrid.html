@@ -11,6 +11,19 @@
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
       }
+      .capsule {
+        rotate: calc(var(--rotate) * -1 * 45);
+        padding: 10px;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgb(113, 110, 110);
+
+      }
+      .arc {
+        place-items: center;
+        --width: 12px;
+        background-color: darkslategray;
+      }
     </style>
   </head>
   <body>
@@ -80,7 +93,11 @@
             <div class="arc"></div>
             <div class="arc"></div>
             <div class="arc"></div> 
-            <div class="arc"></div>
+            <div class="arc">
+              <div class="capsule">
+                hola
+              </div>
+            </div>
           </div>
           <div class="ring " style="--progress: 55; width: 110px; height: 110px;">
             <div class="item xs bg-primary" style="--item-number: 2; --angle: calc(-90 + var(--progress) * 3.6)"></div>
