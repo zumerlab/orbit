@@ -28,6 +28,15 @@
   ); 
   transform: rotate(var(--rotate)) translate(var(--quarter), 0);
 }
+/*
+<span style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    rotate: calc(var(--rotate) * -1 (queda horizontal) * 45 (queda stationary) * 90(queda tipo rayo bici) );
+">play</span>
 
+*/
 
 
