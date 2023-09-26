@@ -69,6 +69,7 @@ OK rows: rings OR orbits
 - zr-orbiter
 - zr-pod (content inside orbiter)
 - zr-surface/arc/slice
+- zr-label
 
 
 
