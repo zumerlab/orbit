@@ -259,7 +259,7 @@
             return `<div class="item ${shape} ${size} ${alignment} ${stationary}">${itemNumber}</div>\n`;
           }).join('');
           return `
-    <div class="ring-${ringNumber} items-${iNumber} ${arc ? `arc-${arc}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
+    <div class="ring ${arc ? `arc-${arc}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
       ${items}
     </div>
           `;
