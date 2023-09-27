@@ -5,8 +5,8 @@
   --semi: calc(var(--angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de item
   --arc-gap: 1px;
   --length-percent: calc(
-    var(--half) + var(--arc-gap) - var(--half) * tan(var(--semi))
-  );
+    var(--half) + (var(--arc-gap) * (var(--current-ring) / var(--max-rings))) - var(--half) * tan(var(--semi))
+  ); // importante fix en gaps, se toma en cta nro de orbits para que no queda desparajo el gap si hay multiples orbits. no se si anda con nested arcs
   --width: 49px;
   --rotate: calc(
     (var(--angle) * var(--item-number) + var(--offset-angle) - (var(--angle) / 2)) * 1deg

@@ -63,6 +63,8 @@
 
   .z-container > .ring:nth-child(#{$i}) > .arc {
     --length: calc(var(--radius-#{$i}) * 2);
+    --current-ring: #{$i};
+    --max-rings: #{$max-rings};
   }
 
   .z-container > .ring:nth-child(#{$i}) > svg {
@@ -104,6 +106,8 @@
   @each $size, $var in $sizes {
     .item.#{$size} > .ring:nth-child(#{$i}) > .arc {
       --length: calc(#{$var} * #{$i});
+      --current-ring: #{$i};
+      --max-rings: #{$max-rings};
     }
   }
 }
