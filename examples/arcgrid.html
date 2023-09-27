@@ -11,23 +11,36 @@
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
       }
-      .capsule {
-        
-       margin: auto 0 ;
-        padding: 10px;
-        color: white;
-        width:  80%;
-        height: 40px;
-        border: 1px solid rgb(190, 15, 15);
-    /*rotate: calc(var(--rotate) * -1);*/
-       
-  
+      .ring {
+        border: none
       }
-     
+      .capsule {
+        display: grid;
+        place-items: center right;
+        color: white;
+        width:  var(--half);
+        /* paddgin right para qeudar fuera de borde mas un espacio*/
+        /*padding-right: calc(var(--width) + 10px);*/
+        /* paddgin right para qeudar fuera de borde mas un espacio*/
+        padding-right: 0px;
+        
+      }
+      .capsule > span {
+        /*queda mirando para afuera*/ 
+       /* rotate: 270deg;*/
+        /* queda mirando para adentro*/
+        /*rotate: 90deg;*/
+        
+        /* queda siempre horizontal. default */
+        rotate: calc(var(--rotate) * -1);
+
+        /* sin rotate quedan perpendiculares al centro.*/
+        /* rotate: 0deg;*/
+      }
       .arc {
        
   
-        --width:12px;
+        --width:50px;
         background-color: darkslategray;
       }
     </style>
@@ -40,38 +53,68 @@
             <div class="core items-1">
               <div class="item xs " style="transform: translate(-50%, -50%);"></div>
             </div>
-            <div class="ring arc-90">
-              <div class="arc"></div>
-              <div class="arc"></div> 
-              <div class="arc"></div>
-              <div class="arc"></div>
+            <div class="ring arc-90" >
+              <div class="arc" style="--arc-gap: calc(8px - 4px);"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div> 
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
               <div class="arc">
                 <div class="capsule">
-                  hola play
+                  <span>😁</span>
                 </div>
               </div> 
-              <div class="arc"></div>
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
             </div>
             
             <div class="ring">
-              <div class="arc"></div>
-              <div class="arc"></div> 
-              <div class="arc"></div>
-              <div class="arc"></div>
+              <div class="arc" style="--arc-gap: calc(8px - 2px);"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
               <div class="arc"><div class="capsule">
-                hola play
+                  <span>😁</span>
+                </div></div> 
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+              <div class="arc"><div class="capsule">
+                <span>😁</span>
               </div></div> 
-              <div class="arc"></div>
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
             </div>
             <div class="ring">
-              <div class="arc btn btn-primary"><div class="capsule">
-                hola play
+              <div class="arc btn btn-primary" style="--arc-gap: 8px;"><div class="capsule">
+                <span>😁</span>
               </div></div>
-              <div class="arc "></div> 
-              <div class="arc"></div>
-              <div class="arc"></div>
-              <div class="arc"></div> 
-              <div class="arc"></div>
+              <div class="arc "><div class="capsule">
+                  <span>😁</span>
+                </div></div> 
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div> 
+              <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
             </div>
           </div>
         </div>
@@ -87,12 +130,24 @@
             <div class="z-progress text-primary" style="--progress: 75"></div>
           </div>
           <div class="ring">
-            <div class="arc"></div>
-            <div class="arc"></div> 
-            <div class="arc"></div>
-            <div class="arc"></div>
-            <div class="arc"></div> 
-            <div class="arc"></div>
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div> 
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div> 
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
           </div>
         </div>
       </div>
@@ -102,14 +157,24 @@
             <div class="item xs bg-success" style="transform: translate(-50%, -50%);"></div>
           </div>
           <div class="ring">
-            <div class="arc"></div>
-            <div class="arc text-primary"></div> 
-            <div class="arc"></div>
-            <div class="arc"></div>
-            <div class="arc"></div> 
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+            <div class="arc text-primary"><div class="capsule">
+              <span>😁</span>
+            </div></div> 
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div>
+            <div class="arc"><div class="capsule">
+                  <span>😁</span>
+                </div></div> 
             <div class="arc">
               <div class="capsule">
-                hola play
+                <span>😁</span>
               </div>
             </div>
           </div>
