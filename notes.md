@@ -96,3 +96,4 @@ LAS MINIMAS ARC TEXT
 por eso elipsis solo andan en ffox
 anim en chrome.>>
 
+add gooey effect
