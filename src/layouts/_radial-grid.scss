@@ -1,14 +1,14 @@
 @use '../utilities/sass-variables' as *;
 
-@each $sector, $value in $sectors {
-  .#{$sector} > .orbiter,
-  .#{$sector} > .sector {
-    --sector: #{$value};
+@each $limit, $value in $limits {
+  .#{$limit} > .item,
+  .#{$limit} > .arc {
+    --arc: #{$value};
   }
 }
-@each $sector, $angle in $sectors {
-  .#{$sector} > .orbiter,
-  .#{$sector} > .sector {
+@each $offset, $angle in $offsets {
+  .#{$offset} > .orbiter,
+  .#{$offset} > .sector {
     --offset-angle: #{$angle};
   }
 }
@@ -20,14 +20,14 @@
 @for $i from $min-orbiters through $max-orbiters {
   .orbit:has(.orbiter:nth-child(#{$i})),
   .orbit:has(.sector:nth-child(#{$i})) {
-    --angle: calc((var(--sector) / #{$i}) * var(--direction));
+    --angle: calc((var(--arc) / #{$i}) * var(--direction));
   }
 }
 @for $i from $min-orbiters through $max-orbiters {
-  @each $sector, $value in $sectors {
-    .orbit.#{$sector}:has(.orbiter:nth-child(#{$i})) {
-      --sector: #{$value};
-      --angle: calc((var(--sector) / #{$i - 1}) * var(--direction));
+  @each $limit, $value in $limits {
+    .orbit.#{$limit}:has(.orbiter:nth-child(#{$i})) {
+      --arc: #{$value};
+      --angle: calc((var(--arc) / #{$i - 1}) * var(--direction));
     }
   }
 }

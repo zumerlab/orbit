@@ -259,7 +259,7 @@
             return `<div class="orbiter ${shape} ${size} ${alignment} ${stationary}">${orbiterNumber}</div>\n`;
           }).join('');
           return `
-    <div class="orbit ${sector ? `sector-${sector}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
+    <div class="orbit ${sector ? `limit-${sector}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
       ${orbiters}
     </div>
           `;

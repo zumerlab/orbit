@@ -105,7 +105,7 @@ By experimenting with different configurations, you can achieve a wide range of 
 In this example, three sectors are placed in a orbit. To draw three sectors that cover the entire orbit, you need to include the `orbiters-3` class in the orbit element. Additionally, you can utilize other parent options to customize the start angle and sector length.
 
 - Use the `offset-*` class to specify the starting angle of the sectors within the orbit.
-- Employ the `sector-*` class to define the length of the orbit sector covered by the sectors.
+- Employ the `limit-*` class to define the length of the orbit sector covered by the sectors.
 
 ### `orbiter` (probably orbiter)
 
