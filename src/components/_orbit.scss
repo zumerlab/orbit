@@ -1,6 +1,6 @@
 
-.ring {
-  --arc: 360; // ensure reset to default. useful for nested
+.orbit {
+  --sector: 360; // ensure reset to default. useful for nested
   --offset-angle: 0; // ensure reset to default. useful for nested
   display: grid;
   border-radius: 50%;
@@ -13,7 +13,7 @@
   z-index: var(--z-index);
 }
 
-.ring {
+.orbit {
   border: 0.1px solid var(--dark);
 }
 

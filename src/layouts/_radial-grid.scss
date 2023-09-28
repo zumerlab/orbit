@@ -1,14 +1,14 @@
 @use '../utilities/sass-variables' as *;
 
-@each $arc, $value in $arcs {
-  .#{$arc} > .item,
-  .#{$arc} > .arc {
-    --arc: #{$value};
+@each $sector, $value in $sectors {
+  .#{$sector} > .orbiter,
+  .#{$sector} > .sector {
+    --sector: #{$value};
   }
 }
 @each $sector, $angle in $sectors {
-  .#{$sector} > .item,
-  .#{$sector} > .arc {
+  .#{$sector} > .orbiter,
+  .#{$sector} > .sector {
     --offset-angle: #{$angle};
   }
 }
@@ -17,28 +17,28 @@
   --direction: -1;
 }
 
-@for $i from $min-items through $max-items {
-  .ring:has(.item:nth-child(#{$i})),
-  .ring:has(.arc:nth-child(#{$i})) {
-    --angle: calc((var(--arc) / #{$i}) * var(--direction));
+@for $i from $min-orbiters through $max-orbiters {
+  .orbit:has(.orbiter:nth-child(#{$i})),
+  .orbit:has(.sector:nth-child(#{$i})) {
+    --angle: calc((var(--sector) / #{$i}) * var(--direction));
   }
 }
-@for $i from $min-items through $max-items {
-  @each $arc, $value in $arcs {
-    .ring.#{$arc}:has(.item:nth-child(#{$i})) {
-      --arc: #{$value};
-      --angle: calc((var(--arc) / #{$i - 1}) * var(--direction));
+@for $i from $min-orbiters through $max-orbiters {
+  @each $sector, $value in $sectors {
+    .orbit.#{$sector}:has(.orbiter:nth-child(#{$i})) {
+      --sector: #{$value};
+      --angle: calc((var(--sector) / #{$i - 1}) * var(--direction));
     }
   }
 }
 
-@for $i from $min-rings through $max-rings {
+@for $i from $min-orbits through $max-orbits {
   $resta: 1;
   @if $i == 1 {
     $resta: 0;
   }
   @each $size, $var in $sizes {
-    .z-container > .ring:nth-child(#{$i}) > .item.#{$size} {
+    .docker > .orbit:nth-child(#{$i}) > .orbiter.#{$size} {
       --x: calc(var(--radius-#{$i}));
     }
     @each $class in $align {
@@ -55,30 +55,30 @@
         $translate: 'translate(-8px, 8px)';
       }
 
-      .z-container > .ring:nth-child(#{$i}) > .item.#{$size}#{$class} {
+      .docker > .orbit:nth-child(#{$i}) > .orbiter.#{$size}#{$class} {
         --x: calc(var(--radius-#{$i}) #{$math});
       }
     }
   }
 
-  .z-container > .ring:nth-child(#{$i}) > .arc {
+  .docker > .orbit:nth-child(#{$i}) > .sector {
     --length: calc(var(--radius-#{$i}) * 2);
-    --current-ring: #{$i};
-    --max-rings: #{$max-rings};
+    --current-orbit: #{$i};
+    --max-orbits: #{$max-orbits};
   }
 
-  .z-container > .ring:nth-child(#{$i}) > svg {
+  .docker > .orbit:nth-child(#{$i}) > svg {
     --diam: calc(var(--radius-#{$i}) * 2);
   }
 }
 
-@for $i from $min-rings through $max-rings {
+@for $i from $min-orbits through $max-orbits {
   @each $size, $var in $sizes {
-    .item.#{$size} > .ring:nth-child(#{$i}) {
+    .orbiter.#{$size} > .orbit:nth-child(#{$i}) {
       --diam: calc(#{$var} * #{$i});
-      --z-index: #{$max-rings - $i};
+      --z-index: #{$max-orbits - $i};
     }
-    .item.#{$size} > .ring:nth-child(#{$i}) > .item {
+    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbiter {
       --x: calc((#{$var} / 2 * #{$i}));
     }
 
@@ -92,42 +92,42 @@
         $math: '- (calc(#{$var} / 4))';
       }
 
-      .item.#{$size} > .ring:nth-child(#{$i}) > .item#{$class} {
+      .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
         --x: calc((#{$var} / 2 * #{$i}) #{$math});
       }
     }
-    .item.#{$size} > .ring:nth-child(#{$i}) > svg {
+    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > svg {
       --diam: calc(#{$var} * #{$i});
     }
   }
 }
-//arcs nested
-@for $i from $min-rings through $max-rings {
+//sectors nested
+@for $i from $min-orbits through $max-orbits {
   @each $size, $var in $sizes {
-    .item.#{$size} > .ring:nth-child(#{$i}) > .arc {
+    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .sector {
       --length: calc(#{$var} * #{$i});
-      --current-ring: #{$i};
-      --max-rings: #{$max-rings};
+      --current-orbit: #{$i};
+      --max-orbits: #{$max-orbits};
     }
   }
 }
 
 @each $size, $var in $sizes {
-  .item.#{$size} {
+  .orbiter.#{$size} {
     --size: #{$var};
   }
 }
 
-@for $i from $min-rings through $max-rings {
-  .z-container > .ring:nth-child(#{$i}) {
+@for $i from $min-orbits through $max-orbits {
+  .docker > .orbit:nth-child(#{$i}) {
     --diam: calc(var(--radius-#{$i}) * 2);
-    --z-index: #{$max-rings - $i};
+    --z-index: #{$max-orbits - $i};
   }
 }
 
-@for $i from $min-items through $max-items {
-  .item:nth-child(#{$i}),
-  .arc:nth-child(#{$i}) {
-    --item-number: #{$i};
+@for $i from $min-orbiters through $max-orbiters {
+  .orbiter:nth-child(#{$i}),
+  .sector:nth-child(#{$i}) {
+    --orbiter-number: #{$i};
   }
 }

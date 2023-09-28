@@ -39,7 +39,7 @@
         white-space: pre !important;
       }
       
-        .item, div[class^="ring-"] {
+        .orbiter, div[class^="orbit-"] {
             transition: all 1s;
         }
         form {
@@ -52,7 +52,7 @@
         select {
           width: 100%;
         }
-        #rings-container, .ringf-container > fieldset, .item-container > fieldset {
+        #orbits-container, .orbitf-container > fieldset, .orbiter-container > fieldset {
             padding: 10px;
         }
         fieldset {
@@ -63,51 +63,51 @@
   </head>
   <body>
 <div class="layout">
-  <div class="z-container"></div>
+  <div class="docker"></div>
   <div>
     <form>
       <fieldset>
-        <legend>Rings</legend>
-        <div id="rings-container">
-          <div class="ringf-container">
+        <legend>orbits</legend>
+        <div id="orbits-container">
+          <div class="orbitf-container">
             <div class="fieldc">
               <div class="fieldt">
-                <label for="rings-radius">Radius</label><br>
-                <input type="range" id="rings-radius" name="rings-radius" min="0" max="1000" step="1" value="">
+                <label for="orbits-radius">Radius</label><br>
+                <input type="range" id="orbits-radius" name="orbits-radius" min="0" max="1000" step="1" value="">
               </div>
             </div>
             <fieldset>
-              <legend>Ring 1</legend>
+              <legend>orbit 1</legend>
               <div class="fieldc">
                 <div class="fieldt">
-                  <label for="ring1-radius">Radius</label><br>
-                  <input type="range" id="ring1-radius" name="ring1-radius" min="0" max="1000" step="1" value="">
+                  <label for="orbit1-radius">Radius</label><br>
+                  <input type="range" id="orbit1-radius" name="orbit1-radius" min="0" max="1000" step="1" value="">
                 </div>
               </div>
               <div class="fieldc">
                 <div class="fieldt">
-                  <label for="ring1-arc">Arc</label><br>
-                  <input type="range" id="ring1-arc" name="ring1-arc" min="0" max="360" step="45" value="0">
+                  <label for="orbit1-sector">sector</label><br>
+                  <input type="range" id="orbit1-sector" name="orbit1-sector" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
-                  <label for="ring1-offset">Offset</label><br>
-                  <input type="range" id="ring1-offset" name="ring1-offset" min="0" max="360" step="45" value="0">
+                  <label for="orbit1-offset">Offset</label><br>
+                  <input type="range" id="orbit1-offset" name="orbit1-offset" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
-                  <label for="ring1-ccw">CCW </label>
-                  <input type="checkbox" id="ring1-ccw" name="ring1-ccw">
+                  <label for="orbit1-ccw">CCW </label>
+                  <input type="checkbox" id="orbit1-ccw" name="orbit1-ccw">
                 </div>
                 <div class="fieldt">
-                  <label for="ring1-visible">visible </label>
-                  <input type="checkbox" id="ring1-visible" name="ring1-visible" checked>
+                  <label for="orbit1-visible">visible </label>
+                  <input type="checkbox" id="orbit1-visible" name="orbit1-visible" checked>
                 </div>
               </div>
-                <button type="button" class="add-item-button" data-ring="1">Add Item</button>
-                <div class="items-container" id="ring1-items-container"></div>
+                <button type="button" class="add-orbiter-button" data-orbit="1">Add orbiter</button>
+                <div class="orbiters-container" id="orbit1-orbiters-container"></div>
             </fieldset>
           </div>
         </div>
-        <button type="button" id="add-ring-button">Add Ring</button>
+        <button type="button" id="add-orbit-button">Add orbit</button>
       </fieldset>
     </form>
   </div>
@@ -121,36 +121,36 @@
 
     <script>
       const form = document.querySelector('form');
-      const radius = document.querySelector('#rings-radius');
-      const rradius = document.querySelector('#ring1-radius');
-      const zContainer = document.querySelector('.z-container');
+      const radius = document.querySelector('#orbits-radius');
+      const rradius = document.querySelector('#orbit1-radius');
+      const zContainer = document.querySelector('.docker');
       const range = getComputedStyle(zContainer).getPropertyValue('--radius');
       radius.setAttribute('value', range.slice(0, -2).trim())
       rradius.setAttribute('value', range.slice(0, -2).trim())
-      const ringsContainer = document.querySelector('#rings-container');
-      const addRingButton = document.querySelector('#add-ring-button');
-      const removeItemButtonHandler = (event) => {
+      const orbitsContainer = document.querySelector('#orbits-container');
+      const addorbitButton = document.querySelector('#add-orbit-button');
+      const removeorbiterButtonHandler = (event) => {
         // remove form element before update to do the trick
         event.target.parentElement.parentElement.remove()
         updateDOM()
       }
-      const removeRingButtonHandler = (event) => {
+      const removeorbitButtonHandler = (event) => {
         // remove form element before update to do the trick
         event.target.parentElement.parentElement.remove()
         updateDOM()
       }
-      const addItemButtonHandler = (event) => {
-        const ringNumber = event.target.dataset.ring;
-        const itemsContainer = document.querySelector(`#ring${ringNumber}-items-container`);
-        const newItem = document.createElement('div');
-        newItem.classList.add('item-container');
-        newItem.innerHTML = `
+      const addorbiterButtonHandler = (event) => {
+        const orbitNumber = event.target.dataset.orbit;
+        const orbitersContainer = document.querySelector(`#orbit${orbitNumber}-orbiters-container`);
+        const neworbiter = document.createElement('div');
+        neworbiter.classList.add('orbiter-container');
+        neworbiter.innerHTML = `
           <fieldset>
-            <legend>Item ${itemsContainer.children.length + 1}</legend>
+            <legend>orbiter ${orbitersContainer.children.length + 1}</legend>
             <div class="fieldc">
               <div class="fieldt">
-                <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-size">Size</label><br>
-                <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-size" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-size">
+                <label for="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-size">Size</label><br>
+                <select id="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-size" name="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-size">
                   <option value="xxs">XXS</option>
                   <option value="xs">XS</option>
                   <option value="s">S</option>
@@ -161,8 +161,8 @@
                 </select>
               </div>
               <div class="fieldt">
-                <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape">Shape</label><br>
-                <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-shape">
+                <label for="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-shape">Shape</label><br>
+                <select id="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-shape" name="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-shape">
                     <option value="box">Box</option>
                     <option value="circle" selected>Circle</option>
                     <option value="rounded">Rounded</option>
@@ -170,112 +170,112 @@
                 </select>
               </div>
               <div class="fieldt">
-                <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment">Alignment</label><br>
-                <select id="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-alignment">
+                <label for="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-alignment">Alignment</label><br>
+                <select id="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-alignment" name="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-alignment">
                     <option value="" selected>Center</option>
                     <option value="upper">Upper</option>
                     <option value="lower">Lower</option>
                 </select>
               </div>
             <div class="fieldt">
-              <label for="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">Stationary </label>
-              <input type="checkbox" id="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary" name="ring${ringNumber}-item${itemsContainer.children.length + 1}-stationary">
+              <label for="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-stationary">Stationary </label>
+              <input type="checkbox" id="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-stationary" name="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-stationary">
             </div>
 
           </div>
-          <button type="button" class="remove-item-button">remove</button>
+          <button type="button" class="remove-orbiter-button">remove</button>
           </fieldset>
         `;
-        itemsContainer.appendChild(newItem);
-        const removeItemButton = newItem.querySelector('.remove-item-button');
-        removeItemButton.addEventListener('click', removeItemButtonHandler);
+        orbitersContainer.appendChild(neworbiter);
+        const removeorbiterButton = neworbiter.querySelector('.remove-orbiter-button');
+        removeorbiterButton.addEventListener('click', removeorbiterButtonHandler);
         formChangeHandler()
       };
-      const addRingButtonHandler = () => {
-        const ringNumber = ringsContainer.children.length + 1;
-        const newRingContainer = document.createElement('div');
-        newRingContainer.classList.add('ringf-container');
-        newRingContainer.innerHTML = `
+      const addorbitButtonHandler = () => {
+        const orbitNumber = orbitsContainer.children.length + 1;
+        const neworbitContainer = document.createElement('div');
+        neworbitContainer.classList.add('orbitf-container');
+        neworbitContainer.innerHTML = `
           <fieldset>
-            <legend>Ring ${ringNumber}</legend>
+            <legend>orbit ${orbitNumber}</legend>
             <div class="fieldc">
               <div class="fieldt">
-                <label for="ring${ringNumber}-radius">Radius</label><br>
-                <input type="range" id="ring${ringNumber}-radius" name="ring${ringNumber}-radius" min="0" max="1000" step="1" value="">
+                <label for="orbit${orbitNumber}-radius">Radius</label><br>
+                <input type="range" id="orbit${orbitNumber}-radius" name="orbit${orbitNumber}-radius" min="0" max="1000" step="1" value="">
               </div>
             </div>
             <div class="fieldc">
                 
                 <div class="fieldt">
-                  <label for="ring${ringNumber}-arc">Arc</label><br>
-                  <input type="range" id="ring${ringNumber}-arc" name="ring${ringNumber}-arc" min="0" max="360" step="45" value="0">
+                  <label for="orbit${orbitNumber}-sector">sector</label><br>
+                  <input type="range" id="orbit${orbitNumber}-sector" name="orbit${orbitNumber}-sector" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
-                  <label for="ring${ringNumber}-offset">Offset</label><br>
-                  <input type="range" id="ring${ringNumber}-offset" name="ring${ringNumber}-offset" min="0" max="360" step="45" value="0">
+                  <label for="orbit${orbitNumber}-offset">Offset</label><br>
+                  <input type="range" id="orbit${orbitNumber}-offset" name="orbit${orbitNumber}-offset" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
-                  <label for="ring${ringNumber}-ccw">CCW </label>
-                  <input type="checkbox" id="ring${ringNumber}-ccw" name="ring${ringNumber}-ccw">
+                  <label for="orbit${orbitNumber}-ccw">CCW </label>
+                  <input type="checkbox" id="orbit${orbitNumber}-ccw" name="orbit${orbitNumber}-ccw">
                 </div>
                 <div class="fieldt">
-                  <label for="ring${ringNumber}-visible">visible </label>
-                  <input type="checkbox" id="ring${ringNumber}-visible" name="ring${ringNumber}-visible" checked>
+                  <label for="orbit${orbitNumber}-visible">visible </label>
+                  <input type="checkbox" id="orbit${orbitNumber}-visible" name="orbit${orbitNumber}-visible" checked>
                 </div>
               </div>
-            <button type="button" class="add-item-button" data-ring="${ringNumber}">Add Item</button>
-            <div class="items-container" id="ring${ringNumber}-items-container"></div>
-            <button type="button" class="remove-ring-button">remove</button>
+            <button type="button" class="add-orbiter-button" data-orbit="${orbitNumber}">Add orbiter</button>
+            <div class="orbiters-container" id="orbit${orbitNumber}-orbiters-container"></div>
+            <button type="button" class="remove-orbit-button">remove</button>
           </fieldset>
         `;
-        ringsContainer.appendChild(newRingContainer);
-        document.querySelector(`#ring${ringNumber}-radius`).setAttribute('value', Number(range.slice(0, -2).trim()))
-        const addItemButton = newRingContainer.querySelector('.add-item-button');
-        addItemButton.addEventListener('click', addItemButtonHandler);
-        const removeRingButton = newRingContainer.querySelector('.remove-ring-button');
-        removeRingButton.addEventListener('click', removeRingButtonHandler);
+        orbitsContainer.appendChild(neworbitContainer);
+        document.querySelector(`#orbit${orbitNumber}-radius`).setAttribute('value', Number(range.slice(0, -2).trim()))
+        const addorbiterButton = neworbitContainer.querySelector('.add-orbiter-button');
+        addorbiterButton.addEventListener('click', addorbiterButtonHandler);
+        const removeorbitButton = neworbitContainer.querySelector('.remove-orbit-button');
+        removeorbitButton.addEventListener('click', removeorbitButtonHandler);
         formChangeHandler()
       };
       const updateDOM = () => {
-        const rings = document.querySelectorAll('.ringf-container');
-        const ringsRadius = document.querySelector(`#rings-radius`).value
-        zContainer.style.setProperty('--radius', ringsRadius + 'px');
-        const html = Array.from(rings).map((ring) => {
-          const ringNumber = ring.querySelector('legend').textContent.split(' ')[1];
-          const ccw = ring.querySelector(`#ring${ringNumber}-ccw`).checked ? 'ccw' : '';
-          const visible = ring.querySelector(`#ring${ringNumber}-visible`).checked ? '' : 'transparent';
-          const arc = ring.querySelector(`#ring${ringNumber}-arc`).value;
-          const offset = ring.querySelector(`#ring${ringNumber}-offset`).value;
-          const ringRadius = ring.querySelector(`#ring${ringNumber}-radius`).value
-          zContainer.style.setProperty(`--radius-${ringNumber}`, ringRadius + 'px');
+        const orbits = document.querySelectorAll('.orbitf-container');
+        const orbitsRadius = document.querySelector(`#orbits-radius`).value
+        zContainer.style.setProperty('--radius', orbitsRadius + 'px');
+        const html = Array.from(orbits).map((orbit) => {
+          const orbitNumber = orbit.querySelector('legend').textContent.split(' ')[1];
+          const ccw = orbit.querySelector(`#orbit${orbitNumber}-ccw`).checked ? 'ccw' : '';
+          const visible = orbit.querySelector(`#orbit${orbitNumber}-visible`).checked ? '' : 'transparent';
+          const sector = orbit.querySelector(`#orbit${orbitNumber}-sector`).value;
+          const offset = orbit.querySelector(`#orbit${orbitNumber}-offset`).value;
+          const orbitRadius = orbit.querySelector(`#orbit${orbitNumber}-radius`).value
+          zContainer.style.setProperty(`--radius-${orbitNumber}`, orbitRadius + 'px');
           var iNumber = 0
-          const items = Array.from(ring.querySelectorAll('.item-container')).map((item) => {
-            const itemNumber = item.querySelector('legend').textContent.split(' ')[1];
+          const orbiters = Array.from(orbit.querySelectorAll('.orbiter-container')).map((orbiter) => {
+            const orbiterNumber = orbiter.querySelector('legend').textContent.split(' ')[1];
             iNumber = iNumber + 1
-            const size = item.querySelector(`#ring${ringNumber}-item${itemNumber}-size`).value;
-            const alignment = item.querySelector(`#ring${ringNumber}-item${itemNumber}-alignment`).value;
-            const shape = item.querySelector(`#ring${ringNumber}-item${itemNumber}-shape`).value;
-            const stationary = item.querySelector(`#ring${ringNumber}-item${itemNumber}-stationary`).checked ? 'stationary' : '';
-            return `<div class="item ${shape} ${size} ${alignment} ${stationary}">${itemNumber}</div>\n`;
+            const size = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-size`).value;
+            const alignment = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-alignment`).value;
+            const shape = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-shape`).value;
+            const stationary = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-stationary`).checked ? 'stationary' : '';
+            return `<div class="orbiter ${shape} ${size} ${alignment} ${stationary}">${orbiterNumber}</div>\n`;
           }).join('');
           return `
-    <div class="ring ${arc ? `arc-${arc}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
-      ${items}
+    <div class="orbit ${sector ? `sector-${sector}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
+      ${orbiters}
     </div>
           `;
         }).join('');
-        const ringsContainer = document.querySelector('.z-container');
-        ringsContainer.innerHTML = html;
+        const orbitsContainer = document.querySelector('.docker');
+        orbitsContainer.innerHTML = html;
         document.querySelector('#code').innerHTML = html;
       }; 
       const formChangeHandler = () => {
         updateDOM();
       };
       form.addEventListener('change', formChangeHandler);
-      addRingButton.addEventListener('click', addRingButtonHandler);
-      const addItemButtons = document.querySelectorAll('.add-item-button');
-      addItemButtons.forEach((addItemButton) => {
-        addItemButton.addEventListener('click', addItemButtonHandler);
+      addorbitButton.addEventListener('click', addorbitButtonHandler);
+      const addorbiterButtons = document.querySelectorAll('.add-orbiter-button');
+      addorbiterButtons.forEach((addorbiterButton) => {
+        addorbiterButton.addEventListener('click', addorbiterButtonHandler);
       });
       
       

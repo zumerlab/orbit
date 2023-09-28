@@ -1,15 +1,15 @@
 
-.arc {
+.sector {
   --half: calc(var(--length) / 2);
   --quarter: calc(var(--half) / 2); 
-  --semi: calc(var(--angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de item
-  --arc-gap: 1px;
+  --semi: calc(var(--angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de orbiter
+  --sector-gap: 1px;
   --length-percent: calc(
-    var(--half) + (var(--arc-gap) * (var(--current-ring) / var(--max-rings))) - var(--half) * tan(var(--semi))
-  ); // importante fix en gaps, se toma en cta nro de orbits para que no queda desparajo el gap si hay multiples orbits. no se si anda con nested arcs
+    var(--half) + (var(--sector-gap) * (var(--current-orbit) / var(--max-orbits))) - var(--half) * tan(var(--semi))
+  ); // importante fix en gaps, se toma en cta nro de orbits para que no queda desparajo el gap si hay multiples orbits. no se si anda con nested sectors
   --width: 49px;
   --rotate: calc(
-    (var(--angle) * var(--item-number) + var(--offset-angle) - (var(--angle) / 2)) * 1deg
+    (var(--angle) * var(--orbiter-number) + var(--offset-angle) - (var(--angle) / 2)) * 1deg
   );
   display: grid;
   grid-area: 1/1/1/1;
@@ -21,7 +21,7 @@
   box-sizing: border-box;
   clip-path: polygon(
     0 50% /* left center pivot*/,  
-    100% calc(100% - var(--length-percent)) /* right to bottom arc increase*/,  
+    100% calc(100% - var(--length-percent)) /* right to bottom sector increase*/,  
     100% 100% /* right top corner*/,
     100% 0  /* right bottom corner*/,
    100% var(--length-percent) /* right to top ar decrease*/
