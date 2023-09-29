@@ -31,6 +31,14 @@
     }
   }
 }
+@for $i from $min-orbiters through $max-orbiters {
+  @each $limit, $value in $limits {
+    .orbit.#{$limit}:has(.sector:nth-child(#{$i})) {
+      --arc: #{$value};
+      --angle: calc((var(--arc) / #{$i}) * var(--direction));
+    }
+  }
+}
 
 @for $i from $min-orbits through $max-orbits {
   $resta: 1;
@@ -131,3 +139,4 @@
     --orbiter-number: #{$i};
   }
 }
+
