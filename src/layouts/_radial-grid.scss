@@ -114,6 +114,7 @@
   @each $size, $var in $sizes {
     .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .sector {
       --length: calc(#{$var} * #{$i});
+      --width: calc(#{$var} / 4);
       --current-orbit: #{$i};
       --max-orbits: #{$max-orbits};
     }
