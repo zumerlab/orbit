@@ -1,8 +1,11 @@
 @use '../utilities/sass-variables' as *;
 
-// Instead of $theme-color-#{warning}
-// https://huemint.com/bootstrap-plus/
-//background-color: map.get($theme-colors, "warning");
+/* ======== Docker - variables ========= */
+
+/* All CSS custom vars are defined inside docker element 
+This allows having isolated vars for each docker and permits
+use multiple dockers on same project without interference.
+*/
 
 .docker {
     /* Layout vars */
