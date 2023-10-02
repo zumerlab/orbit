@@ -1,7 +1,7 @@
 
 .orbit {
-  --arc: 360; // ensure reset to default. useful for nested
-  --offset-angle: 0; // ensure reset to default. useful for nested
+  --arc: var(--a360); // ensure reset to default. useful for nested
+  --offset-angle: var(--a0); // ensure reset to default. useful for nested
   display: grid;
   border-radius: 50%;
   border: 0.1px solid var(--dark);

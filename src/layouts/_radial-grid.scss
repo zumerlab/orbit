@@ -123,13 +123,31 @@
  but is not yet handled by Firefox, unless layout.css.has-selector.enabled flag  https://caniuse.com/css-has
 */
 @for $i from $min-orbiters through $max-orbiters {
-    .orbit:has(> .orbiter:nth-child(#{$i})) {
+  .orbit:has(> .orbiter:nth-child(#{$i})) {
+    $number: $i - 1;
+    @if $i < 1  {
+      $number: 1;
+    }
+    --angle: calc((var(--arc) / #{$number}) * var(--direction)); /* Calculate and set --angle variable */
+    }
+}
+@for $i from $min-orbiters through $max-orbiters {
+    .orbit:not([class*="limit-"]):has(> .orbiter:nth-child(#{$i})) {
       $number: $i;
-
-      @if $i <= 1  {
+      @if $i < 1  {
         $number: 1;
       }
       --angle: calc((var(--arc) / #{$number}) * var(--direction)); /* Calculate and set --angle variable */
+      }
+}
+
+@for $i from $min-orbiters through $max-orbiters {
+  .orbit[class*="limit-"]:has(> .orbiter:nth-child(#{$i})) {
+    $number: $i - 1;
+    @if $i < 1  {
+      $number: 1;
+    }
+    --angle: calc((var(--arc) / #{$number}) * var(--direction)); /* Calculate and set --angle variable */
     }
 }
 
