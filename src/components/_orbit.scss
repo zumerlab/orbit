@@ -1,6 +1,6 @@
 
 .orbit {
-  --sector: 360; // ensure reset to default. useful for nested
+  --arc: 360; // ensure reset to default. useful for nested
   --offset-angle: 0; // ensure reset to default. useful for nested
   display: grid;
   border-radius: 50%;

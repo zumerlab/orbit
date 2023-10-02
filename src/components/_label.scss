@@ -8,6 +8,7 @@
   border-radius: 50%;
   width: 4px;
   height: 4px;
+  --x: calc(var(--size) / 1.8);
 }
 
 .label::before {
@@ -17,6 +18,25 @@
   width: var(--connector-width);
   height: 1px;
 }
+
+/* Set size variable for each orbiter */
+@each $size, $var in $sizes {
+  .label#{$size} {
+    @if $size != null {
+      --size: #{$var};
+    }    
+  }
+}
+
+/* Set size variable for each orbiter */
+@each $pos, $angle in $position {
+  .label#{$pos} {
+   
+      --label-angle: calc(#{$angle} * 1deg);
+    }    
+ 
+}
+
 .label > .text {
   transform-origin: 0 0;
   display: grid;
@@ -37,19 +57,10 @@
     rotate(var(--label-angle-invert));
 }
 
-@each $size, $var in $sizes {
-  @each $pos, $angle in $position {
-    .orbiter.#{$size} > .label.#{$pos} {
-      --label-angle: calc(#{$angle} * 1deg);
-      --x: calc(#{$var} / 1.8);
-    }
-  }
-}
-
 @each $pos, $angle in $position {
-  .label.#{$pos} > .text {
-    --label-angle-invert: calc(#{$angle} * -1deg);
-    @if $pos != 'pos-180' {
+  .label#{$pos} > .text {
+    --label-angle-invert: calc(var(--label-angle) * -1deg);
+    @if $pos != '.pos-180' {
       --label-box: +5px;
     } @else {
       --label-box: -5px;

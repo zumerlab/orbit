@@ -25,11 +25,15 @@
   }
 
   /* Check if the parent is .orbiter */
-  @each $size, $var in $sizes {
-    .orbiter.#{$size} > .orbit:nth-child(#{$i}) {
-      --diam: calc(#{$var} * #{$i});
+ // @each $size, $var in $sizes {
+    .orbiter > .orbit:nth-child(#{$i}) {
+    //  @if $size == null {
+     //   --diam: calc(var(--m) * #{$i});
+     // } @else {
+        --diam: calc(var(--size) * #{$i});
+     // }
       --z-index: #{$z-index};
-    }
+   // }
   }
 }
 
@@ -58,21 +62,21 @@
   
 
   /* Check if the parent is .orbiter */
-  @each $size, $var in $sizes {
-    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbit {
-      --diam: calc(#{$var} * #{$i});
+  
+    .orbiter > .orbit:nth-child(#{$i}) > .orbit {
+      --diam: calc(var(--size) * #{$i});
       --z-index: #{$z-index};
       --x: calc(var(--radius-#{$i}));
       border: none;
     }
 
-    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbit > .sector {
-      --length: calc(#{$var} * #{$i});
-    --width: calc(#{$var} / 4);
-    --current-orbit: #{$i};
-    --max-orbits: #{$max-orbits};
+    .orbiter > .orbit:nth-child(#{$i}) > .orbit > .sector {
+        --length: calc(var(--size) * #{$i});
+        --width: calc(var(--size) / 4);
+        --current-orbit: #{$i};
+        --max-orbits: #{$max-orbits};
     }
-  }
+ 
 }
 
 /* Set different offset angles.
@@ -81,11 +85,18 @@
  For example, .offset-45 implies that orbiters or sectors start at a 45º angle.
 */
 @each $offset, $angle in $offsets {
-  .orbit.#{$offset} > .orbiter,
-  .orbit.#{$offset} > .sector {
+    .orbit#{$offset} {
     --offset-angle: #{$angle}; /* Set --offset-angle variable for a specific offset */
   }
 }
+
+@each $limit, $angle in $limits {
+  .orbit#{$limit} {
+    --arc: #{$angle}; /* Set lengyh variable for a specific arc limit */
+  }
+}
+
+
 
 /* Counter-clockwise direction
  By default, orbit child elements are arranged clockwise.
@@ -99,8 +110,10 @@
 
 /* Set size variable for each orbiter */
 @each $size, $var in $sizes {
-  .orbiter.#{$size} {
-    --size: #{$var};
+  .orbiter#{$size} {
+    @if $size != null {
+      --size: #{$var};
+    }    
   }
 }
 
@@ -121,12 +134,9 @@
  but is not yet handled by Firefox, unless layout.css.has-selector.enabled flag  https://caniuse.com/css-has
 */
 @for $i from $min-orbiters through $max-orbiters {
-  @each $limit, $value in $limits {
-    .orbit.#{$limit}:has(> .orbiter:nth-child(#{$i})) {
-      --arc: #{$value}; /* Set --arc variable for specific limit */
+    .orbit:has(> .orbiter:nth-child(#{$i})) {
       --angle: calc((var(--arc) / #{$i - 1}) * var(--direction)); /* Calculate and set --angle variable */
     }
-  }
 }
 
 /* Set orbiter-number variable for each orbiter in each orbit */
@@ -141,28 +151,28 @@
  Aligment options ares included.
 */
 @for $i from $min-orbits through $max-orbits {
-  @each $size, $var in $sizes {
+ 
     /* Set x variable for each orbiter */
-    .docker > .orbit:nth-child(#{$i}) > .orbiter.#{$size} {
+    .docker > .orbit:nth-child(#{$i}) > .orbiter {
       --x: calc(var(--radius-#{$i}));
     }
     @each $class in $align {
       $math: '';
     /* Set x variable and translate for specific alignments (Upper) */
     @if $class == '.upper' {
-      $math: '+ (calc(#{$var} / 2))';
+      $math: '+ (calc(var(--size) / 2))';
     }
 
     /* Set x variable and translate for specific alignments (Lower) */
     @if $class == '.lower' {
-      $math: '- (calc(#{$var} / 2))';
+      $math: '- (calc(var(--size) / 2))';
     }
 
     /* Apply styles based on alignment */
-    .docker > .orbit:nth-child(#{$i}) > .orbiter.#{$size}#{$class} {
+    .docker > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
       --x: calc(var(--radius-#{$i}) #{$math});
     }
-  }
+ 
   }
 }
 
@@ -173,26 +183,27 @@
  Example: orbiter.upper
 */
 @for $i from $min-orbits through $max-orbits {
-  @each $size, $var in $sizes {
-    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbiter {
-      --x: calc((#{$var} / 2 * #{$i}));
+ 
+    .orbiter > .orbit:nth-child(#{$i}) > .orbiter {
+     
+        --x: calc(var(--diam) / 2);
+     
     }
     @each $class in $align {
     /* Set x variable for specific alignments */
     $math: '';
     @if $class == '.upper' {
-      $math: '+ (calc(#{$var} / 4))';
+      $math: '+ (calc(var(--size) / 2))';
     }
 
     @if $class == '.lower' {
-      $math: '- (calc(#{$var} / 4))';
+      $math: '- (calc(var(--size) / 2))';
     }
 
     /* Apply styles based on alignment */
-    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
-      --x: calc((#{$var} / 2 * #{$i}) #{$math});
+    .orbiter > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
+        --x: calc((var(--diam) / 2) #{$math});
     }
-  }
   }
 }
 
@@ -222,12 +233,9 @@
  but is not yet handled by Firefox, unless layout.css.has-selector.enabled flag  https://caniuse.com/css-has
 */
 @for $i from $min-orbiters through $max-orbiters {
-  @each $limit, $value in $limits {
-    .orbit.#{$limit}:has(> .sector:nth-child(#{$i})) {
-      --arc: #{$value}; /* Set --arc variable for specific limit */
+    .orbit:has(> .sector:nth-child(#{$i})) {
       --angle: calc((var(--arc) / #{$i}) * var(--direction)); /* Calculate and set --angle variable */
     }
-  }
 }
 @for $i from $min-orbits through $max-orbits {
   /* Set sector variables */
@@ -241,14 +249,13 @@
    Accordng its diameter named sizes each sector has a radius to depending on a nested orbit.
    This is because sector can be nested.
   */
-  @each $size, $var in $sizes {
-    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .sector {
-      --length: calc(#{$var} * #{$i});
-      --width: calc(#{$var} / 4);
+  
+    .orbiter > .orbit:nth-child(#{$i}) > .sector {
+      --length: calc(var(--size) * #{$i});
+      --width: calc(var(--size) / 4);
       --current-orbit: #{$i};
       --max-orbits: #{$max-orbits};
     }
-  }
 }
 
 /* ========= Radial Grid - SVG ============= */
@@ -267,10 +274,12 @@
  Example: orbiter.upper
 */
 @for $i from $min-orbits through $max-orbits {
-  @each $size, $var in $sizes {
+
     /* Set diameter variable for the SVG in each orbit */
-    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > svg {
-      --diam: calc(#{$var} * #{$i});
+    .orbiter > .orbit:nth-child(#{$i}) > svg {
+      
+        --diam: calc(var(--size) * #{$i});
+     
+      
     }
-  }
 }
