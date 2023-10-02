@@ -33,6 +33,48 @@
   }
 }
 
+/* ====== Radial Grid - Sub-orbit ======== */
+
+/* 
+ Set diameter and z-index variables for each suborbit.
+*/
+@for $i from $min-orbits through $max-orbits {
+  $z-index: #{$max-orbits - $i};
+  
+  /* Check if the parent is .docker */
+  .docker > .orbit:nth-child(#{$i}) > .orbit {
+    --diam: calc(var(--radius-#{$i}) * 2);
+    --z-index: #{$z-index};
+    --x: calc(var(--radius-#{$i}));
+    border: none;
+  }
+
+  /* Check if the parent is .docker */
+  .docker > .orbit:nth-child(#{$i}) > .orbit > .sector {
+    --length: calc(var(--radius-#{$i}) * 2);
+    --current-orbit: #{$i};
+    --max-orbits: #{$max-orbits};
+  }
+  
+
+  /* Check if the parent is .orbiter */
+  @each $size, $var in $sizes {
+    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbit {
+      --diam: calc(#{$var} * #{$i});
+      --z-index: #{$z-index};
+      --x: calc(var(--radius-#{$i}));
+      border: none;
+    }
+
+    .orbiter.#{$size} > .orbit:nth-child(#{$i}) > .orbit > .sector {
+      --length: calc(#{$var} * #{$i});
+    --width: calc(#{$var} / 4);
+    --current-orbit: #{$i};
+    --max-orbits: #{$max-orbits};
+    }
+  }
+}
+
 /* Set different offset angles.
  This allows orbit child elements to start at different points, overriding the default 0º.
  $offsets are defined in ./base/_variables.scss.
