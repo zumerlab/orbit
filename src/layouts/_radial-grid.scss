@@ -117,17 +117,6 @@
   }
 }
 
-/* Calculate and set angle for each orbiter.
- Angle is calculated taking into account arc-length, number of orbit child elements and direction
- Note: using :nth-child() selector avoid to use parent classes to define number of child elements,
- but is not yet handled by Firefox, unless layout.css.has-selector.enabled flag  https://caniuse.com/css-has
-*/
-@for $i from $min-orbiters through $max-orbiters {
-  .orbit:has(> .orbiter:nth-child(#{$i})) {
-    --angle: calc((var(--arc) / #{$i}) * var(--direction)); /* Calculate and set --angle variable */
-  }
-}
-
 /* Calculate and set arc-length and angle for each orbiter based on arc limits.
  Angle is calculated taking into account arc-length, number of orbit child elements and direction
  Note: using :nth-child() selector avoid to use parent classes to define number of child elements,
@@ -135,7 +124,12 @@
 */
 @for $i from $min-orbiters through $max-orbiters {
     .orbit:has(> .orbiter:nth-child(#{$i})) {
-      --angle: calc((var(--arc) / #{$i - 1}) * var(--direction)); /* Calculate and set --angle variable */
+      $number: $i;
+
+      @if $i <= 1  {
+        $number: 1;
+      }
+      --angle: calc((var(--arc) / #{$number}) * var(--direction)); /* Calculate and set --angle variable */
     }
 }
 
@@ -227,16 +221,7 @@
   }
 }
 
-/* Calculate and set arc-length and angle for each sector based on arc limits.
- Angle is calculated taking into account arc-length, number of orbit child elements and direction
- Note: using :nth-child() selector avoid to use parent classes to define number of child elements,
- but is not yet handled by Firefox, unless layout.css.has-selector.enabled flag  https://caniuse.com/css-has
-*/
-@for $i from $min-orbiters through $max-orbiters {
-    .orbit:has(> .sector:nth-child(#{$i})) {
-      --angle: calc((var(--arc) / #{$i}) * var(--direction)); /* Calculate and set --angle variable */
-    }
-}
+
 @for $i from $min-orbits through $max-orbits {
   /* Set sector variables */
   .docker > .orbit:nth-child(#{$i}) > .sector {
