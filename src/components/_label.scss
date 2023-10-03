@@ -66,18 +66,3 @@
     }
   }
 }
-
-/* element theme */
-.label {
-  border-color: var(--info);
-}
-
-.label::before {
-  border-bottom-color: var(--info);
-}
-
-.label > .text {
-  background-color: var(--light);
-  border-color: var(--info);
-  color: var(--info);
-}
