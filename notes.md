@@ -101,6 +101,8 @@ TITULOS // LABELS PARA ORBITS
 .MARKERS
 .CORE .... AJUSTAR
 ver temas de z-index....
+. margin 0 issue
+. adjuts size to view port
 
 
 ### COSAS PARA DESPUES
