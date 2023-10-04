@@ -4,19 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/css/index.min.css" type="text/css" defer/>
-    <title>Zumer CSS</title>
+    <title>°ⓩ CSS</title>
     <style>
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
+        background-color: darkslategray;
       }
+      .content {
+        position:absolute;
+        z-index: 400;
+        width: 100%;
+        overflow: hidden;
+      }
+      dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.352);
+      }
+
     </style>
+   
   </head>
   <body>
     <div class="docker" >
+      
       <div class="core ">
         <div class="orbiter s" style="transform: translate(-50%, -50%);"></div>
       </div>
+      
       <div class="orbit">
+     
         <div class="orbit limit-180">
           <div class="sector"></div>
           <div class="sector"></div>
@@ -27,11 +42,12 @@
           <div class="orbiter s lower">w</div>
           <div class="orbiter s lower">w</div>
           <div class="orbiter s lower">w</div>
-          <div class="orbiter s lower">w</div>
+          <button id="dialogb" class="orbiter s">open dialog</button>
         </div>
       </div>
       
       <div class="orbit limit-90">
+       
          <div class=" orbiter m ">
           <div class="orbit ">
             <div class="sector" ></div>
@@ -56,7 +72,25 @@
           </div>
         </div>
       </div>
+      <dialog  id="dialog"   class="orb" style="  width: 200px;
+      height: 200px;">
+        esto modal es
+      </dialog>
+      
     </div>
   </body>
+  <script>
+    (function () {
+   var updateButton = document.getElementById("dialogb");
 
+   var favDialog = document.getElementById("dialog");
+
+   // Update button opens a modal dialog
+   updateButton.addEventListener("click", function () {
+     favDialog.showModal();
+   });
+
+ })();
+   </script>
 </html>
+
