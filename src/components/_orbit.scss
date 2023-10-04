@@ -13,6 +13,18 @@
   z-index: var(--z-index);
 }
 
+.orb {
+  --arc: var(--a360); // ensure reset to default. useful for nested
+  --offset-angle: var(--a0); // ensure reset to default. useful for nested
+  border-radius: 50%;
+  border: 0.1px solid var(--dark);
+  grid-area: 1/1/1/1;
+  place-items: center;
+  box-sizing: content-box;
+
+  z-index: 800;
+}
+
 .orbit {
   border: 0.1px solid var(--dark);
 }
