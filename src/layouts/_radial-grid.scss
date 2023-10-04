@@ -7,6 +7,10 @@
  specifying interactions between elements such as docker, orbits, orbiters, sectors, and SVG.
  It also manages the behavior of these elements when properties change, like sizes, arc-length limits, and alignment. 
 */
+/* ====== Radial Grid - Core ======== */
+.core > .orbiter {
+  // transform: translate(-50%, -50%);
+}
 
 /* ====== Radial Grid - Orbit ======== */
 
@@ -22,6 +26,13 @@
   .docker > :nth-child(#{$i} of .orbit) {
     --diam: calc(var(--radius-#{$i}) * 2);
     --z-index: #{$z-index};
+  }
+
+  @each $orbit-size, $orbit-value in $orbit-sizes {
+    /* Check if the parent is .docker */
+    .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) {
+      --diam: #{$orbit-value};
+    }
   }
 
   /* Check if the parent is .orbiter */
@@ -52,12 +63,27 @@
     --x: calc(var(--radius-#{$i}));
     border: none;
   }
+  @each $orbit-size, $orbit-value in $orbit-sizes {
+  /* Check if the parent is .docker */
+  .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit {
+    --diam: #{$orbit-value};
+    --x: calc( #{$orbit-value} / 2);
+  }
+}
 
   /* Check if the parent is .docker */
   .docker > :nth-child(#{$i} of .orbit) > .orbit > .sector {
     --length: calc(var(--radius-#{$i}) * 2);
     --current-orbit: #{$i};
     --max-orbits: #{$max-orbits};
+  }
+
+  @each $orbit-size, $orbit-value in $orbit-sizes {
+    /* Check if the parent is .docker */
+    .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit  > .sector{
+      --length: #{$orbit-value};
+      
+    }
   }
   
 
@@ -85,13 +111,13 @@
  For example, .offset-45 implies that orbiters or sectors start at a 45º angle.
 */
 @each $offset, $angle in $offsets {
-    .orbit#{$offset} {
+    .orbit#{$offset}, .core#{$offset} {
     --offset-angle: #{$angle}; /* Set --offset-angle variable for a specific offset */
   }
 }
 
 @each $limit, $angle in $limits {
-  .orbit#{$limit} {
+  .orbit#{$limit}, .core#{$limit} {
     --arc: #{$angle}; /* Set lengyh variable for a specific arc limit */
   }
 }
@@ -181,7 +207,7 @@
     }
 
     /* Apply styles based on alignment */
-    .docker > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
+    .docker >  :nth-child(#{$i} of .orbit) > .orbiter#{$class} {
       --x: calc(var(--radius-#{$i}) #{$math});
     }
  

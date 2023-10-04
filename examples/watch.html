@@ -27,11 +27,11 @@
   <body>
     <div class="docker" >
       <div class="core offset-270 ">
-        <hr class="orbiter line hora" style="width: 110px; height: 6px;  border:1px solid red; --angle: 0;  --orbiter-number: 2;">
-        <hr class="orbiter line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);  --angle: 0;  --orbiter-number: 2;">
-        <hr class="orbiter line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);  --angle: 0;  --orbiter-number: 2;">
+        <hr class="orbiter line hora" style="width: 110px; height: 6px;  border:1px solid red;   --orbiter-number: 2;">
+        <hr class="orbiter line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);    --orbiter-number: 2;">
+        <hr class="orbiter line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);    --orbiter-number: 2;">
       </div>
-      <div class="orbit">
+      <div class="orbit size-1">
         <div class="orbit offset-270 limit-90">
           <div class="sector"></div>
           <div class="sector"></div>
@@ -42,54 +42,47 @@
           <div class="orbiter s upper d-m  transparent"></div>
           <div class="orbiter s upper d-s  transparent"></div>
         </div>
-
+        </div>
+        <div class="orbit size-2">
         <div class="orbit">
           <svg class="z-svg">
             <circle class="svg-progress second" /> 
           </svg>
-      </div>
-      <div class="orbit">
-        <div class="orbit offset-270">
-          <div class="orbiter xs ">12</div>
-          <div class="orbiter xs ">1</div>
-          <div class="orbiter xs ">2</div>
-          <div class="orbiter xs ">3</div>
-          <div class="orbiter xs ">4</div>
-          <div class="orbiter xs ">5</div>
-          <div class="orbiter xs ">6</div>
-          <div class="orbiter xs ">7</div>
-          <div class="orbiter xs ">8</div>
-          <div class="orbiter xs ">9</div>
-          <div class="orbiter xs ">10</div>
-          <div class="orbiter xs ">11</div>
-        </div>
-
-        <div class="orbit">
-          <svg class="z-svg">
-            <circle class="svg-progress minute" /> 
-          </svg>
-        </div>
-      </div>
-      <div class="orbit">
-        <div class="orbit offset-270">
-          <svg class="z-svg">
-            <circle class="svg-progress hour" style="--stroke: 60"/>   
-          </svg>
         </div>
         <div class="orbit">
-          <svg class="z-svg">
-            <circle class="markers"/> 
-          </svg>
+        <svg class="z-svg">
+          <circle class="svg-progress minute" /> 
+        </svg>
         </div>
+      <div class="orbit offset-270">
+        <svg class="z-svg">
+          <circle class="svg-progress hour" style="--stroke: 60"/>   
+        </svg>
       </div>
-        
+          
       
-      
-      
-      
+   
+      <div class="orbit offset-270">
+        <div class="orbiter xs ">12</div>
+        <div class="orbiter xs ">1</div>
+        <div class="orbiter xs ">2</div>
+        <div class="orbiter xs ">3</div>
+        <div class="orbiter xs ">4</div>
+        <div class="orbiter xs ">5</div>
+        <div class="orbiter xs ">6</div>
+        <div class="orbiter xs ">7</div>
+        <div class="orbiter xs ">8</div>
+        <div class="orbiter xs ">9</div>
+        <div class="orbiter xs ">10</div>
+        <div class="orbiter xs ">11</div>
       </div>
+      <div class="orbit">
+        <svg class="z-svg">
+          <circle class="markers"/> 
+        </svg>
       </div>
     </div>
+   
     <script>
       function analogWatch() {
         // Get the current time

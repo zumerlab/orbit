@@ -99,10 +99,11 @@ TITULOS // LABELS PARA ORBITS
 .PROGRESS
 .KNOB
 .MARKERS
-.CORE .... AJUSTAR
-ver temas de z-index....
+.CORE .... AJUSTAR. HAY QUE VER VARIOS TEMAS: SI HAY UN SOLO ORBITER, SI HAY MAS...
+OK ver temas de z-index.... ESTA BIEN ASI
 . margin 0 issue
 . adjuts size to view port
+OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL
 
 
 ### COSAS PARA DESPUES
