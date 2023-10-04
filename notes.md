@@ -93,7 +93,19 @@ LAS MINIMAS ARC TEXT
 
 ### css first
 
-por eso elipsis solo andan en ffox
-anim en chrome.>>
+### COSAS PARA AHORA
+TITULOS // LABELS PARA ORBITS
+.CONTENT NO RADIAL GRID
+.PROGRESS
+.KNOB
+.MARKERS
+.CORE .... AJUSTAR
+ver temas de z-index....
 
-add gooey effect
+
+### COSAS PARA DESPUES
+ELIPSES USANDO COS SIN (SOLO EN FFOX)
+CSS TYPES PARA ANIMAR (SOLO CHROME)
+GOEY EFFECT
+TEXTO CURVO (JS)
+data-* para JS
