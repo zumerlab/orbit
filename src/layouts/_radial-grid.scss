@@ -19,14 +19,14 @@
   $z-index: #{$max-orbits - $i};
   
   /* Check if the parent is .docker */
-  .docker > .orbit:nth-child(#{$i}) {
+  .docker > :nth-child(#{$i} of .orbit) {
     --diam: calc(var(--radius-#{$i}) * 2);
     --z-index: #{$z-index};
   }
 
   /* Check if the parent is .orbiter */
  // @each $size, $var in $sizes {
-    .orbiter > .orbit:nth-child(#{$i}) {
+    .orbiter > :nth-child(#{$i} of .orbit) {
     //  @if $size == null {
      //   --diam: calc(var(--m) * #{$i});
      // } @else {
@@ -46,7 +46,7 @@
   $z-index: #{$max-orbits - $i};
   
   /* Check if the parent is .docker */
-  .docker > .orbit:nth-child(#{$i}) > .orbit {
+  .docker > :nth-child(#{$i} of .orbit) > .orbit {
     --diam: calc(var(--radius-#{$i}) * 2);
     --z-index: #{$z-index};
     --x: calc(var(--radius-#{$i}));
@@ -54,7 +54,7 @@
   }
 
   /* Check if the parent is .docker */
-  .docker > .orbit:nth-child(#{$i}) > .orbit > .sector {
+  .docker > :nth-child(#{$i} of .orbit) > .orbit > .sector {
     --length: calc(var(--radius-#{$i}) * 2);
     --current-orbit: #{$i};
     --max-orbits: #{$max-orbits};
@@ -165,7 +165,7 @@
 @for $i from $min-orbits through $max-orbits {
  
     /* Set x variable for each orbiter */
-    .docker > .orbit:nth-child(#{$i}) > .orbiter {
+    .docker > :nth-child(#{$i} of .orbit) > .orbiter {
       --x: calc(var(--radius-#{$i}));
     }
     @each $class in $align {
