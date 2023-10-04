@@ -17,7 +17,7 @@ use multiple dockers on same project without interference.
     --orbiter-number: 1;
     --radius-padding: 8px;
     @for $i from $min-orbits through $max-orbits {
-      --radius-#{$i}: var(--radius) * #{$i};
+      --radius-#{$i}: var(--radius) * #{$i * 1.5};
     }
   
     /* Shape sizes */
