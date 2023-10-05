@@ -8,8 +8,8 @@
  It also manages the behavior of these elements when properties change, like sizes, arc-length limits, and alignment. 
 */
 /* ====== Radial Grid - Core ======== */
-.core > .orbiter {
-  // transform: translate(-50%, -50%);
+.core >.orbiter:only-child {
+  transform: translate(-50%, -50%);
 }
 
 /* ====== Radial Grid - Orbit ======== */
