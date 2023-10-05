@@ -85,8 +85,22 @@
       
     }
   }
-  
 
+  
+ @each $orbit-size, $orbit-value in $orbit-sizes {
+    /* Check if the parent is .docker */
+    .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .sector{
+      --length: #{$orbit-value};
+      
+    }
+  }
+  @each $orbit-size, $orbit-value in $orbit-sizes {
+    /* Check if the parent is .docker */
+    .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbiter {
+      --x:  calc( #{$orbit-value} / 2);
+      
+    }
+  }
   /* Check if the parent is .orbiter */
   
     .orbiter > .orbit:nth-child(#{$i}) > .orbit {
@@ -268,7 +282,7 @@
 
 @for $i from $min-orbits through $max-orbits {
   /* Set sector variables */
-  .docker > .orbit:nth-child(#{$i}) > .sector {
+  .docker >  :nth-child(#{$i} of .orbit) > .sector {
     --length: calc(var(--radius-#{$i}) * 2);
     --current-orbit: #{$i};
     --max-orbits: #{$max-orbits};
@@ -279,7 +293,7 @@
    This is because sector can be nested.
   */
   
-    .orbiter > .orbit:nth-child(#{$i}) > .sector {
+    .orbiter >  :nth-child(#{$i} of .orbit) > .sector {
       --length: calc(var(--size) * #{$i});
       --width: calc(var(--size) / 4);
       --current-orbit: #{$i};
