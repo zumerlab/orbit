@@ -104,6 +104,7 @@ OK ver temas de z-index.... ESTA BIEN ASI
 . margin 0 issue
 . adjuts size to view port  @media
 OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL. add ajustes eslabonado?
+OK. Visual css changes
 
 
 ### COSAS PARA DESPUES
