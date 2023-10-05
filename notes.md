@@ -102,8 +102,8 @@ TITULOS // LABELS PARA ORBITS
 OK .CORE .... AJUSTAR. HAY QUE VER VARIOS TEMAS: SI HAY UN SOLO ORBITER, SI HAY MAS...
 OK ver temas de z-index.... ESTA BIEN ASI
 . margin 0 issue
-. adjuts size to view port
-OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL
+. adjuts size to view port  @media
+OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL. add ajustes eslabonado?
 
 
 ### COSAS PARA DESPUES
