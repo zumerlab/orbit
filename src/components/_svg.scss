@@ -1,20 +1,5 @@
 @use '../utilities/mixins' as *;
 
-/* z-progress */
-.z-progress {
-  --percentage: calc(var(--progress) * 3.6);
-  display: grid;
-  border-radius: 50%;
-  grid-area: 1/1/1/1;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-}
-
-.z-progress::after {
-  // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
-}
-
 /* z-svg */
 .z-svg {
   display: grid;
