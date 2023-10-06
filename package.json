@@ -1,7 +1,7 @@
 {
-  "name": "zummer-css",
+  "name": "orbit",
   "version": "0.0.1",
-  "description": "Tool for testing visual changes",
+  "description": "Orbit is a radial UI °ⓩ",
   "scripts": {
     "test": "jest"
   },
