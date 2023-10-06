@@ -97,14 +97,15 @@ LAS MINIMAS ARC TEXT
 TITULOS // LABELS PARA ORBITS
 .CONTENT NO RADIAL GRID
 .PROGRESS
-.KNOB
+.KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
 .MARKERS
 OK .CORE .... AJUSTAR. HAY QUE VER VARIOS TEMAS: SI HAY UN SOLO ORBITER, SI HAY MAS...
 OK ver temas de z-index.... ESTA BIEN ASI
 . margin 0 issue
-. adjuts size to view port  @media
+OK. adjuts size to view port  @media
 OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL. add ajustes eslabonado?
 OK. Visual css changes
+BUG: upper, lower... no anda en todos lados ej watch
 
 
 ### COSAS PARA DESPUES
