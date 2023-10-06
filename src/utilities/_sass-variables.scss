@@ -14,7 +14,7 @@ $grid-breakpoints: (
 $sizes: null, '.xxs' var(--xxs), '.xs' var(--xs), '.s' var(--s), '.m' var(--m),
   '.l' var(--l), '.xl' var(--xl), '.xxl' var(--xxl);
 
-$align: '.upper', '.lower';
+$align: null, '.upper', '.lower';
 
 $min-orbits: 1;
 $max-orbits: 6;
@@ -31,4 +31,4 @@ $limits: '.limit-0' var(--a0),'.limit-45' var(--a45), '.limit-90' var(--a90), '.
 $position: '.pos-0' var(--a0),'.pos-45' var(--a45), '.pos-90' var(--a90), '.pos-135' var(--a135), '.pos-180' var(--a180),
 '.pos-225' var(--a225), '.pos-270' var(--a270), '.pos-315' var(--a315), '.pos-360' var(--a360);
 
-$orbit-sizes: '.size-1' var(--orbit-size-1),'.size-2' var(--orbit-size-2),'.size-3' var(--orbit-size-3),'.size-4' var(--orbit-size-4),'.size-5' var(--orbit-size-5),'.size-6' var(--orbit-size-6);
+$orbit-sizes: null, '.size-1' var(--orbit-size-1),'.size-2' var(--orbit-size-2),'.size-3' var(--orbit-size-3),'.size-4' var(--orbit-size-4),'.size-5' var(--orbit-size-5),'.size-6' var(--orbit-size-6);
