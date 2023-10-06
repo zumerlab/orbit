@@ -1,6 +1,16 @@
 // Sass variables
 $prefix: 'z-';
 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+
 $sizes: null, '.xxs' var(--xxs), '.xs' var(--xs), '.s' var(--s), '.m' var(--m),
   '.l' var(--l), '.xl' var(--xl), '.xxl' var(--xxl);
 
