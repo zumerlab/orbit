@@ -105,14 +105,23 @@
   }
   @each $orbit-size, $orbit-value in $orbit-sizes {
     
-    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbiter {
-      @if $orbit-size != null {
-      --x:  calc( #{$orbit-value} / 2);
-      }
-      
+    @each $class in $align {
+      $math: '';
+  
+    @if $class == '.upper' {
+      $math: '+ (calc(var(--size) / 2))';
     }
+    @if $class == '.lower' {
+      $math: '- (calc(var(--size) / 2))';
+    }
+
+    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbiter#{$class} {
+      @if $orbit-size != null {
+      --x:  calc( #{$orbit-value} / 2 #{$math});
+      }
   }
- 
+}
+}
   
     .orbiter > .orbit:nth-child(#{$i}) > .orbit {
       --diam: calc(var(--size) * #{$i});
