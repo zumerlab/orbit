@@ -17,7 +17,7 @@
 
 /* 
  Set diameter and z-index variables for each orbit
- having into account due orbit is nestable --diam is affected by 
+ having into account due orbit is nestable --diameter is affected by 
  parent orbiter size.
 */
 @for $i from $min-orbits through $max-orbits {
@@ -29,9 +29,9 @@
     .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) {
       @if $orbit-size != null {
         
-        --diam: #{$orbit-value};
+        --diameter: #{$orbit-value};
       }  @else {
-        --diam: calc(var(--radius-#{$i}) * 2);
+        --diameter: calc(var(--radius-#{$i}) * 2);
       }
       --z-index: #{$z-index};
       
@@ -42,9 +42,9 @@
  // @each $size, $var in $sizes {
     .orbiter > :nth-child(#{$i} of .orbit) {
     //  @if $size == null {
-     //   --diam: calc(var(--m) * #{$i});
+     //   --diameter: calc(var(--m) * #{$i});
      // } @else {
-        --diam: calc(var(--size) * #{$i});
+        --diameter: calc(var(--size) * #{$i});
      // }
       --z-index: #{$z-index};
    // }
@@ -64,11 +64,11 @@
   
   .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit {
     @if $orbit-size != null {
-      --diam: #{$orbit-value};
-      --x: calc( #{$orbit-value} / 2);
+      --diameter: #{$orbit-value};
+      --x-coords: calc( #{$orbit-value} / 2);
     } @else {
-      --diam: calc(var(--radius-#{$i}) * 2);
-    --x: calc(var(--radius-#{$i}));
+      --diameter: calc(var(--radius-#{$i}) * 2);
+    --x-coords: calc(var(--radius-#{$i}));
     }
 
     --z-index: #{$z-index};
@@ -80,9 +80,9 @@
   @each $orbit-size, $orbit-value in $orbit-sizes {
   .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit > .sector {
     @if $orbit-size != null {
-      --length: #{$orbit-value};
+      --diameter: #{$orbit-value};
       } @else {
-        --length: calc(var(--radius-#{$i}) * 2);
+        --diameter: calc(var(--radius-#{$i}) * 2);
       }
     
     --current-orbit: #{$i};
@@ -96,9 +96,9 @@
     
     .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .sector{
       @if $orbit-size != null {
-      --length: #{$orbit-value};
+      --diameter: #{$orbit-value};
       } @else {
-        --length: calc(var(--radius-#{$i}) * 2);
+        --diameter: calc(var(--radius-#{$i}) * 2);
       }
       
     }
@@ -117,21 +117,21 @@
 
     .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbiter#{$class} {
       @if $orbit-size != null {
-      --x:  calc( #{$orbit-value} / 2 #{$math});
+      --x-coords:  calc( #{$orbit-value} / 2 #{$math});
       }
   }
 }
 }
   
     .orbiter > .orbit:nth-child(#{$i}) > .orbit {
-      --diam: calc(var(--size) * #{$i});
+      --diameter: calc(var(--size) * #{$i});
       --z-index: #{$z-index};
-      --x: calc(var(--radius-#{$i}));
+      --x-coords: calc(var(--radius-#{$i}));
       border: none;
     }
 
     .orbiter > .orbit:nth-child(#{$i}) > .orbit > .sector {
-        --length: calc(var(--size) * #{$i});
+        --diameter: calc(var(--size) * #{$i});
         --width: calc(var(--size) / 4);
         --current-orbit: #{$i};
         --max-orbits: #{$max-orbits};
@@ -239,7 +239,7 @@
 
     
     .pod >  :nth-child(#{$i} of .orbit) > .orbiter#{$class} {
-      --x: calc(var(--radius-#{$i}) #{$math});
+      --x-coords: calc(var(--radius-#{$i}) #{$math});
     }
  
   }
@@ -266,7 +266,7 @@
 
     
     .orbiter > .orbit:nth-child(#{$i}) > .orbiter#{$class}, .orbit > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
-        --x: calc((var(--diam) / 2) #{$math});
+        --x-coords: calc((var(--diameter) / 2) #{$math});
     }
   }
 }
@@ -295,14 +295,14 @@
 @for $i from $min-orbits through $max-orbits {
   
   .pod >  :nth-child(#{$i} of .orbit) > .sector {
-    --length: calc(var(--radius-#{$i}) * 2);
+    --diameter: calc(var(--radius-#{$i}) * 2);
     --current-orbit: #{$i};
     --max-orbits: #{$max-orbits};
   }
 
   
     .orbiter >  :nth-child(#{$i} of .orbit) > .sector {
-      --length: calc(var(--size) * #{$i});
+      --diameter: calc(var(--size) * #{$i});
       --width: calc(var(--size) / 4);
       --current-orbit: #{$i};
       --max-orbits: #{$max-orbits};
@@ -314,7 +314,7 @@
 @for $i from $min-orbits through $max-orbits {
   
   .pod > .orbit:nth-child(#{$i}) > svg {
-    --diam: calc(var(--radius-#{$i}) * 2);
+    --diameter: calc(var(--radius-#{$i}) * 2);
   }
 }
 
@@ -329,7 +329,7 @@
     
     .orbiter > .orbit:nth-child(#{$i}) > svg {
       
-        --diam: calc(var(--size) * #{$i});
+        --diameter: calc(var(--size) * #{$i});
      
       
     }

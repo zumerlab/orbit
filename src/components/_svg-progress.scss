@@ -1,6 +1,6 @@
 /* svg progress */
 .svg-pod > .svg-progress {
-  --r: calc(var(--diam) / 2);
+  --r: calc(var(--diameter) / 2);
   cx: var(--r);
   cy: var(--r);
   r: calc(var(--r));

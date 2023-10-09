@@ -8,7 +8,7 @@
   border-radius: 50%;
   width: 4px;
   height: 4px;
-  --x: calc(var(--size) / 1.8);
+  --x-coords: calc(var(--size) / 1.8);
 }
 
 .label::before {
@@ -50,7 +50,7 @@
 
 /* element radial setup*/
 .orbiter > .label {
-  transform: rotate(var(--label-angle)) translate(var(--x), 0);
+  transform: rotate(var(--label-angle)) translate(var(--x-coords), 0);
 }
 
 .label > .text {

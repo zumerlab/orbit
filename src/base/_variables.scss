@@ -21,6 +21,7 @@ use multiple pods on same project without interference.
     }
 
     @for $i from $min-orbits through $max-orbits {
+      // diameter
       --orbit-size-#{$i}: calc(var(--radius) * #{$i} * 2);
     }
   

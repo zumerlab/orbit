@@ -161,14 +161,14 @@ The `svg progress` component also works with orbits and serves the purpose of cr
     </div>
 ```
 
-### `svg markers` (SVG)
+### `svg svg-markers` (SVG)
 
-The `svg markers` component, designed for orbits, allows for the creation of markers within circular progress bars or knobs. It is implemented using SVG, providing a versatile way to indicate specific points or milestones within the circular progress.
+The `svg svg-markers` component, designed for orbits, allows for the creation of svg-markers within circular progress bars or knobs. It is implemented using SVG, providing a versatile way to indicate specific points or milestones within the circular progress.
 
 ```html
    <div class="orbit-3 ">
       <svg class="svg-pod">
-          <circle class="markers" /> 
+          <circle class="svg-markers" /> 
         </svg>
     </div>
 ```

@@ -14,12 +14,12 @@
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
-  transform: rotate(var(--rotate)) translate(var(--x), 0)
+  transform: rotate(var(--rotate)) translate(var(--x-coords), 0)
     rotate(var(--rotate-invert));
 }
 
 .orbiter.stationary {
-  transform: rotate(var(--rotate)) translate(var(--x), 0);
+  transform: rotate(var(--rotate)) translate(var(--x-coords), 0);
 }
 
 .orbiter > .content {

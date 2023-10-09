@@ -14,7 +14,7 @@
 .orbiter.line {
   transform-origin: 0 50% !important;
   height: 0;
-  width: calc(var(--radius-3));
+  width: calc(var(--radius-3)); // esto no es lo mas adecuado
   border-radius: 0%;
   border: none;
   border-top: 1px dashed var(--dark);

@@ -11,3 +11,8 @@
   aspect-ratio: 1;
 }
   // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
+
+.progress + .orbiter {
+  --orbiter-number: 2; 
+  --angle: calc(-90 + var(--progress) * 3.6);
+} 

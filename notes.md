@@ -95,10 +95,10 @@ LAS MINIMAS ARC TEXT
 
 ### COSAS PARA AHORA
 TITULOS // LABELS PARA ORBITS
-.CONTENT NO RADIAL GRID
+.CONTENT NO RADIAL GRID no capsule
 .PROGRESS
 .KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
-.MARKERS
+.svg-markers
 OK .CORE .... AJUSTAR. HAY QUE VER VARIOS TEMAS: SI HAY UN SOLO ORBITER, SI HAY MAS...
 OK ver temas de z-index.... ESTA BIEN ASI
 . margin 0 issue

@@ -7,16 +7,16 @@
   grid-area: 1/1/1/1;
   @include alignment;
   rotate: -90deg;
-  width: calc(var(--diam));
-  height: calc(var(--diam));
+  width: calc(var(--diameter));
+  height: calc(var(--diameter));
 }
 
-.svg-pod > .markers {
-  --markers: 12;
+.svg-pod > .svg-markers {
+  --svg-markers: 12;
   --marker-width: 1px;
   --circumference: calc(var(--r) * var(--π) * 2);
-  --dash: calc(var(--circumference) / var(--markers) - var(--marker-width));
-  --r: calc(var(--diam) / 2);
+  --dash: calc(var(--circumference) / var(--svg-markers) - var(--marker-width));
+  --r: calc(var(--diameter) / 2);
   cx: var(--r);
   cy: var(--r);
   r: var(--r);
@@ -24,7 +24,7 @@
   stroke-dasharray: var(--marker-width) var(--dash);
 }
 .svg-pod > .svg-progress {
-  --r: calc(var(--diam) / 2);
+  --r: calc(var(--diameter) / 2);
   cx: var(--r);
   cy: var(--r);
   r: calc(var(--r));
