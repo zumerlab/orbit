@@ -1,9 +1,9 @@
 @use '../utilities/mixins' as *;
 
-.item {
+.orbiter {
   --size: var(--m); // default
   --rotation-angle: calc(
-    var(--angle) * var(--item-number) + var(--offset-angle) - var(--angle)
+    var(--angle) * var(--orbiter-number) + var(--offset-angle) - var(--angle)
   );
   --rotate: calc(var(--rotation-angle) * 1deg);
   --rotate-invert: calc(var(--rotation-angle) * -1deg);
@@ -18,11 +18,11 @@
     rotate(var(--rotate-invert));
 }
 
-.item.stationary {
+.orbiter.stationary {
   transform: rotate(var(--rotate)) translate(var(--x), 0);
 }
 
-.item > .content {
+.orbiter > .content {
   padding: 5px;
   width: inherit;
   height: inherit;

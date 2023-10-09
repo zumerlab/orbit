@@ -1,0 +1,42 @@
+
+.sector {
+  --half: calc(var(--length) / 2);
+  --quarter: calc(var(--half) / 2); 
+  --semi: calc(var(--angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de orbiter
+  --sector-gap: 1px;
+  --length-percent: calc(
+    var(--half) + (var(--sector-gap) * (var(--current-orbit) / var(--max-orbits))) - var(--half) * tan(var(--semi))
+  ); // importante fix en gaps, se toma en cta nro de orbits para que no queda desparajo el gap si hay multiples orbits. no se si anda con nested sectors
+  --width: 49px;
+  --rotate: calc(
+    (var(--angle) * var(--orbiter-number) + var(--offset-angle) - (var(--angle) / 2)) * 1deg
+  );
+  display: grid;
+  grid-area: 1/1/1/1;
+  height: var(--length);
+  width: var(--half);
+  border: var(--width) solid;
+  border-left: none;
+  border-radius: 0% 100% 100% 0% / 100% 51% 51% 0%;
+  box-sizing: border-box;
+  clip-path: polygon(
+    0 50% /* left center pivot*/,  
+    100% calc(100% - var(--length-percent)) /* right to bottom sector increase*/,  
+    100% 100% /* right top corner*/,
+    100% 0  /* right bottom corner*/,
+   100% var(--length-percent) /* right to top ar decrease*/
+  ); 
+  transform: rotate(var(--rotate)) translate(var(--quarter), 0);
+}
+/*
+<span style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    rotate: calc(var(--rotate) * -1 (queda horizontal) * 45 (queda stationary) * 90(queda tipo rayo bici) );
+">play</span>
+
+*/
+
+

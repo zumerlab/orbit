@@ -19,61 +19,70 @@
       .second {
         stroke: orangered;
       }
+      hr.orbiter {
+        margin: 0
+      }
     </style>
   </head>
   <body>
-    <div class="z-container" >
+    <div class="pod" >
       <div class="core offset-270 ">
-        <hr class="item line hora" style="width: 110px; height: 6px;  border:1px solid red; --angle: 0;  --item-number: 2;">
-        <hr class="item line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);  --angle: 0;  --item-number: 2;">
-        <hr class="item line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);  --angle: 0;  --item-number: 2;">
+        <hr class="orbiter line hora" style="width: 110px; height: 6px;  border:1px solid red;   --orbiter-number: 2;">
+        <hr class="orbiter line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);    --orbiter-number: 2;">
+        <hr class="orbiter line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);    --orbiter-number: 2;">
       </div>
-      <div class="ring-1 items-3 offset-270 arc-90">
-        <div class="arc"></div>
-        <div class="arc"></div>
-        <div class="arc"></div>
-      </div>
-      <div class="ring-1 items-3 offset-270 arc-90">
-        <div class="item s upper d-h  transparent"></div>
-        <div class="item s upper d-m  transparent"></div>
-        <div class="item s upper d-s  transparent"></div>
-      </div>
-      <div class="ring-2 items-12 offset-270">
-        <div class="item xs ">12</div>
-        <div class="item xs ">1</div>
-        <div class="item xs ">2</div>
-        <div class="item xs ">3</div>
-        <div class="item xs ">4</div>
-        <div class="item xs ">5</div>
-        <div class="item xs ">6</div>
-        <div class="item xs ">7</div>
-        <div class="item xs ">8</div>
-        <div class="item xs ">9</div>
-        <div class="item xs ">10</div>
-        <div class="item xs ">11</div>
-      </div>
-      <div class="ring-3 items-12 offset-270">
-        <svg class="z-svg">
+      <div class="orbit size-1">
+        <div class="orbit offset-270 limit-90">
+          <div class="sector"></div>
+          <div class="sector"></div>
+          <div class="sector"></div>
+        </div>
+        <div class="orbit offset-270 limit-90">
+          <div class="orbiter s  d-h  transparent"></div>
+          <div class="orbiter s  d-m  transparent"></div>
+          <div class="orbiter upper s  d-s  transparent"></div>
+        </div>
+        </div>
+        <div class="orbit size-2">
+        <div class="orbit">
+          <svg class="svg-pod">
+            <circle class="svg-progress second" /> 
+          </svg>
+        </div>
+        <div class="orbit">
+        <svg class="svg-pod">
+          <circle class="svg-progress minute" /> 
+        </svg>
+        </div>
+      <div class="orbit offset-270">
+        <svg class="svg-pod">
           <circle class="svg-progress hour" style="--stroke: 60"/>   
         </svg>
       </div>
-      <div class="ring-3">
-        <svg class="z-svg">
+          
+      
+   <div class="orbit">
+        <svg class="svg-pod">
           <circle class="markers"/> 
         </svg>
       </div>
-      <div class="ring-2">
-        <svg class="z-svg">
-          <circle class="svg-progress minute" /> 
-        </svg>
+      <div class="orbit offset-270">
+        <div class="orbiter m upper">12</div>
+        <div class="orbiter xs ">1</div>
+        <div class="orbiter xs ">2</div>
+        <div class="orbiter xs ">3</div>
+        <div class="orbiter xs ">4</div>
+        <div class="orbiter xs ">5</div>
+        <div class="orbiter xs ">6</div>
+        <div class="orbiter xs ">7</div>
+        <div class="orbiter xs ">8</div>
+        <div class="orbiter xs ">9</div>
+        <div class="orbiter xs ">10</div>
+        <div class="orbiter xs ">11</div>
       </div>
-      <div class="ring-1">
-        <svg class="z-svg">
-          <circle class="svg-progress second" /> 
-        </svg>
-      </div>
-      </div>
+      
     </div>
+   
     <script>
       function analogWatch() {
         // Get the current time

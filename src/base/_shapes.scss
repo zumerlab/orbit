@@ -1,21 +1,23 @@
-/* 
-* based on item element
+/* ========== Shapes ========= */
+
+/*
+ All shapes are based on orbiter element.
+ Some shapes can be applied to orbit element but take into account that Zumer only works with 
+ radial grid, so if you have a boexed orbit its child elements still will be placed
+ using radial grid.
 */
 
-.item.line {
-  transform-origin: 0 50%;
+.circle {
+  border-radius: 50% !important; /* Default shape */
+}
+
+.orbiter.line {
+  transform-origin: 0 50% !important;
   height: 0;
   width: calc(var(--radius-3));
   border-radius: 0%;
   border: none;
   border-top: 1px dashed var(--dark);
-}
-
-/* 
-* generic element
-*/
-.circle {
-  border-radius: 50% !important;
 }
 
 .box {
@@ -26,7 +28,8 @@
   border-radius: 25% !important;
 }
 
-.bubble {
+/* TODO: add blob variants */
+.blob {
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% !important;
 }
 

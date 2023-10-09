@@ -4,64 +4,93 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/css/index.min.css" type="text/css" defer/>
-    <title>Zumer CSS</title>
+    <title>°ⓩ CSS</title>
     <style>
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
+        background-color: darkslategray;
       }
+      .content {
+        position:absolute;
+        z-index: 400;
+        width: 100%;
+        overflow: hidden;
+      }
+      dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.352);
+      }
+
     </style>
+   
   </head>
   <body>
-    <div class="z-container" >
-      <div class="core items-1">
-        <div class="item s" style="transform: translate(-50%, -50%);"></div>
+    <div class="pod" >
+      
+      <div class="core ">
+        <div class="orbiter s" style="transform: translate(-50%, -50%);"></div>
       </div>
-      <div class="ring-3 items-4">
-        <div class="arc"></div>
-        <div class="arc"></div>
-        <div class="arc"></div>
-        <div class="arc"></div>
+      
+      <div class="orbit">
+     
+        <div class="orbit limit-180">
+          <div class="sector"></div>
+          <div class="sector"></div>
+          <div class="sector"></div>
+          <div class="sector"></div>
+        </div>
+        <div class="orbit limit-180">
+          <div class="orbiter s lower">w</div>
+          <div class="orbiter s lower">w</div>
+          <div class="orbiter s lower">w</div>
+          <button id="dialogb" class="orbiter s">open dialog</button>
+        </div>
       </div>
-      <div class="ring-3 items-6">
-         <div class=" item m ">
-          <div class="ring-3 items-4">
-            <div class="arc"></div>
-            <div class="arc"></div>
-            <div class="arc"></div>
-            <div class="arc"></div>
+      
+      <div class="orbit limit-90">
+       
+         <div class=" orbiter m ">
+          <div class="orbit ">
+            <div class="sector" ></div>
+            <div class="sector"></div>
+            <div class="sector"></div>
+            <div class="sector"></div>
+            <div class="sector"></div>
           </div>
-          <div class="ring-3 items-4">
-            <div class="item s lower">
-              <div class="ring-3 items-3">
-                <div class="arc"></div>
-                <div class="arc"></div>
-                <div class="arc"></div>
-              </div>
-              <div class="ring-3 ">
-                <svg class="z-svg">
-                  <circle class="svg-progress" style="--val: 59; stroke: purple;" /> 
-                </svg>
-                
-              </div>
-              
-            </div>
-            <div class="item s"><div class="label pos-90"><span class="text">hole</span></div></div>
-            <div class="item s"></div>
-            <div class="item s"></div>
+
+        </div>
+        <div class="orbiter m">
+        </div> 
+        <div class="orbiter m">
+        </div>
+        <div class=" orbiter m ">
+        </div>
+        <div class="orbiter m">
+        </div> 
+        <div class="orbiter m">
+          <div class="label pos-45">
+            <div class="text">Tactic sat intel <br> trino</div>
           </div>
         </div>
-        <div class="item m">
-        </div> 
-        <div class="item m">
-        </div>
-        <div class=" item m ">
-        </div>
-        <div class="item m">
-        </div> 
-        <div class="item m">
-        </div>
       </div>
+      <dialog  id="dialog"   class="orb" style="  width: 200px;
+      height: 200px;">
+        esto modal es
+      </dialog>
+      
     </div>
   </body>
+  <script>
+    (function () {
+   var updateButton = document.getElementById("dialogb");
 
+   var favDialog = document.getElementById("dialog");
+
+   // Update button opens a modal dialog
+   updateButton.addEventListener("click", function () {
+     favDialog.showModal();
+   });
+
+ })();
+   </script>
 </html>
+

@@ -8,6 +8,7 @@
   border-radius: 50%;
   width: 4px;
   height: 4px;
+  --x: calc(var(--size) / 1.8);
 }
 
 .label::before {
@@ -17,57 +18,47 @@
   width: var(--connector-width);
   height: 1px;
 }
+
+/* Set size variable for each orbiter */
+@each $size, $var in $sizes {
+  .orbiter#{$size} > .label {
+    @if $size != null {
+      --size: #{$var};
+    }    
+  }
+}
+
+/* Set size variable for each orbiter */
+@each $pos, $angle in $position {
+  .label#{$pos} {
+      --label-angle: calc(#{$angle} * 1deg);
+    }    
+ 
+}
+
 .label > .text {
   transform-origin: 0 0;
   display: grid;
   border: 1px solid;
   border-radius: 4px;
-  width: var(--label-width);
-  height: 20px;
+  min-width: 100px;
+  padding: 5px;
+  height:auto;
+  --label-box: 5px;
   @include alignment;
 }
 
 /* element radial setup*/
-.item > .label {
+.orbiter > .label {
   transform: rotate(var(--label-angle)) translate(var(--x), 0);
 }
 
 .label > .text {
   transform: translate(calc(var(--connector-width) - 5px), var(--label-box))
-    rotate(var(--label-angle-invert));
+    rotate(calc(var(--label-angle) * -1));
 }
 
-@each $size, $var in $sizes {
-  @each $pos, $angle in $position {
-    .item.#{$size} > .label.#{$pos} {
-      --label-angle: calc(#{$angle} * 1deg);
-      --x: calc(#{$var} / 1.8);
-    }
+
+  .label.pos-180 > .text {
+    --label-box: -5px;
   }
-}
-
-@each $pos, $angle in $position {
-  .label.#{$pos} > .text {
-    --label-angle-invert: calc(#{$angle} * -1deg);
-    @if $pos != 'pos-180' {
-      --label-box: +5px;
-    } @else {
-      --label-box: -5px;
-    }
-  }
-}
-
-/* element theme */
-.label {
-  border-color: var(--info);
-}
-
-.label::before {
-  border-bottom-color: var(--info);
-}
-
-.label > .text {
-  background-color: var(--light);
-  border-color: var(--info);
-  color: var(--info);
-}

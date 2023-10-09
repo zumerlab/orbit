@@ -6,9 +6,9 @@
   display: grid;
   border-radius: 50%;
   grid-area: 1/1/1/1;
-  z-index: $max-rings;
+  z-index: $max-orbits;
 }
 
-.core > .item {
+.core > .orbiter {
   transform: rotate(var(--rotate));
 }

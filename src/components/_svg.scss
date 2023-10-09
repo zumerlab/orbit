@@ -1,22 +1,7 @@
 @use '../utilities/mixins' as *;
 
-/* z-progress */
-.z-progress {
-  --percentage: calc(var(--progress) * 3.6);
-  display: grid;
-  border-radius: 50%;
-  grid-area: 1/1/1/1;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-}
-
-.z-progress::after {
-  // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
-}
-
-/* z-svg */
-.z-svg {
+/* svg-pod */
+.svg-pod {
   display: grid;
   border-radius: inherit;
   grid-area: 1/1/1/1;
@@ -26,7 +11,7 @@
   height: calc(var(--diam));
 }
 
-.z-svg > .markers {
+.svg-pod > .markers {
   --markers: 12;
   --marker-width: 1px;
   --circumference: calc(var(--r) * var(--π) * 2);
@@ -38,7 +23,7 @@
   stroke-width: calc(var(--radius) * 2);
   stroke-dasharray: var(--marker-width) var(--dash);
 }
-.z-svg > .svg-progress {
+.svg-pod > .svg-progress {
   --r: calc(var(--diam) / 2);
   cx: var(--r);
   cy: var(--r);

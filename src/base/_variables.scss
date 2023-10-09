@@ -1,20 +1,27 @@
 @use '../utilities/sass-variables' as *;
 
-// Instead of $theme-color-#{warning}
-// https://huemint.com/bootstrap-plus/
-//background-color: map.get($theme-colors, "warning");
+/* ======== pod - variables ========= */
 
-.z-container {
+/* All CSS custom vars are defined inside pod element 
+This allows having isolated vars for each pod and permits
+use multiple pods on same project without interference.
+*/
+
+.pod {
     /* Layout vars */
     --arc: 360;
     --offset-angle: 0;
     --direction: 1;
     --angle: 1;
     --radius: 50px;
-    --item-number: 1;
+    --orbiter-number: 1;
     --radius-padding: 8px;
-    @for $i from $min-rings through $max-rings {
+    @for $i from $min-orbits through $max-orbits {
       --radius-#{$i}: var(--radius) * #{$i};
+    }
+
+    @for $i from $min-orbits through $max-orbits {
+      --orbit-size-#{$i}: calc(var(--radius) * #{$i} * 2);
     }
   
     /* Shape sizes */
@@ -25,6 +32,17 @@
     --l: 110px;
     --xl: 180px;
     --xxl: 288px;
+
+    /* angles */
+    --a0: 0;
+    --a45: 45;
+    --a90: 90;
+    --a135: 135;
+    --a180: 180;
+    --a225: 225;
+    --a270: 270;
+    --a315: 315;
+    --a360: 360;
   
     /* width connector */
     --connector-width: 40px;

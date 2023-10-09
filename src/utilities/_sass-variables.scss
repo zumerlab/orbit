@@ -1,22 +1,34 @@
 // Sass variables
-$prefix: 'zr-';
+$prefix: 'o-';
 
-$sizes: 'xxs' var(--xxs), 'xs' var(--xs), 's' var(--s), 'm' var(--m),
-  'l' var(--l), 'xl' var(--xl), 'xxl' var(--xxl);
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
 
-$align: '.upper', '.lower';
 
-$min-rings: 1;
-$max-rings: 6;
+$sizes: null, '.xxs' var(--xxs), '.xs' var(--xs), '.s' var(--s), '.m' var(--m),
+  '.l' var(--l), '.xl' var(--xl), '.xxl' var(--xxl);
 
-$min-items: 1;
-$max-items: 24;
+$align: null, '.upper', '.lower';
 
-$sectors: 'offset-45' 45, 'offset-90' 90, 'offset-135' 135, 'offset-180' 180,
-  'offset-225' 225, 'offset-270' 270, 'offset-315' 315;
+$min-orbits: 1;
+$max-orbits: 6;
 
-$arcs: 'arc-45' 45, 'arc-90' 90, 'arc-135' 135, 'arc-180' 180, 'arc-225' 225,
-  'arc-270' 270, 'arc-315' 315;
+$min-orbiters: 1;
+$max-orbiters: 24;
 
-$position: 'pos-0' 360, 'pos-45' 45, 'pos-90' 90, 'pos-135' 135, 'pos-180' 180,
-  'pos-225' 225, 'pos-270' 270, 'pos-315' 315;
+$offsets: '.offset-0' var(--a0), '.offset-45' var(--a45), '.offset-90' var(--a90), '.offset-135' var(--a135), '.offset-180' var(--a180),
+  '.offset-225' var(--a225), '.offset-270' var(--a270), '.offset-315' var(--a315), '.offset-360' var(--a360);
+
+$limits: '.limit-0' var(--a0),'.limit-45' var(--a45), '.limit-90' var(--a90), '.limit-135' var(--a135), '.limit-180' var(--a180),
+'.limit-225' var(--a225), '.limit-270' var(--a270), '.limit-315' var(--a315), '.limit-360' var(--a360);
+
+$position: '.pos-0' var(--a0),'.pos-45' var(--a45), '.pos-90' var(--a90), '.pos-135' var(--a135), '.pos-180' var(--a180),
+'.pos-225' var(--a225), '.pos-270' var(--a270), '.pos-315' var(--a315), '.pos-360' var(--a360);
+
+$orbit-sizes: null, '.size-1' var(--orbit-size-1),'.size-2' var(--orbit-size-2),'.size-3' var(--orbit-size-3),'.size-4' var(--orbit-size-4),'.size-5' var(--orbit-size-5),'.size-6' var(--orbit-size-6);

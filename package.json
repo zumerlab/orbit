@@ -1,0 +1,20 @@
+{
+  "name": "orbit",
+  "version": "0.0.1",
+  "description": "Orbit is a radial UI °ⓩ",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest-image-snapshot": "^6.2.0"
+  },
+  "dependencies": {
+    "jest": "^29.7.0",
+    "puppeteer": "^21.3.7"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.js"
+    ]
+  }
+}
