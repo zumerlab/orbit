@@ -25,7 +25,7 @@
     </style>
   </head>
   <body>
-    <div class="docker" >
+    <div class="pod" >
       <div class="core offset-270 ">
         <hr class="orbiter line hora" style="width: 110px; height: 6px;  border:1px solid red;   --orbiter-number: 2;">
         <hr class="orbiter line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);    --orbiter-number: 2;">
@@ -45,23 +45,27 @@
         </div>
         <div class="orbit size-2">
         <div class="orbit">
-          <svg class="z-svg">
+          <svg class="svg-pod">
             <circle class="svg-progress second" /> 
           </svg>
         </div>
         <div class="orbit">
-        <svg class="z-svg">
+        <svg class="svg-pod">
           <circle class="svg-progress minute" /> 
         </svg>
         </div>
       <div class="orbit offset-270">
-        <svg class="z-svg">
+        <svg class="svg-pod">
           <circle class="svg-progress hour" style="--stroke: 60"/>   
         </svg>
       </div>
           
       
-   
+   <div class="orbit">
+        <svg class="svg-pod">
+          <circle class="markers"/> 
+        </svg>
+      </div>
       <div class="orbit offset-270">
         <div class="orbiter m upper">12</div>
         <div class="orbiter xs ">1</div>
@@ -76,11 +80,7 @@
         <div class="orbiter xs ">10</div>
         <div class="orbiter xs ">11</div>
       </div>
-      <div class="orbit">
-        <svg class="z-svg">
-          <circle class="markers"/> 
-        </svg>
-      </div>
+      
     </div>
    
     <script>

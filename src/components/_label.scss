@@ -44,6 +44,7 @@
   min-width: 100px;
   padding: 5px;
   height:auto;
+  --label-box: 5px;
   @include alignment;
 }
 
@@ -57,12 +58,7 @@
     rotate(calc(var(--label-angle) * -1));
 }
 
-@each $pos, $angle in $position {
-  .label#{$pos} > .text {
-    @if $pos != '.pos-180' {
-      --label-box: 5px;
-    } @else {
-      --label-box: -5px;
-    }
+
+  .label.pos-180 > .text {
+    --label-box: -5px;
   }
-}

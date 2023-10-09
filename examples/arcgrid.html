@@ -49,7 +49,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <div class="docker" >
+          <div class="pod" >
             <div class="core ">
               <div class="orbiter s"></div>
             </div>
@@ -122,12 +122,12 @@
       </div>
      <div class="row">
       <div class="col-sm-6">
-        <div class="docker" >
+        <div class="pod" >
           <div class="core">
             <div class="orbiter xs bg-primary" style="transform: translate(-50%, -50%);"></div>
           </div>
           <div class="orbit" style="width: 120px; height: 120px;">
-            <div class="z-progress text-primary" style="--progress: 75"></div>
+            <div class="progress text-primary" style="--progress: 75"></div>
           </div>
           <div class="orbit">
             <div class="sector"><div class="capsule">
@@ -152,9 +152,14 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="docker" >
+        <div class="pod" >
           <div class="core">
             <div class="orbiter xs bg-success">5</div>
+          </div>
+          
+          <div class="orbit size-3" style="--progress: 55; ">
+            <div class="orbiter xs upper bg-primary" style="--orbiter-number: 2; --angle: calc(-90 + var(--progress) * 3.6)"></div>
+            <div class="progress text-primary"></div>
           </div>
           <div class="orbit size-2">
             <div class="sector" style="--width: 3px"><div class="capsule">
@@ -172,10 +177,6 @@
                 <span>😁</span>
               </div>
             </div>
-          </div>
-          <div class="orbit size-3" style="--progress: 55; ">
-            <div class="orbiter xs lower bg-primary" style="--orbiter-number: 1; --angle: calc(-90 + var(--progress) * 3.6)"></div>
-            <div class="z-progress text-primary"></div>
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 @use '../utilities/sass-variables' as *;
 
-/* ======== Docker - variables ========= */
+/* ======== pod - variables ========= */
 
-/* All CSS custom vars are defined inside docker element 
-This allows having isolated vars for each docker and permits
-use multiple dockers on same project without interference.
+/* All CSS custom vars are defined inside pod element 
+This allows having isolated vars for each pod and permits
+use multiple pods on same project without interference.
 */
 
-.docker {
+.pod {
     /* Layout vars */
     --arc: 360;
     --offset-angle: 0;

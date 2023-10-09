@@ -63,7 +63,7 @@
   </head>
   <body>
 <div class="layout">
-  <div class="docker"></div>
+  <div class="pod"></div>
   <div>
     <form>
       <fieldset>
@@ -123,7 +123,7 @@
       const form = document.querySelector('form');
       const radius = document.querySelector('#orbits-radius');
       const rradius = document.querySelector('#orbit1-radius');
-      const zContainer = document.querySelector('.docker');
+      const zContainer = document.querySelector('.pod');
       const range = getComputedStyle(zContainer).getPropertyValue('--radius');
       radius.setAttribute('value', range.slice(0, -2).trim())
       rradius.setAttribute('value', range.slice(0, -2).trim())
@@ -264,7 +264,7 @@
     </div>
           `;
         }).join('');
-        const orbitsContainer = document.querySelector('.docker');
+        const orbitsContainer = document.querySelector('.pod');
         orbitsContainer.innerHTML = html;
         document.querySelector('#code').innerHTML = html;
       }; 

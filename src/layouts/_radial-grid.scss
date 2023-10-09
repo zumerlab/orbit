@@ -4,13 +4,14 @@
 /*  
  ====== Radial Grid =======
  Next the structure of a radial grid,
- specifying interactions between elements such as docker, orbits, orbiters, sectors, and SVG.
+ specifying interactions between elements such as pod, orbits, orbiters, sectors, and SVG.
  It also manages the behavior of these elements when properties change, like sizes, arc-length limits, and alignment. 
 */
 /* ====== Radial Grid - Core ======== */
 .core >.orbiter:only-child {
   transform: translate(-50%, -50%);
 }
+
 
 /* ====== Radial Grid - Orbit ======== */
 
@@ -22,10 +23,10 @@
 @for $i from $min-orbits through $max-orbits {
   $z-index: #{$max-orbits - $i};
   
-  /* Check if the parent is .docker */
+  
    @each $orbit-size, $orbit-value in $orbit-sizes {
-    /* Check if the parent is .docker */
-    .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) {
+    
+    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) {
       @if $orbit-size != null {
         
         --diam: #{$orbit-value};
@@ -37,7 +38,7 @@
     }
   }
 
-  /* Check if the parent is .orbiter */
+ 
  // @each $size, $var in $sizes {
     .orbiter > :nth-child(#{$i} of .orbit) {
     //  @if $size == null {
@@ -58,10 +59,10 @@
 @for $i from $min-orbits through $max-orbits {
   $z-index: #{$max-orbits - $i};
   
-  /* Check if the parent is .docker */
+  
   @each $orbit-size, $orbit-value in $orbit-sizes {
-  /* Check if the parent is .docker */
-  .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit {
+  
+  .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit {
     @if $orbit-size != null {
       --diam: #{$orbit-value};
       --x: calc( #{$orbit-value} / 2);
@@ -75,9 +76,9 @@
   }
 }
 
-  /* Check if the parent is .docker */
+  
   @each $orbit-size, $orbit-value in $orbit-sizes {
-  .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit > .sector {
+  .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit > .sector {
     @if $orbit-size != null {
       --length: #{$orbit-value};
       } @else {
@@ -92,8 +93,8 @@
 
   
  @each $orbit-size, $orbit-value in $orbit-sizes {
-    /* Check if the parent is .docker */
-    .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .sector{
+    
+    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .sector{
       @if $orbit-size != null {
       --length: #{$orbit-value};
       } @else {
@@ -103,15 +104,15 @@
     }
   }
   @each $orbit-size, $orbit-value in $orbit-sizes {
-    /* Check if the parent is .docker */
-    .docker > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbiter {
+    
+    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbiter {
       @if $orbit-size != null {
       --x:  calc( #{$orbit-value} / 2);
       }
       
     }
   }
-  /* Check if the parent is .orbiter */
+ 
   
     .orbiter > .orbit:nth-child(#{$i}) > .orbit {
       --diam: calc(var(--size) * #{$i});
@@ -178,7 +179,7 @@
     @if $i < 1  {
       $number: 1;
     }
-    --angle: calc((var(--arc) / #{$number}) * var(--direction)); /* Calculate and set --angle variable */
+    --angle: calc((var(--arc) / #{$number}) * var(--direction)); 
     }
 }
 @for $i from $min-orbiters through $max-orbiters {
@@ -187,7 +188,7 @@
       @if $i < 1  {
         $number: 1;
       }
-      --angle: calc((var(--arc) / #{$number}) * var(--direction)); /* Calculate and set --angle variable */
+      --angle: calc((var(--arc) / #{$number}) * var(--direction)); 
       }
 }
 
@@ -197,7 +198,7 @@
     @if $i < 1  {
       $number: 1;
     }
-    --angle: calc((var(--arc) / #{$number}) * var(--direction)); /* Calculate and set --angle variable */
+    --angle: calc((var(--arc) / #{$number}) * var(--direction)); 
     }
 }
 
@@ -214,24 +215,21 @@
 */
 @for $i from $min-orbits through $max-orbits {
  
-    /* Set x variable for each orbiter 
-    .docker > :nth-child(#{$i} of .orbit) > .orbiter {
-      --x: calc(var(--radius-#{$i}));
-    }*/
+   
     @each $class in $align {
       $math: '';
-    /* Set x variable and translate for specific alignments (Upper) */
+   
     @if $class == '.upper' {
       $math: '+ (calc(var(--size) / 2))';
     }
 
-    /* Set x variable and translate for specific alignments (Lower) */
+    
     @if $class == '.lower' {
       $math: '- (calc(var(--size) / 2))';
     }
 
-    /* Apply styles based on alignment */
-    .docker >  :nth-child(#{$i} of .orbit) > .orbiter#{$class} {
+    
+    .pod >  :nth-child(#{$i} of .orbit) > .orbiter#{$class} {
       --x: calc(var(--radius-#{$i}) #{$math});
     }
  
@@ -247,7 +245,7 @@
 @for $i from $min-orbits through $max-orbits {
  
     @each $class in $align {
-    /* Set x variable for specific alignments */
+    
     $math: '';
     @if $class == '.upper' {
       $math: '+ (calc(var(--size) / 2))';
@@ -257,8 +255,8 @@
       $math: '- (calc(var(--size) / 2))';
     }
 
-    /* Apply styles based on alignment */
-    .orbiter > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
+    
+    .orbiter > .orbit:nth-child(#{$i}) > .orbiter#{$class}, .orbit > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
         --x: calc((var(--diam) / 2) #{$math});
     }
   }
@@ -280,23 +278,19 @@
 */
 @for $i from $min-orbiters through $max-orbiters {
   .orbit:has(> .sector:nth-child(#{$i})) {
-    --angle: calc((var(--arc) / #{$i}) * var(--direction)); /* Calculate and set --angle variable */
+    --angle: calc((var(--arc) / #{$i}) * var(--direction)); 
   }
 }
 
 
 @for $i from $min-orbits through $max-orbits {
-  /* Set sector variables */
-  .docker >  :nth-child(#{$i} of .orbit) > .sector {
+  
+  .pod >  :nth-child(#{$i} of .orbit) > .sector {
     --length: calc(var(--radius-#{$i}) * 2);
     --current-orbit: #{$i};
     --max-orbits: #{$max-orbits};
   }
 
-  /* Set length for each sector in each orbit based on size of previous orbiter.
-   Accordng its diameter named sizes each sector has a radius to depending on a nested orbit.
-   This is because sector can be nested.
-  */
   
     .orbiter >  :nth-child(#{$i} of .orbit) > .sector {
       --length: calc(var(--size) * #{$i});
@@ -309,8 +303,8 @@
 /* ========= Radial Grid - SVG ============= */
 
 @for $i from $min-orbits through $max-orbits {
-  /* Set SVG diameter */
-  .docker > .orbit:nth-child(#{$i}) > svg {
+  
+  .pod > .orbit:nth-child(#{$i}) > svg {
     --diam: calc(var(--radius-#{$i}) * 2);
   }
 }
@@ -323,7 +317,7 @@
 */
 @for $i from $min-orbits through $max-orbits {
 
-    /* Set diameter variable for the SVG in each orbit */
+    
     .orbiter > .orbit:nth-child(#{$i}) > svg {
       
         --diam: calc(var(--size) * #{$i});

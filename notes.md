@@ -59,17 +59,17 @@ OK rows: rings OR orbits
 - arcs: radial columns. visual support with basic interactivity and some cool customizations (gap, width, radius, POSITION). Should be nestable
 - rings: radial rows. visual support. Nestable
 - labels: item label with optional conector and predefined positions
-- zr-MODAL
-- zr-POPOVER
-- zr-PROGRESS
-- zr-KNOB
-- zr-docker
-- zr-orbit
-- zr-suborbit (mantiene mismo nivel de orbita que el orbit parent)
-- zr-orbiter
-- zr-pod (content inside orbiter)
-- zr-sector
-- zr-label
+- o-MODAL
+- o-POPOVER
+- o-PROGRESS
+- o-KNOB
+- o-pod
+- o-orbit
+- o-suborbit (mantiene mismo nivel de orbita que el orbit parent)
+- o-orbiter
+- o-pod (content inside orbiter)
+- o-sector
+- o-label
 
 
 
@@ -105,7 +105,12 @@ OK ver temas de z-index.... ESTA BIEN ASI
 OK. adjuts size to view port  @media
 OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL. add ajustes eslabonado?
 OK. Visual css changes
-BUG: upper, lower... no anda en todos lados ej watch
+BUG: upper, lower... no anda en todos lados. Queda chequear scss ejemplo en arcgrid.
+explicar y mejorear y diferecniar los progress.
+
+o-progress
+o-svg-pod
+o-svg-progress
 
 
 ### COSAS PARA DESPUES

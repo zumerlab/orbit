@@ -49,7 +49,7 @@ Folllowing code set a container and inside it a radial layout with three circles
     <title>Zumer CSS Rocks!</title>
   </head>
   <body>
-    <div class="docker">
+    <div class="pod">
       <div class="orbit-2 orbiters-3">
         <div class="orbiter"></div>
         <div class="orbiter"></div>
@@ -64,11 +64,11 @@ Folllowing code set a container and inside it a radial layout with three circles
 
 Basic documentation to understand and start with Zumer CSS.
 
-### `docker`
+### `pod`
 
-The `docker` serves as the root element to scaffold Zumer. It encapsulates the entire Zumer framework and defines the boundaries for its usage. Multiple `docker` elements can coexist on the same page, allowing for modular and flexible implementation.
+The `pod` serves as the root element to scaffold Zumer. It encapsulates the entire Zumer framework and defines the boundaries for its usage. Multiple `pod` elements can coexist on the same page, allowing for modular and flexible implementation.
 
-At the `docker` level, major CSS variables are defined, providing a centralized and customizable approach to styling and theming Zumer components. These variables can be easily modified within each `docker` instance, ensuorbit consistency and flexibility across different sections of your application.
+At the `pod` level, major CSS variables are defined, providing a centralized and customizable approach to styling and theming Zumer components. These variables can be easily modified within each `pod` instance, ensuorbit consistency and flexibility across different sections of your application.
 
 ### `orbit-*` (probably orbit)
 
@@ -93,7 +93,7 @@ With the `sector` class, you can customize properties such as width, gap, offset
 By experimenting with different configurations, you can achieve a wide range of design aesthetics, whether you prefer a sleek and minimalistic look or a more intricate and expressive pattern.
 
 ```html
-    <div class="docker">
+    <div class="pod">
       <div class="orbit-1 orbiters-3">
         <div class="sector"></div>
         <div class="sector"></div>
@@ -144,7 +144,7 @@ The `progress` component works with orbits and is particularly useful for creati
 
 ```html
   <div class="orbit-1">
-    <div class="z-progress" style="--progress: 75">
+    <div class="progress" style="--progress: 75">
     </div>
   </div>
 ```
@@ -155,7 +155,7 @@ The `svg progress` component also works with orbits and serves the purpose of cr
 
 ```html
    <div class="orbit-3 ">
-      <svg class="z-svg">
+      <svg class="svg-pod">
         <circle class="svg-progress" style="--val: 59;" /> 
       </svg>
     </div>
@@ -167,7 +167,7 @@ The `svg markers` component, designed for orbits, allows for the creation of mar
 
 ```html
    <div class="orbit-3 ">
-      <svg class="z-svg">
+      <svg class="svg-pod">
           <circle class="markers" /> 
         </svg>
     </div>
