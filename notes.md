@@ -113,7 +113,10 @@ o-svg-pod
 o-svg-progress
 
 
-bug: orbit orbit multiple border bug
+bugs: 
+orbit orbit multiple border bug
+
+
 
 
 ### COSAS PARA DESPUES
@@ -122,13 +125,29 @@ CSS TYPES PARA ANIMAR (SOLO CHROME)
 GOEY EFFECT
 TEXTO CURVO (JS)
 data-* para JS
+separar el test como repo independiente para testeo local (y luego remoto as service con server less?)
 
 
 EJEMPLOS:
 
-MENU RADIAL SIMPLE
+BASICO de cada elementos para documentacion y testeo
+o-container : multiple containers
+o-container: props
+o-orbit y orbit orbit: dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
+o-orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT,  (+ OFFSET, LIMITS)
+o-sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors
+o-labels: FALTA METERLO EN SECTORS, angle, offset, connector
+o-svg-progress: props, colors, percentaje
+o-svg-markers: same above
+o-progress: propr, colors
+"o-knob": ver
+o-modal/dialog: ver
+custom vars: explanation
 
-MENU RADIAL COMPLEJO
+
+
+
+MENU RADIAL SIMPLE y COMPLEJO
 
 SELECTOR DE COLORES
 
