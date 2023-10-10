@@ -1,5 +1,5 @@
 
-.pod .sector {
+.sector {
   --half: calc(var(--diameter) / 2);
   --quarter: calc(var(--half) / 2); 
   --semi: calc(var(--angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de orbiter

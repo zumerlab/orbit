@@ -2,7 +2,7 @@
 @use '../utilities/mixins' as *;
 
  /* element structure */
-.pod .label {
+.label {
   display: block;
   border: 1px solid;
   border-radius: 50%;
@@ -11,7 +11,7 @@
   --x-coords: calc(var(--size) / 1.8);
 }
 
-.pod .label::before {
+.label::before {
   content: '';
   display: block;
   border-bottom: 1px solid;
@@ -29,14 +29,20 @@
 }
 
 /* Set size variable for each orbiter */
-@each $pos, $angle in $position {
-  .pod .label#{$pos} {
+@each $pos, $angle in $offsets {
+  .label#{$pos} {
       --label-angle: calc(#{$angle} * 1deg);
+      @if $pos == '.offset-180' {
+        --label-box: -5px;
+      } @else {
+        --label-box: 5px;
+      }
+      
     }    
  
 }
 
-.pod .label > .text {
+.label > .text {
   transform-origin: 0 0;
   display: grid;
   border: 1px solid;
@@ -53,12 +59,7 @@
   transform: rotate(var(--label-angle)) translate(var(--x-coords), 0);
 }
 
-.pod .label > .text {
+.label > .text {
   transform: translate(calc(var(--connector-width) - 5px), var(--label-box))
     rotate(calc(var(--label-angle) * -1));
 }
-
-
-  .pod .label.pos-180 > .text {
-    --label-box: -5px;
-  }

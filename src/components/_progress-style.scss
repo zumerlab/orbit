@@ -1,5 +1,5 @@
 /* progress */
-.pod .progress {
+.progress {
   background-image: radial-gradient(circle, var(--light) 64%, transparent 65%),
     conic-gradient(
       var(--primary) calc((var(--percentage) - 1) * 1deg),
