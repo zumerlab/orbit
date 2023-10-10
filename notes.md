@@ -113,6 +113,9 @@ o-svg-pod
 o-svg-progress
 
 
+bug: orbit orbit multiple border bug
+
+
 ### COSAS PARA DESPUES
 ELIPSES USANDO COS SIN (SOLO EN FFOX)
 CSS TYPES PARA ANIMAR (SOLO CHROME)
