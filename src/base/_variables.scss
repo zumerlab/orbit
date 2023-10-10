@@ -7,50 +7,50 @@ This allows having isolated vars for each pod and permits
 use multiple pods on same project without interference.
 */
 
-.pod {
+.o-container {
     /* Layout vars */
-    --arc: 360;
-    --offset-angle: 0;
-    --direction: 1;
-    --angle: 1;
-    --radius: 50px;
-    --orbiter-number: 1;
-    --radius-padding: 8px;
+    --o-arc: 360;
+    --o-offset-angle: 0;
+    --o-direction: 1;
+    --o-angle: 1;
+    --o-radius: 50px;
+    --o-orbiter-number: 1;
+    --o-radius-padding: 8px;
     @for $i from $min-orbits through $max-orbits {
-      --radius-#{$i}: var(--radius) * #{$i};
+      --o-radius-#{$i}: var(--o-radius) * #{$i};
     }
 
     @for $i from $min-orbits through $max-orbits {
       // diameter
-      --orbit-size-#{$i}: calc(var(--radius) * #{$i} * 2);
+      --o-orbit-size-#{$i}: calc(var(--o-radius) * #{$i} * 2);
     }
   
     /* Shape sizes */
-    --xxs: 8px;
-    --xs: 24px;
-    --s: 44px;
-    --m: 68px;
-    --l: 110px;
-    --xl: 180px;
-    --xxl: 288px;
+    --o-xxs: 8px;
+    --o-xs: 24px;
+    --o-sm: 44px;
+    --o-md: 68px;
+    --o-lg: 110px;
+    --o-xl: 180px;
+    --o-xxl: 288px;
 
     /* angles */
-    --a0: 0;
-    --a45: 45;
-    --a90: 90;
-    --a135: 135;
-    --a180: 180;
-    --a225: 225;
-    --a270: 270;
-    --a315: 315;
-    --a360: 360;
+    --o-a0: 0;
+    --o-a45: 45;
+    --o-a90: 90;
+    --o-a135: 135;
+    --o-a180: 180;
+    --o-a225: 225;
+    --o-a270: 270;
+    --o-a315: 315;
+    --o-a360: 360;
   
     /* width connector */
-    --connector-width: 40px;
-    --label-width: 50px;
+    --o-connector-width: 40px;
+    --o-label-width: 50px;
   
     /* svg */
-    --val: 0;
-    --stroke: 10;
-    --π: 3.14159265359;
+    --o-val: 0;
+    --o-stroke: 10;
+    --o-π: 3.14159265359;
 }

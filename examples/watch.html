@@ -19,66 +19,66 @@
       .second {
         stroke: orangered;
       }
-      hr.orbiter {
+      hr.o-orbiter {
         margin: 0
       }
     </style>
   </head>
   <body>
-    <div class="pod" >
-      <div class="core offset-270 ">
-        <hr class="orbiter line hora" style="width: 110px; height: 6px;  border:1px solid red;   --orbiter-number: 2;">
-        <hr class="orbiter line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);    --orbiter-number: 2;">
-        <hr class="orbiter line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);    --orbiter-number: 2;">
+    <div class="o-container" >
+      <div class="o-core o-offset-270 ">
+        <hr class="o-orbiter o-line hora" style="width: 110px; height: 6px;  border:1px solid red;   --o-orbiter-number: 2;">
+        <hr class="o-orbiter o-line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);    --o-orbiter-number: 2;">
+        <hr class="o-orbiter o-line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);    --o-orbiter-number: 2;">
       </div>
-      <div class="orbit size-1">
-        <div class="orbit offset-270 limit-90">
-          <div class="sector"></div>
-          <div class="sector"></div>
-          <div class="sector"></div>
+      <div class="o-orbit o-size-1">
+        <div class="o-orbit o-offset-270 o-limit-90">
+          <div class="o-sector"></div>
+          <div class="o-sector"></div>
+          <div class="o-sector"></div>
         </div>
-        <div class="orbit offset-270 limit-90">
-          <div class="orbiter s  d-h  transparent"></div>
-          <div class="orbiter s  d-m  transparent"></div>
-          <div class="orbiter upper s  d-s  transparent"></div>
+        <div class="o-orbit o-offset-270 o-limit-90">
+          <div class="o-orbiter o-sm  d-h  transparent"></div>
+          <div class="o-orbiter o-sm  d-m  transparent"></div>
+          <div class="o-orbiter o-upper o-sm  d-s  transparent"></div>
         </div>
         </div>
-        <div class="orbit size-2">
-        <div class="orbit">
-          <svg class="svg-pod">
-            <circle class="svg-progress second" /> 
+        <div class="o-orbit o-size-2">
+        <div class="o-orbit">
+          <svg class="o-svg-pod">
+            <circle class="o-svg-progress second" /> 
           </svg>
         </div>
-        <div class="orbit">
-        <svg class="svg-pod">
-          <circle class="svg-progress minute" /> 
+        <div class="o-orbit">
+        <svg class="o-svg-pod">
+          <circle class="o-svg-progress minute" /> 
         </svg>
         </div>
-      <div class="orbit offset-270">
-        <svg class="svg-pod">
-          <circle class="svg-progress hour" style="--stroke: 60"/>   
+      <div class="o-orbit o-offset-270">
+        <svg class="o-svg-pod">
+          <circle class="o-svg-progress hour" style="--o-stroke: 60"/>   
         </svg>
       </div>
           
       
-   <div class="orbit">
-        <svg class="svg-pod">
-          <circle class="svg-markers"/> 
+   <div class="o-orbit">
+        <svg class="o-svg-pod">
+          <circle class="o-svg-markers"/> 
         </svg>
       </div>
-      <div class="orbit offset-270">
-        <div class="orbiter m upper">12</div>
-        <div class="orbiter xs ">1</div>
-        <div class="orbiter xs ">2</div>
-        <div class="orbiter xs ">3</div>
-        <div class="orbiter xs ">4</div>
-        <div class="orbiter xs ">5</div>
-        <div class="orbiter xs ">6</div>
-        <div class="orbiter xs ">7</div>
-        <div class="orbiter xs ">8</div>
-        <div class="orbiter xs ">9</div>
-        <div class="orbiter xs ">10</div>
-        <div class="orbiter xs ">11</div>
+      <div class="o-orbit o-offset-270">
+        <div class="o-orbiter o-md o-upper">12</div>
+        <div class="o-orbiter o-xs ">1</div>
+        <div class="o-orbiter o-xs ">2</div>
+        <div class="o-orbiter o-xs ">3</div>
+        <div class="o-orbiter o-xs ">4</div>
+        <div class="o-orbiter o-xs ">5</div>
+        <div class="o-orbiter o-xs ">6</div>
+        <div class="o-orbiter o-xs ">7</div>
+        <div class="o-orbiter o-xs ">8</div>
+        <div class="o-orbiter o-xs ">9</div>
+        <div class="o-orbiter o-xs ">10</div>
+        <div class="o-orbiter o-xs ">11</div>
       </div>
       
     </div>
@@ -110,18 +110,18 @@
         const minuteDigital = document.querySelector('.d-m');
         const secondDigital = document.querySelector('.d-s');
 
-        const svgh = document.querySelector('.svg-progress.hour');
-        const svgm = document.querySelector('.svg-progress.minute');
-        const svgs = document.querySelector('.svg-progress.second');
+        const svgh = document.querySelector('.o-svg-progress.hour');
+        const svgm = document.querySelector('.o-svg-progress.minute');
+        const svgs = document.querySelector('.o-svg-progress.second');
 
         // Set the transform style of each hand element with angle correction
-        hourHand.style.setProperty("--angle", hourAngle)
-        minuteHand.style.setProperty("--angle", minuteAngle)
-        secondHand.style.setProperty("--angle", secondAngle)
+        hourHand.style.setProperty("--o-angle", hourAngle)
+        minuteHand.style.setProperty("--o-angle", minuteAngle)
+        secondHand.style.setProperty("--o-angle", secondAngle)
 
-        svgh.style.setProperty("--val", hourPercentage)
-        svgm.style.setProperty("--val", minutePercentage)
-        svgs.style.setProperty("--val", secondPercentage)
+        svgh.style.setProperty("--o-val", hourPercentage)
+        svgm.style.setProperty("--o-val", minutePercentage)
+        svgs.style.setProperty("--o-val", secondPercentage)
 
         hourDigital.innerHTML = hour
         minuteDigital.innerHTML = minute

@@ -1,32 +1,32 @@
 
-.sector {
-  --half: calc(var(--diameter) / 2);
-  --quarter: calc(var(--half) / 2); 
-  --semi: calc(var(--angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de orbiter
-  --sector-gap: 1px;
-  --diameter-percent: calc(
-    var(--half) + (var(--sector-gap) * (var(--current-orbit) / var(--max-orbits))) - var(--half) * tan(var(--semi))
+.o-sector {
+  --o-half: calc(var(--o-diameter) / 2);
+  --o-quarter: calc(var(--o-half) / 2); 
+  --o-semi: calc(var(--o-angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de orbiter
+  --o-sector-gap: 1px;
+  --o-diameter-percent: calc(
+    var(--o-half) + (var(--o-sector-gap) * (var(--o-current-orbit) / var(--o-max-orbits))) - var(--o-half) * tan(var(--o-semi))
   ); // importante fix en gaps, se toma en cta nro de orbits para que no queda desparajo el gap si hay multiples orbits. no se si anda con nested sectors
-  --width: 49px;
-  --rotate: calc(
-    (var(--angle) * var(--orbiter-number) + var(--offset-angle) - (var(--angle) / 2)) * 1deg
+  --o-width: 49px;
+  --o-rotate: calc(
+    (var(--o-angle) * var(--o-orbiter-number) + var(--o-offset-angle) - (var(--o-angle) / 2)) * 1deg
   );
   display: grid;
   grid-area: 1/1/1/1;
-  height: var(--diameter);
-  width: var(--half);
-  border: var(--width) solid;
+  height: var(--o-diameter);
+  width: var(--o-half);
+  border: var(--o-width) solid;
   border-left: none;
   border-radius: 0% 100% 100% 0% / 100% 51% 51% 0%;
   box-sizing: border-box;
   clip-path: polygon(
     0 50% /* left center pivot*/,  
-    100% calc(100% - var(--diameter-percent)) /* right to bottom sector increase*/,  
+    100% calc(100% - var(--o-diameter-percent)) /* right to bottom sector increase*/,  
     100% 100% /* right top corner*/,
     100% 0  /* right bottom corner*/,
-   100% var(--diameter-percent) /* right to top ar decrease*/
+   100% var(--o-diameter-percent) /* right to top ar decrease*/
   ); 
-  transform: rotate(var(--rotate)) translate(var(--quarter), 0);
+  transform: rotate(var(--o-rotate)) translate(var(--o-quarter), 0);
 }
 /*
 <span style="
@@ -34,7 +34,7 @@
     top: 50%;
     left: 50%;
     transform:translate(-50%, -50%);
-    rotate: calc(var(--rotate) * -1 (queda horizontal) * 45 (queda stationary) * 90(queda tipo rayo bici) );
+    rotate: calc(var(--o-rotate) * -1 (queda horizontal) * 45 (queda stationary) * 90(queda tipo rayo bici) );
 ">play</span>
 
 */

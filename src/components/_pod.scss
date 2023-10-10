@@ -1,9 +1,9 @@
 /* container */
 
-.pod {
+.o-container {
   display: grid;
-  grid-template-columns: minmax(var(--radius), 1fr);
-  grid-template-rows: minmax(var(--radius), 1fr);
+  grid-template-columns: minmax(var(--o-radius), 1fr);
+  grid-template-rows: minmax(var(--o-radius), 1fr);
   place-items: center;
 }
 

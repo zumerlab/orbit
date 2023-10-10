@@ -1,34 +1,34 @@
 @use '../utilities/mixins' as *;
 
 /* svg-pod */
-.svg-pod {
+.o-svg-pod {
   display: grid;
   border-radius: inherit;
   grid-area: 1/1/1/1;
   @include alignment;
   rotate: -90deg;
-  width: calc(var(--diameter));
-  height: calc(var(--diameter));
+  width: calc(var(--o-diameter));
+  height: calc(var(--o-diameter));
 }
 
-.svg-pod > .svg-markers {
-  --svg-markers: 12;
-  --marker-width: 1px;
-  --circumference: calc(var(--r) * var(--π) * 2);
-  --dash: calc(var(--circumference) / var(--svg-markers) - var(--marker-width));
-  --r: calc(var(--diameter) / 2);
-  cx: var(--r);
-  cy: var(--r);
-  r: var(--r);
-  stroke-width: calc(var(--radius) * 2);
-  stroke-dasharray: var(--marker-width) var(--dash);
+.o-svg-pod > .o-svg-markers {
+  --o-svg-markers: 12;
+  --o-marker-width: 1px;
+  --o-circumference: calc(var(--o-r) * var(--o-π) * 2);
+  --o-dash: calc(var(--o-circumference) / var(--o-svg-markers) - var(--o-marker-width));
+  --o-r: calc(var(--o-diameter) / 2);
+  cx: var(--o-r);
+  cy: var(--o-r);
+  r: var(--o-r);
+  stroke-width: calc(var(--o-radius) * 2);
+  stroke-dasharray: var(--o-marker-width) var(--o-dash);
 }
-.svg-pod > .svg-progress {
-  --r: calc(var(--diameter) / 2);
-  cx: var(--r);
-  cy: var(--r);
-  r: calc(var(--r));
-  stroke-width: var(--stroke);
-  stroke-dasharray: calc(var(--r) * var(--π) * 2);
-  stroke-dashoffset: calc((100 - var(--val)) / 100 * (var(--r) * var(--π) * 2));
+.o-svg-pod > .o-svg-progress {
+  --o-r: calc(var(--o-diameter) / 2);
+  cx: var(--o-r);
+  cy: var(--o-r);
+  r: calc(var(--o-r));
+  stroke-width: var(--o-stroke);
+  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2);
+  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * (var(--o-r) * var(--o-π) * 2));
 }

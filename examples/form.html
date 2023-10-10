@@ -24,7 +24,7 @@
         width: 100%;
         height: 400px;
         background: #000000;
-        font-size:10px;
+        font-o-size:10px;
         appearance: none;
         border: none;
         resize: none;
@@ -47,7 +47,7 @@
           float: right;
           width: 400px;
           padding: 10px;
-          font-size: smaller;
+          font-o-size: smaller;
         }
         select {
           width: 100%;
@@ -63,13 +63,13 @@
   </head>
   <body>
 <div class="layout">
-  <div class="pod"></div>
+  <div class="o-container"></div>
   <div>
     <form>
       <fieldset>
         <legend>orbits</legend>
         <div id="orbits-container">
-          <div class="orbitf-container">
+          <div class="o-orbitf-container">
             <div class="fieldc">
               <div class="fieldt">
                 <label for="orbits-radius">Radius</label><br>
@@ -90,8 +90,8 @@
                   <input type="range" id="orbit1-sector" name="orbit1-sector" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
-                  <label for="orbit1-offset">Offset</label><br>
-                  <input type="range" id="orbit1-offset" name="orbit1-offset" min="0" max="360" step="45" value="0">
+                  <label for="orbit1-o-offset">o-offset</label><br>
+                  <input type="range" id="orbit1-o-offset" name="orbit1-o-offset" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
                   <label for="orbit1-ccw">CCW </label>
@@ -102,8 +102,8 @@
                   <input type="checkbox" id="orbit1-visible" name="orbit1-visible" checked>
                 </div>
               </div>
-                <button type="button" class="add-orbiter-button" data-orbit="1">Add orbiter</button>
-                <div class="orbiters-container" id="orbit1-orbiters-container"></div>
+                <button type="button" class="o-add-orbiter-button" data-orbit="1">Add orbiter</button>
+                <div class="o-orbiters-container" id="orbit1-orbiters-container"></div>
             </fieldset>
           </div>
         </div>
@@ -123,8 +123,8 @@
       const form = document.querySelector('form');
       const radius = document.querySelector('#orbits-radius');
       const rradius = document.querySelector('#orbit1-radius');
-      const zContainer = document.querySelector('.pod');
-      const range = getComputedStyle(zContainer).getPropertyValue('--radius');
+      const zContainer = document.querySelector('.orbit-container');
+      const range = getComputedStyle(zContainer).getPropertyValue('--o-radius');
       radius.setAttribute('value', range.slice(0, -2).trim())
       rradius.setAttribute('value', range.slice(0, -2).trim())
       const orbitsContainer = document.querySelector('#orbits-container');
@@ -149,13 +149,13 @@
             <legend>orbiter ${orbitersContainer.children.length + 1}</legend>
             <div class="fieldc">
               <div class="fieldt">
-                <label for="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-size">Size</label><br>
-                <select id="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-size" name="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-size">
-                  <option value="xxs">XXS</option>
-                  <option value="xs">XS</option>
-                  <option value="s">S</option>
-                  <option value="m" selected>M</option>
-                  <option value="l">L</option>
+                <label for="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-o-size">o-size</label><br>
+                <select id="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-o-size" name="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-o-size">
+                  <option value="o-xxs">o-xxs</option>
+                  <option value="o-xs">o-xs</option>
+                  <option value="o-sm">o-sm</option>
+                  <option value="o-md" selected>o-md</option>
+                  <option value="o-lg">o-lg</option>
                   <option value="xl">XL</option>
                   <option value="xxl">XXL</option>
                 </select>
@@ -173,8 +173,8 @@
                 <label for="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-alignment">Alignment</label><br>
                 <select id="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-alignment" name="orbit${orbitNumber}-orbiter${orbitersContainer.children.length + 1}-alignment">
                     <option value="" selected>Center</option>
-                    <option value="upper">Upper</option>
-                    <option value="lower">Lower</option>
+                    <option value="o-upper">o-upper</option>
+                    <option value="o-lower">o-lower</option>
                 </select>
               </div>
             <div class="fieldt">
@@ -211,8 +211,8 @@
                   <input type="range" id="orbit${orbitNumber}-sector" name="orbit${orbitNumber}-sector" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
-                  <label for="orbit${orbitNumber}-offset">Offset</label><br>
-                  <input type="range" id="orbit${orbitNumber}-offset" name="orbit${orbitNumber}-offset" min="0" max="360" step="45" value="0">
+                  <label for="orbit${orbitNumber}-o-offset">o-offset</label><br>
+                  <input type="range" id="orbit${orbitNumber}-o-offset" name="orbit${orbitNumber}-o-offset" min="0" max="360" step="45" value="0">
                 </div>
                 <div class="fieldt">
                   <label for="orbit${orbitNumber}-ccw">CCW </label>
@@ -224,7 +224,7 @@
                 </div>
               </div>
             <button type="button" class="add-orbiter-button" data-orbit="${orbitNumber}">Add orbiter</button>
-            <div class="orbiters-container" id="orbit${orbitNumber}-orbiters-container"></div>
+            <div class="o-orbiters-container" id="orbit${orbitNumber}-orbiters-container"></div>
             <button type="button" class="remove-orbit-button">remove</button>
           </fieldset>
         `;
@@ -239,32 +239,32 @@
       const updateDOM = () => {
         const orbits = document.querySelectorAll('.orbitf-container');
         const orbitsRadius = document.querySelector(`#orbits-radius`).value
-        zContainer.style.setProperty('--radius', orbitsRadius + 'px');
+        zContainer.style.setProperty('--o-radius', orbitsRadius + 'px');
         const html = Array.from(orbits).map((orbit) => {
           const orbitNumber = orbit.querySelector('legend').textContent.split(' ')[1];
           const ccw = orbit.querySelector(`#orbit${orbitNumber}-ccw`).checked ? 'ccw' : '';
           const visible = orbit.querySelector(`#orbit${orbitNumber}-visible`).checked ? '' : 'transparent';
           const sector = orbit.querySelector(`#orbit${orbitNumber}-sector`).value;
-          const offset = orbit.querySelector(`#orbit${orbitNumber}-offset`).value;
+          const o-offset = orbit.querySelector(`#orbit${orbitNumber}-o-offset`).value;
           const orbitRadius = orbit.querySelector(`#orbit${orbitNumber}-radius`).value
-          zContainer.style.setProperty(`--radius-${orbitNumber}`, orbitRadius + 'px');
+          zContainer.style.setProperty(`--o-radius-${orbitNumber}`, orbitRadius + 'px');
           var iNumber = 0
           const orbiters = Array.from(orbit.querySelectorAll('.orbiter-container')).map((orbiter) => {
             const orbiterNumber = orbiter.querySelector('legend').textContent.split(' ')[1];
             iNumber = iNumber + 1
-            const size = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-size`).value;
+            const o-size = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-o-size`).value;
             const alignment = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-alignment`).value;
             const shape = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-shape`).value;
             const stationary = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-stationary`).checked ? 'stationary' : '';
-            return `<div class="orbiter ${shape} ${size} ${alignment} ${stationary}">${orbiterNumber}</div>\n`;
+            return `<div class="o-orbiter ${shape} ${o-size} ${alignment} ${stationary}">${orbiterNumber}</div>\n`;
           }).join('');
           return `
-    <div class="orbit ${sector ? `limit-${sector}` : ``} ${offset ? `offset-${offset}` : ``} ${ccw}  ${visible}">
+    <div class="o-orbit ${sector ? `o-limit-${sector}` : ``} ${o-offset ? `o-offset-${o-offset}` : ``} ${ccw}  ${visible}">
       ${orbiters}
     </div>
           `;
         }).join('');
-        const orbitsContainer = document.querySelector('.pod');
+        const orbitsContainer = document.querySelector('.orbit-container');
         orbitsContainer.innerHTML = html;
         document.querySelector('#code').innerHTML = html;
       }; 

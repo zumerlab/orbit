@@ -2,47 +2,47 @@
 @use '../utilities/mixins' as *;
 
  /* element structure */
-.label {
+.o-label {
   display: block;
   border: 1px solid;
   border-radius: 50%;
   width: 4px;
   height: 4px;
-  --x-coords: calc(var(--size) / 1.8);
+  --o-x-coords: calc(var(--o-size) / 1.8);
 }
 
-.label::before {
+.o-label::before {
   content: '';
   display: block;
   border-bottom: 1px solid;
-  width: var(--connector-width);
+  width: var(--o-connector-width);
   height: 1px;
 }
 
 /* Set size variable for each orbiter */
 @each $size, $var in $sizes {
-  .orbiter#{$size} > .label {
+  .o-orbiter#{$size} > .o-label {
     @if $size != null {
-      --size: #{$var};
+      --o-size: #{$var};
     }    
   }
 }
 
 /* Set size variable for each orbiter */
 @each $pos, $angle in $offsets {
-  .label#{$pos} {
-      --label-angle: calc(#{$angle} * 1deg);
-      @if $pos == '.offset-180' {
-        --label-box: -5px;
+  .o-label#{$pos} {
+      --o-label-angle: calc(#{$angle} * 1deg);
+      @if $pos == '.o-offset-180' {
+        --o-label-box: -5px;
       } @else {
-        --label-box: 5px;
+        --o-label-box: 5px;
       }
       
     }    
  
 }
 
-.label > .text {
+.o-label > .o-text {
   transform-origin: 0 0;
   display: grid;
   border: 1px solid;
@@ -50,16 +50,16 @@
   min-width: 100px;
   padding: 5px;
   height:auto;
-  --label-box: 5px;
+  --o-label-box: 5px;
   @include alignment;
 }
 
 /* element radial setup*/
-.orbiter > .label {
-  transform: rotate(var(--label-angle)) translate(var(--x-coords), 0);
+.o-orbiter > .o-label {
+  transform: rotate(var(--o-label-angle)) translate(var(--o-x-coords), 0);
 }
 
-.label > .text {
-  transform: translate(calc(var(--connector-width) - 5px), var(--label-box))
-    rotate(calc(var(--label-angle) * -1));
+.o-label > .o-text {
+  transform: translate(calc(var(--o-connector-width) - 5px), var(--o-label-box))
+    rotate(calc(var(--o-label-angle) * -1));
 }

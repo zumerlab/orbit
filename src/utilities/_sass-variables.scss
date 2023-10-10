@@ -11,10 +11,10 @@ $grid-breakpoints: (
 );
 
 
-$sizes: null, '.xxs' var(--xxs), '.xs' var(--xs), '.s' var(--s), '.m' var(--m),
-  '.l' var(--l), '.xl' var(--xl), '.xxl' var(--xxl);
+$sizes: null, '.o-xxs' var(--o-xxs), '.o-xs' var(--o-xs), '.o-sm' var(--o-sm), '.o-md' var(--o-md),
+  '.o-lg' var(--o-lg), '.o-xl' var(--o-xl), '.o-xxl' var(--o-xxl);
 
-$align: null, '.upper', '.lower';
+$align: null, '.o-upper', '.o-lower';
 
 $min-orbits: 1;
 $max-orbits: 6;
@@ -22,10 +22,10 @@ $max-orbits: 6;
 $min-orbiters: 1;
 $max-orbiters: 24;
 
-$offsets: '.offset-0' var(--a0), '.offset-45' var(--a45), '.offset-90' var(--a90), '.offset-135' var(--a135), '.offset-180' var(--a180),
-  '.offset-225' var(--a225), '.offset-270' var(--a270), '.offset-315' var(--a315), '.offset-360' var(--a360);
+$offsets: '.o-offset-45' var(--o-a45), '.o-offset-90' var(--o-a90), '.o-offset-135' var(--o-a135), '.o-offset-180' var(--o-a180),
+  '.o-offset-225' var(--o-a225), '.o-offset-270' var(--o-a270), '.o-offset-315' var(--o-a315);
 
-$limits: '.limit-0' var(--a0),'.limit-45' var(--a45), '.limit-90' var(--a90), '.limit-135' var(--a135), '.limit-180' var(--a180),
-'.limit-225' var(--a225), '.limit-270' var(--a270), '.limit-315' var(--a315), '.limit-360' var(--a360);
+$limits: '.o-limit-45' var(--o-a45), '.o-limit-90' var(--o-a90), '.o-limit-135' var(--o-a135), '.o-limit-180' var(--o-a180),
+'.o-limit-225' var(--o-a225), '.o-limit-270' var(--o-a270), '.o-limit-315' var(--o-a315);
 
-$orbit-sizes: null, '.size-1' var(--orbit-size-1),'.size-2' var(--orbit-size-2),'.size-3' var(--orbit-size-3),'.size-4' var(--orbit-size-4),'.size-5' var(--orbit-size-5),'.size-6' var(--orbit-size-6);
+$orbit-sizes: null, '.o-size-1' var(--o-orbit-size-1),'.o-size-2' var(--o-orbit-size-2),'.o-size-3' var(--o-orbit-size-3),'.o-size-4' var(--o-orbit-size-4),'.o-size-5' var(--o-orbit-size-5),'.o-size-6' var(--o-orbit-size-6);

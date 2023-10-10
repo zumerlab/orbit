@@ -1,23 +1,23 @@
 
-.orbit {
-  --arc: var(--a360); // ensure reset to default. useful for nested
-  --offset-angle: var(--a0); // ensure reset to default. useful for nested
+.o-orbit {
+  --o-arc: var(--o-a360); // ensure reset to default. useful for nested
+  --o-offset-angle: var(--o-a0); // ensure reset to default. useful for nested
   display: grid;
   border-radius: 50%;
-  border: 0.1px solid var(--dark);
+  border: 0.1px solid var(--o-dark);
   grid-area: 1/1/1/1;
   place-items: center;
   box-sizing: content-box;
-  width: var(--diameter);
-  height: var(--diameter);
-  z-index: var(--z-index);
+  width: var(--o-diameter);
+  height: var(--o-diameter);
+  z-index: var(--o-z-index);
 }
 
-.orb {
-  --arc: var(--a360); // ensure reset to default. useful for nested
-  --offset-angle: var(--a0); // ensure reset to default. useful for nested
+.o-orb {
+  --o-arc: var(--o-a360); // ensure reset to default. useful for nested
+  --o-offset-angle: var(--o-a0); // ensure reset to default. useful for nested
   border-radius: 50%;
-  border: 0.1px solid var(--dark);
+  border: 0.1px solid var(--o-dark);
   grid-area: 1/1/1/1;
   place-items: center;
   box-sizing: content-box;
@@ -25,8 +25,8 @@
   z-index: 800;
 }
 
-.orbit {
-  border: 0.1px solid var(--dark);
+.o-orbit {
+  border: 0.1px solid var(--o-dark);
 }
 
 

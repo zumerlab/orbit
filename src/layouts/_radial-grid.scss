@@ -8,7 +8,7 @@
  It also manages the behavior of these elements when properties change, like sizes, arc-length limits, and alignment. 
 */
 /* ====== Radial Grid - Core ======== */
-.core >.orbiter:only-child {
+.o-core >.o-orbiter:only-child {
   transform: translate(-50%, -50%);
 }
 
@@ -17,7 +17,7 @@
 
 /* 
  Set diameter and z-index variables for each orbit
- having into account due orbit is nestable --diameter is affected by 
+ having into account due orbit is nestable --o-diameter is affected by 
  parent orbiter size.
 */
 @for $i from $min-orbits through $max-orbits {
@@ -26,27 +26,27 @@
   
    @each $orbit-size, $orbit-value in $orbit-sizes {
     
-    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) {
+    .o-container > :nth-child(#{$i} of .o-orbit#{$orbit-size}) {
       @if $orbit-size != null {
         
-        --diameter: #{$orbit-value};
+        --o-diameter: #{$orbit-value};
       }  @else {
-        --diameter: calc(var(--radius-#{$i}) * 2);
+        --o-diameter: calc(var(--o-radius-#{$i}) * 2);
       }
-      --z-index: #{$z-index};
+      --o-z-index: #{$z-index};
       
     }
   }
 
  
  // @each $size, $var in $sizes {
-    .orbiter > :nth-child(#{$i} of .orbit) {
+    .o-orbiter > :nth-child(#{$i} of .o-orbit) {
     //  @if $size == null {
-     //   --diameter: calc(var(--m) * #{$i});
+     //   --o-diameter: calc(var(--o-m) * #{$i});
      // } @else {
-        --diameter: calc(var(--size) * #{$i});
+        --o-diameter: calc(var(--o-size) * #{$i});
      // }
-      --z-index: #{$z-index};
+      --o-z-index: #{$z-index};
    // }
   }
 }
@@ -54,7 +54,7 @@
 /* ====== Radial Grid - Sub-orbit ======== */
 
 /* 
- Set diameter and z-index variables for each suborbit.
+ Set diameter and z-index variables for each suborbit.o-
 */
 @for $i from $min-orbits through $max-orbits {
   $z-index: #{$max-orbits - $i};
@@ -62,31 +62,31 @@
   
   @each $orbit-size, $orbit-value in $orbit-sizes {
   
-  .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit {
+  .o-container > :nth-child(#{$i} of .o-orbit#{$orbit-size}) > .o-orbit {
     @if $orbit-size != null {
-      --diameter: #{$orbit-value};
-      --x-coords: calc( #{$orbit-value} / 2);
+      --o-diameter: #{$orbit-value};
+      --o-x-coords: calc( #{$orbit-value} / 2);
     } @else {
-      --diameter: calc(var(--radius-#{$i}) * 2);
-    --x-coords: calc(var(--radius-#{$i}));
+      --o-diameter: calc(var(--o-radius-#{$i}) * 2);
+    --o-x-coords: calc(var(--o-radius-#{$i}));
     }
 
-    --z-index: #{$z-index};
+    --o-z-index: #{$z-index};
     
   }
 }
 
   
   @each $orbit-size, $orbit-value in $orbit-sizes {
-  .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbit > .sector {
+  .o-container > :nth-child(#{$i} of .o-orbit#{$orbit-size}) > .o-orbit > .o-sector {
     @if $orbit-size != null {
-      --diameter: #{$orbit-value};
+      --o-diameter: #{$orbit-value};
       } @else {
-        --diameter: calc(var(--radius-#{$i}) * 2);
+        --o-diameter: calc(var(--o-radius-#{$i}) * 2);
       }
     
-    --current-orbit: #{$i};
-    --max-orbits: #{$max-orbits};
+    --o-current-orbit: #{$i};
+    --o-max-orbits: #{$max-orbits};
   }
   }
  
@@ -94,11 +94,11 @@
   
  @each $orbit-size, $orbit-value in $orbit-sizes {
     
-    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .sector{
+    .o-container > :nth-child(#{$i} of .o-orbit#{$orbit-size}) > .o-sector{
       @if $orbit-size != null {
-      --diameter: #{$orbit-value};
+      --o-diameter: #{$orbit-value};
       } @else {
-        --diameter: calc(var(--radius-#{$i}) * 2);
+        --o-diameter: calc(var(--o-radius-#{$i}) * 2);
       }
       
     }
@@ -108,33 +108,33 @@
     @each $class in $align {
       $math: '';
   
-    @if $class == '.upper' {
-      $math: '+ (calc(var(--size) / 2))';
+    @if $class == '.o-upper' {
+      $math: '+ (calc(var(--o-size) / 2))';
     }
-    @if $class == '.lower' {
-      $math: '- (calc(var(--size) / 2))';
+    @if $class == '.o-lower' {
+      $math: '- (calc(var(--o-size) / 2))';
     }
 
-    .pod > :nth-child(#{$i} of .orbit#{$orbit-size}) > .orbiter#{$class} {
+    .o-container > :nth-child(#{$i} of .o-orbit#{$orbit-size}) > .o-orbiter#{$class} {
       @if $orbit-size != null {
-      --x-coords:  calc( #{$orbit-value} / 2 #{$math});
+      --o-x-coords:  calc( #{$orbit-value} / 2 #{$math});
       }
   }
 }
 }
   
-    .orbiter > .orbit:nth-child(#{$i}) > .orbit {
-      --diameter: calc(var(--size) * #{$i});
-      --z-index: #{$z-index};
-      --x-coords: calc(var(--radius-#{$i}));
+    .o-orbiter > .o-orbit:nth-child(#{$i}) > .o-orbit {
+      --o-diameter: calc(var(--o-size) * #{$i});
+      --o-z-index: #{$z-index};
+      --o-x-coords: calc(var(--o-radius-#{$i}));
       border: none;
     }
 
-    .orbiter > .orbit:nth-child(#{$i}) > .orbit > .sector {
-        --diameter: calc(var(--size) * #{$i});
-        --width: calc(var(--size) / 4);
-        --current-orbit: #{$i};
-        --max-orbits: #{$max-orbits};
+    .o-orbiter > .o-orbit:nth-child(#{$i}) > .o-orbit > .o-sector {
+        --o-diameter: calc(var(--o-size) * #{$i});
+        --o-width: calc(var(--o-size) / 4);
+        --o-current-orbit: #{$i};
+        --o-max-orbits: #{$max-orbits};
     }
  
 }
@@ -145,14 +145,14 @@
  For example, .offset-45 implies that orbiters or sectors start at a 45º angle.
 */
 @each $offset, $angle in $offsets {
-    .orbit#{$offset}, .core#{$offset} {
-    --offset-angle: #{$angle}; /* Set --offset-angle variable for a specific offset */
+    .o-orbit#{$offset}, .o-core#{$offset} {
+    --o-offset-angle: #{$angle}; /* Set --o-offset-angle variable for a specific offset */
   }
 }
 
 @each $limit, $angle in $limits {
-  .orbit#{$limit}, .core#{$limit} {
-    --arc: #{$angle}; /* Set lengyh variable for a specific arc limit */
+  .o-orbit#{$limit}, .o-core#{$limit} {
+    --o-arc: #{$angle}; /* Set lengyh variable for a specific arc limit */
   }
 }
 
@@ -162,17 +162,17 @@
  By default, orbit child elements are arranged clockwise.
  Use this class to change this behavior.
 */
-.orbit.ccw {
-  --direction: -1; /* Set --direction variable to -1 for counter-clockwise direction */
+.o-orbit.o-ccw {
+  --o-direction: -1; /* Set --o-direction variable to -1 for counter-clockwise direction */
 }
 
 /* ====== Radial Grid - Orbiters ======== */
 
 /* Set size variable for each orbiter */
 @each $size, $var in $sizes {
-  .orbiter#{$size} {
+  .o-orbiter#{$size} {
     @if $size != null {
-      --size: #{$var};
+      --o-size: #{$var};
     }    
   }
 }
@@ -183,38 +183,38 @@
  but is not yet handled by Firefox, unless layout.css.has-selector.enabled flag  https://caniuse.com/css-has
 */
 @for $i from $min-orbiters through $max-orbiters {
-  .orbit:has(> .orbiter:nth-child(#{$i})) {
+  .o-orbit:has(> .o-orbiter:nth-child(#{$i})) {
     $number: $i - 1;
     @if $i < 1  {
       $number: 1;
     }
-    --angle: calc((var(--arc) / #{$number}) * var(--direction)); 
+    --o-angle: calc((var(--o-arc) / #{$number}) * var(--o-direction)); 
     }
 }
 @for $i from $min-orbiters through $max-orbiters {
-    .orbit:not([class*="limit-"]):has(> .orbiter:nth-child(#{$i})) {
+    .o-orbit:not([class*="limit-"]):has(> .o-orbiter:nth-child(#{$i})) {
       $number: $i;
       @if $i < 1  {
         $number: 1;
       }
-      --angle: calc((var(--arc) / #{$number}) * var(--direction)); 
+      --o-angle: calc((var(--o-arc) / #{$number}) * var(--o-direction)); 
       }
 }
 
 @for $i from $min-orbiters through $max-orbiters {
-  .orbit[class*="limit-"]:has(> .orbiter:nth-child(#{$i})) {
+  .o-orbit[class*="limit-"]:has(> .o-orbiter:nth-child(#{$i})) {
     $number: $i - 1;
     @if $i < 1  {
       $number: 1;
     }
-    --angle: calc((var(--arc) / #{$number}) * var(--direction)); 
+    --o-angle: calc((var(--o-arc) / #{$number}) * var(--o-direction)); 
     }
 }
 
 /* Set orbiter-number variable for each orbiter in each orbit */
 @for $i from $min-orbiters through $max-orbiters {
-  .orbiter:nth-child(#{$i}) {
-    --orbiter-number: #{$i};
+  .o-orbiter:nth-child(#{$i}) {
+    --o-orbiter-number: #{$i};
   }
 }
 
@@ -228,18 +228,18 @@
     @each $class in $align {
       $math: '';
    
-    @if $class == '.upper' {
-      $math: '+ (calc(var(--size) / 2))';
+    @if $class == '.o-upper' {
+      $math: '+ (calc(var(--o-size) / 2))';
     }
 
     
-    @if $class == '.lower' {
-      $math: '- (calc(var(--size) / 2))';
+    @if $class == '.o-lower' {
+      $math: '- (calc(var(--o-size) / 2))';
     }
 
     
-    .pod >  :nth-child(#{$i} of .orbit) > .orbiter#{$class} {
-      --x-coords: calc(var(--radius-#{$i}) #{$math});
+    .o-container >  :nth-child(#{$i} of .o-orbit) > .o-orbiter#{$class} {
+      --o-x-coords: calc(var(--o-radius-#{$i}) #{$math});
     }
  
   }
@@ -256,17 +256,17 @@
     @each $class in $align {
     
     $math: '';
-    @if $class == '.upper' {
-      $math: '+ (calc(var(--size) / 2))';
+    @if $class == '.o-upper' {
+      $math: '+ (calc(var(--o-size) / 2))';
     }
 
-    @if $class == '.lower' {
-      $math: '- (calc(var(--size) / 2))';
+    @if $class == '.o-lower' {
+      $math: '- (calc(var(--o-size) / 2))';
     }
 
     
-    .orbiter > .orbit:nth-child(#{$i}) > .orbiter#{$class}, .orbit > .orbit:nth-child(#{$i}) > .orbiter#{$class} {
-        --x-coords: calc((var(--diameter) / 2) #{$math});
+    .o-orbiter > .o-orbit:nth-child(#{$i}) > .o-orbiter#{$class}, .o-orbit > .o-orbit:nth-child(#{$i}) > .o-orbiter#{$class} {
+        --o-x-coords: calc((var(--o-diameter) / 2) #{$math});
     }
   }
 }
@@ -275,8 +275,8 @@
 
 /* Set orbiter-number variable for each sector in each orbit */
 @for $i from $min-orbiters through $max-orbiters {
-  .sector:nth-child(#{$i}) {
-    --orbiter-number: #{$i};
+  .o-sector:nth-child(#{$i}) {
+    --o-orbiter-number: #{$i};
   }
 }
 
@@ -286,26 +286,26 @@
  but is not yet handled by Firefox, unless layout.css.has-selector.enabled flag  https://caniuse.com/css-has
 */
 @for $i from $min-orbiters through $max-orbiters {
-  .orbit:has(> .sector:nth-child(#{$i})) {
-    --angle: calc((var(--arc) / #{$i}) * var(--direction)); 
+  .o-orbit:has(> .o-sector:nth-child(#{$i})) {
+    --o-angle: calc((var(--o-arc) / #{$i}) * var(--o-direction)); 
   }
 }
 
 
 @for $i from $min-orbits through $max-orbits {
   
-  .pod >  :nth-child(#{$i} of .orbit) > .sector {
-    --diameter: calc(var(--radius-#{$i}) * 2);
-    --current-orbit: #{$i};
-    --max-orbits: #{$max-orbits};
+  .o-container >  :nth-child(#{$i} of .o-orbit) > .o-sector {
+    --o-diameter: calc(var(--o-radius-#{$i}) * 2);
+    --o-current-orbit: #{$i};
+    --o-max-orbits: #{$max-orbits};
   }
 
   
-    .orbiter >  :nth-child(#{$i} of .orbit) > .sector {
-      --diameter: calc(var(--size) * #{$i});
-      --width: calc(var(--size) / 4);
-      --current-orbit: #{$i};
-      --max-orbits: #{$max-orbits};
+    .o-orbiter >  :nth-child(#{$i} of .o-orbit) > .o-sector {
+      --o-diameter: calc(var(--o-size) * #{$i});
+      --o-width: calc(var(--o-size) / 4);
+      --o-current-orbit: #{$i};
+      --o-max-orbits: #{$max-orbits};
     }
 }
 
@@ -313,8 +313,8 @@
 
 @for $i from $min-orbits through $max-orbits {
   
-  .pod > .orbit:nth-child(#{$i}) > svg {
-    --diameter: calc(var(--radius-#{$i}) * 2);
+  .o-container > .o-orbit:nth-child(#{$i}) > svg {
+    --o-diameter: calc(var(--o-radius-#{$i}) * 2);
   }
 }
 
@@ -327,9 +327,9 @@
 @for $i from $min-orbits through $max-orbits {
 
     
-    .orbiter > .orbit:nth-child(#{$i}) > svg {
+    .o-orbiter > .o-orbit:nth-child(#{$i}) > svg {
       
-        --diameter: calc(var(--size) * #{$i});
+        --o-diameter: calc(var(--o-size) * #{$i});
      
       
     }

@@ -1,9 +1,9 @@
 /* orbiter */
-.orbiter {
-  background-color: var(--light);
-  border-color: var(--dark);
+.o-orbiter {
+  background-color: var(--o-light);
+  border-color: var(--o-dark);
 }
 
-.orbiter > .content {
-  background-color: var(--light);
+.o-orbiter > .o-content {
+  background-color: var(--o-light);
 }

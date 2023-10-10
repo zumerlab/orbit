@@ -1,8 +1,8 @@
 /* progress */
-.progress {
-  background-image: radial-gradient(circle, var(--light) 64%, transparent 65%),
+.o-progress {
+  background-image: radial-gradient(circle, var(--o-light) 64%, transparent 65%),
     conic-gradient(
-      var(--primary) calc((var(--percentage) - 1) * 1deg),
-      var(--secondary) calc(var(--percentage) * 1deg)
+      var(--o-primary) calc((var(--o-percentage) - 1) * 1deg),
+      var(--o-secondary) calc(var(--o-percentage) * 1deg)
     );
 }

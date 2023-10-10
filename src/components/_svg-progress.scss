@@ -1,10 +1,10 @@
 /* svg progress */
-.svg-pod > .svg-progress {
-  --r: calc(var(--diameter) / 2);
-  cx: var(--r);
-  cy: var(--r);
-  r: calc(var(--r));
-  stroke-width: var(--stroke);
-  stroke-dasharray: calc(var(--r) * var(--π) * 2);
-  stroke-dashoffset: calc((100 - var(--val)) / 100 * (var(--r) * var(--π) * 2));
+.o-svg-pod > .o-svg-progress {
+  --o-r: calc(var(--o-diameter) / 2);
+  cx: var(--o-r);
+  cy: var(--o-r);
+  r: calc(var(--o-r));
+  stroke-width: var(--o-stroke);
+  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2);
+  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * (var(--o-r) * var(--o-π) * 2));
 }

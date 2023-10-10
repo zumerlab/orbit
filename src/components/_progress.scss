@@ -1,7 +1,7 @@
 
 /* progress */
-.progress {
-  --percentage: calc(var(--progress) * 3.6);
+.o-progress {
+  --o-percentage: calc(var(--o-progress) * 3.6);
   display: grid;
   border-radius: 50%;
   grid-area: 1/1/1/1;
@@ -12,7 +12,7 @@
 }
   // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
 
-.progress + .orbiter {
-  --orbiter-number: 2; 
-  --angle: calc(-90 + var(--progress) * 3.6);
+.o-progress + .o-orbiter {
+  --o-orbiter-number: 2; 
+  --o-angle: calc(-90 + var(--o-progress) * 3.6);
 } 

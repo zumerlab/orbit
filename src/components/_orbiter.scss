@@ -1,28 +1,28 @@
 @use '../utilities/mixins' as *;
 
-.orbiter {
-  --size: var(--m); // default
-  --rotation-angle: calc(
-    var(--angle) * var(--orbiter-number) + var(--offset-angle) - var(--angle)
+.o-orbiter {
+  --o-size: var(--o-m); // default
+  --o-rotation-angle: calc(
+    var(--o-angle) * var(--o-orbiter-number) + var(--o-offset-angle) - var(--o-angle)
   );
-  --rotate: calc(var(--rotation-angle) * 1deg);
-  --rotate-invert: calc(var(--rotation-angle) * -1deg);
+  --o-rotate: calc(var(--o-rotation-angle) * 1deg);
+  --o-rotate-invert: calc(var(--o-rotation-angle) * -1deg);
   display: grid;
   border: 1px solid;
   grid-area: 1/1/1/1;
   place-content: center;
-  width: var(--size);
-  height: var(--size);
+  width: var(--o-size);
+  height: var(--o-size);
   border-radius: 50%;
-  transform: rotate(var(--rotate)) translate(var(--x-coords), 0)
-    rotate(var(--rotate-invert));
+  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0)
+    rotate(var(--o-rotate-invert));
 }
 
-.orbiter.stationary {
-  transform: rotate(var(--rotate)) translate(var(--x-coords), 0);
+.o-orbiter.o-stationary {
+  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0);
 }
 
-.orbiter > .content {
+.o-orbiter > .o-content {
   padding: 5px;
   width: inherit;
   height: inherit;
