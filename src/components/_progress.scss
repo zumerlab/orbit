@@ -1,6 +1,6 @@
 
 /* progress */
-.progress {
+.pod .progress {
   --percentage: calc(var(--progress) * 3.6);
   display: grid;
   border-radius: 50%;
@@ -12,7 +12,7 @@
 }
   // https://codepen.io/chandrashekhar/pen/RvMVey?editors=1100
 
-.progress + .orbiter {
+.pod .progress + .orbiter {
   --orbiter-number: 2; 
   --angle: calc(-90 + var(--progress) * 3.6);
 } 

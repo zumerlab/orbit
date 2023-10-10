@@ -1,13 +1,13 @@
 /* element theme */
-.label {
+.pod .label {
   border-color: var(--info);
 }
 
-.label::before {
+.pod .label::before {
   border-bottom-color: var(--info);
 }
 
-.label > .text {
+.pod .label > .text {
   background-color: var(--light);
   border-color: var(--info);
   color: var(--info);
