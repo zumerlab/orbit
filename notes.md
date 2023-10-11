@@ -94,8 +94,8 @@ LAS MINIMAS ARC TEXT
 ### css first
 
 ### COSAS PARA AHORA
-TITULOS // LABELS PARA ORBITS
-.CONTENT NO RADIAL GRID no capsule
+>>>>> TITULOS // LABELS PARA ORBITS sector y container
+>>>>>> .CONTENT NO RADIAL GRID no capsule
 .PROGRESS
 .KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
 .svg-markers
@@ -131,42 +131,74 @@ separar el test como repo independiente para testeo local (y luego remoto as ser
 EJEMPLOS:
 
 BASICO de cada elementos para documentacion y testeo
-o-container : multiple containers
-o-container: props
-o-orbit y orbit orbit: dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
+o-container : 
+multiple containers con diferentes tamaños y que aparezcan los valores de las variables?
+
+o-orbit y orbit orbit: 
+dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
+
+
 o-orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT,  (+ OFFSET, LIMITS)
-o-sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors
+
+o-sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember  sector shapes
+
 o-labels: FALTA METERLO EN SECTORS, angle, offset, connector
+
 o-svg-progress: props, colors, percentaje
+
 o-svg-markers: same above
+
 o-progress: propr, colors
+
 "o-knob": ver
+
 o-modal/dialog: ver
+
 custom vars: explanation
 
 
 
 
 MENU RADIAL SIMPLE y COMPLEJO
+simple es un par de sectores con iconos control volumen, complejo es con varios orbits y sectores control playlista?
 
 SELECTOR DE COLORES
+un progress con colores y escalas con varios orbits...
 
 CALENDARIO
+fecha al centro y aano; mes; dia. Que gire....
 
 ORGANIZACION DE TIEMPO
-
-CONTROL DE VOLUMEN
+ver esos esquemas raros
 
 RELOG ANALOGICO
 
 DATA VIS CON SECTORES
 
-INDICADOR DE PROGRESO
+diagrama de anillo, diagrama de cinturón y mapa de árbol radialp.
 
-SELECTOR DE IMAGENES
+grafico de barras curvas
+
+Este tipo de visualización muestra jerarquía a través de una serie de anillos que se cortan para cada nodo de categoría. Cada anillo corresponde a un nivel de jerarquía, con el círculo central representando el nodo raíz y la jerarquía moviéndose hacia fuera de él.
+
+Los anillos se cortan y se dividen en función de su relación jerárquica con la porción primaria. El ángulo de cada porción se divide igualmente en su nodo primario o puede ser proporcionar a un valor.
+
+Se puede utilizar color para resaltar las agrupaciones jerárquicas o las categorías específicas.
+
+
+
+SIMON GAME?
+seh
+
+INDICADORes 
+instrumentales raduales
+
 
 PANEL DE CONTROL
+ver
 
 INFOGRAFIA RADIAL
+con labels
 
 SIMULADOR ECOSISTEMA/SOLAR
+sep
