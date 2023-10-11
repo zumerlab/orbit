@@ -7,24 +7,27 @@
 
 /* Check Firefox has() support */
 @supports not selector(:has(a)) {	
-
-  .o-container .o-orbit {
+  
+  .o-container .o-orbit, .o-container .o-core, .o-container .o-sector  {
     display: none;
    
   }
 
   .o-container::before {
-    background-color: yellow;
-    content: '°ⓩ Orbit is not yet supported by 🦊 Firefox (until v.120)';
+    content: '⚠️ °ⓩ Orbit is not yet supported by 🦊 Firefox (until v.120)';
     text-shadow: 0 0 2px red;
     font-size: 18px;
+    background-color: yellow;
+    padding: 10px;
+    text-align: center;
    
   }
 
   .o-container::after {
-    content: "To experience Orbit, enable 'layout.css.has-selector.enabled' in your Firefox settings. Just head to about:config!";
+    content: "To experience Orbit, enable 'layout.css.has-selector.enabled' in 'about:config'";
     text-shadow: 0 0 2px rgba(253, 2, 2, 0.384);
-    font-size: 18px;
+    font-size: 12px;
+    text-align: center;
    
   }
 }
