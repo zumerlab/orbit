@@ -5,3 +5,27 @@
   margin: 0
 }
 
+/* Check Firefox has() support */
+@supports not selector(:has(a)) {	
+
+  .o-container .o-orbit {
+    display: none;
+   
+  }
+
+  .o-container::before {
+    background-color: yellow;
+    content: '°ⓩ Orbit is not yet supported by 🦊 Firefox (until v.120)';
+    text-shadow: 0 0 2px red;
+    font-size: 18px;
+   
+  }
+
+  .o-container::after {
+    content: "To experience Orbit, enable 'layout.css.has-selector.enabled' in your Firefox settings. Just head to about:config!";
+    text-shadow: 0 0 2px rgba(253, 2, 2, 0.384);
+    font-size: 18px;
+   
+  }
+}
+
