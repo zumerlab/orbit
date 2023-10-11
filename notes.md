@@ -137,7 +137,6 @@ multiple containers con diferentes tamaños y que aparezcan los valores de las v
 o-orbit y orbit orbit: 
 dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
 
-
 o-orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT,  (+ OFFSET, LIMITS)
 
 o-sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember  sector shapes

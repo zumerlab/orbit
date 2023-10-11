@@ -7,7 +7,11 @@
 
 /* Check Firefox has() support */
 @supports not selector(:has(a)) {	
-  
+  .o-container {
+    border: 5px solid red !important;
+    text-shadow: 0 0 2px red;
+    margin: 10px;
+  }
   .o-container .o-orbit, .o-container .o-core, .o-container .o-sector  {
     display: none;
    
