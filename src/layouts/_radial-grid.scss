@@ -72,6 +72,7 @@
     }
 
     --o-z-index: #{$z-index};
+    border: none !important;
     
   }
 }
@@ -127,7 +128,7 @@
       --o-diameter: calc(var(--o-size) * #{$i});
       --o-z-index: #{$z-index};
       --o-x-coords: calc(var(--o-radius-#{$i}));
-      border: none;
+      border: none !important;
     }
 
     .o-orbiter > .o-orbit:nth-child(#{$i}) > .o-orbit > .o-sector {

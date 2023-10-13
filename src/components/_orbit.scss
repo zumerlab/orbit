@@ -4,7 +4,6 @@
   --o-offset-angle: var(--o-a0); // ensure reset to default. useful for nested
   display: grid;
   border-radius: 50%;
-  border: 0.1px solid var(--o-dark);
   grid-area: 1/1/1/1;
   place-items: center;
   box-sizing: content-box;
@@ -13,21 +12,8 @@
   z-index: var(--o-z-index);
 }
 
-.o-orb {
-  --o-arc: var(--o-a360); // ensure reset to default. useful for nested
-  --o-offset-angle: var(--o-a0); // ensure reset to default. useful for nested
-  border-radius: 50%;
-  border: 0.1px solid var(--o-dark);
-  grid-area: 1/1/1/1;
-  place-items: center;
-  box-sizing: content-box;
 
-  z-index: 800;
-}
 
-.o-orbit {
-  border: 0.1px solid var(--o-dark);
-}
 
 
 // add suborbit

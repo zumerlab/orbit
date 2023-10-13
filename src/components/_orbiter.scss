@@ -8,7 +8,7 @@
   --o-rotate: calc(var(--o-rotation-angle) * 1deg);
   --o-rotate-invert: calc(var(--o-rotation-angle) * -1deg);
   display: grid;
-  border: 1px solid;
+  
   grid-area: 1/1/1/1;
   place-content: center;
   width: var(--o-size);
