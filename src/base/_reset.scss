@@ -1,8 +1,11 @@
-/* container */
+/* Basic reset for each Orbit container */
 .o-container * {
   box-sizing: border-box;
   padding: 0;
-  margin: 0
+  margin: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
 }
 
 /* Check Firefox has() support */
@@ -14,17 +17,15 @@
   }
   .o-container .o-orbit, .o-container .o-core, .o-container .o-sector  {
     display: none;
-   
   }
 
   .o-container::before {
-    content: '⚠️ °ⓩ Orbit is not yet supported by 🦊 Firefox (until v.120)';
+    content: '⚠️ Orbit is not yet supported by 🦊 Firefox (until v.120)';
     text-shadow: 0 0 2px red;
     font-size: 18px;
     background-color: yellow;
     padding: 10px;
     text-align: center;
-   
   }
 
   .o-container::after {
@@ -32,7 +33,6 @@
     text-shadow: 0 0 2px rgba(253, 2, 2, 0.384);
     font-size: 12px;
     text-align: center;
-   
   }
 }
 

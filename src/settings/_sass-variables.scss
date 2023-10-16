@@ -1,16 +1,6 @@
 // Sass variables
 $prefix: 'o-';
 
-$grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  xxl: 1400px
-);
-
-
 $sizes: null, '.o-xxs' var(--o-xxs), '.o-xs' var(--o-xs), '.o-sm' var(--o-sm), '.o-md' var(--o-md),
   '.o-lg' var(--o-lg), '.o-xl' var(--o-xl), '.o-xxl' var(--o-xxl);
 

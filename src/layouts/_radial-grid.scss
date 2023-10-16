@@ -1,5 +1,5 @@
 // Import Sass variables from utility module
-@use '../utilities/sass-variables' as *;
+@use '../settings/sass-variables' as *;
 
 /*  
  ====== Radial Grid =======
@@ -72,7 +72,6 @@
     }
 
     --o-z-index: #{$z-index};
-    border: none !important;
     
   }
 }

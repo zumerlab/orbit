@@ -1,3 +1,39 @@
+@use '../settings/mixins' as *;
+
+.o-orbiter {
+  --o-size: var(--o-m); // default
+  --o-rotation-angle: calc(
+    var(--o-angle) * var(--o-orbiter-number) + var(--o-offset-angle) - var(--o-angle)
+  );
+  --o-rotate: calc(var(--o-rotation-angle) * 1deg);
+  --o-rotate-invert: calc(var(--o-rotation-angle) * -1deg);
+  display: grid;
+  
+  grid-area: 1/1/1/1;
+  place-content: center;
+  width: var(--o-size);
+  height: var(--o-size);
+  border-radius: 50%;
+  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0)
+    rotate(var(--o-rotate-invert));
+}
+
+.o-orbiter.o-stationary {
+  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0);
+}
+
+.o-orbiter > .o-content {
+  padding: 5px;
+  width: inherit;
+  height: inherit;
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  @include alignment;
+  overflow: hidden;
+  z-index: 10;
+}
+
 /* ========== Shapes ========= */
 
 /*

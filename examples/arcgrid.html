@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/zumer.min.css" type="text/css" defer/>
-    <link rel="stylesheet" href="../assets/css/zumer-ui.min.css" type="text/css" defer/>
-    <title>Zumer CSS</title>
+    <link rel="stylesheet" href="../assets/css/orbit-base.min.css" type="text/css" defer/>
+    <link rel="stylesheet" href="../assets/css/orbit-theme.min.css" type="text/css" defer/>
+    <title>Orbit CSS</title>
     <style>
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
@@ -37,11 +37,18 @@
         /* sin rotate quedan perpendiculares al centro.*/
         /* rotate: 0deg;*/
       }
+      .custom {
+        --o-a360: 180;
+      }
+      .custom  .o-sector {
+        --o-sector-gap: 45px;
+        --o-width: 10px;
+      }
       .o-sector {
        
   
         --o-width:20px;
-        background-color: darkslategray !important;
+        background-color: rgb(52, 47, 25) !important;
       }
     </style>
   </head>
@@ -122,7 +129,7 @@
       </div>
      <div class="row">
       <div class="col-sm-6">
-        <div class="o-container" >
+        <div class="o-container custom" >
           <div class="o-core">
             <div class="o-orbiter o-xs bg-primary" style="transform: translate(-50%, -50%);"></div>
           </div>

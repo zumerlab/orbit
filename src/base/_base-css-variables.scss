@@ -1,21 +1,24 @@
-@use '../utilities/sass-variables' as *;
+@use '../settings/sass-variables' as *;
 
-/* ======== pod - variables ========= */
+/* ======== Orbit - variables ========= */
 
-/* All CSS custom vars are defined inside pod element 
-This allows having isolated vars for each pod and permits
-use multiple pods on same project without interference.
+/* 
+All CSS Custom Vars are defined inside this container element 
+This allows var isolation for Orbit. If you have mutiple o-containers
+on same page, you can override some vars in specific class or style tags
+Ej: .custom {
+  --o-arc: 180;
+}
 */
 
 .o-container {
     /* Layout vars */
-    --o-arc: 360;
+    --o-arc: var(--o-a360);
     --o-offset-angle: 0;
     --o-direction: 1;
     --o-angle: 1;
     --o-radius: 50px;
     --o-orbiter-number: 1;
-    --o-radius-padding: 8px;
     @for $i from $min-orbits through $max-orbits {
       --o-radius-#{$i}: var(--o-radius) * #{$i};
     }
@@ -44,6 +47,10 @@ use multiple pods on same project without interference.
     --o-a270: 270;
     --o-a315: 315;
     --o-a360: 360;
+
+    /* sector */
+    --o-sector-gap: -1px;
+    --o-width: 40px;
   
     /* width connector */
     --o-connector-width: 40px;
