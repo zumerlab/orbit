@@ -1,7 +1,7 @@
 @use '../settings/mixins' as *;
 
 /* svg-pod */
-.o-svg-pod {
+.o-svg {
   display: grid;
   border-radius: inherit;
   grid-area: 1/1/1/1;
@@ -11,7 +11,7 @@
   height: calc(var(--o-diameter));
 }
 
-.o-svg-pod > .o-svg-markers {
+.o-svg > .o-svg-markers {
   --o-svg-markers: 12;
   --o-marker-width: 1px;
   --o-circumference: calc(var(--o-r) * var(--o-π) * 2);
@@ -23,7 +23,7 @@
   stroke-width: calc(var(--o-radius) * 2);
   stroke-dasharray: var(--o-marker-width) var(--o-dash);
 }
-.o-svg-pod > .o-svg-progress {
+.o-svg > .o-svg-progress {
   --o-r: calc(var(--o-diameter) / 2);
   cx: var(--o-r);
   cy: var(--o-r);

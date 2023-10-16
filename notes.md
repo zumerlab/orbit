@@ -109,7 +109,7 @@ BUG: upper, lower... no anda en todos lados. Queda chequear scss ejemplo en arcg
 explicar y mejorear y diferecniar los progress.
 
 o-progress
-o-svg-pod
+o-svg
 o-svg-progress
 
 
@@ -122,17 +122,21 @@ orbit orbit multiple border bug
 ### COSAS PARA DESPUES
 ELIPSES USANDO COS SIN (SOLO EN FFOX)
 CSS TYPES PARA ANIMAR (SOLO CHROME)
+
+
+
 GOEY EFFECT
 TEXTO CURVO (JS)
-data-* para JS
+data-o* para JS
 separar el test como repo independiente para testeo local (y luego remoto as service con server less?)
 
+los estilos en clases o las variables en clases?
 
 EJEMPLOS:
 
 BASICO de cada elementos para documentacion y testeo
 o-container : 
-multiple containers con diferentes tamaños y que aparezcan los valores de las variables?
+multiple containers con diferentes tamaños
 
 o-orbit y orbit orbit: 
 dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
@@ -153,9 +157,9 @@ o-progress: propr, colors
 
 o-modal/dialog: ver
 
-custom vars: explanation
+custom vars: explanation / data-o-
 
-
+0content as utilities
 
 
 MENU RADIAL SIMPLE y COMPLEJO
