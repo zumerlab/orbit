@@ -1,11 +1,10 @@
 /* svg progress */
-.o-svg > .o-svg-progress {
+.o-svg> .o-svg-progress {
   --o-r: calc(var(--o-diameter) / 2);
   cx: var(--o-r);
-  cy: calc(var(--o-r) / var(--o-ellipse-rate));
-  rx: var(--o-r);
-  ry: calc(var(--o-r) / var(--o-ellipse-rate));
+  cy: var(--o-r);
+  r: calc(var(--o-r));
   stroke-width: var(--o-stroke);
-  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
-  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * (var(--o-r) * var(--o-π) * 2) / var(--o-ellipse-rate));
+  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2);
+  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * (var(--o-r) * var(--o-π) * 2));
 }

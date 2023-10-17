@@ -1,6 +1,6 @@
 @use '../settings/mixins' as *;
 
-/* svg-pod */
+/* svg */
 .o-svg {
   display: grid;
   border-radius: inherit;
@@ -8,5 +8,5 @@
   @include alignment;
   rotate: -90deg;
   width: calc(var(--o-diameter));
-  height: calc(var(--o-diameter) / var(--o-ellipse-rate));
+  height: calc(var(--o-diameter));
 }
