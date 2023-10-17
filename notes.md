@@ -95,7 +95,7 @@ LAS MINIMAS ARC TEXT
 
 ### COSAS PARA AHORA
 >>>>> TITULOS y LABELS PARA ORBITS sector y container
->>>>>> .CONTENT para sector y orbiters
+>>>>>> .CONTENT para sector y orbiters: BUG EN CAPAS
 >>>>>> knob armar
 ok .PROGRESS
 .KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
