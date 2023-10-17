@@ -14,24 +14,13 @@
   width: var(--o-size);
   height: var(--o-size);
   border-radius: 50%;
-  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0)
-    rotate(var(--o-rotate-invert));
+  //transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0)
+   // rotate(var(--o-rotate-invert));
+   transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate))));
 }
 
 .o-orbiter.o-stationary {
-  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0);
-}
-
-.o-orbiter > .o-content {
-  padding: 5px;
-  width: inherit;
-  height: inherit;
-  display: grid;
-  border-radius: inherit;
-  grid-area: 1/1/1/1;
-  @include alignment;
-  overflow: hidden;
-  z-index: 10;
+  transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate)))) rotate(var(--o-rotate));
 }
 
 /* ========== Shapes ========= */
@@ -43,7 +32,7 @@
  using radial grid.
 */
 
-.o-circle {
+.o-orbiter.o-circle {
   border-radius: 50% !important; /* Default shape */
 }
 
@@ -56,20 +45,20 @@
   border-top: 1px dashed var(--o-dark);
 }
 
-.o-box {
+.o-orbiter.o-box {
   border-radius: 0% !important;
 }
 
-.o-rounded {
+.o-orbiter.o-rounded {
   border-radius: 25% !important;
 }
 
 /* TODO: add blob variants */
-.o-blob {
+.o-orbiter.o-blob {
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% !important;
 }
 
-.o-transparent {
+.o-orbiter.o-transparent {
   border: none !important;
   background-color: var(--o-transparent) !important;
 }

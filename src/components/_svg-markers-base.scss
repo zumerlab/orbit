@@ -4,12 +4,13 @@
 .o-svg > .o-svg-markers {
   --o-svg-markers: 12;
   --o-marker-width: 1px;
-  --o-circumference: calc(var(--o-r) * var(--o-π) * 2);
+  --o-circumference: calc(var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
   --o-dash: calc(var(--o-circumference) / var(--o-svg-markers) - var(--o-marker-width));
   --o-r: calc(var(--o-diameter) / 2);
   cx: var(--o-r);
-  cy: var(--o-r);
-  r: var(--o-r);
+  cy: calc(var(--o-r) / var(--o-ellipse-rate));
+  rx: var(--o-r);
+  ry: calc(var(--o-r) / var(--o-ellipse-rate));
   stroke-width: calc(var(--o-radius) * 2);
   stroke-dasharray: var(--o-marker-width) var(--o-dash);
 }

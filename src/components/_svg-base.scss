@@ -8,27 +8,5 @@
   @include alignment;
   rotate: -90deg;
   width: calc(var(--o-diameter));
-  height: calc(var(--o-diameter));
-}
-
-.o-svg > .o-svg-markers {
-  --o-svg-markers: 12;
-  --o-marker-width: 1px;
-  --o-circumference: calc(var(--o-r) * var(--o-π) * 2);
-  --o-dash: calc(var(--o-circumference) / var(--o-svg-markers) - var(--o-marker-width));
-  --o-r: calc(var(--o-diameter) / 2);
-  cx: var(--o-r);
-  cy: var(--o-r);
-  r: var(--o-r);
-  stroke-width: calc(var(--o-radius) * 2);
-  stroke-dasharray: var(--o-marker-width) var(--o-dash);
-}
-.o-svg > .o-svg-progress {
-  --o-r: calc(var(--o-diameter) / 2);
-  cx: var(--o-r);
-  cy: var(--o-r);
-  r: calc(var(--o-r));
-  stroke-width: var(--o-stroke);
-  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2);
-  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * (var(--o-r) * var(--o-π) * 2));
+  height: calc(var(--o-diameter) / var(--o-ellipse-rate));
 }

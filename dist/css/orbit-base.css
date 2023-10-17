@@ -63,6 +63,7 @@ Ej: .custom {
   --o-orbit-size-4: calc(var(--o-radius) * 4 * 2);
   --o-orbit-size-5: calc(var(--o-radius) * 5 * 2);
   --o-orbit-size-6: calc(var(--o-radius) * 6 * 2);
+  --o-ellipse-rate: 1;
   /* Shape sizes */
   --o-xxs: 8px;
   --o-xs: 24px;
@@ -123,7 +124,7 @@ Ej: .custom {
   place-items: center;
   box-sizing: content-box;
   width: var(--o-diameter);
-  height: var(--o-diameter);
+  height: calc(var(--o-diameter) / var(--o-ellipse-rate));
   z-index: var(--o-z-index);
 }
 
@@ -174,26 +175,11 @@ Ej: .custom {
   width: var(--o-size);
   height: var(--o-size);
   border-radius: 50%;
-  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0) rotate(var(--o-rotate-invert));
+  transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate))));
 }
 
 .o-orbiter.o-stationary {
-  transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0);
-}
-
-.o-orbiter > .o-content {
-  padding: 5px;
-  width: inherit;
-  height: inherit;
-  display: grid;
-  border-radius: inherit;
-  grid-area: 1/1/1/1;
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
-  overflow: hidden;
-  z-index: 10;
+  transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate)))) rotate(var(--o-rotate));
 }
 
 /* ========== Shapes ========= */
@@ -203,7 +189,7 @@ Ej: .custom {
  radial grid, so if you have a boexed orbit its child elements still will be placed
  using radial grid.
 */
-.o-circle {
+.o-orbiter.o-circle {
   border-radius: 50% !important; /* Default shape */
 }
 
@@ -216,20 +202,20 @@ Ej: .custom {
   border-top: 1px dashed var(--o-dark);
 }
 
-.o-box {
+.o-orbiter.o-box {
   border-radius: 0% !important;
 }
 
-.o-rounded {
+.o-orbiter.o-rounded {
   border-radius: 25% !important;
 }
 
 /* TODO: add blob variants */
-.o-blob {
+.o-orbiter.o-blob {
   border-radius: 30% 70% 70% 30%/30% 30% 70% 70% !important;
 }
 
-.o-transparent {
+.o-orbiter.o-transparent {
   border: none !important;
   background-color: var(--o-transparent) !important;
 }
@@ -352,41 +338,19 @@ Ej: .custom {
   justify-content: center;
   rotate: -90deg;
   width: calc(var(--o-diameter));
-  height: calc(var(--o-diameter));
+  height: calc(var(--o-diameter) / var(--o-ellipse-rate));
 }
 
 .o-svg > .o-svg-markers {
   --o-svg-markers: 12;
   --o-marker-width: 1px;
-  --o-circumference: calc(var(--o-r) * var(--o-π) * 2);
+  --o-circumference: calc(var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
   --o-dash: calc(var(--o-circumference) / var(--o-svg-markers) - var(--o-marker-width));
   --o-r: calc(var(--o-diameter) / 2);
   cx: var(--o-r);
-  cy: var(--o-r);
-  r: var(--o-r);
-  stroke-width: calc(var(--o-radius) * 2);
-  stroke-dasharray: var(--o-marker-width) var(--o-dash);
-}
-
-.o-svg > .o-svg-progress {
-  --o-r: calc(var(--o-diameter) / 2);
-  cx: var(--o-r);
-  cy: var(--o-r);
-  r: calc(var(--o-r));
-  stroke-width: var(--o-stroke);
-  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2);
-  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * var(--o-r) * var(--o-π) * 2);
-}
-
-.o-svg > .o-svg-markers {
-  --o-svg-markers: 12;
-  --o-marker-width: 1px;
-  --o-circumference: calc(var(--o-r) * var(--o-π) * 2);
-  --o-dash: calc(var(--o-circumference) / var(--o-svg-markers) - var(--o-marker-width));
-  --o-r: calc(var(--o-diameter) / 2);
-  cx: var(--o-r);
-  cy: var(--o-r);
-  r: var(--o-r);
+  cy: calc(var(--o-r) / var(--o-ellipse-rate));
+  rx: var(--o-r);
+  ry: calc(var(--o-r) / var(--o-ellipse-rate));
   stroke-width: calc(var(--o-radius) * 2);
   stroke-dasharray: var(--o-marker-width) var(--o-dash);
 }
@@ -395,11 +359,12 @@ Ej: .custom {
 .o-svg > .o-svg-progress {
   --o-r: calc(var(--o-diameter) / 2);
   cx: var(--o-r);
-  cy: var(--o-r);
-  r: calc(var(--o-r));
+  cy: calc(var(--o-r) / var(--o-ellipse-rate));
+  rx: var(--o-r);
+  ry: calc(var(--o-r) / var(--o-ellipse-rate));
   stroke-width: var(--o-stroke);
-  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2);
-  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * var(--o-r) * var(--o-π) * 2);
+  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
+  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
 }
 
 /* progress */
@@ -411,7 +376,6 @@ Ej: .custom {
   place-items: center;
   width: 100%;
   height: 100%;
-  aspect-ratio: 1;
 }
 
 .o-progress + .o-orbiter {
@@ -2841,6 +2805,21 @@ Ej: .custom {
 
 .o-orbiter > .o-orbit:nth-child(6) > svg {
   --o-diameter: calc(var(--o-size) * 6);
+}
+
+.o-content {
+  padding: 5px;
+  width: inherit;
+  height: inherit;
+  display: grid;
+  border-radius: inherit;
+  grid-area: 1/1/1/1;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 10;
 }
 
 /* Media Query for Mobile Devices */

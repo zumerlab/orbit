@@ -96,39 +96,45 @@ LAS MINIMAS ARC TEXT
 ### COSAS PARA AHORA
 >>>>> TITULOS // LABELS PARA ORBITS sector y container
 >>>>>> .CONTENT NO RADIAL GRID no capsule
-.PROGRESS
+ok .PROGRESS
 .KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
-.svg-markers
+ok .svg-markers
 OK .CORE .... AJUSTAR. HAY QUE VER VARIOS TEMAS: SI HAY UN SOLO ORBITER, SI HAY MAS...
 OK ver temas de z-index.... ESTA BIEN ASI
-. margin 0 issue
+ok . margin 0 issue
 OK. adjuts size to view port  @media
 OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL. add ajustes eslabonado?
 OK. Visual css changes
-BUG: upper, lower... no anda en todos lados. Queda chequear scss ejemplo en arcgrid.
+ok: upper, lower... no anda en todos lados. Queda chequear scss ejemplo en arcgrid.
+
+
+
 explicar y mejorear y diferecniar los progress.
 
 o-progress
 o-svg
 o-svg-progress
+o-knob
 
-
-bugs: 
-orbit orbit multiple border bug
+o-title o label?
 
 
 
 
 ### COSAS PARA DESPUES
-ELIPSES USANDO COS SIN (SOLO EN FFOX)
-CSS TYPES PARA ANIMAR (SOLO CHROME)
+elipse usar container perspective.
+
+alternativamente se puede pensar en orbit eliptical con orbinters aliptical usando sen y cos
+o-comet
+
+CSS TYPES PARA ANIMAR (SOLO CHROME pero sale en breve en firefox)
 
 
 
-GOEY EFFECT
+ok GOEY EFFECT
 TEXTO CURVO (JS)
 data-o* para JS
-separar el test como repo independiente para testeo local (y luego remoto as service con server less?)
+ok separar el test como repo independiente para testeo local (y luego remoto as service con server less?)
 
 los estilos en clases o las variables en clases?
 
@@ -160,6 +166,7 @@ o-modal/dialog: ver
 custom vars: explanation / data-o-
 
 0content as utilities
+
 
 
 MENU RADIAL SIMPLE y COMPLEJO

@@ -9,6 +9,9 @@
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
       }
+      .gooey {
+        filter: url('#fancy-goo');
+      }
     </style>
   </head>
   <body style="background-color: slategray;">
@@ -55,7 +58,7 @@
         <div class="o-orbiter o-sm" style="background-color: rgb(227, 16, 65);"></div>
         <div class="o-orbiter o-sm" style="background-color: rgb(227, 16, 65);"></div>
       </div>
-      <div class="o-orbit">
+      <div class="o-orbit gooey">
         <div class="o-orbiter o-md" style="background-color: rgb(194, 212, 29);">1</div>
         <div class="o-orbiter o-md" style="background-color: rgb(194, 212, 29);"></div>
         <div class="o-orbiter o-md" style="background-color: rgb(194, 212, 29);"></div>
@@ -86,7 +89,15 @@
         <div class="o-orbiter o-md" style="background-color: rgb(194, 212, 29);">20</div>
       </div>
     </div>
-
+<svg>
+  <defs>
+    <filter id="fancy-goo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+    </filter>
+  </defs>
+</svg>
   </body>
 
 </html>

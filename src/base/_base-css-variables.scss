@@ -27,7 +27,7 @@ Ej: .custom {
       // diameter
       --o-orbit-size-#{$i}: calc(var(--o-radius) * #{$i} * 2);
     }
-  
+    --o-ellipse-rate: 1;
     /* Shape sizes */
     --o-xxs: 8px;
     --o-xs: 24px;
