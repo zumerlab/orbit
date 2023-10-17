@@ -94,8 +94,9 @@ LAS MINIMAS ARC TEXT
 ### css first
 
 ### COSAS PARA AHORA
->>>>> TITULOS // LABELS PARA ORBITS sector y container
->>>>>> .CONTENT NO RADIAL GRID no capsule
+>>>>> TITULOS y LABELS PARA ORBITS sector y container
+>>>>>> .CONTENT para sector y orbiters
+>>>>>> knob armar
 ok .PROGRESS
 .KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
 ok .svg-markers
@@ -122,19 +123,19 @@ o-title o label?
 
 
 ### COSAS PARA DESPUES
-elipse usar container perspective.
-
-alternativamente se puede pensar en orbit eliptical con orbinters aliptical usando sen y cos
-o-comet
+OK elipse usar container perspective para tener todo cool
+OK alternativamente se puede pensar en orbit eliptical con orbinters aliptical usando sen y cos
+OK GOEY EFFECT
+data-o* para JS
 
 CSS TYPES PARA ANIMAR (SOLO CHROME pero sale en breve en firefox)
 
 
 
-ok GOEY EFFECT
+
 TEXTO CURVO (JS)
-data-o* para JS
-ok separar el test como repo independiente para testeo local (y luego remoto as service con server less?)
+
+OK separar el test como repo independiente para testeo local (y luego remoto as service con server less?)
 
 los estilos en clases o las variables en clases?
 
