@@ -1,6 +1,7 @@
 @use '../settings/mixins' as *;
+@use '../settings/sass-variables' as *;
 
-.orbiter > .o-content {
+.o-orbiter > .o-content {
     padding: 5px;
     width: inherit;
     height: inherit;
@@ -17,24 +18,22 @@
     place-items: center right;
     color: white;
     width:  var(--o-half);
-    /* paddgin right para qeudar fuera de borde mas un espacio*/
+    /* paddgin right para qeudar fuera de bordeo*/
     padding-right: calc(var(--o-width) + 10px);
-    /* paddgin right para qeudar fuera de borde mas un espacio*/
-    /*padding-right: 0px;*/
+    /* paddgin right para qeudar dentro del borde*/
+    /*padding-right: 5px;*/
     
   }
-  .o-sector > .o-content > span {
-    /*queda mirando para afuera*/ 
-   /* rotate: 270deg;*/
-    /* queda mirando para adentro*/
-    /*rotate: 90deg;*/
-    
-    /* queda siempre horizontal. default */
-    rotate: calc(var(--o-rotate) * -1);
 
-    /* sin rotate quedan perpendiculares al centro.*/
-    /* rotate: 0deg;*/
+  .o-sector > .o-content > * {
+    rotate: calc(var(--o-rotate) * -1);
   }
+
+  @each $position, $angle in $content-position {
+  .o-content#{$position} > * {
+    rotate: calc(#{$angle} * 1deg);
+  }
+}
 
 //o-svg
 .o-svg {
