@@ -11,7 +11,7 @@
 /* Check Firefox has() support */
 @supports not selector(:has(a)) {	
   .o-container {
-    border: 5px solid red !important;
+    border: 1px solid black !important;
     text-shadow: 0 0 2px red;
     margin: 10px;
   }
@@ -20,7 +20,7 @@
   }
 
   .o-container::before {
-    content: '⚠️ Orbit is not yet supported by 🦊 Firefox (until v.120)';
+    content: 'Orbit is not yet supported by 🦊 Firefox';
     text-shadow: 0 0 2px red;
     font-size: 18px;
     background-color: yellow;
