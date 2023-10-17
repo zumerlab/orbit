@@ -1,0 +1,20 @@
+@use '../settings/mixins' as *;
+
+.o-content {
+    padding: 5px;
+    width: inherit;
+    height: inherit;
+    display: grid;
+    border-radius: inherit;
+    grid-area: 1/1/1/1;
+    @include alignment;
+    overflow: hidden;
+    z-index: 10;
+}
+
+//sector capsule
+
+//o-svg
+
+//label
+  
