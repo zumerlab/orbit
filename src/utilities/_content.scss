@@ -1,20 +1,59 @@
 @use '../settings/mixins' as *;
 
-.o-content {
+.orbiter > .o-content {
     padding: 5px;
     width: inherit;
     height: inherit;
     display: grid;
     border-radius: inherit;
-    grid-area: 1/1/1/1;
     @include alignment;
     overflow: hidden;
     z-index: 10;
 }
 
-//sector capsule
+//sector o-cont.o-content
+.o-sector > .o-content {
+    display: grid;
+    place-items: center right;
+    color: white;
+    width:  var(--o-half);
+    /* paddgin right para qeudar fuera de borde mas un espacio*/
+    padding-right: calc(var(--o-width) + 10px);
+    /* paddgin right para qeudar fuera de borde mas un espacio*/
+    /*padding-right: 0px;*/
+    
+  }
+  .o-sector > .o-content > span {
+    /*queda mirando para afuera*/ 
+   /* rotate: 270deg;*/
+    /* queda mirando para adentro*/
+    /*rotate: 90deg;*/
+    
+    /* queda siempre horizontal. default */
+    rotate: calc(var(--o-rotate) * -1);
+
+    /* sin rotate quedan perpendiculares al centro.*/
+    /* rotate: 0deg;*/
+  }
 
 //o-svg
+.o-svg {
+    border-radius: inherit;
+    @include alignment;
+    rotate: -90deg;
+    width: calc(var(--o-diameter));
+    height: calc(var(--o-diameter));
+}
 
 //label
+.o-label > .o-content {
+    transform-origin: 0 0;
+    border: 1px solid;
+    border-radius: 4px;
+    min-width: 100px;
+    height:auto;
+    --o-label-box: 5px;
+    transform: translate(calc(var(--o-connector-width) - 5px), var(--o-label-box))
+      rotate(calc(var(--o-label-angle) * -1));
+}
   

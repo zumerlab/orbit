@@ -303,54 +303,20 @@ Ej: .custom {
   --o-label-box: 5px;
 }
 
-.o-label > .o-text {
-  transform-origin: 0 0;
-  display: grid;
-  border: 1px solid;
-  border-radius: 4px;
-  min-width: 100px;
-  padding: 5px;
-  height: auto;
-  --o-label-box: 5px;
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
-}
-
 /* element radial setup*/
 .o-orbiter > .o-label {
   transform: rotate(var(--o-label-angle)) translate(var(--o-x-coords), 0);
 }
 
-.o-label > .o-text {
-  transform: translate(calc(var(--o-connector-width) - 5px), var(--o-label-box)) rotate(calc(var(--o-label-angle) * -1));
-}
-
-/* svg-pod */
-.o-svg {
-  display: grid;
-  border-radius: inherit;
-  grid-area: 1/1/1/1;
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
-  rotate: -90deg;
-  width: calc(var(--o-diameter));
-  height: calc(var(--o-diameter) / var(--o-ellipse-rate));
-}
-
 .o-svg > .o-svg-markers {
   --o-svg-markers: 12;
   --o-marker-width: 1px;
-  --o-circumference: calc(var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
+  --o-circumference: calc(var(--o-r) * var(--o-π) * 2);
   --o-dash: calc(var(--o-circumference) / var(--o-svg-markers) - var(--o-marker-width));
   --o-r: calc(var(--o-diameter) / 2);
   cx: var(--o-r);
-  cy: calc(var(--o-r) / var(--o-ellipse-rate));
-  rx: var(--o-r);
-  ry: calc(var(--o-r) / var(--o-ellipse-rate));
+  cy: var(--o-r);
+  r: var(--o-r);
   stroke-width: calc(var(--o-radius) * 2);
   stroke-dasharray: var(--o-marker-width) var(--o-dash);
 }
@@ -359,12 +325,11 @@ Ej: .custom {
 .o-svg > .o-svg-progress {
   --o-r: calc(var(--o-diameter) / 2);
   cx: var(--o-r);
-  cy: calc(var(--o-r) / var(--o-ellipse-rate));
-  rx: var(--o-r);
-  ry: calc(var(--o-r) / var(--o-ellipse-rate));
+  cy: var(--o-r);
+  r: calc(var(--o-r));
   stroke-width: var(--o-stroke);
-  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
-  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * var(--o-r) * var(--o-π) * 2 / var(--o-ellipse-rate));
+  stroke-dasharray: calc(var(--o-r) * var(--o-π) * 2);
+  stroke-dashoffset: calc((100 - var(--o-val)) / 100 * var(--o-r) * var(--o-π) * 2);
 }
 
 /* progress */
@@ -2807,19 +2772,65 @@ Ej: .custom {
   --o-diameter: calc(var(--o-size) * 6);
 }
 
-.o-content {
+.orbiter > .o-content {
   padding: 5px;
   width: inherit;
   height: inherit;
   display: grid;
   border-radius: inherit;
-  grid-area: 1/1/1/1;
   align-items: center;
   justify-items: center;
   align-content: center;
   justify-content: center;
   overflow: hidden;
   z-index: 10;
+}
+
+.o-sector > .o-content {
+  display: grid;
+  place-items: center right;
+  color: white;
+  width: var(--o-half);
+  /* paddgin right para qeudar fuera de borde mas un espacio*/
+  padding-right: calc(var(--o-width) + 10px);
+  /* paddgin right para qeudar fuera de borde mas un espacio*/
+  /*padding-right: 0px;*/
+}
+
+.o-sector > .o-content > span {
+  /*queda mirando para afuera*/
+  /* rotate: 270deg;*/
+  /* queda mirando para adentro*/
+  /*rotate: 90deg;*/
+  /* queda siempre horizontal. default */
+  rotate: calc(var(--o-rotate) * -1);
+  /* sin rotate quedan perpendiculares al centro.*/
+  /* rotate: 0deg;*/
+}
+
+.o-svg {
+  border-radius: inherit;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+  rotate: -90deg;
+  width: calc(var(--o-diameter));
+  height: calc(var(--o-diameter));
+}
+
+.o-label > .o-content {
+  transform-origin: 0 0;
+  border: 1px solid;
+  border-radius: 4px;
+  min-width: 100px;
+  height: auto;
+  --o-label-box: 5px;
+  transform: translate(calc(var(--o-connector-width) - 5px), var(--o-label-box)) rotate(calc(var(--o-label-angle) * -1));
+}
+
+.o-orbit.o-filter-gooey {
+  filter: url('data:image/svg+xml,    <svg xmlns="http://www.w3.org/2000/svg">    <filter id="fancy-goo">    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />    <feComposite in="SourceGraphic" in2="goo" operator="atop" />    </filter>    </svg>#fancy-goo');
 }
 
 /* Media Query for Mobile Devices */
