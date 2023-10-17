@@ -2,12 +2,14 @@
 @use '../settings/sass-variables' as *;
 
 .o-orbiter > .o-content {
+    position:absolute;
     padding: 5px;
     width: inherit;
     height: inherit;
     display: grid;
     border-radius: inherit;
     @include alignment;
+    text-align: center;
     overflow: hidden;
     z-index: 10;
 }
