@@ -1,0 +1,65 @@
+@use '../settings/mixins' as *;
+
+.o-orbiter {
+  --o-size: var(--o-m); // default
+  --o-rotation-angle: calc(
+    var(--o-angle) * var(--o-orbiter-number) + var(--o-offset-angle) - var(--o-angle)
+  );
+  --o-rotate: calc(var(--o-rotation-angle) * 1deg);
+  --o-rotate-invert: calc(var(--o-rotation-angle) * -1deg);
+  display: grid;
+  
+  grid-area: 1/1/1/1;
+  place-content: center;
+  width: var(--o-size);
+  height: var(--o-size);
+  border-radius: 50%;
+  //transform: rotate(var(--o-rotate)) translate(var(--o-x-coords), 0)
+   // rotate(var(--o-rotate-invert));
+   transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate))));
+}
+
+.o-orbiter.o-stationary {
+  transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate)))) rotate(var(--o-rotate));
+}
+
+/* ========== Shapes ========= */
+
+/*
+ All shapes are based on orbiter element.
+ Some shapes can be applied to orbit element but take into account that Zumer only works with 
+ radial grid, so if you have a boexed orbit its child elements still will be placed
+ using radial grid.
+*/
+
+.o-orbiter.o-circle {
+  border-radius: 50% !important; /* Default shape */
+}
+
+.o-orbiter.o-line {
+  transform-origin: 0 50% !important;
+  height: 0;
+  width: calc(var(--o-radius-3)); // esto no es lo mas adecuado
+  border-radius: 0%;
+  border: none;
+  border-top: 1px dashed var(--o-dark);
+}
+
+.o-orbiter.o-box {
+  border-radius: 0% !important;
+}
+
+.o-orbiter.o-rounded {
+  border-radius: 25% !important;
+}
+
+/* TODO: add blob variants */
+.o-orbiter.o-blob {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% !important;
+}
+
+.o-orbiter.o-transparent {
+  border: none !important;
+  background-color: var(--o-transparent) !important;
+}
+

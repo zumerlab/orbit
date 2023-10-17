@@ -1,0 +1,13 @@
+.o-orbit {
+  --o-arc: var(--o-a360); // ensure reset to default. useful for nested
+  --o-offset-angle: var(--o-a0); // ensure reset to default. useful for nested
+  display: grid;
+  border-radius: 50%;
+  grid-area: 1/1/1/1;
+  place-items: center;
+  box-sizing: content-box;
+  width: var(--o-diameter);
+  height: calc(var(--o-diameter) / var(--o-ellipse-rate));
+  z-index: var(--o-z-index);
+}
+

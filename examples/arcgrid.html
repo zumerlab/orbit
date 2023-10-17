@@ -4,44 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/zumer.min.css" type="text/css" defer/>
-    <link rel="stylesheet" href="../assets/css/zumer-ui.min.css" type="text/css" defer/>
-    <title>Zumer CSS</title>
+    <link rel="stylesheet" href="../assets/css/orbit-base.min.css" type="text/css" defer/>
+    <link rel="stylesheet" href="../assets/css/orbit-theme.min.css" type="text/css" defer/>
+    <title>Orbit CSS</title>
     <style>
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
       }
-      .o-orbit {
-        border: none
+     
+     
+      .custom {
+        --o-a360: 180;
       }
-      .capsule {
-        display: grid;
-        place-items: center right;
-        color: white;
-        width:  var(--o-half);
-        /* paddgin right para qeudar fuera de borde mas un espacio*/
-        padding-right: calc(var(--o-width) + 10px);
-        /* paddgin right para qeudar fuera de borde mas un espacio*/
-        /*padding-right: 0px;*/
-        
-      }
-      .capsule > span {
-        /*queda mirando para afuera*/ 
-       /* rotate: 270deg;*/
-        /* queda mirando para adentro*/
-        /*rotate: 90deg;*/
-        
-        /* queda siempre horizontal. default */
-        rotate: calc(var(--o-rotate) * -1);
-
-        /* sin rotate quedan perpendiculares al centro.*/
-        /* rotate: 0deg;*/
+      .custom  .o-sector {
+        --o-sector-gap: 45px;
+        --o-width: 10px;
       }
       .o-sector {
        
   
         --o-width:20px;
-        background-color: darkslategray !important;
+        background-color: rgb(52, 47, 25) !important;
       }
     </style>
   </head>
@@ -54,65 +37,65 @@
               <div class="o-orbiter o-sm"></div>
             </div>
             <div class="o-orbit o-limit-270" >
-              <div class="o-sector" ><div class="capsule">
+              <div class="o-sector" ><div class="o-content">
                   <span>😁1</span>
                 </div></div>
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div> 
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
               <div class="o-sector">
-                <div class="capsule">
+                <div class="o-content">
                   <span>😁</span>
                 </div>
               </div> 
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
             </div>
             
             <div class="o-orbit">
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div> 
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                 <span>😁</span>
               </div></div> 
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
             </div>
             <div class="o-orbit">
-              <div class="o-sector btn btn-primary" ><div class="capsule">
+              <div class="o-sector btn btn-primary" ><div class="o-content">
                 <span>😁</span>
               </div></div>
-              <div class="o-sector "><div class="capsule">
+              <div class="o-sector "><div class="o-content">
                   <span>😁</span>
                 </div></div> 
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div> 
-              <div class="o-sector"><div class="capsule">
+              <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
             </div>
@@ -122,7 +105,7 @@
       </div>
      <div class="row">
       <div class="col-sm-6">
-        <div class="o-container" >
+        <div class="o-container custom" >
           <div class="o-core">
             <div class="o-orbiter o-xs bg-primary" style="transform: translate(-50%, -50%);"></div>
           </div>
@@ -130,22 +113,22 @@
             <div class="o-progress text-primary" style="--o-progress: 75"></div>
           </div>
           <div class="o-orbit">
-            <div class="o-sector"><div class="capsule">
+            <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-            <div class="o-sector"><div class="capsule">
+            <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div> 
-            <div class="o-sector"><div class="capsule">
+            <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-            <div class="o-sector"><div class="capsule">
+            <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-            <div class="o-sector"><div class="capsule">
+            <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div> 
-            <div class="o-sector"><div class="capsule">
+            <div class="o-sector"><div class="o-content">
                   <span>😁</span>
                 </div></div>
           </div>
@@ -163,18 +146,18 @@
             
           </div>
           <div class="o-orbit o-size-2">
-            <div class="o-sector" style="--o-width: 3px"><div class="capsule">
+            <div class="o-sector" style="--o-width: 3px"><div class="o-content">
                   <span>😁</span>
                 </div></div>
-            <div class="o-sector text-primary" style="--o-width: 12px"><div class="capsule">
+            <div class="o-sector text-primary" style="--o-width: 12px"><div class="o-content">
               <span>😁</span>
             </div></div> 
-            <div class="o-sector" style="--o-width: 10px"><div class="capsule">
+            <div class="o-sector" style="--o-width: 10px"><div class="o-content">
                   <span>😁</span>
                 </div></div>
          
             <div class="o-sector" style="--o-width: 20px">
-              <div class="capsule">
+              <div class="o-content">
                 <span>😁</span>
               </div>
             </div>

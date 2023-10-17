@@ -1,20 +1,28 @@
 {
   "name": "orbit",
   "version": "0.0.1",
-  "description": "Orbit is a radial UI °ⓩ",
+  "description": "CSS radial library",
+  "main": "./src/orbit.scss",
+  "directories": {
+    "example": "examples"
+  },
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "jest-image-snapshot": "^6.2.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zumerlab/orbit.git"
   },
-  "dependencies": {
-    "jest": "^29.7.0",
-    "puppeteer": "^21.3.7"
+  "keywords": [
+    "CSS",
+    "UI",
+    "circular",
+    "radial"
+  ],
+  "author": "Juan Martin Muda - Zumerlab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zumerlab/orbit/issues"
   },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest-setup.js"
-    ]
-  }
+  "homepage": "https://github.com/zumerlab/orbit#readme"
 }

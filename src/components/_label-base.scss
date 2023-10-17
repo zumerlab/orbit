@@ -1,0 +1,46 @@
+@use '../settings/sass-variables' as *;
+@use '../settings/mixins' as *;
+
+ /* element structure */
+.o-label {
+  display: block;
+  border: 1px solid;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  --o-x-coords: calc(var(--o-size) / 1.8);
+}
+
+.o-label::before {
+  content: '';
+  display: block;
+  border-bottom: 1px solid;
+  width: var(--o-connector-width);
+  height: 1px;
+}
+
+/* Set size variable for each orbiter */
+@each $size, $var in $sizes {
+  .o-orbiter#{$size} > .o-label {
+    @if $size != null {
+      --o-size: #{$var};
+    }    
+  }
+}
+
+/* Set size variable for each orbiter */
+@each $pos, $angle in $offsets {
+  .o-label#{$pos} {
+      --o-label-angle: calc(#{$angle} * 1deg);
+      @if $pos == '.o-offset-180' {
+        --o-label-box: -5px;
+      } @else {
+        --o-label-box: 5px;
+      }
+  }    
+}
+
+/* element radial setup*/
+.o-orbiter > .o-label {
+  transform: rotate(var(--o-label-angle)) translate(var(--o-x-coords), 0);
+}

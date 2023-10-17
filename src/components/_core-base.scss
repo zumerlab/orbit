@@ -1,0 +1,14 @@
+@use '../settings/sass-variables' as *;
+
+.o-core {
+  width: 0px;
+  height: 0px;
+  display: grid;
+  border-radius: 50%;
+  grid-area: 1/1/1/1;
+  z-index: $max-orbits;
+}
+
+.o-core > .o-orbiter {
+  transform: rotate(var(--o-rotate));
+}

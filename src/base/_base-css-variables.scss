@@ -1,0 +1,63 @@
+@use '../settings/sass-variables' as *;
+
+/* ======== Orbit - variables ========= */
+
+/* 
+All CSS Custom Vars are defined inside this container element 
+This allows var isolation for Orbit. If you have mutiple o-containers
+on same page, you can override some vars in specific class or style tags
+Ej: .custom {
+  --o-arc: 180;
+}
+*/
+
+.o-container {
+    /* Layout vars */
+    --o-arc: var(--o-a360);
+    --o-offset-angle: 0;
+    --o-direction: 1;
+    --o-angle: 1;
+    --o-radius: 50px;
+    --o-orbiter-number: 1;
+    @for $i from $min-orbits through $max-orbits {
+      --o-radius-#{$i}: var(--o-radius) * #{$i};
+    }
+
+    @for $i from $min-orbits through $max-orbits {
+      // diameter
+      --o-orbit-size-#{$i}: calc(var(--o-radius) * #{$i} * 2);
+    }
+    --o-ellipse-rate: 1;
+    /* Shape sizes */
+    --o-xxs: 8px;
+    --o-xs: 24px;
+    --o-sm: 44px;
+    --o-md: 68px;
+    --o-lg: 110px;
+    --o-xl: 180px;
+    --o-xxl: 288px;
+
+    /* angles */
+    --o-a0: 0;
+    --o-a45: 45;
+    --o-a90: 90;
+    --o-a135: 135;
+    --o-a180: 180;
+    --o-a225: 225;
+    --o-a270: 270;
+    --o-a315: 315;
+    --o-a360: 360;
+
+    /* sector */
+    --o-sector-gap: -1px;
+    --o-width: 40px;
+  
+    /* width connector */
+    --o-connector-width: 40px;
+    --o-label-width: 50px;
+  
+    /* svg */
+    --o-val: 0;
+    --o-stroke: 10;
+    --o-π: 3.14159265359;
+}
