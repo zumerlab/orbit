@@ -94,8 +94,8 @@ LAS MINIMAS ARC TEXT
 ### css first
 
 ### COSAS PARA AHORA
->>>>> TITULOS y LABELS PARA ORBITS sector y container
->>>>>> .CONTENT para sector y orbiters: BUG EN CAPAS
+>>>>> mejorar labels para orbiters
+OK.CONTENT para sector y orbiters: 
 >>>>>> knob armar
 ok .PROGRESS
 .KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
@@ -123,6 +123,7 @@ o-title o label?
 
 
 ### COSAS PARA DESPUES
+titulos para orbiter y orbit
 OK elipse usar container perspective para tener todo cool
 OK alternativamente se puede pensar en orbit eliptical con orbinters aliptical usando sen y cos
 OK GOEY EFFECT
