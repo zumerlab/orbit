@@ -1,7 +1,7 @@
 @use '../settings/mixins' as *;
 
 .o-orbiter {
-  --o-size: var(--o-m); // default
+  --o-size: var(--o-md); // default
   border-radius: 50%; //default
   --o-rotation-angle: calc(var(--o-angle) * var(--o-orbiter-number) + var(--o-offset-angle) - var(--o-angle));
   --o-rotate: calc(var(--o-rotation-angle) * 1deg);
