@@ -94,9 +94,8 @@ LAS MINIMAS ARC TEXT
 ### css first
 
 ### COSAS PARA AHORA
->>>>> mejorar labels para orbiters
-OK.CONTENT para sector y orbiters: 
->>>>>> knob armar
+OK. mejorar labels para orbiters
+OK.CONTENT para sector y orbiters
 ok .PROGRESS
 .KNOB: asegurar que el selector queda enmedio del grosos del progress seria lower by deafult
 ok .svg-markers

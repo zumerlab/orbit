@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../assets/css/orbit-base.min.css" type="text/css" defer/>
+    <!-- <link rel="stylesheet" href="../../assets/css/orbit-theme.min.css" type="text/css" defer/> -->
+    <title>Orbit - o-container</title>
+<style>
+    .o-orbiter {
+        border: 7px solid mediumaquamarine
+    }
+    .o-container {
+        border: 0.2px solid gray;
+        height:auto
+    }
+    .one {
+        border: 2px solid;
+  padding: 20px; 
+  width: 300px;
+  resize: both;
+  overflow: auto;
+    }
+</style>
+</head>
+<body>
+    <section  class="o-container one resize">
+        one - enable relative resize?
+        <ul  class="o-orbit">
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+        </ul>
+    </section>
+    <section  class="o-container two">
+        two
+    </section>
+    <section  class="o-container three">
+        three
+    </section>
+    <section  class="o-container four" resizable>
+        four
+    </section>
+    
+</body>
+</html>
