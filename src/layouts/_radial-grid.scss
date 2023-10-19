@@ -49,6 +49,21 @@
       --o-z-index: #{$z-index};
    // }
   }
+
+  @each $orbit-size, $orbit-value in $orbit-sizes {
+    
+    .o-orbiter > :nth-child(#{$i} of .o-orbit#{$orbit-size}) {
+      @if $orbit-size != null {
+        
+        --o-diameter: #{$orbit-value};
+      }  @else {
+        --o-diameter: calc(var(--o-size) * #{$i});
+      }
+      --o-z-index: #{$z-index};
+      
+    }
+  }
+
 }
 
 /* ====== Radial Grid - Sub-orbit ======== */
