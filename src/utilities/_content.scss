@@ -14,6 +14,7 @@
     z-index: 10;
 }
 
+
 //sector o-cont.o-content
 .o-sector > .o-content {
     display: grid;
@@ -54,7 +55,7 @@
     min-width: 100px;
     height:auto;
     --o-label-box: 5px;
-    transform: translate(calc(var(--o-connector-width) - 5px), var(--o-label-box))
-      rotate(calc(var(--o-label-angle) * -1));
+    rotate: (calc(var(--o-label-angle) * -1));
+    transform: translate(calc(var(--o-connector-width) * cos(var(--o-label-angle)) - var(--o-len)), calc(cos(var(--o-label-angle)) * var(--o-connector-width) * var(--o-label-dir)));
 }
   

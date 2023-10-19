@@ -6,6 +6,7 @@
   display: block;
   border: 1px solid;
   border-radius: 50%;
+  background-color: inherit;
   width: 4px;
   height: 4px;
   --o-x-coords: calc(var(--o-size) / 1.8);
@@ -31,12 +32,44 @@
 /* Set size variable for each orbiter */
 @each $pos, $angle in $offsets {
   .o-label#{$pos} {
-      --o-label-angle: calc(#{$angle} * 1deg);
+      
       @if $pos == '.o-offset-180' {
         --o-label-box: -5px;
-      } @else {
+        --o-len: 100%;
+        --o-label-dir: 1;
+        --o-label-angle: calc(#{$angle} * 1deg);
+      } @else if $pos == '.o-offset-45' {
         --o-label-box: 5px;
-      }
+        --o-len: 0%;
+        --o-label-dir: 1;
+        --o-label-angle: calc(#{$angle} * 1deg);
+      } @else if $pos == '.o-offset-90' {
+        --o-label-box: 5px;
+        --o-len: 0%;
+        --o-label-dir: -58;
+        --o-label-angle: 91deg;
+      } @else if $pos == '.o-offset-135' {
+        --o-label-box: 5px;
+        --o-len: 100%;
+        --o-label-dir: -1;
+        --o-label-angle: calc(#{$angle} * 1deg);
+      } @else if $pos == '.o-offset-225' {
+        --o-label-box: 5px;
+        --o-len: 100%;
+        --o-label-dir: 2;
+        --o-label-angle: calc(#{$angle} * 1deg);
+      } @else if $pos == '.o-offset-270' {
+        --o-label-box: 5px;
+        --o-len: 100%;
+        --o-label-dir: -125;
+        --o-label-angle: 271deg;
+      }  @else if $pos == '.o-offset-315' {
+        --o-label-box: 5px;
+        --o-len: 0%;
+        --o-label-dir: -3;
+        --o-label-angle: calc(#{$angle} * 1deg);
+      } 
+      
   }    
 }
 
