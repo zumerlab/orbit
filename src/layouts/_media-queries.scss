@@ -5,13 +5,17 @@
         --o-radius: 50px; 
     } 
 } 
-
+.resize {
+    container-type: inline-size;
+  }
+@container (min-width: 481px) and (max-width: 767px) { 
 /* Media Query for low resolution Tablets, Ipads */ 
 @media (min-width: 481px) and (max-width: 767px) { 
     .o-container { 
         --o-radius: 60px; 
     } 
 } 
+}
 
 /* Media Query for Tablets Ipads portrait mode */ 
 @media (min-width: 768px) and (max-width: 1024px){ 
@@ -36,9 +40,7 @@
 
 /* container media query */
 
-.resize {
-    container-type: inline-size;
-  }
+
   
 
 /* Media Query for Mobile Devices */ 
