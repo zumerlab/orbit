@@ -74,6 +74,6 @@
 }
 
 /* element radial setup*/
-.o-orbiter > .o-label {
+.o-orbiter > .o-label, .o-content > .o-label {
   transform: rotate(var(--o-label-angle)) translate(var(--o-x-coords), 0);
 }
