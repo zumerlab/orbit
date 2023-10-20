@@ -12,27 +12,36 @@
     }
     .o-container {
         border: 0.2px solid gray;
-        height:auto
     }
     .one {
         border: 2px solid;
   padding: 20px; 
-  width: 300px;
+
   
     }
 
-    .resize {
+    .o-container-query-enabled {
+        box-sizing: border-box;
         resize: both;
-  overflow: auto;
+         overflow: auto;
     }
 </style>
 </head>
 <body>
-    <div class="resize">
-
-   
-    <section  class="o-container one ">
-        one - enable relative resize?
+    <div class="o-container-query-enabled">
+        <section  class="o-container one ">
+            one - enable relative resize?
+            <ul  class="o-orbit">
+                <li class="o-orbiter"></li>
+                <li class="o-orbiter"></li>
+                <li class="o-orbiter"></li>
+                <li class="o-orbiter"></li>
+                <li class="o-orbiter"></li>
+            </ul>
+        </section>
+    </div>
+    <section  class="o-container two">
+        two
         <ul  class="o-orbit">
             <li class="o-orbiter"></li>
             <li class="o-orbiter"></li>
@@ -40,12 +49,16 @@
             <li class="o-orbiter"></li>
             <li class="o-orbiter"></li>
         </ul>
-    </section> </div>
-    <section  class="o-container two">
-        two
     </section>
     <section  class="o-container three">
         three
+        <ul  class="o-orbit">
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+            <li class="o-orbiter"></li>
+        </ul>
     </section>
     <section  class="o-container four" resizable>
         four
