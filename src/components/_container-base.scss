@@ -1,10 +1,10 @@
 /* container */
 
 .o-container {
+  position: absolute;
   display: grid;
   width: 100%;
   min-height: 100%;
   place-items: center;
-
 }
 
