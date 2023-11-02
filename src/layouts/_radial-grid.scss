@@ -208,7 +208,7 @@
     }
 }
 @for $i from $min-orbiters through $max-orbiters {
-    .o-orbit:not([class*="limit-"]):has(> .o-orbiter:nth-child(#{$i})) {
+    .o-orbit:not([class*="o-limit-"]):has(> :nth-child(#{$i} of .o-orbiter)) {
       $number: $i;
       @if $i < 1  {
         $number: 1;
@@ -218,7 +218,7 @@
 }
 
 @for $i from $min-orbiters through $max-orbiters {
-  .o-orbit[class*="limit-"]:has(> .o-orbiter:nth-child(#{$i})) {
+  .o-orbit[class*="o-limit-"]:has(> .o-orbiter:nth-child(#{$i})) {
     $number: $i - 1;
     @if $i < 1  {
       $number: 1;
