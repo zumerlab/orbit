@@ -1,18 +1,68 @@
-
 .o-container {
   /* Color */
-  --o-transparent: transparent;
-  --o-white: white;
-  --o-black: black;
-  --o-light: #c7e9fe;
-  --o-dark: #000300;
-  --o-primary: #e23a48;
-  --o-secondary: #685ca0;
-  --o-info: #7085b7;
-  --o-accent1: #a0dbf7;
-  --o-accent2: #e7508a;
-  --o-accent3: #ccc1d3;
-  --o-success: #6fb72b;
-  --o-warning: #fec785;
-  --o-danger: #f8166b;
+
+  --primary-color-dark: #2c2455; /* Darker Indigo */
+  --secondary-color-dark: #502963; /* Darker Purple */
+  --tertiary-color-dark: #7e3d6d; /* Darker Magenta */
+  --quaternary-color-dark: #a8626d; /* Darker Rose */
+
+  --background-color-dark: #202020; /* Very Dark Grey for background */
+  --text-color-dark: #e0e0e0; /* Light Grey for text */
+
+  --accent-color-dark: #ffd166; /* Mustard Yellow for accents (unchanged) */
+
+  --primary-color-light: #37306b; /* Original Deep Indigo */
+  --secondary-color-light: #66347f; /* Original Rich Purple */
+  --tertiary-color-light: #9e4784; /* Original Muted Magenta */
+  --quaternary-color-light: #d27685; /* Original Soft Rose */
+
+  --background-color-light: #f3f3f3; /* Light Grey for background */
+  --text-color-light: #333333; /* Dark Grey for text */
+
+  --accent-color-light: #ffd166; /* Mustard Yellow for accents (unchanged) */
+
+  --o-primary-color: var(--primary-color-light);
+  --o-secondary-color: var(--secondary-color-light);
+  --o-tertiary-color: var(--tertiary-color-light);
+  --o-quaternary-color: var(--quaternary-color-light);
+  --o-background-color: var(--background-color-light);
+  --o-text-color: var(--text-color-light);
+  --o-accent-color: var(--accent-color-light);
+}
+.theme-dark {
+  --o-primary-color: var(--primary-color-dark);
+  --o-secondary-color: var(--secondary-color-dark);
+  --o-tertiary-color: var(--tertiary-color-dark);
+  --o-quaternary-color: var(--quaternary-color-dark);
+
+  --o-background-color: var(--background-color-dark);
+  --o-text-color: var(--text-color-dark);
+
+  --o-accent-color: var(--accent-color-dark);
+}
+
+.theme-light {
+  --o-primary-color: var(--primary-color-light);
+  --o-secondary-color: var(--secondary-color-light);
+  --o-tertiary-color: var(--tertiary-color-light);
+  --o-quaternary-color: var(--quaternary-color-light);
+
+  --o-background-color: var(--background-color-light);
+  --o-text-color: var(--text-color-light);
+
+  --o-accent-color: var(--accent-color-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .o-container {
+    --o-primary-color: var(--primary-color-dark);
+    --o-secondary-color: var(--secondary-color-dark);
+    --o-tertiary-color: var(--tertiary-color-dark);
+    --o-quaternary-color: var(--quaternary-color-dark);
+
+    --o-background-color: var(--background-color-dark);
+    --o-text-color: var(--text-color-dark);
+
+    --o-accent-color: var(--accent-color-dark);
+  }
 }

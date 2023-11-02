@@ -1,14 +1,14 @@
 /* element theme */
 .o-label {
-  border-color: var(--o-info);
+  border-color: var(--o-quaternary-color);
 }
 
 .o-label::before {
-  border-bottom-color: var(--o-info);
+  border-bottom-color: var(--o-quaternary-color);
 }
 
 .o-label > .o-text {
-  background-color: var(--o-light);
-  border-color: var(--o-info);
-  color: var(--o-info);
+  background-color: var(--o-background-color);
+  border-color: var(--o-quaternary-color);
+  color: var(--o-quaternary-color);
 }
