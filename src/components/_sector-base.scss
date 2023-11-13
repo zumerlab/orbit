@@ -10,7 +10,7 @@
   --o-rotate: calc(
     (var(--o-angle) * var(--o-orbiter-number) + var(--o-offset-angle) - (var(--o-angle) / 2)) * 1deg
   );
-  position: absolute;
+  /*position: absolute;*/
   display: grid;
   grid-area: 1/1/1/1;
   height: var(--o-diameter);
