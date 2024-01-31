@@ -6,8 +6,185 @@
     <link rel="stylesheet" href="../assets/css/orbit-base.min.css" type="text/css" defer/>
     <link rel="stylesheet" href="../assets/css/orbit-theme.min.css" type="text/css" defer/>
     <title>Orbit - o-container</title>
+    <style>
+       .o-container {
+        --lig: 50;
+        --hu: 100
+       }
+        .colors {
+            --light: calc(var(--lig) * 1%);
+            --sat: calc(var(--hu) * 1%);
+           background: conic-gradient( from 90deg,
+  hsl(0, var(--sat), var(--light)),   /* Red */
+  hsl(60, var(--sat), var(--light)),  /* Yellow */
+  hsl(120, var(--sat), var(--light)), /* Green */
+  hsl(180, var(--sat), var(--light)), /* Cyan */
+  hsl(240, var(--sat), var(--light)), /* Blue */
+  hsl(300, var(--sat), var(--light)), /* Magenta */
+  hsl(360, var(--sat), var(--light))  /* Back to Red */);
+  border-radius: 50%;
+         
+
+
+        }
+        .no-events{
+            pointer-events: none;
+        }
+        .control {
+            --sat: calc(var(--hu) * 1%);
+            --light: calc(var(--lig) * 1%);
+            background-color: hsl(var(--knob-angle) var(--sat) var(--light));
+            border: 5px solid rgba(255, 255, 255, 0.369);
+            position: absolute;
+            rotate: var(--knob-angle);
+        }
+        .hue {
+            
+            background-color: gray;
+            border: 5px solid rgba(255, 255, 255, 0.369);
+            position: absolute;
+            rotate: var(--knob-angle);
+        }
+        .hueknob {
+            --o-val: var(--hu);
+        }
+        .lightknob {
+            --o-val: var(--lig);
+        }
+        .light {
+            
+            background-color: gray;
+            border: 5px solid rgba(255, 255, 255, 0.369);
+            position: absolute;
+            rotate: var(--knob-angle);
+        }
+        
+        .selector {
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            --o-x-coords: 0px
+        }
+
+        
+    </style>
 </head>
 <body>
+    <div class="o-container-query-enabled">
+        <div class="o-container">
+            <div class="o-core">
+                <div class="o-orbit">
+                    <div class="o-orbiter o-md control" style="--knob-angle: 55deg">
+                        <div class="o-orbit">
+                            <div class="o-orbiter o-xs o-stationary selector">></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="o-orbit colors">
+
+            </div>
+            <div class="o-orbit o-size-1 o-offset-315 o-limit-45">
+                <div class="o-orbiter o-sm o-upper">
+                    <div class="o-orbit">
+                        <div class="o-orbit hue" style="--knob-angle: 55deg">
+                            <div class="o-orbiter o-xs o-stationary selector">></div>
+                        </div>
+                        <div class="o-orbit no-events" style="border: 1px solid green">
+                            <svg class="o-svg no-events">
+                                <circle class="o-svg-progress no-events hueknob" style=" stroke: black"></circle>
+                            </svg>                                    
+                        </div>
+                    </div>
+                </div>
+                    <div class="o-orbiter o-sm o-upper">
+                        <div class="o-orbit">
+                            <div class="o-orbit light" style="--knob-angle: 55deg">
+                                <div class="o-orbiter o-xs o-stationary selector">></div>
+                            </div>
+                            <div class="o-orbit no-events" style="border: 1px solid green">
+                                <svg class="o-svg no-events">
+                                    <circle class="o-svg-progress no-events lightknob" style="stroke: black"></circle>
+                                </svg>                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+<script>
+function createKnob(selector, type=false, cssvar=false) {
+    const container = document.querySelector('.o-container');
+    const knob = document.querySelector(selector);
+    var progress = type ?  progress = document.querySelector(type) : null
     
+    let isDragging = false;
+    let startAngle = 0;
+
+    // Function to get the current knob angle from the CSS variable
+    function getKnobAngle() {
+        const computedStyle = getComputedStyle(knob);
+        const transformValue = computedStyle.getPropertyValue('--knob-angle');
+        const angle = parseFloat(transformValue);
+        return angle;
+    }
+
+    // Function to set the knob angle using the CSS variable, ensuring it stays within 0 - 360 degrees
+    function setKnobAngle(angle) {
+        angle = angle < 0 ? 0 : (angle > 360 ? 360 : angle); // Ensure angle is within the range [0, 360]
+        knob.style.setProperty('--knob-angle', `${Math.round(angle, 0)}deg`);
+        if (progress !== null) {
+            
+            progress.style.setProperty(cssvar, `${Math.round(angle/3.6, 0)}`);
+            container.style.setProperty(cssvar, `${Math.round(angle/3.6, 0)}`);
+
+        }
+    }
+
+    // Event listeners for mouse events
+    knob.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        const knobRect = knob.getBoundingClientRect();
+        const knobCenterX = knobRect.left + knobRect.width / 2;
+        const knobCenterY = knobRect.top + knobRect.height / 2;
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        startAngle = Math.atan2(mouseY - knobCenterY, mouseX - knobCenterX) * (180 / Math.PI);
+        knob.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const knobRect = knob.getBoundingClientRect();
+        const knobCenterX = knobRect.left + knobRect.width / 2;
+        const knobCenterY = knobRect.top + knobRect.height / 2;
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        const currentAngle = Math.atan2(mouseY - knobCenterY, mouseX - knobCenterX) * (180 / Math.PI);
+        const angleDelta = currentAngle - startAngle;
+        const newAngle = getKnobAngle() + angleDelta;
+        setKnobAngle(newAngle);
+        startAngle = currentAngle;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        knob.style.cursor = 'grab';
+    });
+}
+
+// Usage example: create a knob with a different selector
+createKnob('.control');
+createKnob('.hue', ".hueknob", '--hu');
+createKnob('.light',".lightknob", '--lig');
+
+
+
+
+</script>
 </body>
 </html>

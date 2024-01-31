@@ -23,9 +23,10 @@
     width:  var(--o-half);
     /* paddgin right para qeudar fuera de bordeo*/
     padding-right: calc(var(--o-width) + 10px);
-    /* paddgin right para qeudar dentro del borde*/
-    /*padding-right: 5px;*/
     
+  }
+  .o-sector > .o-content.o-at-border {
+    padding-right: 8px;
   }
 
   .o-sector > .o-content > * {
@@ -40,8 +41,8 @@
 
 //o-svg
 .o-svg {
+    position: absolute;
     border-radius: inherit;
-    @include alignment;
     rotate: -90deg;
     width: calc(var(--o-diameter));
     height: calc(var(--o-diameter));

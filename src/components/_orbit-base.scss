@@ -10,5 +10,6 @@
   width: var(--o-diameter);
   height: calc(var(--o-diameter) / var(--o-ellipse-rate));
   z-index: var(--o-z-index);
+  pointer-events: none;
 }
 

@@ -329,7 +329,7 @@
 
 @for $i from $min-orbits through $max-orbits {
   
-  .o-container > .o-orbit:nth-child(#{$i}) > svg {
+  .o-container > :nth-child(#{$i} of .o-orbit) > svg {
     --o-diameter: calc(var(--o-radius-#{$i}) * 2);
   }
 }
@@ -343,7 +343,7 @@
 @for $i from $min-orbits through $max-orbits {
 
     
-    .o-orbiter > .o-orbit:nth-child(#{$i}) > svg {
+    .o-orbiter > :nth-child(#{$i} of .o-orbit) > svg {
       
         --o-diameter: calc(var(--o-size) * #{$i});
      

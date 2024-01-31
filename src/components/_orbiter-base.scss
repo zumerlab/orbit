@@ -13,6 +13,7 @@
   width: var(--o-size);
   height: var(--o-size);
   transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate))));
+  pointer-events: auto;
 }
 
 .o-orbiter.o-stationary {

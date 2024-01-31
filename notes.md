@@ -128,6 +128,11 @@ OK alternativamente se puede pensar en orbit eliptical con orbinters aliptical u
 OK GOEY EFFECT
 data-o* para JS
 
+agrgar vas vars que incidan sobre las vars de los compoenentes cmo en sector
+pensar en mejores nombres de variables.
+pensar en span sectors...
+mas orbits..
+
 CSS TYPES PARA ANIMAR (SOLO CHROME pero sale en breve en firefox)
 
 
@@ -186,16 +191,13 @@ RELOG ANALOGICO
 
 DATA VIS CON SECTORES
 
-diagrama de anillo, diagrama de cinturón y mapa de árbol radialp.
+ROSA DE NOTHINGALE
 
-grafico de barras curvas
+CLASSIC PIE
 
-Este tipo de visualización muestra jerarquía a través de una serie de anillos que se cortan para cada nodo de categoría. Cada anillo corresponde a un nivel de jerarquía, con el círculo central representando el nodo raíz y la jerarquía moviéndose hacia fuera de él.
+BARRAS RADIALES
 
-Los anillos se cortan y se dividen en función de su relación jerárquica con la porción primaria. El ángulo de cada porción se divide igualmente en su nodo primario o puede ser proporcionar a un valor.
-
-Se puede utilizar color para resaltar las agrupaciones jerárquicas o las categorías específicas.
-
+RAYOS DE SOL
 
 
 SIMON GAME?
@@ -213,3 +215,23 @@ con labels
 
 SIMULADOR ECOSISTEMA/SOLAR
 sep
+
+
+
+BUG 
+
+CORE.... borrar? no anda core/orbiter.
+
+CORE: ELIMINAR, USAR ORBIT ZERO Y que sirva pra todas las orbitas
+
+offset y limit ampliar valores
+
+rotation ampliar angulos
+
+sectors... pensar en un nest
+
+nombres... elimnar prefijossss
+
+orbit size cambiar nombre
+
+penssar en algo tipo span sectors, orbiters
