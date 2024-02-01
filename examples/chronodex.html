@@ -22,17 +22,17 @@
         color: rgba(0, 0, 0, 0.626);
         
     }
-      .o-container {
+      .container {
         position: absolute;
       }
 
-      .o-sector {
+      .sector {
         background-color: rgba(128, 128, 128, 0);
         border-color: var(--o-cyan-light);
         --o-width: 39px;
       }
 
-      .o-sector.low {
+      .sector.low {
         --o-diameter: calc(var(--o-radius-3) * 2) !important;
         --o-width: 0px;
         background-color: white;
@@ -41,7 +41,7 @@
       }
      
 
-      .o-sector.medium {
+      .sector.medium {
         --o-diameter: calc(var(--o-radius-4) * 2) !important;
         --o-width: 0px;
         background-color: white;
@@ -50,20 +50,20 @@
       }
     
 
-      .o-sector.high {
+      .sector.high {
         --o-width: 0px;
         background-color: white;
         border-color: white;
         --o-sector-gap:1px;
       }
 
-      .o-orbiter.low {
+      .orbiter.low {
         --o-x-coords: calc(var(--o-radius-3) + (calc(var(--o-size) / 2))) !important;
        
       }
      
 
-      .o-orbiter.medium {
+      .orbiter.medium {
         --o-x-coords: calc(var(--o-radius-4) + (calc(var(--o-size) / 2))) !important;
         
       }
@@ -71,16 +71,16 @@
 
 
 
-      .o-core .o-content {
+      .core .content {
         position: relative;
         color:turquoise;
       }
 
-      .o-sector .o-content {
+      .sector .content {
         left: 50px;
       }
 
-      .o-svg-markers {
+      .svg-markers {
         stroke-width: calc(var(--o-radius-4) * 2) !important;
         stroke: rgba(0, 0, 0, 0.532) !important;
         --o-svg-markers: 12 !important  ;
@@ -127,7 +127,7 @@
         background-color: white;
        }
 
-      .o-container{
+      .container{
         --factor: 0.7;
         --o-sector-gap: 1px;
         --o-radius-1: calc(130px * var(--factor));
@@ -149,52 +149,52 @@
   </head>
 
   <body>
-    <main class="o-container-query-enabled">
-      <section class="o-container" id="menu">
-       <div class="o-orbit dashed white one o-limit-90 o-offset-90">
-            <div class="o-orbiter o-xs o-upper">6am</div>
-            <div class="o-orbiter o-xs ">7am</div>
-            <div class="o-orbiter o-xs ">8am</div>
-            <div class="o-orbiter o-sm  o-upper">9am</div>
+    <main class=" container-query-enabled">
+      <section class=" container" id="menu">
+       <div class=" orbit dashed white one  limit-90  offset-90">
+            <div class=" orbiter  xs  upper">6am</div>
+            <div class=" orbiter  xs ">7am</div>
+            <div class=" orbiter  xs ">8am</div>
+            <div class=" orbiter  sm   upper">9am</div>
         </div>
-       <div class="o-orbit solid o-offset-90 o-limit-90 white">
-        <div class="o-sector inner"></div>
-        <div class="o-sector inner"></div>
-        <div class="o-sector inner"></div>
-        <svg class="o-svg">
-            <circle class="o-svg-markers grades"></circle>
+       <div class=" orbit solid  offset-90  limit-90 white">
+        <div class=" sector inner"></div>
+        <div class=" sector inner"></div>
+        <div class=" sector inner"></div>
+        <svg class=" svg">
+            <circle class=" svg-markers grades"></circle>
         </svg>
        
        </div>
-       <div class="o-orbit dashed three"></div>
-       <div class="o-orbit dashed four"></div>
-       <div class="o-orbit dashed six">
-        <div class="o-orbiter o-xs o-upper">3pm</div>
-        <div class="o-orbiter o-xs medium">4pm</div>
-        <div class="o-orbiter o-xs o-upper">5pm</div>
-        <div class="o-orbiter o-xs o-upper">6pm</div>
-        <div class="o-orbiter o-xs medium">7pm</div>
-        <div class="o-orbiter o-xs o-upper">8pm</div>
-        <div class="o-orbiter o-xs o-upper">9pm</div>
-        <div class="o-orbiter o-xs medium">10am</div>
-        <div class="o-orbiter o-xs o-upper">11am</div>
-        <div class="o-orbiter o-xs o-upper">12pm</div>
-        <div class="o-orbiter o-xs medium">1pm</div>
-        <div class="o-orbiter o-xs o-upper">2pm</div>
+       <div class=" orbit dashed three"></div>
+       <div class=" orbit dashed four"></div>
+       <div class=" orbit dashed six">
+        <div class=" orbiter  xs  upper">3pm</div>
+        <div class=" orbiter  xs medium">4pm</div>
+        <div class=" orbiter  xs  upper">5pm</div>
+        <div class=" orbiter  xs  upper">6pm</div>
+        <div class=" orbiter  xs medium">7pm</div>
+        <div class=" orbiter  xs  upper">8pm</div>
+        <div class=" orbiter  xs  upper">9pm</div>
+        <div class=" orbiter  xs medium">10am</div>
+        <div class=" orbiter  xs  upper">11am</div>
+        <div class=" orbiter  xs  upper">12pm</div>
+        <div class=" orbiter  xs medium">1pm</div>
+        <div class=" orbiter  xs  upper">2pm</div>
        </div>
-       <div class="o-orbit   five">
-        <div class="o-sector low"></div>
-        <div class="o-sector medium"></div>
-        <div class="o-sector high"></div>
-        <div class="o-sector low"></div>
-        <div class="o-sector medium"></div>
-        <div class="o-sector high"></div>
-        <div class="o-sector low"></div>
-        <div class="o-sector medium"></div>
-        <div class="o-sector high"></div>
-        <div class="o-sector low"></div>
-        <div class="o-sector medium"></div>
-        <div class="o-sector high"></div>
+       <div class=" orbit   five">
+        <div class=" sector low"></div>
+        <div class=" sector medium"></div>
+        <div class=" sector high"></div>
+        <div class=" sector low"></div>
+        <div class=" sector medium"></div>
+        <div class=" sector high"></div>
+        <div class=" sector low"></div>
+        <div class=" sector medium"></div>
+        <div class=" sector high"></div>
+        <div class=" sector low"></div>
+        <div class=" sector medium"></div>
+        <div class=" sector high"></div>
        </div>      
       </section>
     </main>

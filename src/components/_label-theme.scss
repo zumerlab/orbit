@@ -1,13 +1,13 @@
 /* element theme */
-.o-label {
+.label {
   border-color: var(--o-quaternary-color);
 }
 
-.o-label::before {
+.label::before {
   border-bottom-color: var(--o-quaternary-color);
 }
 
-.o-label > .o-text {
+.label > .text {
   background-color: var(--o-background-color);
   border-color: var(--o-quaternary-color);
   color: var(--o-quaternary-color);

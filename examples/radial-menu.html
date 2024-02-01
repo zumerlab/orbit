@@ -10,13 +10,13 @@ PERO TAMBIEN CON UN SELECTOR sector-20/40/60/...180 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Orbit - Radial menu</title>
     <style>
-        .o-container {
+        .container {
             width: 500px;
             aspect-ratio: 1;
             position: absolute;
         }
 
-        .o-sector {
+        .sector {
             background-color: rgba(128, 128, 128, 0);
             border-color: var(--o-cyan-light);
             --o-width: 39px;
@@ -29,11 +29,11 @@ PERO TAMBIEN CON UN SELECTOR sector-20/40/60/...180 -->
        .header {
         cursor: pointer;
        }
-        .o-core .o-content {
+        .core .content {
             position: relative;
         }
 
-        .o-sector .o-content {
+        .sector .content {
             left: 50px;
         }
 
@@ -70,95 +70,95 @@ PERO TAMBIEN CON UN SELECTOR sector-20/40/60/...180 -->
 </head>
 
 <body>
-    <main class="o-container-query-enabled">
+    <main class=" container-query-enabled">
         <section>
             <article>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum justo felis, sed imperdiet metus dignissim a. Nulla nunc libero, facilisis eu posuere ut, auctor sit amet est. Sed sodales at erat nec pulvinar. Nullam vitae dictum diam. Praesent porta pellentesque nisl, non sollicitudin dolor lobortis eu. Donec fermentum mollis velit et pulvinar. Vivamus vulputate nibh vel risus mollis efficitur. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus eros ex, ullamcorper at aliquet eget, malesuada sit amet sapien. Morbi et felis a metus mollis tincidunt id in velit. Morbi finibus augue sit amet nibh aliquam, sed dignissim risus posuere.
             </article>
         </section>
-        <section class="o-container" id="menu">
-            <div class="o-core" >
-                <div class="o-orbiter "
+        <section class=" container" id="menu">
+            <div class=" core" >
+                <div class=" orbiter "
                     style="border:2px solid white ;background-color: rgb(53, 53, 53); --o-diameter: 60px">
-                    <div class="o-content header"><i class="fa-solid fa-xmark"></i></div>
+                    <div class=" content header"><i class="fa-solid fa-xmark"></i></div>
                 </div>
 
             </div>
-            <div class="o-orbit o-offset-225" style="box-shadow: 0 3px 5px rgb(0 0 0 / 0.5);">
-                <div class="o-sector">
-                    <div class="o-content o-at-border"><span class="text">Format</span></div>
+            <div class=" orbit  offset-225" style="box-shadow: 0 3px 5px rgb(0 0 0 / 0.5);">
+                <div class=" sector">
+                    <div class=" content  at-border"><span class="text">Format</span></div>
                 </div>
-                <div class="o-sector">
-                    <div class="o-content o-at-border"><span class="text">Color</span></div>
+                <div class=" sector">
+                    <div class=" content  at-border"><span class="text">Color</span></div>
                 </div>
-                <div class="o-sector">
-                    <div class="o-content o-at-border"><span class="text">Alignment</span></div>
+                <div class=" sector">
+                    <div class=" content  at-border"><span class="text">Alignment</span></div>
                 </div>
-                <div class="o-sector">
-                    <div class="o-content o-at-border"><span class="text">Size</span></div>
+                <div class=" sector">
+                    <div class=" content  at-border"><span class="text">Size</span></div>
                 </div>
             </div>
-            <div class="o-orbit">
-                <div class="o-orbit o-offset-225 o-limit-90" style="--o-radius-2: 110px">
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-bold"></i></div>
+            <div class=" orbit">
+                <div class=" orbit  offset-225  limit-90" style="--o-radius-2: 110px">
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-bold"></i></div>
                     </div>
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-italic"></i></div>
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-italic"></i></div>
                     </div>
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-underline"></i></div>
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-underline"></i></div>
                     </div>
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-strikethrough"></i></div>
-                    </div>
-                </div>
-                <div class="o-orbit" style="--o-sector-gap: 0px;--o-radius-2: 110px">
-                    <div class="o-orbiter o-sm color red" style="--o-sector-gap: -1px;">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
-                    </div>
-                    <div class="o-orbiter o-sm color orange" style="--o-sector-gap: -1px;">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
-                    </div>
-                    <div class="o-orbiter o-sm color cyan">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
-                    </div>
-                    <div class="o-orbiter o-sm color blue">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
-                    </div>
-                    <div class="o-orbiter o-sm color green">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
-                    </div>
-                    <div class="o-orbiter o-sm color purple">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
-                    </div>
-                    <div class="o-orbiter o-sm color black">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
-                    </div>
-                    <div class="o-orbiter o-sm color gray">
-                        <div class="o-content o-at-border"><span class="text"></span></div>
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-strikethrough"></i></div>
                     </div>
                 </div>
-                <div class="o-orbit o-offset-45 o-limit-90" style="--o-radius-2: 110px">
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-align-left"></i></div>
+                <div class=" orbit" style="--o-sector-gap: 0px;--o-radius-2: 110px">
+                    <div class=" orbiter  sm color red" style="--o-sector-gap: -1px;">
+                        <div class=" content  at-border"><span class="text"></span></div>
                     </div>
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-align-center"></i></div>
+                    <div class=" orbiter  sm color orange" style="--o-sector-gap: -1px;">
+                        <div class=" content  at-border"><span class="text"></span></div>
                     </div>
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-align-right"></i></div>
+                    <div class=" orbiter  sm color cyan">
+                        <div class=" content  at-border"><span class="text"></span></div>
                     </div>
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-align-justify"></i></div>
+                    <div class=" orbiter  sm color blue">
+                        <div class=" content  at-border"><span class="text"></span></div>
+                    </div>
+                    <div class=" orbiter  sm color green">
+                        <div class=" content  at-border"><span class="text"></span></div>
+                    </div>
+                    <div class=" orbiter  sm color purple">
+                        <div class=" content  at-border"><span class="text"></span></div>
+                    </div>
+                    <div class=" orbiter  sm color black">
+                        <div class=" content  at-border"><span class="text"></span></div>
+                    </div>
+                    <div class=" orbiter  sm color gray">
+                        <div class=" content  at-border"><span class="text"></span></div>
                     </div>
                 </div>
-                <div class="o-orbit o-offset-135 o-limit-90" style="--o-radius-2: 110px">
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-plus"></i></div>
+                <div class=" orbit  offset-45  limit-90" style="--o-radius-2: 110px">
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-align-left"></i></div>
                     </div>
-                    <div class="o-sector">
-                        <div class="o-content o-at-border"><i class="fa-solid fa-minus"></i></div>
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-align-center"></i></div>
+                    </div>
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-align-right"></i></div>
+                    </div>
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-align-justify"></i></div>
+                    </div>
+                </div>
+                <div class=" orbit  offset-135  limit-90" style="--o-radius-2: 110px">
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class=" sector">
+                        <div class=" content  at-border"><i class="fa-solid fa-minus"></i></div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 @use '../settings/sass-variables' as *;
 
-.o-core {
+.core {
   width: 0px;
   height: 0px;
   display: grid;
@@ -9,6 +9,6 @@
   z-index: $max-orbits;
 }
 
-.o-core > .o-orbiter {
+.core > .orbiter {
   transform: rotate(var(--o-rotate));
 }

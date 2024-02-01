@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/orbit-base.min.css" type="text/css" defer/>
     <link rel="stylesheet" href="../assets/css/orbit-theme.min.css" type="text/css" defer/>
-    <title>Orbit - o-container</title>
+    <title>Orbit -  container</title>
     <style>
-       .o-container {
+       .container {
         --lig: 50;
         --hu: 100
        }
@@ -70,42 +70,42 @@
     </style>
 </head>
 <body>
-    <div class="o-container-query-enabled">
-        <div class="o-container">
-            <div class="o-core">
-                <div class="o-orbit">
-                    <div class="o-orbiter o-md control" style="--knob-angle: 55deg">
-                        <div class="o-orbit">
-                            <div class="o-orbiter o-xs o-stationary selector">></div>
+    <div class=" container-query-enabled">
+        <div class=" container">
+            <div class=" core">
+                <div class=" orbit">
+                    <div class=" orbiter  md control" style="--knob-angle: 55deg">
+                        <div class=" orbit">
+                            <div class=" orbiter  xs  stationary selector">></div>
                         </div>
                     </div>
                 </div>
                 
             </div>
-            <div class="o-orbit colors">
+            <div class=" orbit colors">
 
             </div>
-            <div class="o-orbit o-size-1 o-offset-315 o-limit-45">
-                <div class="o-orbiter o-sm o-upper">
-                    <div class="o-orbit">
-                        <div class="o-orbit hue" style="--knob-angle: 55deg">
-                            <div class="o-orbiter o-xs o-stationary selector">></div>
+            <div class=" orbit  size-1  offset-315  limit-45">
+                <div class=" orbiter  sm  upper">
+                    <div class=" orbit">
+                        <div class=" orbit hue" style="--knob-angle: 55deg">
+                            <div class=" orbiter  xs  stationary selector">></div>
                         </div>
-                        <div class="o-orbit no-events" style="border: 1px solid green">
-                            <svg class="o-svg no-events">
-                                <circle class="o-svg-progress no-events hueknob" style=" stroke: black"></circle>
+                        <div class=" orbit no-events" style="border: 1px solid green">
+                            <svg class=" svg no-events">
+                                <circle class=" svg-progress no-events hueknob" style=" stroke: black"></circle>
                             </svg>                                    
                         </div>
                     </div>
                 </div>
-                    <div class="o-orbiter o-sm o-upper">
-                        <div class="o-orbit">
-                            <div class="o-orbit light" style="--knob-angle: 55deg">
-                                <div class="o-orbiter o-xs o-stationary selector">></div>
+                    <div class=" orbiter  sm  upper">
+                        <div class=" orbit">
+                            <div class=" orbit light" style="--knob-angle: 55deg">
+                                <div class=" orbiter  xs  stationary selector">></div>
                             </div>
-                            <div class="o-orbit no-events" style="border: 1px solid green">
-                                <svg class="o-svg no-events">
-                                    <circle class="o-svg-progress no-events lightknob" style="stroke: black"></circle>
+                            <div class=" orbit no-events" style="border: 1px solid green">
+                                <svg class=" svg no-events">
+                                    <circle class=" svg-progress no-events lightknob" style="stroke: black"></circle>
                                 </svg>                                    
                             </div>
                         </div>
@@ -118,7 +118,7 @@
     </div>
 <script>
 function createKnob(selector, type=false, cssvar=false) {
-    const container = document.querySelector('.o-container');
+    const container = document.querySelector('.container');
     const knob = document.querySelector(selector);
     var progress = type ?  progress = document.querySelector(type) : null
     

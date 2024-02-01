@@ -1,10 +1,10 @@
 // Sass variables
-$prefix: 'o-';
+$prefix: ' ';
 
-$sizes: null, '.o-xxs' var(--o-xxs), '.o-xs' var(--o-xs), '.o-sm' var(--o-sm), '.o-md' var(--o-md),
-  '.o-lg' var(--o-lg), '.o-xl' var(--o-xl), '.o-xxl' var(--o-xxl);
+$sizes: null, '.xxs' var(--o-xxs), '.xs' var(--o-xs), '.sm' var(--o-sm), '.md' var(--o-md),
+  '.lg' var(--o-lg), '.xl' var(--o-xl), '.xxl' var(--o-xxl);
 
-$align: null, '.o-upper', '.o-lower';
+$align: null, '.upper', '.lower';
 
 $min-orbits: 1;
 $max-orbits: 6;
@@ -12,15 +12,15 @@ $max-orbits: 6;
 $min-orbiters: 1;
 $max-orbiters: 24;
 
-$offsets: '.o-offset-45' var(--o-a45), '.o-offset-90' var(--o-a90), '.o-offset-135' var(--o-a135), '.o-offset-180' var(--o-a180),
-  '.o-offset-225' var(--o-a225), '.o-offset-270' var(--o-a270), '.o-offset-315' var(--o-a315);
+$offsets: '.offset-45' var(--o-a45), '.offset-90' var(--o-a90), '.offset-135' var(--o-a135), '.offset-180' var(--o-a180),
+  '.offset-225' var(--o-a225), '.offset-270' var(--o-a270), '.offset-315' var(--o-a315);
 
-$content-position: '.o-face-up' var(--o-a270), '.o-face-down' var(--o-a90), '.o-face-left' var(--o-a0), '.o-face-right' var(--o-a180);
+$content-position: '.face-up' var(--o-a270), '.face-down' var(--o-a90), '.face-left' var(--o-a0), '.face-right' var(--o-a180);
 
-$limits: '.o-limit-45' var(--o-a45), '.o-limit-90' var(--o-a90), '.o-limit-135' var(--o-a135), '.o-limit-180' var(--o-a180),
-'.o-limit-225' var(--o-a225), '.o-limit-270' var(--o-a270), '.o-limit-315' var(--o-a315);
+$limits: '.limit-45' var(--o-a45), '.limit-90' var(--o-a90), '.limit-135' var(--o-a135), '.limit-180' var(--o-a180),
+'.limit-225' var(--o-a225), '.limit-270' var(--o-a270), '.limit-315' var(--o-a315);
 
-$orbit-sizes: null, '.o-size-1' var(--o-orbit-size-1),'.o-size-2' var(--o-orbit-size-2),'.o-size-3' var(--o-orbit-size-3),'.o-size-4' var(--o-orbit-size-4),'.o-size-5' var(--o-orbit-size-5),'.o-size-6' var(--o-orbit-size-6);
+$orbit-sizes: null, '.size-1' var(--o-orbit-size-1),'.size-2' var(--o-orbit-size-2),'.size-3' var(--o-orbit-size-3),'.size-4' var(--o-orbit-size-4),'.size-5' var(--o-orbit-size-5),'.size-6' var(--o-orbit-size-6);
 
 $border-width: 0;
 $border-style: solid;

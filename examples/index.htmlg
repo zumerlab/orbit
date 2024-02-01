@@ -18,23 +18,23 @@
   </head>
   <body>
     <h2>Examples</h2>
-    <div class="o-container">
-<div class="o-orbit o-size-3" >
+    <div class=" container">
+<div class=" orbit  size-3" >
  
-  <ul class="o-orbit" style="filter: drop-shadow(0px 0px 1px black);">
-    <li class="o-sector"></li>
-    <li class="o-sector"></li>
-    <li class="o-sector"></li>
-    <li class="o-sector"></li>
-    <li class="o-sector"></li>
+  <ul class=" orbit" style="filter: drop-shadow(0px 0px 1px black);">
+    <li class=" sector"></li>
+    <li class=" sector"></li>
+    <li class=" sector"></li>
+    <li class=" sector"></li>
+    <li class=" sector"></li>
    
   </ul>
-  <ul class="o-orbit">
-    <li class="o-orbiter o-lower o-md o-rounded"> <div class="o-content o-face-up"><a href="./generic.html">Generic</a></div></li>
-    <li class="o-orbiter o-lower o-md o-rounded o-stationary"><div class="o-content o-face-down"><a href="./watch.html">Watch app</a></div></li>
-    <li class="o-orbiter o-lower o-md o-rounded"> <div class="o-content o-face-left"><a href="./spread.html">Spread orbiters</a></div></li>
-    <li class="o-orbiter o-lower o-md o-rounded"> <div class="o-content o-face-right"><a href="./form.html">Form</a></div></li>
-    <li class="o-orbiter o-lower o-md o-rounded"> <div class="o-content"><a href="./arcgrid.html">Sector grid</a></div></li>
+  <ul class=" orbit">
+    <li class=" orbiter  lower  md  rounded"> <div class=" content  face-up"><a href="./generic.html">Generic</a></div></li>
+    <li class=" orbiter  lower  md  rounded  stationary"><div class=" content  face-down"><a href="./watch.html">Watch app</a></div></li>
+    <li class=" orbiter  lower  md  rounded"> <div class=" content  face-left"><a href="./spread.html">Spread orbiters</a></div></li>
+    <li class=" orbiter  lower  md  rounded"> <div class=" content  face-right"><a href="./form.html">Form</a></div></li>
+    <li class=" orbiter  lower  md  rounded"> <div class=" content"><a href="./arcgrid.html">Sector grid</a></div></li>
   </ul>
 </div>
       

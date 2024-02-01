@@ -1,4 +1,4 @@
-.o-sector {
+.sector {
   --o-half: calc(var(--o-diameter) / 2);
   --o-quarter: calc(var(--o-half) / 2); 
   --o-semi: calc(var(--o-angle) / 2 * 1deg); // ademas del offset el angulo debe dividirse por 2, distinto de orbiter
