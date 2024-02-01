@@ -1,7 +1,7 @@
 @use '../settings/mixins' as *;
 @use '../settings/sass-variables' as *;
 
-.o-orbiter > .o-content {
+.orbiter > .content {
     position:absolute;
     padding: 5px;
     width: inherit;
@@ -15,8 +15,8 @@
 }
 
 
-//sector o-cont.o-content
-.o-sector > .o-content {
+//sector  cont.content
+.sector > .content {
     display: grid;
     place-items: center right;
     color: white;
@@ -25,22 +25,22 @@
     padding-right: calc(var(--o-width) + 10px);
     
   }
-  .o-sector > .o-content.o-at-border {
+  .sector > .content.at-border {
     padding-right: 8px;
   }
 
-  .o-sector > .o-content > * {
+  .sector > .content > * {
     rotate: calc(var(--o-rotate) * -1);
   }
 
   @each $position, $angle in $content-position {
-  .o-content#{$position} > * {
+  .content#{$position} > * {
     rotate: calc(#{$angle} * 1deg);
   }
 }
 
-//o-svg
-.o-svg {
+// svg
+.svg {
     position: absolute;
     border-radius: inherit;
     rotate: -90deg;
@@ -49,7 +49,7 @@
 }
 
 //label
-.o-label > .o-content {
+.label > .content {
     transform-origin: 0 0;
     border: 1px solid;
     border-radius: 4px;

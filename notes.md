@@ -59,17 +59,17 @@ OK rows: rings OR orbits
 - arcs: radial columns. visual support with basic interactivity and some cool customizations (gap, width, radius, POSITION). Should be nestable
 - rings: radial rows. visual support. Nestable
 - labels: item label with optional conector and predefined positions
-- o-MODAL
-- o-POPOVER
-- o-PROGRESS
-- o-KNOB
-- o-pod
-- o-orbit
-- o-suborbit (mantiene mismo nivel de orbita que el orbit parent)
-- o-orbiter
-- o-pod (content inside orbiter)
-- o-sector
-- o-label
+-  MODAL
+-  POPOVER
+-  PROGRESS
+-  KNOB
+-  pod
+-  orbit
+-  suborbit (mantiene mismo nivel de orbita que el orbit parent)
+-  orbiter
+-  pod (content inside orbiter)
+-  sector
+-  label
 
 
 
@@ -111,12 +111,12 @@ ok: upper, lower... no anda en todos lados. Queda chequear scss ejemplo en arcgr
 
 explicar y mejorear y diferecniar los progress.
 
-o-progress
-o-svg
-o-svg-progress
-o-knob
+ progress
+ svg
+ svg-progress
+ knob
 
-o-title o label?
+ title o label?
 
 
 
@@ -147,27 +147,27 @@ los estilos en clases o las variables en clases?
 EJEMPLOS:
 
 BASICO de cada elementos para documentacion y testeo
-o-container : 
+ container : 
 multiple containers con diferentes tamaños
 
-o-orbit y orbit orbit: 
+ orbit y orbit orbit: 
 dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
 
-o-orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT,  (+ OFFSET, LIMITS)
+ orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT,  (+ OFFSET, LIMITS)
 
-o-sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember  sector shapes
+ sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember  sector shapes
 
-o-labels: FALTA METERLO EN SECTORS, angle, offset, connector
+ labels: FALTA METERLO EN SECTORS, angle, offset, connector
 
-o-svg-progress: props, colors, percentaje
+ svg-progress: props, colors, percentaje
 
-o-svg-markers: same above
+ svg-markers: same above
 
-o-progress: propr, colors
+ progress: propr, colors
 
-"o-knob": ver
+" knob": ver
 
-o-modal/dialog: ver
+ modal/dialog: ver
 
 custom vars: explanation / data-o-
 

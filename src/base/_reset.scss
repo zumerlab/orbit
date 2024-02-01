@@ -1,5 +1,5 @@
 /* Basic reset for each Orbit container */
-.o-container, .o-container * {
+.container, .container * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -10,16 +10,16 @@
 
 /* Check Firefox has() support */
 @supports not selector(:has(a)) {	
-  .o-container {
+  .container {
     border: 1px solid black !important;
     text-shadow: 0 0 2px red;
     margin: 10px;
   }
-  .o-container .o-orbit, .o-container .o-core, .o-container .o-sector  {
+  .container .orbit, .container .core, .container .sector  {
     display: none;
   }
 
-  .o-container::before {
+  .container::before {
     content: 'Orbit is not yet supported by 🦊 Firefox';
     text-shadow: 0 0 2px red;
     font-size: 18px;
@@ -28,7 +28,7 @@
     text-align: center;
   }
 
-  .o-container::after {
+  .container::after {
     content: "To experience Orbit, activate 'layout.css.has-selector.enabled' in 'about:config'";
     text-shadow: 0 0 2px rgba(253, 2, 2, 0.384);
     font-size: 12px;

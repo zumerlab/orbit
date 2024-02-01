@@ -4,14 +4,14 @@
 
 /* 
 All CSS Custom Vars are defined inside this container element 
-This allows var isolation for Orbit. If you have mutiple o-containers
+This allows var isolation for Orbit. If you have mutiple  containers
 on same page, you can override some vars in specific class or style tags
 Ej: .custom {
   --o-arc: 180;
 }
 */
 
-.o-container {
+.container {
     /* Layout vars */
     --o-arc: var(--o-a360);
     --o-offset-angle: 0;

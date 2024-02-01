@@ -17,10 +17,10 @@
     .no-events {
         pointer-events: none;
       }
-        .o-core{
+        .core{
             z-index: 200
         }
-        .o-container {
+        .container {
             transform-style: preserve-3d;
             transform: rotateX(30deg); 
         }
@@ -37,7 +37,7 @@
             transition: all 300ms;
             z-index: 4;
         }
-        .o-sector {
+        .sector {
             --o-width: 100px !important;
             --o-sector-gap: 43px;
             --o-sector-lateral: 5%;
@@ -80,7 +80,7 @@
             cursor: pointer;
             
         }
-       .o-container-query-enabled {
+       .container-query-enabled {
         perspective: 1000px; 
  width: 700px;
         }
@@ -88,28 +88,28 @@
     </style>
 </head>
 <body>
-    <div class="o-container-query-enabled">
-        <div class="o-container">
-            <div class="o-core">
-                <div class="o-orbiter o-md start"  onclick="startGame()">
-                   <div class="o-content">Start</div>
+    <div class=" container-query-enabled">
+        <div class=" container">
+            <div class=" core">
+                <div class=" orbiter  md start"  onclick="startGame()">
+                   <div class=" content">Start</div>
                 </div>
             </div>
            
-            <div class="o-orbit o-size-2 control" >
+            <div class=" orbit  size-2 control" >
                 <p></p>
                 <p id="message">Press "Start" to begin</p>
                 
             </div>
-            <div class="o-orbit o-size-4 buttons">
-                <div class="o-sector red" onclick="handleButtonClick('red')"></div>
-                <div class="o-sector blue" onclick="handleButtonClick('blue')"></div>
-                <div class="o-sector yellow" onclick="handleButtonClick('yellow')"></div>
-                <div class="o-sector green" onclick="handleButtonClick('green')"></div>
+            <div class=" orbit  size-4 buttons">
+                <div class=" sector red" onclick="handleButtonClick('red')"></div>
+                <div class=" sector blue" onclick="handleButtonClick('blue')"></div>
+                <div class=" sector yellow" onclick="handleButtonClick('yellow')"></div>
+                <div class=" sector green" onclick="handleButtonClick('green')"></div>
               
             </div>
 
-            <div class="o-orbit o-size-5  border"></div>
+            <div class=" orbit  size-5  border"></div>
            
         </div>
     </div>

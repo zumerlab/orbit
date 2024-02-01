@@ -1,6 +1,6 @@
 @use '../settings/mixins' as *;
 
-.o-orbiter {
+.orbiter {
   position: absolute;
   --o-size: var(--o-md); // default
   border-radius: 50%; //default
@@ -16,7 +16,7 @@
   pointer-events: auto;
 }
 
-.o-orbiter.o-stationary {
+.orbiter.stationary {
   transform: translate(calc(var(--o-x-coords) * cos(var(--o-rotate))), calc(var(--o-x-coords) / var(--o-ellipse-rate) * sin(var(--o-rotate)))) rotate(var(--o-rotate));
 }
 
@@ -29,11 +29,11 @@
  using radial grid.
 */
 
-.o-orbiter.o-circle {
+.orbiter.circle {
   border-radius: 50% !important; /* Default shape */
 }
 
-.o-orbiter.o-line {
+.orbiter.line {
   transform-origin: 0 50% !important;
   height: 0;
   width: calc(var(--o-radius-3)); // esto no es lo mas adecuado
@@ -42,20 +42,20 @@
   border-top: 1px dashed var(--o-dark);
 }
 
-.o-orbiter.o-box {
+.orbiter.box {
   border-radius: 0% !important;
 }
 
-.o-orbiter.o-rounded {
+.orbiter.rounded {
   border-radius: 25% !important;
 }
 
 /* TODO: add blob variants */
-.o-orbiter.o-blob {
+.orbiter.blob {
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% !important;
 }
 
-.o-orbiter.o-transparent {
+.orbiter.transparent {
   border: none !important;
   background-color: var(--o-transparent) !important;
 }
