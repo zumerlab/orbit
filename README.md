@@ -1,68 +1,73 @@
-<img  src="https://avatars.githubusercontent.com/u/103702169" width=120 />
+# °〇 Orbit
 
-# Zumer - CSS radial library
-
-Zumer is a CSS radial library that empowers developers to easily create complex and captivating circular UI designs. Whether you're building circular menus, data visualization components, or unique circular interfaces, Zumer simplifies the process with its intuitive classes and lightweight structure.
-
-Designed to be used standalone or seamlessly integrated with other CSS frameworks, Zumer unlocks a world of possibilities for creating stunning circular user interfaces.
-
-Elevate your projects and unleash your creativity with Zumer, your go-to CSS radial library. Experience the power of circular designs today!
-
-## Features
-
-- **Effortless Circular Designs**: Easily create compelling circular designs for UI components.
-- **Seamless Integration**: Use Zumer standalone or integrate it with other CSS frameworks.
-- **Intuitive Classes**: Implement circular UI elements with intuitive and easy-to-use classes.
-- **Lightweight and Performant**: Enjoy optimized performance with Zumer's lightweight structure.
-- **Responsive and Customizable**: Adapt circular designs to various screen sizes and customize them to match your project's aesthetics.
+Orbit is a CSS radial library to create complex circular UI designs. Whether you're building circular menus, data visualization components, or circular interfaces, Orbit aims to simplify the process with intuitive CSS classes.
 
 ## Status
 
-## Beta Stage
+Orbit is currently in its MVP stage, but we're actively developing a new version to enhance the developer experience. The key focus is on incorporating cutting-edge and experimental CSS features while minimizing reliance on additional programming languages. This approach ensures that Orbit is not only maintainable and flexible but also compatible with your preferred programming tools, libraries, and frameworks, making the development experience more enjoyable.
 
-Zumer CSS is currently in a closed Beta stage. We greatly value your ideas, discussions, and feedback as we continue to refine and expand the library.
+## Join the dscussion
 
-## Join the Discussion
+Your input and contributions are essential in creating a robust and user-friendly radial library. Join the discussion on [here](https://github.com/zumerlab/zumer-css/discussions) page and be a part of the Orbit community today!
 
-To actively participate in shaping the future of Zumer CSS, we encourage you to join the discussions [here](https://github.com/zumerlab/zumer-css/discussions). Share your thoughts, ask questions, and collaborate with the community to make Zumer even better.
+## Installation
 
-Your input and contributions are essential in creating a robust and user-friendly radial library. Let's work together to develop stunning and innovative circular designs with Zumer CSS.
-
-Join the discussion on  [here](https://github.com/zumerlab/zumer-css/discussions) page and be a part of the Zumer CSS community today!
-
-## Quick start
-
-1. Clone the repository.
-2. Go to `examples` folder and open index.html with a browser. That's all. Server is not required because this examples are very simple and static.
-3. For development, we recommend using Visual Studio Code with the Live Sass Compile and Live Server extensions. This setup will provide a seamless experience until we have [devbox available as standalone tool](https://github.com/zumerlab/devbox).
-
-## Barebone template
-
-Folllowing code set a container and inside it a radial layout with three circles.
+### Download or Include via CDN:
+Download the library files from our repository or include them directly from a CDN in your HTML file:
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../assets/css/index.css" type="text/css" defer/>
-    <title>Zumer CSS Rocks!</title>
-  </head>
-  <body>
-    <div class="pod">
-      <div class="orbit-2 orbiters-3">
-        <div class="orbiter"></div>
-        <div class="orbiter"></div>
-        <div class="orbiter"></div>
-      </div>
-    </div>
-  </body>
-</html>
+<link rel="stylesheet" href="path/to/orbit.css">
 ```
 
-## Guide
+### Install via Package Manager:
+If you are using a package manager like npm or yarn, install the library by running:
 
-Basic documentation to understand and start with Zumer CSS.
+```bash
+npm install @zumerlab/orbit
+```
+
+or
+
+```bash
+yarn add  @zumerlab/orbit
+```
+
+## Basic Usage
+
+### Include Styles:
+Link the library styles in the `<head>` section of your HTML file.
+
+```html
+<head>
+  <link rel="stylesheet" href="path/to/orbit.css">
+</head>
+```
+or 
+
+```html
+<style>
+  @import url('path/to/orbit.css');
+</style>
+```
+
+### Apply Orbit Classes:
+Utilize predefined classes in your HTML elements to benefit from Orbit features. Folllowing code set a container and inside it a radial layout with three circles.
+
+```html
+<div class="container">
+  <div class="orbit">
+    <div class="orbiter"></div>
+    <div class="orbiter"></div>
+    <div class="orbiter"></div>
+  </div>
+</div>
+```
+Congratulations! You've successfully integrated and started using Orbit. Follow next steps for more advanced options and customization possibilities. If you encounter any issues, feel free to reach out to our support community for assistance.
+
+Happy coding!
+
+## Guide
+Basic documentation to understand and start with °〇 Orbit.
 
 ### `pod`
 
@@ -166,17 +171,25 @@ The `svg progress` component also works with orbits and serves the purpose of cr
 The `svg svg-markers` component, designed for orbits, allows for the creation of svg-markers within circular progress bars or knobs. It is implemented using SVG, providing a versatile way to indicate specific points or milestones within the circular progress.
 
 ```html
-   <div class="orbit-3 ">
+   <div class="orbit">
       <svg class="svg-pod">
-          <circle class="svg-markers" /> 
+          <circle class="svg-markers"></circle> 
         </svg>
     </div>
 ```
+## Examples
 
-### `modal` (Coming Soon)
+Radial menu
 
-The `modal` component, coming soon to Zumer, will provide a convenient way to display modal windows within the radial UI.
+Color selector
 
-### `popover` (Coming Soon)
+Analog watch
 
-The `popover` component, also coming soon, will offer a user-friendly and customizable way to present popovers within the radial UI.
+Simon game
+
+Car dashboard
+
+
+
+
+
