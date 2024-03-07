@@ -1,0 +1,30 @@
+/* Satellite class */
+.satellite {
+  width: 5px; /* Adjust satellite size */
+  height: 5px; /* Adjust satellite size */
+  background-color: yellow; /* Adjust satellite color */
+  border-radius: 50%; /* Make it a circle */
+  border: 1px solid black;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(
+    calc(
+      var(--o-radius) / var(--ellipse-ratio-x) *
+        cos(var(--begin-at) + var(--angle) * var(--sat-number))
+    ),
+    calc(
+      var(--o-radius) / var(--ellipse-ratio-y) *
+        sin(var(--begin-at) + var(--angle) * var(--sat-number))
+    )
+  );
+}
+
+.satellite > .orbital-zone {
+  --o-lenght: var(--o-diameter);
+  width: var(--o-lenght);
+  height: auto;
+  justify-content: center;
+  align-items: center;
+}

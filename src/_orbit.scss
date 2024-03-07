@@ -1,0 +1,13 @@
+/* Orbit class */
+.orbit, [class*='orbit-'] {
+  border: 1px solid #007bff; /* Orbit color and thickness */
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / var(--max-orbits));
+  --o-radius: calc(var(--o-diameter) / 2);
+  width: calc(var(--o-diameter) / var(--ellipse-ratio-x));
+  height: calc(var(--o-diameter) / var(--ellipse-ratio-y));
+}

@@ -1,0 +1,12 @@
+@use './variables'  as *;
+:root {
+  --max-orbits: #{$max-orbits};
+  --begin-at: 0deg;
+  --range: 360deg;
+  --ellipse-ratio-x: 1;
+  --ellipse-ratio-y: 1;
+}
+
+* {
+  box-sizing: border-box;
+}

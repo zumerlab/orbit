@@ -1,0 +1,35 @@
+/* Vector class */
+.vector {
+  height: 9px; /*use vars latter */
+  border: none;
+  border-width: 1px;
+  border-style: solid;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  width: calc(var(--o-radius) / var(--orbit-nth) * var(--o-width-factor, 1));
+  padding: 0;
+  background: red;
+  position: absolute;
+  pointer-events: none;
+  transform: translate(
+      calc(
+        (
+            var(--o-radius) -
+              calc(
+                var(--o-radius) / var(--orbit-nth) * var(--o-width-factor, 1)
+              ) / 2
+          ) / var(--ellipse-ratio-x) *
+          cos(var(--begin-at) + var(--angle) * var(--sat-number))
+      ),
+      calc(
+        (
+            var(--o-radius) -
+              calc(
+                var(--o-radius) / var(--orbit-nth) * var(--o-width-factor, 1)
+              ) / 2
+          ) / var(--ellipse-ratio-y) *
+          sin(var(--begin-at) + var(--angle) * var(--sat-number))
+      )
+    )
+    rotate(calc(var(--angle) * var(--sat-number)));
+}
