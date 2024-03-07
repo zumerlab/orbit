@@ -83,70 +83,85 @@ class OrbitSector extends HTMLElement {
 class OrbitProgress extends HTMLElement {
   constructor() {
     super();
-    // Define a Shadow DOM for encapsulation
     this.attachShadow({ mode: 'open' });
   }
-  // armar punteros curvos
+
   connectedCallback() {
-    // Create SVG element
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-    svg.setAttribute('viewBox', '0 0 100 100')
+    this.update();
 
-    // pointer-events: visible;
-    svg.setAttribute('width', this.getAttribute('width') || '100%')
-    svg.setAttribute('height', this.getAttribute('height') || '100%')
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          this.update();
+        }
+      });
+    });
 
-    // Retrieve attributes
-    const widthFactor =
-      getComputedStyle(this).getPropertyValue('--o-width-factor') || 1
-    const orbitNumber =
-      getComputedStyle(this).getPropertyValue('--orbit-nth') || 0
-    const lineCap =
-      getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt'
-    const ellipseX =
-      getComputedStyle(this).getPropertyValue('--ellipse-ratio-x') || 1
-    const ellipseY =
-      getComputedStyle(this).getPropertyValue('--ellipse-ratio-y') || 1
+    observer.observe(this, { attributes: true });
+  }
 
-    const progress =
-      getComputedStyle(this).getPropertyValue('--o-progress') ||
-      this.getAttribute('value') ||
-      0
-    // const max = getComputedStyle(this).getPropertyValue('--o-range') || 0;
-    //  let max = calcularExpresionCSS(max1)
-    const progressColor = this.getAttribute('progress-color') || 'orange'
-    const radius = parseFloat(this.getAttribute('radius')) || 50
-    const strokeWidth = (50 / parseFloat(orbitNumber)) * parseFloat(widthFactor)
+  update() {
+    const svg = this.createSVGElement();
+    const progressArc = this.createProgressArc();
+    svg.appendChild(progressArc);
+    this.shadowRoot.innerHTML = '';
+    this.shadowRoot.appendChild(svg);
+  }
 
-    const realRadius = radius - strokeWidth / 2
-    // Calculate angle for progress
-    const angle = progress //360 * (Math.round(progress) / max);
+  createSVGElement() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('width', this.getAttribute('width') || '100%');
+    svg.setAttribute('height', this.getAttribute('height') || '100%');
+    return svg;
+  }
 
-    // Create progress arc
-    const progressArc = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'path'
-    )
-    const radiusX = realRadius / ellipseX
-    const radiusY = realRadius / ellipseY
-    const startX = 50 + radiusX * Math.cos(-Math.PI / 2)
-    const startY = 50 + radiusY * Math.sin(-Math.PI / 2)
-    const endX = 50 + radiusX * Math.cos(((angle - 90) * Math.PI) / 180)
-    const endY = 50 + radiusY * Math.sin(((angle - 90) * Math.PI) / 180)
-    const largeArcFlag = angle <= 180 ? 0 : 1
-    const d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`
-    progressArc.setAttribute('d', d)
-    progressArc.setAttribute('stroke', progressColor)
-    progressArc.setAttribute('stroke-width', strokeWidth)
-    progressArc.setAttribute('fill', 'transparent')
-    progressArc.setAttribute('stroke-linecap', lineCap)
-    svg.appendChild(progressArc)
+  createProgressArc() {
+    const progressArc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const { radius, strokeWidth, realRadius, ellipseX, ellipseY, progressColor, lineCap, maxAngle } = this.getAttributes();
+    const angle = this.getProgressAngle(maxAngle);
+    const { startX, startY, endX, endY, largeArcFlag, d } = this.calculateArcParameters(angle, realRadius, ellipseX, ellipseY);
+    progressArc.setAttribute('d', d);
+    progressArc.setAttribute('stroke', progressColor);
+    progressArc.setAttribute('stroke-width', strokeWidth);
+    progressArc.setAttribute('fill', 'transparent');
+    progressArc.setAttribute('stroke-linecap', lineCap);
+    return progressArc;
+  }
 
-    // Append SVG to custom element
-    this.shadowRoot.appendChild(svg)
+  getAttributes() {
+    const widthFactor = getComputedStyle(this).getPropertyValue('--o-width-factor') || 1;
+    const orbitNumber = getComputedStyle(this).getPropertyValue('--orbit-nth') || 0;
+    const lineCap = getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt';
+    const ellipseX = getComputedStyle(this).getPropertyValue('--ellipse-ratio-x') || 1;
+    const ellipseY = getComputedStyle(this).getPropertyValue('--ellipse-ratio-y') || 1;
+    const progress = parseFloat(getComputedStyle(this).getPropertyValue('--o-progress') || this.getAttribute('value') || 0);
+    const progressColor = this.getAttribute('progress-color') || 'orange';
+    const radius = parseFloat(this.getAttribute('radius')) || 50;
+    const strokeWidth = (50 / parseFloat(orbitNumber)) * parseFloat(widthFactor);
+    const realRadius = radius - strokeWidth / 2;
+    const maxAngle = parseFloat(this.getAttribute('max-angle')) || 360; // User-defined max angle
+    return { widthFactor, orbitNumber, lineCap, ellipseX, ellipseY, progress, progressColor, radius, strokeWidth, realRadius, maxAngle };
+  }
+
+  getProgressAngle(maxAngle) {
+    const progress = parseFloat(getComputedStyle(this).getPropertyValue('--o-progress') || this.getAttribute('value') || 0);
+    const maxValue = parseFloat(this.getAttribute('max')) || 100; // User-defined max value
+    return (progress / maxValue) * maxAngle; // Calculate angle based on progress and user-defined max angle
+  }
+
+  calculateArcParameters(angle, realRadius, ellipseX, ellipseY) {
+    const radiusX = realRadius / ellipseX;
+    const radiusY = realRadius / ellipseY;
+    const startX = 50 + radiusX * Math.cos(-Math.PI / 2);
+    const startY = 50 + radiusY * Math.sin(-Math.PI / 2);
+    const endX = 50 + radiusX * Math.cos(((angle - 90) * Math.PI) / 180);
+    const endY = 50 + radiusY * Math.sin(((angle - 90) * Math.PI) / 180);
+    const largeArcFlag = angle <= 180 ? 0 : 1;
+    const d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`;
+    return { startX, startY, endX, endY, largeArcFlag, d };
   }
 }
-// Define the custom element
 
 customElements.define('o-sector', OrbitSector)
 
