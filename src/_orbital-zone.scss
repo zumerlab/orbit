@@ -1,0 +1,49 @@
+/* Orbital zone class */
+.orbital-zone {
+  --o-lenght: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: var(--o-lenght);
+  aspect-ratio: 1;
+  position: absolute;
+  pointer-events: none;
+}
+
+.orbital-zone.top-left {
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+}
+.orbital-zone.top-center {
+  align-items: flex-start !important;
+  justify-content: center !important;
+}
+.orbital-zone.top-right {
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+}
+.orbital-zone.bottom-left {
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+}
+.orbital-zone.bottom-center {
+  align-items: flex-end !important;
+  justify-content: center !important;
+}
+.orbital-zone.bottom-right {
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+}
+.orbital-zone.center-left {
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+.orbital-zone.center {
+  align-items: center !important;
+  justify-content: center !important;
+}
+.orbital-zone.center-right {
+  align-items: center !important;
+  justify-content: flex-end !important;
+}

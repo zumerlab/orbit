@@ -1,0 +1,14 @@
+/* Progress class */
+o-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  pointer-events: none;
+  width: var(--o-diameter);
+  --o-width-factor: 1;
+}
+o-progress.rounded {
+  --o-linecap: round;
+}

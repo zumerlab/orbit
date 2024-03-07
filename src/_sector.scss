@@ -1,0 +1,42 @@
+@use './variables' as *;
+/* Sector class */
+o-sector {
+  container-name: sectors;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  transform: rotate(calc((var(--begin-at) + var(--angle) * var(--sat-number))));
+  ---o-width-factor: 1;
+}
+
+o-sector svg path {
+  display: none;
+}
+@container sectors style(--ellipse-ratio-x: 1) and style(--ellipse-ratio-y: 1) {
+  /* Conditional render sector if ratio equals 1*/
+  o-sector svg path {
+    display: block;
+  }
+}
+
+
+o-sector svg {
+  pointer-events: none;
+  overflow: visible;
+}
+o-sector svg > * {
+  pointer-events: stroke;
+}
+o-sector path {
+  stroke-opacity: 0.5;
+  border: 1px solid purple;
+}
+
+o-sector path:hover {
+  stroke: red;
+  cursor: pointer;
+}
