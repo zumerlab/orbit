@@ -1,6 +1,8 @@
 @use './variables' as *;
 /* Sector class */
 o-sector {
+  --o-angle-composite: var(--o-angle) * var(--o-position);
+  ---o-width-factor: 1;
   container-name: sectors;
   display: flex;
   justify-content: center;
@@ -9,14 +11,13 @@ o-sector {
   position: absolute;
   pointer-events: none;
   width: 100%;
-  transform: rotate(calc((var(--begin-at) + var(--angle) * var(--sat-number))));
-  ---o-width-factor: 1;
+  transform: rotate(calc(var(--o-begin-at) + var(--o-angle-composite)));
 }
 
 o-sector svg path {
   display: none;
 }
-@container sectors style(--ellipse-ratio-x: 1) and style(--ellipse-ratio-y: 1) {
+@container sectors style(--o-ellipse-x: 1) and style(--o-ellipse-y: 1) {
   /* Conditional render sector if ratio equals 1*/
   o-sector svg path {
     display: block;
@@ -40,3 +41,4 @@ o-sector path:hover {
   stroke: red;
   cursor: pointer;
 }
+

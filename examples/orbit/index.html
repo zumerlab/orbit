@@ -1,141 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../dist/css/orbit.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../dist/css/orbit.css">
+  <title>Document</title>
+  <style>
+    [class*="orbit-"] {
+     border: none
+    }
+    .connector[class*="orbit-"], .connector [class*="orbit-"] {
+      border: none !important
+    }
+    .connector  .label {
+      justify-content: flex-start;
+    }
+    .connector .satellite {
+      border: none;
+      background: none;
+     
+    }
+    .connector .title {
+      border: 1px solid black;
+      background: none;
+      border-radius: 5%;
+      width: fit-content;
+      height: auto;
+    }
+  </style>
 </head>
+
 <body>
+
     <div class="orbital-zone">
-        <div class="orbit-6">
-          <div class="vector x5"></div>
-          
-          <div class="vector "></div>
-          <div class="vector "></div>
-          <div class="vector "></div>
-          <div class="vector"></div>
-          <div class="vector"></div>
-          
-          <div class="vector"></div>
-          <div class="vector"></div>
-          <div class="vector"></div>
-          <div class="vector"></div>
-          <div class="vector"></div>
-          <div class="vector"></div>
-        </div>
-        <div class="orbit-9 ">
-          <o-sector class=""></o-sector>
-          <o-sector class=""></o-sector>
-          <o-sector></o-sector>
-          <o-sector></o-sector>
-          <o-sector></o-sector>
-          <o-sector></o-sector>
-          <o-sector class=" "></o-sector>
-          <o-sector class=" "></o-sector>
-          <o-sector class=" "></o-sector>
-          <o-sector class=" "></o-sector>
-          <o-sector></o-sector>
-          <o-sector></o-sector>
-        </div>
-      
-        <div class="orbit-5"></div>
-        <div class="orbit-9 " style="border: none;">
-          <div class="satellite">
-            
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
-            </div>
-          </div>
-          <div class="satellite ">
-            <div class="orbital-zone">
-              <div class="orbit-12 "></div>
+      <div class="orbit-4">
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="satellite">
+          <div class="orbital-zone">
+            <div class="orbit-12  connector">
+              <div class="vector x11"></div>
+              <div class="satellite" >
+                <div class="orbital-zone">
+                  <div class="orbit-1">
+                    <div class="satellite label">
+                      <div class="title">hola</div>
+                    </div>
+                  </div>
+               </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="orbit-8"></div>
-        <div class="orbit-10"></div>
-        
-        <div class="orbit-11">
-          <o-progress class="x2 rounded" style="--o-progress: 20"></o-progress>
-        </div>
-        <div class="orbit-12">
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-          <div class="satellite"></div>
-        </div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
       </div>
-      <script src="../../src/components.js"></script>
+      <div class="orbit-6">
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite angle-20"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+      </div>
+      <div class="orbit-9 ">
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+        <div class="vector"></div>
+      </div>
+      <div class="orbit-9 range-180">
+        <o-sector></o-sector>
+        <o-sector class="gap5"></o-sector>
+        
+        <o-sector></o-sector>
+        <o-sector></o-sector>
+      </div>
+      <div class="orbit-11">
+        <o-progress value="12.999" max="50" max-angle="45"></o-progress>
+        
+      </div>
+    </div>
+
+ 
+  <script src="../../src/components.js"></script>
 </body>
+
 </html>
