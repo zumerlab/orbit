@@ -1,10 +1,10 @@
 @use './variables'  as *;
 :root {
-  --max-orbits: #{$max-orbits};
-  --begin-at: 0deg;
-  --range: 360deg;
-  --ellipse-ratio-x: 1;
-  --ellipse-ratio-y: 1;
+  --o-max-orbits: #{$max-orbits};
+  --o-begin-at: 0deg;
+  --o-range: 360deg;
+  --o-ellipse-x: 1;
+  --o-ellipse-y: 1;
 }
 
 * {

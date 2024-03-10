@@ -6,8 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / var(--max-orbits));
+  --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / var(--o-max-orbits));
   --o-radius: calc(var(--o-diameter) / 2);
-  width: calc(var(--o-diameter) / var(--ellipse-ratio-x));
-  height: calc(var(--o-diameter) / var(--ellipse-ratio-y));
+  width: calc(var(--o-diameter) / var(--o-ellipse-x));
+  height: calc(var(--o-diameter) / var(--o-ellipse-y));
 }

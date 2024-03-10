@@ -1,10 +1,21 @@
 @use './variables' as *;
 /* Utilities */
 
-/* Sector utilities */ 
-@for $i from 1 through $max-orbiters {
-  o-sector.gap#{$i} {
-    --o-gap: #{$i};
+/* Range, begin-at and angle classes utility */
+$max-grade: 360;
+@for $i from 0 through $max-grade {
+  .range-#{$i} {
+    --o-range: #{$i}deg;
+  }
+}
+@for $i from 0 through $max-grade {
+  .begin-at-#{$i} {
+    --o-begin-at: #{$i}deg;
+  }
+}
+@for $i from 0 through $max-grade {
+  .angle-#{$i} {
+    --o-angle-composite: #{$i}deg;
   }
 }
 
@@ -21,10 +32,10 @@
 * Can be used in parent elements or in each orbiter class
 */ 
 
-$sub-factors: 4;
+$sub-factors: 10;
 @for $i from 1 to  $sub-factors {
-  $name: $i / $sub-factors * 100;
-  $value: $i / $sub-factors; 
+  $name: calc($i / $sub-factors * 100);
+  $value: calc($i / $sub-factors); 
   .x0#{$name} {
     --o-width-factor: #{$value}; 
   }

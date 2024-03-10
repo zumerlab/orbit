@@ -1,5 +1,6 @@
 /* Satellite class */
 .satellite {
+  --o-angle-composite: var(--o-angle) * var(--o-position);
   width: 5px; /* Adjust satellite size */
   height: 5px; /* Adjust satellite size */
   background-color: yellow; /* Adjust satellite color */
@@ -11,12 +12,12 @@
   align-items: center;
   transform: translate(
     calc(
-      var(--o-radius) / var(--ellipse-ratio-x) *
-        cos(var(--begin-at) + var(--angle) * var(--sat-number))
+      var(--o-radius) / var(--o-ellipse-x) *
+        cos(var(--o-begin-at) + var(--o-angle-composite))
     ),
     calc(
-      var(--o-radius) / var(--ellipse-ratio-y) *
-        sin(var(--begin-at) + var(--angle) * var(--sat-number))
+      var(--o-radius) / var(--o-ellipse-y) *
+        sin(var(--o-begin-at) + var(--o-angle-composite))
     )
   );
 }

@@ -9,7 +9,7 @@
   border: 1px solid red;
 }
 @for $i from 1 through $max-orbits {
-    .orbit:nth-child(#{$i}), .orbit-#{$i} {
+    :nth-child(#{$i} of .orbit), .orbit-#{$i} {
     --orbit-nth: #{$i};
     }
 }
@@ -17,20 +17,14 @@
 /* Satellites, sectors and vectors layout */
 
 @for $i from 1 through $max-orbiters {
-    .satellite:nth-child(#{$i}), o-sector:nth-child(#{$i}), .vector:nth-child(#{$i}) {
-    --sat-number: #{$i};
+    :nth-child(#{$i} of .satellite), :nth-child(#{$i} of o-sector), :nth-child(#{$i} of .vector) {
+    --o-position: #{$i};
     }
 }
 
 @for $i from 1 through $max-orbiters {
-    .satellite:nth-child(#{$i}), o-sector:nth-child(#{$i}), .vector:nth-child(#{$i}) {
-    --sat-number: #{$i};
-    }
-}
-
-@for $i from 1 through $max-orbiters {
-    .orbit:has(> .satellite:nth-child(#{$i}), > o-sector:nth-child(#{$i}), > .vector:nth-child(#{$i})),
-    [class*='orbit-']:has(> .satellite:nth-child(#{$i}), > o-sector:nth-child(#{$i}), > .vector:nth-child(#{$i})) {
-    --angle: calc(var(--range) / #{$i});
+    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .vector)),
+    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .vector)) {
+    --o-angle: calc(var(--o-range) / #{$i});
     }
 }

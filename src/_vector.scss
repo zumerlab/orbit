@@ -1,14 +1,11 @@
 /* Vector class */
 .vector {
-  height: 9px; /*use vars latter */
+  --o-angle-composite: var(--o-angle) * var(--o-position);
+  height: 1px; /*use vars latter */
   border: none;
-  border-width: 1px;
-  border-style: solid;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
   width: calc(var(--o-radius) / var(--orbit-nth) * var(--o-width-factor, 1));
   padding: 0;
-  background: red;
+  background: rgb(0, 0, 0);
   position: absolute;
   pointer-events: none;
   transform: translate(
@@ -18,8 +15,8 @@
               calc(
                 var(--o-radius) / var(--orbit-nth) * var(--o-width-factor, 1)
               ) / 2
-          ) / var(--ellipse-ratio-x) *
-          cos(var(--begin-at) + var(--angle) * var(--sat-number))
+          ) / var(--o-ellipse-x) *
+          cos(var(--o-begin-at) + var(--o-angle-composite))
       ),
       calc(
         (
@@ -27,9 +24,9 @@
               calc(
                 var(--o-radius) / var(--orbit-nth) * var(--o-width-factor, 1)
               ) / 2
-          ) / var(--ellipse-ratio-y) *
-          sin(var(--begin-at) + var(--angle) * var(--sat-number))
+          ) / var(--o-ellipse-y) *
+          sin(var(--o-begin-at) + var(--o-angle-composite))
       )
     )
-    rotate(calc(var(--angle) * var(--sat-number)));
+    rotate(calc(var(--o-angle-composite)));
 }
