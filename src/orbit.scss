@@ -1,9 +1,13 @@
+// Orbit core
 @import './settings';
 @import './orbital-zone';
-@import './_orbit';
+@import './_orbit-class';
 @import './satellite';
 @import './vector';
 @import './sector';
 @import './progress';
 @import './utilities';
 @import './radial-layout';
+// Orbit theme
+@import './orbital-zone_theme';
+@import './orbit-class_theme';

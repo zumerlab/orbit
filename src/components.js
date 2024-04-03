@@ -6,7 +6,7 @@
 // OK orbit -ratios
 // OK armar class vector
 // OK usar nth type para evitar conflictos. OJO ERROR EN ORBIT HAS
-// USAR ESBUILD para el bundle de cwc y sass
+// USAR ESBUILD para el bundle de cwc y sass. OK probar luego
 // trabajar en los satelittes NO
 // curved text component
 // label component

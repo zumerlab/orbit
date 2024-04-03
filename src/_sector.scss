@@ -1,5 +1,16 @@
 @use './variables' as *;
-/* Sector class */
+/* o-sector class 
+ <o-sector> is an web-component for rendering a radial sector slices. 
+ It has some special attributes and css variables that user can modify:
+  
+    --o-linecap: to set ending cap of progress bar. Class .rounded can be added. Default 'butt'
+    --o-progress ||  attribute 'value'. To set progress value. Default 0
+    attribute 'progress-color'. To set color of porgress bar. Default 'orange'
+    attribute 'max-angle'. Uset defined max angle. Default 360;
+
+ css properties affect <o-progress> web-component.
+
+*/
 o-sector {
   --o-angle-composite: var(--o-angle) * var(--o-position);
   ---o-width-factor: 1;
@@ -14,11 +25,13 @@ o-sector {
   transform: rotate(calc(var(--o-begin-at) + var(--o-angle-composite)));
 }
 
+/* Conditional render sector if ratio equals 1*/
 o-sector svg path {
+  /* By default is hidden */
   display: none;
 }
 @container sectors style(--o-ellipse-x: 1) and style(--o-ellipse-y: 1) {
-  /* Conditional render sector if ratio equals 1*/
+  /* Shown if ratio equals 1*/
   o-sector svg path {
     display: block;
   }
