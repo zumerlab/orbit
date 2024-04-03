@@ -1,7 +1,49 @@
 @use './variables' as *;
-/* Utilities */
+/* 
+  Orbit utilities 
+*/
 
-/* Range, begin-at and angle classes utility */
+/* .orbital-zone  aligment utilities */
+.orbital-zone.top-left {
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+}
+.orbital-zone.top-center {
+  align-items: flex-start !important;
+  justify-content: center !important;
+}
+.orbital-zone.top-right {
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+}
+.orbital-zone.bottom-left {
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+}
+.orbital-zone.bottom-center {
+  align-items: flex-end !important;
+  justify-content: center !important;
+}
+.orbital-zone.bottom-right {
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+}
+.orbital-zone.center-left {
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+.orbital-zone.center {
+  align-items: center !important;
+  justify-content: center !important;
+}
+.orbital-zone.center-right {
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+/* 
+  Range, begin-at and angle classes utilities 
+*/
 $max-grade: 360;
 @for $i from 0 through $max-grade {
   .range-#{$i} {
@@ -19,17 +61,22 @@ $max-grade: 360;
   }
 }
 
-/* Sector, Progress and Vector utilities */ 
+/* 
+  Sector, Progress and Vector utilities 
+*/ 
 
-/* Sector gap*/ 
+/* 
+  Sector gap 
+*/ 
 @for $i from 1 through $max-orbiters {
   o-sector.gap#{$i} {
     --o-gap: #{$i};
   }
 }
 
-/* Sector, Progress and Vector width-factor 
-* Can be used in parent elements or in each orbiter class
+/* 
+  Sector, Progress and Vector width-factor USE GROW-FACTOR
+Ca  n be used in parent elements or in each orbiter class
 */ 
 
 $sub-factors: 10;

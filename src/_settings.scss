@@ -1,4 +1,10 @@
 @use './variables'  as *;
+
+/*
+  Orbit Root initial css variable declaration
+
+  TO-DO make it root independient
+*/
 :root {
   --o-max-orbits: #{$max-orbits};
   --o-begin-at: 0deg;
@@ -7,6 +13,7 @@
   --o-ellipse-y: 1;
 }
 
+/* Orbit basic reset */
 * {
   box-sizing: border-box;
 }
