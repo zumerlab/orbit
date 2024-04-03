@@ -1,16 +1,50 @@
-/* Orbital zone class */
+/* .orbital-zone class 
+Orbital zone is a  funcitonal class that groups .orbit classes.
+Is a container with a lenght that is defined just once by --o-lenght when 
+Orbit app is initializated. When Orbital zone is nested in a .satellite its lenght
+will depend on .satellite's .orbit diameter.
+
+Important: orbital-zone can be only nested into a satellite
+
+Usage:
+<div class="orbital-zone">
+  <div class="orbit"></div>
+  <div class="orbit">
+    <div class="satellite">
+      <div class="orbital-zone"> <-- nested !-->
+        <div class="orbit"></div>
+      </div>
+    </div
+  </div>
+</div>
+
+
+*/
 .orbital-zone {
+  /* Variables */
   --o-lenght: 500px;
+  width: var(--o-lenght);
+  /* Core settings */
+  aspect-ratio: 1;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none; /* To avoid event conflict with other elements */
+  /* Reset theme to default */
   border: none;
-  width: var(--o-lenght);
-  aspect-ratio: 1;
-  position: absolute;
-  pointer-events: none;
 }
 
+
+.satellite > .orbital-zone {
+   /* When nested orbital-zone takes its lenght from the diameter of satellite's orbit */
+  --o-lenght: var(--o-diameter);
+  width: var(--o-lenght);
+  height: auto;
+}
+
+
+/* Arrange .orbital-zone child elements*/
 .orbital-zone.top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
