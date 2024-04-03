@@ -1,45 +1,42 @@
-/* .orbit class 
- This class renders a circumsference around a .orbital-zone center and allows other elements to be 
- distributed along width. By default there are 12 orbits. The number of orbits can be change on --o-max-orbits,
- or in scss source $max-orbits var.
+/* 
+  ORBIT CLASS
+    This class renders a circumsference around a .orbital-zone center and allows other elements to be 
+    distributed along width. By default there are 12 orbits. The number of orbits can be change on --o-max-orbits,
+    or in scss source $max-orbits var.
 
- Important: .orbit is a direct child element of .orbital-zone.
+    Important: .orbit is a direct child element of .orbital-zone.
 
- Usage: 
- <div class="orbital-zone">
-  <div class="orbit"></div>
-  <div class="orbit"></div>
-  ...
- </div>
+    Usage: 
+    <div class="orbital-zone">
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      ...
+    </div>
 
- Examples:
- - This renders three orbits equally distributed 
-  <div class="orbit"></div>
-  <div class="orbit"></div>
-  <div class="orbit"></div>
+    Examples:
+    - This renders three orbits equally distributed 
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbit"></div>
 
- - This renders three orbits with custom distribution
-  <div class="orbit-2"></div>
-  <div class="orbit-9"></div>
-  <div class="orbit-12"></div>
+    - This renders three orbits with custom distribution
+      <div class="orbit-2"></div>
+      <div class="orbit-9"></div>
+      <div class="orbit-12"></div>
 
-Customization:
-Besides css properties that user can change according his needs, there two css variables to convert .orbit into 
-an ellipse (--o-ellipse-x, and --o-ellipse-y). This will affect orbit and its childs, with an excepcion of <o-sector>
-web component that will be hide when orbit is an ellipse.
+    Customization:
+    Besides css properties that user can change according his needs, there two css variables to convert .orbit into 
+    an ellipse (--o-ellipse-x, and --o-ellipse-y). This will affect orbit and its childs, with an excepcion of <o-sector>
+    web component that will be hide when orbit is an ellipse.
 
-There are some utility classes that are set on orbit element and affect its child radial layout (.begin-at-*, .range-*). 
-Please see Radial Layout section
-
-
+    There are some utility classes that are set on orbit element and affect its child radial layout (.begin-at-*, .range-*). 
+    Please see Radial Layout section.
 */
 .orbit, [class*='orbit-'] {
-  /* Variables */
   --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / var(--o-max-orbits));
   --o-radius: calc(var(--o-diameter) / 2);
   width: calc(var(--o-diameter) / var(--o-ellipse-x));
   height: calc(var(--o-diameter) / var(--o-ellipse-y));
-  /* Core .orbit settings */
   position: absolute;
   display: flex;
   justify-content: center;

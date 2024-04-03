@@ -1,15 +1,12 @@
 @use './variables' as *;
-/* o-sector class 
- <o-sector> is an web-component for rendering a radial sector slices. 
- It has some special attributes and css variables that user can modify:
-  
-    --o-linecap: to set ending cap of progress bar. Class .rounded can be added. Default 'butt'
-    --o-progress ||  attribute 'value'. To set progress value. Default 0
-    attribute 'progress-color'. To set color of porgress bar. Default 'orange'
-    attribute 'max-angle'. Uset defined max angle. Default 360;
-
- css properties affect <o-progress> web-component.
-
+/* 
+  O-SECTOR
+    <o-sector> is an web-component for rendering a radial sector slices. 
+    It has some special attributes and css variables that user can modify:
+      --o-width-factor. Set the lenght of o-sector relative to its orbit. Default 1. .x* utility could be use.
+      --o-gap. Set a gap space between sectors. Default 0
+      attribute 'progress-color'. Set the secctor background color || '#00ff00'; MAKE FRIENDLY
+      attribute 'radius' || 50 CHECK
 */
 o-sector {
   --o-angle-composite: var(--o-angle) * var(--o-position);
@@ -25,7 +22,9 @@ o-sector {
   transform: rotate(calc(var(--o-begin-at) + var(--o-angle-composite)));
 }
 
-/* Conditional render sector if ratio equals 1*/
+/* 
+  Conditional render sector if ratio equals 1
+*/
 o-sector svg path {
   /* By default is hidden */
   display: none;
@@ -37,7 +36,6 @@ o-sector svg path {
   }
 }
 
-
 o-sector svg {
   pointer-events: none;
   overflow: visible;
@@ -45,13 +43,3 @@ o-sector svg {
 o-sector svg > * {
   pointer-events: stroke;
 }
-o-sector path {
-  stroke-opacity: 0.5;
-  border: 1px solid purple;
-}
-
-o-sector path:hover {
-  stroke: red;
-  cursor: pointer;
-}
-

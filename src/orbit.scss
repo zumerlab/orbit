@@ -1,4 +1,6 @@
-// Orbit core
+/*================
+    ORBIT CORE
+==================*/
 @import './settings';
 @import './orbital-zone';
 @import './_orbit-class';
@@ -6,8 +8,15 @@
 @import './vector';
 @import './sector';
 @import './progress';
-@import './utilities';
 @import './radial-layout';
-// Orbit theme
+@import './utilities';
+
+/*=================
+    ORBIT THEME
+===================*/
 @import './orbital-zone_theme';
 @import './orbit-class_theme';
+@import './satellite_theme';
+@import './sector_theme';
+@import './progress_theme';
+@import './vector_theme';

@@ -1,20 +1,15 @@
-/* o-progress class 
- <o-progress> is an web-component for rendering a radial progress bar. 
- It has some special attributes and css variables that user can modify:
-  
-    --o-linecap: to set ending cap of progress bar. Class .rounded can be added. Default 'butt'
-    --o-progress ||  attribute 'value'. To set progress value. Default 0
-    attribute 'progress-color'. To set color of porgress bar. Default 'orange'
-    attribute 'max-angle'. Uset defined max angle. Default 360;
-
- css properties affect <o-progress> web-component.
-
+/* 
+  O-PROGRESS
+    <o-progress> is a web-component for rendering a radial progress bar. 
+    It has some special attributes and css variables that user can modify:
+        --o-linecap: to set ending cap of progress bar. Class .rounded can be added. Default 'butt'
+        --o-progress ||  attribute 'value'. To set progress value. Default 0
+        attribute 'progress-color'. To set color of porgress bar. Default 'orange'. MAKE FRIENDLY
+        attribute 'max-angle'. Uset defined max angle. Default 360
 */
 o-progress {
-  /* Variables */
   --o-width-factor: 1;
   width: var(--o-diameter);
-  /* Core settings */
   position: absolute;
   display: flex;
   justify-content: center;
@@ -22,6 +17,7 @@ o-progress {
   border-radius: 50%;
   pointer-events: none; /* To avoid events conflicts with other elements */
 }
+
 o-progress.rounded {
   --o-linecap: round;
 }

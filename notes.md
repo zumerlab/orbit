@@ -235,3 +235,29 @@ nombres... elimnar prefijossss
 orbit size cambiar nombre
 
 penssar en algo tipo span sectors, orbiters
+
+// Define the custom SVG progress bar element
+// todos: componente sector tiene que tener posibilidad de bordes. acomoder el angulo inicial que esta en -90
+// OK aramr un componentes de progress. 
+  // satelite... up and low tangential
+  // comoentes... up/center/low?
+// OK orbit -ratios
+// OK armar class vector
+// OK usar nth type para evitar conflictos. OJO ERROR EN ORBIT HAS
+// USAR ESBUILD para el bundle de cwc y sass. OK probar luego
+// trabajar en los satelittes NO
+// curved text component
+// label component
+// pesnar el tema de los sector/ progress con medidas desiguales para ponner el sunburst charts
+// SEPARAR BASE DE STILO
+// 
+// mostrar cada estado de cada elemento posible en los docs, chiquito minimalista
+// armar templates para descargar con $
+//    - graficos: sunburst/pie/donut/gauges/rose
+//    - knobs
+//    - futurist
+//    - menu
+//    - mandalas
+//
+//
+//
