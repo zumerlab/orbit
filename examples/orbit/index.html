@@ -1,39 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/css/orbit.css" />
+    <title>Document</title>
+    <style>
+      .connector[class*='orbit-'],
+      .connector [class*='orbit-'] {
+        border: none !important;
+      }
+      .connector .label {
+        justify-content: flex-start;
+      }
+      .connector .satellite {
+        border: none;
+        background: none;
+      }
+      .connector .title {
+        border: 1px solid black;
+        background: none;
+        border-radius: 5%;
+        width: fit-content;
+        height: auto;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../dist/css/orbit.css">
-  <title>Document</title>
-  <style>
-    [class*="orbit-"] {
-     border: none
-    }
-    .connector[class*="orbit-"], .connector [class*="orbit-"] {
-      border: none !important
-    }
-    .connector  .label {
-      justify-content: flex-start;
-    }
-    .connector .satellite {
-      border: none;
-      background: none;
-     
-    }
-    .connector .title {
-      border: 1px solid black;
-      background: none;
-      border-radius: 5%;
-      width: fit-content;
-      height: auto;
-    }
-  </style>
-</head>
-
-<body>
-
+  <body>
     <div class="orbital-zone">
+      <div class="orbit-2">
+        <o-sector></o-sector>
+        <o-sector></o-sector>
+        <div class="satellite"></div>
+      </div>
       <div class="orbit-4">
         <div class="vector"></div>
         <div class="vector"></div>
@@ -52,54 +52,65 @@
         <div class="vector"></div>
         <div class="satellite">
           <div class="orbital-zone">
-            <div class="orbit-12  connector">
+            <div class="orbit-12 connector">
               <div class="vector x11"></div>
-              <div class="satellite" >
+              <div class="satellite">
                 <div class="orbital-zone">
                   <div class="orbit-1">
                     <div class="satellite label">
                       <div class="title">hola</div>
                     </div>
                   </div>
-               </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="satellite"></div>
-        <div class="satellite"></div>
-        <div class="satellite"></div>
+
         <div class="satellite"></div>
       </div>
       <div class="orbit-6">
-        <div class="satellite"></div>
-        <div class="satellite"></div>
+        <div class="satellite inner"></div>
+        <div class="satellite outer"></div>
         <div class="satellite angle-20"></div>
-        <div class="satellite"></div>
+        <div class="satellite">
+          <div class="orbital-zone">
+            <div class="orbit-2">
+              <o-sector class="outer"></o-sector>
+              <o-sector></o-sector>
+              <o-sector></o-sector>
+            </div>
+          </div>
+        </div>
         <div class="satellite"></div>
       </div>
-      <div class="orbit-9 ">
+      <div class="orbit-9">
         <div class="vector"></div>
-        <div class="vector"></div>
-        <div class="vector"></div>
+        <div class="vector inner"></div>
+        <div class="vector outer"></div>
         <div class="vector"></div>
         <div class="vector"></div>
       </div>
-      <div class="orbit-9 range-180">
+      <div class="orbit-9">
         <o-sector></o-sector>
         <o-sector class="gap5"></o-sector>
-        
-        <o-sector></o-sector>
-        <o-sector></o-sector>
+
+        <o-sector class="inner size-2x"></o-sector>
+        <o-sector class="outer"></o-sector>
       </div>
       <div class="orbit-11">
-        <o-progress value="12.999" max="50" max-angle="45"></o-progress>
-        
+        <o-progress
+          value="50"
+          max="100"
+          bar-color="purple"
+          bg-color="gray"
+          class="begin-at-45 range-90 size-1x rounded"
+        ></o-progress>
+        <div class="satellite"></div>
       </div>
     </div>
 
- 
-  <script src="../../src/components.js"></script>
-</body>
-
+    <script type="module" src="../../src/orbit.js"></script>
+  </body>
 </html>

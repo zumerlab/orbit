@@ -1,16 +1,12 @@
 @use './variables' as *;
-/* 
-  O-SECTOR
-    <o-sector> is an web-component for rendering a radial sector slices. 
-    It has some special attributes and css variables that user can modify:
-      --o-width-factor. Set the lenght of o-sector relative to its orbit. Default 1. .x* utility could be use.
-      --o-gap. Set a gap space between sectors. Default 0
-      attribute 'progress-color'. Set the secctor background color || '#00ff00'; MAKE FRIENDLY
-      attribute 'radius' || 50 CHECK
+/*!
+## <o-sector>
+
+See o-sector docs in web-component file.
+
 */
 o-sector {
   --o-angle-composite: var(--o-angle) * var(--o-position);
-  ---o-width-factor: 1;
   container-name: sectors;
   display: flex;
   justify-content: center;
@@ -19,6 +15,8 @@ o-sector {
   position: absolute;
   pointer-events: none;
   width: 100%;
+  r: var(--o-radius);
+  stroke-width:  calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
   transform: rotate(calc(var(--o-begin-at) + var(--o-angle-composite)));
 }
 

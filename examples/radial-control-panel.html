@@ -1,406 +1,412 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/orbit-base.min.css" type="text/css" defer />
-    <link rel="stylesheet" href="../assets/css/orbit-theme.min.css" type="text/css" defer />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="../assets/css/orbit-base.min.css"
+      type="text/css"
+      defer
+    />
+    <link
+      rel="stylesheet"
+      href="../assets/css/orbit-theme.min.css"
+      type="text/css"
+      defer
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+      integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <title>Orbit - dashboard</title>
     <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        .container {
-           
-        }
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif;
+      }
+      .container {
+      }
 
-        .sector {
-            background-color: rgba(128, 128, 128, 0);
-            border-color: var(--o-cyan-light);
-            --o-width: 39px;
-            --o-sector-gap: -1px;
-            cursor: pointer;
-            
-            
-        }
-
-       .header {
+      .sector {
+        background-color: rgba(128, 128, 128, 0);
+        border-color: var(--o-cyan-light);
+        --o-width: 39px;
+        --o-sector-gap: -1px;
         cursor: pointer;
-       }
-        .core .content {
-            position: relative;
-        }
+      }
 
-        .sector .content {
-            left: 50px;
-        }
+      .header {
+        cursor: pointer;
+      }
+      .core .content {
+        position: relative;
+      }
 
-        .color {
-            border: 2px solid black;
-            box-shadow: black 1px 1px 1px;
-        }
+      .sector .content {
+        left: 50px;
+      }
 
-        .red{
-            background-color: var(--o-red);
-        }
-        .orange{
-            background-color: var(--o-orange);
-        }
-        .cyan{
-            background-color: var(--o-cyan);
-        }
-        .blue{
-            background-color: var(--o-blue);
-        }
-        .green{
-            background-color: var(--o-green);
-        }
-        .purple{
-            background-color: var(--o-purple);
-        }
-        .black{
-            background-color: black;
-        }
-        .gray{
-            background-color: var(--o-gray);
-        }
-        .back {
-            width: 950px;
-            height: 540px;
-            background-color: black;
-            border-radius: 15px;
-        }
+      .color {
+        border: 2px solid black;
+        box-shadow: black 1px 1px 1px;
+      }
 
-        .big, .small {
-            border: 2px solid rgb(228, 228, 228);
-            color: rgb(228, 228, 228)
-        }
-        .small.left{
-            --o-rotate: 155deg
-        }
-        .small.right{
-            --o-rotate: 90deg;
-            --o-x-coords: 86px !important;
-            --o-size: 108px
-        }
-        .svg-markers {
-            stroke: rgb(228, 228, 228) !important;
-            --o-marker-width: 2px !important;
-            stroke-width: 30px !important;
-        }
-        .km {
-            --o-svg-markers: 11 !important
-        }
+      .red {
+        background-color: var(--o-red);
+      }
+      .orange {
+        background-color: var(--o-orange);
+      }
+      .cyan {
+        background-color: var(--o-cyan);
+      }
+      .blue {
+        background-color: var(--o-blue);
+      }
+      .green {
+        background-color: var(--o-green);
+      }
+      .purple {
+        background-color: var(--o-purple);
+      }
+      .black {
+        background-color: black;
+      }
+      .gray {
+        background-color: var(--o-gray);
+      }
+      .back {
+        width: 950px;
+        height: 540px;
+        background-color: black;
+        border-radius: 15px;
+      }
 
-        .kmsmall {
-            --o-svg-markers: 44 !important;
-            stroke-width: 20px !important;
-        }
-        .gasbig {
-            --o-svg-markers: 9 !important;
-            stroke-width: 20px !important;
-        }
-        .gasmall {
-            --o-svg-markers: 18 !important;
-            stroke-width: 17px !important;
-        }
-        .base {
-            background-color: black !important;
-            border-color: gray;
-            --o-width: 0px !important;
-            z-index: 6;
+      .big,
+      .small {
+        border: 2px solid rgb(228, 228, 228);
+        color: rgb(228, 228, 228);
+      }
+      .small.left {
+        --o-rotate: 155deg;
+      }
+      .small.right {
+        --o-rotate: 90deg;
+        --o-x-coords: 86px !important;
+        --o-size: 108px;
+      }
+      .svg-markers {
+        stroke: rgb(228, 228, 228) !important;
+        --o-marker-width: 2px !important;
+        stroke-width: 30px !important;
+      }
+      .km {
+        --o-svg-markers: 11 !important
+        ;
+      }
 
-    --o-sector-gap: -115px  !important;
-        }
-        .basesmall {
-            background-color: black !important;
-            border-color: gray;
-            --o-width: 0px !important;
-            z-index: 6;
+      .kmsmall {
+        --o-svg-markers: 44 !important;
+        stroke-width: 20px !important;
+      }
+      .gasbig {
+        --o-svg-markers: 9 !important;
+        stroke-width: 20px !important;
+      }
+      .gasmall {
+        --o-svg-markers: 18 !important;
+        stroke-width: 17px !important;
+      }
+      .base {
+        background-color: black !important;
+        border-color: gray;
+        --o-width: 0px !important;
+        z-index: 6;
 
-    --o-sector-gap: -208px  !important;
-        }
+        --o-sector-gap: -115px !important;
+      }
+      .basesmall {
+        background-color: black !important;
+        border-color: gray;
+        --o-width: 0px !important;
+        z-index: 6;
 
-        
-        .bignumbers {
+        --o-sector-gap: -208px !important;
+      }
 
-            --o-arc: 291 !important;
-    --o-offset-angle: 142 !important;
-    --o-size: 250px !important;
-        }
+      .bignumbers {
+        --o-arc: 291 !important;
+        --o-offset-angle: 142 !important;
+        --o-size: 250px !important;
+      }
 
-        .smallnumbers {
+      .smallnumbers {
+        --o-arc: 262 !important;
+        --o-offset-angle: 156 !important;
+        --o-size: 255px !important;
+        font-size: x-small;
+      }
 
-            --o-arc: 262 !important;
-    --o-offset-angle: 156 !important;
-    --o-size: 255px !important;
-    font-size: x-small;
-}
+      .smallnumbers2 {
+        --o-arc: 357 !important;
+        --o-offset-angle: 152 !important;
+        --o-size: 90px !important;
+        font-size: smaller;
+      }
+      .center {
+        border: 2px solid hsl(0deg 0% 69.86%);
+        --o-x-coords: 0px !important;
+        z-index: 8;
 
-.smallnumbers2{
-    --o-arc: 357 !important;
-    --o-offset-angle: 152 !important;
-    --o-size: 90px !important;
-    font-size: smaller;
-}
-.center {
+        box-shadow: inset 0px 0px 6px 0px hsl(240, 2%, 60%);
+      }
+      .bigneedle {
+        transform: translate(73px, 0);
+        width: 106px;
+        height: 3px;
+        background-color: crimson;
+        border: 1px solid red;
+      }
 
-    border: 2px solid hsl(0deg 0% 69.86%);
-    --o-x-coords: 0px !important;
-    z-index: 8;
-   
-    box-shadow: inset 0px 0px 6px 0px hsl(240, 2%, 60%);
-}
-.bigneedle {
+      .smallneedle {
+        transform: translate(27px, 0);
+        width: 32px;
+        height: 3px;
+        background-color: crimson;
+        border: 1px solid red;
+      }
+      .rpmcontainer {
+        rotate: 337deg;
+      }
+      .highrpm {
+        stroke: crimson;
+        --o-val: 18;
+      }
+      .lowlevel {
+        stroke: crimson;
+        --o-val: 10;
+      }
+      .lowlevelcontainer {
+        rotate: -209deg;
+      }
 
-    transform: translate(73px, 0);
-    width: 106px;
-    height: 3px;
-    background-color: crimson;
-    border: 1px solid red;
-}
+      .temper {
+        stroke: crimson;
+        --o-val: 11;
+      }
+      .tempercontainer {
+        rotate: -8deg;
+      }
 
-.smallneedle {
-    transform: translate(27px, 0);
-    width: 32px;
-    height: 3px;
-    background-color: crimson;
-    border: 1px solid red;
+      .gas {
+        --o-rotate: 180deg;
+      }
 
-}
-.rpmcontainer {
-    rotate: 337deg
-}
-.highrpm {
-    stroke: crimson;
-    --o-val: 18;
-}
-.lowlevel {
-
-    stroke: crimson;
-    --o-val: 10;
-}
-.lowlevelcontainer {
-    rotate: -209deg
-}
-
-.temper {
-
-stroke: crimson;
---o-val: 11;
-}
-.tempercontainer {
-    rotate: -8deg
-}
-
-.gas{
-    --o-rotate: 180deg
-}
-
-.kmh{
-    --o-rotate: 149deg
-}
-
-
+      .kmh {
+        --o-rotate: 149deg;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <main class=" container-query-enabled back">
-       <section class=" container">
-        <div class=" orbit  size-4 border">
-            
-            <div class=" orbiter  xxl big">
-                <div class=" orbit" style="
-                --o-diameter: 332px;
-                border: 4px solid rgb(228, 228, 228);">
-                    
-                    <div class=" orbit">
-                        <svg class=" svg">
-                            <circle class=" svg-markers km"></circle>
-                        </svg>
-                   
-                        <svg class=" svg">
-                            <circle class=" svg-markers kmsmall"></circle>
-                        </svg>
-                    </div>
-                    <div class=" orbit  limit-90  offset-45">
-                        <div class=" sector base"></div>
-                    </div>
-                    
-                    <div class=" orbit  offset-90 ">
-                        <div class=" orbiter small  right  md  lower ">
-                            <div class=" orbit">
-                                <div class=" orbit">
-                                    <svg class=" svg lowlevelcontainer">
-                                        <circle class=" svg-progress lowlevel"></circle>
-                                    </svg>
-                                    <svg class=" svg">
-                                        <circle class=" svg-markers gasbig"></circle>
-                                    </svg>
-                                    <svg class=" svg">
-                                        <circle class=" svg-markers gasmall"></circle>
-                                    </svg>
-                                </div>
-                                <div class=" orbit  limit-90  offset-45">
-                                    <div class=" sector basesmall"></div>
-                                </div>
-                                <div class=" orbit">
-                                    <div class=" orbiter  xs center" style=" rotate:-41deg">
-                                        <hr class="smallneedle" />
-                                    </div>
-                                </div>
-                                <div class=" orbit smallnumbers2">
-                                    <div class=" orbiter  xs  lower gas"> <i class="fa-solid fa-gas-pump"></i></div>
-                                   
-                                </div>
-                               
-                                <div class=" orbit smallnumbers2">
-                                    <div class=" orbiter  xs  lower">0</div>
+  <body>
+    <main class="container-query-enabled back">
+      <section class="container">
+        <div class="orbit size-4 border">
+          <div class="orbiter xxl big">
+            <div
+              class="orbit"
+              style="--o-diameter: 332px; border: 4px solid rgb(228, 228, 228)"
+            >
+              <div class="orbit">
+                <svg class="svg">
+                  <circle class="svg-markers km"></circle>
+                </svg>
 
-                                    <div class=" orbiter  xs  lower">1/2</div>
-                                    <div class=" orbiter  xs  lower">1</div>
-                                </div>
-                            </div>
-                        </div>
+                <svg class="svg">
+                  <circle class="svg-markers kmsmall"></circle>
+                </svg>
+              </div>
+              <div class="orbit limit-90 offset-45">
+                <div class="sector base"></div>
+              </div>
+
+              <div class="orbit offset-90">
+                <div class="orbiter small right md lower">
+                  <div class="orbit">
+                    <div class="orbit">
+                      <svg class="svg lowlevelcontainer">
+                        <circle class="svg-progress lowlevel"></circle>
+                      </svg>
+                      <svg class="svg">
+                        <circle class="svg-markers gasbig"></circle>
+                      </svg>
+                      <svg class="svg">
+                        <circle class="svg-markers gasmall"></circle>
+                      </svg>
                     </div>
-                    
-                  
-                    <div class=" orbit">
-                        <div class=" orbiter center" style="rotate: -220deg; --o-size: 40px;">
-                            <hr class="bigneedle" />
-                        </div>
+                    <div class="orbit limit-90 offset-45">
+                      <div class="sector basesmall"></div>
                     </div>
-                   
-                    <div class=" orbit bignumbers">
-                        <div class=" orbiter  xs  lower">0</div>
-                        <div class=" orbiter  xs  lower">20</div>
-                        <div class=" orbiter  xs  lower">40</div>
-                        <div class=" orbiter  xs  lower">60</div>
-                        <div class=" orbiter  xs  lower">100</div>
-                        <div class=" orbiter  xs  lower">140</div>
-                        <div class=" orbiter  xs  lower">180</div>
-                        <div class=" orbiter  xs  lower">220</div>
-                        <div class=" orbiter  xs  lower">260</div>
-                        
+                    <div class="orbit">
+                      <div class="orbiter xs center" style="rotate: -41deg">
+                        <hr class="smallneedle" />
+                      </div>
                     </div>
-                    <div class=" orbit" style="    --o-size: 265px;">
-                        <div class=" orbit smallnumbers">
-                            <div class=" orbiter  xs  lower kmh"> km/h</div>
-                           
-                        </div>
-                        <div class=" orbit smallnumbers">
-                            <div class=" orbiter  xs  lower">10</div>
-                            <div class=" orbiter  xs  lower">30</div>
-                            <div class=" orbiter  xs  lower">50</div>
-                            <div class=" orbiter  xs  lower">80</div>
-                            <div class=" orbiter  xs  lower">120</div>
-                            <div class=" orbiter  xs  lower">160</div>
-                            <div class=" orbiter  xs  lower">200</div>
-                            <div class=" orbiter  xs  lower">240</div>
-                        </div>
+                    <div class="orbit smallnumbers2">
+                      <div class="orbiter xs lower gas">
+                        <i class="fa-solid fa-gas-pump"></i>
+                      </div>
                     </div>
-                    
+
+                    <div class="orbit smallnumbers2">
+                      <div class="orbiter xs lower">0</div>
+
+                      <div class="orbiter xs lower">1/2</div>
+                      <div class="orbiter xs lower">1</div>
+                    </div>
+                  </div>
                 </div>
-               
-            </div>
+              </div>
 
-            <div class=" orbiter  xxl big">
-                <div class=" orbit" style="
-                --o-diameter: 332px;
-                border: 4px solid rgb(228, 228, 228);">
-                    
-                    <div class=" orbit">
-                        <svg class=" svg rpmcontainer">
-                            <circle class=" svg-progress highrpm"></circle>
-                        </svg>
-                        <svg class=" svg">
-                            <circle class=" svg-markers km"></circle>
-                        </svg>
-                   
-                        <svg class=" svg">
-                            <circle class=" svg-markers kmsmall"></circle>
-                        </svg>
-                    </div>
-                    <div class=" orbit  limit-90  offset-45">
-                        <div class=" sector base"></div>
-                    </div>
-                    
-                    <div class=" orbit  offset-90 ">
-                        <div class=" orbiter small  right  md  lower ">
-                            <div class=" orbit">
-                                <div class=" orbit">
-                                    <svg class=" svg tempercontainer">
-                                        <circle class=" svg-progress temper"></circle>
-                                    </svg>
-                                    <svg class=" svg">
-                                        <circle class=" svg-markers gasbig"></circle>
-                                    </svg>
-                                    <svg class=" svg">
-                                        <circle class=" svg-markers gasmall"></circle>
-                                    </svg>
-                                </div>
-                                <div class=" orbit  limit-90  offset-45">
-                                    <div class=" sector basesmall"></div>
-                                </div>
-                                <div class=" orbit">
-                                    <div class=" orbiter  xs center" style=" rotate:-90deg">
-                                        <hr class="smallneedle" />
-                                    </div>
-                                </div>
-                                <div class=" orbit smallnumbers2">
-                                    <div class=" orbiter  xs  lower gas"> <i class="fa-solid fa-temperature-high"></i></div>
-                                   
-                                </div>
-                               
-                                <div class=" orbit smallnumbers2">
-                                    <div class=" orbiter  xs  lower">50</div>
-
-                                    <div class=" orbiter  xs  lower">90</div>
-                                    <div class=" orbiter  xs  lower">130</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                  
-                    <div class=" orbit">
-                        <div class=" orbiter center" style="rotate: -220deg; --o-size: 40px;">
-                            <hr class="bigneedle" />
-                        </div>
-                    </div>
-                   
-                    <div class=" orbit bignumbers">
-                        <div class=" orbiter  xs  lower">0</div>
-                        <div class=" orbiter  xs  lower">1</div>
-                        <div class=" orbiter  xs  lower">2</div>
-                        <div class=" orbiter  xs  lower">3</div>
-                        <div class=" orbiter  xs  lower">4</div>
-                        <div class=" orbiter  xs  lower">5</div>
-                        <div class=" orbiter  xs  lower">6</div>
-                        <div class=" orbiter  xs  lower">7</div>
-                        <div class=" orbiter  xs  lower">8</div>
-                        
-                    </div>
-                    <div class=" orbit" style="    --o-size: 265px;">
-                        <div class=" orbit smallnumbers">
-                            <div class=" orbiter  xs  lower kmh"> rpm</div>
-                           
-                        </div>
-                      
-                    </div>
-                    
+              <div class="orbit">
+                <div
+                  class="orbiter center"
+                  style="rotate: -220deg; --o-size: 40px"
+                >
+                  <hr class="bigneedle" />
                 </div>
-               
-            </div>
+              </div>
 
-          
+              <div class="orbit bignumbers">
+                <div class="orbiter xs lower">0</div>
+                <div class="orbiter xs lower">20</div>
+                <div class="orbiter xs lower">40</div>
+                <div class="orbiter xs lower">60</div>
+                <div class="orbiter xs lower">100</div>
+                <div class="orbiter xs lower">140</div>
+                <div class="orbiter xs lower">180</div>
+                <div class="orbiter xs lower">220</div>
+                <div class="orbiter xs lower">260</div>
+              </div>
+              <div class="orbit" style="--o-size: 265px">
+                <div class="orbit smallnumbers">
+                  <div class="orbiter xs lower kmh">km/h</div>
+                </div>
+                <div class="orbit smallnumbers">
+                  <div class="orbiter xs lower">10</div>
+                  <div class="orbiter xs lower">30</div>
+                  <div class="orbiter xs lower">50</div>
+                  <div class="orbiter xs lower">80</div>
+                  <div class="orbiter xs lower">120</div>
+                  <div class="orbiter xs lower">160</div>
+                  <div class="orbiter xs lower">200</div>
+                  <div class="orbiter xs lower">240</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbiter xxl big">
+            <div
+              class="orbit"
+              style="--o-diameter: 332px; border: 4px solid rgb(228, 228, 228)"
+            >
+              <div class="orbit">
+                <svg class="svg rpmcontainer">
+                  <circle class="svg-progress highrpm"></circle>
+                </svg>
+                <svg class="svg">
+                  <circle class="svg-markers km"></circle>
+                </svg>
+
+                <svg class="svg">
+                  <circle class="svg-markers kmsmall"></circle>
+                </svg>
+              </div>
+              <div class="orbit limit-90 offset-45">
+                <div class="sector base"></div>
+              </div>
+
+              <div class="orbit offset-90">
+                <div class="orbiter small right md lower">
+                  <div class="orbit">
+                    <div class="orbit">
+                      <svg class="svg tempercontainer">
+                        <circle class="svg-progress temper"></circle>
+                      </svg>
+                      <svg class="svg">
+                        <circle class="svg-markers gasbig"></circle>
+                      </svg>
+                      <svg class="svg">
+                        <circle class="svg-markers gasmall"></circle>
+                      </svg>
+                    </div>
+                    <div class="orbit limit-90 offset-45">
+                      <div class="sector basesmall"></div>
+                    </div>
+                    <div class="orbit">
+                      <div class="orbiter xs center" style="rotate: -90deg">
+                        <hr class="smallneedle" />
+                      </div>
+                    </div>
+                    <div class="orbit smallnumbers2">
+                      <div class="orbiter xs lower gas">
+                        <i class="fa-solid fa-temperature-high"></i>
+                      </div>
+                    </div>
+
+                    <div class="orbit smallnumbers2">
+                      <div class="orbiter xs lower">50</div>
+
+                      <div class="orbiter xs lower">90</div>
+                      <div class="orbiter xs lower">130</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="orbit">
+                <div
+                  class="orbiter center"
+                  style="rotate: -220deg; --o-size: 40px"
+                >
+                  <hr class="bigneedle" />
+                </div>
+              </div>
+
+              <div class="orbit bignumbers">
+                <div class="orbiter xs lower">0</div>
+                <div class="orbiter xs lower">1</div>
+                <div class="orbiter xs lower">2</div>
+                <div class="orbiter xs lower">3</div>
+                <div class="orbiter xs lower">4</div>
+                <div class="orbiter xs lower">5</div>
+                <div class="orbiter xs lower">6</div>
+                <div class="orbiter xs lower">7</div>
+                <div class="orbiter xs lower">8</div>
+              </div>
+              <div class="orbit" style="--o-size: 265px">
+                <div class="orbit smallnumbers">
+                  <div class="orbiter xs lower kmh">rpm</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-       </section>
+      </section>
     </main>
-
-</body>
-
+  </body>
 </html>

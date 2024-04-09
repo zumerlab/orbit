@@ -1,4 +1,5 @@
 OK rows: rings OR orbits
+
 - OK columns: sectors relates to angles. quadrants... cordinal points... > ARCS
 - OK offset angle: importantes para saber desde donde empieza
 - OK arc: importante para estabelcer tamano del arco 90° o 360° x ej. DESAMBIGUAR
@@ -18,23 +19,24 @@ OK rows: rings OR orbits
   4. OK se use un clip-path polygon y
   5. ~~OK un radial-gradient con hard stop al inicio de ring.~~
   6. OK ARCS como elemento independiente.
-  <https://bennettfeely.com/clippy/>
-  <https://9elements.github.io/fancy-border-radius/full-control.html#0.0.85.0-100.0.15.0-100.100>
-  Juices
-  <https://garden.bradwoods.io/notes/css/3d>
-  <https://garden.bradwoods.io/notes/css/blend-modes>
-- ~~ISSUE arc & arc-* same bug as items~~
+     <https://bennettfeely.com/clippy/>
+     <https://9elements.github.io/fancy-border-radius/full-control.html#0.0.85.0-100.0.15.0-100.100>
+     Juices
+     <https://garden.bradwoods.io/notes/css/3d>
+     <https://garden.bradwoods.io/notes/css/blend-modes>
+- ~~ISSUE arc & arc-\* same bug as items~~
 - NOT NOW angles & distances, ETC: definir independientemte (a32; d453)? TAMBIEN SIZES
 - responsiveness: crear dos versiones? media query & vh vw units? ...
--  layer para CONTENIDO ACOMODAR dentro de los items. Todo lo referido a alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo qued aara el usuario o algo para armar especialemnte
+- layer para CONTENIDO ACOMODAR dentro de los items. Todo lo referido a alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo qued aara el usuario o algo para armar especialemnte
 - OK Abstraer variables de color, backgrpund etc
 - WIP separar grid, de otras cosas
 - WIP CHANGE NAMES AVOID CONFLICTS
 - add manual overrride of items-n
-- OK NEST ARCS 
+- OK NEST ARCS
 - ITEMS AND ARCS HARMONIC
 
-*******
+---
+
 - OK Separar css custom flavor de css radial stuff (para que se pueda usar con otros css frameworks facil)
 - Terminar modal
 - Terminar popover o usar labels
@@ -44,11 +46,12 @@ OK rows: rings OR orbits
 - NOP arcs as shapes with contenido???? ver
 - OK svg? SIP ADAPTAR A RINGS
 - OK REPLICAR MODELO DE SVG PERCENT. DESCARGAR LO SCAMBIOS A VARIABLES NO A TODO EL ELEMENTO
-- CASI OK Armonizar toda la libreria 
+- CASI OK Armonizar toda la libreria
 - Documentar en .md
 - Invitar a repo cerrado
 - Landing & Docs con Docusaurus
-*******
+
+---
 
 ## ELEMENTS
 
@@ -59,23 +62,20 @@ OK rows: rings OR orbits
 - arcs: radial columns. visual support with basic interactivity and some cool customizations (gap, width, radius, POSITION). Should be nestable
 - rings: radial rows. visual support. Nestable
 - labels: item label with optional conector and predefined positions
--  MODAL
--  POPOVER
--  PROGRESS
--  KNOB
--  pod
--  orbit
--  suborbit (mantiene mismo nivel de orbita que el orbit parent)
--  orbiter
--  pod (content inside orbiter)
--  sector
--  label
-
-
-
-
+- MODAL
+- POPOVER
+- PROGRESS
+- KNOB
+- pod
+- orbit
+- suborbit (mantiene mismo nivel de orbita que el orbit parent)
+- orbiter
+- pod (content inside orbiter)
+- sector
+- label
 
 ## COMPONENTS
+
 - progress casi OK
 - knob casi OK
 - ~~sectors svg~~ css arcs OK
@@ -89,11 +89,13 @@ OK rows: rings OR orbits
 - forms
 
 ## UTILITIES
+
 LAS MINIMAS ARC TEXT
 
 ### css first
 
 ### COSAS PARA AHORA
+
 OK. mejorar labels para orbiters
 OK.CONTENT para sector y orbiters
 ok .PROGRESS
@@ -102,31 +104,27 @@ ok .svg-markers
 OK .CORE .... AJUSTAR. HAY QUE VER VARIOS TEMAS: SI HAY UN SOLO ORBITER, SI HAY MAS...
 OK ver temas de z-index.... ESTA BIEN ASI
 ok . margin 0 issue
-OK. adjuts size to view port  @media
+OK. adjuts size to view port @media
 OK? TEMA RADIAL SIZE. ADD AJUSTE MANUAL. add ajustes eslabonado?
 OK. Visual css changes
 ok: upper, lower... no anda en todos lados. Queda chequear scss ejemplo en arcgrid.
 
-
-
 explicar y mejorear y diferecniar los progress.
 
- progress
- svg
- svg-progress
- knob
+progress
+svg
+svg-progress
+knob
 
- title o label?
-
-
-
+title o label?
 
 ### COSAS PARA DESPUES
+
 titulos para orbiter y orbit
 OK elipse usar container perspective para tener todo cool
 OK alternativamente se puede pensar en orbit eliptical con orbinters aliptical usando sen y cos
 OK GOEY EFFECT
-data-o* para JS
+data-o\* para JS
 
 agrgar vas vars que incidan sobre las vars de los compoenentes cmo en sector
 pensar en mejores nombres de variables.
@@ -134,9 +132,6 @@ pensar en span sectors...
 mas orbits..
 
 CSS TYPES PARA ANIMAR (SOLO CHROME pero sale en breve en firefox)
-
-
-
 
 TEXTO CURVO (JS)
 
@@ -147,33 +142,31 @@ los estilos en clases o las variables en clases?
 EJEMPLOS:
 
 BASICO de cada elementos para documentacion y testeo
- container : 
+container :
 multiple containers con diferentes tamaños
 
- orbit y orbit orbit: 
+orbit y orbit orbit:
 dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
 
- orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT,  (+ OFFSET, LIMITS)
+orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT, (+ OFFSET, LIMITS)
 
- sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember  sector shapes
+sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember sector shapes
 
- labels: FALTA METERLO EN SECTORS, angle, offset, connector
+labels: FALTA METERLO EN SECTORS, angle, offset, connector
 
- svg-progress: props, colors, percentaje
+svg-progress: props, colors, percentaje
 
- svg-markers: same above
+svg-markers: same above
 
- progress: propr, colors
+progress: propr, colors
 
 " knob": ver
 
- modal/dialog: ver
+modal/dialog: ver
 
 custom vars: explanation / data-o-
 
 0content as utilities
-
-
 
 MENU RADIAL SIMPLE y COMPLEJO
 simple es un par de sectores con iconos control volumen, complejo es con varios orbits y sectores control playlista?
@@ -199,13 +192,11 @@ BARRAS RADIALES
 
 RAYOS DE SOL
 
-
 SIMON GAME?
 seh
 
-INDICADORes 
+INDICADORes
 instrumentales raduales
-
 
 PANEL DE CONTROL
 ver
@@ -216,9 +207,7 @@ con labels
 SIMULADOR ECOSISTEMA/SOLAR
 sep
 
-
-
-BUG 
+BUG
 
 CORE.... borrar? no anda core/orbiter.
 
@@ -238,9 +227,9 @@ penssar en algo tipo span sectors, orbiters
 
 // Define the custom SVG progress bar element
 // todos: componente sector tiene que tener posibilidad de bordes. acomoder el angulo inicial que esta en -90
-// OK aramr un componentes de progress. 
-  // satelite... up and low tangential
-  // comoentes... up/center/low?
+// OK aramr un componentes de progress.
+// satelite... up and low tangential
+// comoentes... up/center/low?
 // OK orbit -ratios
 // OK armar class vector
 // OK usar nth type para evitar conflictos. OJO ERROR EN ORBIT HAS
@@ -250,14 +239,14 @@ penssar en algo tipo span sectors, orbiters
 // label component
 // pesnar el tema de los sector/ progress con medidas desiguales para ponner el sunburst charts
 // SEPARAR BASE DE STILO
-// 
+//
 // mostrar cada estado de cada elemento posible en los docs, chiquito minimalista
 // armar templates para descargar con $
-//    - graficos: sunburst/pie/donut/gauges/rose
-//    - knobs
-//    - futurist
-//    - menu
-//    - mandalas
+// - graficos: sunburst/pie/donut/gauges/rose
+// - knobs
+// - futurist
+// - menu
+// - mandalas
 //
 //
 //

@@ -1,0 +1,27 @@
+/*!
+## <o-progress>
+
+See o-progress docs in web-component file.
+
+*/
+o-progress {
+  r: var(--o-radius);
+  stroke-width:  calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
+  transform: rotate(var(--o-begin-at));
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 50%;
+  pointer-events: none; /* To avoid events conflicts with other elements */
+}
+
+o-progress.rounded {
+  --o-linecap: round;
+}
+
+o-progress svg {
+  pointer-events: none;
+  overflow: visible;
+}

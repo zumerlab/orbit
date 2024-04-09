@@ -1,0 +1,94 @@
+/*! 
+## .orbit or .orbit-*
+
+This class renders a circumsference around a .orbital-zone center and allows other elements to be 
+distributed along width. By default there are 12 orbits. The number of orbits can be change on --o-max-orbits,
+or in scss source $max-orbits var.
+
+**Important:** .orbit or .orbit-* is a direct child element of .orbital-zone.
+
+### Usage: 
+
+```html
+<div class="orbital-zone">
+  <div class="orbit"></div>
+  <div class="orbit"></div>
+</div>
+```
+
+### Examples:
+
+- This renders three orbits equally distributed 
+  ```html
+  <div class="orbit"></div>
+  <div class="orbit"></div>
+  <div class="orbit"></div>
+  ```
+
+- This renders three orbits with custom distribution
+  ```html
+  <div class="orbit-2"></div>
+  <div class="orbit-9"></div>
+  <div class="orbit-12"></div>
+  ```
+
+- This renders nested orbits around a satellite
+  ```html
+  <div class="orbital-zone">
+    <div class="orbit">
+      <div class="satellite">
+        <div class="orbital-zone">
+          <div class="orbit"></div>
+          <div class="orbit"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  ```
+  
+### Customization:
+
+It has some special attributes and css variables to customize it or its children elements:
+  
+  - Class `.gap-*` applied on `.orbit` or `.orbit-*` set a `o-sector` gap space. Default '0'
+  - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
+  - Class utility `.begint-at-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
+  - Class utility `.inner`: To place `o-sector` at a "low-orbit". Default midle-orbit
+  - Class utility `.outer`: To place `o-sector` at a "high-orbit". Default midle-orbit
+
+  - CSS styles. User can customize `.orbit` by adding CSS properties.
+
+Besides css properties that user can change according his needs, there two css variables to turn `.orbit`or `.orbit-*` into 
+an ellipse (`--o-ellipse-x`, and `--o-ellipse-y`). This will affect orbit and its childs, with an excepcion of `<o-sector>`
+web component that will be hide when orbit is an ellipse. Values range from 0 to 1.
+
+**Important**: Ckecking `--o-ellipse-x` and `--o-ellipse-y` doesn't work currently on Firefox and Safari.
+
+```html
+<div class="orbital-zone" style="--o-ellipse-x: 0.6">
+  <div class="orbit">
+    <div class="satellite">
+      <div class="orbital-zone">
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+There are some utility classes that are set on orbit element and affect its child radial layout (`.begin-at-*`, `.range-*`). 
+Please see **Radial Layout section**.
+
+*/
+.orbit, [class*='orbit-'] {
+  --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / var(--o-max-orbits));
+  --o-radius: calc(var(--o-diameter) / 2);
+  width: calc(var(--o-diameter) / var(--o-ellipse-x));
+  height: calc(var(--o-diameter) / var(--o-ellipse-y));
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
