@@ -1,0 +1,56 @@
+/*! 
+## .vector
+
+This class renders a perpendicular segment along an orbit. 
+  
+### Customization
+
+It has some special classes and css variables to customize it:
+
+  - Class utility `.range-*`: Default '360deg'
+  - Class utility `.begint-at-*`: Default '0deg'
+  - Class utility `.size-*x`: To increase size according number of orbits. Default 1.
+  - Class utility `.size-*fr`: To decrease size according a fracction of orbit width. Default 1.
+  - Class utility `.inner`: To place `.vector` at a "low-orbit". Default midle-orbit
+  - Class utility `.outer`: To place `.vector` at a "high-orbit". Default midle-orbit
+
+  - CSS styles. User can customize `.vector` by adding CSS properties to it. 
+
+### Usage 
+
+```html
+<div class="orbit">
+  <div class="vector"><div>
+  <div class="vector x5"><div> <!-- 50% of orbit radius -->
+  <div class="vector x01"><div> <!-- 1% of orbit radius -->
+  <div class="vector"><div>
+</div>
+```
+
+**Important:** `.vector` can only be placed into a parent `.orbit` or `.orbit-*`
+
+*/
+
+.vector {
+  --o-angle-composite: var(--o-angle) * var(--o-position);
+  width: calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
+  position: absolute;
+  padding: 0;
+  transform: translate(
+      calc(
+        (var(--o-radius) - var(--o-aligment, 1px)) / var(--o-ellipse-x) *
+          cos(var(--o-begin-at) + var(--o-angle-composite))
+      ),
+      calc(
+        (var(--o-radius) - var(--o-aligment, 1px)) / var(--o-ellipse-y) *
+          sin(var(--o-begin-at) + var(--o-angle-composite))
+      )
+    )
+    rotate(
+      calc(var(--o-angle-composite))
+    );
+  height: 1px; /*use vars latter */
+  pointer-events: none;
+  border: none;
+  background: rgb(0, 0, 0);
+}

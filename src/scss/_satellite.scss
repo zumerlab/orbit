@@ -1,0 +1,93 @@
+/*!
+## .satellite
+
+Elements with `.satellite` are placed along an `.orbit` or `.orbit-*` arc serving as content place and/or to nest an `.orbital-zone`. 
+
+### Shapes
+
+By default a satellite provides an unstyled circle shape, but it can be easily changed according project needs.
+
+A few set of shapes utilities are provided (`.circle`, `.box`, `.rounded-box`). Nevertheless, users can set any shapes using svg, images, etc. At this instance, Orbit is focused on setting a radial layout, not in UI styles.
+
+### Customization
+
+It has some special classes and css variables to customize it:
+
+  - Class utility `.range-*`: Default '360deg'
+  - Class utility `.begint-at-*`: Default '0deg'
+  - Class utility `.size-*x`: To increase size according number of orbits. Default 1.
+  - Class utility `.size-*fr`: To decrease size according a fracction of orbit width. Default 1.
+  - Class utility `.inner`: To place `.satellite` at a "low-orbit". Default midle-orbit
+  - Class utility `.outer`: To place `.satellite` at a "high-orbit". Default midle-orbit
+
+  - CSS styles. User can customize `.satellite` by adding CSS properties to it. 
+
+### Usage
+
+- This renders six satellites with different properties
+```html
+<div class="orbit">
+  <div class="satellite"></div>
+  <div class="satellite inner"></div>
+  <div class="satellite outer"></div>
+  <div class="satellite rounded-box"></div>
+  <div class="satellite size-2x"></div>
+  <div class="satellite size-6fr"></div>
+</div>
+```
+
+- This renders two satellites. One of which nest `.orbital-zone` with some orbits
+```html
+<div class="orbit">
+  <div class="satellite"></div>
+  <div class="satellite">
+    <div class="orbital-zone">
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+    </div>
+  </div>
+</div>
+```
+
+**Important:**
+
+- `.satellite` can only be placed into a parent `.orbit` or `.orbit-*`
+- There is no limit for nesting orbita-zone in satellites.
+
+
+*/
+.satellite {
+  --o-angle-composite: var(--o-angle) * var(--o-position);
+  transform: translate(
+    calc(
+      (var(--o-radius) - var(--o-aligment, 0px))  / var(--o-ellipse-x) *
+        cos(var(--o-begin-at) + var(--o-angle-composite))
+    ),
+    calc(
+      (var(--o-radius) - var(--o-aligment, 0px))  / var(--o-ellipse-y) *
+        sin(var(--o-begin-at) + var(--o-angle-composite))
+    )
+  );
+  width: calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
+  height: calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
+  position: absolute;
+  margin: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* Circle by default */
+}
+
+.satellite.circle {
+  border-radius: 50%;
+}
+
+.satellite.box {
+  border-radius: 0%;
+}
+
+.satellite.rounded-box {
+  border-radius: 8px;
+}
+

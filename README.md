@@ -13,13 +13,15 @@ Your input and contributions are essential in creating a robust and user-friendl
 ## Installation
 
 ### Download or Include via CDN:
+
 Download the library files from our repository or include them directly from a CDN in your HTML file:
 
 ```html
-<link rel="stylesheet" href="path/to/orbit.css">
+<link rel="stylesheet" href="path/to/orbit.css" />
 ```
 
 ### Install via Package Manager:
+
 If you are using a package manager like npm or yarn, install the library by running:
 
 ```bash
@@ -35,14 +37,16 @@ yarn add  @zumerlab/orbit
 ## Basic Usage
 
 ### Include Styles:
+
 Link the library styles in the `<head>` section of your HTML file.
 
 ```html
 <head>
-  <link rel="stylesheet" href="path/to/orbit.css">
+  <link rel="stylesheet" href="path/to/orbit.css" />
 </head>
 ```
-or 
+
+or
 
 ```html
 <style>
@@ -51,6 +55,7 @@ or
 ```
 
 ### Apply Orbit Classes:
+
 Utilize predefined classes in your HTML elements to benefit from Orbit features. Folllowing code set a container and inside it a radial layout with three circles.
 
 ```html
@@ -62,11 +67,13 @@ Utilize predefined classes in your HTML elements to benefit from Orbit features.
   </div>
 </div>
 ```
+
 Congratulations! You've successfully integrated and started using Orbit. Follow next steps for more advanced options and customization possibilities. If you encounter any issues, feel free to reach out to our support community for assistance.
 
 Happy coding!
 
 ## Guide
+
 Basic documentation to understand and start with °〇 Orbit.
 
 ### `pod`
@@ -98,13 +105,13 @@ With the `sector` class, you can customize properties such as width, gap, offset
 By experimenting with different configurations, you can achieve a wide range of design aesthetics, whether you prefer a sleek and minimalistic look or a more intricate and expressive pattern.
 
 ```html
-    <div class="pod">
-      <div class="orbit-1 orbiters-3">
-        <div class="sector"></div>
-        <div class="sector"></div>
-        <div class="sector"></div>
-      </div>
-    </div>
+<div class="pod">
+  <div class="orbit-1 orbiters-3">
+    <div class="sector"></div>
+    <div class="sector"></div>
+    <div class="sector"></div>
+  </div>
+</div>
 ```
 
 In this example, three sectors are placed in a orbit. To draw three sectors that cover the entire orbit, you need to include the `orbiters-3` class in the orbit element. Additionally, you can utilize other parent options to customize the start angle and sector length.
@@ -136,11 +143,11 @@ One of the notable features of Zumer is the ability to nest `orbiter` elements, 
 The `label` component is used to place labels on orbiters within the Zumer radial grid. It can be customized with the same shapes as orbiters and includes a connector line for visual clarity.
 
 ```html
-  <div class="orbiter">
-     <div class="label pos-45">
-      <span class="text">Hi there!</span>
-    </div>
+<div class="orbiter">
+  <div class="label pos-45">
+    <span class="text">Hi there!</span>
   </div>
+</div>
 ```
 
 ### `progress` (CSS Only)
@@ -148,10 +155,9 @@ The `label` component is used to place labels on orbiters within the Zumer radia
 The `progress` component works with orbits and is particularly useful for creating circular progress bars or knobs. It is implemented using CSS and gradient properties, allowing for easy customization and styling.
 
 ```html
-  <div class="orbit-1">
-    <div class="progress" style="--progress: 75">
-    </div>
-  </div>
+<div class="orbit-1">
+  <div class="progress" style="--progress: 75"></div>
+</div>
 ```
 
 ### `svg progress` (SVG)
@@ -159,11 +165,11 @@ The `progress` component works with orbits and is particularly useful for creati
 The `svg progress` component also works with orbits and serves the purpose of creating circular progress bars or knobs. It is implemented using SVG.
 
 ```html
-   <div class="orbit-3 ">
-      <svg class="svg-pod">
-        <circle class="svg-progress" style="--val: 59;" /> 
-      </svg>
-    </div>
+<div class="orbit-3 ">
+  <svg class="svg-pod">
+    <circle class="svg-progress" style="--val: 59;" />
+  </svg>
+</div>
 ```
 
 ### `svg svg-markers` (SVG)
@@ -171,12 +177,13 @@ The `svg progress` component also works with orbits and serves the purpose of cr
 The `svg svg-markers` component, designed for orbits, allows for the creation of svg-markers within circular progress bars or knobs. It is implemented using SVG, providing a versatile way to indicate specific points or milestones within the circular progress.
 
 ```html
-   <div class="orbit">
-      <svg class="svg-pod">
-          <circle class="svg-markers"></circle> 
-        </svg>
-    </div>
+<div class="orbit">
+  <svg class="svg-pod">
+    <circle class="svg-markers"></circle>
+  </svg>
+</div>
 ```
+
 ## Examples
 
 Radial menu
@@ -188,8 +195,3 @@ Analog watch
 Simon game
 
 Car dashboard
-
-
-
-
-

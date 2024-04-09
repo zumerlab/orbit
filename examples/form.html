@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Update DOM with Settings Form</title>
     <link rel="stylesheet" href="../assets/css/orbit.css" type="text/css" />
     <style>
@@ -12,7 +12,6 @@
       .layout {
         display: grid;
         grid-template-columns: 3fr 1fr;
-
       }
       .fieldc {
         display: grid;
@@ -20,11 +19,10 @@
         grid-column-gap: 15px;
       }
       #code {
-       
         width: 100%;
         height: 400px;
         background: #000000;
-        font-o-size:10px;
+        font-o-size: 10px;
         appearance: none;
         border: none;
         resize: none;
@@ -38,97 +36,145 @@
         user-select: text;
         white-space: pre !important;
       }
-      
-        .orbiter, div[class^="orbit-"] {
-            transition: all 1s;
-        }
-        form {
-          z-index: 20;
-          float: right;
-          width: 400px;
-          padding: 10px;
-          font-o-size: smaller;
-        }
-        select {
-          width: 100%;
-        }
-        #orbits-container, .orbitf-container > fieldset, .orbiter-container > fieldset {
-            padding: 10px;
-        }
-        fieldset {
-            border-radius: 7px;
-            padding: 10px;
-        }
+
+      .orbiter,
+      div[class^='orbit-'] {
+        transition: all 1s;
+      }
+      form {
+        z-index: 20;
+        float: right;
+        width: 400px;
+        padding: 10px;
+        font-o-size: smaller;
+      }
+      select {
+        width: 100%;
+      }
+      #orbits-container,
+      .orbitf-container > fieldset,
+      .orbiter-container > fieldset {
+        padding: 10px;
+      }
+      fieldset {
+        border-radius: 7px;
+        padding: 10px;
+      }
     </style>
   </head>
   <body>
-<div class="layout">
-  <div class=" container"></div>
-  <div>
-    <form>
-      <fieldset>
-        <legend>orbits</legend>
-        <div id="orbits-container">
-          <div class=" orbitf-container">
-            <div class="fieldc">
-              <div class="fieldt">
-                <label for="orbits-radius">Radius</label><br>
-                <input type="range" id="orbits-radius" name="orbits-radius" min="0" max="1000" step="1" value="">
+    <div class="layout">
+      <div class="container"></div>
+      <div>
+        <form>
+          <fieldset>
+            <legend>orbits</legend>
+            <div id="orbits-container">
+              <div class="orbitf-container">
+                <div class="fieldc">
+                  <div class="fieldt">
+                    <label for="orbits-radius">Radius</label><br />
+                    <input
+                      type="range"
+                      id="orbits-radius"
+                      name="orbits-radius"
+                      min="0"
+                      max="1000"
+                      step="1"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <fieldset>
+                  <legend>orbit 1</legend>
+                  <div class="fieldc">
+                    <div class="fieldt">
+                      <label for="orbit1-radius">Radius</label><br />
+                      <input
+                        type="range"
+                        id="orbit1-radius"
+                        name="orbit1-radius"
+                        min="0"
+                        max="1000"
+                        step="1"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div class="fieldc">
+                    <div class="fieldt">
+                      <label for="orbit1-sector">sector</label><br />
+                      <input
+                        type="range"
+                        id="orbit1-sector"
+                        name="orbit1-sector"
+                        min="0"
+                        max="360"
+                        step="45"
+                        value="0"
+                      />
+                    </div>
+                    <div class="fieldt">
+                      <label for="orbit1-o-offset"> offset</label><br />
+                      <input
+                        type="range"
+                        id="orbit1-o-offset"
+                        name="orbit1-o-offset"
+                        min="0"
+                        max="360"
+                        step="45"
+                        value="0"
+                      />
+                    </div>
+                    <div class="fieldt">
+                      <label for="orbit1-ccw">CCW </label>
+                      <input
+                        type="checkbox"
+                        id="orbit1-ccw"
+                        name="orbit1-ccw"
+                      />
+                    </div>
+                    <div class="fieldt">
+                      <label for="orbit1-visible">visible </label>
+                      <input
+                        type="checkbox"
+                        id="orbit1-visible"
+                        name="orbit1-visible"
+                        checked
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="add-orbiter-button"
+                    data-orbit="1"
+                  >
+                    Add orbiter
+                  </button>
+                  <div
+                    class="orbiters-container"
+                    id="orbit1-orbiters-container"
+                  ></div>
+                </fieldset>
               </div>
             </div>
-            <fieldset>
-              <legend>orbit 1</legend>
-              <div class="fieldc">
-                <div class="fieldt">
-                  <label for="orbit1-radius">Radius</label><br>
-                  <input type="range" id="orbit1-radius" name="orbit1-radius" min="0" max="1000" step="1" value="">
-                </div>
-              </div>
-              <div class="fieldc">
-                <div class="fieldt">
-                  <label for="orbit1-sector">sector</label><br>
-                  <input type="range" id="orbit1-sector" name="orbit1-sector" min="0" max="360" step="45" value="0">
-                </div>
-                <div class="fieldt">
-                  <label for="orbit1-o-offset"> offset</label><br>
-                  <input type="range" id="orbit1-o-offset" name="orbit1-o-offset" min="0" max="360" step="45" value="0">
-                </div>
-                <div class="fieldt">
-                  <label for="orbit1-ccw">CCW </label>
-                  <input type="checkbox" id="orbit1-ccw" name="orbit1-ccw">
-                </div>
-                <div class="fieldt">
-                  <label for="orbit1-visible">visible </label>
-                  <input type="checkbox" id="orbit1-visible" name="orbit1-visible" checked>
-                </div>
-              </div>
-                <button type="button" class=" add-orbiter-button" data-orbit="1">Add orbiter</button>
-                <div class=" orbiters-container" id="orbit1-orbiters-container"></div>
-            </fieldset>
-          </div>
-        </div>
-        <button type="button" id="add-orbit-button">Add orbit</button>
-      </fieldset>
-    </form>
-  </div>
-  <textarea readonly name="" id="code">
-     
-  </textarea>
-
- 
- 
-</div>
+            <button type="button" id="add-orbit-button">Add orbit</button>
+          </fieldset>
+        </form>
+      </div>
+      <textarea readonly name="" id="code"> </textarea>
+    </div>
 
     <script>
-      const form = document.querySelector('form');
-      const radius = document.querySelector('#orbits-radius');
-      const rradius = document.querySelector('#orbit1-radius');
-      const zContainer = document.querySelector('.orbit-container');
-      const range = getComputedStyle(zContainer).getPropertyValue('--o-radius');
+      const form = document.querySelector('form')
+      const radius = document.querySelector('#orbits-radius')
+      const rradius = document.querySelector('#orbit1-radius')
+      const zContainer = document.querySelector('.orbit-container')
+      const range = getComputedStyle(zContainer).getPropertyValue('--o-radius')
       radius.setAttribute('value', range.slice(0, -2).trim())
       rradius.setAttribute('value', range.slice(0, -2).trim())
-      const orbitsContainer = document.querySelector('#orbits-container');
-      const addorbitButton = document.querySelector('#add-orbit-button');
+      const orbitsContainer = document.querySelector('#orbits-container')
+      const addorbitButton = document.querySelector('#add-orbit-button')
       const removeorbiterButtonHandler = (event) => {
         // remove form element before update to do the trick
         event.target.parentElement.parentElement.remove()
@@ -140,10 +186,12 @@
         updateDOM()
       }
       const addorbiterButtonHandler = (event) => {
-        const orbitNumber = event.target.dataset.orbit;
-        const orbitersContainer = document.querySelector(`#orbit${orbitNumber}-orbiters-container`);
-        const neworbiter = document.createElement('div');
-        neworbiter.classList.add('orbiter-container');
+        const orbitNumber = event.target.dataset.orbit
+        const orbitersContainer = document.querySelector(
+          `#orbit${orbitNumber}-orbiters-container`
+        )
+        const neworbiter = document.createElement('div')
+        neworbiter.classList.add('orbiter-container')
         neworbiter.innerHTML = `
           <fieldset>
             <legend>orbiter ${orbitersContainer.children.length + 1}</legend>
@@ -185,16 +233,21 @@
           </div>
           <button type="button" class="remove-orbiter-button">remove</button>
           </fieldset>
-        `;
-        orbitersContainer.appendChild(neworbiter);
-        const removeorbiterButton = neworbiter.querySelector('.remove-orbiter-button');
-        removeorbiterButton.addEventListener('click', removeorbiterButtonHandler);
+        `
+        orbitersContainer.appendChild(neworbiter)
+        const removeorbiterButton = neworbiter.querySelector(
+          '.remove-orbiter-button'
+        )
+        removeorbiterButton.addEventListener(
+          'click',
+          removeorbiterButtonHandler
+        )
         formChangeHandler()
-      };
+      }
       const addorbitButtonHandler = () => {
-        const orbitNumber = orbitsContainer.children.length + 1;
-        const neworbitContainer = document.createElement('div');
-        neworbitContainer.classList.add('orbitf-container');
+        const orbitNumber = orbitsContainer.children.length + 1
+        const neworbitContainer = document.createElement('div')
+        neworbitContainer.classList.add('orbitf-container')
         neworbitContainer.innerHTML = `
           <fieldset>
             <legend>orbit ${orbitNumber}</legend>
@@ -227,56 +280,100 @@
             <div class=" orbiters-container" id="orbit${orbitNumber}-orbiters-container"></div>
             <button type="button" class="remove-orbit-button">remove</button>
           </fieldset>
-        `;
-        orbitsContainer.appendChild(neworbitContainer);
-        document.querySelector(`#orbit${orbitNumber}-radius`).setAttribute('value', Number(range.slice(0, -2).trim()))
-        const addorbiterButton = neworbitContainer.querySelector('.add-orbiter-button');
-        addorbiterButton.addEventListener('click', addorbiterButtonHandler);
-        const removeorbitButton = neworbitContainer.querySelector('.remove-orbit-button');
-        removeorbitButton.addEventListener('click', removeorbitButtonHandler);
+        `
+        orbitsContainer.appendChild(neworbitContainer)
+        document
+          .querySelector(`#orbit${orbitNumber}-radius`)
+          .setAttribute('value', Number(range.slice(0, -2).trim()))
+        const addorbiterButton = neworbitContainer.querySelector(
+          '.add-orbiter-button'
+        )
+        addorbiterButton.addEventListener('click', addorbiterButtonHandler)
+        const removeorbitButton = neworbitContainer.querySelector(
+          '.remove-orbit-button'
+        )
+        removeorbitButton.addEventListener('click', removeorbitButtonHandler)
         formChangeHandler()
-      };
+      }
       const updateDOM = () => {
-        const orbits = document.querySelectorAll('.orbitf-container');
+        const orbits = document.querySelectorAll('.orbitf-container')
         const orbitsRadius = document.querySelector(`#orbits-radius`).value
-        zContainer.style.setProperty('--o-radius', orbitsRadius + 'px');
-        const html = Array.from(orbits).map((orbit) => {
-          const orbitNumber = orbit.querySelector('legend').textContent.split(' ')[1];
-          const ccw = orbit.querySelector(`#orbit${orbitNumber}-ccw`).checked ? 'ccw' : '';
-          const visible = orbit.querySelector(`#orbit${orbitNumber}-visible`).checked ? '' : 'transparent';
-          const sector = orbit.querySelector(`#orbit${orbitNumber}-sector`).value;
-          const  offset = orbit.querySelector(`#orbit${orbitNumber}-o-offset`).value;
-          const orbitRadius = orbit.querySelector(`#orbit${orbitNumber}-radius`).value
-          zContainer.style.setProperty(`--o-radius-${orbitNumber}`, orbitRadius + 'px');
-          var iNumber = 0
-          const orbiters = Array.from(orbit.querySelectorAll('.orbiter-container')).map((orbiter) => {
-            const orbiterNumber = orbiter.querySelector('legend').textContent.split(' ')[1];
-            iNumber = iNumber + 1
-            const  size = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-o-size`).value;
-            const alignment = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-alignment`).value;
-            const shape = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-shape`).value;
-            const stationary = orbiter.querySelector(`#orbit${orbitNumber}-orbiter${orbiterNumber}-stationary`).checked ? 'stationary' : '';
-            return `<div class=" orbiter ${shape} ${ size} ${alignment} ${stationary}">${orbiterNumber}</div>\n`;
-          }).join('');
-          return `
-    <div class=" orbit ${sector ? ` limit-${sector}` : ``} ${ offset ? ` offset-${ offset}` : ``} ${ccw}  ${visible}">
+        zContainer.style.setProperty('--o-radius', orbitsRadius + 'px')
+        const html = Array.from(orbits)
+          .map((orbit) => {
+            const orbitNumber = orbit
+              .querySelector('legend')
+              .textContent.split(' ')[1]
+            const ccw =
+              orbit.querySelector(`#orbit${orbitNumber}-ccw`).checked ?
+                'ccw'
+              : ''
+            const visible =
+              orbit.querySelector(`#orbit${orbitNumber}-visible`).checked ?
+                ''
+              : 'transparent'
+            const sector = orbit.querySelector(
+              `#orbit${orbitNumber}-sector`
+            ).value
+            const offset = orbit.querySelector(
+              `#orbit${orbitNumber}-o-offset`
+            ).value
+            const orbitRadius = orbit.querySelector(
+              `#orbit${orbitNumber}-radius`
+            ).value
+            zContainer.style.setProperty(
+              `--o-radius-${orbitNumber}`,
+              orbitRadius + 'px'
+            )
+            var iNumber = 0
+            const orbiters = Array.from(
+              orbit.querySelectorAll('.orbiter-container')
+            )
+              .map((orbiter) => {
+                const orbiterNumber = orbiter
+                  .querySelector('legend')
+                  .textContent.split(' ')[1]
+                iNumber = iNumber + 1
+                const size = orbiter.querySelector(
+                  `#orbit${orbitNumber}-orbiter${orbiterNumber}-o-size`
+                ).value
+                const alignment = orbiter.querySelector(
+                  `#orbit${orbitNumber}-orbiter${orbiterNumber}-alignment`
+                ).value
+                const shape = orbiter.querySelector(
+                  `#orbit${orbitNumber}-orbiter${orbiterNumber}-shape`
+                ).value
+                const stationary =
+                  (
+                    orbiter.querySelector(
+                      `#orbit${orbitNumber}-orbiter${orbiterNumber}-stationary`
+                    ).checked
+                  ) ?
+                    'stationary'
+                  : ''
+                return `<div class=" orbiter ${shape} ${size} ${alignment} ${stationary}">${orbiterNumber}</div>\n`
+              })
+              .join('')
+            return `
+    <div class=" orbit ${sector ? ` limit-${sector}` : ``} ${offset ? ` offset-${offset}` : ``} ${ccw}  ${visible}">
       ${orbiters}
     </div>
-          `;
-        }).join('');
-        const orbitsContainer = document.querySelector('.orbit-container');
-        orbitsContainer.innerHTML = html;
-        document.querySelector('#code').innerHTML = html;
-      }; 
+          `
+          })
+          .join('')
+        const orbitsContainer = document.querySelector('.orbit-container')
+        orbitsContainer.innerHTML = html
+        document.querySelector('#code').innerHTML = html
+      }
       const formChangeHandler = () => {
-        updateDOM();
-      };
-      form.addEventListener('change', formChangeHandler);
-      addorbitButton.addEventListener('click', addorbitButtonHandler);
-      const addorbiterButtons = document.querySelectorAll('.add-orbiter-button');
+        updateDOM()
+      }
+      form.addEventListener('change', formChangeHandler)
+      addorbitButton.addEventListener('click', addorbitButtonHandler)
+      const addorbiterButtons = document.querySelectorAll('.add-orbiter-button')
       addorbiterButtons.forEach((addorbiterButton) => {
-        addorbiterButton.addEventListener('click', addorbiterButtonHandler);
-      });
-      
-      
-</script>
+        addorbiterButton.addEventListener('click', addorbiterButtonHandler)
+      })
+    </script>
+  </body>
+</html>

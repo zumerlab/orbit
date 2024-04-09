@@ -1,127 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../assets/css/orbit.min.css" type="text/css" defer/>
+    <link
+      rel="stylesheet"
+      href="../assets/css/orbit.min.css"
+      type="text/css"
+      defer
+    />
     <title>Orbit</title>
     <style>
       body {
         font-family: 'Lucida Sans', Verdana, sans-serif;
       }
       .hour {
-        stroke:crimson;
+        stroke: crimson;
       }
       .minute {
-        stroke:darkmagenta;
+        stroke: darkmagenta;
       }
       .second {
         stroke: orangered;
       }
       hr.orbiter {
-        margin: 0
+        margin: 0;
       }
     </style>
   </head>
   <body>
-    <div class=" container" >
-      <div class=" core  offset-270 ">
-        <hr class=" orbiter  line hora" style="width: 110px; height: 6px;  border:1px solid red;   --o-orbiter-number: 2;">
-        <hr class=" orbiter  line minuto" style="width: 160px; height: 3px; border:1px solid rgb(157, 2, 247);    --o-orbiter-number: 2;">
-        <hr class=" orbiter  line segundo" style="width: 210px; height: 1px; border:1px solid rgb(0, 245, 61);    --o-orbiter-number: 2;">
+    <div class="container">
+      <div class="core offset-270">
+        <hr
+          class="orbiter line hora"
+          style="
+            width: 110px;
+            height: 6px;
+            border: 1px solid red;
+            --o-orbiter-number: 2;
+          "
+        />
+        <hr
+          class="orbiter line minuto"
+          style="
+            width: 160px;
+            height: 3px;
+            border: 1px solid rgb(157, 2, 247);
+            --o-orbiter-number: 2;
+          "
+        />
+        <hr
+          class="orbiter line segundo"
+          style="
+            width: 210px;
+            height: 1px;
+            border: 1px solid rgb(0, 245, 61);
+            --o-orbiter-number: 2;
+          "
+        />
       </div>
-      <div class=" orbit  size-1">
-        <div class=" orbit  offset-270  limit-90">
-          <div class=" sector"></div>
-          <div class=" sector"></div>
-          <div class=" sector"></div>
+      <div class="orbit size-1">
+        <div class="orbit offset-270 limit-90">
+          <div class="sector"></div>
+          <div class="sector"></div>
+          <div class="sector"></div>
         </div>
-        <div class=" orbit  offset-270  limit-90">
-          <div class=" orbiter  sm  d-h  transparent"></div>
-          <div class=" orbiter  sm  d-m  transparent"></div>
-          <div class=" orbiter  upper  sm  d-s  transparent"></div>
+        <div class="orbit offset-270 limit-90">
+          <div class="orbiter sm d-h transparent"></div>
+          <div class="orbiter sm d-m transparent"></div>
+          <div class="orbiter upper sm d-s transparent"></div>
         </div>
-        </div>
-        <div class=" orbit  size-2">
-        <div class=" orbit">
-          <svg class=" svg">
-            <circle class=" svg-progress second" /> 
+      </div>
+      <div class="orbit size-2">
+        <div class="orbit">
+          <svg class="svg">
+            <circle class="svg-progress second" />
           </svg>
         </div>
-        <div class=" orbit">
-        <svg class=" svg">
-          <circle class=" svg-progress minute" /> 
-        </svg>
+        <div class="orbit">
+          <svg class="svg">
+            <circle class="svg-progress minute" />
+          </svg>
         </div>
-      <div class=" orbit  offset-270">
-        <svg class=" svg">
-          <circle class=" svg-progress hour" style="--o-stroke: 60"/>   
-        </svg>
+        <div class="orbit offset-270">
+          <svg class="svg">
+            <circle class="svg-progress hour" style="--o-stroke: 60" />
+          </svg>
+        </div>
+
+        <div class="orbit">
+          <svg class="svg">
+            <ellipse class="svg-markers" />
+          </svg>
+        </div>
+        <div class="orbit offset-270">
+          <div class="orbiter md upper">12</div>
+          <div class="orbiter xs">1</div>
+          <div class="orbiter xs">2</div>
+          <div class="orbiter xs">3</div>
+          <div class="orbiter xs">4</div>
+          <div class="orbiter xs">5</div>
+          <div class="orbiter xs">6</div>
+          <div class="orbiter xs">7</div>
+          <div class="orbiter xs">8</div>
+          <div class="orbiter xs">9</div>
+          <div class="orbiter xs">10</div>
+          <div class="orbiter xs">11</div>
+        </div>
       </div>
-          
-      
-   <div class=" orbit">
-        <svg class=" svg">
-          <ellipse class=" svg-markers"/> 
-        </svg>
-      </div>
-      <div class=" orbit  offset-270">
-        <div class=" orbiter  md  upper">12</div>
-        <div class=" orbiter  xs ">1</div>
-        <div class=" orbiter  xs ">2</div>
-        <div class=" orbiter  xs ">3</div>
-        <div class=" orbiter  xs ">4</div>
-        <div class=" orbiter  xs ">5</div>
-        <div class=" orbiter  xs ">6</div>
-        <div class=" orbiter  xs ">7</div>
-        <div class=" orbiter  xs ">8</div>
-        <div class=" orbiter  xs ">9</div>
-        <div class=" orbiter  xs ">10</div>
-        <div class=" orbiter  xs ">11</div>
-      </div>
-      
     </div>
-   
     <script>
       function analogWatch() {
         // Get the current time
-        const now = new Date();
+        const now = new Date()
 
         // Get the current hour, minute, and second
-        const hour = now.getHours();
-        const minute = now.getMinutes();
-        const second = now.getSeconds();
+        const hour = now.getHours()
+        const minute = now.getMinutes()
+        const second = now.getSeconds()
 
         // Calculate the angles of the hour, minute, and second hands
-        const hourAngle = (hour % 12) * 30 + minute / 2;
-        const minuteAngle = minute * 6;
-        const secondAngle = second * 6;
-        const hourPercentage = hourAngle / 360 * 100;
-        const minutePercentage = minuteAngle / 360 * 100;
-        const secondPercentage = secondAngle / 360 * 100;
+        const hourAngle = (hour % 12) * 30 + minute / 2
+        const minuteAngle = minute * 6
+        const secondAngle = second * 6
+        const hourPercentage = (hourAngle / 360) * 100
+        const minutePercentage = (minuteAngle / 360) * 100
+        const secondPercentage = (secondAngle / 360) * 100
 
         // Get the hour, minute, and second hand elements
-        const hourHand = document.querySelector('.hora');
-        const minuteHand = document.querySelector('.minuto');
-        const secondHand = document.querySelector('.segundo');
+        const hourHand = document.querySelector('.hora')
+        const minuteHand = document.querySelector('.minuto')
+        const secondHand = document.querySelector('.segundo')
 
-        const hourDigital = document.querySelector('.d-h');
-        const minuteDigital = document.querySelector('.d-m');
-        const secondDigital = document.querySelector('.d-s');
+        const hourDigital = document.querySelector('.d-h')
+        const minuteDigital = document.querySelector('.d-m')
+        const secondDigital = document.querySelector('.d-s')
 
-        const svgh = document.querySelector('.svg-progress.hour');
-        const svgm = document.querySelector('.svg-progress.minute');
-        const svgs = document.querySelector('.svg-progress.second');
+        const svgh = document.querySelector('.svg-progress.hour')
+        const svgm = document.querySelector('.svg-progress.minute')
+        const svgs = document.querySelector('.svg-progress.second')
 
         // Set the transform style of each hand element with angle correction
-        hourHand.style.setProperty("--o-angle", hourAngle)
-        minuteHand.style.setProperty("--o-angle", minuteAngle)
-        secondHand.style.setProperty("--o-angle", secondAngle)
+        hourHand.style.setProperty('--o-angle', hourAngle)
+        minuteHand.style.setProperty('--o-angle', minuteAngle)
+        secondHand.style.setProperty('--o-angle', secondAngle)
 
-        svgh.style.setProperty("--o-val", hourPercentage)
-        svgm.style.setProperty("--o-val", minutePercentage)
-        svgs.style.setProperty("--o-val", secondPercentage)
+        svgh.style.setProperty('--o-val', hourPercentage)
+        svgm.style.setProperty('--o-val', minutePercentage)
+        svgs.style.setProperty('--o-val', secondPercentage)
 
         hourDigital.innerHTML = hour
         minuteDigital.innerHTML = minute
@@ -129,9 +156,7 @@
       }
 
       // Call the analogWatch function every second
-      setInterval(analogWatch, 1000);
-
+      setInterval(analogWatch, 1000)
     </script>
   </body>
-
 </html>
