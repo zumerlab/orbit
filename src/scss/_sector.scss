@@ -7,7 +7,7 @@ See o-sector docs in web-component file.
 */
 o-sector {
   --o-angle-composite: var(--o-angle) * var(--o-position);
-  container-name: sectors;
+  container-name: osector;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,21 +17,7 @@ o-sector {
   width: 100%;
   r: var(--o-radius);
   stroke-width:  calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
-  transform: rotate(calc(var(--o-begin-at) + var(--o-angle-composite)));
-}
-
-/* 
-  Conditional render sector if ratio equals 1
-*/
-o-sector svg path {
-  /* By default is hidden */
-  display: none;
-}
-@container sectors style(--o-ellipse-x: 1) and style(--o-ellipse-y: 1) {
-  /* Shown if ratio equals 1*/
-  o-sector svg path {
-    display: block;
-  }
+  transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
 }
 
 o-sector svg {

@@ -5,9 +5,10 @@ See o-progress docs in web-component file.
 
 */
 o-progress {
+  container-name: oprogress;
   r: var(--o-radius);
   stroke-width:  calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
-  transform: rotate(var(--o-begin-at));
+  transform: rotate(var(--o-from));
   position: absolute;
   display: flex;
   justify-content: center;

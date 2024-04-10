@@ -2,6 +2,7 @@
 ## .satellite
 
 Elements with `.satellite` are placed along an `.orbit` or `.orbit-*` arc serving as content place and/or to nest an `.orbital-zone`. 
+By default there are 24 satellites per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
 ### Shapes
 
@@ -14,11 +15,11 @@ A few set of shapes utilities are provided (`.circle`, `.box`, `.rounded-box`). 
 It has some special classes and css variables to customize it:
 
   - Class utility `.range-*`: Default '360deg'
-  - Class utility `.begint-at-*`: Default '0deg'
-  - Class utility `.size-*x`: To increase size according number of orbits. Default 1.
-  - Class utility `.size-*fr`: To decrease size according a fracction of orbit width. Default 1.
-  - Class utility `.inner`: To place `.satellite` at a "low-orbit". Default midle-orbit
-  - Class utility `.outer`: To place `.satellite` at a "high-orbit". Default midle-orbit
+  - Class utility `.from-*`: Default '0deg'
+  - Class utility `.grow-*x`: To increase size according number of orbits. Default 1.
+  - Class utility `.reduce-*`: To decrease size according an orbit fracction percentage. Default 1.
+  - Class utility `.inner-orbit`: To place `.satellite` just below its orbit
+  - Class utility `.outer-orbit`: To place `.satellite` just above its orbit
 
   - CSS styles. User can customize `.satellite` by adding CSS properties to it. 
 
@@ -58,15 +59,16 @@ It has some special classes and css variables to customize it:
 
 */
 .satellite {
+  container-name: satellite;
   --o-angle-composite: var(--o-angle) * var(--o-position);
   transform: translate(
     calc(
       (var(--o-radius) - var(--o-aligment, 0px))  / var(--o-ellipse-x) *
-        cos(var(--o-begin-at) + var(--o-angle-composite))
+        cos(var(--o-from) + var(--o-angle-composite))
     ),
     calc(
       (var(--o-radius) - var(--o-aligment, 0px))  / var(--o-ellipse-y) *
-        sin(var(--o-begin-at) + var(--o-angle-composite))
+        sin(var(--o-from) + var(--o-angle-composite))
     )
   );
   width: calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));

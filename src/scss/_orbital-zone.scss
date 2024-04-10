@@ -22,6 +22,7 @@ Orbital zone is a functional class that groups `.orbit` classes. It serves as a 
 
 */
 .orbital-zone {
+  container-name: orbitalzone;
   --o-lenght: 500px;
   width: var(--o-lenght);
   aspect-ratio: 1;

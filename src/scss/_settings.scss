@@ -1,5 +1,4 @@
 @use './variables'  as *;
-
 /*!
 
 ## Orbit initial css variable declaration
@@ -8,8 +7,7 @@ When start a new Orbit project following css variables are declared:
 
 ```css
 :root {
-  --o-max-orbits: 12;
-  --o-begin-at: 0deg;
+  --o-from: 0deg;
   --o-range: 360deg;
   --o-ellipse-x: 1;
   --o-ellipse-y: 1;
@@ -20,16 +18,14 @@ When start a new Orbit project following css variables are declared:
 
 ```css
 .instance-1 {
-  --o-max-orbits: 6;
-  --o-begin-at: 90deg;
+  --o-from: 90deg;
   --o-range: 360deg;
   --o-ellipse-x: 1;
   --o-ellipse-y: 1;
 }
 
 .instance-2 {
-  --o-max-orbits: 10;
-  --o-begin-at: 0deg;
+  --o-from: 0deg;
   --o-range: 1800deg;
   --o-ellipse-x: 0.8;
   --o-ellipse-y: 1;
@@ -46,8 +42,7 @@ When start a new Orbit project following css variables are declared:
 
 */
 :root {
-  --o-max-orbits: #{$max-orbits};
-  --o-begin-at: 0deg;
+  --o-from: 0deg;
   --o-range: 360deg;
   --o-ellipse-x: 1;
   --o-ellipse-y: 1;

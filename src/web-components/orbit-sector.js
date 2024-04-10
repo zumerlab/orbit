@@ -13,16 +13,17 @@ function calcularExpresionCSS(cssExpression) {
 /*! 
 ## o-sector
 
-`<o-sector>` is a standard web-component for rendering a radial slices or pies . 
+`<o-sector>` is a standard web-component for rendering a radial slices or pies. 
+By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
 It has some special attributes and css variables to customize it:
   - Attribute `sector-color`: To set a color for sector. Default `orange`
 
   - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-sector>`: to set gap space. Default '0'
   - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
-  - Class utility `.begint-at-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - Class utility `.inner`: To place `o-sector` at a "low-orbit". Default midle-orbit
-  - Class utility `.outer`: To place `o-sector` at a "high-orbit". Default midle-orbit
+  - Class utility `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
+  - Class utility `.inner-orbit`: To place `o-sector` just below its orbit
+  - Class utility `.outer-orbit`: To place `o-sector` just above its orbit
 
   - CSS styles. User can customize `o-sector` by adding CSS properties to `o-sector path`
   

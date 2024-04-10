@@ -1,8 +1,8 @@
 /*! 
 ## o-progress
 
-`<o-progress>` is a standard web-component for rendering a radial progress bar. 
-It has a progress bar and a range bar.
+`<o-progress>` is a standard web-component for rendering a radial progress bar. Just one o-progress can be used per orbit.
+It has a progress and range bar.
 
 It has some special attributes and css variables to customize it:
   - Attribute `value`: To set a number that represents the progress bar value.
@@ -10,13 +10,16 @@ It has some special attributes and css variables to customize it:
   - Attribute `bar-color`: To set a color for progress bar. Default `orange`
   - Attribute `bg-color`: To set a color for range bar. Default `transparent`
 
+
   - Class `.rounded`: to set ending caps. Default 'butt'
   - Class utility `.range-*`: Default '360deg'
-  - Class utility `.begint-at-*`: Default '0deg'
-  - Class utility `.inner`: To place `o-progress` at a "low-orbit". Default midle-orbit
-  - Class utility `.outer`: To place `o-progress` at a "high-orbit". Default midle-orbit
+  - Class utility `.from-*`: Default '0deg'
+  - Class utility `.inner-orbit`: To place `o-progress` just below its orbit
+  - Class utility `.outer-orbit`: To place `o-progress` just above its orbit
+
 
   - CSS styles. User can customize `o-progress` by adding CSS properties to `o-progress path` 
+  
   
 **Important:** `<o-progress>` can only be used into `.orbit` or `.orbit-*`
 
@@ -104,10 +107,12 @@ export class OrbitProgress extends HTMLElement {
     )
     const lineCap =
       getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt'
-    const ellipseX =
+    const ellipseX = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-ellipse-x') || 1
-    const ellipseY =
+    )
+    const ellipseY = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-ellipse-y') || 1
+    )
     const progress = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-progress') ||
         this.getAttribute('value') ||

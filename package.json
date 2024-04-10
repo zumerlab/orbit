@@ -7,7 +7,10 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "npx @zumerbox/build"
+    "build": "npx @zumerbox/build",
+    "doc:scss": "npx @zumerbox/doc-extractor src/orbit.scss -folder docs-one-scss -scss-imports -public-folder https://github.com/zumerlab/orbit/blob/main/src/scss",
+    "doc:scssx": "npx @zumerbox/doc-extractor src/scss -folder docs-scss-mutiple -multiple -public-folder https://github.com/zumerlab/orbit/blob/main/src/scss",
+    "doc:js": "npx @zumerbox/doc-extractor src/web-components -folder docs-js-mutiple  -multiple -public-folder https://github.com/zumerlab/orbit/blob/main/src/web-components"
   },
   "repository": {
     "type": "git",

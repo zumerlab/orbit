@@ -7,14 +7,14 @@ There is a small set of CSS utilities to use with some orbit classes and compone
   - **.orbital-zone aligment utilities**
     - `.center`, `center-left`, `.center-right`, `.top-left`, `.top-center`, `.top-right`, `.bottom-left`, `.bottom-center`,  `.bottom-right`
   - **.orbit or .orbit-* child elements utilities (satellite, vector, o-sector, o-progress)**
-    - `.begin-at-*`: To set a starting angle point. From 0 - 360deg. Default 0deg.
+    - `.from-*`: To set a starting angle point. From 0 - 360deg. Default 0deg.
     - `.range-*`: To set a limit to distribute elements. From 0 - 360deg. Default 360deg.
-    - `.angle-*`: To set an angle poijt to place elements. From 0 - 360deg. (not applies to o-progress)
+    - `.angle-*`: To set an angle point to place elements. From 0 - 360deg. (not applies to o-progress)
   - **Satellite, vector, o-sector, o-progress utilites**
-    - `.size-*x`: To increase size according number of orbits. Default 1.
-    - `.size-*fr`: To decrease size according a fracction of orbit width. Default 1.
-    - `.inner`: To place element at a "low-orbit". Default midle-orbit
-    - `.outer`: To place element at a "high-orbit". Default midle-orbit
+    - `.grow-*x`: To increase size according number of orbits. Default 1.
+    - `.reduce-*`: To decrease size according an orbit fracction percentage. Default 1.
+    - `.inner-orbit`: To place element just below its orbit.
+    - `.outer-orbit`: To place element just above its orbit. 
   - **satellite utilities**
     - `.circle` to render a circle shape. Default
     - `.rounded-box` to render a rounded box shape.
@@ -72,8 +72,8 @@ $max-grade: 360;
   }
 }
 @for $i from 0 through $max-grade {
-  .begin-at-#{$i} {
-    --o-begin-at: #{$i}deg;
+  .from-#{$i} {
+    --o-from: #{$i}deg;
   }
 }
 @for $i from 0 through $max-grade {
@@ -96,20 +96,20 @@ $max-grade: 360;
 }
 
 /* 
-  Sector, Progress and Vector width-factor USE GROW-FACTOR
-Ca  n be used in parent elements or in each orbiter class
+Sector, Progress and Vector size-ratio
+Can be used in parent elements or in each orbiter class
 */ 
 
-@for $i from 1 through  $max-orbits  {
-
-  $value: calc($i / $max-orbits ); 
-  .size-#{$i}fr {
+@for $i from 0 through  10  {
+  $percent: calc($i * 10);
+  $value: if($i == 0, 1, 1 - ($i / 10));
+  .reduce-#{$percent} {
     --o-size-ratio: #{$value}; 
   }
 }
 
 @for $i from 1 through $max-orbits {
-  .size-#{$i}x {
+  .grow-#{$i}x {
     --o-size-ratio: #{$i};
   }
 }
@@ -117,12 +117,12 @@ Ca  n be used in parent elements or in each orbiter class
 /* 
   Orbit child elements could be placed at low / middle / high-orbit
 */ 
-.inner {
+.inner-orbit {
   --o-aligment: calc(
     var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1)
   ) / 2;
 }
-.outer {
+.outer-orbit {
   --o-aligment: calc(
     var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1)
   ) / -2;

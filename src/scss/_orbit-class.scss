@@ -1,9 +1,9 @@
+@use './variables' as *;
 /*! 
 ## .orbit or .orbit-*
 
 This class renders a circumsference around a .orbital-zone center and allows other elements to be 
-distributed along width. By default there are 12 orbits. The number of orbits can be change on --o-max-orbits,
-or in scss source $max-orbits var.
+distributed along width. By default there are 12 orbits. The number can be modify with `$max-orbits` var at `_variables.scss`.
 
 **Important:** .orbit or .orbit-* is a direct child element of .orbital-zone.
 
@@ -52,9 +52,9 @@ It has some special attributes and css variables to customize it or its children
   
   - Class `.gap-*` applied on `.orbit` or `.orbit-*` set a `o-sector` gap space. Default '0'
   - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
-  - Class utility `.begint-at-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - Class utility `.inner`: To place `o-sector` at a "low-orbit". Default midle-orbit
-  - Class utility `.outer`: To place `o-sector` at a "high-orbit". Default midle-orbit
+  - Class utility `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
+  - Class utility `.inner-orbit`: To place `o-sector` just below its orbit
+  - Class utility `.outer-orbit`: To place `o-sector` just above its orbit
 
   - CSS styles. User can customize `.orbit` by adding CSS properties.
 
@@ -77,12 +77,13 @@ web component that will be hide when orbit is an ellipse. Values range from 0 to
 </div>
 ```
 
-There are some utility classes that are set on orbit element and affect its child radial layout (`.begin-at-*`, `.range-*`). 
+There are some utility classes that are set on orbit element and affect its child radial layout (`.from-*`, `.range-*`). 
 Please see **Radial Layout section**.
 
 */
 .orbit, [class*='orbit-'] {
-  --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / var(--o-max-orbits));
+  container-name: orbit;
+  --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / #{$max-orbits});
   --o-radius: calc(var(--o-diameter) / 2);
   width: calc(var(--o-diameter) / var(--o-ellipse-x));
   height: calc(var(--o-diameter) / var(--o-ellipse-y));

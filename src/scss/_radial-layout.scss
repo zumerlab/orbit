@@ -26,7 +26,7 @@ There are some modifiers to adjust orbit child distribution:
 
 - `--o-range`: This variable allows the user to set an arbitrary arc length. Values can range from 0 to 360deg. For convenience, there are utility classes `range-*` (.range-0 to .range-360).
 
-- `--o-begin-at`: This variable allows the user to set an arbitrary starting point. Values can range from 0 to 360deg. For convenience, there are utility classes `begin-at-*` (.begin-at-0 to .begin-at-360).
+- `--o-from`: This variable allows the user to set an arbitrary starting point. Values can range from 0 to 360deg. For convenience, there are utility classes `begin-at-*` (.from-0 to .from-360).
 
 ### Usage and Examples
 
