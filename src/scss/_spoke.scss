@@ -49,12 +49,12 @@ It has some special classes and css variables to customize it:
   );
   width: calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
   position: absolute;
-  padding: 0;
+  display: flex;
+  align-items: center;
   transform: var(--o-transform);
   height: 1px; /*use vars latter */
   pointer-events: none;
   border: none;
-  background: rgb(0, 0, 0);
 }
 
 .spoke.at-center {
