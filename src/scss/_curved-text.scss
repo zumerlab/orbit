@@ -1,13 +1,13 @@
 @use './variables' as *;
 /*!
-## <o-sector>
+## <o-text>
 
-See o-sector docs in web-component file.
+See o-text docs in web-component file.
 
 */
-o-sector {
+o-text {
   --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
-  container-name: osector;
+  container-name: otext;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,10 +20,17 @@ o-sector {
   transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
 }
 
-o-sector svg {
+o-text svg {
   pointer-events: none;
   overflow: visible!important;
 }
-o-sector svg > * {
+o-text svg > * {
   pointer-events: stroke;
+}
+
+o-text svg text  {
+  color: rgb(110, 110, 110);
+  font-size: 8px;
+  font-weight: 100;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }

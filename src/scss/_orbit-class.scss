@@ -80,10 +80,29 @@ web component that will be hide when orbit is an ellipse. Values range from 0 to
 There are some utility classes that are set on orbit element and affect its child radial layout (`.from-*`, `.range-*`). 
 Please see **Radial Layout section**.
 
+
+### TODO
+* Fix orbit-0 ok by adding ortbit-nth 0.1  OK
+* Add center position for vector, satellite  OK
+* Add .ccv for all orbit child ok
+* correjir sector y progress ok
+* add content radial aligment y 
+  + hacerlo rsponsive llegado el caso al espacio.. ver
+= add slot content para w-c NO HACE X AHORA XQ SE CUBRE CON SATELLITE O TEXT
+* CORREJIR ALINEACION TODO DESDE 0 A LAS 12 OK
+* probar sacar cambio de tamano en nested xq confunde mucho. ok
+* arreglar lenght.... para que sea responsive.. OK con una funcion
+... UN COMPOENENT DE TEXTO CURVO WIP. falta tema ajuste al path .. con attrib y size
+* bug no gap when one sector/text. 
+* bug alineacion gaps ... 180 on mas de un sector/ text
++ separar vector de constellation... o ray / vector
+* ornit-nth cambiar nombre
+
+
 */
 .orbit, [class*='orbit-'] {
   container-name: orbit;
-  --o-diameter: calc(var(--orbit-nth) * var(--o-lenght) / #{$max-orbits});
+  --o-diameter: calc(var(--o-orbit-number) * var(--o-lenght) / #{$max-orbits});
   --o-radius: calc(var(--o-diameter) / 2);
   width: calc(var(--o-diameter) / var(--o-ellipse-x));
   height: calc(var(--o-diameter) / var(--o-ellipse-y));

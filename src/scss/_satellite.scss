@@ -60,27 +60,30 @@ It has some special classes and css variables to customize it:
 */
 .satellite {
   container-name: satellite;
-  --o-angle-composite: var(--o-angle) * var(--o-position);
-  transform: translate(
+  --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 270deg)) * var(--o-direction, 1);
+  --o-transform: translate(
     calc(
       (var(--o-radius) - var(--o-aligment, 0px))  / var(--o-ellipse-x) *
-        cos(var(--o-from) + var(--o-angle-composite))
+        cos(var(--o-from) + var(--o-angle-composite ))
     ),
     calc(
       (var(--o-radius) - var(--o-aligment, 0px))  / var(--o-ellipse-y) *
         sin(var(--o-from) + var(--o-angle-composite))
     )
   );
-  width: calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
-  height: calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
+  transform: var(--o-transform);
+  width: calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
+  height: calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
   position: absolute;
-  margin: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%; /* Circle by default */
 }
 
+.satellite.at-center {
+  --o-transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
+}
 .satellite.circle {
   border-radius: 50%;
 }

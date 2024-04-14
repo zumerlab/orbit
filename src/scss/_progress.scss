@@ -7,7 +7,7 @@ See o-progress docs in web-component file.
 o-progress {
   container-name: oprogress;
   r: var(--o-radius);
-  stroke-width:  calc(var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1));
+  stroke-width:  calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
   transform: rotate(var(--o-from));
   position: absolute;
   display: flex;
@@ -24,5 +24,5 @@ o-progress.rounded {
 
 o-progress svg {
   pointer-events: none;
-  overflow: visible;
+  overflow: visible!important;
 }
