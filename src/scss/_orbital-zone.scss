@@ -35,8 +35,8 @@ Orbital zone is a functional class that groups `.orbit` classes. It serves as a 
 }
 
 .satellite > .orbital-zone {
-   /* When nested orbital-zone takes its lenght from the diameter of satellite's orbit */
+   /* Disabled nested adjusment size. When nested orbital-zone takes its lenght from the diameter of satellite's orbit 
   --o-lenght: var(--o-diameter);
   width: var(--o-lenght);
-  height: auto;
+  height: auto;*/
 }

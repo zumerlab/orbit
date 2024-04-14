@@ -156,7 +156,7 @@ export class OrbitProgress extends HTMLElement {
     )
     const maxValue = parseFloat(this.getAttribute('max')) || 100 // User-defined max value
     return full ?
-        ((maxValue - 1) / maxValue) * maxAngle
+        ((maxValue - 0.001) / maxValue) * maxAngle
       : (progress / maxValue) * maxAngle // Calculate angle based on progress and user-defined max angle
   }
 

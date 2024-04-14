@@ -11,40 +11,40 @@ function calcularExpresionCSS(cssExpression) {
 }
 
 /*! 
-## o-sector
+## o-text
 
-`<o-sector>` is a standard web-component for rendering a radial slices or pies. 
+`<o-text>` is a standard web-component for rendering a radial slices or pies. 
 By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
 It has some special attributes and css variables to customize it:
   - Attribute `sector-color`: To set a color for sector. Default `orange`
 
-  - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-sector>`: to set gap space. Default '0'
+  - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-text>`: to set gap space. Default '0'
   - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
   - Class utility `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - Class utility `.inner-orbit`: To place `o-sector` just below its orbit
-  - Class utility `.outer-orbit-orbit`: To place `o-sector` just above its orbit
+  - Class utility `.inner-orbit`: To place `o-text` just below its orbit
+  - Class utility `.outer-orbit-orbit`: To place `o-text` just above its orbit
 
-  - CSS styles. User can customize `o-sector` by adding CSS properties to `o-sector path`
+  - CSS styles. User can customize `o-text` by adding CSS properties to `o-text path`
   
 **Important:** 
 
-  - `<o-sector>` can only be used into `.orbit` or `.orbit-*`.
-  - `<o-sector>` doesn't support ellipse shape. See `.orbit` section for more information.
+  - `<o-text>` can only be used into `.orbit` or `.orbit-*`.
+  - `<o-text>` doesn't support ellipse shape. See `.orbit` section for more information.
 
 ### Usage
 
 ```html
 <div class="orbit range-180"> 
-  <o-sector />
-  <o-sector class="gap-5" />
-  <o-sector class="gap-10" />
-  <o-sector class="gap-5" />
+  <o-text />
+  <o-text class="gap-5" />
+  <o-text class="gap-10" />
+  <o-text class="gap-5" />
 </div>
 ```
 */
 
-export class OrbitSector extends HTMLElement {
+export class OrbitText extends HTMLElement {
   connectedCallback() {
     this.update()
 
@@ -58,14 +58,21 @@ export class OrbitSector extends HTMLElement {
 
     observer.observe(this, { attributes: true })
   }
-
   update() {
-    const svg = this.createSVGElement()
-    const sectorArc = this.createSectorArc()
-    svg.appendChild(sectorArc)
-    this.innerHTML = ''
-    this.appendChild(svg)
-  }
+    const svg = this.createSVGElement();
+    const pathId = `o-${Math.random().toString(36).substr(2, 9)}`;
+    const path = this.createPathElement(pathId);
+    const text = this.createTextPath(pathId);
+
+    svg.appendChild(path);
+    svg.appendChild(text);
+    
+    this.innerHTML = '';
+    this.appendChild(svg);
+}
+
+
+
 
   createSVGElement() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
@@ -74,23 +81,50 @@ export class OrbitSector extends HTMLElement {
     svg.setAttribute('height', this.getAttribute('height') || '100%')
     return svg
   }
-
-  createSectorArc() {
-    const sectorArc = document.createElementNS(
+  createPathElement(pathId) {
+    const path = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'path'
     )
-    const { strokeWidth, realRadius, sectorColor, gap } = this.getAttributes()
+    const { strokeWidth,realRadius,sectorColor, gap } = this.getAttributes()
     const angle = this.calculateAngle()
     const { d } = this.calculateArcParameters(angle, realRadius, gap)
-    sectorArc.setAttribute('d', d)
-    sectorArc.setAttribute('stroke', sectorColor)
-    sectorArc.setAttribute('stroke-width', strokeWidth)
-    sectorArc.setAttribute('fill', 'transparent')
-    sectorArc.setAttribute('vector-effect', 'non-scaling-stroke')
+    path.setAttribute('id', pathId)
+    path.setAttribute('d', d)
+    path.setAttribute('fill', 'none')
+   path.setAttribute('stroke', 'none')
+    path.setAttribute('stroke-width', strokeWidth)
+   path.setAttribute('vector-effect', 'non-scaling-stroke')
 
-    return sectorArc
+    return path
+}
+
+createTextPath(pathId) {
+  const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  const textPath = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'textPath'
+  );
+
+  //text.setAttribute('x', '25'); // Adjust as needed
+  textPath.setAttribute('href', `#${pathId}`);
+  textPath.setAttribute('alignment-baseline', 'middle');
+  textPath.textContent = this.textContent; // Set the text content here
+
+  text.appendChild(textPath);
+  return text;
+}
+
+  
+  textContentNode() {
+    const text = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'text'
+    )
+    text.textContent = this.textContent
+    return text
   }
+
 
   getAttributes() {
     const orbitRadius = parseFloat(
@@ -100,6 +134,7 @@ export class OrbitSector extends HTMLElement {
       getComputedStyle(this).getPropertyValue('--o-gap') || 0.001
     )
     const sectorColor = this.getAttribute('sector-color') || '#00ff00'
+
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle')
     const strokeWidth = parseFloat(
       getComputedStyle(this).getPropertyValue('stroke-width') || 1
@@ -115,7 +150,7 @@ export class OrbitSector extends HTMLElement {
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage
     const sectorAngle = calcularExpresionCSS(rawAngle)
-    
+   
     return {
       orbitRadius,
       strokeWidth,

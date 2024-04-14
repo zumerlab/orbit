@@ -33,25 +33,46 @@ It has some special classes and css variables to customize it:
 
 .vector {
   container-name: vector;
-  --o-angle-composite: var(--o-angle) * var(--o-position);
-  width: calc(var(--o-radius, 500px) / var(--orbit-nth) * var(--o-size-ratio, 1));
+  --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 270deg)) * var(--o-direction, 1);
+  --o-transform: translate(
+    calc(
+      (var(--o-radius) - var(--o-aligment, 1px)) / var(--o-ellipse-x) *
+        cos(var(--o-from) + var(--o-angle-composite))
+    ),
+    calc(
+      (var(--o-radius) - var(--o-aligment, 1px)) / var(--o-ellipse-y) *
+        sin(var(--o-from) + var(--o-angle-composite))
+    )
+  )
+  rotate(
+    calc(var(--o-from) + var(--o-angle-composite))
+  );
+  width: calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
   position: absolute;
   padding: 0;
-  transform: translate(
-      calc(
-        (var(--o-radius, 500px) - var(--o-aligment, 1px)) / var(--o-ellipse-x) *
-          cos(var(--o-from) + var(--o-angle-composite))
-      ),
-      calc(
-        (var(--o-radius, 500px) - var(--o-aligment, 1px)) / var(--o-ellipse-y) *
-          sin(var(--o-from) + var(--o-angle-composite))
-      )
-    )
-    rotate(
-      calc(var(--o-angle-composite))
-    );
+  transform: var(--o-transform);
   height: 1px; /*use vars latter */
   pointer-events: none;
   border: none;
   background: rgb(0, 0, 0);
 }
+
+.vector.at-center {
+  --o-transform: rotate(
+    calc(var(--o-from) + var(--o-angle-composite))
+  )
+}
+
+.vector.is-polygon {
+  --o-y: calc(var(--o-radius) * sin(90deg - var(--o-angle) / 2));
+  --o-transform: rotate( calc(var(--o-from) + var(--o-angle-composite)))
+  translate(0, var(--o-y));
+  width: calc(var(--o-radius) * cos(90deg - var(--o-angle) / 2) * 2);
+  /* cateto opuesto = hipotenusa * cos(angulo) */
+}
+.vector.is-polygon.outer-orbit{
+  --o-y: calc(var(--o-radius));
+  width: calc(var(--o-radius) * tan(var(--o-angle) / 2) * 2);
+  /* cateto adyacente = cateto opuesto * tan(angulo) */
+}
+// ijnvestigar from... si se saca de rotate se puede hacer figuras..

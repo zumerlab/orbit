@@ -25,39 +25,39 @@ There is a small set of CSS utilities to use with some orbit classes and compone
 */
 
 /* .orbital-zone  aligment utilities */
-.orbital-zone.top-left {
+.orbital-zone.at-top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
 }
-.orbital-zone.top-center {
+.orbital-zone.at-top {
   align-items: flex-start !important;
   justify-content: center !important;
 }
-.orbital-zone.top-right {
+.orbital-zone.at-top-right {
   align-items: flex-start !important;
   justify-content: flex-end !important;
 }
-.orbital-zone.bottom-left {
+.orbital-zone.at-bottom-left {
   align-items: flex-end !important;
   justify-content: flex-start !important;
 }
-.orbital-zone.bottom-center {
+.orbital-zone.at-bottom {
   align-items: flex-end !important;
   justify-content: center !important;
 }
-.orbital-zone.bottom-right {
+.orbital-zone.at-bottom-right {
   align-items: flex-end !important;
   justify-content: flex-end !important;
 }
-.orbital-zone.center-left {
+.orbital-zone.at-center-left {
   align-items: center !important;
   justify-content: flex-start !important;
 }
-.orbital-zone.center {
+.orbital-zone.at-center {
   align-items: center !important;
   justify-content: center !important;
 }
-.orbital-zone.center-right {
+.orbital-zone.at-center-right {
   align-items: center !important;
   justify-content: flex-end !important;
 }
@@ -78,7 +78,7 @@ $max-grade: 360;
 }
 @for $i from 0 through $max-grade {
   .angle-#{$i} {
-    --o-angle-composite: #{$i}deg;
+    --o-angle-composite: #{$i}deg !important; 
   }
 }
 
@@ -89,8 +89,10 @@ $max-grade: 360;
 /* 
   Sector gap 
 */ 
-@for $i from 1 through $max-orbiters {
-  o-sector.gap-#{$i} {
+
+$max-gaps: $max-orbiters / 2;
+@for $i from 1 through  $max-gaps {
+  o-sector.gap-#{$i}, o-text.gap-#{$i} {
     --o-gap: #{$i};
   }
 }
@@ -119,11 +121,67 @@ Can be used in parent elements or in each orbiter class
 */ 
 .inner-orbit {
   --o-aligment: calc(
-    var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1)
+    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
   ) / 2;
 }
 .outer-orbit {
   --o-aligment: calc(
-    var(--o-radius) / var(--orbit-nth) * var(--o-size-ratio, 1)
+    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
   ) / -2;
 }
+
+/* 
+  Orbit direction
+*/ 
+
+.ccw{
+  --o-direction: -1;
+  --o-offset: - -90deg
+}
+
+
+/* 
+  Orbit capsule
+*/ 
+
+.capsule  {
+  --o-angle-composite: 0deg;
+  width: inherit;
+  height: auto;
+  padding: 5px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  rotate: calc(var(--o-angle-composite));
+}
+.capsule.flip {
+  --o-angle-composite: 180deg !important;
+}
+
+.capsule.turn-left {
+  margin-top: 25%;
+  --o-angle-composite: 90deg !important;
+}
+.capsule.turn-right  {
+  margin-top: 25%;
+  --o-angle-composite: 270deg !important;
+}
+
+.capsule.stable  {
+  --o-gyro: calc(90deg - ( var(--o-angle) * var(--o-orbit-child-number)));
+  --o-angle-composite: var(--o-gyro);
+}
+
+.satellite>.capsule.stable  {
+  --o-gyro: calc(var(--o-angle) * var(--o-orbit-child-number));
+  --o-angle-composite: var(--o-gyro);
+}
+
+.satellite>.capsule.turn-left {
+  --o-angle-composite: 90deg !important;
+}
+.satellite>.capsule.turn-right  {
+  --o-angle-composite: 270deg !important;
+}
+
+
