@@ -96,9 +96,9 @@ There are some modifiers to adjust orbit child distribution:
 }
 
 @for $i from 1 through $max-orbiters {
-    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .spoke)),
-    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .segment), 
-    > :nth-child(#{$i} of o-label)) {
+    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .spoke), > :nth-child(#{$i} of .segment), > :nth-child(#{$i} of o-label)), 
+    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .spoke), > :nth-child(#{$i} of .segment), > :nth-child(#{$i} of o-label)) {
     --o-angle: calc(var(--o-range) / #{$i});
     }
 }
+

@@ -78,7 +78,7 @@ $max-grade: 360;
 }
 @for $i from 0 through $max-grade {
   .angle-#{$i} {
-    --o-angle-composite: #{$i}deg !important; 
+    --o-angle-composite: calc(#{$i}deg - 90deg) !important; 
   }
 }
 
@@ -124,6 +124,17 @@ Can be used in parent elements or in each orbiter class
     var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
   ) / 2;
 }
+.quarter-inner-orbit {
+  --o-aligment: calc(
+    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
+  ) / 3.75;
+}
+.quarter-outer-orbit {
+  --o-aligment: calc(
+    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
+  ) / -3.75;
+}
+
 .outer-orbit {
   --o-aligment: calc(
     var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
