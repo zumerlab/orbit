@@ -82,23 +82,23 @@ There are some modifiers to adjust orbit child distribution:
     }
 }
 
-/* Satellites, sectors, text and vectors layout */
+/* Satellites, sectors, label, segment, and spokes layout */
 @for $i from 1 through $max-orbiters {
- :nth-child(#{$i} of .vector.is-polygon){
+ :nth-child(#{$i} of .segment){
     --o-orbit-child-number: #{$i - 2}; // Uses - 1 to start from 0 deg.
     }
 }
 
 @for $i from 1 through $max-orbiters {
-  :nth-child(#{$i} of .satellite),:nth-child(#{$i} of o-sector), :nth-child(#{$i} of .vector) ,:nth-child(#{$i} of o-text) {
+  :nth-child(#{$i} of .satellite),:nth-child(#{$i} of o-sector), :nth-child(#{$i} of .spoke) ,:nth-child(#{$i} of o-label) {
     --o-orbit-child-number: #{$i - 1}; // Uses - 1 to start from 0 deg.
     }
 }
 
 @for $i from 1 through $max-orbiters {
-    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .vector)),
-    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .vector), 
-    > :nth-child(#{$i} of o-text)) {
+    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .spoke)),
+    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .segment), 
+    > :nth-child(#{$i} of o-label)) {
     --o-angle: calc(var(--o-range) / #{$i});
     }
 }
