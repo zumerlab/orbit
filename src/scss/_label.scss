@@ -1,11 +1,11 @@
 @use './variables' as *;
 /*!
-## <o-text>
+## <o-label>
 
-See o-text docs in web-component file.
+See o-label docs in web-component file.
 
 */
-o-text {
+o-label {
   --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
   container-name: otext;
   display: flex;
@@ -20,15 +20,15 @@ o-text {
   transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
 }
 
-o-text svg {
+o-label svg {
   pointer-events: none;
   overflow: visible!important;
 }
-o-text svg > * {
+o-label svg > * {
   pointer-events: stroke;
 }
 
-o-text svg text  {
+o-label svg text  {
   color: rgb(110, 110, 110);
   font-size: 8px;
   font-weight: 100;

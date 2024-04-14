@@ -44,7 +44,7 @@ It has some special attributes and css variables to customize it:
 ```
 */
 
-export class OrbitText extends HTMLElement {
+export class OrbitLabel extends HTMLElement {
   connectedCallback() {
     this.update()
 

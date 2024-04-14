@@ -1,0 +1,55 @@
+/*! 
+## .spoke
+
+This class renders a perpendicular segment along an orbit. By default there are 24 spokes per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
+  
+### Customization
+
+It has some special classes and css variables to customize it:
+
+  - Class utility `.range-*`: Default '360deg'
+  - Class utility `.from-*`: Default '0deg'
+  - Class utility `.grow-*x`: To increase size according number of orbits. Default 1.
+  - Class utility `.reduce-*`: To decrease size according an orbit fracction percentage. Default 1.
+  - Class utility `.inner-orbit`: To place `.spoke` just below its orbit
+  - Class utility `.outer-orbit`: To place `.spoke` just above its orbit
+
+  - CSS styles. User can customize `.spoke` by adding CSS properties to it. 
+
+### Usage 
+
+```html
+<div class="orbit">
+  <div class="spoke"><div>
+  <div class="spoke x5"><div> <!-- 50% of orbit radius -->
+  <div class="spoke x01"><div> <!-- 1% of orbit radius -->
+  <div class="spoke"><div>
+</div>
+```
+
+**Important:** `.spoke` can only be placed into a parent `.orbit` or `.orbit-*`
+
+*/
+
+.segment {
+  container-name: segment;
+  --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 270deg)) * var(--o-direction, 1);
+  --o-y: calc(var(--o-radius) * sin(90deg - var(--o-angle) / 2));
+  --o-transform: rotate( calc(var(--o-from) + var(--o-angle-composite)))
+  translate(0, var(--o-y));
+  width: calc(var(--o-radius) * cos(90deg - var(--o-angle) / 2) * 2);
+  position: absolute;
+  padding: 0;
+  transform: var(--o-transform);
+  height: 1px; /*use vars latter */
+  pointer-events: none;
+  border: none;
+  background: rgb(0, 0, 0);
+}
+
+.segment.outer-orbit{
+  --o-y: calc(var(--o-radius));
+  width: calc(var(--o-radius) * tan(var(--o-angle) / 2) * 2);
+  /* cateto adyacente = cateto opuesto * tan(angulo) */
+}
+
