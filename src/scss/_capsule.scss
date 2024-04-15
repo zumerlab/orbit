@@ -1,0 +1,37 @@
+@use './variables' as *;
+/*!
+## .capsule
+
+Capsule is a class to put content. It can be put into satellites and segments.
+There are some utilties to modify capsule orientation content.
+
+### Usage
+
+```html
+<div class="satellite">
+  <div class="capsule stable">
+    Some text here.
+  </div>
+</div> 
+```
+
+#### Utilities
+
+- `stable`: to mantain content always horizontal. 
+- `turn-left`: to turn content 90deg left
+- `turn-right`: to turn content 90deg right
+- `flip`: to turn content upside-down.
+
+*/
+
+.capsule  {
+  --o-angle-composite: 0deg;
+  display: flex;
+  width: inherit;
+  height: auto;
+  padding: 5px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  rotate: calc(var(--o-angle-composite));
+}

@@ -4,7 +4,7 @@
 
 There is a small set of CSS utilities to use with some orbit classes and componentes:
 
-  - **.orbital-zone aligment utilities**
+  - **.orbit-zone aligment utilities**
     - `.center`, `center-left`, `.center-right`, `.top-left`, `.top-center`, `.top-right`, `.bottom-left`, `.bottom-center`,  `.bottom-right`
   - **.orbit or .orbit-* child elements utilities (satellite, vector, o-sector, o-progress)**
     - `.from-*`: To set a starting angle point. From 0 - 360deg. Default 0deg.
@@ -24,40 +24,40 @@ There is a small set of CSS utilities to use with some orbit classes and compone
   
 */
 
-/* .orbital-zone  aligment utilities */
-.orbital-zone.at-top-left {
+/* .orbit-zone  aligment utilities */
+.orbit-zone.at-top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
 }
-.orbital-zone.at-top {
+.orbit-zone.at-top {
   align-items: flex-start !important;
   justify-content: center !important;
 }
-.orbital-zone.at-top-right {
+.orbit-zone.at-top-right {
   align-items: flex-start !important;
   justify-content: flex-end !important;
 }
-.orbital-zone.at-bottom-left {
+.orbit-zone.at-bottom-left {
   align-items: flex-end !important;
   justify-content: flex-start !important;
 }
-.orbital-zone.at-bottom {
+.orbit-zone.at-bottom {
   align-items: flex-end !important;
   justify-content: center !important;
 }
-.orbital-zone.at-bottom-right {
+.orbit-zone.at-bottom-right {
   align-items: flex-end !important;
   justify-content: flex-end !important;
 }
-.orbital-zone.at-center-left {
+.orbit-zone.at-center-left {
   align-items: center !important;
   justify-content: flex-start !important;
 }
-.orbital-zone.at-center {
+.orbit-zone.at-center {
   align-items: center !important;
   justify-content: center !important;
 }
-.orbital-zone.at-center-right {
+.orbit-zone.at-center-right {
   align-items: center !important;
   justify-content: flex-end !important;
 }
@@ -90,7 +90,7 @@ $max-grade: 360;
   Sector gap 
 */ 
 
-$max-gaps: $max-orbiters / 2;
+$max-gaps: calc($max-orbiters / 2);
 @for $i from 1 through  $max-gaps {
   o-sector.gap-#{$i}, o-text.gap-#{$i} {
     --o-gap: #{$i};
@@ -104,7 +104,7 @@ Can be used in parent elements or in each orbiter class
 
 @for $i from 0 through  10  {
   $percent: calc($i * 10);
-  $value: if($i == 0, 1, 1 - ($i / 10));
+  $value: if($i == 0, 1, 1 - calc($i / 10));
   .reduce-#{$percent} {
     --o-size-ratio: #{$value}; 
   }
@@ -155,16 +155,7 @@ Can be used in parent elements or in each orbiter class
   Orbit capsule
 */ 
 
-.capsule  {
-  --o-angle-composite: 0deg;
-  width: inherit;
-  height: auto;
-  padding: 5px;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  rotate: calc(var(--o-angle-composite));
-}
+
 .capsule.flip {
   --o-angle-composite: 180deg !important;
 }
@@ -185,14 +176,13 @@ Can be used in parent elements or in each orbiter class
 
 .satellite>.capsule.stable  {
   --o-gyro: calc(var(--o-angle) * var(--o-orbit-child-number));
-  --o-angle-composite: var(--o-gyro);
 }
 
 .satellite>.capsule.turn-left {
-  --o-angle-composite: 90deg !important;
+  margin-top:unset;
 }
 .satellite>.capsule.turn-right  {
-  --o-angle-composite: 270deg !important;
+  margin-top:unset;
 }
 
 
