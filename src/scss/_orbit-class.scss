@@ -2,15 +2,15 @@
 /*! 
 ## .orbit or .orbit-*
 
-This class renders a circumsference around a .orbital-zone center and allows other elements to be 
+This class renders a circumsference around a .orbit-zone center and allows other elements to be 
 distributed along width. By default there are 12 orbits. The number can be modify with `$max-orbits` var at `_variables.scss`.
 
-**Important:** .orbit or .orbit-* is a direct child element of .orbital-zone.
+**Important:** .orbit or .orbit-* is a direct child element of .orbit-zone.
 
 ### Usage: 
 
 ```html
-<div class="orbital-zone">
+<div class="orbit-zone">
   <div class="orbit"></div>
   <div class="orbit"></div>
 </div>
@@ -34,10 +34,10 @@ distributed along width. By default there are 12 orbits. The number can be modif
 
 - This renders nested orbits around a satellite
   ```html
-  <div class="orbital-zone">
+  <div class="orbit-zone">
     <div class="orbit">
       <div class="satellite">
-        <div class="orbital-zone">
+        <div class="orbit-zone">
           <div class="orbit"></div>
           <div class="orbit"></div>
         </div>
@@ -65,10 +65,10 @@ web component that will be hide when orbit is an ellipse. Values range from 0 to
 **Important**: Ckecking `--o-ellipse-x` and `--o-ellipse-y` doesn't work currently on Firefox and Safari.
 
 ```html
-<div class="orbital-zone" style="--o-ellipse-x: 0.6">
+<div class="orbit-zone" style="--o-ellipse-x: 0.6">
   <div class="orbit">
     <div class="satellite">
-      <div class="orbital-zone">
+      <div class="orbit-zone">
         <div class="orbit"></div>
         <div class="orbit"></div>
       </div>
@@ -87,13 +87,13 @@ Please see **Radial Layout section**.
 * Add .ccv for all orbit child ok
 * correjir sector y progress ok
 * add content radial aligment y 
-  + hacerlo rsponsive llegado el caso al espacio.. ver esto no esta bien del todo
+  * hacerlo rsponsive llegado el caso al espacio.. ver esto no esta bien del todo
 = add slot content para w-c NO HACE X AHORA XQ SE CUBRE CON SATELLITE O TEXT
 * CORREJIR ALINEACION TODO DESDE 0 A LAS 12 OK
 * probar sacar cambio de tamano en nested xq confunde mucho. ok
 * arreglar lenght.... para que sea responsive.. OK con una funcion
 * UN COMPOENENT DE TEXTO CURVO WIP.  text size and color from class style. 
-- eliminar sttributos innecsarios hacerlosmasstndars para progres y sector tb
+* eliminar sttributos innecsarios hacerlosmasstndars para progres y sector tb
 * bug no gap when one sector/text. 
 * bug alineacion gaps ... 180 on mas de un sector/ o-label
 * separar vector de constellation... o vector to spoke / vector.is-poligon to segment
@@ -101,10 +101,13 @@ Please see **Radial Layout section**.
 * resize orbit as optional function.
 * trabajar con spoke as container... tiene que alinearse siempre a la mitad asi, si tiene una imagen dentro queda
 alineada tambien.
+- add rules to support chek
+- create basic and alternative theme
+- volver a chequear documentacion
 
 
 */
-.orbit, [class*='orbit-'] {
+.orbit, [class*='orbit-']:not(.orbit-zone) {
   container-name: orbit;
   --o-diameter: calc(var(--o-orbit-number) * var(--o-lenght) / #{$max-orbits});
   --o-radius: calc(var(--o-diameter) / 2);

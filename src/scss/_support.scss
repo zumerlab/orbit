@@ -12,9 +12,9 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
 
 ### Visual warning on invalid nested elements
 
-- Orbit checks and warns if `.orbital-zone` has some invalid Orbit direct child element. Only `.orbit` or `.orbit-*` are allowed
+- Orbit checks and warns if `.orbit-zone` has some invalid Orbit direct child element. Only `.orbit` or `.orbit-*` are allowed
 
-- Orbit checks and warns if `.satellite` has some invalid Orbit direct child element. Only `.orbital-zone` is allowed. 
+- Orbit checks and warns if `.satellite` has some invalid Orbit direct child element. Only `.orbit-zone` is allowed. 
 
 */
 
@@ -31,11 +31,11 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
   }
 }
 
-.orbital-zone:has(>.satellite, >.vector, >o-progress, >o-sector) {
+.orbit-zone:has(>.satellite, >.spoke, >o-progress, >o-sector) {
   border: 0.5px solid red!important;
 }
 
-.orbital-zone::after{
+.orbit-zone::after{
   position: absolute;
   top: 0px;
   left: 0px;
@@ -60,7 +60,7 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
 }
 
 
-.orbital-zone>.satellite, .orbital-zone>.vector, .orbital-zone>o-sector,.orbital-zone>o-progress, .satellite>.satellite,.satellite>.orbit,.satellite>[class*='orbit-'], .satellite>.vector, .satellite>o-sector,.satellite>o-progress {
+.orbit-zone>.satellite, .orbit-zone>.spoke, .orbit-zone>.segment, .orbit-zone>o-sector,.orbit-zone>o-progress, .satellite>.satellite,.satellite>.orbit,.satellite>[class*='orbit-']:not(.orbit-zone), .satellite>.spoke, .satellite>.segment, .satellite>o-sector,.satellite>o-progress {
   border: 1px solid red!important;
   background-color: red;
   border-radius: 50%;
@@ -69,14 +69,14 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
   animation:  pulse 1.5s infinite;
 }
 
-.orbital-zone>o-sector path, .orbital-zone>o-progress path, .satellite>o-sector path, .satellite>o-progress path {
+.orbit-zone>o-sector path, .orbit-zone>o-progress path, .satellite>o-sector path, .satellite>o-progress path {
   stroke:none
 }
 
-.orbital-zone:has(>.satellite,>.vector,>o-sector,>o-progress)::after {
-  content: "⚠️ Invalid nested elements on .orbital-zone!";
+.orbit-zone:has(>.satellite,>.spoke,>.segment,>o-sector,>o-progress)::after {
+  content: "⚠️ Invalid nested elements on .orbit-zone!";
 }
-.satellite:has(>.satellite,>.vector,>o-sector,>o-progress,>.orbit, >[class*='orbit-'])::after {
+.satellite:has(>.satellite,>.spoke,>.segment,>o-sector,>o-progress,>.orbit, >[class*='orbit-']:not(.orbit-zone))::after {
   content: "⚠️ Invalid nested elements on .satellite!";
 }
 

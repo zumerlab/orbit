@@ -86,13 +86,13 @@ export class OrbitLabel extends HTMLElement {
       'http://www.w3.org/2000/svg',
       'path'
     )
-    const { strokeWidth,realRadius,sectorColor, gap } = this.getAttributes()
+    const { strokeWidth,realRadius, gap,labelBgColor} = this.getAttributes()
     const angle = this.calculateAngle()
     const { d } = this.calculateArcParameters(angle, realRadius, gap)
     path.setAttribute('id', pathId)
     path.setAttribute('d', d)
     path.setAttribute('fill', 'none')
-    path.setAttribute('stroke', 'none')
+    path.setAttribute('stroke', labelBgColor)
     path.setAttribute('stroke-width', strokeWidth)
     path.setAttribute('vector-effect', 'non-scaling-stroke')
 
@@ -106,8 +106,9 @@ createTextPath(pathId) {
       'textPath'
   );
 
-  //text.setAttribute('x', '25'); // Adjust as needed
+  const { labelColor} = this.getAttributes()
   textPath.setAttribute('href', `#${pathId}`);
+  textPath.setAttribute('color', `#${labelColor}`);
   textPath.setAttribute('alignment-baseline', 'middle');
   textPath.textContent = this.textContent; // Set the text content here
 
@@ -133,7 +134,9 @@ createTextPath(pathId) {
     const gap = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-gap') || 0.001
     )
-    const sectorColor = this.getAttribute('sector-color') || '#00ff00'
+    const labelColor = this.getAttribute('label-color') || 'black'
+
+    const labelBgColor = this.getAttribute('bg-color') || 'none'
 
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle')
     const strokeWidth = parseFloat(
@@ -149,21 +152,22 @@ createTextPath(pathId) {
       innerOuter = 0
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage
-    const sectorAngle = calcularExpresionCSS(rawAngle)
+    const labelAngle = calcularExpresionCSS(rawAngle)
    
     return {
       orbitRadius,
       strokeWidth,
       realRadius,
-      sectorColor,
+      labelColor,
+      labelBgColor,
       gap,
-      sectorAngle
+      labelAngle
     }
   }
 
   calculateAngle() {
-    const { sectorAngle, gap } = this.getAttributes()
-    return sectorAngle - gap
+    const { labelAngle, gap } = this.getAttributes()
+    return labelAngle - gap
   }
 
   calculateArcParameters(angle, realRadius, gap) {

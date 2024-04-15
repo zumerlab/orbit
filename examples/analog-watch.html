@@ -41,7 +41,7 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
   <body>
     <main>
       <section id="one">
-        <div class="orbital-zone"  >
+        <div class="orbit-zone"  >
           <div class="orbit-0">
               <div class="spoke quarter-outer-orbit grow-4x angle-76">
                <img src="../assets/arrow.png" alt="">
@@ -165,7 +165,7 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
           </div>
       </section>
       <section id="two">
-        <div class="orbital-zone center-left">
+        <div class="orbit-zone center-left">
           <div class="orbit-0">
               <div class="satellite reduce-70 at-center"></div> 
           </div>
@@ -219,12 +219,12 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
             <div class="satellite"></div>
             <div class="satellite"></div>
             <div class="satellite">hola
-              <div class="orbital-zone">
+              <div class="orbit-zone">
                 <div class="orbit-1">
                   <div class="satellite"></div>
                   <div class="satellite"></div>
                   <div class="satellite">
-                    <div class="orbital-zone">
+                    <div class="orbit-zone">
                     <div class="orbit-1">
                       <div class="satellite inner-orbit reduce-50"></div>
                       <div class="satellite reduce-50"></div>
@@ -249,10 +249,14 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
     
    
     <script>
+      let one = document.querySelector('#one')
+     // one.style.opacity = 0
     // Function to run when the DOM content is loaded
     const initialize = () => {
     // Call the function with the desired parent element selector
+      
       Orbit.resize("#one");
+      // one.style.opacity = 1
     }
     // Wait for the DOMContentLoaded event before initializing
     document.addEventListener('DOMContentLoaded', initialize);

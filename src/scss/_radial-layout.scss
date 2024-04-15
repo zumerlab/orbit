@@ -16,7 +16,7 @@ Orbit radial layout is the core of Orbit library, offering a flexible, clean and
 
 The mechanism is straightforward:
 
-- `--o-orbit-number` gives a radius that informs where each `orbit` is placed, according to both the `.orbital-zone` length and the maximum number of orbits. For example, with an `.orbital-zone` length of 500px and a maximum of 12 orbits, `orbit-4` will have 166.66 pixels of radius.
+- `--o-orbit-number` gives a radius that informs where each `orbit` is placed, according to both the `.orbit-zone` length and the maximum number of orbits. For example, with an `.orbit-zone` length of 500px and a maximum of 12 orbits, `orbit-4` will have 166.66 pixels of radius.
 
 - According to child number in an orbit, `--o-angle` is calculated (if one orbit has 3 satellites, `--o-angle` is 120deg). Finally, `--o-angle` is multiplied by `--o-orbit-child-numbers`. For example, satellite one will have 120deg, satellite two 240deg, and satellite three 360deg, and each satellite will be placed along its orbit at 166.66px.
 
@@ -32,7 +32,7 @@ There are some modifiers to adjust orbit child distribution:
 
 ```html
 <!-- Example usage of Orbit Radial Layout -->
-<div class="orbital-zone">
+<div class="orbit-zone">
     <div class="orbit-3"></div>
     <div class="orbit-4">
         <div class="satellite"></div>
@@ -97,7 +97,7 @@ There are some modifiers to adjust orbit child distribution:
 
 @for $i from 1 through $max-orbiters {
     .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .spoke), > :nth-child(#{$i} of .segment), > :nth-child(#{$i} of o-label)), 
-    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .spoke), > :nth-child(#{$i} of .segment), > :nth-child(#{$i} of o-label)) {
+    [class*='orbit-']:not(.orbit-zone):has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-sector), > :nth-child(#{$i} of .spoke), > :nth-child(#{$i} of .segment), > :nth-child(#{$i} of o-label)) {
     --o-angle: calc(var(--o-range) / #{$i});
     }
 }

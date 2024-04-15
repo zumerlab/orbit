@@ -2,7 +2,7 @@
     ORBIT CORE
 ==================*/
 @import './scss/_settings.scss';
-@import './scss/_orbital-zone.scss';
+@import './scss/_orbit-zone.scss';
 @import './scss/_orbit-class.scss';
 @import './scss/_satellite.scss';
 @import './scss/_spoke.scss';
@@ -11,6 +11,7 @@
 @import './scss/_label.scss';
 @import './scss/_progress.scss';
 @import './scss/_radial-layout.scss';
+@import './scss/_capsule.scss';
 @import './scss/_utilities.scss';
 
 /*================
@@ -21,7 +22,7 @@
 /*=================
     ORBIT THEME
 ===================*/
-@import './scss/_orbital-zone_theme.scss';
+@import './scss/_orbit-zone_theme.scss';
 @import './scss/_orbit-class_theme.scss';
 @import './scss/_satellite_theme.scss';
 @import './scss/_sector_theme.scss';
