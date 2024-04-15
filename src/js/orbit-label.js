@@ -11,35 +11,35 @@ function calcularExpresionCSS(cssExpression) {
 }
 
 /*! 
-## o-text
+## o-label
 
-`<o-text>` is a standard web-component for rendering a radial slices or pies. 
+`<o-label>` is a standard web-component for rendering a radial slices or pies. 
 By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
 It has some special attributes and css variables to customize it:
   - Attribute `sector-color`: To set a color for sector. Default `orange`
 
-  - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-text>`: to set gap space. Default '0'
+  - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-label>`: to set gap space. Default '0'
   - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
   - Class utility `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - Class utility `.inner-orbit`: To place `o-text` just below its orbit
-  - Class utility `.outer-orbit-orbit`: To place `o-text` just above its orbit
+  - Class utility `.inner-orbit`: To place `o-label` just below its orbit
+  - Class utility `.outer-orbit-orbit`: To place `o-label` just above its orbit
 
-  - CSS styles. User can customize `o-text` by adding CSS properties to `o-text path`
+  - CSS styles. User can customize `o-label` by adding CSS properties to `o-label path`
   
 **Important:** 
 
-  - `<o-text>` can only be used into `.orbit` or `.orbit-*`.
-  - `<o-text>` doesn't support ellipse shape. See `.orbit` section for more information.
+  - `<o-label>` can only be used into `.orbit` or `.orbit-*`.
+  - `<o-label>` doesn't support ellipse shape. See `.orbit` section for more information.
 
 ### Usage
 
 ```html
 <div class="orbit range-180"> 
-  <o-text />
-  <o-text class="gap-5" />
-  <o-text class="gap-10" />
-  <o-text class="gap-5" />
+  <o-label />
+  <o-label class="gap-5" />
+  <o-label class="gap-10" />
+  <o-label class="gap-5" />
 </div>
 ```
 */
@@ -92,9 +92,9 @@ export class OrbitLabel extends HTMLElement {
     path.setAttribute('id', pathId)
     path.setAttribute('d', d)
     path.setAttribute('fill', 'none')
-   path.setAttribute('stroke', 'none')
+    path.setAttribute('stroke', 'none')
     path.setAttribute('stroke-width', strokeWidth)
-   path.setAttribute('vector-effect', 'non-scaling-stroke')
+    path.setAttribute('vector-effect', 'non-scaling-stroke')
 
     return path
 }
