@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Centered viewport --> 
+    <script type="module" src="../src/orbit.js" defer></script>
 <link
 rel="stylesheet"
 href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
@@ -248,30 +247,16 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
       </section>
     </main>
     
-    <script type="module" src="../../src/orbit.js"></script>
+   
     <script>
-      function observeParentElement(parentElementSelector) {
-      const parentElement = document.querySelector(parentElementSelector);
-
-      if (!parentElement) {
-        console.error(`No se encontró ningún elemento con el selector ${parentElementSelector}`);
-        return;
-      }
-      const resizeObserver = new ResizeObserver(entries => {
-        for (let entry of entries) {
-          const { width } = entry.contentRect;
-          const childElement = parentElement.querySelector('.orbital-zone');
-          if (childElement) {
-            childElement.style.setProperty('--o-lenght', `${width}px`);
-          } else {
-            console.error('No se encontró ningún elemento hijo con la clase .child-element');
-          }
-        }
-      });
-      resizeObserver.observe(parentElement);
+    // Function to run when the DOM content is loaded
+    const initialize = () => {
+    // Call the function with the desired parent element selector
+      Orbit.resize("#one");
     }
-    //observeParentElement('#one');
-    //observeParentElement('#two');
+    // Wait for the DOMContentLoaded event before initializing
+    document.addEventListener('DOMContentLoaded', initialize);
     </script>
+
   </body>
 </html>
