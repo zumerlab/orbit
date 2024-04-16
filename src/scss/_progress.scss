@@ -18,9 +18,6 @@ o-progress {
   pointer-events: none; /* To avoid events conflicts with other elements */
 }
 
-o-progress.rounded {
-  --o-linecap: round;
-}
 
 o-progress svg {
   pointer-events: none;
