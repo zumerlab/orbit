@@ -92,7 +92,7 @@ $max-grade: 360;
 
 $max-gaps: calc($max-orbiters / 2);
 @for $i from 1 through  $max-gaps {
-  o-sector.gap-#{$i}, o-text.gap-#{$i} {
+  o-sector.gap-#{$i}, o-label.gap-#{$i} {
     --o-gap: #{$i};
   }
 }
@@ -150,6 +150,14 @@ Can be used in parent elements or in each orbiter class
   --o-offset: - -90deg
 }
 
+/* 
+  Orbit range justification
+*/ 
+
+.fit-range {
+  --o-fit-range: 1;
+}
+
 
 /* 
   Orbit capsule
@@ -185,4 +193,7 @@ Can be used in parent elements or in each orbiter class
   margin-top:unset;
 }
 
+o-progress.rounded,o-label.rounded {
+  --o-linecap: round;
+}
 

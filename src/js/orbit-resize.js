@@ -12,7 +12,7 @@ Orbit = {
         const resizeObserver = new ResizeObserver(entries => {
         for (let entry of entries) {
             const { width } = entry.contentRect;
-            const childElement = parentElement.querySelector('.orbital-zone');
+            const childElement = parentElement.querySelector('.orbit-zone');
             if (childElement) {
             childElement.style.setProperty('--o-lenght', `${width}px`);
             } else {
