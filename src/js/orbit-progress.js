@@ -126,10 +126,10 @@ export class OrbitProgress extends HTMLElement {
     let strokeWithPercentage = ((strokeWidth / 2) * 100) / orbitRadius / 2
     // default aligment at middle
     let innerOuter = strokeWithPercentage
-    if (this.classList.contains('outer')) {
+    if (this.classList.contains('outer-orbit')) {
       innerOuter = strokeWithPercentage * 2
     }
-    if (this.classList.contains('inner')) {
+    if (this.classList.contains('inner-orbit')) {
       innerOuter = 0
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage

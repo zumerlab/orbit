@@ -1,14 +1,14 @@
 function calcularExpresionCSS(cssExpression) {
-  const match = cssExpression.match(/calc\(([\d.]+)(deg)\s*\/\s*(\d+)\)/)
+  const match = cssExpression.match(/calc\(\s*([\d.]+)deg\s*\/\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)\s*\)/);
   if (match) {
-    const value = parseFloat(match[1])
-    const unit = match[2]
-    const divisor = parseInt(match[3])
-    if (unit === 'deg' && divisor >= 1 && divisor <= 12) {
-      return value / divisor
-    }
+      const value = parseFloat(match[1]);
+      const divisor = parseInt(match[2]) - parseInt(match[3]);
+      if (!isNaN(value) && !isNaN(divisor) && divisor !== 0) {
+          return value / divisor;
+      }
   }
 }
+
 
 /*! 
 ## o-label
@@ -62,7 +62,7 @@ export class OrbitLabel extends HTMLElement {
     const svg = this.createSVGElement();
     const pathId = `o-${Math.random().toString(36).substr(2, 9)}`;
     const path = this.createPathElement(pathId);
-    const text = this.createTextPath(pathId);
+    const text = this.createTextPath(pathId, path);
 
     svg.appendChild(path);
     svg.appendChild(text);
@@ -86,55 +86,68 @@ export class OrbitLabel extends HTMLElement {
       'http://www.w3.org/2000/svg',
       'path'
     )
-    const { strokeWidth,realRadius, gap,labelBgColor} = this.getAttributes()
+    const { strokeWidth,realRadius, gap,labelBgColor, flip, lineCap} = this.getAttributes()
     const angle = this.calculateAngle()
-    const { d } = this.calculateArcParameters(angle, realRadius, gap)
+    const { d } = this.calculateArcParameters(angle, realRadius, gap, flip)
     path.setAttribute('id', pathId)
     path.setAttribute('d', d)
     path.setAttribute('fill', 'none')
     path.setAttribute('stroke', labelBgColor)
     path.setAttribute('stroke-width', strokeWidth)
     path.setAttribute('vector-effect', 'non-scaling-stroke')
+    path.setAttribute('stroke-linecap', lineCap)
 
     return path
 }
 
-createTextPath(pathId) {
+createTextPath(pathId, path) {
   const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   const textPath = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'textPath'
   );
 
-  const { labelColor} = this.getAttributes()
+  const { labelColor, gap, textAnchor} = this.getAttributes()
   textPath.setAttribute('href', `#${pathId}`);
-  textPath.setAttribute('color', `#${labelColor}`);
+  textPath.setAttribute('color', labelColor);;
   textPath.setAttribute('alignment-baseline', 'middle');
-  textPath.textContent = this.textContent; // Set the text content here
+
+  
+  if (textAnchor === 'middle') {
+  const textLength = text.textContent.length;
+  const pathLength = path.getTotalLength();
+  const startOffset = (pathLength - textLength - (gap * 2)) / 4;
+
+  textPath.setAttribute('startOffset', startOffset);
+  } else if (textAnchor === 'end') {
+    const textLength = text.textContent.length;
+    const pathLength = path.getTotalLength();
+    const startOffset = (pathLength - textLength + gap) / 2  ;
+  
+    textPath.setAttribute('startOffset', startOffset);
+  }
+  
+
+  textPath.textContent = this.textContent; 
 
   text.appendChild(textPath);
   return text;
 }
 
-  
-  textContentNode() {
-    const text = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'text'
-    )
-    text.textContent = this.textContent
-    return text
-  }
 
-
-  getAttributes() {
+getAttributes() {
     const orbitRadius = parseFloat(
       getComputedStyle(this).getPropertyValue('r') || 0
     )
+    const flip = this.hasAttribute('flip')
+    const lineCap =
+      getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt'
     const gap = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-gap') || 0.001
     )
     const labelColor = this.getAttribute('label-color') || 'black'
+
+    const textAnchor = this.getAttribute('text-anchor') || 'start'
 
     const labelBgColor = this.getAttribute('bg-color') || 'none'
 
@@ -161,7 +174,10 @@ createTextPath(pathId) {
       labelColor,
       labelBgColor,
       gap,
-      labelAngle
+      labelAngle,
+      flip,
+      textAnchor,
+      lineCap
     }
   }
 
@@ -170,15 +186,26 @@ createTextPath(pathId) {
     return labelAngle - gap
   }
 
-  calculateArcParameters(angle, realRadius, gap) {
-    const radiusX = realRadius / 1
-    const radiusY = realRadius / 1
-    const startX = 50 + gap + radiusX * Math.cos(-Math.PI / 2)
-    const startY = 50 + radiusY * Math.sin(-Math.PI / 2)
-    const endX = 50 + radiusX * Math.cos(((angle - 90) * Math.PI) / 180)
-    const endY = 50 + radiusY * Math.sin(((angle - 90) * Math.PI) / 180)
-    const largeArcFlag = angle <= 180 ? 0 : 1
-    const d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`
-    return { startX, startY, endX, endY, largeArcFlag, d }
-  }
+  calculateArcParameters(angle, realRadius, gap, flip) {
+    const radiusX = realRadius / 1;
+    const radiusY = realRadius / 1;
+    let startX, startY, endX, endY, largeArcFlag, d;
+
+    if (flip) {
+        startX = 50 - gap + radiusX * Math.cos(-Math.PI / 2);
+        startY = 50 + radiusY * Math.sin(-Math.PI / 2);
+        endX = 50 + radiusX * Math.cos(((270 - angle) * Math.PI) / 180);
+        endY = 50 + radiusY * Math.sin(((270 - angle) * Math.PI) / 180);
+        largeArcFlag = angle <= 180 ? 0 : 1;
+        d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 0 ${endX},${endY}`;
+    } else {
+        startX = 50 + gap + radiusX * Math.cos(-Math.PI / 2);
+        startY = 50 + radiusY * Math.sin(-Math.PI / 2);
+        endX = 50 + radiusX * Math.cos(((angle - 90) * Math.PI) / 180);
+        endY = 50 + radiusY * Math.sin(((angle - 90) * Math.PI) / 180);
+        largeArcFlag = angle <= 180 ? 0 : 1;
+        d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`;
+    }
+    return { startX, startY, endX, endY, largeArcFlag, d };
+}
 }

@@ -1,14 +1,14 @@
 function calcularExpresionCSS(cssExpression) {
-  const match = cssExpression.match(/calc\(([\d.]+)(deg)\s*\/\s*(\d+)\)/)
+  const match = cssExpression.match(/calc\(\s*([\d.]+)deg\s*\/\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)\s*\)/);
   if (match) {
-    const value = parseFloat(match[1])
-    const unit = match[2]
-    const divisor = parseInt(match[3])
-    if (unit === 'deg' && divisor >= 1 && divisor <= 12) {
-      return value / divisor
-    }
+      const value = parseFloat(match[1]);
+      const divisor = parseInt(match[2]) - parseInt(match[3]);
+      if (!isNaN(value) && !isNaN(divisor) && divisor !== 0) {
+          return value / divisor;
+      }
   }
 }
+
 
 /*! 
 ## o-sector
@@ -96,6 +96,7 @@ export class OrbitSector extends HTMLElement {
     const orbitRadius = parseFloat(
       getComputedStyle(this).getPropertyValue('r') || 0
     )
+   
     const gap = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-gap') || 0.001
     )
@@ -115,6 +116,7 @@ export class OrbitSector extends HTMLElement {
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage
     const sectorAngle = calcularExpresionCSS(rawAngle)
+    console.log(sectorAngle)
     
     return {
       orbitRadius,
