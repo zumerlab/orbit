@@ -55,8 +55,15 @@ export class OrbitLabel extends HTMLElement {
         }
       })
     })
-
     observer.observe(this, { attributes: true })
+    
+  //  const textoObserver = new MutationObserver(() => {
+     // this.update();
+  //  });
+   // textoObserver.observe(this, { childList: true, subtree: true });
+
+
+    
   }
   update() {
     const svg = this.createSVGElement();
@@ -122,7 +129,7 @@ createTextPath(pathId, path) {
   } else if (textAnchor === 'end') {
     const textLength = text.textContent.length;
     const pathLength = path.getTotalLength();
-    const startOffset = (pathLength - textLength + gap) / 2  ;
+    const startOffset = (pathLength - textLength - gap * 4) / 2  ;
   
     textPath.setAttribute('startOffset', startOffset);
   }
@@ -161,8 +168,14 @@ getAttributes() {
     if (this.classList.contains('outer-orbit')) {
       innerOuter = strokeWithPercentage * 2
     }
+    if (this.classList.contains('quarter-outer-orbit')) {
+      innerOuter = strokeWithPercentage * 3.75
+    }
     if (this.classList.contains('inner-orbit')) {
       innerOuter = 0
+    }
+    if (this.classList.contains('quarter-inner-orbit')) {
+      innerOuter = strokeWithPercentage * 0.75
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage
     const labelAngle = calcularExpresionCSS(rawAngle)
