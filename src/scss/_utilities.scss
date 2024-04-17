@@ -101,6 +101,13 @@ $max-gaps: calc($max-orbiters / 2);
 Sector, Progress and Vector size-ratio
 Can be used in parent elements or in each orbiter class
 */ 
+@for $i from 0 through  10  {
+  $percent: calc($i * 10);
+  $value: if($i == 0, 1, 1 - calc($i / 10));
+  .orbit.reduce-#{$percent}, [class*='orbit-']:not(.orbit-zone).reduce-#{$percent} {
+    --o-orbit-ratio: #{$value}; 
+  }
+}
 
 @for $i from 0 through  10  {
   $percent: calc($i * 10);

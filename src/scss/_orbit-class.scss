@@ -108,12 +108,13 @@ alineada tambien.
 - el gap en label no anda super duper con texto invertido
 - agregar quarters a secto, label, progress
 + dar vuelta texto camniando 1 por 0.. meterlo en function
++ ver orbit reduce que no anda del todo bien , tmpoco en label
 
 
 */
 .orbit, [class*='orbit-']:not(.orbit-zone) {
   container-name: orbit;
-  --o-diameter: calc(var(--o-orbit-number) * var(--o-lenght) / #{$max-orbits});
+  --o-diameter: calc(var(--o-orbit-number) * var(--o-lenght) / #{$max-orbits} * var(--o-orbit-ratio, 1));
   --o-radius: calc(var(--o-diameter) / 2);
   width: calc(var(--o-diameter) / var(--o-ellipse-x));
   height: calc(var(--o-diameter) / var(--o-ellipse-y));
