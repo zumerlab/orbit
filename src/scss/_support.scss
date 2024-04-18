@@ -17,6 +17,28 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
 - Orbit checks and warns if `.satellite` has some invalid Orbit direct child element. Only `.orbit-zone` is allowed. 
 
 */
+/* Check Firefox has() support */
+@supports not selector(:has(a)) {	
+  .orbit-zone {
+    border: 3px dotted red!important;
+  }
+  .orbit-zone>* {
+    display: none;
+  }
+
+  .orbit-zone::before {
+    content: 'Update  🦊 Firefox to use Orbit';
+   // text-shadow: 0 0 2px red;
+    font-size: 18px;
+   // background-color: yellow;
+    padding: 10px;
+    text-align: center;
+  }
+
+
+}
+
+
 
 @container osector not style(--o-ellipse-x: 1) {
   /* Shown if ratio equals 1*/
