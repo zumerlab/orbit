@@ -114,26 +114,30 @@ createTextPath(pathId, path) {
       'textPath'
   );
 
-  const { labelColor, gap, textAnchor} = this.getAttributes()
+  const { labelColor, fitRange, textAnchor} = this.getAttributes()
   textPath.setAttribute('href', `#${pathId}`);
   textPath.setAttribute('color', labelColor);;
   textPath.setAttribute('alignment-baseline', 'middle');
-
   
-  if (textAnchor === 'middle') {
-  const textLength = text.textContent.length;
-  const pathLength = path.getTotalLength();
-  const startOffset = (pathLength - textLength - (gap * 2)) / 4;
-
-  textPath.setAttribute('startOffset', startOffset);
-  } else if (textAnchor === 'end') {
-    const textLength = text.textContent.length;
-    const pathLength = path.getTotalLength();
-    const startOffset = (pathLength - textLength - gap * 4) / 2  ;
-  
-    textPath.setAttribute('startOffset', startOffset);
+  if (textAnchor === 'start') {
+    textPath.setAttribute('startOffset', '0%');
+    textPath.setAttribute('text-anchor', 'start');
   }
-  
+  if (textAnchor === 'middle') {
+  textPath.setAttribute('startOffset', '50%');
+  textPath.setAttribute('text-anchor', 'middle');
+  }
+  if (textAnchor === 'end') {
+    textPath.setAttribute('startOffset', '100%');
+    textPath.setAttribute('text-anchor', 'end');
+  }
+
+  if (fitRange) {
+    text.setAttribute('textLength', path.getTotalLength());
+  }
+ 
+
+
 
   textPath.textContent = this.textContent; 
 
@@ -147,6 +151,7 @@ getAttributes() {
       getComputedStyle(this).getPropertyValue('r') || 0
     )
     const flip = this.hasAttribute('flip')
+    const fitRange = this.hasAttribute('fit-range')
     const lineCap =
       getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt'
     const gap = parseFloat(
@@ -169,7 +174,7 @@ getAttributes() {
       innerOuter = strokeWithPercentage * 2
     }
     if (this.classList.contains('quarter-outer-orbit')) {
-      innerOuter = strokeWithPercentage * 3.75
+      innerOuter = strokeWithPercentage * 1.75
     }
     if (this.classList.contains('inner-orbit')) {
       innerOuter = 0
@@ -190,7 +195,8 @@ getAttributes() {
       labelAngle,
       flip,
       textAnchor,
-      lineCap
+      lineCap,
+      fitRange
     }
   }
 

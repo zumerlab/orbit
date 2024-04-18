@@ -20,77 +20,67 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
 
 @container osector not style(--o-ellipse-x: 1) {
   /* Shown if ratio equals 1*/
-  o-sector svg path, o-progress svg path {
+  o-sector, o-progress, o-label {
     display: none;
   }
 }
 @container osector not style(--o-ellipse-y: 1) {
   /* Shown if ratio equals 1*/
-  o-sector svg path, o-progress svg path {
+  o-sector, o-progress, o-label {
     display: none;
   }
 }
 
-.orbit-zone:has(>.satellite, >.spoke, >o-progress, >o-sector) {
-  border: 0.5px solid red!important;
+
+/* orbit-zone checks */
+.orbit-zone:has(>*:not(.orbit, [class*='orbit-'])) {
+  border: 3px dotted red!important;
 }
-
-.orbit-zone::after{
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  font-size: x-small;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  width: fit-content;
-  padding: 5px;
-  color: red;
-  height: auto;
+.orbit-zone:has(>*:not(.orbit, [class*='orbit-'])) > * {
+  filter:grayscale(1) opacity(0.2)
 }
-
-.satellite::after{
-  position: absolute;
-  top: 25px;
-  left: 0px;
-  font-size: x-small;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  width: 100px;
-  padding: 5px;
-  color: red;
-  height: auto;
-}
-
-
-.orbit-zone>.satellite, .orbit-zone>.spoke, .orbit-zone>.segment, .orbit-zone>o-sector,.orbit-zone>o-progress, .satellite>.satellite,.satellite>.orbit,.satellite>[class*='orbit-']:not(.orbit-zone), .satellite>.spoke, .satellite>.segment, .satellite>o-sector,.satellite>o-progress {
-  border: 1px solid red!important;
-  background-color: red;
-  border-radius: 50%;
-  width: 5px;
-  height: 5px;
+.orbit-zone:has(> *:not(.orbit, [class*='orbit-']))::after {
+  content: "⚠️";
+  font-size: 140%;
   animation:  pulse 1.5s infinite;
+  z-index: 99;
+  filter: drop-shadow(3px 3px 8px rgb(255, 254, 254));
+  position: absolute;
 }
 
-.orbit-zone>o-sector path, .orbit-zone>o-progress path, .satellite>o-sector path, .satellite>o-progress path {
-  stroke:none
+/* orbit and satellite checks */
+.orbit:has(>*:is(.orbit, [class*='orbit-'])), 
+[class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-'])),
+.satellite:has(>*:not(.orbit-zone, .capsule)) {
+ border: 2px dotted rgb(0, 255, 47)!important;
+}
+.orbit:has(>*:is(.orbit, [class*='orbit-']))> *, 
+[class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-']))> *,
+.satellite:has(>*:not(.orbit-zone, .capsule)) > * {
+  opacity: 0.4
+}
+.orbit:has(>*:is(.orbit, [class*='orbit-']))::after, 
+[class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-']))::after, 
+.satellite:has(>*:not(.orbit-zone, .capsule))::after {
+  content: "⚠️";
+  animation:  pulse 1.5s infinite;
+  z-index: 999;
+  filter: drop-shadow(1px 1px 8px rgb(255, 254, 254));
+  position: absolute;
 }
 
-.orbit-zone:has(>.satellite,>.spoke,>.segment,>o-sector,>o-progress)::after {
-  content: "⚠️ Invalid nested elements on .orbit-zone!";
-}
-.satellite:has(>.satellite,>.spoke,>.segment,>o-sector,>o-progress,>.orbit, >[class*='orbit-']:not(.orbit-zone))::after {
-  content: "⚠️ Invalid nested elements on .satellite!";
-}
 
 @keyframes pulse {
   0% {
     transform: scale(1);
-    opacity: 1;
+    opacity: 0;
   }
   50% {
-    transform: scale(3);
-    opacity: 0.5;
+    opacity: 1;
+    transform: scale(1.2);
   }
   100% {
     transform: scale(1);
-    opacity: 1;
+    opacity: 0;
   }
 }
