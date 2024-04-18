@@ -111,8 +111,14 @@ export class OrbitSector extends HTMLElement {
     if (this.classList.contains('outer-orbit')) {
       innerOuter = strokeWithPercentage * 2
     }
+    if (this.classList.contains('quarter-outer-orbit')) {
+      innerOuter = strokeWithPercentage * 1.75
+    }
     if (this.classList.contains('inner-orbit')) {
       innerOuter = 0
+    }
+    if (this.classList.contains('quarter-inner-orbit')) {
+      innerOuter = strokeWithPercentage * 0.75
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage
     const sectorAngle = calcularExpresionCSS(rawAngle)

@@ -12,6 +12,12 @@
   <script type="module" src="../src/orbit.js" defer></script>
   <title>Orbit</title>
   <style>
+    body {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-weight: 500;
+      font-style: normal;
+    }
+
     body>.orbit-zone {
       --o-lenght: 350px;
       background-color: black;
@@ -20,29 +26,8 @@
       overflow: hidden;
     }
 
-    body {
-      font-family: "M PLUS Rounded 1c", sans-serif;
-      font-weight: 500;
-      font-style: normal;
-    }
-
-
-    [class*='orbit-'] {
-      border: none
-    }
-
-
-
-    .minute {
-      stroke: darkmagenta;
-    }
-
-    .second {
-      stroke: orangered;
-    }
-
-    hr.orbiter {
-      margin: 0;
+    [class*='orbit-'], .satellite {
+     border: none
     }
 
     .black-spot {
@@ -55,19 +40,10 @@
       outline: 2px solid rgb(232 226 218)
     }
 
-    .mini {
-      background-color: rgb(255, 255, 255);
-
-      outline: 2px solid rgb(254, 254, 254);
-    }
-
-
-
     .white-spot {
       border: 1px inset #0000002b;
       background-color: rgb(229, 229, 229);
       outline: 2px solid rgb(229, 229, 229);
-
     }
 
     .hours {
@@ -75,49 +51,49 @@
       border: none;
     }
 
-
     .big {
       height: 3px;
       border-radius: 2px;
     }
-
-    .small-clock .small .spoke {
-      height: 1px;
-      border-radius: 2px;
-      background-color: gray;
+    .mini {
+      background-color: rgb(255, 255, 255);
+      outline: 2px solid rgb(254, 254, 254);
     }
 
-    .small-clock .medium .spoke {
-      height: 2px;
-      border-radius: 2px;
-      background-color: rgb(0, 0, 0);
-    }
+    .small-clock {
+        .small .spoke {
+        height: 1px;
+        border-radius: 2px;
+        background-color: gray;
+      }
 
-    .small-clock .hours .satellite {
-      font-size: x-small;
-      border: none;
-      background-color: transparent;
-      font-weight: 600;
-    }
+      .medium .spoke {
+        height: 2px;
+        border-radius: 2px;
+        background-color: rgb(0, 0, 0);
+      }
 
-    .small-clock .needle {
-      background-color: rgb(255, 64, 25);
-      height: 1.5px;
-      filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.537))
-    }
+      .hours .satellite {
+        font-size: x-small;
+        border: none;
+        background-color: transparent;
+        font-weight: 600;
+      }
 
-    .small-clock .needle-center {
-      background-color: rgb(255, 64, 25);
-      filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.537))
-    }
+      .needle {
+        background-color: rgb(255, 64, 25);
+        height: 1.5px;
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.537))
+      }
 
+      .needle-center {
+        background-color: rgb(255, 64, 25);
+      }
+
+    }
 
     .transparent {
       background-color: transparent;
-    }
-
-    .satellite {
-      border: none
     }
 
     .clock>.center {
@@ -127,7 +103,7 @@
 
     .hour,
     .minute {
-      filter: drop-shadow(4px 4px 7px black)
+      filter: drop-shadow(4px 4px 5px black)
     }
 
     .hours {
@@ -157,24 +133,23 @@
 
 <body>
   <div class="orbit-zone">
-    <div class="orbit-12 range-160 from-320">
-      <div class="satellite outer-orbit transparent">
-        <img src="../assets/alarm-clock.png" class="invert-color" width="25">
+  
+    <div class="orbit-12  range-90 from-315 fit-range">
+      <div class="satellite grow-2x outer-orbit transparent">
+        <img src="../assets/alarm-clock.png" class="invert-color capsule " width="25">
       </div>
-      <div class="satellite outer-orbit">
-        <img src="../assets/moon.png" width="25">
+      <div class="satellite grow-2x  outer-orbit transparent ">
+        <img src="../assets/moon.png" class="" width="25">
       </div>
 
     </div>
     <!-- curved text -->
-    <div class="orbit-11 from-298 range-125">
-      <o-label label-color="rgb(163,163,163)" class="gap-2 quarter-inner-orbit ">ALARM 7:00AM</o-label>
-      <o-label label-color="rgb(163,163,163)" text-anchor="end"
-        class="digital-clock gap-4 quarter-inner-orbit "></o-label>
+    <div class="orbit-11 from-270 range-180">
+      <o-label label-color="rgb(163,163,163)" text-anchor="middle" >ALARM 7:00AM</o-label>
+      <o-label label-color="rgb(163,163,163)" text-anchor="middle" class="digital-clock"></o-label>
     </div>
     <div class="orbit-11 from-160 range-40 ">
-      <o-label flip label-color="rgb(163,163,163)">500 • 30 • 12</o-label>
-
+      <o-label flip   text-anchor="middle" label-color="rgb(163,163,163)">500 • 30 • 12</o-label>
     </div>
 
     <div class="calendar orbit-11 from-215 range-30">
@@ -183,12 +158,9 @@
       <o-label flip bg-color="rgb(163,163,163)" text-anchor="middle" class="current gap-3 rounded">23</o-label>
       <o-label flip bg-color="rgb(57,57,57)" label-color="rgb(163,163,163)" text-anchor="middle"
         class="gap-3 rounded next">24</o-label>
-
     </div>
     <div class="orbit-12 from-227 range-12 ">
-
-      <o-label flip label-color="white" text-anchor="middle" class="outer-orbit day-name">FRI</o-label>
-
+      <o-label flip label-color="white" text-anchor="middle" class="outer-orbit day-name"></o-label>
     </div>
 
     <!-- big clock ticks -->
@@ -617,7 +589,6 @@
     function analogWatch() {
       // Get the current time
       const now = new Date()
-
       // Get the current hour, minute, and second
       const hour = now.getHours()
       const minute = now.getMinutes()
@@ -626,14 +597,11 @@
       const pastDate = new Date();
       pastDate.setDate(today - 1);
       const pastDay = pastDate.getDate();
-
       // Future today (1 today later)
       const futureDate = new Date();
       futureDate.setDate(today + 1);
       const futureDay = futureDate.getDate();
-
       const currentDayName = now.toLocaleString('en', { weekday: 'short' });
-
       const shortDayName = currentDayName.slice(0, 3);
 
       // Calculate the angles of the hour, minute, and second hands
@@ -649,33 +617,25 @@
       const minuteHand = document.querySelector('.xm')
       const secondHand = document.querySelector('.xs')
 
-      const digitalClock = document.querySelector('.digital-clock')
-      const curvedText = digitalClock.querySelector('textPath')
+      const curvedText = document.querySelector('.digital-clock textPath')
 
-      const calendar = document.querySelector('.calendar')
-      const current = calendar.querySelector('.current textPath')
-      const previous = calendar.querySelector('.previous textPath')
-      const next = calendar.querySelector('.next textPath')
+      const current = document.querySelector('.calendar .current textPath')
+      const previous = document.querySelector('.calendar .previous textPath')
+      const next = document.querySelector('.calendar .next textPath')
       const dayName = document.querySelector('.day-name textPath')
-
 
       // Set the transform style of each hand element with angle correction
       hourHand.style.setProperty('--o-angle-composite', hourAngle - 90 + 'deg')
       minuteHand.style.setProperty('--o-angle-composite', minuteAngle - 90 + 'deg')
       secondHand.style.setProperty('--o-angle-composite', secondAngle - 90 + 'deg')
 
-    
       curvedText.innerHTML = `${hour}:${minute}, ${hour}H ${minute}M`
 
       current.innerHTML = `${today}`
       previous.innerHTML = `${futureDay}`
       next.innerHTML = `${pastDay}`
-
       dayName.innerHTML = `${shortDayName}`
-
-      
     }
-
     // Call the analogWatch function every second
     setInterval(analogWatch, 1000)
   </script>
