@@ -1,8 +1,8 @@
 /*!
 ## .satellite
 
-Elements with `.satellite` are placed along an `.orbit` or `.orbit-*` arc serving as content place and/or to nest an `.orbital-zone`. 
-By default there are 24 satellites per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
+Elements with `.satellite` are placed along an `.orbit` or `.orbit-*` arc serving as content place and/or to nest an `.orbit-zone`. 
+By default up to 24 satellites can be placed in an orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
 ### Shapes
 
@@ -14,12 +14,14 @@ A few set of shapes utilities are provided (`.circle`, `.box`, `.rounded-box`). 
 
 It has some special classes and css variables to customize it:
 
-  - Class utility `.range-*`: Default '360deg'
-  - Class utility `.from-*`: Default '0deg'
-  - Class utility `.grow-*x`: To increase size according number of orbits. Default 1.
-  - Class utility `.reduce-*`: To decrease size according an orbit fracction percentage. Default 1.
-  - Class utility `.inner-orbit`: To place `.satellite` just below its orbit
-  - Class utility `.outer-orbit`: To place `.satellite` just above its orbit
+  - Utility class `.range-*`: Default '360deg'
+  - Utility class `.from-*`: Default '0deg'
+  - Utility class `.grow-*x`: To increase size according number of orbits. Default 1.
+  - Utility class `.reduce-*`: To decrease size according an orbit fracction percentage. Default 1.
+  - Utility class `.inner-orbit`: To place `.satellite` just below its orbit
+  - Utility class `.outer-orbit`: To place `.satellite` just above its orbit
+  - Utility class `.quarter-inner-orbit`: To place `.satellite` a 25% into its orbit.
+  - Utility class `.quarter-outer-orbit`: To place `.satellite` a 25% outer its orbit.
 
   - CSS styles. User can customize `.satellite` by adding CSS properties to it. 
 
@@ -29,20 +31,20 @@ It has some special classes and css variables to customize it:
 ```html
 <div class="orbit">
   <div class="satellite"></div>
-  <div class="satellite inner"></div>
-  <div class="satellite outer"></div>
+  <div class="satellite inner-orbit"></div>
+  <div class="satellite outer-orbit"></div>
   <div class="satellite rounded-box"></div>
-  <div class="satellite size-2x"></div>
-  <div class="satellite size-6fr"></div>
+  <div class="satellite grow-2x"></div>
+  <div class="satellite reduce-40"></div>
 </div>
 ```
 
-- This renders two satellites. One of which nest `.orbital-zone` with some orbits
+- This renders two satellites. One of which nests `.orbital-zone` with some orbits
 ```html
 <div class="orbit">
   <div class="satellite"></div>
   <div class="satellite">
-    <div class="orbital-zone">
+    <div class="orbit-zone">
       <div class="orbit"></div>
       <div class="orbit"></div>
       <div class="orbit"></div>
@@ -54,7 +56,7 @@ It has some special classes and css variables to customize it:
 **Important:**
 
 - `.satellite` can only be placed into a parent `.orbit` or `.orbit-*`
-- There is no limit for nesting orbita-zone in satellites.
+- There is no limit for nesting orbit-zone in satellites.
 
 
 */

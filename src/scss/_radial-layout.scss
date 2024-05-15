@@ -4,21 +4,21 @@
 /*! 
 ## Orbit Radial Layout
 
-Orbit radial layout is the core of Orbit library, offering a flexible, clean and simple way to design radial apps using just CSS.
+Orbit radial layout is the core of Orbit framework that offers a flexible, clean and simple way to design radial UI using just CSS and some optional vanilla web components crafted to improve dev UX.
 
 ### Overview
 
-`.orbit` and `.orbit-*` have `--o-orbit-number` to individualize their position according to the maximum number of orbits (e.g., `orbit-4` has `--o-orbit-number: 4`). Similarly, other elements such as `satellites`, `vectors`, and `sectors` use `--o-orbit-child-number` to be individualized.
+`.orbit` and `.orbit-*` have `--o-orbit-number` to individualize their position according to the maximum number of orbits (e.g., `orbit-4` has `--o-orbit-number: 4`). Similarly, other elements such as `satellites`, `spokes`, `sectors`, and others use `--o-orbit-child-number` to be individualized.
 
-`.orbit` and `.orbit-*` hold a unique `--o-angle` calculated by counting their children. This allows for some calculations to distribute such elements along an orbit.
+`.orbit` and `.orbit-*` hold a unique `--o-angle` value calculated by counting their children. This allows to distribute such elements along an orbit.
 
 ### Mechanism
 
 The mechanism is straightforward:
 
-- `--o-orbit-number` gives a radius that informs where each `orbit` is placed, according to both the `.orbit-zone` length and the maximum number of orbits. For example, with an `.orbit-zone` length of 500px and a maximum of 12 orbits, `orbit-4` will have 166.66 pixels of radius.
+- `--o-orbit-number` gives a radius that informs where each `orbit` is placed, according to `.orbit-zone` length and maximum number of orbits. For example, with an `.orbit-zone` length of 500px and a maximum of 12 orbits, `orbit-4` will have 166.66 pixels of radius.
 
-- According to child number in an orbit, `--o-angle` is calculated (if one orbit has 3 satellites, `--o-angle` is 120deg). Finally, `--o-angle` is multiplied by `--o-orbit-child-numbers`. For example, satellite one will have 120deg, satellite two 240deg, and satellite three 360deg, and each satellite will be placed along its orbit at 166.66px.
+- `--o-angle` is calculated depending on children number in an orbit (if one orbit has 3 satellites, `--o-angle` is 120deg). Finally, `--o-angle` is multiplied by `--o-orbit-child-numbers`. For example, satellite one will have 120deg, satellite two 240deg, and satellite three 360deg, and each satellite will be placed along its orbit at 166.66px.
 
 ### Modifiers
 
@@ -26,7 +26,11 @@ There are some modifiers to adjust orbit child distribution:
 
 - `--o-range`: This variable allows the user to set an arbitrary arc length. Values can range from 0 to 360deg. For convenience, there are utility classes `range-*` (.range-0 to .range-360).
 
-- `--o-from`: This variable allows the user to set an arbitrary starting point. Values can range from 0 to 360deg. For convenience, there are utility classes `begin-at-*` (.from-0 to .from-360).
+- `--o-from`: This variable allows the user to set an arbitrary starting point. Values can range from 0 to 360deg. For convenience, there are utility classes `from-*` (.from-0 to .from-360).
+
+- ccw
+
+- fit-range
 
 ### Usage and Examples
 
@@ -53,23 +57,20 @@ There are some modifiers to adjust orbit child distribution:
 
 ```html
 <!-- Example usage of Orbit Radial Layout with custom starting point -->
-<div class="orbit-3 begin-at-90">
-  <div class="vector"></div>
-  <div class="vector"></div>
-  <div class="vector"></div>
-  <div class="vector"></div>
-  <div class="vector"></div>
+<div class="orbit-3 from-90">
+  <div class="spoke"></div>
+  <div class="spoke"></div>
+  <div class="spoke"></div>
+  <div class="spoke"></div>
+  <div class="spoke"></div>
 </div>
 ```
 
 #### To-do
 
-- Check `--o-orbit-number` and `--o-orbit-child-number`
-- Check behaviour when nested mix elements inside an orbit ALMOST DONE
-- Add @container check OK
-- ADD VECTOR POLYGON OK
-- SYNC VECTOR AND SATELLITES BY DEFAULT
-- pensar el tema de si reducir o no las zone orbits anidadas.. me da que se complica
+- Improve this doc section to be more clear
+- Add angle modifier
+
 */
 
 /* Orbits layout */

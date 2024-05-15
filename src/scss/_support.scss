@@ -2,11 +2,13 @@
 
 /*!
 
-## Orbit support and check
+## Orbit support and checking
 
-Orbit has a few but useful CSS checks and supports:
+Orbit has a few but useful visual aids to inform dev user if there is a violation to following rules:
 
-### o-sector and o-progress only on circular orbits
+### Check if Browser supports has() CSS rule.
+
+### o-sector, o-label and o-progress only on circular orbits
 
 Currently Orbit doesn't support ellipse shapes, so when detected these web-components will be hidden.
 
@@ -16,6 +18,7 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
 
 - Orbit checks and warns if `.satellite` has some invalid Orbit direct child element. Only `.orbit-zone` is allowed. 
 
+add markers on safari....
 */
 /* Check Firefox has() support */
 @supports not selector(:has(a)) {	
@@ -63,7 +66,7 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
 }
 .orbit-zone:has(> *:not(.orbit, [class*='orbit-']))::after {
   content: "⚠️";
-  font-size: 140%;
+  font-size: 130%;
   animation:  pulse 1.5s infinite;
   z-index: 99;
   filter: drop-shadow(3px 3px 8px rgb(255, 254, 254));
@@ -74,7 +77,7 @@ Currently Orbit doesn't support ellipse shapes, so when detected these web-compo
 .orbit:has(>*:is(.orbit, [class*='orbit-'])), 
 [class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-'])),
 .satellite:has(>*:not(.orbit-zone, .capsule)) {
- border: 2px dotted rgb(0, 255, 47)!important;
+ border: 2px dotted rgb(255, 81, 0)!important;
 }
 .orbit:has(>*:is(.orbit, [class*='orbit-']))> *, 
 [class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-']))> *,

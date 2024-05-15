@@ -4,12 +4,13 @@
 */
 
 o-sector path {
-  stroke-opacity: 0.5;
-  border: 1px solid purple;
+  //stroke-opacity: 0.5;
+  //border: 1px solid purple;
 }
 
-o-sector path:hover {
+o-sector path:hover  {
   stroke: red;
+ // fill: red;
   cursor: pointer;
 }
 

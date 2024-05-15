@@ -18,12 +18,18 @@ By default there are 24 sector per orbit. The number can be modify with `$max-or
 
 It has some special attributes and css variables to customize it:
   - Attribute `sector-color`: To set a color for sector. Default `orange`
+  - Attribute `shape`: To set a different endings looks. Currently, you can choose between `circle`, `arrow`, `slash`, `backslash` and `zigzag` shapes. Default `none`
 
-  - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-sector>`: to set gap space. Default '0'
-  - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
-  - Class utility `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - Class utility `.inner-orbit`: To place `o-sector` just below its orbit
-  - Class utility `.outer-orbit-orbit`: To place `o-sector` just above its orbit
+  - Utility class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-sector>`: to set gap space between o-sectors. Default '0'
+  - Utility class `.range-*`: Default '360deg'
+  - Utility class `.from-*`: Default '0deg'
+  - Utility class `.grow-*x`: To increase `o-sector` height by multiplying orbit radius. Default '1x'
+  - Utility class `.reduce-*`: To reduce `o-sector` height by reducing current orbit percentage. Default '100'
+  - Utility class `.inner-orbit`: To place `o-sector` just below its orbit
+  - Utility class `.outer-orbit`: To place `o-sector` just above its orbit
+  - Utility class `.quarter-inner-orbit`: To place `o-sector` a 25% into its orbit.
+  - Utility class `.quarter-outer-orbit`: To place `o-sector` a 25% outer its orbit.
+
 
   - CSS styles. User can customize `o-sector` by adding CSS properties to `o-sector path`
   
@@ -58,10 +64,39 @@ export class OrbitSector extends HTMLElement {
 
     observer.observe(this, { attributes: true })
   }
-
+  generateRandomString() {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    const numbers = '0123456789';
+    let randomString = '';
+  
+    // Generate 3 random letters
+    for (let i = 0; i < 3; i++) {
+      randomString += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+  
+    // Generate 3 random numbers
+    for (let i = 0; i < 3; i++) {
+      randomString += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    }
+  
+    // Shuffle the string to randomize the order of letters and numbers
+    randomString = randomString.split('').sort(() => Math.random() - 0.5).join('');
+  
+    return randomString;
+  }
   update() {
+    const {shape} = this.getAttributes()
+    const randomId = this.generateRandomString()
     const svg = this.createSVGElement()
-    const sectorArc = this.createSectorArc()
+    if (shape !== 'none') {
+      const defs = this.createDefs()
+      const markerDefs = this.createMarker('head'+randomId, 'end');
+      defs.appendChild(markerDefs);
+      const markerDefs1 = this.createMarker('tail'+randomId, 'start');
+      defs.appendChild(markerDefs1);
+      svg.appendChild(defs)
+    }
+    const sectorArc = this.createSectorArc(randomId)
     svg.appendChild(sectorArc)
     this.innerHTML = ''
     this.appendChild(svg)
@@ -75,7 +110,8 @@ export class OrbitSector extends HTMLElement {
     return svg
   }
 
-  createSectorArc() {
+  createSectorArc(randomId) {
+    const {shape} = this.getAttributes()
     const sectorArc = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'path'
@@ -88,6 +124,11 @@ export class OrbitSector extends HTMLElement {
     sectorArc.setAttribute('stroke-width', strokeWidth)
     sectorArc.setAttribute('fill', 'transparent')
     sectorArc.setAttribute('vector-effect', 'non-scaling-stroke')
+    if (shape !== 'none') {
+      sectorArc.setAttribute('marker-end', `url(#head${randomId})`)
+      sectorArc.setAttribute('marker-start', `url(#tail${randomId})`)
+    }
+    
 
     return sectorArc
   }
@@ -100,6 +141,7 @@ export class OrbitSector extends HTMLElement {
     const gap = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-gap') || 0.001
     )
+    const shape = this.getAttribute('shape') || 'none'
     const sectorColor = this.getAttribute('sector-color') || '#00ff00'
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle')
     const strokeWidth = parseFloat(
@@ -122,15 +164,15 @@ export class OrbitSector extends HTMLElement {
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage
     const sectorAngle = calcularExpresionCSS(rawAngle)
-    console.log(sectorAngle)
-    
+   
     return {
       orbitRadius,
       strokeWidth,
       realRadius,
       sectorColor,
       gap,
-      sectorAngle
+      sectorAngle,
+      shape
     }
   }
 
@@ -150,4 +192,64 @@ export class OrbitSector extends HTMLElement {
     const d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`
     return { startX, startY, endX, endY, largeArcFlag, d }
   }
+
+  createDefs() {
+    // Create <defs> element
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+    return defs;
+  }
+
+  createMarker(id, position = 'end') {
+    const {
+      shape
+    } = this.getAttributes()
+    // Create <marker> element
+    const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+    marker.setAttribute('id', id);
+    marker.setAttribute('viewBox', '0 0 10 10');
+    position === 'start' && shape !== 'circle' ? marker.setAttribute('refX', '2'):
+    position === 'start' && shape === 'circle' ? marker.setAttribute('refX', '5'):
+    marker.setAttribute('refX', '0.1')
+    marker.setAttribute('refY', '5');
+    marker.setAttribute('markerWidth', '1');
+    marker.setAttribute('markerHeight', '1');
+    marker.setAttribute('orient', 'auto');
+    marker.setAttribute('markerUnits', 'strokeWidth')
+    marker.setAttribute('fill', 'context-stroke' )
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const shapes = {
+      arrow: {
+        head: 'M 0 0 L 2 5 L 0 10 z',
+        tail: 'M 2 0 L 0 0 L 1 5 L 0 10 L 2 10 L 2 5 z'
+      },
+      slash: {
+        head: 'M 0 0 L 0 0 L 1 5 L 2 10 L 0 10 L 0 5 z',
+        tail: 'M 2 0 L 0 0 L 1 5 L 2 10 L 2 10 L 2 5 z'
+      },
+      backslash: {
+        head: 'M 0 0 L 2 0 L 1 5 L 0 10 L 0 10 L 0 5 z',
+        tail: 'M 2 0 L 2 0 L 1 5 L 0 10 L 2 10 L 2 5 z'
+      },
+      circle: {
+        head: 'M 0 0 C 7 0 7 10 0 10 z',
+        tail: 'M 6 0 C -1 0 -1 10 6 10 z'
+      },
+      zigzag: {
+        head: 'M 1 0 L 0 0 L 0 5 L 0 10 L 1 10 L 2 7 L 1 5 L 2 3 z',
+        tail: 'M 0 0 L 2 0 L 2 5 L 2 10 L 0 10 L 1 7 L 0 5 L 1 3 z'
+      }
+    }
+    position === 'end' ? path.setAttribute('d', shapes[shape].head) :
+      path.setAttribute('d', shapes[shape].tail)
+
+  //  path.setAttribute('stroke-width', '0.1');
+
+    // Append <path> to <marker>
+    marker.appendChild(path);
+
+    return marker
+  }
+
 }
