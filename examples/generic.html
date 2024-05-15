@@ -1,162 +1,25 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="../assets/css/orbit.min.css"
-      type="text/css"
-      defer
-    />
-    <title>Orbit</title>
-    <style>
-      body {
-        font-family: 'Lucida Sans', Verdana, sans-serif;
-        background-color: darkslategray;
-      }
 
-      dialog::backdrop {
-        background-color: rgba(0, 0, 0, 0.352);
-      }
-      .container {
-        margin-top: 150px;
-      }
-    </style>
   </head>
+ 
   <body>
-    <div class="container">
-      <div class="core">
-        <div class="orbiter sm" style="transform: translate(-50%, -50%)"></div>
-      </div>
+    <div id="container"></div>
+<script type="module">
+  import { createPlayground } from 'https://unpkg.com/livecodes@latest';
 
-      <div class="orbit">
-        <div class="orbit limit-180">
-          <div class="sector"></div>
-          <div class="sector"></div>
-          <div class="sector"></div>
-          <div class="sector"></div>
-        </div>
-        <div class="orbit limit-180">
-          <div class="orbiter sm lower">w</div>
-          <div class="orbiter sm lower">w</div>
-          <div class="orbiter sm lower">w</div>
-          <button id="dialogb" class="orbiter sm">open dialog</button>
-        </div>
-      </div>
+  const config = {
+  lite: true,
+  tools: {
+      status: "none",
+    },
+    mode: "simple",
+  
+};
 
-      <div class="orbit limit-270">
-        <div class="orbiter md">
-          <div class="content">
-            hola <br />
-            45
-          </div>
-          <div class="content" style="overflow: visible">
-            <div class="label offset-45" style="position: absolute">
-              <div class="content">
-                Tactic sat intel <br />
-                45
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit">
-            <div class="sector"></div>
-            <div class="sector"></div>
-            <div class="sector"></div>
-            <div class="sector"></div>
-            <div class="sector"></div>
-          </div>
-        </div>
-        <div class="orbiter md">
-          <div class="label offset-45">
-            <div class="content">
-              Tactic sat intel <br />
-              45
-            </div>
-          </div>
-        </div>
-        <div class="orbiter md">
-          <div class="label offset-90">
-            <div class="content">
-              Tactic sat intel <br />
-              90
-            </div>
-          </div>
-        </div>
-        <div class="orbiter md">
-          <div class="content" style="overflow: visible">
-            <div class="label offset-135">
-              <div class="content">
-                Tactic sat intel <br />
-                135
-              </div>
-            </div>
-          </div>
-
-          <div class="orbit size-1">
-            <div class="orbiter sm" style="background-color: burlywood">a</div>
-            <div class="orbiter sm" style="background-color: burlywood">d</div>
-            <div class="orbiter sm" style="background-color: burlywood"></div>
-            <div class="orbiter sm" style="background-color: burlywood">
-              <div class="label offset-135">
-                <div class="content">
-                  Tactic sat intel <br />
-                  135
-                </div>
-              </div>
-            </div>
-            <div class="orbiter sm" style="background-color: burlywood"></div>
-          </div>
-        </div>
-        <div class="orbiter md">
-          <div class="label offset-180">
-            <div class="content">
-              Tactic sat intel <br />
-              180
-            </div>
-          </div>
-        </div>
-        <div class="orbiter md">
-          <div class="label offset-225">
-            <div class="content">
-              Tactic sat intel <br />
-              225
-            </div>
-          </div>
-        </div>
-        <div class="orbiter md">
-          <div class="label offset-270">
-            <div class="content">
-              Tactic sat intel <br />
-              270
-            </div>
-          </div>
-        </div>
-        <div class="orbiter md">
-          <div class="label offset-315">
-            <div class="content">
-              Tactic sat intel <br />
-              315
-            </div>
-          </div>
-        </div>
-      </div>
-      <dialog id="dialog" class="orb" style="width: 200px; height: 200px">
-        esto modal es
-      </dialog>
-    </div>
+createPlayground('#container', { config });
+</script>
   </body>
-  <script>
-    ;(function () {
-      var updateButton = document.getElementById('dialogb')
-
-      var favDialog = document.getElementById('dialog')
-
-      // Update button opens a modal dialog
-      updateButton.addEventListener('click', function () {
-        favDialog.showModal()
-      })
-    })()
-  </script>
 </html>

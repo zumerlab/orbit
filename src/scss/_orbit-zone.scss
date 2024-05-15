@@ -1,7 +1,16 @@
 /*! 
 ## .orbit-zone
 
-orbit zone is a functional class that groups `.orbit` classes. It serves as a container with a length defined once by `--o-length` when the Orbit app is initialized. When the orbit zone is nested within a `.satellite`, its length will depend on the `.satellite`'s `.orbit` diameter.
+Orbit-zone is a functional class that groups `.orbit` classes. It serves as a container with a length defined once by `--o-length` when the Orbit app is initialized.
+~~When orbit-zone is nested into a `.satellite`, its length will depend on the `.satellite`'s `.orbit` diameter.~~
+
+### Customization
+
+It has some special classes and css variables to customize it:
+
+  - Aligment class utilities: `.center`, `center-left`, `.center-right`, `.top-left`, `.top-center`, `.top-right`, `.bottom-left`, `.bottom-center`,  `.bottom-right`. Default `.center`
+
+**Note:** Orbit is 100% CSS, but in case user needs Orbit be responsive there is an optional tiny JS script that modifies `--o-length` when a parent element of `.orbit-zone` is resized. See how to use in Orbit.resize docs
 
 **Important:** The `orbit-zone` class can only be nested into a `.satellite`.
 

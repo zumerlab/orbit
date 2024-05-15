@@ -573,18 +573,30 @@
         </div>
       </div>
     </div>
+    <div class="orbit-5">
+     
+      <o-sector shape="circle" class="gap-9"></o-sector>
+      <o-sector shape="zigzag" class="gap-9"></o-sector>
+    </div>
+    <div class="orbit-6">
+      <o-progress value="45" max="123" shape="circle" bg-color="yellow"></o-progress>
+    </div>
     <!-- big clock -->
     <div class="orbit-0 clock">
-      <div class="spoke outer-orbit hour xh">
-        <img src="../assets/hours.png" width="78">
-      </div>
       <div class="spoke outer-orbit minute xm">
         <img src="../assets/minutes.png" width="132">
+      </div>
+      <div class="spoke outer-orbit hour xh">
+        <img src="../assets/hours.png" width="78">
       </div>
       <div class="satellite at-center center">
       </div>
     </div>
   </div>
+  <!-- <script type="module" defer>
+    import {Orbit} from '../src/js/orbit-resize.js'
+    Orbit.resize('body')
+  </script> -->
   <script>
     function analogWatch() {
       // Get the current time

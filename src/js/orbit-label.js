@@ -13,17 +13,20 @@ function calcularExpresionCSS(cssExpression) {
 /*! 
 ## o-label
 
-`<o-label>` is a standard web-component for rendering a radial slices or pies. 
+`<o-label>` is a standard web-component for rendering curved text. 
 By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
 It has some special attributes and css variables to customize it:
-  - Attribute `sector-color`: To set a color for sector. Default `orange`
+  - Attribute `label-color`: To set a text color for label. Default `black`
+  - Attribute `bg-color`: To set a background color for label. Default `none`
 
   - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-label>`: to set gap space. Default '0'
-  - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
-  - Class utility `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - Class utility `.inner-orbit`: To place `o-label` just below its orbit
-  - Class utility `.outer-orbit-orbit`: To place `o-label` just above its orbit
+  - utility class `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
+  - utility class `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
+  - utility class `.inner-orbit`: To place `o-label` just below its orbit
+  - utility class `.outer-orbit-orbit`: To place `o-label` just above its orbit
+  - Utility class `.quarter-inner-orbit`: To place `o-sector` a 25% into its orbit.
+  - Utility class `.quarter-outer-orbit`: To place `o-sector` a 25% outer its orbit.
 
   - CSS styles. User can customize `o-label` by adding CSS properties to `o-label path`
   
@@ -35,11 +38,8 @@ It has some special attributes and css variables to customize it:
 ### Usage
 
 ```html
-<div class="orbit range-180"> 
-  <o-label />
-  <o-label class="gap-5" />
-  <o-label class="gap-10" />
-  <o-label class="gap-5" />
+<div class="orbit"> 
+  <o-label>Hello World!</o-label>
 </div>
 ```
 */
@@ -62,8 +62,6 @@ export class OrbitLabel extends HTMLElement {
   //  });
    // textoObserver.observe(this, { childList: true, subtree: true });
 
-
-    
   }
   update() {
     const svg = this.createSVGElement();
@@ -77,8 +75,6 @@ export class OrbitLabel extends HTMLElement {
     this.innerHTML = '';
     this.appendChild(svg);
 }
-
-
 
 
   createSVGElement() {
@@ -136,9 +132,6 @@ createTextPath(pathId, path) {
     text.setAttribute('textLength', path.getTotalLength());
   }
  
-
-
-
   textPath.textContent = this.textContent; 
 
   text.appendChild(textPath);
@@ -226,5 +219,5 @@ getAttributes() {
         d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`;
     }
     return { startX, startY, endX, endY, largeArcFlag, d };
-}
+  }
 }

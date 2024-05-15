@@ -1,5 +1,4 @@
-OK rows: rings OR orbits
-
+- OK rows: rings OR orbit
 - OK columns: sectors relates to angles. quadrants... cordinal points... > ARCS
 - OK offset angle: importantes para saber desde donde empieza
 - OK arc: importante para estabelcer tamano del arco 90° o 360° x ej. DESAMBIGUAR
@@ -250,3 +249,36 @@ penssar en algo tipo span sectors, orbiters
 //
 //
 //
+
+
+### TODO
+* Fix orbit-0 ok by adding ortbit-nth 0.1  OK
+* Add center position for vector, satellite  OK
+* Add .ccv for all orbit child ok
+* correjir sector y progress ok
+* add content radial aligment y 
+  * hacerlo rsponsive llegado el caso al espacio.. ver esto no esta bien del todo
+= add slot content para w-c NO HACE X AHORA XQ SE CUBRE CON SATELLITE O TEXT
+* CORREJIR ALINEACION TODO DESDE 0 A LAS 12 OK
+* probar sacar cambio de tamano en nested xq confunde mucho. ok
+* arreglar lenght.... para que sea responsive.. OK con una funcion
+* UN COMPOENENT DE TEXTO CURVO WIP.  text size and color from class style. 
+* eliminar sttributos innecsarios hacerlosmasstndars para progres y sector tb
+* bug no gap when one sector/text. 
+* bug alineacion gaps ... 180 on mas de un sector/ o-label
+* separar vector de constellation... o vector to spoke / vector.is-poligon to segment
+* ornit-nth cambiar nombre
+* resize orbit as optional function.
+* trabajar con spoke as container... tiene que alinearse siempre a la mitad asi, si tiene una imagen dentro queda alineada tambien.
+* add rules to support chek
+* add gooey
+* textLength y space. 
+* el gap en label no anda super duper con texto invertido
+* agregar quarters a secto, label, progress
+* dar vuelta texto camniando 1 por 0.. meterlo en function
+* ver orbit reduce que no anda del todo bien , tmpoco en label
+* a los sectors y progress ver de meter otras linecaps tipo >
+- ver algop ara labels... tipo https://www.benchling.com/
+* reset styles to avoid conflcits
+- create basic theme
+- volver a chequear documentacion

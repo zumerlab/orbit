@@ -2,19 +2,32 @@
 /*! 
 ## .orbit or .orbit-*
 
-This class renders a circumsference around a .orbit-zone center and allows other elements to be 
-distributed along width. By default there are 12 orbits. The number can be modify with `$max-orbits` var at `_variables.scss`.
+This class renders a circumsference inside an .orbit-zone. Inside `.orbit` can be placed many elements, such as satellites, sectors, progress, spokes, segments, and labels.
+By default there are 12 orbits. The number can be modify with `$max-orbits` var at `_variables.scss`.
 
 **Important:** .orbit or .orbit-* is a direct child element of .orbit-zone.
 
+### Stack order
+Orbits stack order is same as any html element. First orbit is below second one. 
+
+
 ### Usage: 
 
-```html
-<div class="orbit-zone">
-  <div class="orbit"></div>
-  <div class="orbit"></div>
-</div>
-```
+- Basic example that renders two orbits
+  ```html
+  <div class="orbit-zone">
+    <div class="orbit"></div>
+    <div class="orbit"></div>
+  </div>
+  ```
+
+- Basic example that renders two orbits of same radius the latter one is abowe the former.
+  ```html
+  <div class="orbit-zone">
+    <div class="orbit-10"></div>
+    <div class="orbit-10"></div>
+  </div>
+  ```
 
 ### Examples:
 
@@ -49,20 +62,14 @@ distributed along width. By default there are 12 orbits. The number can be modif
 ### Customization:
 
 It has some special attributes and css variables to customize it or its children elements:
-  
-  - Class `.gap-*` applied on `.orbit` or `.orbit-*` set a `o-sector` gap space. Default '0'
-  - Class utility `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
-  - Class utility `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - Class utility `.inner-orbit`: To place `o-sector` just below its orbit
-  - Class utility `.outer-orbit`: To place `o-sector` just above its orbit
+
+  - Utility class `.reduce-*`: To decrease size according an orbit fracction percentage. Default 1.
+  - Utility class `.goey-fx`: This utility allows orbit child elements to look grouped and sticky. Try it!
 
   - CSS styles. User can customize `.orbit` by adding CSS properties.
 
 Besides css properties that user can change according his needs, there two css variables to turn `.orbit`or `.orbit-*` into 
-an ellipse (`--o-ellipse-x`, and `--o-ellipse-y`). This will affect orbit and its childs, with an excepcion of `<o-sector>`
-web component that will be hide when orbit is an ellipse. Values range from 0 to 1.
-
-**Important**: Ckecking `--o-ellipse-x` and `--o-ellipse-y` doesn't work currently on Firefox and Safari.
+an ellipse (`--o-ellipse-x`, and `--o-ellipse-y`). This will affect orbit and its children, with an excepcion of `<o-sector>`, `<o-progress>`, and `<o-label>` web components that will be hiden when orbit is an ellipse. Values range from 0 to 1.
 
 ```html
 <div class="orbit-zone" style="--o-ellipse-x: 0.6">
@@ -77,39 +84,9 @@ web component that will be hide when orbit is an ellipse. Values range from 0 to
 </div>
 ```
 
-There are some utility classes that are set on orbit element and affect its child radial layout (`.from-*`, `.range-*`). 
+There are some utility classes that are set on orbit element and affect its child radial layout (`.from-*`, `.range-*`, etc). 
 Please see **Radial Layout section**.
 
-
-### TODO
-* Fix orbit-0 ok by adding ortbit-nth 0.1  OK
-* Add center position for vector, satellite  OK
-* Add .ccv for all orbit child ok
-* correjir sector y progress ok
-* add content radial aligment y 
-  * hacerlo rsponsive llegado el caso al espacio.. ver esto no esta bien del todo
-= add slot content para w-c NO HACE X AHORA XQ SE CUBRE CON SATELLITE O TEXT
-* CORREJIR ALINEACION TODO DESDE 0 A LAS 12 OK
-* probar sacar cambio de tamano en nested xq confunde mucho. ok
-* arreglar lenght.... para que sea responsive.. OK con una funcion
-* UN COMPOENENT DE TEXTO CURVO WIP.  text size and color from class style. 
-* eliminar sttributos innecsarios hacerlosmasstndars para progres y sector tb
-* bug no gap when one sector/text. 
-* bug alineacion gaps ... 180 on mas de un sector/ o-label
-* separar vector de constellation... o vector to spoke / vector.is-poligon to segment
-* ornit-nth cambiar nombre
-* resize orbit as optional function.
-* trabajar con spoke as container... tiene que alinearse siempre a la mitad asi, si tiene una imagen dentro queda
-alineada tambien.
-* add rules to support chek
-- create basic and alternative theme
-- volver a chequear documentacion
-* add gooey
-* textLength y space. 
-* el gap en label no anda super duper con texto invertido
-* agregar quarters a secto, label, progress
-* dar vuelta texto camniando 1 por 0.. meterlo en function
-* ver orbit reduce que no anda del todo bien , tmpoco en label
 
 
 */

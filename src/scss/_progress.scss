@@ -1,7 +1,7 @@
 /*!
 ## <o-progress>
 
-See o-progress docs in web-component file.
+See o-progress docs in web-component docs.
 
 */
 o-progress {
@@ -22,4 +22,9 @@ o-progress {
 o-progress svg {
   pointer-events: none;
   overflow: visible!important;
+}
+
+
+o-progress svg > * {
+  pointer-events: stroke;
 }
