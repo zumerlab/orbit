@@ -4,7 +4,8 @@
 `<o-progress>` is a standard web-component for rendering a radial progress bar. Just one o-progress can be used per orbit.
 It has two elements: a progress bar and a background bar that show the max range progress bar can achieve.
 
-o-progress has some special attributes and css variables to customize it:
+### Customization
+
   - Attribute `value`: To set a number that represents the progress bar value.
   - Attribute `max`: To set the max allowed `value`.
   - Attribute `bar-color`: To set a color for progress bar. Default `orange`

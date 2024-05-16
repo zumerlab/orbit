@@ -1,18 +1,19 @@
 /*!
 ## .satellite
 
-Elements with `.satellite` are placed along an `.orbit` or `.orbit-*` arc serving as content place and/or to nest an `.orbit-zone`. 
+Elements with `.satellite` are placed along an `.orbit` or `.orbit-*` serving as content place and/or to nest `.orbits` using `.orbit-zone`. 
 By default up to 24 satellites can be placed in an orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
+
+### Content
+Satellites are suitable to render different content. It is desirable to use `.capsule` inside a `.satellite` to put content.
 
 ### Shapes
 
-By default a satellite provides an unstyled circle shape, but it can be easily changed according project needs.
+Satellite provides an unstyled circle shape, but it can be easily changed according project needs.
 
 A few set of shapes utilities are provided (`.circle`, `.box`, `.rounded-box`). Nevertheless, users can set any shapes using svg, images, etc. At this instance, Orbit is focused on setting a radial layout, not in UI styles.
 
 ### Customization
-
-It has some special classes and css variables to customize it:
 
   - Utility class `.range-*`: Default '360deg'
   - Utility class `.from-*`: Default '0deg'
@@ -30,7 +31,11 @@ It has some special classes and css variables to customize it:
 - This renders six satellites with different properties
 ```html
 <div class="orbit">
-  <div class="satellite"></div>
+  <div class="satellite">
+    <div class="capsule">
+      Change volume
+    </div>
+  </div>
   <div class="satellite inner-orbit"></div>
   <div class="satellite outer-orbit"></div>
   <div class="satellite rounded-box"></div>

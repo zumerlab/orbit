@@ -281,4 +281,4 @@ penssar en algo tipo span sectors, orbiters
 - ver algop ara labels... tipo https://www.benchling.com/
 * reset styles to avoid conflcits
 - create basic theme
-- volver a chequear documentacion
+* volver a chequear documentacion

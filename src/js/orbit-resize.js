@@ -1,40 +1,22 @@
 /*! 
-## Orbit.resize
+## Orbit.resize()
 
-Resize is currently the only method of Orbit. 
-
-### Install
-
-```html
-<body>
-    <div class="orbit-zone">
-    <!-- Orbit app -->
-    </div>
-    <script scr="orbit-resize.js">
-
-    </script>
-</body>
-
-```
+Resize is currently the only JS method of Orbit. 
 
 ### Usage
 
 ```html
-<div class="wrapper">
-    <div class="orbit-zone">
-    <!-- Orbit app -->
+<body>
+    <div class="container">
+        <div class="orbit-zone">
+            <!-- Orbit app -->
+        </div>
     </div>
-</div>
+    <script scr="orbit-resize.js">
+        Orbit.resize('container');
+    </script>
+</body>
 ```
-
-
-```js
-<script scr="orbit-resize.js">
-    Orbit.resize('.wrapper')
-</script>
-
-```
-
 
 */
 let Orbit = {}
