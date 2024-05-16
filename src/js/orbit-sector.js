@@ -13,10 +13,10 @@ function calcularExpresionCSS(cssExpression) {
 /*! 
 ## o-sector
 
-`<o-sector>` is a standard web-component for rendering a radial slices or pies. 
-By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
+`<o-sector>` is a standard web-component for rendering a radial slices or pies. By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
-It has some special attributes and css variables to customize it:
+### Custmization
+
   - Attribute `sector-color`: To set a color for sector. Default `orange`
   - Attribute `shape`: To set a different endings looks. Currently, you can choose between `circle`, `arrow`, `slash`, `backslash` and `zigzag` shapes. Default `none`
 

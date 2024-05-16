@@ -2,35 +2,47 @@
 @use './variables' as *;
 
 /*! 
-## Orbit Radial Layout
+## Orbit radial layout
 
 Orbit radial layout is the core of Orbit framework that offers a flexible, clean and simple way to design radial UI using just CSS and some optional vanilla web components crafted to improve dev UX.
 
 ### Overview
 
-`.orbit` and `.orbit-*` have `--o-orbit-number` to individualize their position according to the maximum number of orbits (e.g., `orbit-4` has `--o-orbit-number: 4`). Similarly, other elements such as `satellites`, `spokes`, `sectors`, and others use `--o-orbit-child-number` to be individualized.
+To create radial layouts using just CSS, it is neccesary to use CSS variables and do some maths. `.orbit` and `.orbit-*` have `--o-orbit-number` var to individualize their position according to the maximum number of orbits. Similarly, other elements such as `satellites`, `spokes`, `sectors`, and others use `--o-orbit-child-number` to be individualized.
 
-`.orbit` and `.orbit-*` hold a unique `--o-angle` value calculated by counting their children. This allows to distribute such elements along an orbit.
+Besides that, `.orbit` and `.orbit-*` have `--o-angle` var that counts their child elements.
 
 ### Mechanism
 
 The mechanism is straightforward:
 
-- `--o-orbit-number` gives a radius that informs where each `orbit` is placed, according to `.orbit-zone` length and maximum number of orbits. For example, with an `.orbit-zone` length of 500px and a maximum of 12 orbits, `orbit-4` will have 166.66 pixels of radius.
+- `--o-orbit-number` informs where each `orbit` is placed, according to `.orbit-zone` length and maximum number of orbits. For example, with an `.orbit-zone` length of 500px and a maximum of 12 orbits, `orbit-4` will have 166.66 pixels of radius.
 
-- `--o-angle` is calculated depending on children number in an orbit (if one orbit has 3 satellites, `--o-angle` is 120deg). Finally, `--o-angle` is multiplied by `--o-orbit-child-numbers`. For example, satellite one will have 120deg, satellite two 240deg, and satellite three 360deg, and each satellite will be placed along its orbit at 166.66px.
+- `--o-angle` is calculated depending on `.orbit` children number. For example, if an orbit has 3 satellites, `--o-angle` is 120deg). Finally, `--o-angle` is multiplied by `--o-orbit-child-number`. For example, satellite one will have 120deg, satellite two 240deg, and satellite three 360deg, and each satellite will be placed along its orbit at 166.66px.
 
 ### Modifiers
 
-There are some modifiers to adjust orbit child distribution:
+There are some modifiers to adjust orbit child distribution and make radial layout more flexible:
 
-- `--o-range`: This variable allows the user to set an arbitrary arc length. Values can range from 0 to 360deg. For convenience, there are utility classes `range-*` (.range-0 to .range-360).
+  - Utility class `.range-*`: To define the arc lenght. Default '360deg'
+  - Utility class `.from-*`: To define starting point. Default '0deg'
+  - Utility class `.grow-*x`: To increase size according number of orbits. Default 1.
+  - Utility class `.reduce-*`: To decrease size according an orbit fracction percentage. Default 1.
+  - Utility class `.inner-orbit`: To place `.satellite` just below its orbit
+  - Utility class `.outer-orbit`: To place `.satellite` just above its orbit
+  - Utility class `.quarter-inner-orbit`: To place `.satellite` a 25% into its orbit.
+  - Utility class `.quarter-outer-orbit`: To place `.satellite` a 25% outer its orbit.
+  - Utility class `.ccw`: to invert arrange order of orbit child elements. Default clock-wise.
+  - Utility class `.fit-range`: Useful when range is inferior to 360deg to cover all range.
 
-- `--o-from`: This variable allows the user to set an arbitrary starting point. Values can range from 0 to 360deg. For convenience, there are utility classes `from-*` (.from-0 to .from-360).
+### Layout rules
 
-- ccw
+Any Orbit project should be follow this simple rules:
 
-- fit-range
+- Start with `.orbit-zone`.
+- Add as many `.orbit`or `.orbit-*` as needed.
+- Put `.satellite`, `o-sector`, `o-progress`,`o-label`,`.segment` or `.spoke` inside an `.orbit`. 
+- Orbits can be nested by adding `.orbit-zone` into `.satellite`.
 
 ### Usage and Examples
 
@@ -65,11 +77,6 @@ There are some modifiers to adjust orbit child distribution:
   <div class="spoke"></div>
 </div>
 ```
-
-#### To-do
-
-- Improve this doc section to be more clear
-- Add angle modifier
 
 */
 

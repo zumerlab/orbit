@@ -13,10 +13,10 @@ function calcularExpresionCSS(cssExpression) {
 /*! 
 ## o-label
 
-`<o-label>` is a standard web-component for rendering curved text. 
-By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
+`<o-label>` is a standard web-component for rendering curved text. There are up to 24 sector per orbit. 
+The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
-It has some special attributes and css variables to customize it:
+### Customization
   - Attribute `label-color`: To set a text color for label. Default `black`
   - Attribute `bg-color`: To set a background color for label. Default `none`
 

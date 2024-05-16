@@ -2,23 +2,31 @@
 
 /*!
 
-## Orbit support and checking
+## Orbit support and compliance checks
 
-Orbit has a few but useful visual aids to inform dev user if there is a violation to following rules:
+Orbit provides a comprehensive set of rules and visual aids in CSS to assist developers in enhancing user experience. These guidelines ensure adherence to best practices and optimize the utilization of Orbit's features.
 
-### Check if Browser supports has() CSS rule.
+### Checking browser support for `has()` CSS Rule
 
-### o-sector, o-label and o-progress only on circular orbits
+Before implementing features reliant on the `has()` CSS rule, it's essential to confirm browser compatibility. Orbit includes checks to verify support for this rule, alerting developers if it's unavailable in the targeted browser environment.
 
-Currently Orbit doesn't support ellipse shapes, so when detected these web-components will be hidden.
+### Checking browser support for `context-stroke`
 
-### Visual warning on invalid nested elements
+Some browsers doesn't support `context-stroke` which is used to add some fancy ending markers in `o-sector` and `o-progress`. Orbit will alert this porblem and offer a quick-fix.
 
-- Orbit checks and warns if `.orbit-zone` has some invalid Orbit direct child element. Only `.orbit` or `.orbit-*` are allowed
+### Usage Limitation of `o-sector`, `o-label`, and `o-progress`
 
-- Orbit checks and warns if `.satellite` has some invalid Orbit direct child element. Only `.orbit-zone` is allowed. 
+For optimal functionality, `o-sector`, `o-label`, and `o-progress` should only be applied within circular orbits. As Orbit currently doesn't support elliptical shapes, these web-components will be hidden if detected within incompatible orbit shapes.
 
-add markers on safari....
+### Visual Warning for Invalid Nested Elements
+
+Orbit incorporates visual cues to identify and warn developers of invalid nested elements within orbit structures:
+
+- **Invalid Child Elements within `.orbit-zone`:** Orbit detects and notifies developers if `.orbit-zone` contains invalid direct child elements. Only `.orbit` or `.orbit-*` elements are permissible within `.orbit-zone`.
+
+- **Invalid Child Elements within `.satellite`:** Similarly, Orbit checks for and alerts developers if `.satellite` includes invalid direct child elements. Only `.orbit-zone` elements are permitted within `.satellite`.
+
+
 */
 /* Check Firefox has() support */
 @supports not selector(:has(a)) {	
@@ -39,6 +47,27 @@ add markers on safari....
   }
 
 
+}
+
+@supports  not (fill: 'context-stroke') {
+  .orbit-zone {
+    border: 3px dotted red!important;
+    color: white;
+  }
+  .orbit-zone * {
+    //display: none !important;
+    opacity: 0.4 !important;
+  }
+
+  .orbit-zone::after {
+    content: "This browser doesn't support 'context-fill' markers. Set attr 'shape' to 'none'";
+    opacity: 1 !important;
+   // text-shadow: 0 0 2px red;
+    font-size: 18px;
+   // background-color: yellow;
+    padding: 10px;
+    text-align: center;
+  }
 }
 
 
@@ -93,6 +122,7 @@ add markers on safari....
   filter: drop-shadow(1px 1px 8px rgb(255, 254, 254));
   position: absolute;
 }
+
 
 
 @keyframes pulse {

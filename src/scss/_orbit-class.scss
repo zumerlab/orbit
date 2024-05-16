@@ -10,7 +10,6 @@ By default there are 12 orbits. The number can be modify with `$max-orbits` var 
 ### Stack order
 Orbits stack order is same as any html element. First orbit is below second one. 
 
-
 ### Usage: 
 
 - Basic example that renders two orbits
@@ -27,15 +26,6 @@ Orbits stack order is same as any html element. First orbit is below second one.
     <div class="orbit-10"></div>
     <div class="orbit-10"></div>
   </div>
-  ```
-
-### Examples:
-
-- This renders three orbits equally distributed 
-  ```html
-  <div class="orbit"></div>
-  <div class="orbit"></div>
-  <div class="orbit"></div>
   ```
 
 - This renders three orbits with custom distribution
@@ -84,10 +74,7 @@ an ellipse (`--o-ellipse-x`, and `--o-ellipse-y`). This will affect orbit and it
 </div>
 ```
 
-There are some utility classes that are set on orbit element and affect its child radial layout (`.from-*`, `.range-*`, etc). 
-Please see **Radial Layout section**.
-
-
+There are some utility classes that are set on `.orbit` element and affect its child radial layout (`.from-*`, `.range-*`, etc).  Please see [**Radial Layout section**].
 
 */
 .orbit, [class*='orbit-']:not(.orbit-zone) {
