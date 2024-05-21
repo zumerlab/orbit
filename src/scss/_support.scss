@@ -49,7 +49,8 @@ Orbit incorporates visual cues to identify and warn developers of invalid nested
 
 }
 
-@supports  not (fill: 'context-stroke') {
+@supports  not (fill: context-stroke) {
+
   .orbit-zone {
     border: 3px dotted red!important;
     color: white;
