@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/orbit.min.css" type="text/css" defer />
+  <script type="module" src="../src/orbit.js" defer></script>
+  <title>Orbit</title>
+  <style>
+    .orbit-5, .orbit-6 {
+      border: 1px solid rgba(0, 0, 0, 0.425) !important;
+    }
+    .orbit-4.inner {
+      border: 1px dashed rgba(0, 0, 0, 0.425) !important;
+    }
+    .orbit-3, .text {
+      border: 0px dashed rgba(0, 0, 0, 0.425) !important;
+    }
+    .satellite {
+      border: 1px solid white;
+      background-color: white;
+    }
+    .orbit-5 > .shape {
+      border: 1px solid white;
+      outline: 10px solid white;
+      background-color: white;
+    }
+
+    .big {
+      border: 16px solid black;
+      background-color: white;
+    }
+    .circle, .box {
+      border: 1px solid black !important;
+    }
+
+    .text {
+      font-family: Roboto, 'Open Sans', sans-serif;
+      font-size: 34px;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="orbit-zone">
+    <div class="orbit-6"></div>
+    <div class="orbit-5 ccw range-240 fit-range">
+      <div class="satellite shape">
+        <div class="capsule ">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 4">
+            <path d="M 0 0 L 4 0 L 2 4 z" stroke="black" stroke-width="0.2" fill="none"/>
+          </svg>
+        </div>
+        
+    </div>
+      <div class="satellite shape circle"></div>
+      <div class="satellite shape box"></div>
+      <div class="satellite shape circle"></div>
+    </div>
+    <div class="orbit-6 text">
+      <div class="satellite  angle-90 grow-7x">
+      </div>
+    </div>
+    <div class="orbit-4 inner">
+     
+    </div>
+    <div class="orbit-5 text">
+      <div class="satellite  angle-90 ">
+        r
+      </div>
+    </div>
+   
+    <div class="orbit-6 text">
+      <div class="satellite  angle-90 ">
+        b
+      </div>
+    </div>
+    <div class="orbit-7 text">
+      <div class="satellite  angle-90 ">
+        i
+      </div>
+    </div>
+    <div class="orbit-8 text">
+      <div class="satellite  angle-90 ">
+        t
+      </div>
+    </div>
+    <div class="orbit-4 text">
+      <div class="satellite  angle-90 ">
+        O
+      </div>
+    </div>
+    <div class="orbit-0 gooey-fx ">
+      <div class="satellite grow-6x big">
+        <div class="orbit-zone">
+          <div class="orbit-3 reduce-10">
+            <div class="satellite big quarter-outer-orbit angle-299" style="--o-size-ratio: 2.5;"></div>
+          </div>
+          
+        </div>
+      </div>
+    
+    </div>
+  </div>
+  <script>
+    
+  </script>
+</body>
+
+</html>
