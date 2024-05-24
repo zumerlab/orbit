@@ -200,11 +200,16 @@ Can be used in parent elements or in each orbiter class
   margin-top:unset;
 }
 
+/*  Satellite  gyro */
+.satellite.sync-rotation {
+  transform: var(--o-transform) rotate(calc(var(--o-angle-composite)));
+}
+
 o-progress.rounded,o-label.rounded {
   --o-linecap: round;
 }
 
-.gooey-fx{
+.gooey-fx-light, .gooey-fx{
   filter: url('data:image/svg+xml,\
   <svg xmlns="http://www.w3.org/2000/svg">\
   <filter id="fancy-goo">\
@@ -213,5 +218,27 @@ o-progress.rounded,o-label.rounded {
   <feComposite in="SourceGraphic" in2="goo" operator="atop" />\
   </filter>\
   </svg>#fancy-goo')
+}
+
+.gooey-fx-medium{
+  filter: url('data:image/svg+xml,\
+  <svg xmlns="http://www.w3.org/2000/svg">\
+  <filter id="fancy-goo">\
+  <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />\
+  <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />\
+  <feComposite in="SourceGraphic" in2="goo" operator="atop" />\
+  </filter>\
+  </svg>#fancy-goo')
+}
+
+.gooey-fx-max{
+  filter: url('data:image/svg+xml,\
+  <svg xmlns="http://www.w3.org/2000/svg">\
+  <filter id="fancy-goo">\
+  <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur" />\
+  <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />\
+  <feComposite in="SourceGraphic" in2="goo" operator="atop" />\
+  </filter>\
+  </svg>#fancy-goo');
 }
 
