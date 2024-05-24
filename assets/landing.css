@@ -1,0 +1,217 @@
+    
+    @property --spoke-angle {
+        syntax: '<angle>';
+        inherits: false;
+        initial-value: 180deg;
+      }
+      body {
+        /*
+        light
+        --main-color: #094067; 
+        --background-color:  #fff;
+        --primary-color: #3da9fc;
+        --tertiary-color: #ef4565;
+        --secondary-color: #90b4ce;
+       
+        */
+        --main-color: #cececf;
+        --background-color: #094067;
+        --primary-color: #3da9fc;
+        --tertiary-color: #ef4565;
+        --secondary-color: #90b4ce;
+        background-color: var(--background-color);
+      }
+      o-sector path:hover  {
+        stroke: unset;
+        cursor: unset;
+      }
+      .orbit-zone{
+        font-family: Roboto, 'Open Sans', sans-serif;
+      }
+      .orbit, [class*='orbit-']:not(.orbit-zone) {
+        border-color: transparent
+      }
+      .solid {
+        border: 1px solid var(--primary-color) !important;
+      }
+      .dashed {
+        border: 1px dashed var(--primary-color) !important;
+      }
+      .orbit-3, .text {
+        border: 0px dashed var(--primary-color) !important;
+      }
+      .satellite {
+        border: 1px solid var(--background-color);
+        background-color: var(--background-color);
+      }
+      .orbit-5 > .shapes {
+        border: 1px solid var(--background-color);
+        outline: 10px solid var(--background-color);
+        background-color: var(--background-color);
+      }
+  
+      .big {
+        border: 16px solid var(--main-color);
+        background-color: var(--background-color);
+      }
+      .small {
+        border: 8px solid transparent;
+        background-color: var(--tertiary-color);
+        
+      }
+      .medium-orbit {
+        border: none !important;
+      }
+      .circle, .box {
+        border: 2px solid var(--primary-color) !important;
+        outline: 9px solid var(--background-color);
+      }
+      .triangle > .segment {
+        border: 1px solid var(--primary-color) !important;
+        
+      }
+  
+      .text {
+        font-size: 34px;
+        color: var(--main-color);
+      }
+      .small {
+        text-align: center;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.857);
+        transition: color 200ms;
+      }
+
+      .small:hover {
+        color: var(--background-color);
+        cursor: pointer;
+       
+      }
+
+      .vector {
+        background-color: var(--primary-color);
+      }
+      
+      .o-container{
+        opacity: 0;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: show 200ms;
+        animation-fill-mode: forwards;
+      }
+      @keyframes tail {
+        0%{
+          --spoke-angle: var(--start);
+          opacity: 0;
+        }
+          100% {
+          --spoke-angle: var(--end);
+          opacity: 1;
+        }
+      }
+      @keyframes move {
+        0%{
+          --spoke-angle: var(--start);
+        }
+          100% {
+          --spoke-angle: var(--end);
+        }
+      }
+      @keyframes show {
+        0%{
+         opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .goooo {
+          --start: 360deg;
+          --end: 330deg;
+          --pure-angle: var(--spoke-angle);
+          --o-angle-composite: calc(var(--pure-angle) - 90deg) !important;
+          animation: move 2s ;
+          animation-fill-mode: forwards;
+          animation-timing-function: ease-out;
+      }
+      .gooo {
+        --start: 80deg;
+          --end: 17deg;
+          --pure-angle: var(--spoke-angle);
+          --o-angle-composite: calc(var(--pure-angle) - 90deg) !important;
+          animation: move 2s ;
+          animation-fill-mode: forwards;
+          animation-timing-function: ease-out;
+      }
+      .goo {
+          --start: 90deg;
+          --end: 30deg;
+          --pure-angle: var(--spoke-angle);
+          --o-angle-composite: calc(var(--pure-angle) - 90deg) !important;
+          animation: move 2s ;
+          animation-fill-mode: forwards;
+          animation-timing-function: ease-out;
+      }
+      .go {
+          --start: 180deg;
+          --end: 120deg;
+          --pure-angle: var(--spoke-angle);
+          --o-angle-composite: calc(var(--pure-angle) - 90deg) !important;
+          animation: move 2s ;
+          animation-fill-mode: forwards;
+          animation-timing-function: ease-out;
+      }
+      .gorange {
+          --start: 63deg;
+          --end: 217deg;
+          --pure-angle: var(--spoke-angle);
+          --o-range: var(--pure-angle) !important;
+          animation: move 1s ;
+          animation-fill-mode: forwards;
+          animation-timing-function: ease-out;
+          animation-delay: 2100ms;
+      }
+      .gaaaa {
+        opacity: 0;
+        animation: show 1s ;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-out;
+        animation-delay: 2100ms;
+  
+      }
+      .gaaa {
+        opacity: 0;
+        animation: show 1s ;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-out;
+        animation-delay: 2050ms;
+  
+      }
+      .gaa {
+        opacity: 0;
+        animation: show 1s ;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-out;
+        animation-delay: 2s;
+  
+      }
+      .ga {
+          --start: 0deg;
+          --end: 45deg;
+          --pure-angle: var(--spoke-angle);
+          --o-angle-composite: calc(var(--pure-angle) - 90deg) !important;
+          animation: tail 2s ;
+          animation-fill-mode: forwards;
+          animation-timing-function: ease-out;
+      }
+    
+      .curved-text {
+        opacity: 0;
+        animation: show 1.2s ;
+        animation-delay: .5s;
+        animation-fill-mode: forwards;
+      }
+  

@@ -37,8 +37,7 @@ Orbit-zone is a container class that groups `.orbit` classes. It serves as a con
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* To avoid event conflict with other elements */
-  border: none; /* Reset theme to default */
+  border: none; 
 }
 
 .satellite > .orbit-zone {

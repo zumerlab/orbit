@@ -46,26 +46,21 @@ The number can be modify with `$max-orbiters` var at `_variables.scss`.
 
 export class OrbitLabel extends HTMLElement {
   connectedCallback() {
-    this.update()
+    const pathId = `o-${Math.random().toString(36).substr(2, 9)}`;
+    this.update(pathId)
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes') {
-          this.update()
+          this.update(pathId)
         }
       })
     })
     observer.observe(this, { attributes: true })
     
-  //  const textoObserver = new MutationObserver(() => {
-     // this.update();
-  //  });
-   // textoObserver.observe(this, { childList: true, subtree: true });
-
   }
-  update() {
+  update(pathId) {
     const svg = this.createSVGElement();
-    const pathId = `o-${Math.random().toString(36).substr(2, 9)}`;
     const path = this.createPathElement(pathId);
     const text = this.createTextPath(pathId, path);
 

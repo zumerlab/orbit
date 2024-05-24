@@ -51,24 +51,10 @@ Orbit incorporates visual cues to identify and warn developers of invalid nested
 
 @supports  not (fill: context-stroke) {
 
-  .orbit-zone {
-    border: 3px dotted red!important;
-    color: white;
+  :not[shape="none"] {
+    display: none;
   }
-  .orbit-zone * {
-    //display: none !important;
-    opacity: 0.4 !important;
-  }
-
-  .orbit-zone::after {
-    content: "This browser doesn't support 'context-fill' markers. Set attr 'shape' to 'none'";
-    opacity: 1 !important;
-   // text-shadow: 0 0 2px red;
-    font-size: 18px;
-   // background-color: yellow;
-    padding: 10px;
-    text-align: center;
-  }
+  
 }
 
 
