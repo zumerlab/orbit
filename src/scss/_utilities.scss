@@ -25,39 +25,39 @@ There is a small set of CSS utilities to use with some orbit classes and compone
 */
 
 /* .orbit-zone  aligment utilities */
-.orbit-zone.at-top-left {
+.at-top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
 }
-.orbit-zone.at-top {
+.at-top {
   align-items: flex-start !important;
   justify-content: center !important;
 }
-.orbit-zone.at-top-right {
+.at-top-right {
   align-items: flex-start !important;
   justify-content: flex-end !important;
 }
-.orbit-zone.at-bottom-left {
+.at-bottom-left {
   align-items: flex-end !important;
   justify-content: flex-start !important;
 }
-.orbit-zone.at-bottom {
+.at-bottom {
   align-items: flex-end !important;
   justify-content: center !important;
 }
-.orbit-zone.at-bottom-right {
+.at-bottom-right {
   align-items: flex-end !important;
   justify-content: flex-end !important;
 }
-.orbit-zone.at-center-left {
+.at-center-left {
   align-items: center !important;
   justify-content: flex-start !important;
 }
-.orbit-zone.at-center {
+.at-center {
   align-items: center !important;
   justify-content: center !important;
 }
-.orbit-zone.at-center-right {
+.at-center-right {
   align-items: center !important;
   justify-content: flex-end !important;
 }
@@ -119,7 +119,7 @@ Can be used in parent elements or in each orbiter class
 
 @for $i from 1 through $max-orbits {
   .grow-#{$i}x {
-    --o-size-ratio: #{$i};
+    --o-size-ratio: #{calc($i * 2)};
   }
 }
 
