@@ -36,72 +36,65 @@ It has two elements: a progress bar and a background bar that show the max range
 ```
 */
 export class OrbitProgress extends HTMLElement {
-  connectedCallback() {
-    this.update()
+  static get observedAttributes() {
+    return ['value', 'shape', 'bar-color', 'bg-color', 'max', 'width', 'height'];
+  }
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes') {
-          this.update()
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host {
+          display: block;
+
         }
-      })
-    })
-
-    observer.observe(this, { attributes: true })
+        svg {
+          width: 100%;
+          height: 100%;
+          overflow:visible;
+        }
+      </style>
+      <svg viewBox="0 0 100 100">
+        <defs></defs>
+        <path class="progress-bg"></path>
+        <path class="progress-bar"></path>
+      </svg>
+    `;
   }
 
-  generateRandomString() {
-    const letters = 'abcdefghijklmnopqrstuvwxyz';
-    const numbers = '0123456789';
-    let randomString = '';
-    // Generate 3 random letters
-    for (let i = 0; i < 3; i++) {
-      randomString += letters.charAt(Math.floor(Math.random() * letters.length));
-    }
-    // Generate 3 random numbers
-    for (let i = 0; i < 3; i++) {
-      randomString += numbers.charAt(Math.floor(Math.random() * numbers.length));
-    }
-    // Shuffle the string to randomize the order of letters and numbers
-    randomString = randomString.split('').sort(() => Math.random() - 0.5).join('');
-  
-    return randomString;
+  connectedCallback() {
+    this.update();
   }
-  
+
+  attributeChangedCallback() {
+    this.update();
+  }
+
   update() {
-    const {shape} = this.getAttributes()
-    const randomId = this.generateRandomString()
-    const svg = this.createSVGElement()
+    const { shape } = this.getAttributes();
+    const svg = this.shadowRoot.querySelector('svg');
+    const defs = this.createDefs();
     if (shape !== 'none') {
-      const defs = this.createDefs()
-      const markerDefs = this.createMarker('head'+randomId, 'end');
-      defs.appendChild(markerDefs);
-      const markerDefs1 = this.createMarker('tail'+randomId, 'start');
-      defs.appendChild(markerDefs1);
-      svg.appendChild(defs)
+      defs.appendChild(this.createMarker('head', 'end'));
+      defs.appendChild(this.createMarker('tail', 'start'));
     }
-    const progressArc1 = this.createProgressArc(true, randomId)
-    svg.appendChild(progressArc1)
-    const progressArc = this.createProgressArc(false, randomId)
-    svg.appendChild(progressArc)
-    this.innerHTML = ''
-    this.appendChild(svg)
+    const progressBg = this.shadowRoot.querySelector('.progress-bg');
+    const progressBar = this.shadowRoot.querySelector('.progress-bar');
+    this.updateArc(progressBg, true);
+    this.updateArc(progressBar, false);
+    svg.querySelector('defs').replaceWith(defs);
   }
 
   createSVGElement() {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-    svg.setAttribute('viewBox', '0 0 100 100')
-    svg.setAttribute('width', this.getAttribute('width') || '100%')
-    svg.setAttribute('height', this.getAttribute('height') || '100%')
-
-    return svg
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('width', this.getAttribute('width') || '100%');
+    svg.setAttribute('height', this.getAttribute('height') || '100%');
+    return svg;
   }
 
-  createProgressArc(full, randomId) {
-    const progressArc = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'path'
-    )
+  updateArc(arc, full) {
     const {
       strokeWidth,
       realRadius,
@@ -111,72 +104,60 @@ export class OrbitProgress extends HTMLElement {
       progressBgColor,
       maxAngle,
       shape
-    } = this.getAttributes()
-    const angle = this.getProgressAngle(maxAngle, full)
-    const { d } = this.calculateArcParameters(
-      angle,
-      realRadius,
-      ellipseX,
-      ellipseY
-    )
-    progressArc.setAttribute('d', d)
-    progressArc.setAttribute(
-      'stroke',
-      full ? progressBgColor : progressBarColor
-    )
-    progressArc.setAttribute(
-      'fill', 'transparent'
-    )
-    shape !== 'none' && progressArc.setAttribute('marker-end', `url(#head${randomId})`)
-    shape !== 'none' && progressArc.setAttribute('marker-start', `url(#tail${randomId})`)
-    progressArc.setAttribute('stroke-width', strokeWidth)
-    full && progressArc.setAttribute('class', 'full')
-    
-    progressArc.setAttribute('vector-effect', 'non-scaling-stroke')
-    return progressArc
+    } = this.getAttributes();
+    const angle = this.getProgressAngle(maxAngle, full);
+    const { d } = this.calculateArcParameters(angle, realRadius, ellipseX, ellipseY);
+    arc.setAttribute('d', d);
+    arc.setAttribute('stroke', full ? progressBgColor : progressBarColor);
+    arc.setAttribute('fill', 'transparent');
+    if (shape !== 'none') {
+      arc.setAttribute('marker-end', 'url(#head)');
+      arc.setAttribute('marker-start', 'url(#tail)');
+    }
+    arc.setAttribute('stroke-width', strokeWidth);
+    arc.setAttribute('vector-effect', 'non-scaling-stroke');
   }
 
   getAttributes() {
     const orbitRadius = parseFloat(
       getComputedStyle(this).getPropertyValue('r') || 0
-    )
+    );
     const range = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-range') || 360
-    )
+    );
     const ellipseX = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-ellipse-x') || 1
-    )
+    );
     const ellipseY = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-ellipse-y') || 1
-    )
+    );
     const progress = parseFloat(
       getComputedStyle(this).getPropertyValue('--o-progress') ||
       this.getAttribute('value') ||
       0
-    )
-    const shape = this.getAttribute('shape') || 'none'
-    const progressBarColor = this.getAttribute('bar-color') || 'orange'
-    const progressBgColor = this.getAttribute('bg-color') || 'transparent'
+    );
+    const shape = this.getAttribute('shape') || 'none';
+    const progressBarColor = this.getAttribute('bar-color') || 'orange';
+    const progressBgColor = this.getAttribute('bg-color') || 'transparent';
     const strokeWidth = parseFloat(
       getComputedStyle(this).getPropertyValue('stroke-width') || 1
-    )
-    let strokeWithPercentage = ((strokeWidth / 2) * 100) / orbitRadius / 2
-    // default aligment at middle
-    let innerOuter = strokeWithPercentage
+    );
+    let strokeWithPercentage = ((strokeWidth / 2) * 100) / orbitRadius / 2;
+    let innerOuter = strokeWithPercentage;
     if (this.classList.contains('outer-orbit')) {
-      innerOuter = strokeWithPercentage * 2
+      innerOuter = strokeWithPercentage * 2;
     }
     if (this.classList.contains('quarter-outer-orbit')) {
-      innerOuter = strokeWithPercentage * 1.75
+      innerOuter = strokeWithPercentage * 1.75;
     }
     if (this.classList.contains('inner-orbit')) {
-      innerOuter = 0
+      innerOuter = 0;
     }
     if (this.classList.contains('quarter-inner-orbit')) {
-      innerOuter = strokeWithPercentage * 0.75
+      innerOuter = strokeWithPercentage * 0.75;
     }
-    const realRadius = 50 + innerOuter - strokeWithPercentage
-    const maxAngle = range // User-defined max angle
+    const realRadius = 50 + innerOuter - strokeWithPercentage;
+    const maxAngle = range;
     return {
       orbitRadius,
       ellipseX,
@@ -188,7 +169,7 @@ export class OrbitProgress extends HTMLElement {
       realRadius,
       maxAngle,
       shape
-    }
+    };
   }
 
   getProgressAngle(maxAngle, full) {
@@ -196,51 +177,49 @@ export class OrbitProgress extends HTMLElement {
       getComputedStyle(this).getPropertyValue('--o-progress') ||
       this.getAttribute('value') ||
       0
-    )
-    const maxValue = parseFloat(this.getAttribute('max')) || 100 // User-defined max value
-    return full ?
-      ((maxValue - 0.00001) / maxValue ) * maxAngle
-      : (progress / maxValue) * maxAngle
+    );
+    const maxValue = parseFloat(this.getAttribute('max')) || 100;
+    return full
+      ? ((maxValue - 0.00001) / maxValue) * maxAngle
+      : (progress / maxValue) * maxAngle;
   }
 
   calculateArcParameters(angle, realRadius, ellipseX, ellipseY) {
-    const radiusX = realRadius / ellipseX
-    const radiusY = realRadius / ellipseY
-    const startX = 50 + radiusX * Math.cos(-Math.PI / 2)
-    const startY = 50 + radiusY * Math.sin(-Math.PI / 2)
-    const endX = 50 + radiusX * Math.cos(((angle - 90) * Math.PI) / 180)
-    const endY = 50 + radiusY * Math.sin(((angle - 90) * Math.PI) / 180)
-    const largeArcFlag = angle <= 180 ? 0 : 1
-    const d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`
-    return { startX, startY, endX, endY, largeArcFlag, d }
+    const radiusX = realRadius / ellipseX;
+    const radiusY = realRadius / ellipseY;
+    const startX = 50 + radiusX * Math.cos(-Math.PI / 2);
+    const startY = 50 + radiusY * Math.sin(-Math.PI / 2);
+    const endX = 50 + radiusX * Math.cos(((angle - 90) * Math.PI) / 180);
+    const endY = 50 + radiusY * Math.sin(((angle - 90) * Math.PI) / 180);
+    const largeArcFlag = angle <= 180 ? 0 : 1;
+    const d = `M ${startX},${startY} A ${radiusX},${radiusY} 0 ${largeArcFlag} 1 ${endX},${endY}`;
+    return { startX, startY, endX, endY, largeArcFlag, d };
   }
 
   createDefs() {
-    // Create <defs> element
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-
     return defs;
   }
 
   createMarker(id, position = 'end') {
-    const {
-      shape
-    } = this.getAttributes()
-    // Create <marker> element
+    const { shape } = this.getAttributes();
     const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
     marker.setAttribute('id', id);
     marker.setAttribute('viewBox', '0 0 10 10');
-    position === 'start' && shape !== 'circle' ? marker.setAttribute('refX', '2'):
-    position === 'start' && shape === 'circle' ? marker.setAttribute('refX', '5'):
-    marker.setAttribute('refX', '0.1')
+    if (position === 'start' && shape !== 'circle') {
+      marker.setAttribute('refX', '2');
+    } else if (position === 'start' && shape === 'circle') {
+      marker.setAttribute('refX', '5');
+    } else {
+      marker.setAttribute('refX', '0.1');
+    }
     marker.setAttribute('refY', '5');
     marker.setAttribute('markerWidth', '1');
     marker.setAttribute('markerHeight', '1');
     marker.setAttribute('orient', 'auto');
-    marker.setAttribute('markerUnits', 'strokeWidth')
-    marker.setAttribute('fill', 'context-stroke' )
+    marker.setAttribute('markerUnits', 'strokeWidth');
+    marker.setAttribute('fill', 'context-stroke');
 
-    // Create <path> element inside <marker>
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const shapes = {
       arrow: {
@@ -263,12 +242,16 @@ export class OrbitProgress extends HTMLElement {
         head: 'M 1 0 L 0 0 L 0 5 L 0 10 L 1 10 L 2 7 L 1 5 L 2 3 z',
         tail: 'M 0 0 L 2 0 L 2 5 L 2 10 L 0 10 L 1 7 L 0 5 L 1 3 z'
       }
+    };
+    if (position === 'end') {
+      path.setAttribute('d', shapes[shape].head);
+    } else {
+      path.setAttribute('d', shapes[shape].tail);
     }
-    position === 'end' ? path.setAttribute('d', shapes[shape].head) :
-      path.setAttribute('d', shapes[shape].tail)
 
     marker.appendChild(path);
-
-    return marker
+    return marker;
   }
 }
+
+// customElements.define('orbit-progress', OrbitProgress);
