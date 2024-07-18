@@ -32,10 +32,9 @@ Orbit = {
         const resizeObserver = new ResizeObserver(entries => {
         for (let entry of entries) {
             const { width } = entry.contentRect;
-            console.log(width)
             const childElement = parentElement.querySelector('.orbit-zone');
             if (childElement) {
-            childElement.style.setProperty('--o-lenght', `${width}px`);
+            childElement.style.setProperty('--o-length', `${width}px`);
             } else {
             console.error('No se encontró ningún elemento hijo con la clase .child-element');
             }

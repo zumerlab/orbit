@@ -109,7 +109,7 @@ export class OrbitSector extends HTMLElement {
     const orbitRadius = parseFloat(getComputedStyle(this).getPropertyValue('r') || 0);
     const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
     const shape = this.getAttribute('shape') || 'none';
-    const sectorColor = this.getAttribute('sector-color') || '#00ff00';
+    const sectorColor = this.getAttribute('sector-color') || 'var(--o-gray)';
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
     const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('stroke-width') || 1);
     const strokeWithPercentage = ((strokeWidth / 2) * 100) / orbitRadius / 2;

@@ -26,29 +26,29 @@
 - ~~ISSUE arc & arc-\* same bug as items~~
 - NOT NOW angles & distances, ETC: definir independientemte (a32; d453)? TAMBIEN SIZES
 - responsiveness: crear dos versiones? media query & vh vw units? ...
-- layer para CONTENIDO ACOMODAR dentro de los items. Todo lo referido a alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo qued aara el usuario o algo para armar especialemnte
+- OK layer para CONTENIDO ACOMODAR dentro de los items. Todo lo referido a alignment: ubicacion del elementos izq, centro, der; arriba medio, abajo qued aara el usuario o algo para armar especialemnte
 - OK Abstraer variables de color, backgrpund etc
-- WIP separar grid, de otras cosas
-- WIP CHANGE NAMES AVOID CONFLICTS
-- add manual overrride of items-n
+- OK WIP separar grid, de otras cosas
+- OK WIP CHANGE NAMES AVOID CONFLICTS
+- OK add manual overrride of items-n
 - OK NEST ARCS
-- ITEMS AND ARCS HARMONIC
+- OK ITEMS AND ARCS HARMONIC
 
 ---
 
 - OK Separar css custom flavor de css radial stuff (para que se pueda usar con otros css frameworks facil)
 - Terminar modal
 - Terminar popover o usar labels
-- Incluir opcion de translateZ by default en el core
-- js arc text (dsp?)
+- GOOD TO THINK Incluir opcion de translateZ by default en el core
+- OK js arc text (dsp?)
 - OK ADAPTAR ARC A RINGS
 - NOP arcs as shapes with contenido???? ver
 - OK svg? SIP ADAPTAR A RINGS
 - OK REPLICAR MODELO DE SVG PERCENT. DESCARGAR LO SCAMBIOS A VARIABLES NO A TODO EL ELEMENTO
-- CASI OK Armonizar toda la libreria
-- Documentar en .md
+-  OK Armonizar toda la libreria
+- OK Documentar en .md
 - Invitar a repo cerrado
-- Landing & Docs con Docusaurus
+- OK Landing & Docs con ASTRO
 
 ---
 
@@ -67,7 +67,7 @@
 - KNOB
 - pod
 - orbit
-- suborbit (mantiene mismo nivel de orbita que el orbit parent)
+- NO suborbit (mantiene mismo nivel de orbita que el orbit parent)
 - orbiter
 - pod (content inside orbiter)
 - sector
@@ -132,7 +132,7 @@ mas orbits..
 
 CSS TYPES PARA ANIMAR (SOLO CHROME pero sale en breve en firefox)
 
-TEXTO CURVO (JS)
+OK TEXTO CURVO (JS)
 
 OK separar el test como repo independiente para testeo local (y luego remoto as service con server less?)
 
@@ -147,17 +147,17 @@ multiple containers con diferentes tamaños
 orbit y orbit orbit:
 dibujar orbits, y sus propiedades (pensar en eliminar los orbits lajanos en caso de responsive o algo asi)
 
-orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT, (+ OFFSET, LIMITS)
+OK orbiter: tamanos,nesting, geostationary, aligment. Falta CONTENT, (+ OFFSET, LIMITS)
 
-sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember sector shapes
+OK sector: borders, background, gaps, content (+ OFFSET, LIMITS), ORBIT NESTING, multiples sectors. remember sector shapes
 
-labels: FALTA METERLO EN SECTORS, angle, offset, connector
+OK labels: FALTA METERLO EN SECTORS, angle, offset, connector
 
-svg-progress: props, colors, percentaje
+OK svg-progress: props, colors, percentaje
 
-svg-markers: same above
+OK svg-markers: same above
 
-progress: propr, colors
+OK progress: propr, colors
 
 " knob": ver
 
@@ -258,7 +258,7 @@ penssar en algo tipo span sectors, orbiters
 * correjir sector y progress ok
 * add content radial aligment y 
   * hacerlo rsponsive llegado el caso al espacio.. ver esto no esta bien del todo
-= add slot content para w-c NO HACE X AHORA XQ SE CUBRE CON SATELLITE O TEXT
+*  add slot content para w-c NO HACE X AHORA XQ SE CUBRE CON SATELLITE O TEXT
 * CORREJIR ALINEACION TODO DESDE 0 A LAS 12 OK
 * probar sacar cambio de tamano en nested xq confunde mucho. ok
 * arreglar lenght.... para que sea responsive.. OK con una funcion
@@ -278,7 +278,7 @@ penssar en algo tipo span sectors, orbiters
 * dar vuelta texto camniando 1 por 0.. meterlo en function
 * ver orbit reduce que no anda del todo bien , tmpoco en label
 * a los sectors y progress ver de meter otras linecaps tipo >
-- ver algop ara labels... tipo https://www.benchling.com/
+* ver algop ara labels... tipo https://www.benchling.com/
 * reset styles to avoid conflcits
-- create basic theme
+- create basic theme. DEPURWRAR ESTO
 * volver a chequear documentacion

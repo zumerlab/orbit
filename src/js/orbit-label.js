@@ -113,8 +113,8 @@ export class OrbitLabel extends HTMLElement {
     if (fitRange) {
       textPath.parentElement.setAttribute('textLength', path.getTotalLength());
     }
-
-    textPath.textContent = this.textContent.trim();
+textPath.textContent = this.textContent.trim();
+    
   }
 
   getPathAttributes() {
