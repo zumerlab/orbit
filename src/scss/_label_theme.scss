@@ -7,7 +7,7 @@ See o-label docs in web-component file.
 */
 
 o-label svg text  {
-  color: rgb(110, 110, 110);
+  color: var(--o-color-black);
   font-size: 4px;
   font-family: inherit;
 }

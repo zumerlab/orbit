@@ -26,19 +26,19 @@ Orbit-zone is a container class that groups `.orbit` classes. It serves as a con
   </div>
 </div>
 ```
-
 */
 .orbit-zone {
   container-name: orbitzone;
   /* Reset to defaults everytime orbit-zone is used */
-  --o-lenght: 500px;
+  --o-length: 500px;
   --o-from: 0deg;
   --o-range: 360deg;
   --o-ellipse-x: 1;
   --o-ellipse-y: 1;
   --o-fit-range: 0;
   --o-direction: 1;
-  width: var(--o-lenght);
+  --o-size-ratio: 1;
+  width: var(--o-length);
   aspect-ratio: 1;
   position: absolute;
   display: flex;
@@ -48,8 +48,8 @@ Orbit-zone is a container class that groups `.orbit` classes. It serves as a con
 }
 
 .satellite > .orbit-zone {
-   /* Disabled nested adjusment size. When nested orbit-zone takes its lenght from the diameter of satellite's orbit 
-  --o-lenght: var(--o-diameter);
-  width: var(--o-lenght);
+   /* Disabled nested adjusment size. When nested orbit-zone takes its length from the diameter of satellite's orbit 
+  --o-length: var(--o-diameter);
+  width: var(--o-length);
   height: auto;*/
 }

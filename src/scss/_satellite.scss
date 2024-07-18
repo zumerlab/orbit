@@ -89,7 +89,7 @@ A few set of shapes utilities are provided (`.circle`, `.box`, `.rounded-box`). 
 }
 
 .satellite.at-center {
-  --o-transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
+  --o-transform: rotate(0deg);
 }
 .satellite.circle {
   border-radius: 50%;

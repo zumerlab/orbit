@@ -137,7 +137,7 @@ export class OrbitProgress extends HTMLElement {
       0
     );
     const shape = this.getAttribute('shape') || 'none';
-    const progressBarColor = this.getAttribute('bar-color') || 'orange';
+    const progressBarColor = this.getAttribute('bar-color') || 'var(--o-gray)';
     const progressBgColor = this.getAttribute('bg-color') || 'transparent';
     const strokeWidth = parseFloat(
       getComputedStyle(this).getPropertyValue('stroke-width') || 1
