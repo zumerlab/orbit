@@ -1,48 +1,3 @@
-
-
-
-/*! 
-## o-sector
-
-`<o-sector>` is a standard web-component for rendering a radial slices or pies. By default there are 24 sector per orbit. The number can be modify with `$max-orbiters` var at `_variables.scss`.
-
-### Custmization
-
-  - Attribute `sector-color`: To set a color for sector. Default `orange`
-  - Attribute `shape`: To set a different endings looks. Currently, you can choose between `circle`, `arrow`, `slash`, `backslash` and `zigzag` shapes. Default `none`
-
-  - Utility class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-sector>`: to set gap space between o-sectors. Default '0'
-  - Utility class `.range-*`: Default '360deg'
-  - Utility class `.from-*`: Default '0deg'
-  - Utility class `.grow-*x`: To increase `o-sector` height by multiplying orbit radius. Default '1x'
-  - Utility class `.reduce-*`: To reduce `o-sector` height by reducing current orbit percentage. Default '100'
-  - Utility class `.inner-orbit`: To place `o-sector` just below its orbit
-  - Utility class `.outer-orbit`: To place `o-sector` just above its orbit
-  - Utility class `.quarter-inner-orbit`: To place `o-sector` a 25% into its orbit.
-  - Utility class `.quarter-outer-orbit`: To place `o-sector` a 25% outer its orbit.
-
-
-  - CSS styles. User can customize `o-sector` by adding CSS properties to `o-sector path`
-  
-**Important:** 
-
-  - `<o-sector>` can only be used into `.orbit` or `.orbit-*`.
-  - `<o-sector>` doesn't support ellipse shape. See `.orbit` section for more information.
-
-### Usage
-
-```html
-<div class="orbit range-180"> 
-  <o-sector />
-  <o-sector class="gap-5" />
-  <o-sector class="gap-10" />
-  <o-sector class="gap-5" />
-</div>
-```
-*/
-
- // orbit-sector.js
-
 const template = document.createElement('template');
 template.innerHTML = `
   <style>
@@ -53,11 +8,24 @@ template.innerHTML = `
       width: 100%;
       height: 100%;
       overflow: visible;
+      pointer-events: none;
+    }
+    svg > * {
+      pointer-events: stroke;
+    }
+    path {
+      fill: transparent;
+      stroke: var(--color, var(--o-gray));
+      transition: stroke 0.3s;
+    }
+    :host(:hover) path {
+      stroke: var(--hover-color, var(--o-gray));
+      cursor: pointer;
     }
   </style>
   <svg viewBox="0 0 100 100">
     <defs></defs>
-    <path vector-effect="non-scaling-stroke" fill="transparent"></path>
+    <path vector-effect="non-scaling-stroke"  strokefill="transparent"></path>
   </svg>
 `;
 
@@ -70,7 +38,7 @@ export class OrbitSector extends HTMLElement {
 
   connectedCallback() {
     this.update();
-
+    
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes') {
@@ -84,7 +52,6 @@ export class OrbitSector extends HTMLElement {
 
   update() {
     const { shape } = this.getAttributes();
-    const svg = this.shadowRoot.querySelector('svg');
     const path = this.shadowRoot.querySelector('path');
     const defs = this.shadowRoot.querySelector('defs');
 
@@ -103,13 +70,15 @@ export class OrbitSector extends HTMLElement {
     path.setAttribute('d', d);
     path.setAttribute('stroke', sectorColor);
     path.setAttribute('stroke-width', strokeWidth);
+
+   
   }
 
   getAttributes() {
     const orbitRadius = parseFloat(getComputedStyle(this).getPropertyValue('r') || 0);
     const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
     const shape = this.getAttribute('shape') || 'none';
-    const sectorColor = this.getAttribute('sector-color') || 'var(--o-gray)';
+    const sectorColor = this.getAttribute('color') || 'currentcolor';
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
     const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('stroke-width') || 1);
     const strokeWithPercentage = ((strokeWidth / 2) * 100) / orbitRadius / 2;
@@ -209,10 +178,12 @@ export class OrbitSector extends HTMLElement {
 function calcularExpresionCSS(cssExpression) {
   const match = cssExpression.match(/calc\(\s*([\d.]+)deg\s*\/\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)\s*\)/);
   if (match) {
-      const value = parseFloat(match[1]);
-      const divisor = parseInt(match[2]) - parseInt(match[3]);
-      if (!isNaN(value) && !isNaN(divisor) && divisor !== 0) {
-          return value / divisor;
-      }
+    const value = parseFloat(match[1]);
+    const divisor = parseInt(match[2]) - parseInt(match[3]);
+    if (!isNaN(value) && !isNaN(divisor) && divisor !== 0) {
+      return value / divisor;
+    }
   }
+  return 0; // Valor por defecto en caso de que no se pueda calcular
 }
+

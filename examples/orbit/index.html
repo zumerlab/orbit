@@ -7,22 +7,30 @@
     <title>Document</title>
     <style>
      
+     o-progress {
+      --color: blue;
+      --hover-color: rgb(176, 36, 226);
+      --bgcolor: green
+     }
     </style>
   </head>
 
   <body>
     <div class="orbit-zone">
-      <div class="orbit-10">
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-      </div>
+      
       <div class="orbit-10">
         <div class="satellite at-center">a</div>
       </div>
-      
+      <div class="orbit-10">
+        <o-sector></o-sector>
+        <o-sector></o-sector>
+        <o-sector></o-sector>
+        <o-sector></o-sector>
+        <o-sector></o-sector>
+      </div>
+      <div class="orbit-12">
+        <o-progress value="78"></o-progress>
+      </div>
       
     </div>
 

@@ -135,9 +135,9 @@ textPath.textContent = this.textContent.trim();
     const fitRange = this.hasAttribute('fit-range');
     const lineCap = getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt';
     const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
-    const labelColor = this.getAttribute('label-color') || 'black';
+    const labelColor = this.getAttribute('color') || 'black';
     const textAnchor = this.getAttribute('text-anchor') || 'start';
-    const labelBgColor = this.getAttribute('bg-color') || 'none';
+    const labelBgColor = this.getAttribute('bgcolor') || 'none';
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
     const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('stroke-width') || 1);
 
