@@ -50,10 +50,26 @@ export class OrbitProgress extends HTMLElement {
 
         }
         svg {
-          width: 100%;
-          height: 100%;
-          overflow:visible;
-        }
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+      }
+      svg > * {
+        pointer-events: stroke;
+      }
+      .progress-bar {
+        fill: transparent;
+        stroke: var(--color, var(--o-gray));
+        transition: stroke 0.3s;
+      }
+      .progress-bg {
+       stroke: var(--bgcolor, transparent);
+      }
+      :host(:hover) .progress-bar {
+        stroke: var(--hover-color, var(--o-gray));
+        cursor: pointer;
+      }
       </style>
       <svg viewBox="0 0 100 100">
         <defs></defs>
@@ -138,7 +154,7 @@ export class OrbitProgress extends HTMLElement {
     );
     const shape = this.getAttribute('shape') || 'none';
     const progressBarColor = this.getAttribute('bar-color') || 'var(--o-gray)';
-    const progressBgColor = this.getAttribute('bg-color') || 'transparent';
+    const progressBgColor = this.getAttribute('bgcolor')  || 'transparent';
     const strokeWidth = parseFloat(
       getComputedStyle(this).getPropertyValue('stroke-width') || 1
     );

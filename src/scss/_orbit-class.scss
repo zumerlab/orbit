@@ -79,8 +79,8 @@ There are some utility classes that are set on `.orbit` element and affect its c
 */
 .orbit, [class*='orbit-']:not(.orbit-zone) {
   container-name: orbit;
-  --o-base-diameter: var(--o-orbit-number) * var(--o-lenght) / #{$max-orbits};
-  --o-prev-diameter: (var(--o-orbit-number) - 1) * var(--o-lenght) / #{$max-orbits};
+  --o-base-diameter: var(--o-orbit-number) * var(--o-length) / #{$max-orbits};
+  --o-prev-diameter: (var(--o-orbit-number) - 1) * var(--o-length) / #{$max-orbits};
   --o-diameter: calc(var(--o-base-diameter) - ((var(--o-base-diameter) - var(--o-prev-diameter)) * var(--o-orbit-ratio, 0)));
   --o-radius: calc(var(--o-diameter) / 2);
   width: calc(var(--o-diameter) / var(--o-ellipse-x));
