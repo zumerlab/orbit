@@ -1,10 +1,5 @@
 @use './variables' as *;
-/*
-## <o-label>
 
-See o-label docs in web-component file.
-
-*/
 o-label {
   --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
   container-name: otext;
