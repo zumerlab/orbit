@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="../../dist/css/orbit.css" />
     <title>Document</title>
     <style>
-     
+     body {
+      font-size: 20px;
+     }
      o-progress {
       --color: blue;
       --hover-color: rgb(176, 36, 226);
@@ -18,18 +20,28 @@
   <body>
     <div class="orbit-zone">
       
-      <div class="orbit-10">
+      <div class="orbit-6">
         <div class="satellite at-center">a</div>
       </div>
-      <div class="orbit-10">
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-        <o-sector></o-sector>
-      </div>
-      <div class="orbit-12">
+      
+      <div class="orbit-11"  style="pointer-events: none;">
         <o-progress value="78"></o-progress>
+      </div>
+      <div class="orbit-7" style="pointer-events: none;">
+        <o-label>texto de prfffueba</o-label>
+        <o-label style="font-size: 7px; --color: rgb(140, 51, 51); --hover-color: yellow" text-anchor="middle">texto de prueba</o-label>
+      </div>
+      <div class="orbit-5">
+        <o-label>texto de prueba</o-label>
+        <o-label style=" --color: gray; --hover-color: yellow" text-anchor="middle">texto de prueba</o-label>
+      </div>
+      <div class="orbit-9"  style="pointer-events: none;">
+        <o-sector></o-sector>
+        <o-sector style="--color: blue;
+      --hover-color: rgb(176, 36, 226);"></o-sector>
+        <o-sector></o-sector>
+        <o-sector></o-sector>
+        <o-sector></o-sector>
       </div>
       
     </div>

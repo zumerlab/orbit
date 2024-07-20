@@ -1,40 +1,3 @@
-
-
-
-/*! 
-## o-label
-
-`<o-label>` is a standard web-component for rendering curved text. There are up to 24 sector per orbit. 
-The number can be modify with `$max-orbiters` var at `_variables.scss`.
-
-### Customization
-  - Attribute `label-color`: To set a text color for label. Default `black`
-  - Attribute `bg-color`: To set a background color for label. Default `none`
-
-  - Class `.gap-*` applied on `.orbit` or `.orbit-*` or in `<o-label>`: to set gap space. Default '0'
-  - utility class `.range-*` applied on `.orbit` or `.orbit-*`: Default '360deg'
-  - utility class `.from-*` applied on `.orbit` or `.orbit-*`: Default '0deg'
-  - utility class `.inner-orbit`: To place `o-label` just below its orbit
-  - utility class `.outer-orbit-orbit`: To place `o-label` just above its orbit
-  - Utility class `.quarter-inner-orbit`: To place `o-sector` a 25% into its orbit.
-  - Utility class `.quarter-outer-orbit`: To place `o-sector` a 25% outer its orbit.
-
-  - CSS styles. User can customize `o-label` by adding CSS properties to `o-label path`
-  
-**Important:** 
-
-  - `<o-label>` can only be used into `.orbit` or `.orbit-*`.
-  - `<o-label>` doesn't support ellipse shape. See `.orbit` section for more information.
-
-### Usage
-
-```html
-<div class="orbit"> 
-  <o-label>Hello World!</o-label>
-</div>
-```
-*/
-
 export class OrbitLabel extends HTMLElement {
   constructor() {
     super();
@@ -42,25 +5,39 @@ export class OrbitLabel extends HTMLElement {
 
     const template = document.createElement('template');
     template.innerHTML = `
-      <svg viewBox="0 0 100 100" width="100%" height="100%">
+      <svg viewBox="0 0 100 100"  >
         <path id="orbitPath" fill="none" vector-effect="non-scaling-stroke"></path>
         <text>
-          <textPath href="#orbitPath" alignment-baseline="middle"></textPath>
+          <textPath href="#orbitPath"  alignment-baseline="middle"></textPath>
         </text>
       </svg>
       <style>
-      svg {
-      overflow: visible;
-      }
-        :host {
+       :host {
           display: inline-block;
+
+        }
+        svg {
           width: 100%;
           height: 100%;
+          overflow: visible;
+          pointer-events: none;
           
         }
-        text {
-          font-size: inherit;
+        svg > * {
+          pointer-events: stroke;
         }
+        path {
+          fill: transparent;
+          stroke: var(--color, transparent);
+          transition: stroke 0.3s;
+        }
+       
+        :host(:hover) path {
+          stroke: var(--hover-color, transparent);
+          cursor: pointer;
+        }
+      
+        
       </style>
     `;
 
@@ -80,24 +57,19 @@ export class OrbitLabel extends HTMLElement {
 
     observer.observe(this, { attributes: true });
 
-    const slot = this.shadowRoot.querySelector('textPath');
-    slot.addEventListener('slotchange', () => {
-      this.update();
-    });
   }
 
   update() {
     const path = this.shadowRoot.getElementById('orbitPath');
+    const text = this.shadowRoot.querySelector('text');
     const textPath = this.shadowRoot.querySelector('textPath');
 
-    const { d, strokeWidth, labelBgColor, lineCap } = this.getPathAttributes();
+    const { d, strokeWidth, lineCap } = this.getPathAttributes();
     path.setAttribute('d', d);
-    path.setAttribute('stroke', labelBgColor);
     path.setAttribute('stroke-width', strokeWidth);
     path.setAttribute('stroke-linecap', lineCap);
 
-    const { labelColor, textAnchor, fitRange } = this.getTextAttributes();
-    textPath.setAttribute('color', labelColor);
+    const { length, fontSize, textAnchor, fitRange } = this.getTextAttributes();
 
     if (textAnchor === 'start') {
       textPath.setAttribute('startOffset', '0%');
@@ -113,7 +85,11 @@ export class OrbitLabel extends HTMLElement {
     if (fitRange) {
       textPath.parentElement.setAttribute('textLength', path.getTotalLength());
     }
-textPath.textContent = this.textContent.trim();
+
+    text.style.fontSize = `calc(${fontSize} / (100 / (${length} / var(--o-orbit-number))))`
+
+   
+    textPath.textContent = this.textContent.trim();
     
   }
 
@@ -125,8 +101,8 @@ textPath.textContent = this.textContent.trim();
   }
 
   getTextAttributes() {
-    const { labelColor, textAnchor, fitRange } = this.getAttributes();
-    return { labelColor, textAnchor, fitRange };
+    const { length, fontSize, textAnchor, fitRange } = this.getAttributes();
+    return { length, fontSize, textAnchor, fitRange };
   }
 
   getAttributes() {
@@ -135,9 +111,9 @@ textPath.textContent = this.textContent.trim();
     const fitRange = this.hasAttribute('fit-range');
     const lineCap = getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt';
     const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
-    const labelColor = this.getAttribute('color') || 'black';
+    const length = parseFloat(getComputedStyle(this).getPropertyValue('--o-length'));
     const textAnchor = this.getAttribute('text-anchor') || 'start';
-    const labelBgColor = this.getAttribute('bgcolor') || 'none';
+    const fontSize = getComputedStyle(this).getPropertyValue('font-size') ||  getComputedStyle(this).getPropertyValue('--font-size');
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
     const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('stroke-width') || 1);
 
@@ -162,8 +138,8 @@ textPath.textContent = this.textContent.trim();
       orbitRadius,
       strokeWidth,
       realRadius,
-      labelColor,
-      labelBgColor,
+      length,
+      fontSize,
       gap,
       labelAngle,
       flip,

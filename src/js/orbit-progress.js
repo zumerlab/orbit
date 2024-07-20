@@ -50,26 +50,26 @@ export class OrbitProgress extends HTMLElement {
 
         }
         svg {
-        width: 100%;
-        height: 100%;
-        overflow: visible;
-        pointer-events: none;
-      }
-      svg > * {
-        pointer-events: stroke;
-      }
-      .progress-bar {
-        fill: transparent;
-        stroke: var(--color, var(--o-gray));
-        transition: stroke 0.3s;
-      }
-      .progress-bg {
-       stroke: var(--bgcolor, transparent);
-      }
-      :host(:hover) .progress-bar {
-        stroke: var(--hover-color, var(--o-gray));
-        cursor: pointer;
-      }
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+          pointer-events: none;
+        }
+        svg > * {
+          pointer-events: stroke;
+        }
+        .progress-bar {
+          fill: transparent;
+          stroke: var(--color, var(--o-gray));
+          transition: stroke 0.3s;
+        }
+        .progress-bg {
+          stroke: var(--bgcolor, transparent);
+        }
+        :host(:hover) .progress-bar {
+          stroke: var(--hover-color, var(--o-gray));
+          cursor: pointer;
+        }
       </style>
       <svg viewBox="0 0 100 100">
         <defs></defs>

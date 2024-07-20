@@ -21,10 +21,3 @@ o-label {
   transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
 }
 
-o-label svg {
-  pointer-events: none;
-  overflow: visible!important;
-}
-o-label svg > * {
-  pointer-events: stroke;
-}
