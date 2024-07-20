@@ -6,6 +6,8 @@ dist/
 #docs-*
 docs-*/
 
+examples/
+
 # dependencies
 node_modules/
 
