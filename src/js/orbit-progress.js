@@ -24,14 +24,14 @@ export class OrbitProgress extends HTMLElement {
         }
         .progress-bar {
           fill: transparent;
-          stroke: var(--color, var(--o-gray));
+          stroke: var(--color, var(--o-cyan-light));
           transition: stroke 0.3s;
         }
         .progress-bg {
           stroke: var(--bgcolor, transparent);
         }
         :host(:hover) .progress-bar {
-          stroke: var(--hover-color, var(--o-gray));
+          stroke: var(--hover-color, var(--o-cyan-light));
           cursor: pointer;
         }
       </style>
@@ -117,7 +117,7 @@ export class OrbitProgress extends HTMLElement {
       0
     );
     const shape = this.getAttribute('shape') || 'none';
-    const progressBarColor = this.getAttribute('bar-color') || 'var(--o-gray)';
+    const progressBarColor = this.getAttribute('bar-color') || 'var(--o-cyan-light)';
     const progressBgColor = this.getAttribute('bgcolor')  || 'transparent';
     const strokeWidth = parseFloat(
       getComputedStyle(this).getPropertyValue('stroke-width') || 1

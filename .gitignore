@@ -3,8 +3,6 @@ dist/
 # generated types
 .astro/
 
-notes.md
-
 #docs-*
 docs-*/
 

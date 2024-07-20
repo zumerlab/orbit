@@ -15,11 +15,11 @@ template.innerHTML = `
     }
     path {
       fill: transparent;
-      stroke: var(--color, var(--o-gray));
+      stroke: var(--color, var(--o-cyan-light));
       transition: stroke 0.3s;
     }
     :host(:hover) path {
-      stroke: var(--hover-color, var(--o-gray));
+      stroke: var(--hover-color, var(--o-cyan-light));
       cursor: pointer;
     }
   </style>
