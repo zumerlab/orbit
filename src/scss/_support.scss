@@ -48,7 +48,7 @@
 
 /* orbit-zone checks */
 .orbit-zone:has(>*:not(.orbit, [class*='orbit-'])) {
-  border: 3px dotted red!important;
+  border: 2px dotted red!important;
 }
 .orbit-zone:has(>*:not(.orbit, [class*='orbit-'])) > * {
   filter:grayscale(1) opacity(0.2)

@@ -1,0 +1,141 @@
+/* default theme */
+
+.orbit-zone {
+  background: none;
+  border: none; 
+}
+
+.orbit, [class*='orbit-']:not(.orbit-zone) {
+  border: 1px solid transparent;
+}
+
+.satellite {
+  background-color: transparent;
+  border: 1px solid currentcolor;
+}
+
+.spoke {
+  border: none;
+  background: currentcolor;
+}
+
+.segment {
+  border: none;
+  background: currentcolor;
+}
+
+o-progress {
+  --o-progress-color: currentcolor;
+  --o-hover-progress-color: currentcolor;
+  --o-bg-color: transparent;
+}
+
+o-sector {
+  --o-sector-color: currentcolor;
+  --o-hover-sector-color: currentcolor;
+}
+
+o-label {
+  --o-label-color: transparent;
+  --o-hover-label-color: transparent;
+  color: currentColor;
+}
+
+/* Dev theme based on default*/
+.dev-orbit.orbit-zone {
+    background: none;
+    border: 0.2px dashed var(--o-red-light); 
+  }
+  
+.dev-orbit {
+  .orbit-zone {
+    background: none;
+    border: 0.2px dashed var(--o-red-light); 
+  }
+  
+  .orbit, [class*='orbit-']:not(.orbit-zone) {
+    border: 0.2px solid var(--o-red-light);
+  }
+  
+  .satellite {
+    background-color: transparent;
+    border: 1px solid currentColor;
+  }
+  
+  .spoke {
+    border: none;
+    background: currentColor;
+  }
+  
+  .segment {
+    border: none;
+    background: currentColor;
+  }
+  
+  o-progress {
+    --o-progress-color: currentColor;
+    --o-hover-progress-color: currentColor;
+    --o-bg-color: transparent;
+  }
+  
+  o-sector {
+    --o-sector-color: currentColor;
+    --o-hover-sector-color: currentColor;
+  }
+  
+  o-label {
+    --o-label-color: transparent;
+    --o-hover-label-color: transparent;
+    color: currentcolor;
+  }
+}
+
+/* cyan theme based on default*/
+
+.theme-cyan {
+.orbit-zone {
+  background: none;
+  border: none; 
+}
+
+.orbit, [class*='orbit-']:not(.orbit-zone) {
+  border: 1px solid transparent;
+}
+
+.satellite {
+  background-color: transparent;
+  border: 1px solid var(--o-cyan);
+}
+
+.spoke {
+  border: none;
+  background: var(--o-cyan);
+}
+
+.segment {
+  border: none;
+  background: var(--o-cyan);
+}
+
+o-progress {
+  --o-progress-color: var(--o-cyan);
+  --o-hover-progress-color: var(--o-cyan);
+  --o-bg-color: transparent;
+}
+
+o-sector {
+  --o-sector-color: var(--o-cyan);
+  --o-hover-sector-color: var(--o-cyan);
+}
+
+o-label {
+  --o-label-color: transparent;
+  --o-hover-label-color: transparent;
+  color: var(--o-cyan);
+}
+}
+
+
+
+
+

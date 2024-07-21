@@ -14,12 +14,12 @@
           pointer-events: stroke;
         }
        .sector {
-          stroke: var(--color, var(--o-cyan-light));
+          stroke: var(--o-sector-color, var(--o-cyan-light));
           transition: stroke 0.3s;
         }
         
         :host(:hover) .sector {
-          stroke: var(--hover-color, var(--color));
+          stroke: var(--o-hover-sector-color, var(--o-sector-color));
           
         }
    </style>
@@ -76,7 +76,7 @@
      const orbitRadius = parseFloat(getComputedStyle(this).getPropertyValue('r') || 0);
      const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
      const shape = this.getAttribute('shape') || 'none';
-     const sectorColor = this.getAttribute('sector-color') || '#00ff00';
+     const sectorColor = this.getAttribute('sector-color');
      const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
      const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('stroke-width') || 1);
      const strokeWithPercentage = ((strokeWidth / 2) * 100) / orbitRadius / 2;

@@ -19,9 +19,10 @@
   border: none; 
 }
 
+/* Disabled nested adjusment size. When nested orbit-zone takes its length from the diameter of satellite's orbit 
 .satellite > .orbit-zone {
-   /* Disabled nested adjusment size. When nested orbit-zone takes its length from the diameter of satellite's orbit 
   --o-length: var(--o-diameter);
   width: var(--o-length);
-  height: auto;*/
+  height: auto;
 }
+*/

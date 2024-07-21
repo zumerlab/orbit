@@ -26,17 +26,15 @@ export class OrbitLabel extends HTMLElement {
         svg * {
           pointer-events: stroke;
         }
-        text {
-          font-size: inherit;
-        }
+        
         path {
           fill: transparent;
-          stroke: var(--color, transparent);
+          stroke: var(--o-label-color);
           transition: stroke 0.3s;
         }
        
         :host(:hover) path {
-          stroke: var(--hover-color, var(--color));
+          stroke: var(--o-hover-label-color, var(--o-label-color));
           
         }
       
