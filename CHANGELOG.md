@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.0](https://github.com/zumerlab/grid/compare/v0.1.0...v0.2.0)
+
+> 21 July 2024
+
+- Bumped version [`15ead07`](https://github.com/zumerlab/grid/commit/15ead077a7726b4061bb647ec9287dad6469b7b4)
+- set proper name for npm [`1556e8d`](https://github.com/zumerlab/grid/commit/1556e8dcc43c249b04e37296cbb66fe4bd292c0e)
+
 #### [v0.1.0](https://github.com/zumerlab/grid/compare/v0.0.1...v0.1.0)
 
 > 21 July 2024
