@@ -4,9 +4,10 @@
   container-name: segment;
   --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 270deg)) * var(--o-direction, 1);
   --o-y: calc(var(--o-radius) * sin(90deg - var(--o-angle) / 2));
+  --o-x: calc(var(--o-radius) * cos(90deg - var(--o-angle) / 2) * 2);
   --o-transform: rotate( calc(var(--o-from) + var(--o-angle-composite)))
   translate(0, var(--o-y));
-  width: calc(var(--o-radius) * cos(90deg - var(--o-angle) / 2) * 2);
+  width: var(--o-x);
   position: absolute;
   padding: 0;
   transform: var(--o-transform);
