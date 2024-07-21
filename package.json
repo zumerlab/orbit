@@ -8,6 +8,10 @@
     "bump": "npx @zumerbox/bump",
     "postbump": "npx @zumerbox/changelog && git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags"
   },
+  "files": [
+    "README.md",
+    "dist/"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zumerlab/orbit.git"
