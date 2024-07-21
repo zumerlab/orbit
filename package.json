@@ -2,7 +2,7 @@
   "name": "@zumer/orbit",
   "version": "0.2.0",
   "description": "The CSS radial composer",
-  "main": "./src/orbit.js",
+  "main": "./dist/orbit.js",
   "scripts": {
     "build": "npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss",
     "bump": "npx @zumerbox/bump",
