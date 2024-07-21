@@ -23,8 +23,11 @@ export class OrbitLabel extends HTMLElement {
           pointer-events: none;
           
         }
-        svg > * {
+        svg * {
           pointer-events: stroke;
+        }
+        text {
+          font-size: inherit;
         }
         path {
           fill: transparent;
@@ -33,8 +36,8 @@ export class OrbitLabel extends HTMLElement {
         }
        
         :host(:hover) path {
-          stroke: var(--hover-color, transparent);
-          cursor: pointer;
+          stroke: var(--hover-color, var(--color));
+          
         }
       
         
@@ -49,13 +52,11 @@ export class OrbitLabel extends HTMLElement {
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes') {
           this.update();
-        }
       });
     });
 
-    observer.observe(this, { attributes: true });
+    observer.observe(this, { attributes: true, childList: true });
 
   }
 
@@ -86,7 +87,7 @@ export class OrbitLabel extends HTMLElement {
       textPath.parentElement.setAttribute('textLength', path.getTotalLength());
     }
 
-    text.style.fontSize = `calc(${fontSize} / (100 / (${length} / var(--o-orbit-number))))`
+    text.style.fontSize = `calc(${fontSize} * (100 / (${length}) * (12 /  var(--o-orbit-number) ))`
 
    
     textPath.textContent = this.textContent.trim();

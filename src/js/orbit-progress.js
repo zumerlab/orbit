@@ -1,8 +1,5 @@
 
 export class OrbitProgress extends HTMLElement {
-  static get observedAttributes() {
-    return ['value', 'shape', 'bar-color', 'bg-color', 'max', 'width', 'height'];
-  }
 
   constructor() {
     super();
@@ -19,7 +16,7 @@ export class OrbitProgress extends HTMLElement {
           overflow: visible;
           pointer-events: none;
         }
-        svg > * {
+        svg * {
           pointer-events: stroke;
         }
         .progress-bar {
@@ -31,8 +28,8 @@ export class OrbitProgress extends HTMLElement {
           stroke: var(--bgcolor, transparent);
         }
         :host(:hover) .progress-bar {
-          stroke: var(--hover-color, var(--o-cyan-light));
-          cursor: pointer;
+          stroke: var(--hover-color, var(--color));
+          
         }
       </style>
       <svg viewBox="0 0 100 100">
@@ -41,14 +38,22 @@ export class OrbitProgress extends HTMLElement {
         <path class="progress-bar"></path>
       </svg>
     `;
+
+   
   }
+
+  
 
   connectedCallback() {
     this.update();
-  }
 
-  attributeChangedCallback() {
-    this.update();
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+          this.update();
+      });
+    });
+  
+    observer.observe(this, { attributes: true, childList: true });
   }
 
   update() {

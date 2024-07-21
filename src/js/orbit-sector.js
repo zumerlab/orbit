@@ -10,14 +10,17 @@
        overflow: visible;
        pointer-events: none;
      }
+       svg * {
+          pointer-events: stroke;
+        }
        .sector {
           stroke: var(--color, var(--o-cyan-light));
           transition: stroke 0.3s;
         }
         
         :host(:hover) .sector {
-          stroke: var(--hover-color, var(--o-cyan-light));
-          cursor: pointer;
+          stroke: var(--hover-color, var(--color));
+          
         }
    </style>
    <svg viewBox="0 0 100 100">
@@ -37,14 +40,13 @@
      this.update();
  
      const observer = new MutationObserver((mutations) => {
-       mutations.forEach((mutation) => {
-         if (mutation.type === 'attributes') {
-           this.update();
-         }
-       });
-     });
- 
-     observer.observe(this, { attributes: true });
+      mutations.forEach((mutation) => {
+          this.update();
+      });
+    });
+
+    observer.observe(this, { attributes: true, childList: true });
+
    }
  
    update() {
