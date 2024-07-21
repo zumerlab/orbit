@@ -16,4 +16,4 @@ With Orbit, you can bring your web projects to life with unique and visually app
 
 ### Documentation
 
-Check our detailed docs [here.](https://github.com/zumerlab/docs)
+Check our detailed docs [here.](https://zumerlab.github.io/orbit-docs)
