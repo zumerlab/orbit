@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.1](https://github.com/zumerlab/grid/compare/v0.2.0...v0.2.1)
+
+> 21 July 2024
+
+- Bumped version [`db42eba`](https://github.com/zumerlab/grid/commit/db42ebaec6593b88b7790bbbb86878fb48ac7916)
+- chore update [`2931ea8`](https://github.com/zumerlab/grid/commit/2931ea852e44f0f19f268703a10b277a8c550f5a)
+
 #### [v0.2.0](https://github.com/zumerlab/grid/compare/v0.1.0...v0.2.0)
 
 > 21 July 2024
