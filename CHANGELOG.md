@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.1.0](https://github.com/zumerlab/grid/compare/v0.0.1...v0.1.0)
+
+> 21 July 2024
+
+- Bumped version [`229b376`](https://github.com/zumerlab/grid/commit/229b376b0a2c6204b0e0bdf02bb2261584cb7f21)
+- add files to pubish [`d748339`](https://github.com/zumerlab/grid/commit/d7483394328c4f7087ac767118543ee041eaa1bc)
+
 #### v0.0.1
 
 > 21 July 2024
