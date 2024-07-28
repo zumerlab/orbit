@@ -1,11 +1,11 @@
 /* default theme */
 
-.orbit-zone {
+.gravity-spot {
   background: none;
   border: none; 
 }
 
-.orbit, [class*='orbit-']:not(.orbit-zone) {
+.orbit, [class*='orbit-'] {
   border: 1px solid transparent;
 }
 
@@ -14,12 +14,12 @@
   border: 1px solid currentcolor;
 }
 
-.spoke {
+.vector {
   border: none;
   background: currentcolor;
 }
 
-.segment {
+.side {
   border: none;
   background: currentcolor;
 }
@@ -30,30 +30,30 @@ o-progress {
   --o-bg-color: transparent;
 }
 
-o-sector {
-  --o-sector-color: currentcolor;
+o-slice {
+  --o-slice-color: currentcolor;
   --o-hover-sector-color: currentcolor;
 }
 
-o-label {
-  --o-label-color: transparent;
+o-text {
+  --o-text-color: transparent;
   --o-hover-label-color: transparent;
   color: currentColor;
 }
 
 /* Dev theme based on default*/
-.dev-orbit.orbit-zone {
+.dev-orbit.gravity-spot {
     background: none;
     border: 0.2px dashed var(--o-red-light); 
   }
   
 .dev-orbit {
-  .orbit-zone {
+  .gravity-spot {
     background: none;
     border: 0.2px dashed var(--o-red-light); 
   }
   
-  .orbit, [class*='orbit-']:not(.orbit-zone) {
+  .orbit, [class*='orbit-'] {
     border: 0.2px solid var(--o-red-light);
   }
   
@@ -62,12 +62,12 @@ o-label {
     border: 1px solid currentColor;
   }
   
-  .spoke {
+  .vector {
     border: none;
     background: currentColor;
   }
   
-  .segment {
+  .side {
     border: none;
     background: currentColor;
   }
@@ -78,13 +78,13 @@ o-label {
     --o-bg-color: transparent;
   }
   
-  o-sector {
-    --o-sector-color: currentColor;
+  o-slice {
+    --o-slice-color: currentColor;
     --o-hover-sector-color: currentColor;
   }
   
-  o-label {
-    --o-label-color: transparent;
+  o-text {
+    --o-text-color: transparent;
     --o-hover-label-color: transparent;
     color: currentcolor;
   }
@@ -93,12 +93,12 @@ o-label {
 /* cyan theme based on default*/
 
 .theme-cyan {
-.orbit-zone {
+.gravity-spot {
   background: none;
   border: none; 
 }
 
-.orbit, [class*='orbit-']:not(.orbit-zone) {
+.orbit, [class*='orbit-'] {
   border: 1px solid transparent;
 }
 
@@ -107,12 +107,12 @@ o-label {
   border: 1px solid var(--o-cyan);
 }
 
-.spoke {
+.vector {
   border: none;
   background: var(--o-cyan);
 }
 
-.segment {
+.side {
   border: none;
   background: var(--o-cyan);
 }
@@ -123,13 +123,13 @@ o-progress {
   --o-bg-color: transparent;
 }
 
-o-sector {
-  --o-sector-color: var(--o-cyan);
+o-slice {
+  --o-slice-color: var(--o-cyan);
   --o-hover-sector-color: var(--o-cyan);
 }
 
-o-label {
-  --o-label-color: transparent;
+o-text {
+  --o-text-color: transparent;
   --o-hover-label-color: transparent;
   color: var(--o-cyan);
 }

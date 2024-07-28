@@ -13,23 +13,23 @@
        svg * {
           pointer-events: stroke;
         }
-       .sector {
-          stroke: var(--o-sector-color, var(--o-cyan-light));
+       .slice {
+          stroke: var(--o-slice-color, var(--o-cyan-light));
           transition: stroke 0.3s;
         }
         
-        :host(:hover) .sector {
-          stroke: var(--o-hover-sector-color, var(--o-sector-color));
+        :host(:hover) .slice {
+          stroke: var(--o-hover-slice-color, var(--o-slice-color));
           
         }
    </style>
    <svg viewBox="0 0 100 100">
      <defs></defs>
-     <path class="sector" vector-effect="non-scaling-stroke" fill="transparent"></path>
+     <path class="slice" vector-effect="non-scaling-stroke" fill="transparent"></path>
    </svg>
  `;
  
- export class OrbitSector extends HTMLElement {
+ export class OrbitSlice extends HTMLElement {
    constructor() {
      super();
      this.attachShadow({ mode: 'open' });
@@ -63,12 +63,12 @@
        path.setAttribute('marker-start', 'url(#tail)');
      }
  
-     const { strokeWidth, realRadius, sectorColor, gap } = this.getAttributes();
+     const { strokeWidth, realRadius, sliceColor, gap } = this.getAttributes();
      const angle = this.calculateAngle();
      const { d } = this.calculateArcParameters(angle, realRadius, gap);
  
      path.setAttribute('d', d);
-     path.setAttribute('stroke', sectorColor);
+     path.setAttribute('stroke', sliceColor);
      path.setAttribute('stroke-width', strokeWidth);
    }
  
@@ -76,7 +76,7 @@
      const orbitRadius = parseFloat(getComputedStyle(this).getPropertyValue('r') || 0);
      const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
      const shape = this.getAttribute('shape') || 'none';
-     const sectorColor = this.getAttribute('sector-color');
+     const sliceColor = this.getAttribute('slice-color');
      const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
      const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('stroke-width') || 1);
      const strokeWithPercentage = ((strokeWidth / 2) * 100) / orbitRadius / 2;
@@ -96,22 +96,22 @@
      }
  
      const realRadius = 50 + innerOuter - strokeWithPercentage;
-     const sectorAngle = calcularExpresionCSS(rawAngle);
+     const sliceAngle = calcularExpresionCSS(rawAngle);
  
      return {
        orbitRadius,
        strokeWidth,
        realRadius,
-       sectorColor,
+       sliceColor,
        gap,
-       sectorAngle,
+       sliceAngle,
        shape,
      };
    }
  
    calculateAngle() {
-     const { sectorAngle, gap } = this.getAttributes();
-     return sectorAngle - gap;
+     const { sliceAngle, gap } = this.getAttributes();
+     return sliceAngle - gap;
    }
  
    calculateArcParameters(angle, realRadius, gap) {

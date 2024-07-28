@@ -1,9 +1,9 @@
 @use './variables' as *;
 
-.orbit, [class*='orbit-']:not(.orbit-zone) {
+.orbit, [class*='orbit-'] {
   container-name: orbit;
-  --o-base-diameter: var(--o-orbit-number) * var(--o-length) / #{$max-orbits};
-  --o-prev-diameter: (var(--o-orbit-number) - 1) * var(--o-length) / #{$max-orbits};
+  --o-base-diameter: (var(--o-initial-orbit, 0) + var(--o-orbit-number)) * var(--o-force) / (#{$max-orbits} + var(--o-initial-orbit, 0));
+  --o-prev-diameter: ((var(--o-initial-orbit, 0) + var(--o-orbit-number)) - 1) * var(--o-force) / (#{$max-orbits} + var(--o-initial-orbit, 0));
   --o-diameter: calc(var(--o-base-diameter) - ((var(--o-base-diameter) - var(--o-prev-diameter)) * var(--o-orbit-ratio, 0)));
   --o-radius: calc(var(--o-diameter) / 2);
   width: calc(var(--o-diameter) / var(--o-ellipse-x));

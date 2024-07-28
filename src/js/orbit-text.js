@@ -1,4 +1,4 @@
-export class OrbitLabel extends HTMLElement {
+export class OrbitText extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -29,12 +29,12 @@ export class OrbitLabel extends HTMLElement {
         
         path {
           fill: transparent;
-          stroke: var(--o-label-color);
+          stroke: var(--o-text-color);
           transition: stroke 0.3s;
         }
        
         :host(:hover) path {
-          stroke: var(--o-hover-label-color, var(--o-label-color));
+          stroke: var(--o-hover-text-color, var(--o-text-color));
           
         }
       
@@ -93,10 +93,10 @@ export class OrbitLabel extends HTMLElement {
   }
 
   getPathAttributes() {
-    const { realRadius, gap, labelBgColor, flip, lineCap, strokeWidth } = this.getAttributes();
+    const { realRadius, gap, textBgColor, flip, lineCap, strokeWidth } = this.getAttributes();
     const angle = this.calculateAngle();
     const { d } = this.calculateArcParameters(angle, realRadius, gap, flip);
-    return { d, strokeWidth, labelBgColor, lineCap };
+    return { d, strokeWidth, textBgColor, lineCap };
   }
 
   getTextAttributes() {
@@ -110,7 +110,7 @@ export class OrbitLabel extends HTMLElement {
     const fitRange = this.hasAttribute('fit-range');
     const lineCap = getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt';
     const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
-    const length = parseFloat(getComputedStyle(this).getPropertyValue('--o-length'));
+    const length = parseFloat(getComputedStyle(this).getPropertyValue('--o-force'));
     const textAnchor = this.getAttribute('text-anchor') || 'start';
     const fontSize = getComputedStyle(this).getPropertyValue('font-size') ||  getComputedStyle(this).getPropertyValue('--font-size');
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
@@ -131,7 +131,7 @@ export class OrbitLabel extends HTMLElement {
       innerOuter = strokeWithPercentage * 0.75;
     }
     const realRadius = 50 + innerOuter - strokeWithPercentage;
-    const labelAngle = calcularExpresionCSS(rawAngle);
+    const textAngle = calcularExpresionCSS(rawAngle);
 
     return {
       orbitRadius,
@@ -140,7 +140,7 @@ export class OrbitLabel extends HTMLElement {
       length,
       fontSize,
       gap,
-      labelAngle,
+      textAngle,
       flip,
       textAnchor,
       lineCap,
@@ -149,8 +149,8 @@ export class OrbitLabel extends HTMLElement {
   }
 
   calculateAngle() {
-    const { labelAngle, gap } = this.getAttributes();
-    return labelAngle - gap;
+    const { textAngle, gap } = this.getAttributes();
+    return textAngle - gap;
   }
 
   calculateArcParameters(angle, realRadius, gap, flip) {
@@ -188,4 +188,3 @@ function calcularExpresionCSS(cssExpression) {
   }
 }
 
-//customElements.define('orbit-label', OrbitLabel);

@@ -1,7 +1,7 @@
 
 
-.spoke {
-  container-name: spoke;
+.vector {
+  container-name: vector;
   --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 270deg)) * var(--o-direction, 1);
   --o-transform: translate(
     calc(
@@ -26,7 +26,7 @@
   border: none;
 }
 
-.spoke.at-center {
+.vector.at-center {
   --o-transform: rotate(
     calc(var(--o-from) + var(--o-angle-composite))
   )

@@ -3,14 +3,14 @@
 
 /* Check Firefox has() support */
 @supports not selector(:has(a)) {	
-  .orbit-zone {
+  .gravity-spot {
     border: 3px dotted red!important;
   }
-  .orbit-zone>* {
+  .gravity-spot>* {
     display: none;
   }
 
-  .orbit-zone::before {
+  .gravity-spot::before {
     content: 'Update  🦊 Firefox to use Orbit';
    // text-shadow: 0 0 2px red;
     font-size: 18px;
@@ -32,28 +32,46 @@
 
 
 
-@container osector not style(--o-ellipse-x: 1) {
+@container oslice not style(--o-ellipse-x: 1) {
   /* Shown if ratio equals 1*/
-  o-sector, o-progress, o-label {
+  o-slice, o-progress, o-text {
     display: none;
   }
 }
-@container osector not style(--o-ellipse-y: 1) {
+@container oslice not style(--o-ellipse-y: 1) {
   /* Shown if ratio equals 1*/
-  o-sector, o-progress, o-label {
+  o-slice, o-progress, o-text {
     display: none;
   }
 }
 
-
-/* orbit-zone checks */
-.orbit-zone:has(>*:not(.orbit, [class*='orbit-'])) {
+/* bigbang checks */
+.bigbangt:has(>*:not(.gravity-spot)) {
   border: 2px dotted red!important;
+  width: var(--o-force) !important;
+  border-radius: 50%;
 }
-.orbit-zone:has(>*:not(.orbit, [class*='orbit-'])) > * {
+.bigbangt:has(>*:not(.gravity-spot)) > * {
   filter:grayscale(1) opacity(0.2)
 }
-.orbit-zone:has(> *:not(.orbit, [class*='orbit-']))::after {
+.bigbangt:has(>*:not(.gravity-spot))::after {
+  content: "⚠️";
+  font-size: 130%;
+  animation:  pulse 1.5s infinite;
+  z-index: 99;
+  filter: drop-shadow(3px 3px 8px rgb(255, 254, 254));
+  position: absolute;
+}
+/* gravity-spot checks */
+.gravity-spot:has(>*:not(.orbit, [class*='orbit-'], .gravity-spot)) {
+  border: 2px dotted red!important;
+  width: var(--o-force) !important;
+  border-radius: 50%;
+}
+.gravity-spot:has(>*:not(.orbit, [class*='orbit-'], .gravity-spot)) > * {
+  filter:grayscale(1) opacity(0.2)
+}
+.gravity-spot:has(> *:not(.orbit, [class*='orbit-'], .gravity-spot))::after {
   content: "⚠️";
   font-size: 130%;
   animation:  pulse 1.5s infinite;
@@ -64,18 +82,18 @@
 
 /* orbit and satellite checks */
 .orbit:has(>*:is(.orbit, [class*='orbit-'])), 
-[class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-'])),
-.satellite:has(>*:not(.orbit-zone, .capsule)) {
+[class*='orbit-']:has(>*:is(.orbit, [class*='orbit-'])),
+.satellite:has(>*:not(.gravity-spot, .capsule)) {
  border: 2px dotted rgb(255, 81, 0)!important;
 }
 .orbit:has(>*:is(.orbit, [class*='orbit-']))> *, 
-[class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-']))> *,
-.satellite:has(>*:not(.orbit-zone, .capsule)) > * {
+[class*='orbit-']:has(>*:is(.orbit, [class*='orbit-']))> *,
+.satellite:has(>*:not(.gravity-spot, .capsule)) > * {
   opacity: 0.4
 }
 .orbit:has(>*:is(.orbit, [class*='orbit-']))::after, 
-[class*='orbit-']:not(.orbit-zone):has(>*:is(.orbit, [class*='orbit-']))::after, 
-.satellite:has(>*:not(.orbit-zone, .capsule))::after {
+[class*='orbit-']:has(>*:is(.orbit, [class*='orbit-']))::after, 
+.satellite:has(>*:not(.gravity-spot, .capsule))::after {
   content: "⚠️";
   animation:  pulse 1.5s infinite;
   z-index: 999;
