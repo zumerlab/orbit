@@ -1,7 +1,7 @@
 @use './variables' as *;
 
 
-/* .orbit-zone  aligment utilities */
+/* .gravity-spot  aligment utilities */
 .at-top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
@@ -38,7 +38,14 @@
   align-items: center !important;
   justify-content: flex-end !important;
 }
-
+/* 
+  initial orbit ratio class 
+*/
+@for $i from 1 through $max-orbits {
+  .gravity-spot.from-#{$i}x {
+  --o-initial-orbit: #{$i};
+  }
+}
 /* 
   Range, begin-at and angle classes utilities 
 */
@@ -69,7 +76,7 @@ $max-grade: 360;
 
 $max-gaps: calc($max-orbiters / 2);
 @for $i from 1 through  $max-gaps {
-  o-sector.gap-#{$i}, o-label.gap-#{$i} {
+  o-slice.gap-#{$i}, o-text.gap-#{$i} {
     --o-gap: #{$i};
   }
 }
@@ -78,26 +85,42 @@ $max-gaps: calc($max-orbiters / 2);
 Sector, Progress and Vector size-ratio
 Can be used in parent elements or in each orbiter class
 */ 
-@for $i from 0 through  10  {
+@for $i from 1 through  9  {
   $percent: calc($i * 10);
   $value: calc($i / 10);
-  .orbit.reduce-#{$percent}, [class*='orbit-']:not(.orbit-zone).reduce-#{$percent} {
+  .orbit.shrink-#{$percent}, [class*='orbit-'].shrink-#{$percent} {
     --o-orbit-ratio: #{$value}; 
   }
 }
 
-@for $i from 0 through  10  {
+@for $i from 1 through  9  {
   $percent: calc($i * 10);
-  $value: if($i == 0, 1, 1 - calc($i / 10));
-  .reduce-#{$percent} {
-    --o-size-ratio: #{$value}; 
+  $value: calc($i / 10);
+  .shrink-#{$percent} {
+    --o-size-ratio: #{$value} !important; 
   }
 }
 
+@for $f from 1 through  9  {
+  $percent: calc($f);
+  $value: calc($f / 10);
+.grow-0\.#{$percent}x {
+  --o-size-ratio: #{calc(1 + $value)} !important; 
+}
+}
 @for $i from 1 through $max-orbits {
   .grow-#{$i}x {
-    --o-size-ratio: #{calc($i * 2)};
+    --o-size-ratio: #{calc($i * 2)} !important;
   }
+
+  @for $f from 1 through  9  {
+    $percent: calc($f);
+    $value: calc($f / 10);
+  .grow-#{$i}\.#{$percent}x {
+    --o-size-ratio: #{calc($i * 2 + $value)} !important; 
+  }
+}
+
 }
 
 /* 
@@ -130,8 +153,8 @@ Can be used in parent elements or in each orbiter class
 */ 
 
 .ccw{
-  --o-direction: -1;
-  --o-offset: - -90deg
+  --o-direction: -1 !important;
+  --o-offset: - -90deg !important;
 }
 
 /* 
@@ -139,7 +162,7 @@ Can be used in parent elements or in each orbiter class
 */ 
 
 .fit-range {
-  --o-fit-range: 1;
+  --o-fit-range: 1 !important;
 }
 
 
@@ -182,7 +205,7 @@ Can be used in parent elements or in each orbiter class
   transform: var(--o-transform) rotate(calc(var(--o-angle-composite)));
 }
 
-o-progress.rounded,o-label.rounded {
+o-progress.rounded,o-text.rounded {
   --o-linecap: round;
 }
 

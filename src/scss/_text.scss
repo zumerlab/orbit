@@ -1,8 +1,8 @@
 @use './variables' as *;
 
-o-sector {
+o-text {
   --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
-  container-name: osector;
+  container-name: otext;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,8 +10,9 @@ o-sector {
   position: absolute;
   pointer-events: none;
   width: 100%;
-  stroke-dashoffset: var(--o-angle);
+  fill: currentColor;
   r: var(--o-radius);
   stroke-width:  calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
   transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
 }
+

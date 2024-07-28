@@ -1,8 +1,8 @@
 @use './variables' as *;
 
-o-label {
+o-slice {
   --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
-  container-name: otext;
+  container-name: oslice;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,9 +10,8 @@ o-label {
   position: absolute;
   pointer-events: none;
   width: 100%;
-  fill: currentColor;
+  stroke-dashoffset: var(--o-angle);
   r: var(--o-radius);
   stroke-width:  calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
   transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
 }
-

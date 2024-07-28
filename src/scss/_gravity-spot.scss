@@ -1,0 +1,20 @@
+
+.gravity-spot {
+  container-name: gravityspot;
+  /* Reset to defaults everytime gravity-spot is used */
+  --o-force: 500px;
+  --o-from: 0deg;
+  --o-range: 360deg;
+  --o-ellipse-x: 1;
+  --o-ellipse-y: 1;
+  --o-fit-range: 0;
+  --o-direction: 1;
+  --o-size-ratio: 1;
+  width: 0;
+  aspect-ratio: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none; 
+}

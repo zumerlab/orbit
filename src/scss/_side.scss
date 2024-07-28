@@ -1,7 +1,7 @@
 
 
-.segment {
-  container-name: segment;
+.side {
+  container-name: side;
   --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 270deg)) * var(--o-direction, 1);
   --o-y: calc(var(--o-radius) * sin(90deg - var(--o-angle) / 2));
   --o-x: calc(var(--o-radius) * cos(90deg - var(--o-angle) / 2) * 2);
@@ -17,7 +17,7 @@
   background: rgb(0, 0, 0);
 }
 
-.segment.outer-orbit{
+.side.outer-orbit{
   --o-y: calc(var(--o-radius));
   width: calc(var(--o-radius) * tan(var(--o-angle) / 2) * 2);
   /* cateto adyacente = cateto opuesto * tan(angulo) */
