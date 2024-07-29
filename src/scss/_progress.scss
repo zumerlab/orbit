@@ -2,7 +2,7 @@
 o-progress {
   container-name: oprogress;
   r: var(--o-radius);
-  stroke-width:  calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
+  stroke-width:  calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1));
   transform: rotate(var(--o-from));
   position: absolute;
   display: flex;

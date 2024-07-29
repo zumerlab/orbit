@@ -1,6 +1,6 @@
 @use './variables' as *;
 
-.orbit, [class*='orbit-'] {
+.orbit, [class*='orbit-']{
   container-name: orbit;
   --o-base-diameter: (var(--o-initial-orbit, 0) + var(--o-orbit-number)) * var(--o-force) / (#{$max-orbits} + var(--o-initial-orbit, 0));
   --o-prev-diameter: ((var(--o-initial-orbit, 0) + var(--o-orbit-number)) - 1) * var(--o-force) / (#{$max-orbits} + var(--o-initial-orbit, 0));

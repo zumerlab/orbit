@@ -16,7 +16,7 @@
   rotate(
     calc(var(--o-from) + var(--o-angle-composite))
   );
-  width: calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
+  width: calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1));
   position: absolute;
   display: flex;
   align-items: center;

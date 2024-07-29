@@ -2,7 +2,7 @@
 @use './variables' as *;
 
 .orbit-0 {
-  --o-orbit-number: 0.01;
+  --o-orbit-number: 0.00001;
 }
 @for $i from 1 through $extra-orbits {
     :nth-child(#{$i} of .orbit), .orbit-#{$i} {

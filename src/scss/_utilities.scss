@@ -128,23 +128,23 @@ Can be used in parent elements or in each orbiter class
 */ 
 .inner-orbit {
   --o-aligment: calc(
-    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
+    var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / 2;
 }
 .quarter-inner-orbit {
   --o-aligment: calc(
-    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
+    var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / 3.75;
 }
 .quarter-outer-orbit {
   --o-aligment: calc(
-    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
+    var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / -3.75;
 }
 
 .outer-orbit {
   --o-aligment: calc(
-    var(--o-radius) / var(--o-orbit-number, 1) * var(--o-size-ratio, 1)
+    var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / -2;
 }
 

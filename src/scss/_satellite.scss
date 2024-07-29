@@ -13,13 +13,13 @@
     )
   );
   transform: var(--o-transform);
-  width: calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
-  height: calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
+  width: calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1));
+  height: calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0))* var(--o-size-ratio, 1));
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%; /* Circle by default */
+  border-radius: 50%; 
   pointer-events: all;
 }
 
