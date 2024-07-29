@@ -95,7 +95,7 @@ Can be used in parent elements or in each orbiter class
 
 @for $i from 1 through  9  {
   $percent: calc($i * 10);
-  $value: calc($i / 10);
+  $value: calc(1 - $i / 10);
   .shrink-#{$percent} {
     --o-size-ratio: #{$value} !important; 
   }
