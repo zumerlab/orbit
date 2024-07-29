@@ -15,6 +15,7 @@
         }
        .slice {
           stroke: var(--o-slice-color, var(--o-cyan-light));
+          stroke-width:  calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
           transition: stroke 0.3s;
         }
         
@@ -63,13 +64,13 @@
        path.setAttribute('marker-start', 'url(#tail)');
      }
  
-     const { strokeWidth, realRadius, sliceColor, gap } = this.getAttributes();
+     const { realRadius, sliceColor, gap } = this.getAttributes();
      const angle = this.calculateAngle();
      const { d } = this.calculateArcParameters(angle, realRadius, gap);
  
      path.setAttribute('d', d);
      path.setAttribute('stroke', sliceColor);
-     path.setAttribute('stroke-width', strokeWidth);
+     // path.setAttribute('stroke-width', strokeWidth);
    }
  
    getAttributes() {
@@ -114,7 +115,7 @@
      return sliceAngle - gap;
    }
  
-   calculateArcParameters(angle, realRadius, gap) {
+   calculateArcParameters(angle, realRadius) {
      const radiusX = realRadius / 1;
      const radiusY = realRadius / 1;
      const startX = 50 + radiusX * Math.cos(-Math.PI / 2);
