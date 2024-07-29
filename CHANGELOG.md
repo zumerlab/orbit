@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.4](https://github.com/zumerlab/grid/compare/v0.2.3...v0.2.4)
+
+> 29 July 2024
+
+- fix bug when initial orbit &gt; 0 [`7345566`](https://github.com/zumerlab/grid/commit/734556612e834f04301b6683809ebb846c07de76)
+- Bumped version [`abef1ae`](https://github.com/zumerlab/grid/commit/abef1ae4e82435e744804c76e42ff562bccd6cc7)
+
 #### [v0.2.3](https://github.com/zumerlab/grid/compare/v0.2.1...v0.2.3)
 
 > 29 July 2024
