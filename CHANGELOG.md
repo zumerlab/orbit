@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.5](https://github.com/zumerlab/grid/compare/v0.2.4...v0.2.5)
+
+> 29 July 2024
+
+- Bumped version [`3508720`](https://github.com/zumerlab/grid/commit/3508720fe2ae3a449bb64289c93082542fc23b73)
+- add reset initial orbit on gravity-spot [`6957530`](https://github.com/zumerlab/grid/commit/6957530a5151327ca60c02e8254cee669b87cde3)
+
 #### [v0.2.4](https://github.com/zumerlab/grid/compare/v0.2.3...v0.2.4)
 
 > 29 July 2024
