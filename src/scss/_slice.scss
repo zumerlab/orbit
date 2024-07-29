@@ -10,7 +10,6 @@ o-slice {
   position: absolute;
   pointer-events: none;
   width: 100%;
-  stroke-dashoffset: var(--o-angle);
   r: var(--o-radius);
   stroke-width:  calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
   transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));

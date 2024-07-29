@@ -33,7 +33,7 @@
 @for $i from 1 through $max-orbiters {
   .orbit:has(> :nth-child(#{$i} of .side)), 
   [class*='orbit-']:has(> :nth-child(#{$i} of .side)) {
-  --o-angle: calc(var(--o-range) / #{$i });
+  --o-angle: calc(var(--o-range) / #{$i});
   }
 }
 
