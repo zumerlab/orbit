@@ -8,6 +8,9 @@ docs-*/
 
 examples/
 
+#binaries
+*.zip
+
 # dependencies
 node_modules/
 
