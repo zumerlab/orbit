@@ -8,7 +8,6 @@ export class OrbitProgress extends HTMLElement {
       <style>
         :host {
           display: block;
-
         }
         svg {
           width: 100%;
