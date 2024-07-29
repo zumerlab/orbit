@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.3](https://github.com/zumerlab/grid/compare/v0.2.1...v0.2.3)
+
+> 29 July 2024
+
+- change names and fix utility bus [`85b0910`](https://github.com/zumerlab/grid/commit/85b0910f6eb3ebe99da0e6d27ed7c57d6d40f1b4)
+- update [`b7b6339`](https://github.com/zumerlab/grid/commit/b7b6339cc08c121c881e7a521f95fd47b9db5c9c)
+- Bumped version [`884161a`](https://github.com/zumerlab/grid/commit/884161ae3e4738bfd9b04332b0c76ffa7167f7bd)
+- update [`e7a3045`](https://github.com/zumerlab/grid/commit/e7a304546d75c475f14c725a06e54b2b96ebe31a)
+- update [`0ff3c20`](https://github.com/zumerlab/grid/commit/0ff3c2046e39a4924590bb37467c930550565df8)
+- cleanup code [`8460a57`](https://github.com/zumerlab/grid/commit/8460a57ec798bb952b05819e08fb119634d0a3d2)
+
 #### [v0.2.1](https://github.com/zumerlab/grid/compare/v0.2.0...v0.2.1)
 
 > 21 July 2024
