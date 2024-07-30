@@ -1,5 +1,5 @@
 
-<p align="center">
+<p align="center" style="padding-right: 50px;">
   <a href="http://zumerlab.github.io/orbit-docs">
     <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/favicon.svg" width="200">
   </a>
