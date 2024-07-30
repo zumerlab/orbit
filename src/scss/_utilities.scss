@@ -1,7 +1,36 @@
 @use './variables' as *;
 
+/* bigbang align utilities*/
 
-/* .gravity-spot  aligment utilities */
+.bigbang.at-center>.gravity-spot{
+  transform: translate(0%, 0%)
+}
+.bigbang.at-center-left>.gravity-spot{
+  transform: translate(-50%, 0%)
+}
+.bigbang.at-center-right>.gravity-spot{
+  transform: translate(50%, 0%)
+}
+.bigbang.at-bottom>.gravity-spot{
+  transform: translate(0%, 50%)
+}
+.bigbang.at-bottom-left>.gravity-spot{
+  transform: translate(-50%, 50%)
+}
+.bigbang.at-bottom-right>.gravity-spot{
+  transform: translate(50%, 50%)
+}
+.bigbang.at-top>.gravity-spot{
+  transform: translate(0%, -50%)
+}
+.bigbang.at-top-left>.gravity-spot{
+  transform: translate(-50%, -50%)
+}
+.bigbang.at-top-right>.gravity-spot{
+  transform: translate(50%, -50%)
+}
+
+/* radial elements  aligment utilities */
 .at-top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
