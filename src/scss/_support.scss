@@ -5,16 +5,16 @@
 @supports not selector(:has(a)) {	
   .gravity-spot {
     border: 3px dotted red!important;
+    height: var(--o-force);
+    width: var(--o-force);
   }
   .gravity-spot>* {
     display: none;
   }
 
   .gravity-spot::before {
-    content: 'Update  🦊 Firefox to use Orbit';
-   // text-shadow: 0 0 2px red;
+    content: 'Update this browser to use Orbit';
     font-size: 18px;
-   // background-color: yellow;
     padding: 10px;
     text-align: center;
   }
