@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.6](https://github.com/zumerlab/grid/compare/v0.2.5...v0.2.6)
+
+> 30 July 2024
+
+- update [`1fb7142`](https://github.com/zumerlab/grid/commit/1fb71429138be164676f5f7704629a01eb29a3ba)
+- Add --o-force size to .bigbang&gt;.gravity-spot [`1f2bc87`](https://github.com/zumerlab/grid/commit/1f2bc8703194ab5e93170ab16dd2b1deef9b8f3b)
+- Update README.md [`6cc0c51`](https://github.com/zumerlab/grid/commit/6cc0c512d2939dd0270e84e7fe3e6002a1e72b53)
+- Bumped version [`01b6880`](https://github.com/zumerlab/grid/commit/01b68805251e8b08d4f6659d2831a86a366412b5)
+- Update README.md [`99c2e2b`](https://github.com/zumerlab/grid/commit/99c2e2bd4a3753a879876e97784b0b056e45ebeb)
+- Update README.md [`9144c37`](https://github.com/zumerlab/grid/commit/9144c37bf9b9368d6617d89239a794c25690df58)
+- update [`d8b57f6`](https://github.com/zumerlab/grid/commit/d8b57f6e5b2b0cf0f97c8928429850f42672563f)
+- Update README.md [`8a96dc3`](https://github.com/zumerlab/grid/commit/8a96dc34a2aca4d4eaca4245d4fbb4638c2f41b7)
+- Update README.md [`2773e51`](https://github.com/zumerlab/grid/commit/2773e516ae231a5390741f41dc877f7413fe8b98)
+- update [`e9e370f`](https://github.com/zumerlab/grid/commit/e9e370fd3714cb95f446e3d38d6d2823f876968e)
+
 #### [v0.2.5](https://github.com/zumerlab/grid/compare/v0.2.4...v0.2.5)
 
 > 29 July 2024
