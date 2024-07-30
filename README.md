@@ -19,14 +19,13 @@
   
 </p>
 
-## Status
-
-We’re in the early stages of development, things are still evolving. You’re welcome to explore and experiment, but keep in mind that names, features, and functionalities may change as we refine our project. We appreciate your understanding and flexibility during this exciting phase!
-
 ## Orbit in short
 
 **Orbit** is a CSS framework designed to create radial UI designs effortlessly. It provides intuitive CSS classes and standard web components for building radial menus, dashboards, creative portfolios, or a cutting-edge applications.
 
+### Status
+
+We’re in the early stages of development, things are still evolving. You’re welcome to explore and experiment, but keep in mind that names, features, and functionalities may change as we refine our project. We appreciate your understanding and flexibility during this exciting phase!
 
 ### Installation & quick start
 
