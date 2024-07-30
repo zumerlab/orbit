@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.7](https://github.com/zumerlab/grid/compare/v0.2.6...v0.2.7)
+
+> 30 July 2024
+
+- Add bigbang align utlities [`02da36d`](https://github.com/zumerlab/grid/commit/02da36db4fc1213dd5441e5dfeddcc7721598456)
+- Bumped version [`7ecdb2d`](https://github.com/zumerlab/grid/commit/7ecdb2d7ca5904cf65917210154f15367e88dea4)
+
 #### [v0.2.6](https://github.com/zumerlab/grid/compare/v0.2.5...v0.2.6)
 
 > 30 July 2024
