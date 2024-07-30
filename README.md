@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="http://zumerlab.github.io/orbit-docs">
-    <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/favicon.svg" width="200" style="padding-right: 50px;">
+    <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/favicon.svg" width="200">
   </a>
 </p>
 
