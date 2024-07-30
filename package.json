@@ -1,6 +1,6 @@
 {
   "name": "@zumer/orbit",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "The CSS radial composer",
   "main": "./dist/orbit.js",
   "scripts": {
