@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  The CSS radial UI composer.
+  <b>The CSS radial UI composer.</b>
 </p>
 
 <p align="center">
