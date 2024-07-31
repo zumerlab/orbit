@@ -1,25 +1,46 @@
 @use './variables'  as *;
 
 
-/* Check Firefox has() support */
+/* Check browser has() support */
 @supports not selector(:has(a)) {	
-  .gravity-spot {
-    border: 3px dotted red!important;
-    height: var(--o-force);
-    width: var(--o-force);
+  .bigbang {
+    background-color: #ff00004f;
+    border: 2px dotted red !important;
+    height: 100px !important;
+    width: 250px !important;
   }
-  .gravity-spot>* {
+  .bigbang>* {
     display: none;
   }
 
-  .gravity-spot::before {
-    content: 'Update this browser to use Orbit';
+  .bigbang::before {
+    content: ':has() selector not supported. Update this browser to use Orbit';
     font-size: 18px;
     padding: 10px;
     text-align: center;
+    color: red;
+  }
+}
+
+@supports not (left: calc(cos(45deg) * 1px)) {
+  .bigbang {
+    background-color: #ff00004f;
+    border: 2px dotted red !important;
+    height: 100px !important;
+    width: 250px !important;
+  }
+  .bigbang>
+  * {
+    display: none;
   }
 
-
+  .bigbang::before {
+    content: 'Trigometric functions not supported. Update this browser to use Orbit';
+    font-size: 18px;
+    padding: 10px;
+    color: red;
+    text-align: center;
+  }
 }
 
 @supports  not (fill: context-stroke) {
