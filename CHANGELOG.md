@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.8](https://github.com/zumerlab/grid/compare/v0.2.7...v0.2.8)
+
+> 31 July 2024
+
+- add CSS trigonomics fx check [`003e707`](https://github.com/zumerlab/grid/commit/003e7073a5c67339abb0ad13f5360cc97afd23b2)
+- Bumped version [`462d7e8`](https://github.com/zumerlab/grid/commit/462d7e884e195e5cbc7ad9eee8a9cda74333094e)
+
 #### [v0.2.7](https://github.com/zumerlab/grid/compare/v0.2.6...v0.2.7)
 
 > 30 July 2024
