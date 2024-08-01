@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.2.9](https://github.com/zumerlab/grid/compare/v0.2.8...v0.2.9)
+
+> 1 August 2024
+
+- Create CODE_OF_CONDUCT.md [`6e28d37`](https://github.com/zumerlab/grid/commit/6e28d37cc4339c15f016f1afe09933cf92241b9c)
+- Refactor bigbang size strategy [`ba946af`](https://github.com/zumerlab/grid/commit/ba946afe008d7d7597d7182feb48cd0e35549c22)
+- update [`0acf323`](https://github.com/zumerlab/grid/commit/0acf3232a74a9df79e006eb9388a0c4ca3a98ad4)
+- Update README.md [`61cedb7`](https://github.com/zumerlab/grid/commit/61cedb7c7f5da9d2eb03335792b1723af70c47ed)
+- Bumped version [`126e77d`](https://github.com/zumerlab/grid/commit/126e77dddb697344bc28c2d636ff746f91d6e6a8)
+- delete [`2736e19`](https://github.com/zumerlab/grid/commit/2736e19c75100f253f9446f3d09d67744d2f142a)
+
 #### [v0.2.8](https://github.com/zumerlab/grid/compare/v0.2.7...v0.2.8)
 
 > 31 July 2024
