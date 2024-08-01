@@ -1,9 +1,16 @@
 
 .bigbang {
-  //position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+}
+
+/* Set .bigbang to 100vh,
+because body has height 0 by default and
+gravity-spot has no size
+*/
+body > .bigbang {
+  height: 100vh;
 }
