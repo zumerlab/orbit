@@ -9,7 +9,7 @@
   <b>ORBIT</b>
 </p>
 <p align="center">
-  <b>The CSS radial UI composer.</b>
+  <b>Create radial interfaces using only CSS.</b>
 </p>
 
 <p align="center">
