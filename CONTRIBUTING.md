@@ -22,6 +22,14 @@ We're excited to have you on board! This guide outlines how you can contribute t
 - **Fix bugs**: Help us squash bugs by submitting pull requests.
 - **New features**: Suggest new features or enhancements and collaborate with us to implement them.
 
+**Spread the Word!**
+
+1. **Share your experience**: Share your experience with Orbit on social media, blogs, or with your friends and colleagues.
+2. **Write a review**: Write a review of Orbit on our GitHub page or on your blog.
+3. **Give a talk**: Give a talk about Orbit at a conference, meetup, or webinar.
+4. **Create content**: Create content (videos, tutorials, blog posts, etc.) to help others learn about Orbit.
+5. **Invite others**: Invite others to join the Orbit community and contribute to its growth.
+
 **Community**
 
 - [**GitHub discussions**](https://github.com/zumerlab/orbit/discussions): Engage with other contributors, ask questions, and share your experiences.
