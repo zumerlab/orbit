@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md"> Get involved</a> and leave a star. <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
+  <a href="https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md" target="_blank"> Get involved</a> and spread the word! <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
   
 </p>
 
