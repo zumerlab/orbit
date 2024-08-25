@@ -39,45 +39,45 @@ This guide will help you quickly get started and install everything you need.
 To start using Orbit, include its CSS in your HTML file. You have two options:
 
 1. **Download or Import the CSS file**:
-   - **Download**: Download the CSS file from [here](https://unpkg.com/@zumer/orbit@latest/dist/orbit.css) and link it in your HTML file:
-     ```html
-     <head>
-       <link rel="stylesheet" href="path/to/orbit.css">
-     </head>
-     ```
-   - **Import**: Add the following to your stylesheet:
-     ```css
-     @import url('path/to/orbit.css');
-     ```
+- **Download**: Download the CSS file from [here](https://unpkg.com/@zumer/orbit@latest/dist/orbit.css) and link it in your HTML file:
+   ```html
+   <head>
+     <link rel="stylesheet" href="path/to/orbit.css">
+   </head>
+   ```
+- **Import**: Add the following to your stylesheet:
+   ```css
+   @import url('path/to/orbit.css');
+   ```
 
 2. **Include via CDN**:
-   - Add this to your HTML file:
-     ```html
-     <head>
-       <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
-     </head>
-     ```
+- Add this to your HTML file:
+   ```html
+   <head>
+     <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
+   </head>
+   ```
 
 ### Step 2: Include Orbit JavaScript (Recommended)
 
 If you plan to use additional features like radial progress bars, curved text, and slices, include Orbit's JavaScript. You can do this in two ways:
 
 1. **Download the JavaScript file**:
-   - Download from [here](https://unpkg.com/@zumer/orbit@latest/dist/orbit.js).
-   - Link it in your HTML file:
-     ```html
-     <head>
-       <script src="path/to/orbit.js" defer></script>
-     </head>
-     ```
+- Download from [here](https://unpkg.com/@zumer/orbit@latest/dist/orbit.js).
+- Link it in your HTML file:
+   ```html
+   <head>
+     <script src="path/to/orbit.js" defer></script>
+   </head>
+   ```
 
 2. **Include via CDN**:
-   - Add this to your HTML file:
-     ```html
-     <head>
-       <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js" defer></script>
-     </head>
-     ```
+- Add this to your HTML file:
+   ```html
+   <head>
+     <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js" defer></script>
+   </head>
+   ```
 
 ### Step 3: Set up Orbit layout
 
@@ -88,8 +88,8 @@ Now, create a container with the `gravity-spot` class, and within it, add a radi
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="/path/to/orbit.css" />
-    <script src="/path/to/orbit.js" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+    <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js" defer></script>
     <title>Orbit Quick Start</title>
   </head>
   <body>
@@ -120,3 +120,8 @@ npm install @zumer/orbit
 ## Next steps
 
 Check our detailed docs [here.](https://zumerlab.github.io/orbit-docs)
+
+## Stay in orbit
+
+There are many way to contribute to Orbit develoment. Check our [guide.](https://github.com/zumerlab/orbit/main/CONTRIBUTING.md)
+
