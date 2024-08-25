@@ -126,5 +126,5 @@ Check our detailed docs [here.](https://zumerlab.github.io/orbit-docs)
 
 ## Stay in orbit
 
-There are many way to contribute to Orbit develoment. Check our [guide.](https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md)
+There are many way to contribute to Orbit development. Check our [guide.](https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md)
 
