@@ -120,7 +120,7 @@ You can also install Orbit using npm or yarn for easier management in your proje
 npm install @zumer/orbit
 ```
 
-## Want to learn more about Orbit?: read our documentation
+## Want to learn more about Orbit? read our documentation
 
 Check our detailed docs [here.](https://zumerlab.github.io/orbit-docs)
 
