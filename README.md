@@ -18,13 +18,16 @@
 </p>
 
 <p align="center">
-  Get involved and leave a star. <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
+  <a href="https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md"> Get involved</a> and leave a star. <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
   
 </p>
 
 ## Orbit in short
 
 **Orbit** is a CSS framework designed to create radial UI designs effortlessly. It provides intuitive CSS classes and standard web components for building radial menus, dashboards, creative portfolios, or a cutting-edge applications.
+
+## Examples
+Taste what can be done with Orbit [checking this examples](https://zumerlab.github.io/orbit-docs/examples)
 
 ## Status
 
@@ -117,11 +120,11 @@ You can also install Orbit using npm or yarn for easier management in your proje
 npm install @zumer/orbit
 ```
 
-## Next steps
+## Want to learn more about Orbit?: read our documentation
 
 Check our detailed docs [here.](https://zumerlab.github.io/orbit-docs)
 
 ## Stay in orbit
 
-There are many way to contribute to Orbit develoment. Check our [guide.](https://github.com/zumerlab/orbit/main/CONTRIBUTING.md)
+There are many way to contribute to Orbit develoment. Check our [guide.](https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md)
 
