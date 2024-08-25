@@ -27,7 +27,7 @@
 **Orbit** is a CSS framework designed to create radial UI designs effortlessly. It provides intuitive CSS classes and standard web components for building radial menus, dashboards, creative portfolios, or a cutting-edge applications.
 
 ## Examples
-Taste what can be done with Orbit [checking this examples](https://zumerlab.github.io/orbit-docs/examples)
+Taste what can be done with Orbit by [checking out this examples](https://zumerlab.github.io/orbit-docs/examples)
 
 ## Status
 
