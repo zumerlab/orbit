@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.4.0](https://github.com/zumerlab/grid/compare/v0.3.0...v0.4.0)
+
+> 29 August 2024
+
+- Bumped version [`af0594b`](https://github.com/zumerlab/grid/commit/af0594be9ca48c2bead2c8a7f77d082b8c04cf85)
+- chore update [`97284bb`](https://github.com/zumerlab/grid/commit/97284bb1eddd64aca5ca4aad2143d3a973ea069f)
+- add gap-0 value [`0f89fa5`](https://github.com/zumerlab/grid/commit/0f89fa5df88b1d5be333eab82811e765d7f1d321)
+- add fallback angle-composite [`8ef74be`](https://github.com/zumerlab/grid/commit/8ef74be64929732344f88ceffc0ee1882a7457ee)
+
 #### [v0.3.0](https://github.com/zumerlab/grid/compare/v0.2.9...v0.3.0)
 
 > 29 August 2024
