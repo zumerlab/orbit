@@ -35,6 +35,6 @@
 }
 
 .satellite.rounded-box {
-  border-radius: 8px;
+  border-radius: calc(var(--o-force) * 0.015);
 }
 
