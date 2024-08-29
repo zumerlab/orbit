@@ -111,7 +111,7 @@ export class OrbitText extends HTMLElement {
     const lineCap = getComputedStyle(this).getPropertyValue('--o-linecap') || 'butt';
     const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap') || 0.001);
     const length = parseFloat(getComputedStyle(this).getPropertyValue('--o-force'));
-    const textAnchor = this.getAttribute('text-anchor') || 'start';
+    const textAnchor = this.getAttribute('text-anchor') || 'middle';
     const fontSize = getComputedStyle(this).getPropertyValue('font-size') ||  getComputedStyle(this).getPropertyValue('--font-size');
     const rawAngle = getComputedStyle(this).getPropertyValue('--o-angle');
     const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('stroke-width') || 1);
