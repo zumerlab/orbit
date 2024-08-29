@@ -79,7 +79,7 @@ $max-grade: 360;
 */ 
 
 $max-gaps: calc($max-orbiters / 2);
-@for $i from 1 through  $max-gaps {
+@for $i from 0 through  $max-gaps {
   o-slice.gap-#{$i}, o-text.gap-#{$i} {
     --o-gap: #{$i};
   }
