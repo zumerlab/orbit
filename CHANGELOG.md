@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.3.0](https://github.com/zumerlab/grid/compare/v0.2.9...v0.3.0)
+
+> 29 August 2024
+
+- Fix arbitrary angle-* position. Closes #13 [`#13`](https://github.com/zumerlab/grid/issues/13)
+- Fix rounded shape to be adaptative. Closes #6 [`#6`](https://github.com/zumerlab/grid/issues/6)
+- Set text-anchor middle as default. Closes #12 [`#12`](https://github.com/zumerlab/grid/issues/12)
+- Set min gap as default. Closes #11 [`#11`](https://github.com/zumerlab/grid/issues/11)
+- Update README.md [`d0cb8d0`](https://github.com/zumerlab/grid/commit/d0cb8d0d968deee1345aece0f112e1a5d590fdcd)
+- Create CONTRIBUTING.md [`524ea85`](https://github.com/zumerlab/grid/commit/524ea8576215f8976b8e78ee3b95a802d910c1ec)
+- Bumped version [`aad5adf`](https://github.com/zumerlab/grid/commit/aad5adf13e45537f3f190d0b419d74cd713dffed)
+- Update README.md [`040e442`](https://github.com/zumerlab/grid/commit/040e4420fac68cd0d39bd66c9230e3cf38a7f62b)
+- Update CONTRIBUTING.md [`2192192`](https://github.com/zumerlab/grid/commit/2192192d32c5b482c290daf1cab365093f14f401)
+- chore [`8d29797`](https://github.com/zumerlab/grid/commit/8d29797fbf38ced9099b26f23a9dd829753d58de)
+- Update README.md [`20f2366`](https://github.com/zumerlab/grid/commit/20f236653a36fd9d6bdddf28f721b2a315e62379)
+- Update README.md [`b133843`](https://github.com/zumerlab/grid/commit/b133843d410f8ebbe2dc1c33025122e99055640f)
+- Update README.md [`4d0fe60`](https://github.com/zumerlab/grid/commit/4d0fe6089362b93e64d4756513bd3dc84befc4b1)
+- Update README.md [`6cdacb7`](https://github.com/zumerlab/grid/commit/6cdacb7be3e66098a5533076e7650e5720dea765)
+- Update README.md [`0e413d6`](https://github.com/zumerlab/grid/commit/0e413d61bc2cc51104d44b0f313238ec21ce86d5)
+
 #### [v0.2.9](https://github.com/zumerlab/grid/compare/v0.2.8...v0.2.9)
 
 > 1 August 2024
