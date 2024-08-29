@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md"> Get involved</a> and leave a star. <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
+  <a href="https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md" target="_blank"> Get involved</a> and spread the word! <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
   
 </p>
 
@@ -27,7 +27,7 @@
 **Orbit** is a CSS framework designed to create radial UI designs effortlessly. It provides intuitive CSS classes and standard web components for building radial menus, dashboards, creative portfolios, or a cutting-edge applications.
 
 ## Examples
-Taste what can be done with Orbit [checking this examples](https://zumerlab.github.io/orbit-docs/examples)
+Taste what can be done with Orbit by [checking out this examples](https://zumerlab.github.io/orbit-docs/examples)
 
 ## Status
 
