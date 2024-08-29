@@ -1,12 +1,12 @@
 {
   "name": "@zumer/orbit",
   "version": "0.2.9",
-  "description": "The CSS radial composer",
+  "description": "Orbit is a CSS framework for radial interfaces",
   "main": "./dist/orbit.js",
   "scripts": {
     "build": "npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss",
     "bump": "npx @zumerbox/bump",
-    "postbump": "npx @zumerbox/changelog && git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags"
+    "postbump": "npx @zumerbox/changelog && git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags && npm run build"
   },
   "files": [
     "README.md",
