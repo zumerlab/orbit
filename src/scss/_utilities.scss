@@ -64,6 +64,11 @@ $max-grade: 360;
     --o-angle-composite: calc(#{$i}deg - 90deg) !important; 
   }
 }
+@for $i from 0 through $max-grade {
+  o-slice.angle-#{$i}, o-progress.angle-#{$i}, o-text.angle-#{$i} {
+    --o-angle-composite: calc(#{$i}deg) !important; 
+  }
+}
 
 /* 
   Sector, Progress and Vector utilities 

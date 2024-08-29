@@ -1,9 +1,10 @@
 
 o-progress {
   container-name: oprogress;
+  --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
   r: var(--o-radius);
   stroke-width:  calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1));
-  transform: rotate(var(--o-from));
+  transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
   position: absolute;
   display: flex;
   justify-content: center;
