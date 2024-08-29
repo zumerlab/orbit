@@ -2,6 +2,7 @@
 
 o-slice {
   --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
+  --o-gap: 1;
   container-name: oslice;
   display: flex;
   justify-content: center;
