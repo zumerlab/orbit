@@ -30,26 +30,22 @@
 
 ## 🖖 Orbit in a nutshell
 
-**Orbit** is a CSS framework to create radial UI designs. It provides intuitive CSS classes and Custom Elements for building radial menus, dashboards, creative portfolios, or a cutting-edge applications.
+**Orbit** is the first CSS framework designed specifically for radial user interfaces. We've used the latest CSS features to make building radial layouts a breeze. It provides intuitive CSS classes and Custom Elements for building radial menus, dashboards, creative portfolios, or a cutting-edge applications.
 
 ## Status
 > We’re in the early stages of development, things are still evolving. You’re welcome to explore and experiment, but keep in mind that names, features, and functionalities may change as we refine our project. We appreciate your understanding and flexibility during this exciting phase!
 
 ## 🤖 Features
 
-### Innovative CSS radial engine
+With Orbit, you can:
 
-Orbit is the first CSS framework for radial user interfaces. It uses latest CSS features for  builing radial layouts in a simple way.
+- Simplify your development process using our predefined CSS classes that do the heavy lifting.
 
-### Easy to use, easy to learn
+- Get started quickly with our detailed documentation, examples, and guides that walk you through using Orbit's features effectively.
 
-Simplify your development process with predefined CSS classes that take care of the heavy lifting. Get started quickly with detailed documentation, examples, and guides that walk you through the process of using Orbit’s features effectively.
+The best part? Orbit plays nicely with your favorite CSS framework! Our goal is for Orbit to complement, not compete with, other frameworks.
 
-### Works with your favorite CSS framework
-
-Our vision is for Orbit to complement, rather than compete with, other CSS frameworks.
-
-## 🌐 Try Orbit online
+## 🚀 Try Orbit now!
 
 To quickly get a taste of Orbit, you can try it directly in a [Orbit Codepen template](https://codepen.io/pen?template=KKjaoRj).
 
