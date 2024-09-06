@@ -13,7 +13,7 @@
   <a href="https://t.me/ZumlyCommunity" target="_blank"><b>🧑‍💻 Telegram Group</b></a>
 </p>
 <p align="center">
-  <b>Use Orbit to create amazing radial UIs using only CSS!</b>
+  <b>Use Orbit to create amazing radial UIs using CSS only!</b>
 </p>
 
 <p align="center">
