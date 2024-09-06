@@ -6,9 +6,9 @@
 </p>
 <p align="center">
   <a href="#installation"><b>⚙️ Install</b></a> •
-  <a href="#features" target="_blank"><b>🤖 Features</b></a> •
-  <a href="#examples" target="_blank"><b>🎮 Examples</b></a> •
-    <a href="https://zumerlab.github.io/orbit-docs" target="_blank"><b>📚 Docs</b></a> •
+  <a href="#features"><b>🤖 Features</b></a> •
+  <a href="#examples"><b>🎮 Examples</b></a> •
+  <a href="https://zumerlab.github.io/orbit-docs" target="_blank"><b>📚 Docs</b></a> •
   <a href="https://github.com/zumerlab/orbit/discussions" target="_blank"><b>💬 Github Discussions</b></a> •
   <a href="https://t.me/ZumlyCommunity" target="_blank"><b>🧑‍💻 Telegram Group</b></a>
 </p>
@@ -35,7 +35,7 @@
 ## Status
 > We’re in the early stages of development, things are still evolving. You’re welcome to explore and experiment, but keep in mind that names, features, and functionalities may change as we refine our project. We appreciate your understanding and flexibility during this exciting phase!
 
-## 🤖 Features
+## Features
 
 With Orbit, you can:
 
@@ -49,7 +49,7 @@ The best part? Orbit plays nicely with your favorite CSS framework! Our goal is 
 
 To quickly get a taste of Orbit, you can try it directly in a [Orbit Codepen template](https://codepen.io/pen?template=KKjaoRj).
 
-## ⚙️ Installation
+## Installation
 
 Orbit comes with just two files: `orbit.css` (or `orbit.min.css`), and `orbit.js` (or `orbit.min.js`).
 
@@ -215,7 +215,7 @@ Sides render a `side` that if used with other sides generates a regular polygon 
 `<o-progress>` is a standard web-component for rendering a radial progress bar. It has two elements: a progress bar and a background bar that show the max range progress bar can achieve.
 
 
-## 🎮  Examples
+## Examples
 
 ### A dashboard
 
