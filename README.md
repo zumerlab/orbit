@@ -1,13 +1,11 @@
 
 <p align="center">
   <a href="http://zumerlab.github.io/orbit-docs">
-    <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/orbithero.gif" width="100%">
+    <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/orbithero.gif" width="100%">
+    
   </a>
 </p>
 
-<p align="center">
-  <b>ORBIT</b>
-</p>
 <p align="center">
   <b>Create radial interfaces using only CSS.</b>
 </p>
