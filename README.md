@@ -17,16 +17,13 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@zumer/orbit"><img src="https://img.shields.io/github/package-json/v/zumerlab/orbit"></a> •
-  <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
+  <a href="https://www.npmjs.com/package/@zumer/orbit"><img src="https://img.shields.io/github/package-json/v/zumerlab/orbit"></a>
 </p>
 
 <p align="center">
-  <a href="#stay-in-orbit"><b>Get involved</b></a> 
+  <a href="#stay-in-orbit"><b>Get involved</b></a>, leave a star <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
 </p>
-<p align="center">
-  <b>Spread the word!</b>
-</p>
+
 
 ## 🖖 Orbit in a nutshell
 
@@ -260,7 +257,7 @@ Sides render a `side` that if used with other sides generates a regular polygon 
 
 Read the Orbit docs [here.](https://zumerlab.github.io/orbit-docs)
 
-## 💫 Stay in orbit
+## Stay in orbit
 
 There are many ways to **contribute** to **Orbit** development:
 
