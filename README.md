@@ -163,53 +163,39 @@ Just add `.bigbang` CSS class in a HTML element like `<div>`. Then use `.gravity
 
 ### Bigbang
 
-The `.bigbang` CSS class is a container for Orbit Apps, serving as a foundation for your project.This class is recommended as the starting point for every Orbit project.
+The foundation of every Orbit project, serving as a container for your application.
 
 ### Gravity-spot
 
-The `.gravity-spot` CSS class serves as a container for organizing Orbit elements within a radial layout. It is fundamental in every Orbit project, acting as the parent container for all other Orbit elements.
+The parent container for organizing Orbit elements within a radial layout.
 
 ### Orbit
 
-<img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/orbit.png" width="50" style="border-radius:50%"> 
-
-The `.orbit` CSS class, along with variations from .orbit-0 to .orbit-24, defines a circular path around a .gravity-spot. Within .orbit element, various Orbit elements such as `satellites`, `o-slices`, `o-progress`, `vectors`, `sides`, and `o-texts` can be positioned.
+Defines a circular path around a .gravity-spot, with variations from .orbit-0 to .orbit-24. Within .orbit element, various Orbit elements such as `satellites`, `o-slices`, `o-progress`, `vectors`, `sides`, and `o-texts` can be positioned.
 
 ### Satellite
-
- <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/satellite.png" width="50" style="border-radius:50%"> 
  
- Elements with `.satellite` are placed along an `.orbit` or `.orbit-*` path serving as content place and/or to nest `.orbits` using `.gravity-spot`. By default, up to 60 satellites can be placed in an orbit.
+ Places elements along an .orbit or .orbit-* path, serving as content containers or nesting points for other orbits.
 
 ### Vector
 
-<img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/vector.png" width="50" style="border-radius:50%">
-
-Vectors are perpendicular lines rendered across orbits. They resemble minute marks in an analog watch, but can be adapted to create connector lines, for instance. Elements with `.vector` are placed along an `.orbit` or `.orbit-* `path. By default, up to 60 vectors can be placed in an orbit.
+Renders perpendicular lines across orbits, perfect for creating connector lines or minute marks.
 
 ### Side
 
-<img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/side.png" width="50" style="border-radius:50%">
-
-Sides render a `side` that if used with other sides generates a regular polygon figure. By default, up to 60 sides can be placed in an `orbit`.
+Generates a regular polygon figure when used with other sides.
 
 ### O-Text
 
-<img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/text.png" width="50" style="border-radius:50%">
-
-`<o-text>` is a standard web-component for rendering curved text. By default can be up to 60 `o-texts` elements per orbit.
+A web-component for rendering curved text.
 
 ### O-Slice
 
-<img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/slice.png" width="50" style="border-radius:50%">
-
-`<o-slice>` is a standard and vanilla web-component for rendering a radial slices, arcs or pies. By default there are up to 60 slices elements per orbit.
+A web-component for rendering radial slices, arcs, or pies.
 
 ### O-Progress
 
-<img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/progress.png" width="50" style="border-radius:50%">
-
-`<o-progress>` is a standard web-component for rendering a radial progress bar. It has two elements: a progress bar and a background bar that show the max range progress bar can achieve.
+A web-component for rendering a radial progress bar.
 
 
 ## Examples
