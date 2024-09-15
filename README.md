@@ -251,6 +251,11 @@ There are many ways to **contribute** to **Orbit** development:
 - [**GitHub discussions**](https://github.com/zumerlab/orbit/discussions): Engage with other contributors, ask questions, and share your experiences.
 - [**Telegram group**](https://t.me/ZumlyCommunity): Join our Telegram group for real-time discussions and updates.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=zumerlab/orbit&type=Date)](https://star-history.com/#zumerlab/orbit&Date)
+
+
 ## License 
 
 [MIT](https://github.com/zumerlab/orbit/blob/main/LICENSE)
