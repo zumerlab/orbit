@@ -37,8 +37,10 @@
 
 Radial UI refers to a design paradigm where elements are organized and laid out in a circular or radial pattern, rather than the traditional grid-based or linear layouts. This approach can create visually appealing and intuitive interfaces, especially for applications that involve:
 
-- Circular data visualization (e.g., pie charts, multi-level pie charts)
+- Circular data visualization (e.g., pie charts, multi-level pie charts, gauges, watch faces)
 - Navigation menus or controls (e.g., radial or pie menus, circular scrolling)
+- Dashboards (e.g., car dashboards, infotainment, smart-home dashboards)
+- Landing pages (e.g., Orbit website landing page)
 
 
 **Characteristics of Radial UI:**
