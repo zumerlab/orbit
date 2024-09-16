@@ -36,11 +36,10 @@
 
 With Orbit, you can:
 
-- Simplify your development process using our predefined CSS classes that do the heavy lifting.
-
-- Get started quickly with our detailed documentation, examples, and guides that walk you through using Orbit's features effectively.
-
-The best part? Orbit plays nicely with your favorite CSS framework! Our goal is for Orbit to complement, not compete with, other frameworks.
+- ⁠Build any kind of radial UI using our predefined CSS classes that do the heavy lifting.
+- ⁠Easily compose simple or complex radial designs by combining Orbit elements.
+- ⁠Use Orbit alongside other traditional CSS frameworks.
+- ⁠Get started quickly with our detailed documentation, examples, and guides that walk you through using Orbit's features effectively.
 
 ## 🚀 Try Orbit now!
 
