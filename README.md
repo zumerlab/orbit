@@ -29,6 +29,9 @@
 
 **Orbit** is the first general-purpose CSS framework designed specifically for radial user interfaces. We've used the latest CSS features to make building radial layouts a breeze. It provides intuitive CSS classes and Custom Elements for building radial menus, dashboards, creative portfolios, or a cutting-edge applications.
 
+## Why Orbit?
+
+Because creating radial UIs generally involves resorting to JS or other languages to calculate angles, radius, distances, etc. **Orbit** helps and saves you a lot of time by allowing you to build these UIs with just CSS.
 
 ## Status
 > We’re in the early stages of development, things are still evolving. You’re welcome to explore and experiment, but keep in mind that names, features, and functionalities may change as we refine our project. We appreciate your understanding and flexibility during this exciting phase!
@@ -42,7 +45,6 @@ Radial UI refers to a design paradigm where elements are organized and laid out 
 - Dashboards (e.g., car dashboards, infotainment, smart-home dashboards)
 - Landing pages (e.g., Orbit website landing page)
 
-
 **Characteristics of Radial UI:**
 
 - Circular layout: Elements are arranged in a circular or curved pattern.
@@ -55,10 +57,6 @@ Radial UI refers to a design paradigm where elements are organized and laid out 
 - Aesthetics: Radial designs can be visually stunning and engaging.
 - Intuitive navigation: Circular layouts can simplify navigation and reduce cognitive load.
 - Space efficiency: Radial UIs can make efficient use of screen real estate.
-
-**Why Orbit?**
-
-Because creating radial UIs generally involves resorting to JS or other languages to calculate angles, radius, distances, etc. **Orbit** helps and saves you a lot of time by allowing you to build these UIs with just CSS.
 
 ## Features
 
