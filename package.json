@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss && npm pack",
     "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
-    "prebuild": "git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags && npm run build"
+    "prebuild": "git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags"
   },
   "files": [
     "README.md",
