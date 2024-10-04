@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.5.0](https://github.com/zumerlab/grid/compare/v0.4.1...v0.5.0)
+
+> 4 October 2024
+
+- Add custom transform variable on satellites
+    - closes #14 [`#14`](https://github.com/zumerlab/grid/issues/14)
+- Changes o-slice by o-arc 
+    - [`cb8d3e3`](https://github.com/zumerlab/grid/commit/cb8d3e357414220c058e752e68ac2234e0f6341d)
+    - closes #18 [`#18`](https://github.com/zumerlab/grid/issues/18)
+
 #### [v0.4.1](https://github.com/zumerlab/grid/compare/v0.4.0...v0.4.1)
 
 > 29 August 2024
