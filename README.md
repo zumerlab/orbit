@@ -156,7 +156,7 @@ In case you are using CDN:
 
 ### Basic Orbit layout
 
-Just add `.bigbang` CSS class in a HTML element like `<div>`. Then use `.gravity-spot` class, and within it, add another element with `.orbit` class. Finally, inside `.orbit` element, add radial elements, such us: `.satellite`, `.vector`, `.side`, or `<o-text>`, `<o-slice>`, `<o-progress>` web components . Here’s a minimal working example:
+Just add `.bigbang` CSS class in a HTML element like `<div>`. Then use `.gravity-spot` class, and within it, add another element with `.orbit` class. Finally, inside `.orbit` element, add radial elements, such us: `.satellite`, `.vector`, `.side`, or `<o-text>`, `<o-arc>`, `<o-progress>` web components . Here’s a minimal working example:
 
 ```html
 <!DOCTYPE html>
@@ -196,7 +196,7 @@ The parent container for organizing Orbit elements within a radial layout.
 
 ### Orbit
 
-Defines a circular path around a .gravity-spot, with variations from .orbit-0 to .orbit-24. Within .orbit element, various Orbit elements such as `satellites`, `o-slices`, `o-progress`, `vectors`, `sides`, and `o-texts` can be positioned.
+Defines a circular path around a .gravity-spot, with variations from .orbit-0 to .orbit-24. Within .orbit element, various Orbit elements such as `satellites`, `o-arcs`, `o-progress`, `vectors`, `sides`, and `o-texts` can be positioned.
 
 ### Satellite
  
@@ -214,7 +214,7 @@ Generates a regular polygon figure when used with other sides.
 
 A web-component for rendering curved text.
 
-### O-Slice
+### o-arc
 
 A web-component for rendering radial slices, arcs, or pies.
 
@@ -276,9 +276,6 @@ There are many ways to **contribute** to **Orbit** development:
 - [**GitHub discussions**](https://github.com/zumerlab/orbit/discussions): Engage with other contributors, ask questions, and share your experiences.
 - [**Telegram group**](https://t.me/ZumlyCommunity): Join our Telegram group for real-time discussions and updates.
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=zumerlab/orbit&type=Date)](https://star-history.com/#zumerlab/orbit&Date)
 
 
 ## License 

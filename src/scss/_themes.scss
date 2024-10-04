@@ -30,8 +30,8 @@ o-progress {
   --o-bg-color: transparent;
 }
 
-o-slice {
-  --o-slice-color: currentcolor;
+o-arc {
+  --o-arc-color: currentcolor;
   --o-hover-sector-color: currentcolor;
 }
 
@@ -78,8 +78,8 @@ o-text {
     --o-bg-color: transparent;
   }
   
-  o-slice {
-    --o-slice-color: currentColor;
+  o-arc {
+    --o-arc-color: currentColor;
     --o-hover-sector-color: currentColor;
   }
   
@@ -123,8 +123,8 @@ o-progress {
   --o-bg-color: transparent;
 }
 
-o-slice {
-  --o-slice-color: var(--o-cyan);
+o-arc {
+  --o-arc-color: var(--o-cyan);
   --o-hover-sector-color: var(--o-cyan);
 }
 

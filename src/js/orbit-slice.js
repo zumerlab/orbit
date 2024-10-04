@@ -14,13 +14,13 @@
           pointer-events: stroke;
         }
        .slice {
-          stroke: var(--o-slice-color, var(--o-cyan-light));
+          stroke: var(--o-arc-color, var(--o-cyan-light));
           stroke-width:  calc(var(--o-radius) / var(--o-orbit-number) * var(--o-size-ratio, 1));
           transition: stroke 0.3s;
         }
         
         :host(:hover) .slice {
-          stroke: var(--o-hover-slice-color, var(--o-slice-color));
+          stroke: var(--o-hover-slice-color, var(--o-arc-color));
           
         }
    </style>

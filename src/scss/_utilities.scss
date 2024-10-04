@@ -65,7 +65,7 @@ $max-grade: 360;
   }
 }
 @for $i from 0 through $max-grade {
-  o-slice.angle-#{$i}, o-progress.angle-#{$i}, o-text.angle-#{$i} {
+  o-arc.angle-#{$i}, o-progress.angle-#{$i}, o-text.angle-#{$i} {
     --o-angle-composite: calc(#{$i}deg) !important; 
   }
 }
@@ -80,7 +80,7 @@ $max-grade: 360;
 
 $max-gaps: calc($max-orbiters / 2);
 @for $i from 0 through  $max-gaps {
-  o-slice.gap-#{$i}, o-text.gap-#{$i} {
+  o-arc.gap-#{$i}, o-text.gap-#{$i} {
     --o-gap: #{$i};
   }
 }

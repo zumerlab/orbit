@@ -18,14 +18,14 @@
 }
 
 @for $i from 1 through $max-orbiters {
-  :nth-child(#{$i} of .satellite),:nth-child(#{$i} of o-slice), :nth-child(#{$i} of .vector) ,:nth-child(#{$i} of o-text) {
+  :nth-child(#{$i} of .satellite),:nth-child(#{$i} of o-arc), :nth-child(#{$i} of .vector) ,:nth-child(#{$i} of o-text) {
     --o-orbit-child-number: #{$i - 1}; // Uses - 1 to start from 0 deg.
     }
 }
 
 @for $i from 1 through $max-orbiters {
-    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-slice), > :nth-child(#{$i} of .vector), > :nth-child(#{$i} of .side), > :nth-child(#{$i} of o-text)), 
-    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-slice), > :nth-child(#{$i} of .vector), > :nth-child(#{$i} of .side), > :nth-child(#{$i} of o-text)) {
+    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-arc), > :nth-child(#{$i} of .vector), > :nth-child(#{$i} of .side), > :nth-child(#{$i} of o-text)), 
+    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-arc), > :nth-child(#{$i} of .vector), > :nth-child(#{$i} of .side), > :nth-child(#{$i} of o-text)) {
     --o-angle: calc(var(--o-range) / (#{$i} - var(--o-fit-range, 0)));
     }
 }

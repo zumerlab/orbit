@@ -55,13 +55,13 @@
 
 @container oslice not style(--o-ellipse-x: 1) {
   /* Shown if ratio equals 1*/
-  o-slice, o-progress, o-text {
+  o-arc, o-progress, o-text {
     display: none;
   }
 }
 @container oslice not style(--o-ellipse-y: 1) {
   /* Shown if ratio equals 1*/
-  o-slice, o-progress, o-text {
+  o-arc, o-progress, o-text {
     display: none;
   }
 }

@@ -1,6 +1,6 @@
 @use './variables' as *;
 
-o-slice {
+o-arc {
   --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
   //--o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 90deg)) * var(--o-direction, 1);
   --o-gap: 1;
