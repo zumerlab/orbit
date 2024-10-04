@@ -12,7 +12,7 @@
         sin(var(--o-from) + var(--o-angle-composite))
     )
   );
-  transform: var(--o-transform);
+  transform: var(--o-transform) var(--o-transform-custom, rotate(0deg));
   width: calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1));
   height: calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0))* var(--o-size-ratio, 1));
   position: absolute;
