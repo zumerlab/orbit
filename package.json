@@ -5,8 +5,8 @@
   "main": "./dist/orbit.js",
   "scripts": {
     "build": "npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss && npm pack",
-    "bump": "npx @zumerbox/bump",
-    "postbump": "npx @zumerbox/changelog && git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags && npm run build"
+    "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
+    "prebuild": "git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags && npm run build"
   },
   "files": [
     "README.md",
@@ -21,6 +21,7 @@
     "UI",
     "framework",
     "radial",
+    "circular",
     "orbit",
     "composer",
     "zumerlab"
