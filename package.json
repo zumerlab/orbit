@@ -1,10 +1,10 @@
 {
   "name": "@zumer/orbit",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Orbit is a CSS framework for radial interfaces",
   "main": "./dist/orbit.js",
   "scripts": {
-    "compile":"npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss",
+    "compile": "npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss",
     "build": "npm run compile && npm pack",
     "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
     "prebuild": "git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags"
