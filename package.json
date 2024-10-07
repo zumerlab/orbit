@@ -4,7 +4,8 @@
   "description": "Orbit is a CSS framework for radial interfaces",
   "main": "./dist/orbit.js",
   "scripts": {
-    "build": "npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss && npm pack",
+    "compile":"npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss",
+    "build": "npm run compile && npm pack",
     "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
     "prebuild": "git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags"
   },
