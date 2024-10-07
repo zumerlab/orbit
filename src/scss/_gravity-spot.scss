@@ -3,6 +3,7 @@
   container-name: gravityspot;
   /* Reset to defaults everytime gravity-spot is used */
   --o-force: 500px;
+  --o-force-ratio: 1;
   --o-from: 0deg;
   --o-range: 360deg;
   --o-ellipse-x: 1;
@@ -19,3 +20,4 @@
   justify-content: center;
   border: none; 
 }
+
