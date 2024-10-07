@@ -2,15 +2,35 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v0.6.0](https://github.com/zumerlab/grid/compare/v0.5.0...v0.6.0)
+
+> 7 October 2024
+
+- Improve Orbit.resize() [`13f278b`](https://github.com/zumerlab/grid/commit/13f278bc5dc6a630977d0b881cd6b3e10529d6e0)
+
+
 #### [v0.5.0](https://github.com/zumerlab/grid/compare/v0.4.1...v0.5.0)
 
 > 4 October 2024
 
-- Add custom transform variable on satellites
-    - closes #14 [`#14`](https://github.com/zumerlab/grid/issues/14)
-- Changes o-slice by o-arc 
-    - [`cb8d3e3`](https://github.com/zumerlab/grid/commit/cb8d3e357414220c058e752e68ac2234e0f6341d)
-    - closes #18 [`#18`](https://github.com/zumerlab/grid/issues/18)
+- closes #18 [`#18`](https://github.com/zumerlab/grid/issues/18)
+- closes #14 [`#14`](https://github.com/zumerlab/grid/issues/14)
+- update [`ba3f5ac`](https://github.com/zumerlab/grid/commit/ba3f5ac3a840bd320eee804df909c813167e4df3)
+- Changes o-slice by o-arc [`cb8d3e3`](https://github.com/zumerlab/grid/commit/cb8d3e357414220c058e752e68ac2234e0f6341d)
+- update [`0c78b95`](https://github.com/zumerlab/grid/commit/0c78b9523a192cc0bda997a4227daf8bafcb9ddb)
+- update [`4d1edc1`](https://github.com/zumerlab/grid/commit/4d1edc154cb069f19b1f086c0ed2d4f4adbb78c6)
+- update [`8874447`](https://github.com/zumerlab/grid/commit/8874447fef45c102b15f45b226de4b4d209bb0ae)
+- Create FUNDING.yml [`9c81080`](https://github.com/zumerlab/grid/commit/9c8108069d0a8f77f07ce4d8c193974c359e8357)
+- Update README.md [`213b55f`](https://github.com/zumerlab/grid/commit/213b55f6fff6182aeeb21380f25f7b842ced93e1)
+- update [`158a009`](https://github.com/zumerlab/grid/commit/158a009037041af37f94b6c44fc03138274af47f)
+- update [`0494644`](https://github.com/zumerlab/grid/commit/04946441cd62b037245b88aaf90bcaff87846e0e)
+- Update README.md [`1819c7f`](https://github.com/zumerlab/grid/commit/1819c7f245ce63768d9f354f2a727751e63f464d)
+- Bumped version [`4e9f888`](https://github.com/zumerlab/grid/commit/4e9f888eb5aa4d1166992070733de531551f1ceb)
+- Update README.md [`1b4264a`](https://github.com/zumerlab/grid/commit/1b4264a8e108e3298c4cbeca420289d6946291bd)
+- chore [`5b2205b`](https://github.com/zumerlab/grid/commit/5b2205b3360f464abb1837c7f4b704b9d0330af1)
+- update [`be740b9`](https://github.com/zumerlab/grid/commit/be740b911350306119c6252df36a6aac968292e3)
+- Update README.md [`ab78ba8`](https://github.com/zumerlab/grid/commit/ab78ba8a349b3d7adf6d2a68c33695880ed2ca25)
+- Update README.md [`06f3993`](https://github.com/zumerlab/grid/commit/06f3993a09edfb946ed63af61565f8b91f5538c1)
 
 #### [v0.4.1](https://github.com/zumerlab/grid/compare/v0.4.0...v0.4.1)
 
