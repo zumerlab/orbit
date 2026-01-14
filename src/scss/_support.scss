@@ -45,7 +45,7 @@
 
 @supports  not (fill: context-stroke) {
 
-  :not[shape="none"] {
+  :not([shape="none"]) {
     display: none;
   }
   
