@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v1.4.5](https://github.com/zumerlab/grid/compare/v1.4.4...v1.4.5)
+
+> 21 January 2026
+
+- fix --o-angle-composite formular for satellite, side and vector [`84a3ca5`](https://github.com/zumerlab/grid/commit/84a3ca569682773f0bb0cd3dc29bb4cf0fc8370b) & [`4d50f1c`](https://github.com/zumerlab/grid/commit/4d50f1cbbf6fa1187c6a4585b5e35146f687e04b)
+
 #### [v1.4.4](https://github.com/zumerlab/grid/compare/v1.4.3...v1.4.4)
 
 > 15 January 2026
