@@ -2,7 +2,7 @@
 
 .side {
   container-name: side;
-  --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) var(--o-offset, + 270deg)) * var(--o-direction, 1);
+  --o-angle-composite: (var(--o-angle) * var(--o-orbit-child-number) + var(--o-offset, 270deg)) * var(--o-direction, 1);
   --o-y: calc(var(--o-radius) * sin(90deg - var(--o-angle) / 2));
   --o-x: calc(var(--o-radius) * cos(90deg - var(--o-angle) / 2) * 2);
   --o-transform: rotate( calc(var(--o-from) + var(--o-angle-composite)))
