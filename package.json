@@ -1,6 +1,6 @@
 {
   "name": "@zumer/orbit",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Orbit is a CSS framework for radial interfaces",
   "main": "./dist/orbit.js",
   "scripts": {
