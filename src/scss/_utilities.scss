@@ -1,6 +1,7 @@
+@use 'sass:math';
 @use './variables' as *;
 
-/* radial elements  aligment utilities */
+/* radial elements alignment utilities */
 .at-top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
@@ -81,8 +82,8 @@ $max-grade: 360;
   Sector gap 
 */ 
 
-$max-gaps: calc($max-orbiters / 2);
-@for $i from 0 through  $max-gaps {
+$max-gaps: math.div($max-orbiters, 2);
+@for $i from 0 through $max-gaps {
   o-arc.gap-#{$i} {
     --o-gap: #{$i};
   }
