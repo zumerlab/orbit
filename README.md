@@ -1,170 +1,177 @@
+# Orbit CSS
+
+**Orbit** is a CSS framework for building radial UIs — gauges, donuts, knobs, pie menus, dashboards — with **CSS only**. No layout JavaScript. Works with plain HTML and any framework (React, Vue, Svelte).
 
 <p align="center">
-  <a href="http://zumerlab.github.io/orbit-docs">
-    <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/orbithero.gif" width="100%">
-  </a>
-</p>
-<p align="center">
-  <a href="https://zumerlab.github.io/orbit-docs" target="_blank"><b>📚 Docs</b></a> •
-  <a href="https://github.com/zumerlab/orbit/discussions" target="_blank"><b>💬 Github discussions</b></a> •
-  <a href="https://t.me/ZumlyCommunity" target="_blank"><b>🧑‍💻 Telegram group</b></a>
-</p>
-<p align="center">
-  <b>Use Orbit to create amazing radial UIs using CSS only!</b>
-</p>
-
-<p align="center">
-  <a href="https://www.npmjs.com/package/@zumer/orbit"><img src="https://img.shields.io/github/package-json/v/zumerlab/orbit"></a>
+  <a href="examples/landing.html"><strong>🚀 Live showcase &amp; demos</strong></a>
+  &nbsp;•&nbsp;
+  <a href="https://zumerlab.github.io/orbit-docs" target="_blank">Full docs</a>
+  &nbsp;•&nbsp;
+  <a href="https://github.com/zumerlab/orbit/discussions">Discussions</a>
+  &nbsp;•&nbsp;
+  <a href="https://t.me/ZumlyCommunity">Telegram</a>
 </p>
 
 <p align="center">
-  <a href="#stay-in-orbit"><b>Get involved</b></a>, 
-place your ⭐ in Orbit! <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
+  <a href="https://www.npmjs.com/package/@zumer/orbit"><img src="https://img.shields.io/npm/v/@zumer/orbit" alt="npm"></a>
+  <a href="https://github.com/zumerlab/orbit/stargazers"><img src="https://img.shields.io/github/stars/zumerlab/orbit" alt="Stars"></a>
 </p>
 
-## Orbit CSS overview
-
-**Orbit** is a CSS framework designed for creating radial layouts. It offers simplicity, effectiveness, ease of use, and tremendous versatility for crafting compelling designs. It offers extensive customization options and supports nesting for building intricate designs tailored to your requirements.
+---
 
 ## Why Orbit?
 
-Creating radial UIs generally involves using JavaScript or other programming languages to calculate angles, radii, distances, and more. **Orbit** saves you time and effort by enabling you to build these UIs with just CSS.
-
-## Features
-
-With **Orbit**, you can:
-
-- Build any kind of radial UI using predefined CSS classes that do the heavy lifting.  
-- Easily compose simple or complex radial designs by combining **Orbit** elements.  
-- Use **Orbit** alongside other traditional CSS frameworks.  
-- Get started quickly with our detailed documentation, examples, and guides.  
-
-## Documentation
-
-Learn all about **Orbit** in our [doc site](https://zumerlab.github.io/orbit-docs)!
-
-## What is radial UI?
-
-Radial UI refers to a design paradigm where elements are organized in a circular or radial pattern, diverging from traditional grid-based or linear layouts. This design approach is particularly effective for applications that involve:
-
-- **Circular data visualization:** progress bars, pie charts, multi-level pies, gauges, knobs  
-- **Navigation menus and controls:** radial or pie menus, circular scrolling  
-- **Dashboards:** smart-home interfaces, car dashboards, infotainment systems  
-- **Calendars:** circular layouts for scheduling and event tracking  
-- **Creative art and structures:** mandalas, sci-fi-inspired art, chemical structures  
-- **Interactive interfaces:** watch faces, dynamic controls for games or tools  
-
-**Characteristics:**
-
-- **Circular layout:** elements are arranged in a circular or curved pattern.  
-- **Center-focused:** the center often serves as a focal point.  
-- **Symmetry:** radial UIs frequently exhibit symmetry, fostering a sense of balance.  
-- **Angular relationships:** elements are positioned at specific angles relative to one another.  
-
-**Benefits:**
-
-- **Aesthetics:** radial designs are visually striking and engaging.  
-- **Intuitive navigation:** circular layouts simplify navigation and reduce cognitive load.  
-- **Space efficiency:** radial UIs make efficient use of available screen, ideal for both compact and expansive interfaces.  
+Radial UIs usually need JavaScript to compute angles, radii, and positions. **Orbit** handles all of that with CSS classes and a couple of Web Components. Drop in two files and start building.
 
 ## Installation
 
-**Orbit** comes with just two files: `orbit.css` (or `orbit.min.css`) and `orbit.js` (or `orbit.min.js`).
+**CDN (fastest):**
 
-### Obtaining the Orbit files
+```html
+<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
+<script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+```
 
-You can get **Orbit** files in three ways:  
+**npm:**
 
-#### 1. Download the files
-
-- Download the **CSS file:** [orbit.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.css) or [orbit.min.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.css).  
-- Download the **JS file:** [orbit.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.js) or [orbit.min.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.js).  
-
-#### 2. Use a CDN
-
-- **CSS:**  
-  Uncompressed: [orbit.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.css)  
-  Minified: [orbit.min.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.css)  
-
-- **JS:**  
-  Uncompressed: [orbit.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.js)  
-  Minified: [orbit.min.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.js)  
-
-#### 3. Install via npm or yarn
-
-```sh
+```bash
 npm install @zumer/orbit
 ```
 
-or
-
-```sh
-yarn add @zumer/orbit
+```js
+import '@zumer/orbit/style'
+import '@zumer/orbit'
 ```
 
-### Adding Orbit to your project
+---
 
-Include the files in your project as follows:
+## Quick start
 
-```html
-<head>
-  <link rel="stylesheet" href="path/to/orbit.css">
-  <script src="path/to/orbit.js"></script>
-</head>
-```
-
-Or via CDN:
-
-```html
-<head>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
-</head>
-```
-
-## 🏁 Quick start
+Minimal gauge in 10 lines:
 
 ```html
 <div class="bigbang">
   <div class="gravity-spot">
-    <div class="orbit-2 range-180 from-180">
-      <o-arc shape="circle" class="shrink-50"></o-arc>
-    </div>
-    <div class="orbit-3 range-270 ">
-      <o-arc shape="circle" class="shrink-50"></o-arc>
+    <div class="orbit-4">
+      <o-progress value="72"></o-progress>
     </div>
   </div>
 </div>
 ```
 
+**Structure:** `bigbang` (container) → `gravity-spot` (center) → `orbit-N` (ring level) → `o-progress` or `o-arc` (the visual element).
+
+---
+
+## Core elements
+
+| Element | Role |
+|---------|------|
+| `.bigbang` | Root container, sets viewport |
+| `.gravity-spot` | Center of the radial layout; holds rings |
+| `.orbit-1` … `.orbit-7` | Rings at different radii (1 = innermost) |
+| `.satellite` | Item placed on a ring (dot, label, icon) |
+| `<o-arc>` | Arc segment (donut slice, gauge needle, menu sector); `value` 0–100, `shape` e.g. `arrow`, `circle-a` |
+| `<o-progress>` | Simple progress ring |
+| `.vector` | Tick/marker on a ring |
+| `.side` | Stretch content along arc |
+| `.capsule` | Wrapper for content inside satellite; required when satellite holds more than plain text |
+
+**Structure rules (avoid visual warnings):**
+- `.bigbang` → direct children: `.gravity-spot` only
+- `.gravity-spot` → direct children: `.orbit`, `.orbit-N`, or `.gravity-spot` only
+- `.satellite` → direct children: `.capsule` or `.gravity-spot` (for nesting) only
+- `.orbit` / `.orbit-N` → do not nest other orbits; orbits live inside gravity-spot
+- `o-arc` and `o-progress` → only work in circular orbits; they are hidden in elliptical shapes
+
+**Useful classes:** `range-180`, `range-270`, `range-360` (arc span); `from-180` (start angle); `fit-range` (distribute items); `shrink-50`, `gap-4` (spacing); `at-center` (place satellite in middle).
+
+---
+
+## Themes
+
+Orbit includes built-in themes. Add the theme class to `.bigbang`:
+
+| Theme | Class | Description |
+|-------|-------|-------------|
+| **Default** | *(none)* | Transparent borders, gray fills, satellites use `currentColor` |
+| **Cyan** | `theme-cyan` | Cyan satellite borders, cyan vectors/sides, light cyan fills for `o-arc` and `o-progress` |
+| **Developer** | `dev-orbit` | Dashed red borders on orbits and satellites to visualize structure while debugging |
+
+```html
+<!-- Default (no class) -->
+<div class="bigbang">...</div>
+
+<!-- Cyan theme -->
+<div class="bigbang theme-cyan">...</div>
+
+<!-- Developer mode for layout debugging -->
+<div class="bigbang dev-orbit">...</div>
+```
+
+You can combine themes, e.g. `class="bigbang theme-cyan dev-orbit"`.
+
+---
+
+## Visual aids & development
+
+Orbit provides **CSS visual warnings** to catch invalid structure. When rules are broken (e.g. wrong children in `gravity-spot` or `satellite`), Orbit shows a red dotted border, grays out content, and displays a ⚠️ icon.
+
+Add **`class="dev-orbit"`** to your root container to enable **developer mode**: dashed red borders on `gravity-spot`, `orbit`, and `satellite` to visualize the layout structure. Useful for debugging.
+
+```html
+<div class="bigbang dev-orbit">
+  <div class="gravity-spot">
+    ...
+  </div>
+</div>
+```
+
+Orbit also checks browser support for `:has()` and trigonometric CSS functions (`cos`, `sin`); unsupported browsers show an upgrade message. See [CSS visual aids](https://zumerlab.github.io/orbit-docs/tools/support) in the full docs.
+
+---
+
 ## Examples
 
-- **A dashboard**  
-  ![demo1](https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/demo1.png)  
+Browse examples on the [Orbit docs site](https://zumerlab.github.io/orbit-docs):
 
-- **A watch**  
-  ![demo3](https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/demo3.png)  
+| Example | Link |
+|---------|------|
+| Circular timer | [circular_time](https://zumerlab.github.io/orbit-docs/examples/circular_time/) |
+| Progress bars | [progress](https://zumerlab.github.io/orbit-docs/examples/progress/) |
+| Charts (donut, pie, sunburst) | [charts](https://zumerlab.github.io/orbit-docs/examples/charts/) |
+| Gauges (180°, 240°, fuel) | [gauges](https://zumerlab.github.io/orbit-docs/examples/gauges/) |
+| Knobs | [knobs](https://zumerlab.github.io/orbit-docs/examples/knobs/) |
+| Pie menus | [piemenu](https://zumerlab.github.io/orbit-docs/examples/piemenu/) |
+| Watch faces | [watches](https://zumerlab.github.io/orbit-docs/examples/watches/) |
+| Chemical structures | [chemical_structures](https://zumerlab.github.io/orbit-docs/examples/chemical_structures/) |
+| Calendars & time planners | [calendar](https://zumerlab.github.io/orbit-docs/examples/calendar/) |
+| Mandalas | [mandalas](https://zumerlab.github.io/orbit-docs/examples/mandalas/) |
+| Dashboard | [dashboard](https://zumerlab.github.io/orbit-docs/examples/dashboard/) |
+| Abstract orbital map | [abstract_map](https://zumerlab.github.io/orbit-docs/examples/abstract_map/) |
 
-Explore more examples in our [doc site](https://zumerlab.github.io/orbit-docs/examples/progress).
+---
 
-## Stay in Orbit
+## Use cases
 
-There are many ways to **contribute** to **Orbit** development:
+- **Dashboards:** gauges, status rings, KPIs  
+- **Automotive / HUD:** speedometers, tachometers, battery, temp  
+- **IoT / Smart home:** thermostats, energy rings, scenes  
+- **Ops / monitoring:** status rings, uptime gauges  
+- **Fitness / health:** activity rings (Move, Exercise, Stand)  
+- **Controls:** knobs, radial menus, compass  
 
-- [**Contribution guidelines**](https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md): This guide outlines how you can contribute to Orbit, help us test and improve it, and share your experiences with the community.
-- [**GitHub discussions**](https://github.com/zumerlab/orbit/discussions): Engage with other contributors, ask questions, and share your experiences.
-- [**Telegram group**](https://t.me/ZumlyCommunity): Join our Telegram group for real-time discussions and updates.
+---
 
-## Special thanks to our contributors
+## Resources
 
-<a href="https://github.com/zumerlab/orbit-docs/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=zumerlab/orbit-docs" />
-</a>
+- [Full documentation](https://zumerlab.github.io/orbit-docs) — elements, tools, advanced examples  
+- [Contributing](CONTRIBUTING.md)  
+- [GitHub Discussions](https://github.com/zumerlab/orbit/discussions)  
+- [Telegram](https://t.me/ZumlyCommunity)  
 
-<a href="https://github.com/zumerlab/orbit/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=zumerlab/orbit" />
-</a>
+---
 
-## License 
+## License
 
-[MIT](https://github.com/zumerlab/orbit/blob/main/LICENSE)
+[MIT](LICENSE)
