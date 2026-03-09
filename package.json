@@ -3,16 +3,21 @@
   "version": "1.4.5",
   "description": "Orbit is a CSS framework for radial interfaces",
   "main": "./dist/orbit.js",
-  "scripts": {
-    "compile": "npx @zumerbox/build -n orbit -j src/orbit.js -s src/orbit.scss",
-    "build": "npm run compile && npm pack",
-    "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
-    "prebuild": "git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags"
+  "exports": {
+    ".": "./dist/orbit.js",
+    "./style": "./dist/orbit.css"
   },
   "files": [
-    "README.md",
-    "dist/"
+    "dist/",
+    "README.md"
   ],
+  "scripts": {
+    "compile": "node esbuild.config.mjs",
+    "bump:dry": "npx @zumerbox/bump -d",
+    "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
+    "build": "npm run compile && npm pack",
+    "prebuild": "git add CHANGELOG.md && git commit -m \"Bumped version\" && git push --follow-tags"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zumerlab/orbit.git"
@@ -32,5 +37,9 @@
   "bugs": {
     "url": "https://github.com/zumerlab/orbit/issues"
   },
-  "homepage": "https://github.com/zumerlab/orbit#readme"
+  "homepage": "https://github.com/zumerlab/orbit#readme",
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "sass": "^1.77.0"
+  }
 }
