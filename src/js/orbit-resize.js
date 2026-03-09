@@ -1,37 +1,28 @@
-
-let Orbit = {}
-
-Orbit = {
-    resize: (parentElementSelector) => {
-        const parentElement = document.querySelector(parentElementSelector);
-    
-        if (!parentElement) {
-        console.error(`Not found: ${parentElementSelector}`);
-        return;
-        }
-        const resizeObserver = new ResizeObserver(entries => {
-        for (let entry of entries) {
-            const { width } = entry.contentRect;
-
-            const childElements = parentElement.querySelectorAll('.gravity-spot');
-            if (childElements) {
-                childElements.forEach(childElement => {
-                    let gravityForce = getComputedStyle(childElement).getPropertyValue('--o-force');
-                    
-                    let forceRatio = width / 500
-                    
-                    childElement.style.setProperty('--o-force-ratio', `${forceRatio}`);
-                });
-            
-            } else {
-            console.error('No gravity-spot found');
-            }
-        }
-        });
-    
-        // Start observing the parent element
-        resizeObserver.observe(parentElement);
+const Orbit = {
+  resize(parentElementSelector) {
+    const parent = document.querySelector(parentElementSelector);
+    if (!parent) {
+      console.error('Orbit.resize: element not found:', parentElementSelector);
+      return;
     }
-}
+    const applyRatio = (width) => {
+      parent.querySelectorAll('.gravity-spot').forEach((el) => {
+        el.style.setProperty('--o-force-ratio', String(width / 500));
+      });
+    };
+    let w = parent.offsetWidth || parent.getBoundingClientRect().width;
+    if (w > 0) applyRatio(w);
+    else requestAnimationFrame(() => {
+      w = parent.offsetWidth || parent.getBoundingClientRect().width;
+      if (w > 0) applyRatio(w);
+    });
+    const ro = new ResizeObserver((entries) => {
+      for (const e of entries) {
+        if (e.contentRect.width > 0) applyRatio(e.contentRect.width);
+      }
+    });
+    ro.observe(parent);
+  }
+};
 
-export {Orbit}
+export { Orbit };
