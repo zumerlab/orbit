@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v1.4.8](https://github.com/zumerlab/grid/compare/v1.4.5...v1.4.8)
+
+> 8 March 2026
+
+- Rewrite compile code and commands. Closes #52 [`#52`](https://github.com/zumerlab/grid/issues/52)
+- Replace import by use [`3d6b3de`](https://github.com/zumerlab/grid/commit/3d6b3de722a3dfab18ece7879478a31c0e6d6509)
+- Fix bug in Safari that prevents show any content [`d924aa0`](https://github.com/zumerlab/grid/commit/d924aa09ff3b2aac3e0fc9e8c55e028e71426ecb)
+- Bumped version [`4369687`](https://github.com/zumerlab/grid/commit/43696874ed2f2ba36285fe883ffcc6e98d2c6c1d)
+
 #### [v1.4.5](https://github.com/zumerlab/grid/compare/v1.4.4...v1.4.5)
 
 > 21 January 2026
