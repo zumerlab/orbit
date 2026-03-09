@@ -67,15 +67,11 @@ export class OrbitProgress extends OrbitBase {
   }
 
   update() {
-    const progressBg = this.shadowRoot.querySelector('.progress-bg');
-    const progressBar = this.shadowRoot.querySelector('.progress-bar');
-    this.updateArc(progressBg, true);
-    this.updateArc(progressBar, false);
-  }
-
-  updateArc(arc, full) {
-    const { d } = this.calculateArcParameters(full);
-    arc.setAttribute('d', d);
+    const attrs = this.getAttributes();
+    const dBg = this.calculateArcParameters(attrs, true);
+    const dBar = this.calculateArcParameters(attrs, false);
+    this.shadowRoot.querySelector('.progress-bg').setAttribute('d', dBg);
+    this.shadowRoot.querySelector('.progress-bar').setAttribute('d', dBar);
   }
 
   getAttributes() {
@@ -92,16 +88,16 @@ export class OrbitProgress extends OrbitBase {
     };
   }
 
-  getProgressAngle(full) {
-    const { range, progress, maxValue } = this.getAttributes();
+  getProgressAngle(attrs, full) {
+    const { range, progress, maxValue } = attrs;
     return full
       ? ((maxValue - 0.00001) / maxValue) * range
       : (progress / maxValue) * range;
   }
 
-  calculateArcParameters(full) {
-    const { shape, realRadius, arcHeightPercentage, orbitNumber, strokeWidth, arcHeight } = this.getAttributes();
-    const arcAngle = this.getProgressAngle(full);
+  calculateArcParameters(attrs, full) {
+    const { shape, realRadius, arcHeightPercentage, orbitNumber, strokeWidth, arcHeight } = attrs;
+    const arcAngle = this.getProgressAngle(attrs, full);
     
     const params = super.calculateCommonArcParameters(
       arcAngle, 
@@ -113,8 +109,6 @@ export class OrbitProgress extends OrbitBase {
       arcHeight
     );
     
-    const d = super.generatePathData(shape, params, arcHeight, orbitNumber);
-    
-    return { d };
+    return super.generatePathData(shape, params, arcHeight, orbitNumber);
   }
 }
