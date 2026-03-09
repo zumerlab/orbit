@@ -61,8 +61,8 @@ export class OrbitArc extends OrbitBase {
   }
 
   disconnectedCallback() {
-    this.observer?.disconnect();
-    this.textObserver?.disconnect();
+    if (this.observer) this.observer.disconnect();
+    if (this.textObserver) this.textObserver.disconnect();
   }
 
   setupObservers() {
@@ -83,17 +83,14 @@ export class OrbitArc extends OrbitBase {
   }
 
   update() {
-    const { length, fontSize, textAnchor, fitRange } = this.getAttributes();
-    const orbitPath = this.shadowRoot.getElementById('orbitPath');
-    const orbitShape = this.shadowRoot.getElementById('orbitShape');
-    const text = this.shadowRoot.querySelector('text');
+    const attrs = this.getAttributes();
+    const { length, fontSize, textAnchor, fitRange } = attrs;
+    const orbitPath = this.shadowRoot.querySelector('#orbitPath');
+    const orbitShape = this.shadowRoot.querySelector('#orbitShape');
     const textPath = this.shadowRoot.querySelector('textPath');
 
-    const { dShape } = this.calculateArcParameters();
-    const { dPath } = this.calculateTextArcParameters();
-
-    orbitShape.setAttribute('d', dShape);
-    orbitPath.setAttribute('d', dPath);
+    orbitShape.setAttribute('d', this.calculateArcParameters(attrs).dShape);
+    orbitPath.setAttribute('d', this.calculateTextArcParameters(attrs).dPath);
 
     if (textAnchor === 'start') {
       textPath.setAttribute('startOffset', '0%');
@@ -110,7 +107,7 @@ export class OrbitArc extends OrbitBase {
       textPath.parentElement.setAttribute('textLength', orbitPath.getTotalLength());
     }
 
-    text.style.fontSize = `calc(${fontSize} * (100 / (${length}) * (12 / var(--o-orbit-number)))`;
+    textPath.parentElement.style.fontSize = `calc(${fontSize} * (100 / (${length}) * (12 / var(--o-orbit-number)))`;
     textPath.textContent = this.textContent;
   }
 
@@ -119,13 +116,13 @@ export class OrbitArc extends OrbitBase {
     let arcAngle;
     const flip = this.hasAttribute('flip') || this.classList.contains('flip');
     const fitRange = this.hasAttribute('fit-range') || this.classList.contains('fit-range') || false;
-    const length = parseFloat(getComputedStyle(this).getPropertyValue('--o-force'));
+    const length = parseFloat(getComputedStyle(this).getPropertyValue('--o-force')) || 100;
     const textAnchor = this.getAttribute('text-anchor') || 'middle';
     const fontSize = getComputedStyle(this).getPropertyValue('font-size') || 
                      getComputedStyle(this).getPropertyValue('--font-size');
     const range = parseFloat(getComputedStyle(this).getPropertyValue('--o-range') || 360);
     const value = parseFloat(this.getAttribute('value'));
-    const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap'));
+    const gap = parseFloat(getComputedStyle(this).getPropertyValue('--o-gap')) || 1;
 
     if (value) {
       arcAngle = super.getProgressAngle(range, value);
@@ -157,8 +154,8 @@ export class OrbitArc extends OrbitBase {
     };
   }
 
-  calculateArcParameters() {
-    const { arcAngle, realRadius, arcHeightPercentage, orbitNumber, shape, strokeWidth, arcHeight, gap } = this.getAttributes();
+  calculateArcParameters(attrs) {
+    const { arcAngle, realRadius, arcHeightPercentage, orbitNumber, shape, strokeWidth, arcHeight, gap } = attrs;
     
     const params = super.calculateCommonArcParameters(
       arcAngle, 
@@ -176,8 +173,8 @@ export class OrbitArc extends OrbitBase {
     return { dShape };
   }
 
-  calculateTextArcParameters() {
-    const { arcAngle, realRadius, gap, flip } = this.getAttributes();
+  calculateTextArcParameters(attrs) {
+    const { arcAngle, realRadius, gap, flip } = attrs;
     const adjustedGap = gap * 0.5;
     const sweepFlag = flip ? 0 : 1;
     const largeArcFlag = arcAngle <= 180 ? 0 : 1;
