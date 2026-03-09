@@ -1,17 +1,6 @@
 export class OrbitBase extends HTMLElement {
-    constructor() {
-     super();
-    this.commonProperties = {
-      orbitRadius: 0,
-      arcHeight: 0,
-      realRadius: 0,
-      arcAngle: 0,
-      shape: 'none',
-      arcHeightPercentage: 0,
-      orbitNumber: 1,
-      size: 1,
-      strokeWidth: 1
-    };
+  constructor() {
+    super();
   }
 
   getCommonAttributes(element) {
@@ -22,7 +11,7 @@ export class OrbitBase extends HTMLElement {
     const shape = element.getAttribute('shape') || 'none';
     
     const arcHeight = orbitRadius / orbitNumber * size - strokeWidth + 0.3;
-    const arcHeightPercentage = ((arcHeight / 2) * 100) / orbitRadius / 2;
+    const arcHeightPercentage = orbitRadius > 0 ? ((arcHeight / 2) * 100) / orbitRadius / 2 : 0;
     
     let innerOuter = 0;
     if (element.classList.contains('outer-orbit')) {
@@ -169,15 +158,11 @@ export class OrbitBase extends HTMLElement {
     const Q3 = this.getControlPoint(upperPointStart.x, upperPointStart.y, newUpperStart.x, newUpperStart.y);
 
     let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
-    d += `Q ${Q.xc}, ${Q.yc} ${upperPointEnd.x} ${upperPointEnd.y} `;
-    d += `L ${upperPointEnd.x} ${upperPointEnd.y}`;
-    d += `L ${innerPointEnd.x} ${innerPointEnd.y}`;
-    d += `Q ${Q1.xc}, ${Q1.yc} ${newInnerEnd.x} ${newInnerEnd.y} `;
+    d += `Q ${Q.xc},${Q.yc} ${upperPointEnd.x},${upperPointEnd.y} L ${innerPointEnd.x},${innerPointEnd.y}`;
+    d += `Q ${Q1.xc},${Q1.yc} ${newInnerEnd.x},${newInnerEnd.y}`;
     d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${newInnerStart.x},${newInnerStart.y}`;
-    d += `Q ${Q2.xc}, ${Q2.yc} ${innerPointStart.x} ${innerPointStart.y} `;
-    d += `L ${innerPointStart.x} ${innerPointStart.y}`;
-    d += `L ${upperPointStart.x} ${upperPointStart.y}`;
-    d += ` Q ${Q3.xc}, ${Q3.yc} ${newUpperStart.x} ${newUpperStart.y} `;
+    d += `Q ${Q2.xc},${Q2.yc} ${innerPointStart.x},${innerPointStart.y} L ${upperPointStart.x},${upperPointStart.y}`;
+    d += ` Q ${Q3.xc},${Q3.yc} ${newUpperStart.x},${newUpperStart.y}`;
     d += ` Z`;
     
     return d;
@@ -250,13 +235,13 @@ generateSlashPath(params, shape, orbitNumber) {
 generateZigzagPath(params, arcHeight, orbitNumber) {
   const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlag, radius } = params;
   
-  const s2 = this.arcPoint(radius, params.upperAngleStart, -arcHeight / orbitNumber / 2, 3);
-  const s3 = this.arcPoint(radius, params.upperAngleStart, 0 / orbitNumber / 2, 0);
-  const s4 = this.arcPoint(radius, params.upperAngleStart, arcHeight / orbitNumber / 2, 3);
-
-  const e2 = this.arcPoint(radius, params.innerAngleEnd, arcHeight / orbitNumber / 2, 3);
-  const e3 = this.arcPoint(radius, params.innerAngleEnd, 0 / orbitNumber / 2, 0);
-  const e4 = this.arcPoint(radius, params.innerAngleEnd, -arcHeight / orbitNumber / 2, 3);
+  const h2 = arcHeight / orbitNumber / 2;
+  const s2 = this.arcPoint(radius, params.upperAngleStart, -h2, 3);
+  const s3 = this.arcPoint(radius, params.upperAngleStart, 0, 0);
+  const s4 = this.arcPoint(radius, params.upperAngleStart, h2, 3);
+  const e2 = this.arcPoint(radius, params.innerAngleEnd, h2, 3);
+  const e3 = this.arcPoint(radius, params.innerAngleEnd, 0, 0);
+  const e4 = this.arcPoint(radius, params.innerAngleEnd, -h2, 3);
 
   let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
   d += `L ${e2.x} ${e2.y}`;
