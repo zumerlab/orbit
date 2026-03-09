@@ -1,26 +1,26 @@
 /*================
     ORBIT CORE
 ==================*/
-@import './scss/_settings.scss';
-@import './scss/_radial-layout.scss';
-@import './scss/_bigbang.scss';
-@import './scss/_gravity-spot.scss';
-@import './scss/_orbit-class.scss';
-@import './scss/_satellite.scss';
-@import './scss/_vector.scss';
-@import './scss/_side.scss';
-@import './scss/_arc.scss';
-@import './scss/_progress.scss';
-@import './scss/_capsule.scss';
-@import './scss/_utilities.scss';
+@use './scss/settings';
+@use './scss/radial-layout';
+@use './scss/bigbang';
+@use './scss/gravity-spot';
+@use './scss/orbit-class';
+@use './scss/satellite';
+@use './scss/vector';
+@use './scss/side';
+@use './scss/arc';
+@use './scss/progress';
+@use './scss/capsule';
+@use './scss/utilities';
 
 /*================
     ORBIT SUPPORT
 ==================*/
-@import './scss/_support.scss';
+@use './scss/support';
 
 /*=================
     ORBIT THEME
 ===================*/
-@import './scss/_color-theme.scss';
-@import './scss/_themes.scss';
+@use './scss/color-theme';
+@use './scss/themes';
