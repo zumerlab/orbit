@@ -1,15 +1,10 @@
-# Orbit CSS
+# Orbit CSS Composer
 
 **Orbit** is a CSS framework for building radial UIs — gauges, donuts, knobs, pie menus, dashboards — with **CSS only**. No layout JavaScript. Works with plain HTML and any framework (React, Vue, Svelte).
 
 <p align="center">
-  <a href="examples/landing.html"><strong>🚀 Live showcase &amp; demos</strong></a>
-  &nbsp;•&nbsp;
-  <a href="https://zumerlab.github.io/orbit-docs" target="_blank">Full docs</a>
-  &nbsp;•&nbsp;
-  <a href="https://github.com/zumerlab/orbit/discussions">Discussions</a>
-  &nbsp;•&nbsp;
-  <a href="https://t.me/ZumlyCommunity">Telegram</a>
+  <a href="https://zumerlab.github.io/orbit-docs" target="_blank"><strong>🚀 Live showcase &amp; docs</strong></a>
+
 </p>
 
 <p align="center">
