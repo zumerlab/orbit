@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>09 — Compass | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: linear-gradient(180deg, #1c1917 0%, #0c0a09 100%); }
+    .demo { width: 260px; aspect-ratio: 1; }
+    .demo .satellite { border: none; }
+    .capsule.card {
+      padding: 6px 12px; border-radius: 8px;
+      background: rgba(250,250,249,.06);
+      font: 800 13px/1 system-ui; color: #fafaf9;
+      border: 1px solid rgba(250,250,249,.12);
+    }
+    .capsule.card#hdg { font-size: 17px; letter-spacing: .08em; }
+    .demo o-arc { --o-fill: #dc2626; }
+    .needle { filter: drop-shadow(0 0 2px rgba(220,38,38,.5)); }
+    .btns { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; }
+    .btns button {
+      padding: 12px 24px; border-radius: 10px;
+      background: rgba(250,250,249,.05); color: #fafaf9;
+      border: 1px solid rgba(250,250,249,.2);
+      cursor: pointer; font-weight: 700; font-size: 16px;
+    }
+    .btns button:hover { background: rgba(250,250,249,.1); }
+    .ring { filter: drop-shadow(0 4px 24px rgba(0,0,0,.4)); }
+    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #0c0a09; color: #78716c; font: 13px/1.5 system-ui; border-top: 1px solid #292524; }
+    .doc code { color: #dc2626; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang ring">
+    <div class="gravity-spot">
+      <div class="orbit-5 range-360 from-0 fit-range">
+        <div class="satellite"><div class="capsule card">N</div></div>
+        <div class="satellite"><div class="capsule card">E</div></div>
+        <div class="satellite"><div class="capsule card">S</div></div>
+        <div class="satellite"><div class="capsule card">W</div></div>
+      </div>
+      <div class="orbit-4 range-360 from-0">
+        <o-arc id="needle" value="0" shape="arrow" class="needle" style="--o-fill:#dc2626"></o-arc>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule card" id="hdg">000°</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="btns">
+    <button id="left">←</button>
+    <button id="right">→</button>
+  </div>
+
+  <div class="doc">
+    <strong>09 — Compass</strong> · Full circle + cardinal points. 360° mapping.
+  </div>
+
+  <script>
+    let hdg=0;
+    const needle=document.getElementById('needle'), lbl=document.getElementById('hdg');
+    const set=d=>{ hdg=(d%360+360)%360; needle.setAttribute('value',Math.round(hdg/3.6)); lbl.textContent=String(hdg).padStart(3,'0')+'°'; };
+    document.getElementById('left').onclick=()=>set(hdg-15);
+    document.getElementById('right').onclick=()=>set(hdg+15);
+    set(0);
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../dist/orbit.css">
+<title>Orbit — Studio Knobs</title>
+<style>
+  body{margin:0;background:#0c0e13;color:#e7eaef;font:13px/1.4 system-ui,sans-serif}
+  .rack{max-width:920px;margin:48px auto;padding:0 20px;display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .module{background:#0f1116;border:1px solid #1b2030;border-radius:16px;padding:16px}
+  .hd{opacity:.7;margin-bottom:10px}
+  .knob{height:220px;display:grid;place-items:center}
+  .satellite{border:none}
+  .tick{height:2px;background:#2b3347}
+  .readout{text-align:center;margin-top:10px;opacity:.85}
+  .val{font-size:18px;font-weight:700;color:#fff}
+</style>
+</head>
+<body>
+  <div class="rack">
+    <!-- Volume -->
+    <div class="module">
+      <div class="hd">Volume</div>
+      <div class="knob">
+        <div class="bigbang">
+          <div class="gravity-spot">
+            <div class="orbit-5 range-270 from-225">
+              <div class="vector tick"></div><div class="vector tick"></div><div class="vector tick"></div>
+              <div class="vector tick"></div><div class="vector tick"></div><div class="vector tick"></div>
+            </div>
+            <div class="orbit-4">
+              <o-arc value="72" shape="circle-a" style="--o-stroke:#1e2636;--o-stroke-width:10;--o-fill:var(--o-cyan)"></o-arc>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center"><div class="capsule val">72%</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="readout">Output level</div>
+    </div>
+
+    <!-- Balance -->
+    <div class="module">
+      <div class="hd">Balance</div>
+      <div class="knob">
+        <div class="bigbang">
+          <div class="gravity-spot">
+            <div class="orbit-4 range-180 from-180">
+              <o-arc value="45" style="--o-stroke:#222532;--o-stroke-width:10;--o-fill:var(--o-purple)"></o-arc>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center"><div class="capsule val">L45</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="readout">Left / Right</div>
+    </div>
+
+    <!-- Gain -->
+    <div class="module">
+      <div class="hd">Gain</div>
+      <div class="knob">
+        <div class="bigbang">
+          <div class="gravity-spot">
+            <div class="orbit-4">
+              <o-arc value="18" shape="zigzag" style="--o-stroke:#33231f;--o-stroke-width:10;--o-fill:var(--o-orange)"></o-arc>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center"><div class="capsule val">+18 dB</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="readout">Preamp boost</div>
+    </div>
+  </div>
+  <script defer src="../dist/orbit.js"></script>
+</body>
+</html>

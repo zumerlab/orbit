@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>08 — Solar System | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #030712; }
+    .demo { width: 340px; aspect-ratio: 1; }
+    .demo .satellite { border: none; }
+    .capsule.sun {
+      width: 40px; height: 40px; min-width: 40px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fef3c7, #f59e0b 40%, #d97706);
+      box-shadow: 0 0 60px #f59e0b, 0 0 120px rgba(245,158,11,.5);
+    }
+    .capsule.planet { width: 10px; height: 10px; min-width: 10px; border-radius: 50%; }
+    .capsule.moon { width: 5px; height: 5px; min-width: 5px; border-radius: 50%; background: #e5e7eb; box-shadow: 0 0 8px #d1d5db; }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    .o1 { animation: orbit 12s linear infinite; }
+    .o2 { animation: orbit 16s linear infinite; }
+    .o3 { animation: orbit 10s linear infinite; }
+    .o4 { animation: orbit 2.5s linear infinite; }
+    .ring { filter: drop-shadow(0 0 30px rgba(245,158,11,.1)); }
+    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #030712; color: #4b5563; font: 13px/1.5 system-ui; border-top: 1px solid #1f2937; }
+    .doc code { color: #f59e0b; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang ring">
+    <div class="gravity-spot">
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule sun"></div></div>
+      </div>
+      <div class="orbit-2 o1">
+        <div class="satellite"><div class="capsule planet" style="background:#a8a29e"></div></div>
+      </div>
+      <div class="orbit-3 o2">
+        <div class="satellite"><div class="capsule planet" style="background:#fbbf24"></div></div>
+      </div>
+      <div class="orbit-4 o1">
+        <div class="satellite">
+          <div class="capsule">
+            <div class="bigbang">
+              <div class="gravity-spot" style="--o-force: 72px">
+                <div class="orbit-0"><div class="satellite at-center"><div class="capsule planet" style="background:#60a5fa"></div></div></div>
+                <div class="orbit-2 o4"><div class="satellite"><div class="capsule moon"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="orbit-5 o3">
+        <div class="satellite"><div class="capsule planet" style="background:#f87171"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc">
+    <strong>08 — Solar system</strong> · Nested <code>.bigbang</code> = complex radial layouts. Orbit metaphor in action.
+  </div>
+</body>
+</html>

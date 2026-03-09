@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>02 — Spend Overview | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: linear-gradient(180deg, #1c1917 0%, #0c0a09 100%); }
+    .demo { width: 260px; aspect-ratio: 1; }
+    .demo .satellite { border: none; }
+    .demo .capsule {
+      font: 800 18px/1.1 system-ui; color: #fafaf9;
+      text-shadow: 0 1px 2px rgba(0,0,0,.5);
+      padding: 12px;
+    }
+    .demo .capsule span { display: block; font-size: 11px; font-weight: 600; color: #a8a29e; margin-top: 2px; }
+    .shadow { filter: drop-shadow(0 8px 32px rgba(0,0,0,.4)); }
+    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #0c0a09; color: #78716c; font: 13px/1.5 system-ui; border-top: 1px solid #292524; }
+    .doc code { color: #fbbf24; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang shadow">
+    <div class="gravity-spot">
+      <div class="orbit-3">
+        <o-arc value="52" style="--o-fill:#f97316;--o-stroke:#451a03;--o-stroke-width:5"></o-arc>
+        <o-arc value="28" style="--o-fill:#eab308;--o-stroke:#422006;--o-stroke-width:5"></o-arc>
+        <o-arc value="20" style="--o-fill:#22c55e;--o-stroke:#052e16;--o-stroke-width:5"></o-arc>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule">$2.4k<span>this month</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc">
+    <strong>02 — Spend overview</strong> · Stacked segments with clear hierarchy. Center = focal point.
+  </div>
+</body>
+</html>

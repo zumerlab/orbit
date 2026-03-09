@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>04 — Speedometer | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: linear-gradient(180deg, #0f172a 0%, #020617 100%); }
+    .demo { width: 300px; aspect-ratio: 1; }
+    .demo .satellite { border: none; }
+    .demo .vector { background: #334155 !important; height: 4px; }
+    .demo .capsule { font: 800 22px/1 system-ui; font-variant-numeric: tabular-nums; color: #f1f5f9; }
+    .demo .capsule small { font-size: 11px; font-weight: 600; color: #64748b; }
+    .needle { --o-fill: #f1f5f9 !important; filter: drop-shadow(0 0 4px rgba(241,245,249,.5)); }
+    .shadow { filter: drop-shadow(0 12px 40px rgba(0,0,0,.5)); }
+    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #020617; color: #475569; font: 13px/1.5 system-ui; border-top: 1px solid #1e293b; }
+    .doc code { color: #38bdf8; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang shadow">
+    <div class="gravity-spot">
+      <div class="orbit-6 range-270 from-225 fit-range">
+        <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+        <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+      </div>
+      <div class="orbit-5 range-270 from-225">
+        <o-arc class="gap-4" style="--o-fill:#22c55e"></o-arc>
+        <o-arc class="gap-4" style="--o-fill:#eab308"></o-arc>
+        <o-arc class="gap-4" style="--o-fill:#ef4444"></o-arc>
+      </div>
+      <div class="orbit-4 range-270 from-225">
+        <o-arc id="needle" value="58" shape="arrow" class="needle"></o-arc>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule"><span id="val">125</span><small>km/h</small></div></div>
+      </div>
+    </div>
+  </div>
+  <input id="rng" type="range" min="0" max="100" value="58" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:220px;accent-color:#3b82f6">
+
+  <div class="doc">
+    <strong>04 — Speedometer</strong> · Zone colors + tick marks (<code>.vector</code>) + needle.
+  </div>
+
+  <script>
+    const rng=document.getElementById('rng'), n=document.getElementById('needle'), v=document.getElementById('val');
+    rng.oninput=()=>{ const p=+rng.value; n.setAttribute('value',p); v.textContent=Math.round(p*2.2); };
+  </script>
+</body>
+</html>

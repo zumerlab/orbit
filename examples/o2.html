@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../dist/orbit.css">
+<title>Orbit — Funnel Gauge</title>
+<style>
+  body{margin:0;background:#0e0f12;color:#e8eaee;font:14px/1.4 system-ui,sans-serif;display:grid;place-items:center;height:100svh}
+  .panel{width:min(700px,92vw);background:#0f1116;border:1px solid #1b2030;border-radius:16px;padding:28px}
+  .h{opacity:.7;margin-bottom:12px}
+  .big {font-size:22px;font-weight:700}
+  .satellite{border:none}
+</style>
+</head>
+<body>
+  <div class="panel">
+    <div class="h">Sales Health</div>
+    <div class="bigbang">
+      <div class="gravity-spot">
+        <!-- Ticks 240° -->
+        <div class="orbit-7 range-240 from-240">
+          <div class="vector inner-orbit" style="height:3px;background:#1f2636"></div>
+          <div class="vector inner-orbit" style="height:3px;background:#1f2636"></div>
+          <div class="vector inner-orbit" style="height:3px;background:#1f2636"></div>
+          <div class="vector inner-orbit" style="height:3px;background:#1f2636"></div>
+          <div class="vector inner-orbit" style="height:3px;background:#1f2636"></div>
+          <div class="vector inner-orbit" style="height:3px;background:#1f2636"></div>
+        </div>
+
+        <!-- Bands -->
+        <div class="orbit-5 range-240 from-240">
+          <o-arc class="gap-6" style="--o-fill:var(--o-green)"></o-arc>
+          <o-arc class="gap-6" style="--o-fill:var(--o-yellow)"></o-arc>
+          <o-arc class="gap-6" style="--o-fill:var(--o-orange)"></o-arc>
+          <o-arc class="gap-6" style="--o-fill:var(--o-red)"></o-arc>
+        </div>
+
+        <!-- Needle (progress) -->
+        <div class="orbit-4 range-240 from-240">
+          <o-arc class="gap-0" value="68" shape="arrow" style="--o-fill:#e8eaee"></o-arc>
+        </div>
+
+        <!-- Center readout -->
+        <div class="orbit-0">
+          <div class="satellite at-center">
+            <div class="capsule" style="flex-direction:column;gap:6px">
+              <div style="font-size:42px;font-weight:800">68</div>
+              <div style="opacity:.7">Pipeline score</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

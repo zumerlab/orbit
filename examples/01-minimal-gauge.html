@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>01 — Daily Goal | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: radial-gradient(ellipse 120% 100% at 50% 0%, #1e1b4b 0%, #0f0f23 60%); }
+    .demo { width: 220px; aspect-ratio: 1; }
+    .demo .satellite { border: none; }
+    .demo o-progress {
+      --o-fill: #818cf8;
+      --o-stroke: rgba(129,140,248,.5);
+      --o-stroke-width: 6;
+      --o-back-stroke: rgba(30,27,75,.6);
+      --o-back-stroke-width: 6;
+    }
+    .ring { filter: drop-shadow(0 0 24px rgba(129,140,248,.25)); }
+    .center { font: 800 28px/1 system-ui; color: #e0e7ff; text-shadow: 0 0 20px rgba(224,231,255,.3); }
+    @keyframes breathe { 0%,100%{ opacity:1 } 50%{ opacity:.9 } }
+    .demo { animation: breathe 3s ease-in-out infinite; }
+    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #0f0f23; color: #6366f1; font: 13px/1.5 system-ui; border-top: 1px solid #1e1b4b; }
+    .doc code { color: #a5b4fc; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang ring">
+    <div class="gravity-spot">
+      <div class="orbit-4">
+        <o-progress value="72"></o-progress>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule center">72%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc">
+    <strong>01 — Daily goal</strong> · Center-focused radial design. <code>o-progress</code> with custom <code>--o-fill</code>, <code>--o-stroke</code>.
+  </div>
+</body>
+</html>

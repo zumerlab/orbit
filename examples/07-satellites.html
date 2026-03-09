@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>07 — Constellation | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: radial-gradient(ellipse 100% 80% at 50% 20%, #1e3a5f 0%, #0f172a 50%, #020617 100%); }
+    .demo { width: 320px; aspect-ratio: 1; }
+    .demo .satellite { border: none; }
+    .capsule.star { width: 10px; height: 10px; min-width: 10px; border-radius: 50%; background: #fef08a; box-shadow: 0 0 16px #fef08a, 0 0 32px rgba(254,240,138,.4); }
+    .orbit-2 .capsule.star { width: 6px; height: 6px; min-width: 6px; background: #93c5fd; box-shadow: 0 0 10px #60a5fa; }
+    .orbit-4 .capsule.star { width: 8px; height: 8px; min-width: 8px; background: #fde68a; box-shadow: 0 0 12px #fcd34d; }
+    .orbit-0 .capsule.core { width: 20px; height: 20px; min-width: 20px; border-radius: 50%; background: #fff; box-shadow: 0 0 24px #fff, 0 0 48px rgba(255,255,255,.6); }
+    .ring { filter: drop-shadow(0 0 40px rgba(254,240,138,.15)); }
+    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #020617; color: #64748b; font: 13px/1.5 system-ui; border-top: 1px solid #1e293b; }
+    .doc code { color: #93c5fd; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang ring">
+    <div class="gravity-spot">
+      <div class="orbit-2">
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+      </div>
+      <div class="orbit-3">
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+      </div>
+      <div class="orbit-4">
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+        <div class="satellite"><div class="capsule star"></div></div>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule core"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc">
+    <strong>07 — Constellation</strong> · Angular relationships + symmetry. Center = focal point.
+  </div>
+</body>
+</html>

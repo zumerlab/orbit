@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Orbit — Declarative Radial UI (CSS + Web Components)</title>
+
+<!-- Bundles locales -->
+<link rel="stylesheet" href="../dist/orbit.css" />
+<script defer src="../dist/orbit.js"></script>
+
+<!-- CDN opcional
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/orbit/dist/orbit.css" />
+<script defer src="https://cdn.jsdelivr.net/npm/orbit/dist/orbit.js"></script>
+-->
+
+<style>
+  /* ================= THEMES ================= */
+  :root{
+    --bg:#07090f; --panel:#0c111a; --ink:#e9eef7; --muted:#9aa7ba;
+    --brand:#7bd8ff; --accent:#c999ff; --ok:#39ef7d; --warn:#ffd166; --bad:#ff5c7a;
+    --border:#172235; --card:#0b1019; --code:#0a0f18; --code-border:#15233a;
+  }
+  [data-theme="light"]{
+    --bg:#f7f8fb; --panel:#ffffff; --ink:#0b1730; --muted:#5b6a82;
+    --brand:#0066ff; --accent:#8b4dff; --ok:#11a760; --warn:#b98100; --bad:#d23b57;
+    --border:#dfe6f2; --card:#ffffff; --code:#f4f7ff; --code-border:#d9e3f7;
+  }
+  [data-theme="sport"]{
+    --bg:#05060b; --panel:#070b12; --ink:#eaf4ff; --muted:#92a7c9;
+    --brand:#56ffe4; --accent:#8d6bff; --ok:#45ff8a; --warn:#ffd166; --bad:#ff6b8d;
+    --border:#1a2540; --card:#0a0f18; --code:#070c14; --code-border:#1a2942;
+  }
+
+  /* ================= BASE ================= */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 700px at 70% -10%, color-mix(in oklab, var(--brand) 10%, var(--bg)) 0%, var(--bg) 55%, color-mix(in oklab, var(--bg) 95%, #000) 100%);
+    color:var(--ink);
+    font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  a{color:var(--brand); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1160px; margin:0 auto; padding:28px 16px 80px; display:grid; gap:26px}
+
+  header{ display:grid; gap:16px; grid-template-columns:1.2fr .8fr; align-items:center; }
+  @media (max-width:980px){ header{ grid-template-columns:1fr; } }
+  .hero h1{margin:0; font-size:42px; line-height:1.06}
+  .hero p{margin:8px 0 0; color:var(--muted)}
+  .cta{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 80%, #0b0f18), color-mix(in oklab, var(--panel) 60%, #0a1422));
+    border:1px solid color-mix(in oklab, var(--border) 70%, #203050);
+    color:color-mix(in oklab, var(--ink) 95%, #fff);
+    font-weight:750; padding:10px 14px; border-radius:12px; cursor:pointer;
+    transition:transform .08s ease, box-shadow .2s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); box-shadow:0 8px 26px -12px color-mix(in oklab, var(--brand) 55%, transparent) }
+  .btn.secondary{ background:var(--card); border-color:var(--border); color:color-mix(in oklab, var(--ink) 90%, #d0e7ff) }
+  .btn.ghost{ background:var(--card); border-color:color-mix(in oklab, var(--border) 85%, #1a2942); color:color-mix(in oklab, var(--ink) 92%, #d0e7ff) }
+
+  /* Theme toggle */
+  .toggle{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+  .seg{display:flex; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:4px; gap:4px}
+  .seg input{display:none}
+  .seg label{
+    flex:1; padding:8px 10px; text-align:center; border-radius:8px; font-weight:700;
+    color:color-mix(in oklab, var(--ink) 90%, #cfe7ff); opacity:.7; cursor:pointer; border:1px solid transparent;
+    transition:background .2s, opacity .2s, border-color .2s;
+  }
+  .seg input:checked + label{ background:color-mix(in oklab, var(--panel) 75%, #0f1f35); opacity:1; border-color:color-mix(in oklab, var(--border) 60%, var(--brand)) }
+
+  .hero-demo{
+    background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 92%, #000), color-mix(in oklab, var(--panel) 85%, #000));
+    border:1px solid var(--border); border-radius:20px; padding:16px;
+  }
+  .row{display:grid; gap:12px; grid-template-columns:repeat(3, minmax(0,1fr))}
+  @media (max-width:720px){ .row{ grid-template-columns:1fr; } }
+  .grid-2{display:grid; gap:16px; grid-template-columns:1fr 1fr}
+  @media (max-width:900px){ .grid-2{ grid-template-columns:1fr } }
+
+  .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:12px; }
+  .card h3{margin:0 0 6px 0; font-size:14px; color:color-mix(in oklab, var(--ink) 95%, #cfe3ff); letter-spacing:.2px}
+  .note{color:var(--muted); font-size:12px}
+
+  /* Orbit demo blocks */
+  .demo{display:grid; place-items:center; aspect-ratio:1/1; overflow:hidden}
+  .demo .satellite{border:none !important}
+
+  /* Code block */
+  pre{margin:0; overflow:auto}
+  .code{
+    background:var(--code); border:1px solid var(--code-border); border-radius:14px; padding:12px;
+    font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:color-mix(in oklab, var(--ink) 95%, #dbe8ff);
+  }
+  .copyline{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px}
+  .pill{padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:var(--panel); color:color-mix(in oklab, var(--ink) 92%, #d6eaff); font-weight:700}
+  .flex{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+
+  /* Footer */
+  .footer{
+    margin-top:10px; padding-top:20px; display:flex; flex-wrap:wrap;
+    gap:10px; align-items:center; justify-content:space-between; color:var(--muted);
+    border-top:1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header>
+    <div class="hero">
+      <h1>Orbit — Declarative Radial UI<br/>(no JS layout)</h1>
+      <p>Construí <strong>gauges, donuts, knobs y menús radiales</strong> con <strong>CSS + Web Components</strong>.
+        Sin librerías pesadas, sin geometría en JS. Ideal para dashboards, HUDs automotrices, IoT y status boards.</p>
+      <div class="cta">
+        <a class="btn" href="#quickstart">🚀 Quickstart</a>
+        <a class="btn secondary" href="https://zumerlab.github.io/orbit-docs/introduction/" target="_blank" rel="noopener noreferrer">📚 Docs completas</a>
+        <a class="btn secondary" href="https://github.com/zumerlab/orbit" target="_blank" rel="noopener noreferrer">★ GitHub</a>
+        <!-- Theme toggle -->
+        <div class="toggle" title="Theme">
+          <div class="seg" id="theme">
+            <input type="radio" name="theme" id="th-dark"  value="dark"  checked><label for="th-dark">Dark</label>
+            <input type="radio" name="theme" id="th-light" value="light"><label for="th-light">Light</label>
+            <input type="radio" name="theme" id="th-sport" value="sport"><label for="th-sport">Sport Neon</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MINI DEMOS EN VIVO -->
+    <div class="hero-demo">
+      <div class="row">
+        <!-- Gauge 270° -->
+        <div class="card">
+          <h3>Gauge 270°</h3>
+          <div class="demo">
+            <div class="bigbang">
+              <div class="gravity-spot" style="--o-force: 420px;">
+                <div class="orbit-7 range-270 from-225 fit-range">
+                  <!-- ticks -->
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                </div>
+                <div class="orbit-5 range-270 from-225">
+                  <o-arc class="gap-4" style="--o-fill:var(--ok)"></o-arc>
+                  <o-arc class="gap-4" style="--o-fill:var(--warn)"></o-arc>
+                  <o-arc class="gap-4" style="--o-fill:var(--bad)"></o-arc>
+                </div>
+                <div class="orbit-4 range-270 from-225">
+                  <o-arc id="needle-hero" value="62" shape="arrow" style="--o-fill:#eaf3ff"></o-arc>
+                </div>
+                <div class="orbit-0">
+                  <div class="satellite at-center">
+                    <div class="capsule" style="flex-direction:column;gap:4px">
+                      <div style="font-size:22px;font-weight:800;letter-spacing:.3px"><span id="val-hero">62</span>%</div>
+                      <div class="note">Performance</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="note">Ajustá el valor con el slider: <input id="rng-hero" type="range" min="0" max="100" value="62" style="vertical-align:middle;width:55%"/></p>
+        </div>
+
+        <!-- Donut multilayer -->
+        <div class="card">
+          <h3>Donut Gauge</h3>
+          <div class="demo">
+            <div class="bigbang"><div class="gravity-spot" style="--o-force: 380px">
+              <div class="orbit-3">
+                <o-arc value="55" style="--o-fill:var(--brand);--o-stroke:#152840;--o-stroke-width:8"></o-arc>
+                <o-arc value="25" style="--o-fill:#8ad8ff"></o-arc>
+                <o-arc value="20" style="--o-fill:var(--accent)"></o-arc>
+              </div>
+              <div class="orbit-0">
+                <div class="satellite at-center"><div class="capsule" style="font-weight:800">Q3</div></div>
+              </div>
+            </div></div>
+          </div>
+          <p class="note">Segmentos apilados con <code>&lt;o-arc&gt;</code>.</p>
+        </div>
+
+        <!-- Radial Menu -->
+        <div class="card">
+          <h3>Radial Menu</h3>
+          <div class="demo">
+            <div class="bigbang"><div class="gravity-spot" style="--o-force: 420px">
+              <div class="orbit-5 fit-range range-240 from-240">
+                <o-arc class="gap-6" style="--o-fill:var(--brand)"></o-arc>
+                <o-arc class="gap-6" style="--o-fill:#9be58c"></o-arc>
+                <o-arc class="gap-6" style="--o-fill:#ffd166"></o-arc>
+                <o-arc class="gap-6" style="--o-fill:#ff8ab8"></o-arc>
+              </div>
+              <div class="orbit-0">
+                <div class="satellite at-center">
+                  <div class="capsule" id="menu-label" style="font-weight:800;letter-spacing:.3px">ECO</div>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <p class="note">Click en sectores para elegir modo.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- QUICKSTART -->
+  <section id="quickstart">
+    <h2>Quickstart (60s)</h2>
+    <p>Incluir los bundles e insertar un donut de progreso.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>CDN / Bundles</h3>
+        <div class="code"><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/orbit/dist/orbit.css&quot;&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/orbit/dist/orbit.js&quot;&gt;&lt;/script&gt;
+</code></pre></div>
+        <div class="copyline">
+          <span class="pill">No setup · Works in plain HTML</span>
+          <button class="btn" data-copy="cdn" type="button">Copy</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>HTML mínimo</h3>
+        <div class="code"><pre><code>&lt;div class=&quot;bigbang&quot;&gt;
+  &lt;div class=&quot;gravity-spot&quot;&gt;
+    &lt;div class=&quot;orbit-4&quot;&gt;
+      &lt;o-progress value=&quot;72&quot;&gt;&lt;/o-progress&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+        <div class="copyline">
+          <span class="pill">Gauge listo en 10 líneas</span>
+          <button class="btn" data-copy="html" type="button">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTES PREARMADOS -->
+  <section>
+    <h2>Ready-made Components</h2>
+    <p>Usá estas piezas sin aprender toda la gramática. Después podés profundizar en la docu.</p>
+    <div class="row">
+      <div class="card">
+        <h3>Gauge 180°</h3>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-4 range-180 from-180"><o-arc value="48" shape="arrow" style="--o-fill:#fff"></o-arc></div>
+          </div></div>
+        </div>
+        <p class="note">Semicírculo con <code>range-180 from-180</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Knob</h3>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-4"><o-arc value="64" shape="circle-a" style="--o-stroke:#1e2636;--o-stroke-width:10;--o-fill:var(--brand)"></o-arc></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800">64%</div></div></div>
+          </div></div>
+        </div>
+        <p class="note">Perilla simple con etiqueta centrada.</p>
+      </div>
+      <div class="card">
+        <h3>Status Ring</h3>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-3">
+              <o-arc value="70" style="--o-fill:var(--ok)"></o-arc>
+              <o-arc value="20" style="--o-fill:var(--warn)"></o-arc>
+              <o-arc value="10" style="--o-fill:var(--bad)"></o-arc>
+            </div>
+          </div></div>
+        </div>
+        <p class="note">Distribución por porcentaje.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="use-cases">
+    <h2>Use cases</h2>
+    <p>Automotive HUD, IoT dashboards, Ops status, Fitness/Health rings…</p>
+
+    <!-- Automotive HUD -->
+    <div class="card">
+      <h3>Automotive HUD</h3>
+      <div class="flex"><span class="pill">Velocímetro 270°</span><span class="pill">Tacómetro mini</span><span class="pill">Batería/Temp</span></div>
+      <div class="grid-2" style="margin-top:10px">
+        <!-- Velocímetro -->
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 440px">
+            <div class="orbit-6 range-270 from-225 fit-range">
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+            </div>
+            <div class="orbit-4 range-270 from-225"><o-arc id="uc-speed" value="48" shape="arrow" style="--o-fill:#fff"></o-arc></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800"><span id="uc-speed-val">125</span> km/h</div></div></div>
+          </div></div>
+        </div>
+        <!-- Tacómetro + botones -->
+        <div>
+          <div class="demo" style="aspect-ratio:2/1">
+            <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+              <div class="orbit-4 range-270 from-225"><o-arc id="uc-rpm" value="40" shape="arrow" style="--o-fill:var(--accent)"></o-arc></div>
+              <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800"><span id="uc-rpm-val">3.2</span>k RPM</div></div></div>
+            </div></div>
+          </div>
+          <div class="flex" style="gap:8px; margin-top:8px">
+            <button class="btn ghost" id="uc-accel">Acelerar</button>
+            <button class="btn ghost" id="uc-brake">Frenar</button>
+          </div>
+        </div>
+      </div>
+      <p class="note">100% CSS + Web Components. Sin JS de layout.</p>
+    </div>
+
+    <!-- IoT / Smart-Home -->
+    <div class="card">
+      <h3>IoT / Smart-Home</h3>
+      <div class="flex"><span class="pill">Termostato</span><span class="pill">Energía</span><span class="pill">Escenas</span></div>
+      <div class="grid-2" style="margin-top:10px">
+        <!-- Termostato (knob) -->
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-4"><o-arc id="uc-temp" value="50" shape="circle-a" style="--o-stroke:#1e2636;--o-stroke-width:10;--o-fill:var(--brand)"></o-arc></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800"><span id="uc-temp-val">22</span>°C</div></div></div>
+          </div></div>
+        </div>
+        <!-- Donut de energía -->
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-3">
+              <o-arc value="60" style="--o-fill:#9be58c;--o-stroke:#152840;--o-stroke-width:8"></o-arc>
+              <o-arc value="25" style="--o-fill:#ffd166"></o-arc>
+              <o-arc value="15" style="--o-fill:#ff8ab8"></o-arc>
+            </div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800">Energy</div></div></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="flex" style="gap:8px; margin-top:8px">
+        <button class="btn ghost" id="uc-temp-dec">–</button>
+        <button class="btn ghost" id="uc-temp-inc">+</button>
+      </div>
+      <p class="note">Termostato radial con incrementos +/– y donut de consumo.</p>
+    </div>
+
+    <!-- Ops / Status -->
+    <div class="card">
+      <h3>Ops Status</h3>
+      <div class="flex"><span class="pill">Status ring</span><span class="pill">Uptime</span></div>
+      <div class="grid-2" style="margin-top:10px">
+        <!-- Status ring -->
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-3">
+              <o-arc id="uc-ok" value="76" style="--o-fill:var(--ok)"></o-arc>
+              <o-arc id="uc-warn" value="18" style="--o-fill:var(--warn)"></o-arc>
+              <o-arc id="uc-bad" value="6" style="--o-fill:var(--bad)"></o-arc>
+            </div>
+          </div></div>
+        </div>
+        <!-- Uptime gauge -->
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-4 range-180 from-180"><o-arc id="uc-uptime" value="99" shape="arrow" style="--o-fill:#eaf3ff"></o-arc></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800"><span id="uc-uptime-val">99.9</span>%</div></div></div>
+          </div></div>
+        </div>
+      </div>
+      <p class="note">Ring por severidad + gauge de uptime.</p>
+      <div class="flex" style="gap:8px">
+        <button class="btn ghost" id="uc-incident">Simular incidente</button>
+        <button class="btn ghost" id="uc-recover">Recuperar</button>
+      </div>
+    </div>
+
+    <!-- Fitness / Health -->
+    <div class="card">
+      <h3>Fitness / Health rings</h3>
+      <div class="flex"><span class="pill">Move</span><span class="pill">Exercise</span><span class="pill">Stand</span></div>
+      <div class="row" style="margin-top:10px">
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 320px">
+            <div class="orbit-4"><o-arc id="uc-move" value="72" style="--o-stroke:#2e1b24;--o-stroke-width:10;--o-fill:#ff6a88"></o-arc></div>
+          </div></div>
+        </div>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 320px">
+            <div class="orbit-4"><o-arc id="uc-ex" value="56" style="--o-stroke:#1f2d1f;--o-stroke-width:10;--o-fill:#9be58c"></o-arc></div>
+          </div></div>
+        </div>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 320px">
+            <div class="orbit-4"><o-arc id="uc-stand" value="38" style="--o-stroke:#1a2638;--o-stroke-width:10;--o-fill:#8ad8ff"></o-arc></div>
+          </div></div>
+        </div>
+      </div>
+      <p class="note">Anillos tipo “Activity”.</p>
+      <div class="flex" style="gap:8px">
+        <button class="btn ghost" id="uc-boost">Boost 10%</button>
+        <button class="btn ghost" id="uc-reset">Reset</button>
+      </div>
+    </div>
+
+
+  </section>
+
+  <section class="card">
+  <h3>Analog Clock</h3>
+  <div class="demo" id="clock-demo">
+    <div class="bigbang">
+      <div class="gravity-spot" style="--o-force: 420px">
+        <!-- 60 marcas -->
+        <div class="orbit-7 range-360 from-0 fit-range">
+          <!-- 60 div.vector; alterno grosor con :nth-child en CSS -->
+          <!-- (Truco: 30 nodos duplicados sirven para demo; si querés 60 exactos, duplicá esta línea) -->
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+          <div class="vector" style="height:3px;background:#1c2842"></div><div class="vector" style="height:3px;background:#1c2842"></div>
+        </div>
+
+        <!-- Agujas: value va 0..100 → mapeamos ángulos por JS -->
+        <div class="orbit-5 range-360 from-0"><o-arc id="h-hand" value="0" shape="arrow" style="--o-fill:#dfe8ff"></o-arc></div>
+        <div class="orbit-4 range-360 from-0"><o-arc id="m-hand" value="0" shape="arrow" style="--o-fill:#8ad8ff"></o-arc></div>
+        <div class="orbit-3 range-360 from-0"><o-arc id="s-hand" value="0" shape="arrow" style="--o-fill:#ff6a88"></o-arc></div>
+
+        <!-- Centro -->
+        <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800">ORBIT</div></div></div>
+      </div>
+    </div>
+  </div>
+  <p class="note">Reloj análogo: 3 agujas como <code>&lt;o-arc shape="arrow"&gt;</code> sobre un rango 360°.</p>
+</section>
+
+<script>
+  // mapping: deg -> percentage (0..360 => 0..100)
+  const deg2pct = (deg)=> ((deg % 360 + 360) % 360) / 3.6;
+  const $h = document.getElementById('h-hand');
+  const $m = document.getElementById('m-hand');
+  const $s = document.getElementById('s-hand');
+  function tickClock(){
+    const d = new Date();
+    const h = d.getHours()%12, m = d.getMinutes(), s = d.getSeconds(), ms = d.getMilliseconds();
+    const sDeg = (s+ms/1000)*6;
+    const mDeg = m*6 + s/10;
+    const hDeg = h*30 + m/2;
+    $s?.setAttribute('value', String(Math.round(deg2pct(sDeg))));
+    $m?.setAttribute('value', String(Math.round(deg2pct(mDeg))));
+    $h?.setAttribute('value', String(Math.round(deg2pct(hDeg))));
+  }
+  tickClock(); setInterval(tickClock, 1000);
+</script>
+
+<section class="card">
+  <h3>Solar System (nested orbits)</h3>
+  <div class="demo" style="aspect-ratio:1/1">
+    <div class="bigbang">
+      <div class="gravity-spot" style="--o-force: 460px">
+        <!-- Sol -->
+        <div class="orbit-0">
+          <div class="satellite at-center">
+            <div class="capsule" style="width:40px;height:40px;border-radius:999px;background:#ffcf33;box-shadow:0 0 60px -12px #ffcf33"></div>
+          </div>
+        </div>
+
+        <!-- Órbita 1 (Mercurio) -->
+        <div class="orbit-2 rot-15">
+          <div class="satellite"><div class="capsule" style="width:10px;height:10px;border-radius:999px;background:#c8c2b8"></div></div>
+        </div>
+
+        <!-- Órbita 2 (Venus) -->
+        <div class="orbit-3 rot-10">
+          <div class="satellite"><div class="capsule" style="width:14px;height:14px;border-radius:999px;background:#d0a46c"></div></div>
+        </div>
+
+        <!-- Órbita 3 (Tierra) + Luna anidada -->
+        <div class="orbit-4 rot-7">
+          <div class="satellite">
+            <div class="capsule">
+              <div class="bigbang">
+                <div class="gravity-spot" style="--o-force:140px">
+                  <div class="orbit-0">
+                    <div class="satellite at-center"><div class="capsule" style="width:16px;height:16px;border-radius:999px;background:#6bb9ff"></div></div>
+                  </div>
+                  <div class="orbit-2 rot-20">
+                    <div class="satellite"><div class="capsule" style="width:6px;height:6px;border-radius:999px;background:#dfe8f2"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Órbita 4 (Marte) -->
+        <div class="orbit-5 rot-5">
+          <div class="satellite"><div class="capsule" style="width:12px;height:12px;border-radius:999px;background:#ff6a4a"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note">Órbitas anidadas: dentro de una cápsula volvés a iniciar un <code>.bigbang</code> y creás otro sistema.</p>
+</section>
+
+<style>
+  /* Rotaciones suaves por órbita (puede reemplazarse por clases del bundle si tenés rotate-orbit/rotate-time-*) */
+  @keyframes orbit-spin { to { transform: rotate(360deg) } }
+  .rot-15 { animation: orbit-spin 15s linear infinite; }
+  .rot-10 { animation: orbit-spin 10s linear infinite; }
+  .rot-7  { animation: orbit-spin 7s  linear infinite; }
+  .rot-5  { animation: orbit-spin 5s  linear infinite; }
+  .rot-20 { animation: orbit-spin 2s  linear infinite; }
+</style>
+
+<section class="card">
+  <h3>Nested Radial Menu</h3>
+  <div class="demo">
+    <div class="bigbang"><div class="gravity-spot" style="--o-force: 420px">
+      <!-- Nivel 1: 4 categorías (240°) -->
+      <div class="orbit-5 range-240 from-240 fit-range">
+        <o-arc class="gap-6" style="--o-fill:#7bd8ff"></o-arc>
+        <o-arc class="gap-6" style="--o-fill:#9be58c"></o-arc>
+        <o-arc class="gap-6" style="--o-fill:#ffd166"></o-arc>
+        <o-arc class="gap-6" style="--o-fill:#ff8ab8"></o-arc>
+      </div>
+      <!-- Nivel 2: subitems internos (mismo sweep, otra órbita) -->
+      <div class="orbit-4 range-240 from-240 fit-range">
+        <o-arc class="gap-6 inner-orbit" style="--o-fill:color-mix(in oklab, #7bd8ff 70%, #ffffff)"></o-arc>
+        <o-arc class="gap-6 inner-orbit" style="--o-fill:color-mix(in oklab, #9be58c 70%, #ffffff)"></o-arc>
+        <o-arc class="gap-6 inner-orbit" style="--o-fill:color-mix(in oklab, #ffd166 70%, #ffffff)"></o-arc>
+        <o-arc class="gap-6 inner-orbit" style="--o-fill:color-mix(in oklab, #ff8ab8 70%, #ffffff)"></o-arc>
+      </div>
+      <div class="orbit-0"><div class="satellite at-center"><div class="capsule" id="menu-nested-label" style="font-weight:800">Select</div></div></div>
+    </div></div>
+  </div>
+  <p class="note">Multinivel = mismo <code>range/from</code> en órbitas distintas (outer / inner).</p>
+</section>
+
+<script>
+  // Demo click → cambia label
+  document.currentScript?.previousElementSibling
+  ?.querySelectorAll('o-arc')
+  .forEach(arc=> arc.addEventListener('click', ()=>{
+    const lbl = document.getElementById('menu-nested-label');
+    if(lbl) lbl.textContent = 'Picked!';
+  }));
+</script>
+
+<section class="card">
+  <h3>Chronodex — Year / Months / Days</h3>
+  <div class="demo">
+    <div class="bigbang"><div class="gravity-spot" style="--o-force: 460px">
+      <!-- Año completo -->
+      <div class="orbit-7 range-360 from-0 fit-range">
+        <!-- 12 meses -->
+        <div class="vector" style="height:5px;background:#22324f"></div><!-- x12 (demo abreviado) -->
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+        <div class="vector" style="height:5px;background:#22324f"></div>
+      </div>
+      <!-- Meses como bandas -->
+      <div class="orbit-5 range-360 from-0">
+        <o-arc class="gap-2" style="--o-fill:#7bd8ff"></o-arc>
+        <o-arc class="gap-2" style="--o-fill:#9be58c"></o-arc>
+        <o-arc class="gap-2" style="--o-fill:#ffd166"></o-arc>
+        <o-arc class="gap-2" style="--o-fill:#ff8ab8"></o-arc>
+      </div>
+      <!-- Días (granular, anillo interno) -->
+      <div class="orbit-3 range-360 from-0 fit-range">
+        <!-- ticks cortitos (muestra) -->
+        <div class="vector" style="height:2px;background:#2a3a5a"></div><div class="vector" style="height:2px;background:#2a3a5a"></div>
+        <div class="vector" style="height:2px;background:#2a3a5a"></div><div class="vector" style="height:2px;background:#2a3a5a"></div>
+        <div class="vector" style="height:2px;background:#2a3a5a"></div><div class="vector" style="height:2px;background:#2a3a5a"></div>
+        <!-- (en real, generás 30–31) -->
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule" style="font-weight:800">2025</div></div>
+      </div>
+    </div></div>
+  </div>
+  <p class="note">Año-mes-día como anillos concéntricos; <code>fit-range</code> reparte los ticks.</p>
+</section>
+
+<section class="card">
+  <h3>Compass + Heading</h3>
+  <div class="demo" id="compass">
+    <div class="bigbang"><div class="gravity-spot" style="--o-force: 420px">
+      <div class="orbit-6 range-360 from-0 fit-range">
+        <div class="vector" style="height:4px;background:#21314f"></div><!-- repite x8 o x16 si querés más marcas -->
+        <div class="vector" style="height:4px;background:#21314f"></div>
+        <div class="vector" style="height:4px;background:#21314f"></div>
+        <div class="vector" style="height:4px;background:#21314f"></div>
+        <div class="vector" style="height:4px;background:#21314f"></div>
+        <div class="vector" style="height:4px;background:#21314f"></div>
+        <div class="vector" style="height:4px;background:#21314f"></div>
+        <div class="vector" style="height:4px;background:#21314f"></div>
+      </div>
+      <!-- Cardinales: 4 items -->
+      <div class="orbit-5 range-360 from-0 fit-range">
+        <div class="satellite"><div class="capsule" style="font-weight:800">N</div></div>
+        <div class="satellite"><div class="capsule" style="font-weight:800">E</div></div>
+        <div class="satellite"><div class="capsule" style="font-weight:800">S</div></div>
+        <div class="satellite"><div class="capsule" style="font-weight:800">O</div></div>
+      </div>
+      <!-- Heading needle -->
+      <div class="orbit-4 range-360 from-0"><o-arc id="heading" value="0" shape="arrow" style="--o-fill:#eaf3ff"></o-arc></div>
+      <div class="orbit-0"><div class="satellite at-center"><div class="capsule" id="heading-label" style="font-weight:800">000°</div></div></div>
+    </div></div>
+  </div>
+  <div class="flex" style="gap:8px"><button class="btn ghost" id="hdg-left">←</button><button class="btn ghost" id="hdg-right">→</button></div>
+  <p class="note">Brújula 360° con marcas cardinales y aguja con heading.</p>
+</section>
+
+<script>
+  (function(){
+    const arc = document.getElementById('heading');
+    const lbl = document.getElementById('heading-label');
+    let hdg = 0;
+    const set = (deg)=>{
+      hdg = (deg%360+360)%360;
+      arc?.setAttribute('value', String(Math.round(hdg/3.6))); // 0..100
+      lbl && (lbl.textContent = String(hdg).padStart(3,'0') + '°');
+    };
+    document.getElementById('hdg-left')?.addEventListener('click', ()=> set(hdg - 10));
+    document.getElementById('hdg-right')?.addEventListener('click',()=> set(hdg + 10));
+    set(0);
+  })();
+</script>
+
+<section class="card">
+  <h3>Radar / Sonar</h3>
+  <div class="demo">
+    <div class="bigbang"><div class="gravity-spot" style="--o-force: 420px">
+      <!-- anillos -->
+      <div class="orbit-7"><o-arc value="100" style="--o-stroke:#1a2942;--o-stroke-width:8;--o-fill:transparent"></o-arc></div>
+      <div class="orbit-5"><o-arc value="100" style="--o-stroke:#162337;--o-stroke-width:8;--o-fill:transparent"></o-arc></div>
+      <div class="orbit-3"><o-arc value="100" style="--o-stroke:#122034;--o-stroke-width:8;--o-fill:transparent"></o-arc></div>
+
+      <!-- haz (estrecho) que rota todo el orbit -->
+      <div class="orbit-6 sweep">
+        <o-arc value="4" style="--o-fill:#7bd8ff"></o-arc>
+      </div>
+
+      <!-- pings (puntos) en posiciones varias -->
+      <div class="orbit-6 range-360 from-0">
+        <div class="satellite" style="transform: rotate(20deg) translateY(-50%)"><div class="capsule ping"></div></div>
+        <div class="satellite" style="transform: rotate(145deg) translateY(-50%)"><div class="capsule ping"></div></div>
+        <div class="satellite" style="transform: rotate(300deg) translateY(-50%)"><div class="capsule ping"></div></div>
+      </div>
+
+      <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800">SCAN</div></div></div>
+    </div></div>
+  </div>
+  <p class="note">El “haz” es un <code>&lt;o-arc&gt;</code> muy angosto; rotamos su órbita completa.</p>
+</section>
+
+<style>
+  @keyframes sweep { to { transform: rotate(360deg) } }
+  .sweep { animation: sweep 4s linear infinite; }
+  .ping{ width:8px;height:8px;border-radius:999px;background:#8ad8ff; box-shadow:0 0 18px -4px #8ad8ff; }
+</style>
+
+
+  <!-- INTEGRATIONS -->
+  <section id="integrations">
+    <h2>Integrations</h2>
+    <p class="flex">
+      <span class="pill">React / Vue / Svelte</span>
+      <span class="pill">Export to Image with SnapDOM</span>
+    </p>
+
+    <div class="grid-2">
+      <!-- Frameworks -->
+      <div class="card">
+        <h3>React / Vue / Svelte</h3>
+        <div class="code"><pre><code>// React (ejemplo)
+import "orbit/dist/orbit.css";
+import "orbit/dist/orbit.js"; // registra &lt;o-arc/&gt; &lt;o-progress/&gt;
+
+export function OrbitGauge({ value = 72 }) {
+  return (
+    &lt;div className=&quot;bigbang&quot;&gt;
+      &lt;div className=&quot;gravity-spot&quot;&gt;
+        &lt;div className=&quot;orbit-4&quot;&gt;
+          &lt;o-progress value={value}&gt;&lt;/o-progress&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Vue/Svelte: usar el custom element directamente (mismo HTML).
+</code></pre></div>
+      </div>
+
+      <!-- SnapDOM -->
+      <div class="card">
+        <h3>Export to Image (SnapDOM)</h3>
+        <p class="note">Capturá cualquier bloque Orbit como PNG/SVG.</p>
+        <div class="code"><pre><code>import snapdom from "snapdom";
+// Selecciona un nodo (por ejemplo, el gauge del Hero):
+const el = document.querySelector(".hero-demo .bigbang");
+// Exportá a PNG:
+const imgDataUrl = await snapdom.toPng(el);
+// o a SVG:
+const svg = await snapdom.toSvg(el);
+</code></pre></div>
+        <div class="copyline">
+          <button class="btn" id="snapdemo">Simular captura</button>
+          <span class="note" id="snapnote">Resultado: (preview simulado abajo)</span>
+        </div>
+        <div id="snapout" class="card" style="margin-top:8px;background:var(--code);"></div>
+      </div>
+    </div>
+
+    <p class="note">Ver más ejemplos e integraciones en la <a href="https://zumerlab.github.io/orbit-docs/introduction/" target="_blank" rel="noopener noreferrer">documentación completa</a>.</p>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section>
+    <div class="card">
+      <div class="flex" style="justify-content:space-between">
+        <div>
+          <h3 style="margin:0 0 6px 0">Listo para despegar 🚀</h3>
+          <div class="note">Orbit: componentes radiales declarativos sin JS de layout.</div>
+        </div>
+        <div class="flex">
+          <a class="btn" href="https://zumerlab.github.io/orbit-docs/introduction/" target="_blank" rel="noopener noreferrer">Leer Docs</a>
+          <a class="btn secondary" href="https://github.com/zumerlab/orbit" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div>© ZumerLab — Orbit</div>
+    <div class="note">Made with CSS custom properties + Web Components</div>
+  </div>
+</div>
+
+<script>
+  // ===== Theme toggle + persist =====
+  (function(){
+    const root = document.documentElement;
+    const saved = localStorage.getItem('orbit-theme');
+    if(saved){ root.setAttribute('data-theme', saved); const el = document.querySelector(`#theme input[value="${saved}"]`); if(el){ el.checked = true; } }
+    document.getElementById('theme').addEventListener('change', (e)=>{
+      const val = e.target && e.target.value; if(!val) return;
+      root.setAttribute('data-theme', val);
+      localStorage.setItem('orbit-theme', val);
+    });
+  })();
+
+  // ===== Hero: live gauge slider =====
+  const rng = document.getElementById('rng-hero');
+  const needle = document.getElementById('needle-hero');
+  const val = document.getElementById('val-hero');
+  if (rng && needle && val) {
+    rng.addEventListener('input', (e) => {
+      const v = +e.target.value || 0;
+      needle.setAttribute('value', v);
+      val.textContent = v;
+    });
+  }
+
+  // ===== Radial menu demo: label on click =====
+  const menuLabel = document.getElementById('menu-label');
+  document.addEventListener('click', (e) => {
+    const el = e.target instanceof Element ? e.target : null;
+    const arc = el ? el.closest('o-arc') : null;
+    if (!arc) return;
+    const options = ['ECO','COMF','SPORT','TRACK'];
+    const idx = Math.floor(Math.random() * options.length);
+    if (menuLabel) menuLabel.textContent = options[idx];
+  });
+
+  // ===== Quickstart copy buttons =====
+  const CDN_SNIPPET = `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/orbit/dist/orbit.css">
+<script src="https://cdn.jsdelivr.net/npm/orbit/dist/orbit.js"><\/script>`;
+  const HTML_SNIPPET = `<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-4">
+      <o-progress value="72"></o-progress>
+    </div>
+  </div>
+</div>`;
+  document.querySelectorAll('button[data-copy]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const t = btn.getAttribute('data-copy');
+      const text = t==='cdn' ? CDN_SNIPPET : HTML_SNIPPET;
+      navigator.clipboard.writeText(text).then(()=>{
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(()=> btn.textContent = orig, 900);
+      });
+    });
+  });
+
+  // ===== Use cases: Automotive controls =====
+  const ucSpeed = document.getElementById('uc-speed');
+  const ucSpeedVal = document.getElementById('uc-speed-val');
+  const ucRpm = document.getElementById('uc-rpm');
+  const ucRpmVal = document.getElementById('uc-rpm-val');
+  const accel = document.getElementById('uc-accel');
+  const brake = document.getElementById('uc-brake');
+
+  function setSpeedFromKm(vKm){
+    const pct = Math.max(0, Math.min(100, Math.round(vKm / 260 * 100)));
+    ucSpeed.setAttribute('value', pct);
+    ucSpeedVal.textContent = Math.round(vKm);
+  }
+  function setRpm(k){
+    const pct = Math.max(0, Math.min(100, Math.round(k / 8 * 100)));
+    ucRpm.setAttribute('value', pct);
+    ucRpmVal.textContent = k.toFixed(1);
+  }
+  if (accel && brake){
+    accel.addEventListener('click', ()=>{
+      let v = parseInt(ucSpeedVal.textContent,10) || 0;
+      const step = ()=>{
+        v += Math.max(1, (140 - v) * 0.08);
+        if (v >= 140) v = 140;
+        setSpeedFromKm(v);
+        setRpm(Math.min(8, 1 + v/50));
+        if (v < 140) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+    brake.addEventListener('click', ()=>{
+      let v = parseInt(ucSpeedVal.textContent,10) || 0;
+      const step = ()=>{
+        v -= Math.max(2, v * 0.12);
+        if (v <= 0) v = 0;
+        setSpeedFromKm(v);
+        setRpm(Math.max(0.7, (+ucRpmVal.textContent||0)*0.9 - 0.05));
+        if (v > 0.2) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+
+  // ===== IoT thermostat +/- =====
+  const tArc = document.getElementById('uc-temp');
+  const tVal = document.getElementById('uc-temp-val');
+  const tDec = document.getElementById('uc-temp-dec');
+  const tInc = document.getElementById('uc-temp-inc');
+  function setTemp(c){
+    const clamped = Math.max(16, Math.min(28, c));
+    tVal.textContent = clamped;
+    const pct = Math.round((clamped - 16) / (28 - 16) * 100);
+    tArc.setAttribute('value', pct);
+  }
+  if (tDec && tInc){
+    tDec.addEventListener('click', ()=> setTemp((+tVal.textContent||22)-1));
+    tInc.addEventListener('click', ()=> setTemp((+tVal.textContent||22)+1));
+  }
+
+  // ===== Ops incident / recover =====
+  const ok = document.getElementById('uc-ok');
+  const warn = document.getElementById('uc-warn');
+  const bad = document.getElementById('uc-bad');
+  const uptime = document.getElementById('uc-uptime');
+  const uptimeVal = document.getElementById('uc-uptime-val');
+  const incBtn = document.getElementById('uc-incident');
+  const recBtn = document.getElementById('uc-recover');
+
+  if (incBtn && recBtn){
+    incBtn.addEventListener('click', ()=>{
+      ok.setAttribute('value','60'); warn.setAttribute('value','25'); bad.setAttribute('value','15');
+      uptime.setAttribute('value','96'); uptimeVal.textContent = '96.0';
+    });
+    recBtn.addEventListener('click', ()=>{
+      ok.setAttribute('value','78'); warn.setAttribute('value','18'); bad.setAttribute('value','4');
+      uptime.setAttribute('value','99'); uptimeVal.textContent = '99.9';
+    });
+  }
+
+  // ===== Fitness boost/reset =====
+  const mv = document.getElementById('uc-move');
+  const ex = document.getElementById('uc-ex');
+  const st = document.getElementById('uc-stand');
+  const boost = document.getElementById('uc-boost');
+  const reset = document.getElementById('uc-reset');
+  function bump(el, delta){
+    const v = Math.max(0, Math.min(100, (+el.getAttribute('value')||0) + delta));
+    el.setAttribute('value', String(v));
+  }
+  if (boost && reset){
+    boost.addEventListener('click', ()=> [mv,ex,st].forEach(el=>bump(el,10)));
+    reset.addEventListener('click', ()=> { mv.setAttribute('value','72'); ex.setAttribute('value','56'); st.setAttribute('value','38'); });
+  }
+
+  // ===== Integrations: SnapDOM simulated preview =====
+  const snapBtn = document.getElementById('snapdemo');
+  const snapOut = document.getElementById('snapout');
+  const snapNote = document.getElementById('snapnote');
+  if (snapBtn && snapOut){
+    snapBtn.addEventListener('click', ()=>{
+      const src = document.querySelector('.hero-demo .card .demo')?.cloneNode(true);
+      snapOut.innerHTML = '';
+      if (src) {
+        snapOut.appendChild(src);
+        snapNote.textContent = 'Resultado: (preview simulado — usá SnapDOM real en tu proyecto)';
+      } else {
+        snapNote.textContent = 'No se encontró el demo para clonar. Abrí el Hero antes de capturar.';
+      }
+    });
+  }
+</script>
+</body>
+</html>

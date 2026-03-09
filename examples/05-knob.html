@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>05 — Volume | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #09090b; }
+    .demo { width: 180px; aspect-ratio: 1; }
+    .demo .satellite { border: none; }
+    .demo o-arc { --o-stroke: #27272a; --o-stroke-width: 14; --o-fill: #a1a1aa; }
+    .demo .capsule { font: 700 15px/1 system-ui; color: #a1a1aa; }
+    .ring { filter: drop-shadow(0 4px 20px rgba(0,0,0,.6)); }
+    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #09090b; color: #525252; font: 13px/1.5 system-ui; border-top: 1px solid #27272a; }
+    .doc code { color: #71717a; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang ring">
+    <div class="gravity-spot">
+      <div class="orbit-4">
+        <o-arc id="knob" value="65" shape="circle-a" style="--o-stroke:#27272a;--o-stroke-width:14;--o-fill:#a1a1aa"></o-arc>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule"><span id="val">65</span>%</div></div>
+      </div>
+    </div>
+  </div>
+  <input id="rng" type="range" min="0" max="100" value="65" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:150px">
+
+  <div class="doc">
+    <strong>05 — Volume</strong> · <code>shape="circle-a"</code> = knob. Minimal, scannable.
+  </div>
+
+  <script>
+    const r=document.getElementById('rng'), k=document.getElementById('knob'), v=document.getElementById('val');
+    r.oninput=()=>{ const x=r.value; k.setAttribute('value',x); v.textContent=x; };
+  </script>
+</body>
+</html>
