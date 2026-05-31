@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/zumerlab/orbit#readme",
   "devDependencies": {
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.12",
     "sass": "^1.77.0"
   }
 }
