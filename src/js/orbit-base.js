@@ -87,15 +87,28 @@ export class OrbitBase extends HTMLElement {
     const upperArcEnd = this.arcPoint(bigRadius, upperAngleEnd);
     const innerArcStart = this.arcPoint(smallRadius, innerAngleStart);
     const innerArcEnd = this.arcPoint(smallRadius, innerAngleEnd);
-    
-    const largeArcFlag = arcAngle <= 180 ? 0 : 1;
+
+    // SVG large-arc flags, derived from the angle each arc ACTUALLY spans.
+    // The endpoints are pulled inward by the stroke gap, which is a constant
+    // arc-LENGTH and therefore subtends a larger angle at the smaller radius
+    // (smallGap > bigGap). So the outer and inner arcs span slightly different
+    // angles and, straddling 180°, can need DIFFERENT flags. A single shared
+    // flag leaves a thin window where one of the two arcs renders its reflex
+    // side — visible e.g. animating a 270° gauge through ~67%. Compute one flag
+    // per arc from its own swept angle.
+    const upperSweep = upperAngleEnd - upperAngleStart; // fangle - 2*bigGap
+    const innerSweep = innerAngleEnd - innerAngleStart; // fangle - 2*smallGap
+    const largeArcFlagUpper = upperSweep > Math.PI ? 1 : 0;
+    const largeArcFlagInner = innerSweep > Math.PI ? 1 : 0;
 
     return {
       upperArcStart,
       upperArcEnd,
       innerArcStart,
       innerArcEnd,
-      largeArcFlag,
+      largeArcFlag: largeArcFlagUpper, // back-compat alias; prefer the two below
+      largeArcFlagUpper,
+      largeArcFlagInner,
       bigRadius,
       smallRadius,
       radius,
@@ -139,9 +152,19 @@ export class OrbitBase extends HTMLElement {
   }
 
   generateRoundedPath(params, arcHeight, orbitNumber) {
-    const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlag } = params;
+    const { bigRadius, smallRadius } = params;
     const curve = arcHeight < 10 ? 5 : arcHeight < 5 ? 2.5 : 10;
-    
+
+    // The rounded caps inset the arc endpoints by an extra curve/orbitNumber
+    // degrees per side, so the drawn arc spans less than the bare gap arc. The
+    // shared large-arc flags don't account for that, leaving a window around
+    // 180° where the cap-inset span is <180° but the flag says "long way",
+    // rendering the reflex arc (visible ~v=69 on a 270° gauge). Derive the
+    // flags from the actual cap-inset endpoints instead.
+    const capRad = (curve / orbitNumber) * Math.PI / 180;
+    const flagU = (params.upperAngleEnd - params.upperAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
+    const flagI = (params.innerAngleEnd - params.innerAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
+
     const newUpperStart = this.arcPoint(bigRadius, params.upperAngleStart, 0, curve / orbitNumber);
     const newUpperEnd = this.arcPoint(bigRadius, params.upperAngleEnd, 0, -curve / orbitNumber);
     const newInnerStart = this.arcPoint(smallRadius, params.innerAngleStart, 0, curve / orbitNumber);
@@ -157,10 +180,10 @@ export class OrbitBase extends HTMLElement {
     const Q2 = this.getControlPoint(newInnerStart.x, newInnerStart.y, innerPointStart.x, innerPointStart.y);
     const Q3 = this.getControlPoint(upperPointStart.x, upperPointStart.y, newUpperStart.x, newUpperStart.y);
 
-    let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
+    let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${flagU} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
     d += `Q ${Q.xc},${Q.yc} ${upperPointEnd.x},${upperPointEnd.y} L ${innerPointEnd.x},${innerPointEnd.y}`;
     d += `Q ${Q1.xc},${Q1.yc} ${newInnerEnd.x},${newInnerEnd.y}`;
-    d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${newInnerStart.x},${newInnerStart.y}`;
+    d += `A ${smallRadius},${smallRadius} 0 ${flagI} 0 ${newInnerStart.x},${newInnerStart.y}`;
     d += `Q ${Q2.xc},${Q2.yc} ${innerPointStart.x},${innerPointStart.y} L ${upperPointStart.x},${upperPointStart.y}`;
     d += ` Q ${Q3.xc},${Q3.yc} ${newUpperStart.x},${newUpperStart.y}`;
     d += ` Z`;
@@ -171,11 +194,11 @@ export class OrbitBase extends HTMLElement {
   // Dentro de la clase OrbitCommon en orbit-common.js
 
 generateCirclePath(params, shape) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlag } = params;
-  
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
+  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner } = params;
+
+  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
   d += ` A 1,1 0 0 1 ${innerArcEnd.x},${innerArcEnd.y} `;
-  d += ` A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${innerArcStart.x},${innerArcStart.y}`;
+  d += ` A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x},${innerArcStart.y}`;
   d += ` A 1,1 0 0 ${shape === "circle" || shape === "circle-a" ? 1 : 0} ${upperArcStart.x},${upperArcStart.y} `;
   d += ` Z`;
   
@@ -183,17 +206,23 @@ generateCirclePath(params, shape) {
 }
 
 generateCircleBPath(params, arcHeight, orbitNumber) {
-  const { upperAngleStart, upperAngleEnd, innerAngleStart, innerAngleEnd, bigRadius, smallRadius, largeArcFlag } = params;
+  const { upperAngleStart, upperAngleEnd, innerAngleStart, innerAngleEnd, bigRadius, smallRadius } = params;
   const segment = arcHeight * 1.36;
-  
+
+  // Like rounded, circle-b insets its arc endpoints (by segment/orbitNumber
+  // degrees per side), so its large-arc flags must come from those endpoints.
+  const capRad = (segment / orbitNumber) * Math.PI / 180;
+  const flagU = (upperAngleEnd - upperAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
+  const flagI = (innerAngleEnd - innerAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
+
   const newUpperStart = this.arcPoint(bigRadius, upperAngleStart, 0, segment / orbitNumber);
   const newUpperEnd = this.arcPoint(bigRadius, upperAngleEnd, 0, -segment / orbitNumber);
   const newInnerStart = this.arcPoint(smallRadius, innerAngleStart, 0, segment / orbitNumber);
   const newInnerEnd = this.arcPoint(smallRadius, innerAngleEnd, 0, -segment / orbitNumber);
 
-  let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
+  let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${flagU} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
   d += ` A 1,1 0 0 1 ${newInnerEnd.x},${newInnerEnd.y} `;
-  d += ` A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${newInnerStart.x},${newInnerStart.y}`;
+  d += ` A ${smallRadius},${smallRadius} 0 ${flagI} 0 ${newInnerStart.x},${newInnerStart.y}`;
   d += ` A 1,1 0 0 1 ${newUpperStart.x},${newUpperStart.y} `;
   d += ` Z`;
   
@@ -201,15 +230,15 @@ generateCircleBPath(params, arcHeight, orbitNumber) {
 }
 
 generateArrowPath(params, orbitNumber) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlag, radius } = params;
-  
+  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner, radius } = params;
+
   const middleEnd = this.arcPoint(radius, params.upperAngleEnd, 0, 24 / orbitNumber / 2);
   const middleStart = this.arcPoint(radius, params.upperAngleStart, 0, 24 / orbitNumber / 2);
 
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
+  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
   d += `L ${middleEnd.x} ${middleEnd.y}`;
   d += `L ${innerArcEnd.x} ${innerArcEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
+  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
   d += `L ${middleStart.x} ${middleStart.y}`;
   d += `Z`;
   
@@ -217,23 +246,23 @@ generateArrowPath(params, orbitNumber) {
 }
 
 generateSlashPath(params, shape, orbitNumber) {
-  const { upperAngleStart, upperAngleEnd, innerAngleStart, innerAngleEnd, bigRadius, smallRadius, largeArcFlag } = params;
-  
+  const { upperAngleStart, upperAngleEnd, innerAngleStart, innerAngleEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner } = params;
+
   const newUpperStart = this.arcPoint(bigRadius, upperAngleStart, 0, shape === "backslash" ? 0 : 24 / orbitNumber / 2);
   const newUpperEnd = this.arcPoint(bigRadius, upperAngleEnd, 0, shape === "backslash" ? 0 : 24 / orbitNumber / 2);
   const newInnerStart = this.arcPoint(smallRadius, innerAngleStart, 0, shape === "backslash" ? 24 / orbitNumber / 2 : 0);
   const newInnerEnd = this.arcPoint(smallRadius, innerAngleEnd, 0, shape === "backslash" ? 24 / orbitNumber / 2 : 0);
 
-  let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
+  let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
   d += `L ${newInnerEnd.x} ${newInnerEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${newInnerStart.x}, ${newInnerStart.y}`;
+  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${newInnerStart.x}, ${newInnerStart.y}`;
   d += `Z`;
   
   return d;
 }
 
 generateZigzagPath(params, arcHeight, orbitNumber) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlag, radius } = params;
+  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner, radius } = params;
   
   const h2 = arcHeight / orbitNumber / 2;
   const s2 = this.arcPoint(radius, params.upperAngleStart, -h2, 3);
@@ -243,12 +272,12 @@ generateZigzagPath(params, arcHeight, orbitNumber) {
   const e3 = this.arcPoint(radius, params.innerAngleEnd, 0, 0);
   const e4 = this.arcPoint(radius, params.innerAngleEnd, -h2, 3);
 
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
+  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
   d += `L ${e2.x} ${e2.y}`;
   d += `L ${e3.x} ${e3.y}`;
   d += `L ${e4.x} ${e4.y}`;
   d += `L ${innerArcEnd.x} ${innerArcEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
+  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
   d += `L ${s2.x} ${s2.y}`;
   d += `L ${s3.x} ${s3.y}`;
   d += `L ${s4.x} ${s4.y}`;
@@ -258,11 +287,11 @@ generateZigzagPath(params, arcHeight, orbitNumber) {
 }
 
 generateDefaultPath(params) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlag } = params;
-  
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
+  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner } = params;
+
+  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
   d += `L ${innerArcEnd.x} ${innerArcEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
+  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
   d += `Z`;
   
   return d;
