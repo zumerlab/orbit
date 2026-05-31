@@ -158,6 +158,18 @@ Browse examples on the [Orbit docs site](https://zumerlab.github.io/orbit-docs):
 
 ---
 
+## Using Orbit with AI / LLMs
+
+Orbit's radial model is unlike the box-flow layouts most models were trained on,
+so an assistant generating Orbit markup from scratch will struggle. Give it the
+reference first — these files are written for that purpose:
+
+- **[llms.txt](https://zumerlab.github.io/orbit-docs/llms.txt)** — concise overview, structure rules, quick recipes.
+- **[llms-full.txt](https://zumerlab.github.io/orbit-docs/llms-full.txt)** — complete reference: every class, custom property, web component, and copy-paste pattern.
+
+Paste the relevant one into your prompt (or your tool's context/rules) before
+asking the model to build a radial UI.
+
 ## Resources
 
 - [Full documentation](https://zumerlab.github.io/orbit-docs) — elements, tools, advanced examples  
