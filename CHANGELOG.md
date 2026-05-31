@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v1.4.10](https://github.com/zumerlab/orbit/compare/v1.4.9...v1.4.10)
+
+> 31 May 2026
+
+- Bump esbuild to 0.25.x to fix dev-server vulnerability (GHSA-67mh-4wv8-2f99) [`212d43c`](https://github.com/zumerlab/orbit/commit/212d43cb09c7d43522ad110d56620d1a644f05c6)
+- Fix esbuild arm64 binary [`add57f1`](https://github.com/zumerlab/orbit/commit/add57f1a62f814774825615ef5701e5172dfbed3)
+
 #### [v1.4.9](https://github.com/zumerlab/grid/compare/v1.4.8...v1.4.9)
 
 > 31 May 2026
