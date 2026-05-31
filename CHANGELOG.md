@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v1.4.11](https://github.com/zumerlab/orbit/compare/v1.4.10...v1.4.11)
+
+> 31 May 2026
+
+- Fix reflex arc rendering when arcs cross 180° [`f85261f`](https://github.com/zumerlab/orbit/commit/f85261fabcda2f10d6fef6364e5370120b71dce7)
+- Add "Using Orbit with AI" section pointing to llms.txt [`b374808`](https://github.com/zumerlab/orbit/commit/b374808a020fe67f7e2347a9b735983ae90ed54f)
+
 #### [v1.4.10](https://github.com/zumerlab/orbit/compare/v1.4.9...v1.4.10)
 
 > 31 May 2026
