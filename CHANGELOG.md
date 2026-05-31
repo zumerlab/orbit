@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v1.4.9](https://github.com/zumerlab/grid/compare/v1.4.8...v1.4.9)
+
+> 31 May 2026
+
+- Refactor SCSS variables to use calc() for base and previous diameter calculations. [`dbca861`](https://github.com/zumerlab/grid/commit/dbca86101f5bd34cb080a033882c1dc0cb73c900). Closes #53
+
+
 #### [v1.4.8](https://github.com/zumerlab/grid/compare/v1.4.5...v1.4.8)
 
 > 8 March 2026
