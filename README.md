@@ -18,6 +18,8 @@
 
 Radial UIs usually need JavaScript to compute angles, radii, and positions. **Orbit** handles all of that with CSS classes and a couple of Web Components. Drop in two files and start building.
 
+> **Want ready-made components?** [**orbit-kit**](https://zumerlab.com/orbit-kit) wraps the common Orbit patterns into one-line custom elements — gauges, charts, activity rings, knobs, pie menus, cockpit instruments, analog clocks, compasses and radars.
+
 ## Installation
 
 **CDN (fastest):**
@@ -172,6 +174,7 @@ asking the model to build a radial UI.
 
 ## Resources
 
+- [orbit-kit](https://zumerlab.com/orbit-kit) — ready-made radial components built on Orbit  
 - [Full documentation](https://zumerlab.github.io/orbit-docs) — elements, tools, advanced examples  
 - [Contributing](CONTRIBUTING.md)  
 - [GitHub Discussions](https://github.com/zumerlab/orbit/discussions)  
