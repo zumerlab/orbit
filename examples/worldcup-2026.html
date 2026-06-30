@@ -1,0 +1,205 @@
+<!doctype html><html><head><meta charset=utf8>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
+<script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap');
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#08080d;font-family:Inter;overflow:hidden}
+.stage{height:100vh;display:flex;align-items:center;justify-content:center;padding:64px 16px 34px;overflow:hidden;
+  background:radial-gradient(ellipse 74% 74% at 50% 52%,#1d1508 0%,#08080d 60%)}
+.scaler{transform-origin:center center;transition:transform .15s ease-out}
+.wrap{position:relative;width:780px;height:780px}
+.keys{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.key{fill:none;stroke:#5a6072;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.key.dim{stroke:#363b49;stroke-width:1.4}
+.key.won{stroke:#ffd34d;stroke-width:2.8;filter:drop-shadow(0 0 5px #ffd34d88)}
+.bigbang{position:absolute;inset:0;z-index:2}
+.satellite{border:none}
+.flag{display:block;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #2c2c38,0 2px 6px #000b;background:#222}
+.flag.s12{width:40px;height:40px}
+.flag.lost{opacity:1;filter:none}
+.flag.won{box-shadow:0 0 0 2.5px #ffd34d,0 0 13px #ffd34daa}
+.flag.tbd{border-radius:50%;background:repeating-conic-gradient(#15151d 0 30deg,#1f1f27 0 60deg);box-shadow:0 0 0 2px #2a2a34}
+.onode{position:absolute;border-radius:50%;object-fit:cover;z-index:50;box-shadow:0 0 0 2px #2c2c38,0 2px 6px #000b;background:#222}
+.onode.won{box-shadow:0 0 0 2.5px #ffd34d,0 0 13px #ffd34daa}
+.onode.tbd{background:repeating-conic-gradient(#15151d 0 30deg,#1f1f27 0 60deg);box-shadow:0 0 0 2px #2a2a34}
+.trophy{font-size:46px;filter:drop-shadow(0 0 26px #ffb222cc);position:relative;z-index:3}
+.title{position:fixed;top:22px;left:0;right:0;text-align:center;color:#eef0f6;font-weight:800;font-size:15px;letter-spacing:.34em;z-index:10}
+.sub{position:fixed;top:46px;left:0;right:0;text-align:center;color:#ffd34d;font-weight:700;font-size:10px;letter-spacing:.28em;z-index:10}
+.foot{position:fixed;bottom:30px;left:0;right:0;text-align:center;color:#3e4252;font-weight:600;font-size:9px;letter-spacing:.14em;z-index:10}
+.brand{position:fixed;bottom:14px;left:0;right:0;text-align:center;z-index:10}
+.brand a{color:#6b7080;font-weight:700;font-size:10px;letter-spacing:.2em;text-decoration:none}
+.brand a:hover{color:#ffd34d}
+.status{position:fixed;top:50%;left:0;right:0;text-align:center;color:#5a6072;font-weight:600;font-size:12px;z-index:20}
+</style></head><body>
+<div class="title">FIFA WORLD CUP 2026</div>
+<div class="sub">ROUND OF 32 &middot; LIVE BRACKET</div>
+<div class="status" id="status">Cargando datos reales&hellip;</div>
+<div class="stage"><div class="scaler"><div class="wrap" id="wrap" style="opacity:0">
+  <svg class="keys" id="keys" viewBox="0 0 780 780"></svg>
+  <div class="bigbang"><div class="gravity-spot" style="--o-force:720px;">
+    <div class="orbit-12" id="ring32"></div>
+    <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="trophy">&#127942;</div></div></div></div>
+  </div></div>
+  <div class="nodes" id="nodes" style="position:absolute;inset:0;z-index:50;isolation:isolate"></div>
+</div></div></div>
+<div class="foot" id="foot">&#9679; DATOS: openfootball (dominio p&uacute;blico)</div>
+<div class="brand"><a href="https://zumerlab.com/orbit" target="_blank" rel="noopener">BUILT WITH ORBIT &middot; zumerlab.com/orbit</a></div>
+
+<script>
+const GEO = {"cx": 390, "cy": 390, "R32": 360.0, "R16": 270.0, "R8": 180.0, "R4": 120.0, "BOX": 780, "leaves": [-1.5707963267948966, -1.3745447442201268, -1.1780136655713598, -0.9817150581290421, -0.7853981633974483, -0.5890812686658546, -0.39278266122353694, -0.1962515825747698, 0.0, 0.1962515825747698, 0.39278266122353683, 0.5890812686658546, 0.7853981633974483, 0.981715058129042, 1.1780136655713598, 1.3745447442201268, 1.5707963267948966, 1.7670479093696665, 1.9635789880184336, 2.159877595460751, 2.356194490192345, 2.552511384923939, 2.7488099923662563, 2.9453410710150236, 3.141592653589793, -2.9453410710150236, -2.7488099923662563, -2.552511384923939, -2.356194490192345, -2.159877595460751, -1.9635789880184336, -1.7670479093696665]};
+const N2C = {"South Africa": "za", "Canada": "ca", "Germany": "de", "Paraguay": "py", "Netherlands": "nl", "Morocco": "ma", "Brazil": "br", "Japan": "jp", "France": "fr", "Sweden": "se", "Ivory Coast": "ci", "Norway": "no", "Mexico": "mx", "Ecuador": "ec", "England": "gb-eng", "DR Congo": "cd", "USA": "us", "Bosnia & Herzegovina": "ba", "Belgium": "be", "Senegal": "sn", "Portugal": "pt", "Croatia": "hr", "Spain": "es", "Austria": "at", "Switzerland": "ch", "Algeria": "dz", "Argentina": "ar", "Cape Verde": "cv", "Colombia": "co", "Ghana": "gh", "Australia": "au", "Egypt": "eg", "Iran": "ir", "South Korea": "kr", "Czech Republic": "cz", "Uruguay": "uy", "Italy": "it"};
+const cx=GEO.cx, cy=GEO.cy;
+const polar=(r,a)=>[cx+r*Math.cos(a), cy+r*Math.sin(a)];
+
+function code(name){ return N2C[name] || null; }
+function flagURL(c){ return 'https://flagcdn.com/w160/'+c+'.png'; }
+
+// determinar ganador de un match openfootball (ft + penales si empate)
+function winnerOf(m){
+  if(!m || !m.score || !m.score.ft) return null;
+  const [a,b]=m.score.ft;
+  if(a>b) return m.team1;
+  if(b>a) return m.team2;
+  // empate -> penales (score.p si existe, o si hay 'pens')
+  if(m.score.p){ const [pa,pb]=m.score.p; return pa>pb?m.team1:m.team2; }
+  // fallback: openfootball a veces mete penales en goals, sino null
+  return null;
+}
+
+async function build(){
+  let data;
+  try{
+    const res = await fetch('https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json');
+    data = await res.json();
+  }catch(e){
+    document.getElementById('status').textContent='No se pudo cargar la data (CORS o red).';
+    return;
+  }
+  const r32m = data.matches.filter(m=>String(m.round)==='Round of 32');
+  if(r32m.length<16){ document.getElementById('status').textContent='Round of 32 incompleto en la fuente.'; }
+
+  // ordenar como el bracket (orden del dataset = orden oficial de cruces)
+  // construir teams[] (32) y winners[] (16)
+  const teams=[], winners=[];
+  for(const m of r32m){
+    const w = winnerOf(m);
+    const tA={name:m.team1, code:code(m.team1), won: w===m.team1, lost: w&&w!==m.team1};
+    const tB={name:m.team2, code:code(m.team2), won: w===m.team2, lost: w&&w!==m.team2};
+    teams.push(tA, tB);
+    winners.push(w? (w===m.team1?tA:tB) : null);
+  }
+  while(teams.length<32){ teams.push({name:'TBD',code:null}); }
+  while(winners.length<16){ winners.push(null); }
+
+  renderRing(teams);
+  await waitFlags();
+  drawKeysAndNodes(teams, winners);
+  document.getElementById('status').style.display='none';
+  document.getElementById('wrap').style.opacity='1';
+  fit();
+
+  // contar jugados
+  const played = winners.filter(Boolean).length;
+  document.getElementById('foot').innerHTML='&#9679; '+played+'/16 definidos &middot; DATOS: openfootball (dominio p&uacute;blico) &middot; '+(new Date().toISOString().slice(0,10));
+}
+
+function renderRing(teams){
+  const ring=document.getElementById('ring32');
+  ring.innerHTML = teams.map((t,k)=>{
+    const a=(k*11.25).toFixed(2);
+    let inner;
+    if(!t.code){ inner='<div class="flag tbd s12"></div>'; }
+    else{ const cls='flag s12'+(t.lost?' lost':'')+(t.won?' won':'');
+      inner='<img class="'+cls+'" src="'+flagURL(t.code)+'" title="'+t.name+'">'; }
+    return '<div class="satellite angle-'+a+'"><div class="capsule">'+inner+'</div></div>';
+  }).join('');
+}
+
+function waitFlags(){
+  return new Promise(r=>{
+    const imgs=[...document.querySelectorAll('#ring32 img')];
+    let n=imgs.length; if(!n) return r();
+    imgs.forEach(im=>{ if(im.complete) done(); else { im.onload=done; im.onerror=done; } });
+    function done(){ if(--n<=0) r(); }
+    setTimeout(r,3000);
+  });
+}
+
+function drawKeysAndNodes(teams, winners){
+  const paths=[]; const nodePts={r16:[],r8:[],r4:[]};
+  function makeLevel(childAngles, rChild, rArc, clsList, store){
+    const out=[];
+    for(let k=0;k<childAngles.length;k+=2){
+      const aa=childAngles[k], ab=childAngles[k+1];
+      const cls=clsList? clsList[k/2] : 'key';
+      const ca=polar(rChild,aa), cb=polar(rChild,ab);
+      const sa=polar(rArc,aa), sb=polar(rArc,ab);
+      paths.push('<path class="'+cls+'" d="M '+ca[0].toFixed(1)+' '+ca[1].toFixed(1)+' L '+sa[0].toFixed(1)+' '+sa[1].toFixed(1)+'"/>');
+      paths.push('<path class="'+cls+'" d="M '+cb[0].toFixed(1)+' '+cb[1].toFixed(1)+' L '+sb[0].toFixed(1)+' '+sb[1].toFixed(1)+'"/>');
+      const sweep = ((ab-aa)%(2*Math.PI)+2*Math.PI)%(2*Math.PI) < Math.PI ? 1:0;
+      paths.push('<path class="'+cls+'" d="M '+sa[0].toFixed(1)+' '+sa[1].toFixed(1)+' A '+rArc.toFixed(1)+' '+rArc.toFixed(1)+' 0 0 '+sweep+' '+sb[0].toFixed(1)+' '+sb[1].toFixed(1)+'"/>');
+      let mid=(aa+ab)/2; if(Math.abs(aa-ab)>=Math.PI) mid+=Math.PI;
+      out.push(mid);
+      if(store){ const mp=polar(rArc,mid); nodePts[store].push(mp); }
+    }
+    return out;
+  }
+  const cls32 = winners.map(w=> w? 'key won':'key');
+  const mid16 = makeLevel(GEO.leaves, GEO.R32, GEO.R16, cls32, 'r16');
+  const mid8  = makeLevel(mid16, GEO.R16, GEO.R8, Array(8).fill('key dim'), 'r8');
+  const mid4  = makeLevel(mid8, GEO.R8, GEO.R4, Array(4).fill('key dim'), 'r4');
+
+  // FINAL HORIZONTAL: forzar que los dos puntos de salida entren al trofeo en horizontal.
+  // tomar los 2 semis de cada lado, unirlos, y la linea al centro es horizontal pura.
+  const r_final=GEO.R4*0.5;
+  const leftIdx=[], rightIdx=[];
+  mid4.forEach((a,i)=>{ (Math.cos(a)<0?leftIdx:rightIdx).push(i); });
+  function mergeSide(idxs, sideSign){
+    if(idxs.length===2){
+      const aa=mid4[idxs[0]], ab=mid4[idxs[1]];
+      const ca=polar(GEO.R4,aa), cb=polar(GEO.R4,ab);
+      const sa=polar(r_final,aa), sb=polar(r_final,ab);
+      paths.push('<path class="key dim" d="M '+ca[0].toFixed(1)+' '+ca[1].toFixed(1)+' L '+sa[0].toFixed(1)+' '+sa[1].toFixed(1)+'"/>');
+      paths.push('<path class="key dim" d="M '+cb[0].toFixed(1)+' '+cb[1].toFixed(1)+' L '+sb[0].toFixed(1)+' '+sb[1].toFixed(1)+'"/>');
+      const sweep = ((ab-aa)%(2*Math.PI)+2*Math.PI)%(2*Math.PI) < Math.PI ? 1:0;
+      paths.push('<path class="key dim" d="M '+sa[0].toFixed(1)+' '+sa[1].toFixed(1)+' A '+r_final.toFixed(1)+' '+r_final.toFixed(1)+' 0 0 '+sweep+' '+sb[0].toFixed(1)+' '+sb[1].toFixed(1)+'"/>');
+      // PUNTO DE SALIDA HORIZONTAL: a la altura del centro (cy), a distancia r_final del lado
+      const hx = cx + sideSign*r_final;
+      // linea horizontal pura desde (hx, cy) al centro
+      paths.push('<path class="key dim" d="M '+hx.toFixed(1)+' '+cy.toFixed(1)+' L '+cx.toFixed(1)+' '+cy.toFixed(1)+'"/>');
+      // conectar el medio del arco a ese punto horizontal
+      let mid=(aa+ab)/2; if(Math.abs(aa-ab)>=Math.PI) mid+=Math.PI;
+      const mp=polar(r_final,mid);
+      paths.push('<path class="key dim" d="M '+mp[0].toFixed(1)+' '+mp[1].toFixed(1)+' L '+hx.toFixed(1)+' '+cy.toFixed(1)+'"/>');
+    }
+  }
+  mergeSide(leftIdx,-1); mergeSide(rightIdx,+1);
+
+  document.getElementById('keys').innerHTML = paths.join('');
+
+  // nodos en el medio de cada arco
+  let nodes='';
+  function nodeHTML(t,sz,x,y){
+    const half=sz/2; const st='position:absolute;left:'+(x-half).toFixed(1)+'px;top:'+(y-half).toFixed(1)+'px;width:'+sz+'px;height:'+sz+'px';
+    if(!t || !t.code) return '<div class="onode tbd" style="'+st+'"></div>';
+    return '<img class="onode'+(t.won?' won':'')+'" style="'+st+'" src="'+flagURL(t.code)+'" title="'+t.name+'">';
+  }
+  for(let i=0;i<16;i++){ const [x,y]=nodePts.r16[i]; nodes+=nodeHTML(winners[i],28,x,y); }
+  for(let j=0;j<8;j++){ const [x,y]=nodePts.r8[j]; nodes+=nodeHTML(null,22,x,y); }
+  for(let q=0;q<4;q++){ const [x,y]=nodePts.r4[q]; nodes+=nodeHTML(null,18,x,y); }
+  document.getElementById('nodes').innerHTML=nodes;
+}
+
+// responsive
+const BASE=GEO.BOX;
+function fit(){
+  const sc=document.querySelector('.scaler'); if(!sc) return;
+  const s=Math.max(0.2, Math.min(1, (window.innerWidth-32)/BASE, (window.innerHeight-130)/BASE));
+  sc.style.transform='scale('+s+')';
+}
+window.addEventListener('resize',fit);
+window.addEventListener('load',()=>{ build(); });
+</script>
+</body></html>
