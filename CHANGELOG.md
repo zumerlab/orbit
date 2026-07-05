@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v1.4.12](https://github.com/zumerlab/orbit/compare/v1.4.11...v1.4.12)
+
+> 4 July 2026
+
+- Mejorar la interacción de los elementos SVG en OrbitArc y OrbitProgress, añadiendo soporte para el atributo "interactive" y optimizando el manejo de texto en arcos. [`60aaf92`](https://github.com/zumerlab/orbit/commit/60aaf92d08e749d0311672c97617de187cb1a5d7)
+- Add orbit-kit references to README for ready-made components [`717e098`](https://github.com/zumerlab/orbit/commit/717e098e871bc8524827a1145e6023120ca9b57f)
+
 #### [v1.4.11](https://github.com/zumerlab/orbit/compare/v1.4.10...v1.4.11)
 
 > 31 May 2026
