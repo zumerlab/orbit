@@ -29,8 +29,16 @@ export class OrbitProgress extends OrbitBase {
           overflow: visible;
           pointer-events: none;
         }
+        /* Display element by default: never steals clicks (see orbit-arc).
+           Interaction is opt-in via the "interactive" attribute. */
         svg * {
+          pointer-events: none;
+        }
+        :host([interactive]) svg * {
           pointer-events: visiblePainted;
+        }
+        :host([interactive]) {
+          cursor: pointer;
         }
         .progress-bar {
           fill: var(--o-fill);
@@ -43,6 +51,23 @@ export class OrbitProgress extends OrbitBase {
           fill: var(--o-back-fill);
           stroke: var(--o-back-stroke);
           stroke-width: var(--o-back-stroke-width);
+        }
+        /* variant="stroke": the thin, legible gauge (registro "medidor").
+           The default band is a FILLED donut wedge, so everyone building a
+           thin gauge tripped on --o-fill/--o-back-fill. With this variant the
+           paths are open arcs and the data color lives where you expect it:
+           --o-stroke for the bar, --o-back-stroke for the track. */
+        :host([variant="stroke"]) .progress-bar {
+          fill: none;
+          stroke: var(--o-stroke);
+          stroke-width: var(--o-stroke-width, 2);
+          stroke-linecap: round;
+        }
+        :host([variant="stroke"]) .progress-bg {
+          fill: none;
+          stroke: var(--o-back-stroke, var(--o-gray-light));
+          stroke-width: var(--o-back-stroke-width, 1);
+          stroke-linecap: round;
         }
       </style>
       <svg viewBox="0 0 100 100">
@@ -68,10 +93,28 @@ export class OrbitProgress extends OrbitBase {
 
   update() {
     const attrs = this.getAttributes();
-    const dBg = this.calculateArcParameters(attrs, true);
-    const dBar = this.calculateArcParameters(attrs, false);
+    const isStroke = this.getAttribute('variant') === 'stroke';
+    const dBg = isStroke ? this.calculateStrokeArc(attrs, true) : this.calculateArcParameters(attrs, true);
+    const dBar = isStroke ? this.calculateStrokeArc(attrs, false) : this.calculateArcParameters(attrs, false);
     this.shadowRoot.querySelector('.progress-bg').setAttribute('d', dBg);
     this.shadowRoot.querySelector('.progress-bar').setAttribute('d', dBar);
+  }
+
+  /**
+   * variant="stroke": open arc along the orbit radius (no closed band),
+   * stroked by CSS. Same progress math as the band variant.
+   */
+  calculateStrokeArc(attrs, full) {
+    const { realRadius } = attrs;
+    const arcAngle = Math.max(0, Math.min(this.getProgressAngle(attrs, full), 359.99));
+    const a0 = -90 * (Math.PI / 180);
+    const a1 = (-90 + arcAngle) * (Math.PI / 180);
+    const x0 = 50 + realRadius * Math.cos(a0);
+    const y0 = 50 + realRadius * Math.sin(a0);
+    const x1 = 50 + realRadius * Math.cos(a1);
+    const y1 = 50 + realRadius * Math.sin(a1);
+    const largeArcFlag = arcAngle > 180 ? 1 : 0;
+    return `M ${x0},${y0} A ${realRadius},${realRadius} 0 ${largeArcFlag} 1 ${x1},${y1}`;
   }
 
   getAttributes() {

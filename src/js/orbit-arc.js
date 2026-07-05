@@ -21,8 +21,18 @@ template.innerHTML = `
       overflow: visible;
       pointer-events: none;
     }
+    /* Arcs are display elements by default: they must NOT steal clicks from
+       satellites/controls nearby (a painted arc used to capture clicks even
+       at opacity 0, and pointer-events:none on the host could not pierce the
+       shadow). Interaction is opt-in via the "interactive" attribute. */
     svg * {
+      pointer-events: none;
+    }
+    :host([interactive]) svg * {
       pointer-events: visiblePainted;
+    }
+    :host([interactive]) {
+      cursor: pointer;
     }
     #orbitShape {
       fill: var(--o-fill);
@@ -109,6 +119,32 @@ export class OrbitArc extends OrbitBase {
 
     textPath.parentElement.style.fontSize = `calc(${fontSize} * (100 / (${length}) * (12 / var(--o-orbit-number)))`;
     textPath.textContent = this.textContent;
+    this.warnIfTextOverflows(orbitPath, textPath, fitRange);
+  }
+
+  /**
+   * Curved text has an explicit angular budget: glyphs past the end of the
+   * arc path are clipped SILENTLY by SVG. Measure and warn so nobody loses
+   * time to invisible truncation (~20 chars in 96° at default sizes).
+   * fit-range squeezes the text to the path via textLength, so it never clips.
+   */
+  warnIfTextOverflows(orbitPath, textPath, fitRange) {
+    const raw = (this.textContent || '').trim();
+    if (!raw || fitRange || !this.isConnected) return;
+    requestAnimationFrame(() => {
+      try {
+        const pathLen = orbitPath.getTotalLength();
+        const textLen = textPath.parentElement.getComputedTextLength();
+        if (pathLen > 0 && textLen > pathLen && this._truncWarned !== raw) {
+          this._truncWarned = raw;
+          console.warn(
+            `[orbit] <o-arc> text "${raw.length > 34 ? raw.slice(0, 34) + '…' : raw}" ` +
+            `overflows its arc (${Math.round(textLen)} > ${Math.round(pathLen)} units) and will clip. ` +
+            'Shorten the text, widen --o-range, or use fit-range to squeeze it.'
+          );
+        }
+      } catch (e) { /* not measurable (hidden/detached) — skip */ }
+    });
   }
 
   getAttributes() {
