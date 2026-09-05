@@ -733,13 +733,14 @@ export function OrbitGauge({ value = 72 }) {
       <div class="card">
         <h3>Export to Image (SnapDOM)</h3>
         <p class="note">Capturá cualquier bloque Orbit como PNG/SVG.</p>
-        <div class="code"><pre><code>import snapdom from "snapdom";
+        <div class="code"><pre><code>import { snapdom } from "@zumer/snapdom";
 // Selecciona un nodo (por ejemplo, el gauge del Hero):
 const el = document.querySelector(".hero-demo .bigbang");
 // Exportá a PNG:
-const imgDataUrl = await snapdom.toPng(el);
+const img = await snapdom.toPng(el);
+document.body.appendChild(img);
 // o a SVG:
-const svg = await snapdom.toSvg(el);
+const svgImage = await snapdom.toSvg(el);
 </code></pre></div>
         <div class="copyline">
           <button class="btn" id="snapdemo">Simular captura</button>
