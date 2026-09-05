@@ -1,27 +1,6 @@
-@use './variables'  as *;
+@use './variables' as *;
 
-
-/* Check browser has() support */
-@supports not selector(:has(a)) {	
-  .bigbang {
-    background-color: #ff00004f;
-    border: 2px dotted red !important;
-    height: 100px !important;
-    width: 250px !important;
-  }
-  .bigbang>* {
-    display: none;
-  }
-
-  .bigbang::before {
-    content: ':has() selector not supported. Update this browser to use Orbit';
-    font-size: 18px;
-    padding: 10px;
-    text-align: center;
-    color: red;
-  }
-}
-
+// CSS still performs the geometry, even when JavaScript manages the layout.
 @supports not (left: calc(cos(45deg) * 1px)) {
   .bigbang {
     background-color: #ff00004f;
@@ -29,13 +8,11 @@
     height: 100px !important;
     width: 250px !important;
   }
-  .bigbang>
-  * {
+  .bigbang > * {
     display: none;
   }
-
   .bigbang::before {
-    content: 'Trigometric functions not supported. Update this browser to use Orbit';
+    content: 'Orbit requires CSS trigonometric functions (sin and cos). Update this browser to use Orbit.';
     font-size: 18px;
     padding: 10px;
     color: red;
@@ -44,78 +21,60 @@
 }
 
 @container oslice not style(--o-ellipse-x: 1) {
-  /* Shown if ratio equals 1*/
   o-arc, o-progress {
     display: none;
   }
 }
 @container oslice not style(--o-ellipse-y: 1) {
-  /* Shown if ratio equals 1*/
   o-arc, o-progress {
     display: none;
   }
 }
 
-/* bigbang checks */
-.bigbangt:has(>*:not(.gravity-spot)) {
-  border: 2px dotted red!important;
-  width: var(--o-force) !important;
-  border-radius: 50%;
-}
-.bigbangt:has(>*:not(.gravity-spot)) > * {
-  filter:grayscale(1) opacity(0.2)
-}
-.bigbangt:has(>*:not(.gravity-spot))::after {
-  content: "⚠️";
-  font-size: 130%;
-  animation:  pulse 1.5s infinite;
-  z-index: 99;
-  filter: drop-shadow(3px 3px 8px rgb(255, 254, 254));
-  position: absolute;
-}
-/* gravity-spot checks */
-.gravity-spot:has(>*:not(.orbit, [class*='orbit-'], .gravity-spot)) {
-  border: 2px dotted red!important;
-  width: var(--o-force) !important;
-  border-radius: 50%;
-}
-.gravity-spot:has(>*:not(.orbit, [class*='orbit-'], .gravity-spot)) > * {
-  filter:grayscale(1) opacity(0.2)
-}
-.gravity-spot:has(> *:not(.orbit, [class*='orbit-'], .gravity-spot))::after {
-  content: "⚠️";
-  font-size: 130%;
-  animation:  pulse 1.5s infinite;
-  z-index: 99;
-  filter: drop-shadow(3px 3px 8px rgb(255, 254, 254));
-  position: absolute;
+// Structural diagnostics are opt-in. Missing :has() support disables these
+// warnings and the static CSS fallback, not the JavaScript layout manager.
+.dev-orbit {
+  &.bigbang:has(> :not(.gravity-spot)),
+  .bigbang:has(> :not(.gravity-spot)),
+  &.gravity-spot:has(> :not(#{$orbit-selector}, .gravity-spot)),
+  .gravity-spot:has(> :not(#{$orbit-selector}, .gravity-spot)) {
+    border: 2px dotted red !important;
+    border-radius: 50%;
+
+    > * {
+      filter: grayscale(1) opacity(0.2);
+    }
+    &::after {
+      content: '⚠️';
+      font-size: 130%;
+      animation: orbit-support-pulse 1.5s infinite;
+      z-index: 99;
+      filter: drop-shadow(3px 3px 8px rgb(255, 254, 254));
+      position: absolute;
+    }
+  }
+
+  &#{$orbit-selector}:has(> #{$orbit-selector}),
+  #{$orbit-selector}:has(> #{$orbit-selector}),
+  &.satellite:has(> :not(.gravity-spot, .capsule)),
+  .satellite:has(> :not(.gravity-spot, .capsule)) {
+    border: 2px dotted rgb(255, 81, 0) !important;
+
+    > * {
+      opacity: 0.4;
+    }
+    &::after {
+      content: '⚠️';
+      animation: orbit-support-pulse 1.5s infinite;
+      z-index: 999;
+      filter: drop-shadow(1px 1px 8px rgb(255, 254, 254));
+      position: absolute;
+    }
+  }
 }
 
-/* orbit and satellite checks */
-.orbit:has(>*:is(.orbit, [class*='orbit-'])), 
-[class*='orbit-']:has(>*:is(.orbit, [class*='orbit-'])),
-.satellite:has(>*:not(.gravity-spot, .capsule)) {
- border: 2px dotted rgb(255, 81, 0)!important;
-}
-.orbit:has(>*:is(.orbit, [class*='orbit-']))> *, 
-[class*='orbit-']:has(>*:is(.orbit, [class*='orbit-']))> *,
-.satellite:has(>*:not(.gravity-spot, .capsule)) > * {
-  opacity: 0.4
-}
-.orbit:has(>*:is(.orbit, [class*='orbit-']))::after, 
-[class*='orbit-']:has(>*:is(.orbit, [class*='orbit-']))::after, 
-.satellite:has(>*:not(.gravity-spot, .capsule))::after {
-  content: "⚠️";
-  animation:  pulse 1.5s infinite;
-  z-index: 999;
-  filter: drop-shadow(1px 1px 8px rgb(255, 254, 254));
-  position: absolute;
-}
-
-
-
-@keyframes pulse {
-  0% {
+@keyframes orbit-support-pulse {
+  0%, 100% {
     transform: scale(1);
     opacity: 0;
   }
@@ -123,8 +82,11 @@
     opacity: 1;
     transform: scale(1.2);
   }
-  100% {
-    transform: scale(1);
-    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dev-orbit::after,
+  .dev-orbit *::after {
+    animation: none;
   }
 }

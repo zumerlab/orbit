@@ -1,5 +1,14 @@
-// Orbit SCSS vars
+@use 'sass:list';
+
+// Static CSS fallback. The JavaScript layout manager supports larger layouts.
 
 $max-orbits: 12;
 $extra-orbits: 24;
 $max-orbiters: 60;
+
+// Match complete class tokens: names such as orbit-card are application classes.
+$orbit-selectors: '.orbit', '[data-orbit-ring]';
+@for $i from 0 through $extra-orbits {
+  $orbit-selectors: list.append($orbit-selectors, '.orbit-#{$i}', comma);
+}
+$orbit-selector: ':is(#{$orbit-selectors})';

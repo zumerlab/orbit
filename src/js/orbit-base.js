@@ -1,17 +1,38 @@
-export class OrbitBase extends HTMLElement {
+import { cssNumber, requestLayout } from './orbit-layout.js';
+
+export class OrbitBase extends (globalThis.HTMLElement || class {}) {
   constructor() {
     super();
   }
 
+  connectedCallback() {
+    requestLayout(this);
+  }
+
+  disconnectedCallback() {
+    if (this._textFrame) this.ownerDocument.defaultView.cancelAnimationFrame(this._textFrame);
+    this._textFrame = 0;
+  }
+
+  readNumber(style, name, fallback = 0) {
+    return cssNumber(this, style.getPropertyValue(name), fallback);
+  }
+
+  readAngle(style, name, fallback = 0) {
+    return cssNumber(this, style.getPropertyValue(name), fallback, 'angle');
+  }
+
   getCommonAttributes(element) {
-    const orbitRadius = parseFloat(getComputedStyle(element).getPropertyValue('r') || 0);
-    const orbitNumber = parseFloat(getComputedStyle(element).getPropertyValue('--o-orbit-number') || 1);
-    const size = parseFloat(getComputedStyle(element).getPropertyValue('--o-size-ratio') || 1);
-    const strokeWidth = parseFloat(getComputedStyle(element).getPropertyValue('--o-stroke-width') || 1);
+    const style = element.ownerDocument.defaultView.getComputedStyle(element);
+    const measuredRadius = parseFloat(style.getPropertyValue('r'));
+    const orbitRadius = Math.max(0, Number.isFinite(measuredRadius) ? measuredRadius : (element.parentElement?.clientWidth || 0) / 2);
+    const orbitNumber = Math.max(.00001, this.readNumber(style, '--o-orbit-number', 1));
+    const size = Math.max(0, this.readNumber(style, '--o-size-ratio', 1));
+    const strokeWidth = Math.max(0, this.readNumber(style, '--o-stroke-width', 1));
     const shape = element.getAttribute('shape') || 'none';
     
-    const arcHeight = orbitRadius / orbitNumber * size - strokeWidth + 0.3;
-    const arcHeightPercentage = orbitRadius > 0 ? ((arcHeight / 2) * 100) / orbitRadius / 2 : 0;
+    const arcHeight = Math.max(0, orbitRadius / orbitNumber * size - strokeWidth + 0.3);
+    const arcHeightPercentage = orbitRadius > 0 ? Math.min(49.999, arcHeight * 25 / orbitRadius) : 0;
     
     let innerOuter = 0;
     if (element.classList.contains('outer-orbit')) {
@@ -35,12 +56,14 @@ export class OrbitBase extends HTMLElement {
       arcHeightPercentage,
       orbitNumber,
       size,
-      strokeWidth
+      strokeWidth,
+      style
     };
   }
 
   getProgressAngle(maxAngle, value, maxValue = 100) {
-    return (value / maxValue) * maxAngle;
+    if (!Number.isFinite(value) || !Number.isFinite(maxValue) || maxValue <= 0) return 0;
+    return Math.min(1, Math.max(0, value / maxValue)) * Math.max(0, Math.min(360, maxAngle));
   }
 
   getControlPoint(x, y, x1, y1, direction = "clockwise") {
@@ -73,11 +96,11 @@ export class OrbitBase extends HTMLElement {
 
   calculateCommonArcParameters(arcAngle, radius, arcHeightPercentage, orbitNumber, shape, strokeWidth, arcHeight, gap = 0) {
     const offset = Math.PI / 2;
-    const fangle = arcAngle * Math.PI / 180;
+    const fangle = Math.max(0, Math.min(359.999999, arcAngle)) * Math.PI / 180;
     const bigRadius = radius + arcHeightPercentage;
-    const smallRadius = (radius - arcHeightPercentage) !== 0 ? radius - arcHeightPercentage : radius;
-    const bigGap = (gap + strokeWidth * 1.25) / orbitNumber / bigRadius;
-    const smallGap = (gap + strokeWidth * 1.25) / orbitNumber / smallRadius;
+    const smallRadius = Math.max(.001, radius - arcHeightPercentage);
+    const bigGap = Math.min(fangle * .49, (gap + strokeWidth * 1.25) / orbitNumber / bigRadius);
+    const smallGap = Math.min(fangle * .49, (gap + strokeWidth * 1.25) / orbitNumber / smallRadius);
     const upperAngleStart = bigGap - offset;
     const upperAngleEnd = fangle - bigGap - offset;
     const innerAngleStart = smallGap - offset;
@@ -153,7 +176,8 @@ export class OrbitBase extends HTMLElement {
 
   generateRoundedPath(params, arcHeight, orbitNumber) {
     const { bigRadius, smallRadius } = params;
-    const curve = arcHeight < 10 ? 5 : arcHeight < 5 ? 2.5 : 10;
+    const available = Math.min(params.upperAngleEnd - params.upperAngleStart, params.innerAngleEnd - params.innerAngleStart);
+    const curve = Math.min(arcHeight < 5 ? 2.5 : arcHeight < 10 ? 5 : 10, available * 180 / Math.PI * orbitNumber * .49);
 
     // The rounded caps inset the arc endpoints by an extra curve/orbitNumber
     // degrees per side, so the drawn arc spans less than the bare gap arc. The
@@ -207,7 +231,8 @@ generateCirclePath(params, shape) {
 
 generateCircleBPath(params, arcHeight, orbitNumber) {
   const { upperAngleStart, upperAngleEnd, innerAngleStart, innerAngleEnd, bigRadius, smallRadius } = params;
-  const segment = arcHeight * 1.36;
+  const available = Math.min(upperAngleEnd - upperAngleStart, innerAngleEnd - innerAngleStart);
+  const segment = Math.min(arcHeight * 1.36, available * 180 / Math.PI * orbitNumber * .49);
 
   // Like rounded, circle-b insets its arc endpoints (by segment/orbitNumber
   // degrees per side), so its large-arc flags must come from those endpoints.

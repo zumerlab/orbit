@@ -1,27 +1,39 @@
+import { refreshLayout } from './orbit-layout.js';
+
+const resizing = new WeakMap();
+
 const Orbit = {
+  refresh: refreshLayout,
+
   resize(parentElementSelector) {
-    const parent = document.querySelector(parentElementSelector);
-    if (!parent) {
+    const parent = typeof parentElementSelector === 'string'
+      ? globalThis.document?.querySelector(parentElementSelector)
+      : parentElementSelector;
+    if (!parent?.ownerDocument) {
       console.error('Orbit.resize: element not found:', parentElementSelector);
-      return;
+      return () => {};
     }
-    const applyRatio = (width) => {
-      parent.querySelectorAll('.gravity-spot').forEach((el) => {
-        el.style.setProperty('--o-force-ratio', String(width / 500));
-      });
-    };
-    let w = parent.offsetWidth || parent.getBoundingClientRect().width;
-    if (w > 0) applyRatio(w);
-    else requestAnimationFrame(() => {
-      w = parent.offsetWidth || parent.getBoundingClientRect().width;
-      if (w > 0) applyRatio(w);
-    });
-    const ro = new ResizeObserver((entries) => {
-      for (const e of entries) {
-        if (e.contentRect.width > 0) applyRatio(e.contentRect.width);
+    resizing.get(parent)?.();
+    const view = parent.ownerDocument.defaultView;
+    const applyRatio = width => {
+      if (!(width > 0)) return;
+      for (const element of parent.querySelectorAll('.gravity-spot')) {
+        const ratio = String(width / 500);
+        if (element.style.getPropertyValue('--o-force-ratio') !== ratio) element.style.setProperty('--o-force-ratio', ratio);
       }
+      refreshLayout(parent);
+    };
+    const observer = new view.ResizeObserver(entries => {
+      for (const entry of entries) applyRatio(entry.contentRect.width);
     });
-    ro.observe(parent);
+    observer.observe(parent);
+    applyRatio(parent.clientWidth || parent.getBoundingClientRect().width);
+    const stop = () => {
+      observer.disconnect();
+      if (resizing.get(parent) === stop) resizing.delete(parent);
+    };
+    resizing.set(parent, stop);
+    return stop;
   }
 };
 

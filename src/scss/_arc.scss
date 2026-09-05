@@ -1,7 +1,7 @@
 @use './variables' as *;
 
 o-arc {
-  --o-angle-composite: var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1);
+  --o-angle-composite: var(--o-arc-start, var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1));
   --o-gap: 1;
   --o_stack: 0;
   container-name: oslice;
@@ -15,4 +15,3 @@ o-arc {
   r: var(--o-radius);
   transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
 }
-

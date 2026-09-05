@@ -96,7 +96,7 @@ Can be used in parent elements or in each orbiter class
 @for $i from 0 through  20  {
   $percent: calc($i * 5);
   $value: calc(($i * 5 / 100));
-  .orbit.shrink-#{$percent}, [class*='orbit-'].shrink-#{$percent} {
+  #{$orbit-selector}.shrink-#{$percent} {
     --o-orbit-ratio: #{$value}; 
   }
 }

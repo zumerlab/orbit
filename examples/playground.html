@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbit — laboratorio radial</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/dist/orbit.css">
+  <script src="/dist/orbit.js"></script>
+  <style>
+    :root { color-scheme: dark; font: 15px/1.5 system-ui, sans-serif; background: #101519; color: #e4ecef; --accent: #8adbc7; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 1200px; margin: auto; padding: 32px 28px 64px; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid #303a40; }
+    .brand { font-size: 26px; letter-spacing: -.05em; font-weight: 750; }
+    .brand span { font-size: 13px; font-weight: 400; letter-spacing: 0; color: #9aaeb6; margin-left: 14px; }
+    a { color: var(--accent); text-underline-offset: 4px; }
+    nav { display: flex; gap: 20px; font-size: 13px; }
+    h1 { font-size: clamp(30px, 4vw, 44px); line-height: 1.15; letter-spacing: -.045em; font-weight: 650; margin: 36px 0 12px; }
+    .intro { color: #a4b6bd; max-width: 650px; margin: 0 0 30px; }
+    h2 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -.02em; }
+    .panel { border: 1px solid #303a40; background: #151c21; min-width: 0; }
+    .panel-head { padding: 18px 22px; border-bottom: 1px solid #303a40; display: flex; align-items: center; gap: 14px; }
+    .number { color: var(--accent); font: 12px ui-monospace, monospace; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 310px; }
+    .stage { min-width: 0; min-height: 450px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background-color: #10171c; background-image: radial-gradient(#334047 1px, transparent 1px); background-size: 24px 24px; }
+    .diagram.bigbang { width: min(var(--demo-size, 300px), calc(100% - 56px)); height: auto; aspect-ratio: 1; container-type: inline-size; }
+    .diagram > .gravity-spot { --o-force: calc(100cqw * 2); }
+    .diagram .guide { border: 1px solid #3d555f; }
+    .diagram .satellite { border: 0; }
+    .diagram .point { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #102720; font: 600 12px ui-monospace, monospace; }
+    .diagram.dense .point { width: 5px; height: 5px; font-size: 0; }
+    .center { display: grid; justify-items: center; color: #8199a4; font: 11px ui-monospace, monospace; gap: 4px; white-space: nowrap; }
+    .center strong { color: #e4ecef; font: 500 42px/1 system-ui, sans-serif; letter-spacing: -.05em; }
+    .stage-note { position: absolute; bottom: 15px; left: 20px; color: #879da8; font: 11px ui-monospace, monospace; }
+    .controls { padding: 22px; border-left: 1px solid #303a40; }
+    .field { margin-bottom: 20px; }
+    .field label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 8px; font-size: 13px; }
+    output { font: 12px ui-monospace, monospace; color: var(--accent); }
+    input[type=range] { width: 100%; margin: 0; accent-color: var(--accent); cursor: pointer; }
+    input[type=checkbox] { accent-color: var(--accent); }
+    .check { display: flex; align-items: center; gap: 7px; font-size: 13px; margin: 18px 0; }
+    button, select { background: #243239; border: 1px solid #4c626c; border-radius: 4px; color: #e4ecef; padding: 9px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+    button:hover { background: #31474e; }
+    button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    select { width: 100%; }
+    .hint { color: #96abb4; font-size: 12px; line-height: 1.55; margin: 14px 0 0; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .pair .stage { min-height: 330px; }
+    .pair .controls { border-left: 0; border-top: 1px solid #303a40; }
+    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    details { padding: 16px 22px; border-top: 1px solid #303a40; }
+    summary { cursor: pointer; color: #a4b6bd; font-size: 12px; }
+    pre { overflow: auto; font: 12px/1.65 ui-monospace, monospace; color: #aad9cd; margin: 16px 0 0; }
+    footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #303a40; color: #96abb4; font-size: 13px; display: flex; flex-wrap: wrap; gap: 12px 24px; }
+    @media (max-width: 760px) { main { padding: 22px 16px 40px; } header { align-items: flex-start; } .brand span { display: block; margin: 0; } nav { flex-direction: column; gap: 5px; text-align: right; } .workspace, .pair { grid-template-columns: 1fr; } .controls { border-left: 0; border-top: 1px solid #303a40; } .stage { min-height: 380px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header><div class="brand">Orbit<span>Laboratorio radial</span></div><nav aria-label="Demos"><a href="#layout">Órbitas</a><a href="#arcs">Arcos</a><a href="#progress">Progreso</a></nav></header>
+  <h1>Mové las piezas. Probá la geometría.</h1>
+  <p class="intro">Componé con las primitivas de Orbit: órbitas, satélites, arcos y progreso. Los controles actualizan el HTML y las propiedades CSS en vivo.</p>
+
+  <section class="panel" id="layout" aria-labelledby="layout-title">
+    <div class="panel-head"><span class="number">01</span><h2 id="layout-title">Distribución de satélites</h2></div>
+    <div class="workspace">
+      <div class="stage">
+        <div class="diagram bigbang" id="layout-demo" style="--demo-size:320px" role="img" aria-label="8 satélites distribuidos en 360 grados">
+          <div class="gravity-spot">
+            <div class="orbit-2 guide"></div><div class="orbit-4 guide"></div>
+            <div class="orbit-6 guide" id="satellite-ring"></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="count-center">8</strong><span>SATÉLITES</span></div></div></div></div>
+          </div>
+        </div>
+        <span class="stage-note">bigbang → gravity-spot → orbit → satellite</span>
+      </div>
+      <div class="controls">
+        <div class="field"><label for="count">Satélites <output for="count" id="count-out">8</output></label><input id="count" type="range" min="1" max="80" value="8"></div>
+        <div class="field"><label for="span">Apertura <output for="span" id="span-out">360°</output></label><input id="span" type="range" min="60" max="360" value="360" step="15"></div>
+        <div class="field"><label for="rotation">Rotación <output for="rotation" id="rotation-out">0°</output></label><input id="rotation" type="range" min="0" max="360" value="0" step="5"></div>
+        <div class="field"><label for="diameter">Diámetro <output for="diameter" id="diameter-out">320 px</output></label><input id="diameter" type="range" min="160" max="400" value="320" step="10"></div>
+        <button id="reorder" type="button">Rotar el orden del DOM</button>
+        <label class="check"><input id="debug" type="checkbox"> Mostrar estructura</label>
+        <p class="hint">Subí a 80 para probar la distribución más allá del antiguo límite de 60. El tamaño también se adapta al ancho disponible.</p>
+      </div>
+    </div>
+    <details><summary>Ver el HTML de esta composición</summary><pre id="layout-code"></pre></details>
+  </section>
+
+  <div class="pair">
+    <section class="panel" id="arcs" aria-labelledby="arcs-title">
+      <div class="panel-head"><span class="number">02</span><h2 id="arcs-title">Arcos apilados</h2></div>
+      <div class="stage">
+        <div class="diagram bigbang" style="--demo-size:240px" id="arcs-demo" role="img" aria-label="Arco A: 40 por ciento; arco B: 25 por ciento">
+          <div class="gravity-spot">
+            <div class="orbit-6"><o-arc value="100" style="--o-fill:#2c3c45;--o-stroke:none;--o-gap:0"></o-arc></div>
+            <div class="orbit-6" id="arc-ring"><o-arc id="arc-a" value="40" style="--o-fill:#8adbc7;--o-stroke:none;--o-gap:2"></o-arc><o-arc id="arc-b" value="25" style="--o-fill:#eda979;--o-stroke:none;--o-gap:2"></o-arc></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="arc-center">65%</strong><span>TOTAL</span></div></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="field"><label for="arc-value">Arco A · verde <output id="arc-out" for="arc-value">40%</output></label><input id="arc-value" type="range" min="0" max="75" value="40"></div>
+        <div class="row"><button type="button" id="arc-zero">A en cero</button><button type="button" id="arc-reorder">Invertir segmentos</button></div>
+        <p class="hint">El arco naranja vale 25%. Cambiá el verde y observá cómo se desplaza el siguiente, incluso al llegar a cero.</p>
+      </div>
+      <details><summary>Ver el HTML de los segmentos</summary><pre id="arc-code"></pre></details>
+    </section>
+
+    <section class="panel" id="progress" aria-labelledby="progress-title">
+      <div class="panel-head"><span class="number">03</span><h2 id="progress-title">Progreso y formas</h2></div>
+      <div class="stage">
+        <div class="diagram bigbang" style="--demo-size:240px" id="progress-demo" role="img" aria-label="Progreso: 63 por ciento">
+          <div class="gravity-spot">
+            <div class="orbit-6" style="--o-range:270deg;--o-from:225deg"><o-progress id="progress-bar" value="63" shape="rounded" style="--o-fill:#8adbc7;--o-stroke:none;--o-back-fill:#2c3c45;--o-back-stroke:none;--o-size-ratio:1.6"></o-progress></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="progress-center">63%</strong><span>PROGRESO</span></div></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="field"><label for="progress-value">Valor <output id="progress-out" for="progress-value">63%</output></label><input id="progress-value" type="range" min="0" max="100" value="63"></div>
+        <div class="field"><label for="shape">Terminación</label><select id="shape"><option value="rounded">Redondeada</option><option value="none">Recta</option><option value="arrow">Flecha</option><option value="circle-a">Círculo A</option><option value="circle-b">Círculo B</option><option value="slash">Diagonal</option><option value="zigzag">Zigzag</option></select></div>
+        <p class="hint">Probá los extremos 0 y 100, y cambiá la terminación del arco. El fondo conserva la apertura de 270°.</p>
+      </div>
+      <details><summary>Ver el HTML del progreso</summary><pre id="progress-code"></pre></details>
+    </section>
+  </div>
+  <footer><span>Más composiciones:</span><a href="/examples/07-satellites.html">Constelación</a><a href="/examples/08-nested-orbits.html">Órbitas anidadas</a><a href="/examples/02-donut-multilayer.html">Donut</a></footer>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const ring = $('satellite-ring');
+  let serial = 0;
+  function layoutCode() {
+    $('layout-code').textContent = `<div class="bigbang">\n  <div class="gravity-spot">\n    <div class="orbit-6${Number($('span').value) < 360 ? ' fit-range' : ''}"\n         style="--o-range:${$('span').value}deg; --o-from:${$('rotation').value}deg">\n      <!-- ${ring.children.length} satélites, en el orden del DOM -->\n      <div class="satellite"><div class="capsule">${ring.firstElementChild.textContent}</div></div>\n      …\n    </div>\n  </div>\n</div>`;
+  }
+  function updateLayout() {
+    const count = Number($('count').value);
+    while (ring.children.length > count) ring.lastElementChild.remove();
+    while (ring.children.length < count) {
+      const satellite = document.createElement('div'); satellite.className = 'satellite';
+      const capsule = document.createElement('div'); capsule.className = 'capsule point'; capsule.textContent = ++serial;
+      satellite.append(capsule); ring.append(satellite);
+    }
+    ring.style.setProperty('--o-range', $('span').value + 'deg');
+    ring.style.setProperty('--o-from', $('rotation').value + 'deg');
+    ring.classList.toggle('fit-range', Number($('span').value) < 360);
+    $('layout-demo').style.setProperty('--demo-size', $('diameter').value + 'px');
+    $('layout-demo').classList.toggle('dense', count > 24);
+    $('layout-demo').classList.toggle('dev-orbit', $('debug').checked);
+    $('layout-demo').setAttribute('aria-label', `${count} satélites distribuidos en ${$('span').value} grados`);
+    $('count-out').value = count; $('count-center').textContent = count;
+    $('span-out').value = $('span').value + '°'; $('rotation-out').value = $('rotation').value + '°';
+    $('diameter-out').value = $('diameter').value + ' px';
+    layoutCode();
+  }
+  for (const id of ['count', 'span', 'rotation', 'diameter', 'debug']) $(id).addEventListener('input', updateLayout);
+  $('reorder').addEventListener('click', () => { ring.prepend(ring.lastElementChild); layoutCode(); });
+  function updateArcs() {
+    const value = Number($('arc-value').value);
+    $('arc-a').setAttribute('value', value); $('arc-out').value = value + '%'; $('arc-center').textContent = (value + 25) + '%';
+    $('arcs-demo').setAttribute('aria-label', `Arco A: ${value} por ciento; arco B: 25 por ciento`);
+    $('arc-code').textContent = Array.from($('arc-ring').children, element => `<o-arc value="${element.getAttribute('value')}"\n       style="--o-fill:${element.id === 'arc-a' ? '#8adbc7' : '#eda979'}"></o-arc>`).join('\n');
+  }
+  $('arc-value').addEventListener('input', updateArcs);
+  $('arc-zero').addEventListener('click', () => { $('arc-value').value = 0; updateArcs(); });
+  $('arc-reorder').addEventListener('click', () => { $('arc-ring').prepend($('arc-ring').lastElementChild); updateArcs(); });
+  function updateProgress() {
+    const value = $('progress-value').value;
+    $('progress-bar').setAttribute('value', value); $('progress-bar').setAttribute('shape', $('shape').value);
+    $('progress-out').value = value + '%'; $('progress-center').textContent = value + '%';
+    $('progress-demo').setAttribute('aria-label', `Progreso: ${value} por ciento`);
+    $('progress-code').textContent = `<div class="orbit-6" style="--o-range:270deg; --o-from:225deg">\n  <o-progress value="${value}" shape="${$('shape').value}"></o-progress>\n</div>`;
+  }
+  $('progress-value').addEventListener('input', updateProgress); $('shape').addEventListener('change', updateProgress);
+  updateLayout(); updateArcs(); updateProgress();
+</script>
+</body>
+</html>

@@ -22,10 +22,9 @@ const common = {
 function buildCss() {
   mkdirSync('dist', { recursive: true })
   const fixCharset = (css) => {
-    if (!css.trimStart().startsWith('@charset')) {
-      return '@charset "UTF-8";\n' + css.replace(/^@charset[^;]+;\s*/i, '')
-    }
-    return css
+    // Compressed Sass emits a BOM. Strip it before adding @charset so it does
+    // not become a selector character in the middle of the stylesheet.
+    return '@charset "UTF-8";\n' + css.replace(/^\uFEFF/, '').replace(/^@charset[^;]+;\s*/i, '')
   }
   const expanded = sass.compile('src/orbit.scss', { loadPaths: ['src'] })
   writeFileSync('dist/orbit.css', fixCharset(expanded.css))
@@ -52,6 +51,15 @@ async function buildJs() {
       platform: 'browser',
       target: ['es2018'],
       minify: true,
+    }),
+    build({
+      ...common,
+      entryPoints: ['src/orbit.js'],
+      outfile: 'dist/orbit.mjs',
+      format: 'esm',
+      platform: 'browser',
+      target: ['es2018'],
+      minify: false,
     }),
   ])
 }

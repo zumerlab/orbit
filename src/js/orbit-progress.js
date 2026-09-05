@@ -77,20 +77,6 @@ export class OrbitProgress extends OrbitBase {
     `;
   }
 
-  connectedCallback() {
-    this.update();
-    this.setupObserver();
-  }
-
-  setupObserver() {
-    this.observer = new MutationObserver((mutations) => {
-      this.observer.disconnect();
-      mutations.forEach(() => this.update());
-      this.observer.observe(this, { attributes: true, childList: true });
-    });
-    this.observer.observe(this, { attributes: true, childList: true });
-  }
-
   update() {
     const attrs = this.getAttributes();
     const isStroke = this.getAttribute('variant') === 'stroke';
@@ -106,7 +92,8 @@ export class OrbitProgress extends OrbitBase {
    */
   calculateStrokeArc(attrs, full) {
     const { realRadius } = attrs;
-    const arcAngle = Math.max(0, Math.min(this.getProgressAngle(attrs, full), 359.99));
+    const arcAngle = Math.max(0, Math.min(this.getProgressAngle(attrs, full), 359.999999));
+    if (!(arcAngle > 0) || !(attrs.orbitRadius > 0)) return '';
     const a0 = -90 * (Math.PI / 180);
     const a1 = (-90 + arcAngle) * (Math.PI / 180);
     const x0 = 50 + realRadius * Math.cos(a0);
@@ -119,9 +106,11 @@ export class OrbitProgress extends OrbitBase {
 
   getAttributes() {
     const common = super.getCommonAttributes(this);
-    const range = parseFloat(getComputedStyle(this).getPropertyValue('--o-range') || 360);
-    const progress = parseFloat(getComputedStyle(this).getPropertyValue('--o-progress') || this.getAttribute('value') || 0);
-    const maxValue = parseFloat(this.getAttribute('max')) || 100;
+    const range = Math.max(0, Math.min(360, this.readAngle(common.style, '--o-range', 360)));
+    const rawValue = common.style.getPropertyValue('--o-progress').trim();
+    const progress = rawValue ? this.readNumber(common.style, '--o-progress', 0) : Number(this.getAttribute('value') || 0);
+    const rawMax = this.getAttribute('max');
+    const maxValue = rawMax === null ? 100 : Number(rawMax);
     
     return {
       ...common,
@@ -133,14 +122,13 @@ export class OrbitProgress extends OrbitBase {
 
   getProgressAngle(attrs, full) {
     const { range, progress, maxValue } = attrs;
-    return full
-      ? ((maxValue - 0.00001) / maxValue) * range
-      : (progress / maxValue) * range;
+    return full ? range : super.getProgressAngle(range, progress, maxValue);
   }
 
   calculateArcParameters(attrs, full) {
     const { shape, realRadius, arcHeightPercentage, orbitNumber, strokeWidth, arcHeight } = attrs;
     const arcAngle = this.getProgressAngle(attrs, full);
+    if (!(arcAngle > 0) || !(attrs.orbitRadius > 0)) return '';
     
     const params = super.calculateCommonArcParameters(
       arcAngle, 
