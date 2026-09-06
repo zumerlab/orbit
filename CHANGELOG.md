@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v1.5.0](https://github.com/zumerlab/orbit/compare/v1.4.12...v1.5.0)
+
+> 5 September 2026
+
+- feat: add demo server and layout management for orbit components [`5085bb6`](https://github.com/zumerlab/orbit/commit/5085bb64ca73d1f848d265496382f37a7889695a)
+- Correct the SnapDOM import and image export example [`7fc6ff7`](https://github.com/zumerlab/orbit/commit/7fc6ff7d0bc7e2a527906369513c6154801fbcd2)
+
 #### [v1.4.12](https://github.com/zumerlab/orbit/compare/v1.4.11...v1.4.12)
 
 > 4 July 2026
