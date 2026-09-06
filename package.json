@@ -1,6 +1,6 @@
 {
   "name": "@zumer/orbit",
-  "version": "1.4.12",
+  "version": "1.5.0",
   "description": "Orbit builds radial interfaces with CSS geometry and a small JavaScript layout runtime",
   "main": "./dist/orbit.js",
   "module": "./dist/orbit.mjs",
