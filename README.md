@@ -1,233 +1,170 @@
 # Orbit
 
-**Orbit** builds radial UIs — gauges, donuts, knobs, pie menus, dashboards — with **CSS geometry and a small JavaScript runtime**. CSS controls presentation; JavaScript keeps ring indices, spacing and SVG paths in sync as the interface changes. Use it with plain HTML or frameworks such as React, Vue and Svelte.
+Orbit arranges HTML elements around a center. Use it to build radial menus, charts, gauges and other circular interfaces.
 
-<p align="center">
-  <a href="https://zumerlab.github.io/orbit-docs" target="_blank"><strong>🚀 Live showcase &amp; docs</strong></a>
+CSS controls geometry and appearance. A small JavaScript runtime updates the layout and draws arcs when elements, styles or values change. Orbit works with plain HTML, React, Vue and Svelte.
 
-</p>
+[Examples and documentation](https://zumerlab.github.io/orbit-docs/) · [npm](https://www.npmjs.com/package/@zumer/orbit)
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@zumer/orbit"><img src="https://img.shields.io/npm/v/@zumer/orbit" alt="npm"></a>
-  <a href="https://github.com/zumerlab/orbit/stargazers"><img src="https://img.shields.io/github/stars/zumerlab/orbit" alt="Stars"></a>
-</p>
+## Install
 
----
-
-## Why Orbit?
-
-Orbit provides reusable radial layout primitives, CSS custom properties and Web Components for arcs and progress rings. Load the stylesheet and script, then compose an interface with HTML classes. The runtime updates added, removed and reordered elements, ancestor style changes and container resizes.
-
-> **Want ready-made components?** [**orbit-kit**](https://zumerlab.com/orbit-kit) wraps the common Orbit patterns into one-line custom elements — gauges, charts, activity rings, knobs, pie menus, cockpit instruments, analog clocks, compasses and radars.
-
-## Installation
-
-**CDN (fastest):**
-
-```html
-<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
-<script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
-```
-
-**npm:**
-
-```bash
+```sh
 npm install @zumer/orbit
 ```
+
+Import the stylesheet and runtime in your app's client entrypoint:
 
 ```js
 import '@zumer/orbit/style'
 import '@zumer/orbit'
 ```
 
-The npm import resolves to an ES module. Importing it during server rendering is safe; registration and layout observation start when the module runs in a browser. Render the markup on the server and include the JavaScript in your client entrypoint to activate it.
+For a plain HTML page, load the files from a CDN as shown below.
 
-The module also exports `Orbit`, `OrbitArc`, `OrbitProgress` and `registerOrbit`:
+## A progress ring
+
+Save this as `index.html` and open it in a browser. It loads Orbit from the CDN and draws a ring at 72%.
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbit progress ring</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@1.5.0/dist/orbit.min.css">
+  <script defer src="https://unpkg.com/@zumer/orbit@1.5.0/dist/orbit.min.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+    .gauge.bigbang { width: 240px; height: 240px; }
+    .gauge > .gravity-spot { --o-force: 400px; }
+    .gauge o-progress { --o-fill: #3da9fc; --o-back-fill: #1d3749; --o-stroke: none; }
+  </style>
+</head>
+<body>
+  <div class="gauge bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-6">
+        <o-progress value="72" shape="rounded" role="progressbar"
+          aria-label="Upload progress" aria-valuenow="72"
+          aria-valuemin="0" aria-valuemax="100"></o-progress>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+```
+
+Change the `value` attribute to update the ring. Keep any labels or ARIA values you add in sync with it:
+
+```js
+const progress = document.querySelector('o-progress')
+progress.setAttribute('value', '40')
+progress.setAttribute('aria-valuenow', '40')
+```
+
+The runtime redraws the ring automatically. A value of `0` leaves only the background; `100` fills the orbit's range.
+
+## How layouts fit together
+
+A `.bigbang` container holds a `.gravity-spot`, which defines the center. Rings inside it position the content. In the example above, `.orbit-6` sets the ring's radius and `<o-progress>` draws on it.
+
+| Element | Purpose |
+| --- | --- |
+| `.bigbang` | Container that centers the layout. |
+| `.gravity-spot` | Layout origin; holds rings and defines their scale with `--o-force`. |
+| `.orbit` / `.orbit-N` | Ring with an automatic index or an explicit level, such as `.orbit-6`. |
+| `.satellite` | Positions an item on a ring. |
+| `.capsule` | Wraps content inside a satellite. |
+| `.vector` | Places a tick or marker on a ring. |
+| `.side` | Places content along the straight line between adjacent ring positions. |
+| `<o-arc>` | Draws a segment. Sibling arcs stack in HTML order. |
+| `<o-progress>` | Draws a progress value over a background arc. |
+
+Put rings directly inside `.gravity-spot`, not inside other rings. Use `.capsule` for elements inside a satellite, or a nested `.gravity-spot` for another radial layout. `.orbit-0` places content at the center.
+
+Set `--o-range` to control the angular span and `--o-from` to rotate it. Classes such as `range-270`, `from-180` and `fit-range` provide common settings. The [element reference](https://zumerlab.github.io/orbit-docs/elements/orbit/) covers sizing, spacing and nesting.
+
+Arcs and progress elements use `value` relative to `max`, which defaults to `100`, and support circular rings. Add `interactive` when you need their SVG shapes to receive pointer events; they are decorative by default. Supply the keyboard behavior and accessible labels for any controls you build.
+
+Progress rings draw filled bands by default. For a stroked line, use `variant="stroke"` and set `--o-stroke` and `--o-back-stroke` instead of the fill colors.
+
+## In an app
+
+Orbit observes added, removed and reordered elements, style and attribute changes, and container resizes. Updates are grouped into the next animation frame.
+
+Importing the package during server rendering is safe. Include it in the browser entrypoint too, so it can register the custom elements and observe the rendered layout. The module exports `Orbit`, `OrbitArc`, `OrbitProgress` and `registerOrbit`; registration happens on import, and repeated calls to `registerOrbit()` are safe.
+
+Use `Orbit.refresh()` when you need an immediate update, or after changes Orbit cannot observe, such as editing stylesheet rules through CSSOM or changing an external control used by a CSS selector:
 
 ```js
 import { Orbit } from '@zumer/orbit'
 
-// Run after the container mounts. Dispose the observer when it unmounts.
+const panel = document.querySelector('#instrument-panel')
+Orbit.refresh(panel)
+```
+
+`refresh()` accepts an element, document or shadow root. With no argument, it refreshes the document. The CDN script exposes the same API as `window.Orbit`.
+
+To scale a layout with its container's width, call `Orbit.resize()` after that container mounts:
+
+```js
 const stopResizing = Orbit.resize('#instrument-panel')
-// Later: stopResizing()
 
-// After changing stylesheet rules through CSSOM, refresh the affected subtree.
-Orbit.refresh(document.querySelector('#instrument-panel'))
+// Call stopResizing() when the component unmounts.
 ```
 
-`Orbit.resize` accepts a selector or an element. `Orbit.refresh(root)` accepts a document, element or shadow root, defaults to the document and updates layout synchronously. DOM, attribute and resize changes within a layout or its ancestors are observed automatically and batched for the next animation frame; use `refresh` when immediate results are needed. Repeated calls to `registerOrbit()` are safe. The classic CDN script exposes the same `Orbit` API as `window.Orbit`.
+`resize()` accepts a selector or an element. It uses a 500px base scale and returns a function that disconnects its observer.
 
-Arcs and progress elements also register layouts inside open or closed shadow roots. Include the Orbit stylesheet inside each shadow root; host and ancestor style changes then refresh its SVGs. For a shadow tree containing only CSS elements, call `Orbit.refresh(shadowRoot)` to register it explicitly. Removing a shadow host releases its observers; reconnecting its components restores them.
+For shadow DOM, include the stylesheet inside each shadow root. An `<o-arc>` or `<o-progress>` registers its layout there automatically. If the shadow tree contains only CSS elements, register it with `Orbit.refresh(shadowRoot)`. Open and closed roots are supported.
 
-Changes made through CSSOM, or selectors driven by external siblings and control states (such as `:checked`), may affect a chart without mutating the layout or an ancestor. Call `Orbit.refresh(chart)` after those changes. Orbit does not infer arbitrary CSS dependencies across unrelated elements.
+Use the documented CSS properties for overrides. The runtime manages `data-orbit-ring`, `--o-layout-*` and `--o-arc-start` internally.
 
----
+## Browser support and debugging
 
-## Quick start
+Orbit needs CSS trigonometric functions (`sin` and `cos`). Without JavaScript, a CSS fallback can position simple elements on up to 24 ring levels, with up to 60 children per type; it also requires `:has()` and `:nth-child(... of ...)`. The JavaScript runtime supports larger layouts. `<o-arc>` and `<o-progress>` always need JavaScript.
 
-Minimal gauge in 10 lines:
+Add `dev-orbit` to a container to show ring boundaries and invalid nesting. Add `theme-cyan` for the built-in cyan colors; both classes can be combined:
 
 ```html
-<div class="bigbang">
-  <div class="gravity-spot">
-    <div class="orbit-4">
-      <o-progress value="72"></o-progress>
-    </div>
-  </div>
-</div>
+<div class="bigbang theme-cyan dev-orbit">...</div>
 ```
 
-**Structure:** `bigbang` (container) → `gravity-spot` (center) → `orbit-N` (ring level) → `o-progress` or `o-arc` (the visual element).
+The [visual aids guide](https://zumerlab.github.io/orbit-docs/tools/support/) explains the structural checks.
 
----
+## Examples and components
 
-## Core elements
+Browse [gauges](https://zumerlab.github.io/orbit-docs/examples/gauges/), [charts](https://zumerlab.github.io/orbit-docs/examples/charts/), [radial menus](https://zumerlab.github.io/orbit-docs/examples/piemenu/), [knobs](https://zumerlab.github.io/orbit-docs/examples/knobs/) and [watch faces](https://zumerlab.github.io/orbit-docs/examples/watches/).
 
-| Element | Role |
-|---------|------|
-| `.bigbang` | Root container, sets viewport |
-| `.gravity-spot` | Center of the radial layout; holds rings |
-| `.orbit` / `.orbit-N` | Automatically numbered rings, or an explicit nonnegative integer ring level (1 = innermost) |
-| `.satellite` | Item placed on a ring (dot, label, icon) |
-| `<o-arc>` | Arc segment (donut slice, gauge needle, menu sector); `value` 0–100, `shape` e.g. `arrow`, `circle-a` |
-| `<o-progress>` | Simple progress ring |
-| `.vector` | Tick/marker on a ring |
-| `.side` | Stretch content along arc |
-| `.capsule` | Wrapper for content inside satellite; required when satellite holds more than plain text |
+[Orbit Kit](https://zumerlab.com/orbit-kit) provides ready-made gauges, clocks, knobs and menus built on Orbit. Use the base library when you want to compose the layout yourself.
 
-**Structure rules:**
+## Work on Orbit
 
-- `.bigbang` → direct children: `.gravity-spot` only
-- `.gravity-spot` → direct children: `.orbit`, `.orbit-N`, or `.gravity-spot` only
-- `.satellite` → direct children: `.capsule` or `.gravity-spot` (for nesting) only
-- `.orbit` / `.orbit-N` → do not nest other orbits; orbits live inside gravity-spot
-- `o-arc` and `o-progress` → only work in circular orbits; they are hidden in elliptical shapes
-
-**Useful classes:** `range-180`, `range-270`, `range-360` (arc span); `from-180` (start angle); `fit-range` (distribute items); `shrink-50`, `gap-4` (spacing); `at-center` (place satellite in middle).
-
-The runtime supports ring levels and child counts beyond the static CSS fallback's 24 levels and 60 children per type. Without JavaScript, that fallback can position simple CSS elements in browsers supporting `:has()` and `:nth-child(... of ...)`; `<o-arc>` and `<o-progress>` require JavaScript. Ring classes are matched as complete tokens, so application classes such as `orbit-card` do not become rings.
-
-Use public custom properties such as `--o-range`, `--o-from`, `--o-orbit-number` and `--o-orbit-child-number` for overrides. The runtime owns `data-orbit-ring`, `--o-layout-*` and `--o-arc-start`; leave these internal values to Orbit.
-
----
-
-## Themes
-
-Orbit includes built-in themes. Add the theme class to `.bigbang`:
-
-| Theme | Class | Description |
-|-------|-------|-------------|
-| **Default** | *(none)* | Transparent borders, gray fills, satellites use `currentColor` |
-| **Cyan** | `theme-cyan` | Cyan satellite borders, cyan vectors/sides, light cyan fills for `o-arc` and `o-progress` |
-| **Developer** | `dev-orbit` | Dashed red borders on orbits and satellites to visualize structure while debugging |
-
-```html
-<!-- Default (no class) -->
-<div class="bigbang">...</div>
-
-<!-- Cyan theme -->
-<div class="bigbang theme-cyan">...</div>
-
-<!-- Developer mode for layout debugging -->
-<div class="bigbang dev-orbit">...</div>
-```
-
-You can combine themes, e.g. `class="bigbang theme-cyan dev-orbit"`.
-
----
-
-## Visual aids & development
-
-Orbit provides **opt-in CSS visual warnings** to catch invalid structure. Inside a `dev-orbit` container, invalid children show a dotted border, dimmed content and a ⚠️ icon. These diagnostics require `:has()` and respect reduced-motion preferences.
-
-Add **`class="dev-orbit"`** to your root container to enable **developer mode**: dashed red borders on `gravity-spot`, `orbit`, and `satellite` to visualize the layout structure. Useful for debugging.
-
-```html
-<div class="bigbang dev-orbit">
-  <div class="gravity-spot">
-    ...
-  </div>
-</div>
-```
-
-CSS trigonometric functions (`cos`, `sin`) are required for geometry; unsupported browsers show an upgrade message. Missing `:has()` support does not block the JavaScript layout runtime. See [CSS visual aids](https://zumerlab.github.io/orbit-docs/tools/support) in the full docs.
-
-## Building and testing
+From a local checkout:
 
 ```sh
 npm ci
-npx playwright install chromium
-npm test
-npm run build
-```
-
-`npm test` compiles the package, tests its published file list and server imports, then runs browser and shadow-root regressions in Chromium. Set `BROWSERS=chromium,firefox,webkit` to run all three engines after installing them with Playwright; CI runs this matrix. Use `npm run test:package`, `npm run test:browser` or `npm run test:shadow` for an individual suite. The shadow suite builds in memory so it can also check source changes independently of `dist`.
-
-`npm run build` compiles CSS, classic browser scripts and the ES module, then creates an npm tarball. It does not commit, tag, push or publish; release operations are separate.
-
----
-
-## Examples
-
-Run the core playground against your local checkout:
-
-```sh
 npm run demo
 ```
 
-Open **http://127.0.0.1:5174**. The command compiles the current source and serves the interactive playground and existing examples using that local build. Use `PORT=5175 npm run demo` to choose another port; stop the server with Ctrl+C.
+Open <http://127.0.0.1:5174>. The demo command compiles the source and serves the playground with that local build. Use `PORT=5175 npm run demo` to choose another port.
 
-Browse examples on the [Orbit docs site](https://zumerlab.github.io/orbit-docs):
+To run the tests:
 
-| Example | Link |
-|---------|------|
-| Circular timer | [circular_time](https://zumerlab.github.io/orbit-docs/examples/circular_time/) |
-| Progress bars | [progress](https://zumerlab.github.io/orbit-docs/examples/progress/) |
-| Charts (donut, pie, sunburst) | [charts](https://zumerlab.github.io/orbit-docs/examples/charts/) |
-| Gauges (180°, 240°, fuel) | [gauges](https://zumerlab.github.io/orbit-docs/examples/gauges/) |
-| Knobs | [knobs](https://zumerlab.github.io/orbit-docs/examples/knobs/) |
-| Pie menus | [piemenu](https://zumerlab.github.io/orbit-docs/examples/piemenu/) |
-| Watch faces | [watches](https://zumerlab.github.io/orbit-docs/examples/watches/) |
-| Chemical structures | [chemical_structures](https://zumerlab.github.io/orbit-docs/examples/chemical_structures/) |
-| Calendars & time planners | [calendar](https://zumerlab.github.io/orbit-docs/examples/calendar/) |
-| Mandalas | [mandalas](https://zumerlab.github.io/orbit-docs/examples/mandalas/) |
-| Dashboard | [dashboard](https://zumerlab.github.io/orbit-docs/examples/dashboard/) |
-| Abstract orbital map | [abstract_map](https://zumerlab.github.io/orbit-docs/examples/abstract_map/) |
+```sh
+npx playwright install chromium firefox webkit
+BROWSERS=chromium,firefox,webkit npm test
+```
 
----
+The tests cover package contents, server imports, browser layouts and shadow DOM. `npm test` uses Chromium by default. Run `npm run test:package`, `npm run test:browser` or `npm run test:shadow` for an individual suite.
 
-## Use cases
+`npm run compile` writes the CSS and JavaScript files to `dist/`. `npm run build` also creates the npm tarball.
 
-- **Dashboards:** gauges, status rings, KPIs  
-- **Automotive / HUD:** speedometers, tachometers, battery, temp  
-- **IoT / Smart home:** thermostats, energy rings, scenes  
-- **Ops / monitoring:** status rings, uptime gauges  
-- **Fitness / health:** activity rings (Move, Exercise, Stand)  
-- **Controls:** knobs, radial menus, compass  
+## Contributing and reference
 
----
+Report bugs in [Issues](https://github.com/zumerlab/orbit/issues), or share examples and ask questions in [Discussions](https://github.com/zumerlab/orbit/discussions). See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution details. There is also a [Telegram group](https://t.me/ZumlyCommunity).
 
-## Using Orbit with AI / LLMs
-
-Orbit's radial model is unlike the box-flow layouts most models were trained on,
-so an assistant generating Orbit markup from scratch will struggle. Give it the
-reference first — these files are written for that purpose:
-
-- **[llms.txt](https://zumerlab.github.io/orbit-docs/llms.txt)** — concise overview, structure rules, quick recipes.
-- **[llms-full.txt](https://zumerlab.github.io/orbit-docs/llms-full.txt)** — complete reference: every class, custom property, web component, and copy-paste pattern.
-
-Paste the relevant one into your prompt (or your tool's context/rules) before
-asking the model to build a radial UI.
-
-## Resources
-
-- [orbit-kit](https://zumerlab.com/orbit-kit) — ready-made radial components built on Orbit  
-- [Full documentation](https://zumerlab.github.io/orbit-docs) — elements, tools, advanced examples  
-- [Contributing](CONTRIBUTING.md)  
-- [GitHub Discussions](https://github.com/zumerlab/orbit/discussions)  
-- [Telegram](https://t.me/ZumlyCommunity)  
-
----
+For coding assistants, [llms.txt](https://zumerlab.github.io/orbit-docs/llms.txt) has a short reference and [llms-full.txt](https://zumerlab.github.io/orbit-docs/llms-full.txt) has the full class and property reference. Include the relevant sections when asking an assistant to generate Orbit markup.
 
 ## License
 
