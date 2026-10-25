@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>08 — Solar System | Orbit</title>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <script src="../dist/orbit.js"></script>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #030712; }
     .demo { width: 340px; aspect-ratio: 1; }
@@ -33,32 +33,28 @@
       <div class="orbit-0">
         <div class="satellite at-center"><div class="capsule sun"></div></div>
       </div>
-      <div class="orbit-2 o1">
+      <div class="orbit-4 o1">
         <div class="satellite"><div class="capsule planet" style="background:#a8a29e"></div></div>
       </div>
-      <div class="orbit-3 o2">
+      <div class="orbit-6 o2">
         <div class="satellite"><div class="capsule planet" style="background:#fbbf24"></div></div>
       </div>
-      <div class="orbit-4 o1">
-        <div class="satellite">
-          <div class="capsule">
-            <div class="bigbang">
-              <div class="gravity-spot" style="--o-force: 72px">
-                <div class="orbit-0"><div class="satellite at-center"><div class="capsule planet" style="background:#60a5fa"></div></div></div>
-                <div class="orbit-2 o4"><div class="satellite"><div class="capsule moon"></div></div></div>
-              </div>
-            </div>
+      <div class="orbit-8 o1">
+        <div class="satellite" style="--o-size-ratio: 5">
+          <div class="gravity-spot">
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule planet" style="background:#60a5fa"></div></div></div>
+            <div class="orbit-10 o4"><div class="satellite"><div class="capsule moon"></div></div></div>
           </div>
         </div>
       </div>
-      <div class="orbit-5 o3">
+      <div class="orbit-11 o3">
         <div class="satellite"><div class="capsule planet" style="background:#f87171"></div></div>
       </div>
     </div>
   </div>
 
   <div class="doc">
-    <strong>08 — Solar system</strong> · Nested <code>.bigbang</code> = complex radial layouts. Orbit metaphor in action.
+    <a href="./">← All demos</a> · <strong>08 — Solar system</strong> · A satellite is a universe too: the Earth's satellite is five lanes wide, and the <code>.gravity-spot</code> inside it reaches its edge, so the Moon's orbit scales with it.
   </div>
 </body>
 </html>

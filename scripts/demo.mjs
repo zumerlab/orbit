@@ -18,7 +18,7 @@ for (const file of ['dist/orbit.css', 'dist/orbit.js']) {
   }
 }
 
-const roots = new Map(await Promise.all(['examples', 'dist'].map(async (name) => [
+const roots = new Map(await Promise.all(['demos', 'examples', 'dist'].map(async (name) => [
   name, await realpath(join(root, name)),
 ])));
 const mime = {
@@ -56,7 +56,8 @@ const server = createServer(async (req, res) => {
   } catch {
     return fail(400, 'Invalid URL');
   }
-  if (pathname === '/') pathname = '/examples/playground.html';
+  if (pathname === '/') pathname = '/demos/';
+  if (pathname.endsWith('/')) pathname += 'index.html';
   const parts = pathname.split('/');
   const base = roots.get(parts[1]);
   if (!base || pathname.includes('\\') || pathname.includes('\0') || parts.some((part) => part === '..' || part.startsWith('.'))) {
@@ -90,6 +91,6 @@ server.on('error', (error) => {
   process.exitCode = 1;
 });
 server.listen(port, host, () => {
-  console.log(`Orbit core demo: http://${host}:${port}`);
+  console.log(`Orbit demos: http://${host}:${port}`);
   console.log('Serving the local build. Press Ctrl+C to stop.');
 });

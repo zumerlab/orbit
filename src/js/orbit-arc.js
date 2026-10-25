@@ -143,9 +143,8 @@ export class OrbitArc extends OrbitBase {
     const textAnchor = this.getAttribute('text-anchor') || 'middle';
     const fontSize = style.fontSize || '16px';
     const gap = Math.max(0, this.readNumber(style, '--o-gap', 1));
-    const value = Number(this.getAttribute('value'));
-    const rawMax = this.getAttribute('max');
-    const max = rawMax === null ? 100 : Number(rawMax);
+    const value = this.readValue();
+    const max = this.readMax();
     const arcAngle = this.hasAttribute('value')
       ? super.getProgressAngle(range, value, max)
       : Math.max(0, Math.min(360, this.readAngle(style, '--o-angle', 0)));
@@ -206,7 +205,12 @@ export class OrbitArc extends OrbitBase {
     return { dPath };
   }
 
-  calcularExpresionCSS(cssExpression) {
+  resolveAngle(cssExpression) {
     return cssNumber(this, cssExpression, 0, 'angle');
+  }
+
+  /** @deprecated Use resolveAngle(). */
+  calcularExpresionCSS(cssExpression) {
+    return this.resolveAngle(cssExpression);
   }
 }

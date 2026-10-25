@@ -4,12 +4,20 @@
   "description": "Orbit builds radial interfaces with CSS geometry and a small JavaScript layout runtime",
   "main": "./dist/orbit.js",
   "module": "./dist/orbit.mjs",
+  "types": "./dist/orbit.d.ts",
+  "customElements": "./dist/custom-elements.json",
   "exports": {
     ".": {
+      "types": "./dist/orbit.d.ts",
       "import": "./dist/orbit.mjs",
       "default": "./dist/orbit.js"
     },
-    "./style": "./dist/orbit.css"
+    "./style": "./dist/orbit.css",
+    "./react": {
+      "types": "./dist/react.d.ts"
+    },
+    "./custom-elements.json": "./dist/custom-elements.json",
+    "./vscode.html-custom-data.json": "./dist/vscode.html-custom-data.json"
   },
   "files": [
     "dist/",

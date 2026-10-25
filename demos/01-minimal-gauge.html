@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>01 — Daily Goal | Orbit</title>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <script src="../dist/orbit.js"></script>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: radial-gradient(ellipse 120% 100% at 50% 0%, #1e1b4b 0%, #0f0f23 60%); }
     .demo { width: 220px; aspect-ratio: 1; }
@@ -28,7 +28,7 @@
 <body>
   <div class="demo bigbang ring">
     <div class="gravity-spot">
-      <div class="orbit-4">
+      <div class="orbit-10" style="--o-size-ratio: 2">
         <o-progress value="72"></o-progress>
       </div>
       <div class="orbit-0">
@@ -38,7 +38,7 @@
   </div>
 
   <div class="doc">
-    <strong>01 — Daily goal</strong> · Center-focused radial design. <code>o-progress</code> with custom <code>--o-fill</code>, <code>--o-stroke</code>.
+    <a href="./">← All demos</a> · <strong>01 — Daily goal</strong> · The ring sits on lane 10 of 12 and is two lanes thick (<code>--o-size-ratio: 2</code> on the ring). Change the box width: the gauge follows.
   </div>
 </body>
 </html>

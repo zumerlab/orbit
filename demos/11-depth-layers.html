@@ -4,15 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>11 — Depth layers | Orbit</title>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <script src="../dist/orbit.js"></script>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; gap: 24px; background: #0e1013; color: #f2f3f5; font: 14px/1.5 system-ui; }
     .demo { width: 320px; aspect-ratio: 1; }
-    .demo .gravity-spot { --o-force: 320px; --o-back-opacity: .45; --o-depth-grow: .42; }
+    .demo .gravity-spot { --o-back-opacity: .45; --o-depth-grow: .42; }
     .demo o-progress { --o-stroke: #f2f3f5; --o-back-stroke: #2a2e35; }
     .demo .layer-front o-progress { --o-stroke: #ffb020; }
-    .demo .capsule { color: #f2f3f5; font-weight: 600; background: none; border: none; }
+    .demo .capsule { color: #f2f3f5; font-weight: 600; background: none; border: none; white-space: nowrap; }
     button { font: inherit; padding: 8px 16px; border-radius: 8px; border: 1px solid #2a2e35; background: #16191e; color: inherit; cursor: pointer; }
     .doc { max-width: 360px; color: #8a9099; text-align: center; }
     .doc code { color: #ffb020; }
@@ -34,7 +34,7 @@
     </div>
   </div>
   <button id="next">Bring next layer to front</button>
-  <p class="doc">Rings inside <code>.depth</code> move back with <code>data-depth</code> (or <code>--o-z</code>) and keep their apparent size. <code>.layer-front</code> marks the active one.</p>
+  <p class="doc"><a href="./">← All demos</a> · Rings inside <code>.depth</code> move back with <code>data-depth</code> (or <code>--o-z</code>) and keep their apparent size. <code>.layer-front</code> marks the active one.</p>
   <script>
     const layers = [...document.querySelectorAll('.depth > [data-depth]')];
     let front = 0;

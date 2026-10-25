@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>03 — Quick Actions | Orbit</title>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <script src="../dist/orbit.js"></script>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #020617; }
     .demo { width: 300px; aspect-ratio: 1; }
@@ -22,11 +22,11 @@
 <body>
   <div class="demo bigbang ring">
     <div class="gravity-spot">
-      <div class="orbit-5 fit-range range-270 from-225">
-        <o-arc class="gap-6" style="--o-fill:#3b82f6"></o-arc>
-        <o-arc class="gap-6" style="--o-fill:#10b981"></o-arc>
-        <o-arc class="gap-6" style="--o-fill:#f59e0b"></o-arc>
-        <o-arc class="gap-6" style="--o-fill:#ef4444"></o-arc>
+      <div class="orbit-8 fit-range range-270 from-225" style="--o-size-ratio: 2; --o-gap: 6">
+        <o-arc interactive style="--o-fill:#3b82f6"></o-arc>
+        <o-arc interactive style="--o-fill:#10b981"></o-arc>
+        <o-arc interactive style="--o-fill:#f59e0b"></o-arc>
+        <o-arc interactive style="--o-fill:#ef4444"></o-arc>
       </div>
       <div class="orbit-0">
         <div class="satellite at-center"><div class="capsule" id="label">MENU</div></div>
@@ -35,7 +35,7 @@
   </div>
 
   <div class="doc">
-    <strong>03 — Quick actions</strong> · Direction-based selection. Large wedges = easy targets (Fitts's law).
+    <a href="./">← All demos</a> · <strong>03 — Quick actions</strong> · Arcs without <code>value</code> split the range. <code>--o-gap</code> and the size are set once on the ring; <code>interactive</code> makes the wedges clickable.
   </div>
 
   <script>

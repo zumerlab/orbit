@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>10 — Radar | Orbit</title>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <script src="../dist/orbit.js"></script>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #020617; }
     .demo { width: 280px; aspect-ratio: 1; }
@@ -27,17 +27,15 @@
 <body>
   <div class="demo bigbang ring">
     <div class="gravity-spot">
-      <div class="orbit-6"><o-arc value="100" style="--o-stroke:rgba(34,211,238,.15);--o-stroke-width:2;--o-fill:transparent"></o-arc></div>
-      <div class="orbit-4"><o-arc value="100" style="--o-stroke:rgba(34,211,238,.1);--o-stroke-width:2;--o-fill:transparent"></o-arc></div>
-      <div class="orbit-2"><o-arc value="100" style="--o-stroke:rgba(34,211,238,.08);--o-stroke-width:2;--o-fill:transparent"></o-arc></div>
-      <div class="orbit-5 sweep">
+      <div class="orbit-11"><o-arc value="100" style="--o-stroke:rgba(34,211,238,.15);--o-stroke-width:2;--o-fill:transparent"></o-arc></div>
+      <div class="orbit-7"><o-arc value="100" style="--o-stroke:rgba(34,211,238,.1);--o-stroke-width:2;--o-fill:transparent"></o-arc></div>
+      <div class="orbit-4"><o-arc value="100" style="--o-stroke:rgba(34,211,238,.08);--o-stroke-width:2;--o-fill:transparent"></o-arc></div>
+      <div class="orbit-9 sweep" style="--o-size-ratio: 4">
         <o-arc value="5" style="--o-fill:rgba(34,211,238,.5)"></o-arc>
       </div>
-      <div class="orbit-4 range-360 from-0">
-        <div class="satellite" style="transform:rotate(60deg) translateY(-50%)"><div class="capsule ping"></div></div>
-        <div class="satellite" style="transform:rotate(180deg) translateY(-50%)"><div class="capsule ping"></div></div>
-        <div class="satellite" style="transform:rotate(300deg) translateY(-50%)"><div class="capsule ping"></div></div>
-      </div>
+      <div class="orbit-5"><div class="satellite angle-60"><div class="capsule ping"></div></div></div>
+      <div class="orbit-9"><div class="satellite angle-180"><div class="capsule ping"></div></div></div>
+      <div class="orbit-7"><div class="satellite angle-300"><div class="capsule ping"></div></div></div>
       <div class="orbit-0">
         <div class="satellite at-center"><div class="capsule" id="scan">SCAN</div></div>
       </div>
@@ -45,7 +43,7 @@
   </div>
 
   <div class="doc">
-    <strong>10 — Radar</strong> · Concentric rings + sweep beam. Center = observer. Data at a glance.
+    <a href="./">← All demos</a> · <strong>10 — Radar</strong> · Concentric rings, a rotating sweep, and pings placed at fixed angles with <code>.angle-N</code>.
   </div>
 </body>
 </html>

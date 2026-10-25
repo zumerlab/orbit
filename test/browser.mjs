@@ -12,7 +12,9 @@ for (const name of browsers) {
   try {
     const page = await browser.newPage();
     const errors = [];
+    const warnings = [];
     page.on('pageerror', error => errors.push(error.message));
+    page.on('console', message => { if (message.type() === 'warning') warnings.push(message.text()); });
     await page.setContent('<!doctype html><html><head></head><body></body></html>');
     await page.addStyleTag({ content: css });
     await page.evaluate(() => { document.body.innerHTML = '<div class="bigbang"><div class="gravity-spot"><div class="orbit-4"><div class="satellite"></div><div class="satellite"></div></div></div></div><div id="invalid" class="bigbang"><p>Invalid structure</p></div>'; });
@@ -112,7 +114,65 @@ for (const name of browsers) {
     assert(depth.flat.isIdentity, 'rings outside .depth are not transformed');
     assert.match(await page.locator('#back').evaluate(el => getComputedStyle(el).transitionProperty), /transform/, 'depth changes transition by default');
 
+
+    // The universe model: .bigbang is the space, orbit-12 reaches its edge.
+    const width = selector => page.locator(selector).evaluate(el => el.getBoundingClientRect().width);
+    await fixture('<div id="space" style="width:240px"><div class="bigbang" id="universe"><div class="gravity-spot"><div class="orbit-12" id="edge"><o-progress id="fluid" value="50"></o-progress></div><div class="orbit-6" id="half"></div></div></div></div>');
+    assert.equal(await width('#universe'), 240, 'a universe takes its parent width');
+    assert.equal(await page.locator('#universe').evaluate(el => el.getBoundingClientRect().height), 240, 'a universe is square by default');
+    assert.equal(await width('#edge'), 240, 'orbit-12 reaches the edge of the universe');
+    assert.equal(await width('#half'), 120, 'orbit-6 is half way');
+    const fluidPath = await page.locator('#fluid').evaluate(el => el.shadowRoot.querySelector('.progress-bar').getAttribute('d'));
+    await page.locator('#space').evaluate(el => { el.style.width = '400px'; });
+    await settle();
+    assert.equal(await width('#edge'), 400, 'the system follows its universe without JavaScript');
+    assert.notEqual(await page.locator('#fluid').evaluate(el => el.shadowRoot.querySelector('.progress-bar').getAttribute('d')), fluidPath, 'arcs redraw when the universe resizes');
+
+    await fixture('<div style="width:300px;height:100px"><div class="bigbang" id="wide"><div class="gravity-spot"><div class="orbit-12" id="wide-edge"></div></div></div></div>');
+    assert.deepEqual(await page.locator('#wide').evaluate(el => [el.clientWidth, el.clientHeight]), [300, 100], 'a parent with a height caps the universe');
+    assert.equal(await width('#wide-edge'), 100, 'the system fits the shorter side');
+
+    await fixture('<div class="bigbang" style="width:240px"><div class="gravity-spot" style="--o-force:480px"><div class="orbit-12" id="fixed"></div></div></div>');
+    assert.equal(await width('#fixed'), 480, 'a length in --o-force overrides the universe');
+
+    // Values cascade from the system and its rings.
+    await fixture('<div class="bigbang" style="width:480px"><div class="gravity-spot"><div class="orbit-6" style="--o-size-ratio:2"><div class="satellite" id="big"></div></div><div class="orbit-8 shrink-50"><div class="satellite" id="plain"></div></div><div class="orbit-10" style="--o-gap:9"><o-arc id="gapped"></o-arc></div><div class="orbit-4"><div class="satellite" id="legacy" style="--o-aligment:-20px"></div></div><div class="orbit-4"><div class="satellite" id="aligned" style="--o-alignment:-20px"></div></div><div class="orbit-4"><div class="satellite" id="unaligned"></div></div></div></div>');
+    assert.equal(await width('#big'), 40, 'a ring\'s --o-size-ratio reaches its satellites');
+    assert.equal(await page.locator('#plain').evaluate(el => getComputedStyle(el).getPropertyValue('--o-size-ratio').trim()), '1', 'shrink-N on a ring spaces rings without resizing satellites');
+    assert.equal(await page.locator('#gapped').evaluate(el => el.getAttributes().gap), 9, 'a ring\'s --o-gap reaches its arcs');
+    const transform = id => page.locator(id).evaluate(el => getComputedStyle(el).transform);
+    assert.notEqual(await transform('#aligned'), await transform('#unaligned'), '--o-alignment moves satellites off the ring');
+    assert.equal(await transform('#aligned'), await transform('#legacy'), '--o-alignment and the legacy --o-aligment place satellites alike');
+
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-8 range-270 fit-range"><o-arc></o-arc><o-arc></o-arc><o-arc></o-arc></div><div class="orbit-6 range-270 fit-range" id="ticks"><div class="vector"></div><div class="vector"></div><div class="vector"></div></div></div></div>');
+    assert.equal(await page.locator('.orbit-8').evaluate(el => getComputedStyle(el).getPropertyValue('--o-angle').trim()), 'calc(270deg / 3)', 'arcs split a fit-range ring without overflowing it');
+    assert.equal(await page.locator('#ticks').evaluate(el => getComputedStyle(el).getPropertyValue('--o-angle').trim()), 'calc(270deg / max(1, 3 - 1))', 'points still land on both ends of a fit-range ring');
+
+    // Nested systems measure the satellite or universe that holds them.
+    await fixture('<div class="bigbang" style="width:480px"><div class="gravity-spot"><div class="orbit-6"><div class="satellite" id="host" style="--o-size-ratio:3"><div class="gravity-spot"><div class="orbit-12" id="moon-edge"></div></div></div></div></div></div>');
+    assert.equal(await width('#moon-edge'), await page.locator('#host').evaluate(el => el.clientWidth), 'a system inside a satellite fills the satellite');
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot depth"><div class="bigbang layer-front" id="layer"><div class="gravity-spot"><div class="orbit-12" id="layer-edge"></div></div></div></div></div>');
+    assert.equal(await page.locator('#layer').evaluate(el => el.offsetWidth), 400, 'a universe inside a system takes its reach');
+    assert.equal(await page.locator('#layer-edge').evaluate(el => el.offsetWidth), 400, 'and its orbit-12 reaches the same edge');
+
+    // Orbit.resize() only scales systems with a fixed --o-force.
+    await fixture('<div id="panel" style="width:250px"><div class="bigbang"><div class="gravity-spot" id="fluid-spot"></div></div><div class="bigbang"><div class="gravity-spot" id="px-spot" style="--o-force:500px"></div></div></div>');
+    await page.evaluate(() => window.Orbit.resize('#panel')());
+    assert.equal(await page.locator('#fluid-spot').evaluate(el => el.style.getPropertyValue('--o-force-ratio')), '', 'resize leaves fluid systems alone');
+    assert.equal(await page.locator('#px-spot').evaluate(el => el.style.getPropertyValue('--o-force-ratio')), '0.5', 'resize scales fixed systems');
+
+    // Problems are explained in the console.
+    warnings.length = 0;
+    await fixture('<span style="display:inline-block"><div class="bigbang"><div class="gravity-spot"><div class="orbit-6"></div></div></div></span><div class="bigbang dev-orbit" style="width:200px"><div class="gravity-spot"><div class="orbit-6"><p>loose</p><div class="satellite"><span>bare</span></div><o-progress value="lots"></o-progress><o-arc value="5" max="0"></o-arc></div></div></div>');
+    await settle();
+    for (const pattern of [/has no size/, /is not placed by its ring/, /sits directly in a \.satellite/, /value="lots"> is not a number/, /max="0"> must be a positive number/]) {
+      assert(warnings.some(text => pattern.test(text)), `warns: ${pattern}`);
+    }
+    const count = warnings.length;
+    await page.evaluate(() => window.Orbit.refresh());
+    assert.equal(warnings.length, count, 'each problem is reported once');
+
     assert.deepEqual(errors, [], `${name} has no browser errors`);
-    console.log(`${name}: layout, stacking, zero, responsive SVG, CSS overrides, lifecycle and geometry passed`);
+    console.log(`${name}: layout, stacking, zero, responsive SVG, CSS overrides, lifecycle, geometry, universe sizing, cascade and diagnostics passed`);
   } finally { await browser.close(); }
 }

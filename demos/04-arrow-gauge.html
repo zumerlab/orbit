@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>04 — Speedometer | Orbit</title>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <script src="../dist/orbit.js"></script>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: linear-gradient(180deg, #0f172a 0%, #020617 100%); }
     .demo { width: 300px; aspect-ratio: 1; }
@@ -22,16 +22,16 @@
 <body>
   <div class="demo bigbang shadow">
     <div class="gravity-spot">
-      <div class="orbit-6 range-270 from-225 fit-range">
+      <div class="orbit-11 range-270 from-225 fit-range" style="--o-size-ratio: 1.5">
         <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
         <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
       </div>
-      <div class="orbit-5 range-270 from-225">
-        <o-arc class="gap-4" style="--o-fill:#22c55e"></o-arc>
-        <o-arc class="gap-4" style="--o-fill:#eab308"></o-arc>
-        <o-arc class="gap-4" style="--o-fill:#ef4444"></o-arc>
+      <div class="orbit-9 range-270 from-225" style="--o-size-ratio: 2; --o-gap: 4">
+        <o-arc style="--o-fill:#22c55e"></o-arc>
+        <o-arc style="--o-fill:#eab308"></o-arc>
+        <o-arc style="--o-fill:#ef4444"></o-arc>
       </div>
-      <div class="orbit-4 range-270 from-225">
+      <div class="orbit-7 range-270 from-225">
         <o-arc id="needle" value="58" shape="arrow" class="needle"></o-arc>
       </div>
       <div class="orbit-0">
@@ -42,7 +42,7 @@
   <input id="rng" type="range" min="0" max="100" value="58" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:220px;accent-color:#3b82f6">
 
   <div class="doc">
-    <strong>04 — Speedometer</strong> · Zone colors + tick marks (<code>.vector</code>) + needle.
+    <a href="./">← All demos</a> · <strong>04 — Speedometer</strong> · Ticks (<code>.vector</code>) on lane 11, zones on lane 9, needle on lane 7: three rings sharing one 270° range.
   </div>
 
   <script>

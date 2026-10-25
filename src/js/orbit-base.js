@@ -1,4 +1,4 @@
-import { cssNumber, requestLayout } from './orbit-layout.js';
+import { cssNumber, requestLayout, warnOnce } from './orbit-layout.js';
 
 export class OrbitBase extends (globalThis.HTMLElement || class {}) {
   constructor() {
@@ -20,6 +20,30 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
 
   readAngle(style, name, fallback = 0) {
     return cssNumber(this, style.getPropertyValue(name), fallback, 'angle');
+  }
+
+  /** The value attribute as a number. Invalid values draw nothing, and say why. */
+  readValue() {
+    const raw = this.getAttribute('value');
+    if (raw === null || raw.trim() === '') return 0;
+    const value = Number(raw);
+    if (!Number.isFinite(value)) {
+      warnOnce(this, 'value:' + raw, `<${this.localName} value="${raw}"> is not a number, so nothing is drawn.`);
+      return 0;
+    }
+    return value;
+  }
+
+  /** The max attribute (default 100). It must be a positive number. */
+  readMax() {
+    const raw = this.getAttribute('max');
+    if (raw === null) return 100;
+    const max = Number(raw);
+    if (!(max > 0)) {
+      warnOnce(this, 'max:' + raw, `<${this.localName} max="${raw}"> must be a positive number, so nothing is drawn.`);
+      return 0;
+    }
+    return max;
   }
 
   getCommonAttributes(element) {
@@ -51,7 +75,7 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
       orbitRadius,
       arcHeight,
       realRadius,
-      arcAngle: 0, // Se sobrescribe en cada componente
+      arcAngle: 0, // set by each component
       shape,
       arcHeightPercentage,
       orbitNumber,
@@ -214,8 +238,6 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
     
     return d;
   }
-
-  // Dentro de la clase OrbitCommon en orbit-common.js
 
 generateCirclePath(params, shape) {
   const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner } = params;

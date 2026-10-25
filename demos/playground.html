@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Orbit — laboratorio radial</title>
+  <title>Orbit — playground</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/dist/orbit.css">
-  <script src="/dist/orbit.js"></script>
+  <link rel="stylesheet" href="../dist/orbit.css">
+  <script src="../dist/orbit.js"></script>
   <style>
     :root { color-scheme: dark; font: 15px/1.5 system-ui, sans-serif; background: #101519; color: #e4ecef; --accent: #8adbc7; }
     * { box-sizing: border-box; }
@@ -25,8 +25,7 @@
     .number { color: var(--accent); font: 12px ui-monospace, monospace; }
     .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 310px; }
     .stage { min-width: 0; min-height: 450px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background-color: #10171c; background-image: radial-gradient(#334047 1px, transparent 1px); background-size: 24px 24px; }
-    .diagram.bigbang { width: min(var(--demo-size, 300px), calc(100% - 56px)); height: auto; aspect-ratio: 1; container-type: inline-size; }
-    .diagram > .gravity-spot { --o-force: calc(100cqw * 2); }
+    .diagram.bigbang { width: min(var(--demo-size, 300px), calc(100% - 56px)); }
     .diagram .guide { border: 1px solid #3d555f; }
     .diagram .satellite { border: 0; }
     .diagram .point { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #102720; font: 600 12px ui-monospace, monospace; }
@@ -59,82 +58,82 @@
 </head>
 <body>
 <main>
-  <header><div class="brand">Orbit<span>Laboratorio radial</span></div><nav aria-label="Demos"><a href="#layout">Órbitas</a><a href="#arcs">Arcos</a><a href="#progress">Progreso</a></nav></header>
-  <h1>Mové las piezas. Probá la geometría.</h1>
-  <p class="intro">Componé con las primitivas de Orbit: órbitas, satélites, arcos y progreso. Los controles actualizan el HTML y las propiedades CSS en vivo.</p>
+  <header><div class="brand">Orbit<span>Playground</span></div><nav aria-label="Demos"><a href="./">All demos</a><a href="#layout">Rings</a><a href="#arcs">Arcs</a><a href="#progress">Progress</a></nav></header>
+  <h1>Move the pieces. Test the geometry.</h1>
+  <p class="intro">Compose with Orbit's primitives: rings, satellites, arcs and progress. Each universe fills its box and orbit-12 touches the edge; the controls change the HTML and CSS live.</p>
 
   <section class="panel" id="layout" aria-labelledby="layout-title">
-    <div class="panel-head"><span class="number">01</span><h2 id="layout-title">Distribución de satélites</h2></div>
+    <div class="panel-head"><span class="number">01</span><h2 id="layout-title">Satellite distribution</h2></div>
     <div class="workspace">
       <div class="stage">
-        <div class="diagram bigbang" id="layout-demo" style="--demo-size:320px" role="img" aria-label="8 satélites distribuidos en 360 grados">
+        <div class="diagram bigbang" id="layout-demo" style="--demo-size:320px" role="img" aria-label="8 satellites spread over 360 degrees">
           <div class="gravity-spot">
-            <div class="orbit-2 guide"></div><div class="orbit-4 guide"></div>
-            <div class="orbit-6 guide" id="satellite-ring"></div>
-            <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="count-center">8</strong><span>SATÉLITES</span></div></div></div></div>
+            <div class="orbit-4 guide"></div><div class="orbit-8 guide"></div>
+            <div class="orbit-11 guide" id="satellite-ring"></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="count-center">8</strong><span>SATELLITES</span></div></div></div></div>
           </div>
         </div>
         <span class="stage-note">bigbang → gravity-spot → orbit → satellite</span>
       </div>
       <div class="controls">
-        <div class="field"><label for="count">Satélites <output for="count" id="count-out">8</output></label><input id="count" type="range" min="1" max="80" value="8"></div>
-        <div class="field"><label for="span">Apertura <output for="span" id="span-out">360°</output></label><input id="span" type="range" min="60" max="360" value="360" step="15"></div>
-        <div class="field"><label for="rotation">Rotación <output for="rotation" id="rotation-out">0°</output></label><input id="rotation" type="range" min="0" max="360" value="0" step="5"></div>
-        <div class="field"><label for="diameter">Diámetro <output for="diameter" id="diameter-out">320 px</output></label><input id="diameter" type="range" min="160" max="400" value="320" step="10"></div>
-        <button id="reorder" type="button">Rotar el orden del DOM</button>
-        <label class="check"><input id="debug" type="checkbox"> Mostrar estructura</label>
-        <p class="hint">Subí a 80 para probar la distribución más allá del antiguo límite de 60. El tamaño también se adapta al ancho disponible.</p>
+        <div class="field"><label for="count">Satellites <output for="count" id="count-out">8</output></label><input id="count" type="range" min="1" max="80" value="8"></div>
+        <div class="field"><label for="span">Range <output for="span" id="span-out">360°</output></label><input id="span" type="range" min="60" max="360" value="360" step="15"></div>
+        <div class="field"><label for="rotation">Start angle <output for="rotation" id="rotation-out">0°</output></label><input id="rotation" type="range" min="0" max="360" value="0" step="5"></div>
+        <div class="field"><label for="diameter">Universe width <output for="diameter" id="diameter-out">320 px</output></label><input id="diameter" type="range" min="160" max="400" value="320" step="10"></div>
+        <button id="reorder" type="button">Rotate DOM order</button>
+        <label class="check"><input id="debug" type="checkbox"> Show structure</label>
+        <p class="hint">Go up to 80 to pass the old 60-item CSS limit. Change the width: the rings follow the universe.</p>
       </div>
     </div>
-    <details><summary>Ver el HTML de esta composición</summary><pre id="layout-code"></pre></details>
+    <details><summary>Show the HTML</summary><pre id="layout-code"></pre></details>
   </section>
 
   <div class="pair">
     <section class="panel" id="arcs" aria-labelledby="arcs-title">
-      <div class="panel-head"><span class="number">02</span><h2 id="arcs-title">Arcos apilados</h2></div>
+      <div class="panel-head"><span class="number">02</span><h2 id="arcs-title">Stacked arcs</h2></div>
       <div class="stage">
-        <div class="diagram bigbang" style="--demo-size:240px" id="arcs-demo" role="img" aria-label="Arco A: 40 por ciento; arco B: 25 por ciento">
+        <div class="diagram bigbang" style="--demo-size:240px" id="arcs-demo" role="img" aria-label="Arc A: 40 percent; arc B: 25 percent">
           <div class="gravity-spot">
-            <div class="orbit-6"><o-arc value="100" style="--o-fill:#2c3c45;--o-stroke:none;--o-gap:0"></o-arc></div>
-            <div class="orbit-6" id="arc-ring"><o-arc id="arc-a" value="40" style="--o-fill:#8adbc7;--o-stroke:none;--o-gap:2"></o-arc><o-arc id="arc-b" value="25" style="--o-fill:#eda979;--o-stroke:none;--o-gap:2"></o-arc></div>
+            <div class="orbit-10" style="--o-size-ratio:2"><o-arc value="100" style="--o-fill:#2c3c45;--o-stroke:none;--o-gap:0"></o-arc></div>
+            <div class="orbit-10" id="arc-ring" style="--o-size-ratio:2"><o-arc id="arc-a" value="40" style="--o-fill:#8adbc7;--o-stroke:none;--o-gap:2"></o-arc><o-arc id="arc-b" value="25" style="--o-fill:#eda979;--o-stroke:none;--o-gap:2"></o-arc></div>
             <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="arc-center">65%</strong><span>TOTAL</span></div></div></div></div>
           </div>
         </div>
       </div>
       <div class="controls">
-        <div class="field"><label for="arc-value">Arco A · verde <output id="arc-out" for="arc-value">40%</output></label><input id="arc-value" type="range" min="0" max="75" value="40"></div>
-        <div class="row"><button type="button" id="arc-zero">A en cero</button><button type="button" id="arc-reorder">Invertir segmentos</button></div>
-        <p class="hint">El arco naranja vale 25%. Cambiá el verde y observá cómo se desplaza el siguiente, incluso al llegar a cero.</p>
+        <div class="field"><label for="arc-value">Arc A · green <output id="arc-out" for="arc-value">40%</output></label><input id="arc-value" type="range" min="0" max="75" value="40"></div>
+        <div class="row"><button type="button" id="arc-zero">A to zero</button><button type="button" id="arc-reorder">Swap segments</button></div>
+        <p class="hint">The orange arc is 25%. Change the green one and watch the next segment move, even at zero.</p>
       </div>
-      <details><summary>Ver el HTML de los segmentos</summary><pre id="arc-code"></pre></details>
+      <details><summary>Show the HTML</summary><pre id="arc-code"></pre></details>
     </section>
 
     <section class="panel" id="progress" aria-labelledby="progress-title">
-      <div class="panel-head"><span class="number">03</span><h2 id="progress-title">Progreso y formas</h2></div>
+      <div class="panel-head"><span class="number">03</span><h2 id="progress-title">Progress and shapes</h2></div>
       <div class="stage">
-        <div class="diagram bigbang" style="--demo-size:240px" id="progress-demo" role="img" aria-label="Progreso: 63 por ciento">
+        <div class="diagram bigbang" style="--demo-size:240px" id="progress-demo" role="img" aria-label="Progress: 63 percent">
           <div class="gravity-spot">
-            <div class="orbit-6" style="--o-range:270deg;--o-from:225deg"><o-progress id="progress-bar" value="63" shape="rounded" style="--o-fill:#8adbc7;--o-stroke:none;--o-back-fill:#2c3c45;--o-back-stroke:none;--o-size-ratio:1.6"></o-progress></div>
-            <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="progress-center">63%</strong><span>PROGRESO</span></div></div></div></div>
+            <div class="orbit-10" style="--o-range:270deg;--o-from:225deg;--o-size-ratio:3"><o-progress id="progress-bar" value="63" shape="rounded" style="--o-fill:#8adbc7;--o-stroke:none;--o-back-fill:#2c3c45;--o-back-stroke:none"></o-progress></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule"><div class="center"><strong id="progress-center">63%</strong><span>PROGRESS</span></div></div></div></div>
           </div>
         </div>
       </div>
       <div class="controls">
-        <div class="field"><label for="progress-value">Valor <output id="progress-out" for="progress-value">63%</output></label><input id="progress-value" type="range" min="0" max="100" value="63"></div>
-        <div class="field"><label for="shape">Terminación</label><select id="shape"><option value="rounded">Redondeada</option><option value="none">Recta</option><option value="arrow">Flecha</option><option value="circle-a">Círculo A</option><option value="circle-b">Círculo B</option><option value="slash">Diagonal</option><option value="zigzag">Zigzag</option></select></div>
-        <p class="hint">Probá los extremos 0 y 100, y cambiá la terminación del arco. El fondo conserva la apertura de 270°.</p>
+        <div class="field"><label for="progress-value">Value <output id="progress-out" for="progress-value">63%</output></label><input id="progress-value" type="range" min="0" max="100" value="63"></div>
+        <div class="field"><label for="shape">Ending</label><select id="shape"><option value="rounded">Rounded</option><option value="none">Straight</option><option value="arrow">Arrow</option><option value="circle-a">Circle A</option><option value="circle-b">Circle B</option><option value="slash">Slash</option><option value="zigzag">Zigzag</option></select></div>
+        <p class="hint">Try 0 and 100, and change the ending. The track keeps its 270° range.</p>
       </div>
-      <details><summary>Ver el HTML del progreso</summary><pre id="progress-code"></pre></details>
+      <details><summary>Show the HTML</summary><pre id="progress-code"></pre></details>
     </section>
   </div>
-  <footer><span>Más composiciones:</span><a href="/examples/07-satellites.html">Constelación</a><a href="/examples/08-nested-orbits.html">Órbitas anidadas</a><a href="/examples/02-donut-multilayer.html">Donut</a></footer>
+  <footer><span>More:</span><a href="00-universe.html">The universe model</a><a href="07-satellites.html">Constellation</a><a href="08-nested-orbits.html">Nested systems</a><a href="02-donut-multilayer.html">Donut</a></footer>
 </main>
 <script>
   const $ = id => document.getElementById(id);
   const ring = $('satellite-ring');
   let serial = 0;
   function layoutCode() {
-    $('layout-code').textContent = `<div class="bigbang">\n  <div class="gravity-spot">\n    <div class="orbit-6${Number($('span').value) < 360 ? ' fit-range' : ''}"\n         style="--o-range:${$('span').value}deg; --o-from:${$('rotation').value}deg">\n      <!-- ${ring.children.length} satélites, en el orden del DOM -->\n      <div class="satellite"><div class="capsule">${ring.firstElementChild.textContent}</div></div>\n      …\n    </div>\n  </div>\n</div>`;
+    $('layout-code').textContent = `<div class="bigbang">\n  <div class="gravity-spot">\n    <div class="orbit-11${Number($('span').value) < 360 ? ' fit-range' : ''}"\n         style="--o-range:${$('span').value}deg; --o-from:${$('rotation').value}deg">\n      <!-- ${ring.children.length} satellites, in DOM order -->\n      <div class="satellite"><div class="capsule">${ring.firstElementChild.textContent}</div></div>\n      …\n    </div>\n  </div>\n</div>`;
   }
   function updateLayout() {
     const count = Number($('count').value);
@@ -150,7 +149,7 @@
     $('layout-demo').style.setProperty('--demo-size', $('diameter').value + 'px');
     $('layout-demo').classList.toggle('dense', count > 24);
     $('layout-demo').classList.toggle('dev-orbit', $('debug').checked);
-    $('layout-demo').setAttribute('aria-label', `${count} satélites distribuidos en ${$('span').value} grados`);
+    $('layout-demo').setAttribute('aria-label', `${count} satellites spread over ${$('span').value} degrees`);
     $('count-out').value = count; $('count-center').textContent = count;
     $('span-out').value = $('span').value + '°'; $('rotation-out').value = $('rotation').value + '°';
     $('diameter-out').value = $('diameter').value + ' px';
@@ -161,7 +160,7 @@
   function updateArcs() {
     const value = Number($('arc-value').value);
     $('arc-a').setAttribute('value', value); $('arc-out').value = value + '%'; $('arc-center').textContent = (value + 25) + '%';
-    $('arcs-demo').setAttribute('aria-label', `Arco A: ${value} por ciento; arco B: 25 por ciento`);
+    $('arcs-demo').setAttribute('aria-label', `Arc A: ${value} percent; arc B: 25 percent`);
     $('arc-code').textContent = Array.from($('arc-ring').children, element => `<o-arc value="${element.getAttribute('value')}"\n       style="--o-fill:${element.id === 'arc-a' ? '#8adbc7' : '#eda979'}"></o-arc>`).join('\n');
   }
   $('arc-value').addEventListener('input', updateArcs);
@@ -171,8 +170,8 @@
     const value = $('progress-value').value;
     $('progress-bar').setAttribute('value', value); $('progress-bar').setAttribute('shape', $('shape').value);
     $('progress-out').value = value + '%'; $('progress-center').textContent = value + '%';
-    $('progress-demo').setAttribute('aria-label', `Progreso: ${value} por ciento`);
-    $('progress-code').textContent = `<div class="orbit-6" style="--o-range:270deg; --o-from:225deg">\n  <o-progress value="${value}" shape="${$('shape').value}"></o-progress>\n</div>`;
+    $('progress-demo').setAttribute('aria-label', `Progress: ${value} percent`);
+    $('progress-code').textContent = `<div class="orbit-10" style="--o-range:270deg; --o-from:225deg; --o-size-ratio:3">\n  <o-progress value="${value}" shape="${$('shape').value}"></o-progress>\n</div>`;
   }
   $('progress-value').addEventListener('input', updateProgress); $('shape').addEventListener('change', updateProgress);
   updateLayout(); updateArcs(); updateProgress();

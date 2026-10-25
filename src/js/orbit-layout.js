@@ -14,6 +14,60 @@ export function orbitNumber(element) {
   return element.classList?.contains('orbit') ? null : undefined;
 }
 
+const WARNED = Symbol.for('zumer.orbit.warned.v1');
+
+/** Log a message once per element and key, so layout loops never flood the console. */
+export function warnOnce(element, key, message) {
+  const seen = element[WARNED] || (element[WARNED] = new Set());
+  if (seen.has(key)) return;
+  seen.add(key);
+  console.warn(`[orbit] ${message}`);
+}
+
+/** closest() that also climbs out of shadow roots, like container queries do. */
+export function composedClosest(element, selector) {
+  for (let current = element; current; current = current.parentElement || current.getRootNode?.().host) {
+    if (current.matches?.(selector)) return current;
+  }
+  return null;
+}
+
+const KINDS = '.satellite, .vector, .side, o-arc, o-progress';
+
+function describe(element) {
+  const classes = [...element.classList].slice(0, 3).map(name => '.' + name).join('');
+  return `<${element.localName}${classes ? ' ' + classes : ''}>`;
+}
+
+/** Explain empty or broken layouts: the usual reasons nothing shows up. */
+function diagnose(ring) {
+  const spot = ring.parentElement;
+  const universe = composedClosest(spot.parentElement, '.bigbang, .satellite');
+  if (!universe) {
+    warnOnce(spot, 'universe', 'A .gravity-spot is not inside a .bigbang, so it measures the viewport. ' +
+      'Wrap it: <div class="bigbang"><div class="gravity-spot">…</div></div>.');
+  } else if (universe.getClientRects().length && (!universe.clientWidth || !universe.clientHeight)) {
+    warnOnce(universe, 'empty', `${describe(universe)} has no size (${universe.clientWidth}×${universe.clientHeight}px), ` +
+      'so its system is invisible. Give it a width, or place it in a parent with a width.');
+  }
+  if (!composedClosest(ring, '.dev-orbit')) return;
+  for (const child of ring.children) {
+    if (orbitNumber(child) !== undefined) {
+      warnOnce(child, 'nested-ring', `${describe(child)} is inside another ring. Rings must be direct children of .gravity-spot; ` +
+        'to nest a system, put a .bigbang > .gravity-spot inside a .satellite > .capsule.');
+    } else if (!child.matches(KINDS)) {
+      warnOnce(child, 'ring-child', `${describe(child)} is not placed by its ring. A ring holds only .satellite, .vector, .side, <o-arc> and <o-progress>; ` +
+        'wrap content as <div class="satellite"><div class="capsule">…</div></div>.');
+    } else if (child.classList.contains('satellite')) {
+      for (const inner of child.children) {
+        if (!inner.matches('.capsule, .gravity-spot, .bigbang')) {
+          warnOnce(inner, 'satellite-child', `${describe(inner)} sits directly in a .satellite. Put content in a .capsule so it stays upright and centered.`);
+        }
+      }
+    }
+  }
+}
+
 export function setLayoutProperty(element, name, value) {
   const text = String(value);
   if (element.style.getPropertyValue(name) !== text) element.style.setProperty(name, text);
@@ -63,8 +117,10 @@ function layoutRing(ring) {
   }
   const count = Math.max(counts.arc, counts.satellite, counts.vector, 1);
   // Preserve Orbit's existing mixed-group convention. Sides close a polygon
-  // and therefore never subtract the fit-range endpoint.
-  const divisor = counts.side ? String(counts.side) : `max(1, ${count} - var(--o-fit-range, 0))`;
+  // and therefore never subtract the fit-range endpoint. fit-range puts points
+  // on both ends of the range; arcs are spans, so a ring of arcs only fills it.
+  const points = counts.satellite || counts.vector;
+  const divisor = counts.side ? String(counts.side) : points ? `max(1, ${count} - var(--o-fit-range, 0))` : String(count);
   setLayoutProperty(ring, '--o-layout-angle', `calc(var(--o-range, 360deg) / ${divisor})`);
 }
 
@@ -273,6 +329,7 @@ function flush(state) {
       if (!target.isConnected) continue;
       if (state.rings.has(target)) {
         layoutRing(target);
+        diagnose(target);
         for (const visual of target.querySelectorAll(VISUALS)) visuals.add(visual);
       } else if (state.visuals.has(target)) visuals.add(target);
     }

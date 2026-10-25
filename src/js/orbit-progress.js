@@ -52,7 +52,7 @@ export class OrbitProgress extends OrbitBase {
           stroke: var(--o-back-stroke);
           stroke-width: var(--o-back-stroke-width);
         }
-        /* variant="stroke": the thin, legible gauge (registro "medidor").
+        /* variant="stroke": the thin, legible gauge.
            The default band is a FILLED donut wedge, so everyone building a
            thin gauge tripped on --o-fill/--o-back-fill. With this variant the
            paths are open arcs and the data color lives where you expect it:
@@ -116,9 +116,8 @@ export class OrbitProgress extends OrbitBase {
     const common = super.getCommonAttributes(this);
     const range = Math.max(0, Math.min(360, this.readAngle(common.style, '--o-range', 360)));
     const rawValue = common.style.getPropertyValue('--o-progress').trim();
-    const progress = rawValue ? this.readNumber(common.style, '--o-progress', 0) : Number(this.getAttribute('value') || 0);
-    const rawMax = this.getAttribute('max');
-    const maxValue = rawMax === null ? 100 : Number(rawMax);
+    const progress = rawValue ? this.readNumber(common.style, '--o-progress', 0) : this.readValue();
+    const maxValue = this.readMax();
     
     return {
       ...common,
