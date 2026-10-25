@@ -12,7 +12,10 @@
       "import": "./dist/orbit.mjs",
       "default": "./dist/orbit.js"
     },
-    "./style": "./dist/orbit.css",
+    "./style": {
+      "types": "./dist/style.d.ts",
+      "default": "./dist/orbit.css"
+    },
     "./react": {
       "types": "./dist/react.d.ts"
     },

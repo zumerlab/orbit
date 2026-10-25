@@ -69,6 +69,7 @@ function buildMetadata() {
   // Types and editor data for TypeScript, JSX, VS Code and other tools.
   copyFileSync('src/types/orbit.d.ts', 'dist/orbit.d.ts')
   copyFileSync('src/types/react.d.ts', 'dist/react.d.ts')
+  copyFileSync('src/types/style.d.ts', 'dist/style.d.ts')
   writeFileSync('dist/custom-elements.json', JSON.stringify(customElementsManifest(version), null, 2) + '\n')
   writeFileSync('dist/vscode.html-custom-data.json', JSON.stringify(vscodeHtmlData(), null, 2) + '\n')
 }

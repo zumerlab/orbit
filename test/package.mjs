@@ -21,7 +21,7 @@ try {
     'package.json', 'README.md', 'LICENSE',
     'dist/orbit.css', 'dist/orbit.min.css',
     'dist/orbit.js', 'dist/orbit.min.js', 'dist/orbit.mjs',
-    'dist/orbit.d.ts', 'dist/react.d.ts',
+    'dist/orbit.d.ts', 'dist/react.d.ts', 'dist/style.d.ts',
     'dist/custom-elements.json', 'dist/vscode.html-custom-data.json',
   ]) {
     assert.ok(files.has(file), `Missing published file: ${file}`)
