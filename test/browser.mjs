@@ -105,6 +105,23 @@ for (const name of browsers) {
     const fullPath = await page.locator('#full').evaluate(el => el.shadowRoot.querySelector('.progress-bar').getAttribute('d'));
     assert.equal((fullPath.match(/A /g) || []).length, 4, 'a 360° stroke is drawn as four quarter arcs');
 
+    await fixture(ring('<o-progress id="band" value="0" style="--o-back-fill:#000;--o-stroke-width:0"></o-progress>'));
+    const band = await page.locator('#band').evaluate(el => {
+      const bg = el.shadowRoot.querySelector('.progress-bg');
+      return { d: bg.getAttribute('d'), width: bg.getBBox().width };
+    });
+    assert.equal((band.d.match(/A /g) || []).length, 8, 'a closed 360° band is drawn as two rings of quarter arcs');
+    assert(band.width > 90, 'a closed 360° band is painted');
+
+    await fixture('<div class="bigbang" style="width:400px;height:400px"><div class="gravity-spot" style="--o-force:400px"><div class="orbit-12"><o-arc id="hit" interactive value="50"></o-arc></div></div></div>');
+    const hits = await page.locator('#hit').evaluate(el => {
+      const box = el.getBoundingClientRect();
+      const cx = box.left + box.width / 2, cy = box.top + box.height / 2;
+      const at = (x, y) => document.elementFromPoint(x, y) === el;
+      return { inside: at(cx + 40, cy), band: at(box.right - 2, cy) };
+    });
+    assert.deepEqual(hits, { inside: false, band: true }, 'an interactive arc takes clicks on its band only, not on its text guide');
+
     await fixture('<div class="bigbang" style="width:400px;height:400px"><div class="gravity-spot depth"><div id="front" class="orbit-4 layer-front"></div><div id="back" class="orbit-6" data-depth="1"></div><div id="custom-z" class="orbit-8" style="--o-z:-220"></div></div></div><div class="bigbang"><div class="gravity-spot"><div id="flat" class="orbit-4" data-depth="2"></div></div></div>');
     const depth = await page.evaluate(() => Object.fromEntries(['front', 'back', 'custom-z', 'flat'].map(id => [id, new DOMMatrix(getComputedStyle(document.getElementById(id)).transform)])));
     assert.equal(depth.front.m43, 0, 'front layer stays at z 0');

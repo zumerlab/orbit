@@ -29,11 +29,11 @@ if (template) template.innerHTML = `
       pointer-events: visiblePainted;
     }
     /* The touch area catches the pointer even where the band is transparent. */
-    #hit {
+    #orbitHit {
       fill: none;
       stroke: transparent;
     }
-    :host([interactive]) #hit {
+    :host([interactive]) #orbitHit {
       pointer-events: stroke;
     }
     :host([interactive]) {
@@ -56,7 +56,7 @@ if (template) template.innerHTML = `
     }
   </style>
   <svg viewBox="0 0 100 100">
-    <path id="hit" vector-effect="non-scaling-stroke"></path>
+    <path id="orbitHit" vector-effect="non-scaling-stroke"></path>
     <path id="orbitShape" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
     <path id="orbitPath" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
     <text>
@@ -89,7 +89,7 @@ export class OrbitArc extends OrbitBase {
 
     orbitShape.setAttribute('d', this.calculateArcParameters(attrs).dShape);
     orbitPath.setAttribute('d', this.calculateTextArcParameters(attrs).dPath);
-    this.updateHitArea(this.shadowRoot.querySelector('#hit'), attrs, 0, attrs.arcAngle);
+    this.updateHitArea(this.shadowRoot.querySelector('#orbitHit'), attrs, 0, attrs.arcAngle);
     const textAnchor = attrs.textAnchor;
 
     if (textAnchor === 'start') {
