@@ -189,7 +189,7 @@ Angle reference: `from-0` = top, `from-90` = right, `from-180` = bottom, `from-2
 
 Placement: DIRECTLY inside `.orbit-N`. Never in `.satellite`.
 
-**Attributes:** `value` (0-100), `max`, `shape` (none|rounded|circle|circle-a|circle-b|bullet|arrow|slash|backslash|zigzag), `flip`, `fit-range`, `text-anchor` (start|middle|end), `range="auto"` (arc sized to its text; consecutive auto arcs follow each other), `interactive` (band takes the pointer, even if transparent), `hit-width` (extra px of touch area)
+**Attributes:** `value` (0-100), `max`, `shape` (none|rounded|circle|circle-a|circle-b|bullet|arrow|slash|backslash|zigzag), `flip`, `fit-range`, `text-anchor` (start|middle|end), `range="auto"` (arc sized to its text; consecutive auto arcs follow each other; add `text-anchor="middle"` to center it on its angle, e.g. a label at −30° with `--o-from:-30deg` on the ring), `interactive` (band takes the pointer, even if transparent), `hit-width` (extra px of touch area)
 
 **Stacking (donut chart):** Multiple `<o-arc>` with `value` auto-stack end-to-end. Values should sum to ≤100.
 ```html

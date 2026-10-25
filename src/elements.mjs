@@ -25,7 +25,7 @@ export const elements = [
     attributes: {
       ...common,
       value: { type: 'number', description: 'Share of the ring\'s range, relative to max. Without it, sibling arcs split the range equally.' },
-      'text-anchor': { type: "'start' | 'middle' | 'end'", default: 'middle', values: ['start', 'middle', 'end'], description: 'Where curved text starts.' },
+      'text-anchor': { type: "'start' | 'middle' | 'end'", default: 'middle', values: ['start', 'middle', 'end'], description: 'Where curved text sits on the arc. With range="auto", an explicit value anchors the arc at its angle: middle centers it, end ends it there.' },
       flip: { type: 'boolean', description: 'Reverse the direction of curved text.' },
       'fit-range': { type: 'boolean', description: 'Squeeze curved text to the length of the arc.' },
       range: { type: "'auto'", values: ['auto'], description: 'Size the arc to its text. Consecutive range="auto" arcs follow each other.' },

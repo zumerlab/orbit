@@ -146,6 +146,14 @@ Text inside an `<o-arc>` is drawn along it. With `range="auto"` the arc takes th
 </div>
 ```
 
+An auto arc starts at its angle. Give it `text-anchor="middle"` to center it there instead, or `"end"` to end it there. A label centered at −30°:
+
+```html
+<div class="orbit-11" style="--o-from: -30deg">
+  <o-arc range="auto" text-anchor="middle">Label</o-arc>
+</div>
+```
+
 ### Depth layers
 
 Add `depth` to a `.gravity-spot` to stack its rings in 3D. Each direct child ring (or a nested `.bigbang`) is a layer: `data-depth="1"` moves it one step back, and `.layer-front` marks the active layer at depth 0. Layers keep their apparent size, because the scale compensates for the perspective, and they animate when their depth changes.

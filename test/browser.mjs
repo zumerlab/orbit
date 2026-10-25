@@ -190,6 +190,14 @@ for (const name of browsers) {
     const auto = await page.evaluate(() => ['short', 'long'].map(id => document.getElementById(id).getAttributes()));
     assert(auto[0].arcAngle > 0 && auto[1].arcAngle > auto[0].arcAngle * 3, 'range="auto" sizes arcs to their text');
     assert(Math.abs(auto[1].stackOffset - auto[0].arcAngle) < 1e-6, 'auto arcs follow each other');
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-10" style="--o-from:-30deg"><o-arc id="centered" range="auto" text-anchor="middle">Label</o-arc></div><div class="orbit-8" style="--o-from:-30deg"><o-arc id="ended" range="auto" text-anchor="end">Label</o-arc></div></div></div>');
+    const anchored = await page.evaluate(() => ['centered', 'ended'].map(id => {
+      const el = document.getElementById(id);
+      return { start: parseFloat(el.style.getPropertyValue('--o-arc-start')), angle: el.getAttributes().arcAngle, rotate: parseFloat(getComputedStyle(el).rotate) };
+    }));
+    assert(anchored[0].angle > 0 && Math.abs(anchored[0].start + anchored[0].angle / 2) < 1e-6, 'text-anchor="middle" centers an auto arc on its angle');
+    assert(Math.abs(anchored[1].start + anchored[1].angle) < 1e-6, 'text-anchor="end" ends an auto arc at its angle');
+    assert(Math.abs(anchored[0].rotate - (-30 - anchored[0].angle / 2)) < .01, 'so a label centered at -30° starts half its length before');
 
     const events = await page.evaluate(async () => {
       document.body.innerHTML = '<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8"><o-progress id="late" value="40"></o-progress></div></div></div>';

@@ -77,7 +77,13 @@ export class OrbitArc extends OrbitBase {
     const attrs = this.getAttributes();
     const { fitRange, stacked } = attrs;
     if (stacked) {
-      setLayoutProperty(this, '--o-arc-start', `${attrs.stackOffset}deg`);
+      // An auto arc with an explicit text-anchor is anchored at its angle:
+      // "middle" centers it there, "end" ends it there. Without one, it starts
+      // there, so consecutive auto arcs follow each other.
+      const anchor = attrs.auto && this.hasAttribute('text-anchor')
+        ? { middle: -.5, end: -1 }[attrs.textAnchor] || 0
+        : 0;
+      setLayoutProperty(this, '--o-arc-start', `${attrs.stackOffset + anchor * attrs.arcAngle}deg`);
       setLayoutProperty(this, '--o_stack', attrs.stackOffset + attrs.arcAngle);
     } else {
       this.style.removeProperty('--o-arc-start');

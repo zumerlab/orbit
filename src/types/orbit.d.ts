@@ -21,7 +21,11 @@ export interface OrbitArcAttributes {
   /** Value that fills the whole range. Default `100`. */
   max?: Numeric;
   shape?: OrbitShape;
-  /** Where curved text starts. Default `middle`. */
+  /**
+   * Where curved text sits on the arc. Default `middle`.
+   * With `range="auto"`, an explicit value also anchors the arc at its angle:
+   * `middle` centers it there, `end` ends it there.
+   */
   'text-anchor'?: 'start' | 'middle' | 'end';
   /** Reverse the direction of curved text. */
   flip?: BooleanAttribute;
