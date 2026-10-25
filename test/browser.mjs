@@ -99,6 +99,19 @@ for (const name of browsers) {
         if (['0', '-1', 'invalid'].includes(value)) assert.equal(path, '', `${shape} ${value} is empty`);
       }
     }
+    await fixture(ring('<o-progress id="full" variant="stroke" value="100"></o-progress>'));
+    const fullPath = await page.locator('#full').evaluate(el => el.shadowRoot.querySelector('.progress-bar').getAttribute('d'));
+    assert.equal((fullPath.match(/A /g) || []).length, 2, 'a 360° stroke is drawn as two half arcs');
+
+    await fixture('<div class="bigbang" style="width:400px;height:400px"><div class="gravity-spot depth"><div id="front" class="orbit-4 layer-front"></div><div id="back" class="orbit-6" data-depth="1"></div><div id="custom-z" class="orbit-8" style="--o-z:-220"></div></div></div><div class="bigbang"><div class="gravity-spot"><div id="flat" class="orbit-4" data-depth="2"></div></div></div>');
+    const depth = await page.evaluate(() => Object.fromEntries(['front', 'back', 'custom-z', 'flat'].map(id => [id, new DOMMatrix(getComputedStyle(document.getElementById(id)).transform)])));
+    assert.equal(depth.front.m43, 0, 'front layer stays at z 0');
+    assert.equal(depth.back.m43, -110, 'data-depth moves a ring back one step');
+    assert(Math.abs(depth.back.m11 - 1010 / 900) < 1e-4, 'scale compensates the perspective');
+    assert.equal(depth['custom-z'].m43, -220, '--o-z sets depth per ring');
+    assert(depth.flat.isIdentity, 'rings outside .depth are not transformed');
+    assert.match(await page.locator('#back').evaluate(el => getComputedStyle(el).transitionProperty), /transform/, 'depth changes transition by default');
+
     assert.deepEqual(errors, [], `${name} has no browser errors`);
     console.log(`${name}: layout, stacking, zero, responsive SVG, CSS overrides, lifecycle and geometry passed`);
   } finally { await browser.close(); }

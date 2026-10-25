@@ -89,6 +89,30 @@ Arcs and progress elements use `value` relative to `max`, which defaults to `100
 
 Progress rings draw filled bands by default. For a stroked line, use `variant="stroke"` and set `--o-stroke` and `--o-back-stroke` instead of the fill colors.
 
+### Depth layers
+
+Add `depth` to a `.gravity-spot` to stack its rings in 3D. Each direct child ring (or a nested `.bigbang`) is a layer: `data-depth="1"` moves it one step back, and `.layer-front` marks the active layer at depth 0. Layers keep their apparent size, because the scale compensates for the perspective, and they animate when their depth changes.
+
+```html
+<div class="gravity-spot depth" style="--o-depth-grow: .42">
+  <div class="orbit-4 layer-front"><o-progress value="82"></o-progress></div>
+  <div class="orbit-4" data-depth="1"><o-progress value="40"></o-progress></div>
+  <div class="orbit-4" data-depth="2"><o-progress value="65"></o-progress></div>
+</div>
+```
+
+| Property | Default | Purpose |
+| --- | --- | --- |
+| `--o-z` | `depth × step` | Position on the z axis in unitless pixels; negative values are farther away. Set it on a ring to override `data-depth`. |
+| `--o-depth-step` | `-110` | Distance between depth steps. |
+| `--o-perspective` | `900` | Perspective in unitless pixels. |
+| `--o-depth-grow` | `0` | Extra size per step back; `.42` gives 1×, 1.42×, 1.84×. |
+| `--o-depth-compensate` | `1` | Set to `0` to let farther layers look smaller. |
+| `--o-back-opacity` | `1` | Opacity of layers behind the front one. |
+| `--o-depth-duration` / `--o-depth-easing` | `.8s` / `cubic-bezier(.2,.8,.2,1)` | Depth transition. Disabled with `prefers-reduced-motion`. |
+
+`data-depth` accepts 0 to 8. Rings outside `.depth` are not transformed.
+
 ## In an app
 
 Orbit observes added, removed and reordered elements, style and attribute changes, and container resizes. Updates are grouped into the next animation frame.

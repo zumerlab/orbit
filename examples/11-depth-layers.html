@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>11 — Depth layers | Orbit</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; gap: 24px; background: #0e1013; color: #f2f3f5; font: 14px/1.5 system-ui; }
+    .demo { width: 320px; aspect-ratio: 1; }
+    .demo .gravity-spot { --o-force: 320px; --o-back-opacity: .45; --o-depth-grow: .42; }
+    .demo o-progress { --o-stroke: #f2f3f5; --o-back-stroke: #2a2e35; }
+    .demo .layer-front o-progress { --o-stroke: #ffb020; }
+    .demo .capsule { color: #f2f3f5; font-weight: 600; background: none; border: none; }
+    button { font: inherit; padding: 8px 16px; border-radius: 8px; border: 1px solid #2a2e35; background: #16191e; color: inherit; cursor: pointer; }
+    .doc { max-width: 360px; color: #8a9099; text-align: center; }
+    .doc code { color: #ffb020; }
+  </style>
+</head>
+<body>
+  <div class="demo bigbang">
+    <div class="gravity-spot depth">
+      <div class="orbit-4 layer-front" data-depth="0">
+        <o-progress variant="stroke" value="82"></o-progress>
+      </div>
+      <div class="orbit-4" data-depth="1">
+        <o-progress variant="stroke" value="40"></o-progress>
+      </div>
+      <div class="orbit-4" data-depth="2">
+        <o-progress variant="stroke" value="65"></o-progress>
+      </div>
+      <div class="orbit-0"><div class="satellite"><div class="capsule" id="label">Layer 1</div></div></div>
+    </div>
+  </div>
+  <button id="next">Bring next layer to front</button>
+  <p class="doc">Rings inside <code>.depth</code> move back with <code>data-depth</code> (or <code>--o-z</code>) and keep their apparent size. <code>.layer-front</code> marks the active one.</p>
+  <script>
+    const layers = [...document.querySelectorAll('.depth > [data-depth]')];
+    let front = 0;
+    document.getElementById('next').addEventListener('click', () => {
+      front = (front + 1) % layers.length;
+      layers.forEach((layer, i) => {
+        const depth = (i - front + layers.length) % layers.length;
+        layer.dataset.depth = depth;
+        layer.classList.toggle('layer-front', depth === 0);
+      });
+      document.getElementById('label').textContent = `Layer ${front + 1}`;
+    });
+  </script>
+</body>
+</html>

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### Unreleased
+
+- feat: depth layers — `.depth`, `data-depth`, `.layer-front`, `--o-z` per ring and a default depth transition
+- fix: a 360° `o-progress variant="stroke"` background is drawn as two half arcs, so it no longer renders shifted
+
 #### [v1.5.0](https://github.com/zumerlab/orbit/compare/v1.4.12...v1.5.0)
 
 > 5 September 2026
