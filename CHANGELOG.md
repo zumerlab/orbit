@@ -2,8 +2,13 @@
 
 All notable changes to this project will be documented in this file. 
 
-#### Unreleased
+#### [v1.6.0](https://github.com/zumerlab/orbit/compare/v1.5.0...v1.6.0)
 
+> 25 October 2026
+
+**Features**
+
+- depth layers and full-circle stroke fix [`4de378e`](https://github.com/zumerlab/orbit/commit/4de378e6f135024afe0b50b6249fe4ad2d083420)
 - feat: depth layers — `.depth`, `data-depth`, `.layer-front`, `--o-z` per ring and a default depth transition
 - fix: a 360° `o-progress variant="stroke"` background is drawn as two half arcs, so it no longer renders shifted
 
