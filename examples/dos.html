@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../dist/orbit.css">
+  <script src="../dist/orbit.js"></script>
+  <title>Testing orbit</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+    body {
+      font-family: "Jost", sans-serif;
+      font-optical-sizing: auto;
+      background-color: rgb(16, 16, 16);
+      color: rgba(255, 255, 255, 0.451) !important;
+    }
+
+    .orbit,
+    [class*=orbit-] {
+      border: 0.5px solid rgba(255, 255, 255, 0.422);
+      font-size: calc(5px * var(--o-force-ratio));
+    }
+
+    .invisible {
+      border: none !important;
+    }
+
+    .vector {
+      background-color: rgba(255, 255, 255, 0.259);
+      height: 1px;
+    }
+
+
+    .visible {
+      background-color: white;
+      border: none
+    }
+
+
+
+    .rotate-orbit {
+      animation-name: rotation;
+      animation-iteration-count: 3;
+      animation-timing-function: linear;
+    }
+
+    .rotate-time-1 {
+      animation-duration: 40s;
+    }
+
+    .rotate-time-2 {
+      animation-duration: 30s;
+    }
+
+    .rotate-time-3 {
+      animation-duration: 20s;
+    }
+
+    .rotate-time-4 {
+      animation-duration: 10s;
+    }
+
+    .rotate-time-5 {
+      animation-duration: 5s;
+    }
+
+    .invert {
+      animation-direction: reverse;
+    }
+
+    @keyframes rotation {
+      0% {
+        rotate: 360deg;
+      }
+
+      100% {
+        rotate: 0deg;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bigbang">
+    <div class="gravity-spot" style="--o-force: 1000px">
+      <div class="orbit-3 invisible">
+        <div class="vector grow-4x"></div>
+        <div class="vector grow-1.9x inner-orbit"></div>
+        <div class="vector grow-3x angle-60"></div>
+        <div class="vector grow-3x angle-90"></div>
+        <div class="vector grow-4x"></div>
+        <div class="vector grow-3x"></div>
+        <div class="vector  grow-1.9x inner-orbit"></div>
+        <div class="vector grow-3x angle-240"></div>
+        <div class="vector grow-5x"></div>
+        <div class="vector grow-3x"></div>
+      </div>
+    </div>
+    <div class="gravity-spot" style="--o-force: 90px">
+      <div class="orbit " style="border-style: dashed;"></div>
+      <div class="orbit  rotate-orbit rotate-time-4">
+        <div class="satellite visible shrink-50 angle-320" style="background-color: red; --o-transform-custom: translateX(500px)"></div>
+      </div>
+      <div class="orbit rotate-orbit rotate-time-5">
+        <div class="satellite visible shrink-50 angle-20"></div>
+      </div>
+      <div class="orbit" style="border-style: dashed;"></div>
+      <div class="orbit rotate-orbit rotate-time-3">
+        <div class="satellite visible shrink-50 angle-120"></div>
+      </div>
+      <div class="orbit" style="border-style: dashed;"></div>
+    </div>
+    <div class="gravity-spot uncentered  " style="--o-force: 350px">
+      <div class="orbit-1 invisible">
+        <div class="satellite angle-270 invisible">
+          <div class="gravity-spot uncentered" style="--o-force: 150px">
+            <div class="orbit-6"></div>
+          </div>
+        </div>
+      </div>
+      <div class="orbit-2 shrink-60 invisible ">
+        <div class="satellite angle-270 invisible">
+          <div class="gravity-spot uncentered  " style="--o-force: 150px">
+            <div class="orbit-10 ">
+              <div class="satellite angle-270 invisible rotate-orbit rotate-time-2 invert ">
+                <div class="capsule rotate-orbit rotate-time-2" style="width: 400px;  flex-direction: column; text-align: center;">
+                  Orbit<br>
+                  THIRD EXTERNAL ORBITAL PATH<br>
+                  MERIDIAN SYSTEM
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="orbit-4 shrink-40 invisible">
+        <div class="satellite angle-270 invisible">
+          <div class="gravity-spot uncentered" style="--o-force: 220px">
+            <div class="orbit-12 rotate-orbit rotate-time-2">
+              <div class="satellite visible shrink-50 angle-20"></div>
+              <div class="satellite visible shrink-20 angle-135"></div>
+              <div class="satellite visible shrink-60 angle-210"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="orbit-12 rotate-orbit rotate-time-3">
+        <div class="satellite angle-60">
+          <div class="gravity-spot from-2x" style="--o-force: 90px">
+            <div class="orbit-1" style="background-color: rgba(255, 255, 255, 0.579);">
+              <div class="satellite at-center rotate-orbit rotate-time-3 invert">
+                <div class="capsule" style="width: 100px;  flex-direction: column; text-align: center; color: black;">
+                  PLANET
+                </div>
+              </div>
+            </div>
+
+            <div class="orbit" style="border-style: dashed;"></div>
+            <div class="orbit-4" style="border-style: dashed;"></div>
+            <div class="orbit-5 rotate-orbit rotate-time-3">
+              <div class="satellite visible shrink-50 angle-20"></div>
+              <div class="satellite visible shrink-50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="satellite angle-145">
+          <div class="gravity-spot" style="--o-force: 90px">
+            <div class="orbit" style="border-width: 2.5px;"></div>
+            <div class="orbit" style="border-style: dashed;"></div>
+            <div class="orbit" style="border-style: dashed;"></div>
+            <div class="orbit" style="border-style: dashed;"></div>
+            <div class="orbit" style="border-style: dashed;"></div>
+            <div class="orbit rotate-orbit rotate-time-5 invert">
+              <div class="satellite visible shrink-50"></div>
+              <div class="satellite visible shrink-50"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="orbit-18 invisible rotate-orbit rotate-time-1">
+        <div class="satellite angle-270">
+          <div class="gravity-spot from-6x" style="--o-force: 90px">
+            <div class="orbit-12 rotate-orbit rotate-time-4 invert">
+              <div class="satellite visible grow-1x angle-120">
+                
+              </div>
+            </div>
+            <div class="orbit-22   rotate-orbit rotate-time-1 invert">
+              <div class="satellite angle-90 invisible ">
+                <div class="capsule stable" style="width: 400px;  flex-direction: column; text-align: center;">
+                  Orbit<br>
+                  SECOND EXTERNAL SYSTEM <br>
+                  MERIDIAN SYSTEM
+                </div>
+              </div>
+            </div>
+
+            <div class="orbit">
+              <div class="satellite visible grow-1x angle-120">
+                <div class="gravity-spot" style="--o-force: 300px">
+                  <div class="orbit rotate-orbit rotate-time-4 invert">
+                    <div class="satellite visible shrink-80"></div>
+                    <div class="satellite visible shrink-80"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+<script>
+ Orbit.resize('.bigbang')
+</script>
+</body>
+
+</html>

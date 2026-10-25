@@ -1,267 +1,241 @@
+import { OrbitBase } from './orbit-base.js';
+import { cssNumber, setLayoutProperty } from './orbit-layout.js';
 
-const template = document.createElement('template')
-template.innerHTML = `
-   <style>
-      :host {
-        --o-fill: var(--o-gray-light);
-        --o-stroke: var(--o-fill);
-        --o-stroke-width: 1;
-        --o-color: currentcolor;
-      }
-      :host(:hover){
-        --o-fill: var(--o-gray-light);
-        --o-stroke: var(--o-fill);
-        --o-stroke-width: 1;
-        --o-color: currentcolor;
-      }
-      svg {
-        width: 100%;
-        height: 100%;
-        overflow: visible;
-        pointer-events: none;
-      }
-      svg * {
-        pointer-events: visiblePainted;
-      }
-      #orbitShape {
-        fill: var(--o-fill);
-        stroke: var(--o-stroke);
-        stroke-width: var(--o-stroke-width);
-        transition: all 0.3s;
-        stroke-linejoin: round;
-      }
-      text {
-       fill: var(--o-color);
-      }
-      #orbitPath {
-        fill: transparent;
-        stroke: none;
-        stroke-width: 0;
-      }
-   </style>
-   <svg viewBox="0 0 100 100">
-     <path id="orbitShape" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
-     <path id="orbitPath"  shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke" ></path>
-     <text>
-        <textPath href="#orbitPath"  alignment-baseline="middle"></textPath>
-      </text>
-   </svg>
- `
+const template = typeof document === 'undefined' ? null : document.createElement('template');
+if (template) template.innerHTML = `
+  <style>
+    :host {
+      --o-fill: var(--o-gray-light);
+      --o-stroke: var(--o-fill);
+      --o-stroke-width: 1;
+      --o-color: currentcolor;
+    }
+    svg {
+      position: absolute;
+      inset: 0;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      pointer-events: none;
+    }
+    /* Arcs are display elements by default: they must NOT steal clicks from
+       satellites/controls nearby (a painted arc used to capture clicks even
+       at opacity 0, and pointer-events:none on the host could not pierce the
+       shadow). Interaction is opt-in via the "interactive" attribute. */
+    svg * {
+      pointer-events: none;
+    }
+    :host([interactive]) svg * {
+      pointer-events: visiblePainted;
+    }
+    /* The touch area catches the pointer even where the band is transparent. */
+    #orbitHit {
+      fill: none;
+      stroke: transparent;
+    }
+    :host([interactive]) #orbitHit {
+      pointer-events: stroke;
+    }
+    :host([interactive]) {
+      cursor: pointer;
+    }
+    #orbitShape {
+      fill: var(--o-fill);
+      stroke: var(--o-stroke);
+      stroke-width: var(--o-stroke-width);
+      transition: fill 0.25s, stroke 0.25s;
+    }
+    text {
+      fill: var(--o-color);
+    }
+    /* Guides for text: never painted and never under the pointer. */
+    #orbitPath, #measure {
+      fill: none;
+      stroke: none;
+      pointer-events: none;
+    }
+  </style>
+  <svg viewBox="0 0 100 100">
+    <path id="orbitHit" vector-effect="non-scaling-stroke"></path>
+    <path id="orbitShape" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
+    <path id="orbitPath" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
+    <text>
+      <textPath href="#orbitPath" alignment-baseline="middle"></textPath>
+    </text>
+    <text id="measure" visibility="hidden" aria-hidden="true"></text>
+  </svg>
+`;
 
-export class OrbitArc extends HTMLElement {
+export class OrbitArc extends OrbitBase {
   constructor() {
-    super()
-    this.attachShadow({ mode: 'open' })
-    this.shadowRoot.appendChild(template.content.cloneNode(true))
-  }
-  
-  connectedCallback() {
-    this.update()
-    this.observer = new MutationObserver((mutations) => {
-      this.observer.disconnect()
-      mutations.forEach((mutation) => {
-        this.update()
-      })
-      this.observer.observe(this, { attributes: true, childList: true })
-    })
-    this.observer.observe(this, { attributes: true, childList: true })
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   update() {
-    const { length, fontSize, textAnchor, fitRange} = this.getAttributes()
-    const orbitPath = this.shadowRoot.getElementById('orbitPath')
-    const orbitShape = this.shadowRoot.getElementById('orbitShape')
-    
-    const text = this.shadowRoot.querySelector('text')
-    const textPath = this.shadowRoot.querySelector('textPath')
-    
-    const { dShape } = this.calculateArcParameters()
-    const { dPath } = this.calculateTextArcParameters()
+    const attrs = this.getAttributes();
+    const { fitRange, stacked } = attrs;
+    if (stacked) {
+      // An auto arc with an explicit text-anchor is anchored at its angle:
+      // "middle" centers it there, "end" ends it there. Without one, it starts
+      // there, so consecutive auto arcs follow each other.
+      const anchor = attrs.auto && this.hasAttribute('text-anchor')
+        ? { middle: -.5, end: -1 }[attrs.textAnchor] || 0
+        : 0;
+      setLayoutProperty(this, '--o-arc-start', `${attrs.stackOffset + anchor * attrs.arcAngle}deg`);
+      setLayoutProperty(this, '--o_stack', attrs.stackOffset + attrs.arcAngle);
+    } else {
+      this.style.removeProperty('--o-arc-start');
+      this.style.removeProperty('--o_stack');
+    }
+    const orbitPath = this.shadowRoot.querySelector('#orbitPath');
+    const orbitShape = this.shadowRoot.querySelector('#orbitShape');
+    const textPath = this.shadowRoot.querySelector('textPath');
 
-    orbitShape.setAttribute('d', dShape)
-    orbitPath.setAttribute('d', dPath)
+    orbitShape.setAttribute('d', this.calculateArcParameters(attrs).dShape);
+    orbitPath.setAttribute('d', this.calculateTextArcParameters(attrs).dPath);
+    this.updateHitArea(this.shadowRoot.querySelector('#orbitHit'), attrs, 0, attrs.arcAngle);
+    const textAnchor = attrs.textAnchor;
 
     if (textAnchor === 'start') {
-      textPath.setAttribute('startOffset', '0%')
-      textPath.setAttribute('text-anchor', 'start')
+      textPath.setAttribute('startOffset', '0%');
+      textPath.setAttribute('text-anchor', 'start');
     } else if (textAnchor === 'middle') {
-      textPath.setAttribute('startOffset', '50%')
-      textPath.setAttribute('text-anchor', 'middle')
+      textPath.setAttribute('startOffset', '50%');
+      textPath.setAttribute('text-anchor', 'middle');
     } else if (textAnchor === 'end') {
-      textPath.setAttribute('startOffset', '100%')
-      textPath.setAttribute('text-anchor', 'end')
+      textPath.setAttribute('startOffset', '100%');
+      textPath.setAttribute('text-anchor', 'end');
     }
 
-    if (fitRange) textPath.parentElement.setAttribute('textLength', orbitPath.getTotalLength())
+    if (fitRange) {
+      textPath.parentElement.setAttribute('textLength', orbitPath.getTotalLength());
+    } else {
+      textPath.parentElement.removeAttribute('textLength');
+    }
 
-    text.style.fontSize = `calc(${fontSize} * (100 / (${length}) * (12 /  var(--o-orbit-number) ))`
-    textPath.textContent = this.textContent
+    textPath.parentElement.style.fontSize = attrs.svgFontSize;
+    textPath.textContent = this.textContent;
+    if (!attrs.auto) this.warnIfTextOverflows(orbitPath, textPath, fitRange);
+  }
+
+  /**
+   * Curved text has an explicit angular budget: glyphs past the end of the
+   * arc path are clipped SILENTLY by SVG. Measure and warn so nobody loses
+   * time to invisible truncation (~20 chars in 96° at default sizes).
+   * fit-range squeezes the text to the path via textLength, so it never clips.
+   */
+  warnIfTextOverflows(orbitPath, textPath, fitRange) {
+    const raw = (this.textContent || '').trim();
+    if (!raw || fitRange || !this.isConnected) return;
+    if (this._textFrame) this.ownerDocument.defaultView.cancelAnimationFrame(this._textFrame);
+    this._textFrame = this.ownerDocument.defaultView.requestAnimationFrame(() => {
+      this._textFrame = 0;
+      if (!this.isConnected) return;
+      try {
+        const pathLen = orbitPath.getTotalLength();
+        const textLen = textPath.parentElement.getComputedTextLength();
+        if (pathLen > 0 && textLen > pathLen && this._truncWarned !== raw) {
+          this._truncWarned = raw;
+          console.warn(
+            `[orbit] <o-arc> text "${raw.length > 34 ? raw.slice(0, 34) + '…' : raw}" ` +
+            `overflows its arc (${Math.round(textLen)} > ${Math.round(pathLen)} units) and will clip. ` +
+            'Shorten the text, widen --o-range, add range="auto" to fit the arc to the text, or fit-range to squeeze it.'
+          );
+        }
+      } catch (e) { /* not measurable (hidden/detached) — skip */ }
+    });
   }
 
   getAttributes() {
-    let rawAngle, arcAngle, orbitNumber, size, innerOuter
-    const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('--o-stroke-width'))
-    const orbitRadius = parseFloat(getComputedStyle(this).getPropertyValue('r') || 0)
-    const shape = this.getAttribute('shape') || 'none'
-    const flip = this.hasAttribute('flip') || this.classList.contains('flip')
-    const fitRange =
-      this.hasAttribute('fit-range') ||
-      this.classList.contains('fit-range') ||
-      false
-    const length = parseFloat(getComputedStyle(this).getPropertyValue('--o-force'))
-    const textAnchor = this.getAttribute('text-anchor') || 'middle'
-    const fontSize =
-      getComputedStyle(this).getPropertyValue('font-size') ||
-      getComputedStyle(this).getPropertyValue('--font-size')
-    const range = parseFloat(getComputedStyle(this).getPropertyValue('--o-range') || 360)
-    const value = parseFloat(this.getAttribute('value'))
-    
-    if (value) {
-      arcAngle = this.getProgressAngle(range, value)
-      const prevElement = this.previousElementSibling
-      const stackOffset = prevElement
-        ? parseFloat(getComputedStyle(prevElement).getPropertyValue('--o_stack'))
-        : 0
-      this.style.setProperty('--o_stack', stackOffset + arcAngle)
-      if (stackOffset >= 0 && flip) this.style.setProperty('--o-angle-composite',parseFloat(stackOffset ) + 'deg')
-      if (stackOffset > 0 && !flip) this.style.setProperty('--o-angle-composite', parseFloat(stackOffset) + 'deg')
-    } else {
-      rawAngle = getComputedStyle(this).getPropertyValue('--o-angle')
-      arcAngle = calcularExpresionCSS(rawAngle)
+    const common = super.getCommonAttributes(this);
+    const { style } = common;
+    const range = Math.max(0, Math.min(360, this.readAngle(style, '--o-range', 360)));
+    const flip = this.hasAttribute('flip') || this.classList.contains('flip');
+    const fitRange = this.hasAttribute('fit-range') || this.classList.contains('fit-range');
+    const length = common.orbitRadius * 24 / common.orbitNumber || 100;
+    const textAnchor = this.getAttribute('text-anchor') || 'middle';
+    const fontSize = style.fontSize || '16px';
+    const gap = Math.max(0, this.readNumber(style, '--o-gap', 1));
+    // Font size in viewBox units: the same px size on every ring.
+    const svgFontSize = `calc(${fontSize} * (100 / (${length}) * (12 / var(--o-orbit-number)))`;
+    const auto = this.getAttribute('range') === 'auto';
+    const stacked = auto || this.hasAttribute('value');
+    let arcAngle;
+    if (auto) arcAngle = this.measureTextAngle(svgFontSize, common.realRadius, gap);
+    else if (this.hasAttribute('value')) arcAngle = super.getProgressAngle(range, this.readValue(), this.readMax());
+    else arcAngle = Math.max(0, Math.min(360, this.readAngle(style, '--o-angle', 0)));
+    this._autoAngle = auto ? arcAngle : 0;
+    let stackOffset = 0;
+    if (stacked) {
+      // Ignore unrelated siblings. Recompute from data so reorders/removals and
+      // a zero first segment cannot leave stale offsets on following arcs.
+      for (let prev = this.previousElementSibling; prev; prev = prev.previousElementSibling) {
+        if (prev.localName !== 'o-arc') continue;
+        const previousStyle = this.ownerDocument.defaultView.getComputedStyle(prev);
+        if (prev.getAttribute('range') === 'auto') stackOffset += prev._autoAngle || 0;
+        else if (prev.hasAttribute('value')) {
+          const prevMax = prev.hasAttribute('max') ? Number(prev.getAttribute('max')) : 100;
+          const prevRange = cssNumber(prev, previousStyle.getPropertyValue('--o-range'), range, 'angle');
+          stackOffset += super.getProgressAngle(prevRange, Number(prev.getAttribute('value')), prevMax);
+        } else stackOffset += cssNumber(prev, previousStyle.getPropertyValue('--o-angle'), 0, 'angle');
+      }
     }
-    
-    orbitNumber = parseFloat(getComputedStyle(this).getPropertyValue('--o-orbit-number'))
-    size = parseFloat(getComputedStyle(this).getPropertyValue('--o-size-ratio'))
-   
-    const arcHeight = orbitRadius / orbitNumber * size - strokeWidth + 0.3 // 0.3 tries to fix bug when render arcs
-    const arcHeightPercentage = ((arcHeight / 2 ) * 100) / orbitRadius / 2
-    const gap =  parseFloat(getComputedStyle(this).getPropertyValue('--o-gap'))
-    
-    if (this.classList.contains('outer-orbit')) {
-      innerOuter = arcHeightPercentage
-    } else if (this.classList.contains('quarter-outer-orbit')) {
-      innerOuter = arcHeightPercentage * -0.5
-    } else if (this.classList.contains('inner-orbit')) {
-      innerOuter = arcHeightPercentage * -1
-    } else if (this.classList.contains('quarter-inner-orbit')) {
-      innerOuter = arcHeightPercentage * 0.5
-    } else {
-      innerOuter = 0
-    }
-    
-    const realRadius = 50 + innerOuter 
-
-    return {
-      orbitRadius,
-      arcHeight,
-      realRadius,
-      gap,
-      arcAngle,
-      shape,
-      length,
-      fontSize,
-      flip,
-      fitRange,
-      textAnchor,
-      arcHeightPercentage,
-      innerOuter,
-      orbitNumber,
-      size,
-      strokeWidth
-    }
+    return { ...common, gap, arcAngle, stackOffset, flip, fitRange, length, fontSize, svgFontSize, textAnchor, auto, stacked };
   }
 
-  getProgressAngle(maxAngle, value) {
-    const progress = value
-    // not now, but take value com parent o-orbit
-    const maxValue = parseFloat(this.getAttribute('max')) || 100
-    return (progress / maxValue) * maxAngle
+  /** range="auto": the angle that fits this arc's text, with half an em of room at each end. */
+  measureTextAngle(svgFontSize, radius, gap) {
+    const text = (this.textContent || '').trim();
+    if (!text || !(radius > 0)) return 0;
+    const measure = this.shadowRoot.querySelector('#measure');
+    measure.style.fontSize = svgFontSize;
+    measure.textContent = text;
+    let length = 0;
+    try {
+      length = measure.getComputedTextLength() + parseFloat(this.ownerDocument.defaultView.getComputedStyle(measure).fontSize);
+    } catch (e) { /* not measurable while hidden */ }
+    if (!(length > 0)) return 0;
+    return Math.min(360, length / radius * 180 / Math.PI + gap);
   }
 
-  calculateArcParameters() {
-    const {arcAngle, realRadius, gap, arcHeightPercentage, orbitNumber, shape, strokeWidth} = this.getAttributes()
-    const radius = realRadius
-    let startX, startY, endX, endY, largeArcFlag, startX1, startY1, endX1, endY1, dShape, pointX, pointX1, pointY, pointY1
-    let offset = Math.PI / 2
-    let stroke = strokeWidth
-    let fangle =  arcAngle * Math.PI / 180
-    let bigRadius = radius + arcHeightPercentage
-    let smallRadius = (radius - arcHeightPercentage) !== 0 ? radius - arcHeightPercentage : radius
-    let bigGap = (gap * 2 + stroke * 2) / orbitNumber / 2 / bigRadius
-    let smallGap = (gap  * 2 + stroke * 2)  / orbitNumber / 2  / smallRadius
-    let startAngle = bigGap  - offset
-    let endAngle = fangle  - bigGap - offset
-    let startAngle1 = smallGap - offset
-    let endAngle1 = fangle  - smallGap - offset
+  calculateArcParameters(attrs) {
+    const { arcAngle, realRadius, arcHeightPercentage, orbitNumber, shape, strokeWidth, arcHeight, gap } = attrs;
+    if (!(arcAngle > 0) || !(attrs.orbitRadius > 0)) return { dShape: '' };
     
-    // upper arc
-    startX = 50 + bigRadius * Math.cos(startAngle );
-    startY = 50 + bigRadius * Math.sin(startAngle );
-    endX = 50 + bigRadius * Math.cos(endAngle );
-    endY = 50 + bigRadius * Math.sin(endAngle );
-    pointX = 50 + bigRadius * Math.cos(endAngle + 3 * Math.PI / 180);
-    pointY = 50 + bigRadius  * Math.sin(endAngle + 3 * Math.PI / 180);
-    // inner arc
-    startX1 = 50 + smallRadius * Math.cos(startAngle1 );
-    startY1 = 50 + smallRadius * Math.sin(startAngle1 );
-    endX1 = 50 + smallRadius * Math.cos(endAngle1 );
-    endY1 = 50 + smallRadius * Math.sin(endAngle1 );
-    pointX1 = 50 + smallRadius * Math.cos(endAngle1 + 3 * Math.PI / 180);
-    pointY1 = 50 + smallRadius * Math.sin(endAngle1 + 3 * Math.PI / 180);
+    const params = super.calculateCommonArcParameters(
+      arcAngle, 
+      realRadius, 
+      arcHeightPercentage, 
+      orbitNumber, 
+      shape, 
+      strokeWidth, 
+      arcHeight, 
+      gap
+    );
     
-    largeArcFlag = arcAngle <= 180 ? 0 : 1;
-
-    dShape = `M ${startX},${startY} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${endX},${endY}`
-    if (shape === "arrow") dShape += `L ${(pointX + pointX1) / 2}  ${(pointY + pointY1) / 2} `
-    if (shape === "circle" || shape === 'bullet') dShape += `A ${(arcHeightPercentage)}, ${(arcHeightPercentage)} 0 0 1 ${endX1},${endY1} `
-    dShape += `L ${endX1} ${endY1}`
-    dShape += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${startX1},${startY1}`
-    if (shape === "circle") dShape += `A ${(arcHeightPercentage)}, ${(arcHeightPercentage)} 0 0 1 ${startX},${startY} `
-    if (shape === "bullet") dShape += `A ${(arcHeightPercentage)}, ${(arcHeightPercentage)} 0 0 0 ${startX},${startY} `
-    if (shape === "arrow") dShape += `L ${startX1 + 3} ${(startY + startY1) / 2}  `
-    dShape += `Z`
- 
-    return { dShape }
+    const dShape = super.generatePathData(shape, params);
+    
+    return { dShape };
   }
 
-  calculateTextArcParameters() {
-    const {arcAngle, realRadius, gap, flip} = this.getAttributes()
-    const radius = realRadius
-    let startX, startY, endX, endY, largeArcFlag, dPath, sweepFlag
-    let adjustedGap = gap * 0.5
-    sweepFlag = flip ? 0 : 1
-    largeArcFlag = arcAngle <= 180 ? 0 : 1;
-    let coordX1 = 50 + radius * Math.cos((-90 + adjustedGap) * (Math.PI / 180));
-    let coordY1 = 50 + radius * Math.sin((-90 + adjustedGap) * (Math.PI / 180));
-    let coordX2 = 50 + radius * Math.cos(((arcAngle - 90 - adjustedGap) * Math.PI) / 180);
-    let coordY2 = 50 + radius * Math.sin(((arcAngle - 90 - adjustedGap) * Math.PI) / 180);
-   
-    if (flip) {
-      startX = coordX2
-      startY = coordY2
-      endX = coordX1
-      endY = coordY1
-    }
-     else {
-      startX = coordX1
-      startY = coordY1
-      endX = coordX2
-      endY = coordY2
-    }
-    dPath = `M ${startX},${startY} A ${radius},${radius} 0 ${largeArcFlag} ${sweepFlag} ${endX},${endY}`;
-    return { dPath }
+  calculateTextArcParameters(attrs) {
+    const { arcAngle, realRadius, gap, flip } = attrs;
+    if (!(arcAngle > 0)) return { dPath: '' };
+    const adjustedGap = Math.min(gap * 0.5, arcAngle * .49);
+    const start = (adjustedGap - 90) * Math.PI / 180;
+    const end = (arcAngle - adjustedGap - 90) * Math.PI / 180;
+    // flip runs the text the other way, so it reads upright at the bottom.
+    return { dPath: flip ? this.linePath(realRadius, end, start) : this.linePath(realRadius, start, end) };
   }
-}
 
-function calcularExpresionCSS(cssExpression) {
-  const match = cssExpression.match(
-    /calc\(\s*([\d.]+)deg\s*\/\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)\s*\)/
-  )
-  if (match) {
-    const value = parseFloat(match[1])
-    const divisor = parseInt(match[2]) - parseInt(match[3])
-    if (!isNaN(value) && !isNaN(divisor) && divisor !== 0) {
-      return value / divisor
-    }
+  resolveAngle(cssExpression) {
+    return cssNumber(this, cssExpression, 0, 'angle');
+  }
+
+  /** @deprecated Use resolveAngle(). */
+  calcularExpresionCSS(cssExpression) {
+    return this.resolveAngle(cssExpression);
   }
 }

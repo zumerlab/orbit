@@ -1,8 +1,11 @@
 
 .gravity-spot {
   container-name: gravityspot;
-  /* Reset to defaults everytime gravity-spot is used */
-  --o-force: 500px;
+  /* Every system starts from these defaults.
+     --o-force is the reach of its gravity: the diameter of orbit-12. By
+     default it is the shorter side of the nearest universe (.bigbang) or
+     satellite, so a system always fits the space it lives in. */
+  --o-force: 100cqmin;
   --o-force-ratio: 1;
   --o-from: 0deg;
   --o-range: 360deg;
@@ -11,7 +14,9 @@
   --o-fit-range: 0;
   --o-direction: 1;
   --o-size-ratio: 1;
+  --o-gap: 1;
   --o-initial-orbit: 0;
+  --o-angle: 0;
   width: 0;
   aspect-ratio: 1;
   position: relative;

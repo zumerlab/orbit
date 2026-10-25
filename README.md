@@ -1,160 +1,304 @@
+# Orbit
 
-<p align="center">
-  <a href="http://zumerlab.github.io/orbit-docs">
-    <img src="https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/orbithero.gif" width="100%">
-  </a>
-</p>
-<p align="center">
-  <a href="https://zumerlab.github.io/orbit-docs" target="_blank"><b>📚 Docs</b></a> •
-  <a href="https://github.com/zumerlab/orbit/discussions" target="_blank"><b>💬 Github discussions</b></a> •
-  <a href="https://t.me/ZumlyCommunity" target="_blank"><b>🧑‍💻 Telegram group</b></a>
-</p>
-<p align="center">
-  <b>Use Orbit to create amazing radial UIs using CSS only!</b>
-</p>
+Orbit arranges HTML elements around a center. Use it to build radial menus, charts, gauges and other circular interfaces.
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@zumer/orbit"><img src="https://img.shields.io/github/package-json/v/zumerlab/orbit"></a>
-</p>
+CSS controls geometry and appearance. A small JavaScript runtime updates the layout and draws arcs when elements, styles or values change. Orbit works with plain HTML, React, Vue and Svelte.
 
-<p align="center">
-  <a href="#stay-in-orbit"><b>Get involved</b></a>, 
-place your ⭐ in Orbit! <a href="https://github.com/zumerlab/orbit/stargazers"> <img src="https://img.shields.io/github/stars/zumerlab/orbit.svg?label=%E2%98%85%20Stars&logo=-&style=social"></a>
-</p>
+[Examples and documentation](https://zumerlab.github.io/orbit-docs/) · [npm](https://www.npmjs.com/package/@zumer/orbit)
 
-## Orbit CSS overview
-
-**Orbit** is a CSS framework designed for creating radial layouts. It offers simplicity, effectiveness, ease of use, and tremendous versatility for crafting compelling designs. It offers extensive customization options and supports nesting for building intricate designs tailored to your requirements.
-
-## Why Orbit?
-
-Creating radial UIs generally involves using JavaScript or other programming languages to calculate angles, radii, distances, and more. **Orbit** saves you time and effort by enabling you to build these UIs with just CSS.
-
-## Documentation
-
-Learn all about **Orbit** in our [doc site](https://zumerlab.github.io/orbit-docs)!
-
-## What is radial UI?
-
-Radial UI refers to a design paradigm where elements are organized in a circular or radial pattern, diverging from traditional grid-based or linear layouts. This design approach is particularly effective for applications that involve:
-
-- **Circular data visualization:** progress bars, pie charts, multi-level pies, gauges, knobs  
-- **Navigation menus and controls:** radial or pie menus, circular scrolling  
-- **Dashboards:** smart-home interfaces, car dashboards, infotainment systems  
-- **Calendars:** circular layouts for scheduling and event tracking  
-- **Creative art and structures:** mandalas, sci-fi-inspired art, chemical structures  
-- **Interactive interfaces:** watch faces, dynamic controls for games or tools  
-
-**Characteristics of radial UI:**
-
-- **Circular layout:** elements are arranged in a circular or curved pattern.  
-- **Center-focused:** the center often serves as a focal point.  
-- **Symmetry:** radial UIs frequently exhibit symmetry, fostering a sense of balance.  
-- **Angular relationships:** elements are positioned at specific angles relative to one another.  
-
-**Benefits of radial UI:**
-
-- **Aesthetics:** radial designs are visually striking and engaging.  
-- **Intuitive navigation:** circular layouts simplify navigation and reduce cognitive load.  
-- **Space efficiency:** radial UIs make efficient use of available screen, ideal for both compact and expansive interfaces.  
-
-## Features
-
-With **Orbit**, you can:
-
-- Build any kind of radial UI using predefined CSS classes that do the heavy lifting.  
-- Easily compose simple or complex radial designs by combining **Orbit** elements.  
-- Use **Orbit** alongside other traditional CSS frameworks.  
-- Get started quickly with our detailed documentation, examples, and guides.  
-
-## Installation
-
-**Orbit** comes with just two files: `orbit.css` (or `orbit.min.css`) and `orbit.js` (or `orbit.min.js`).
-
-### Obtaining the Orbit files
-
-You can get **Orbit** files in three ways:  
-
-#### 1. Download the files
-
-- Download the **CSS file:** [orbit.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.css) or [orbit.min.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.css).  
-- Download the **JS file:** [orbit.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.js) or [orbit.min.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.js).  
-
-#### 2. Use a CDN
-
-- **CSS:**  
-  Uncompressed: [orbit.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.css)  
-  Minified: [orbit.min.css](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.css)  
-
-- **JS:**  
-  Uncompressed: [orbit.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.js)  
-  Minified: [orbit.min.js](https://unpkg.com/@zumer/orbit@latest/dist/orbit.min.js)  
-
-#### 3. Install via npm or yarn
+## Install
 
 ```sh
 npm install @zumer/orbit
 ```
 
-or
+Import the stylesheet and runtime in your app's client entrypoint:
 
-```sh
-yarn add @zumer/orbit
+```js
+import '@zumer/orbit/style'
+import '@zumer/orbit'
 ```
 
-### Adding Orbit to your project
+For a plain HTML page, load the files from a CDN as shown below.
 
-Include the files in your project as follows:
+## A progress ring
+
+Save this as `index.html` and open it in a browser. It draws a ring at 72% that fills its 240px box.
 
 ```html
+<!doctype html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="path/to/orbit.css">
-  <script src="path/to/orbit.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbit progress ring</title>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css">
+  <script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"></script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+    .gauge { width: 240px; }
+    .gauge o-progress { --o-fill: #3da9fc; --o-back-fill: #1d3749; --o-stroke: none; }
+  </style>
 </head>
-```
-
-Or via CDN:
-
-```html
-<head>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
-  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
-</head>
-```
-
-## 🏁 Quick start
-
-```html
-<div class="bigbang">
-  <div class="gravity-spot">
-    <div class="orbit">
-      <div class="satellite">1</div>
-      <div class="satellite">2</div>
-      <div class="satellite">3</div>
+<body>
+  <div class="gauge bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10" style="--o-size-ratio: 2">
+        <o-progress value="72" shape="rounded" role="progressbar"
+          aria-label="Upload progress" aria-valuenow="72"
+          aria-valuemin="0" aria-valuemax="100"></o-progress>
+      </div>
     </div>
   </div>
+</body>
+</html>
+```
+
+Change the `value` attribute to update the ring. Keep any labels or ARIA values you add in sync with it:
+
+```js
+const progress = document.querySelector('o-progress')
+progress.setAttribute('value', '40')
+progress.setAttribute('aria-valuenow', '40')
+```
+
+The runtime redraws the ring automatically. A value of `0` leaves only the background; `100` fills the orbit's range. Change the width of `.gauge` and the ring follows it.
+
+## The model
+
+Orbit borrows its names from a solar system. Each name says what the element does:
+
+| Element | In the metaphor | What it does |
+| --- | --- | --- |
+| `.bigbang` | The universe | Its box is the space. Square by default: it takes its parent's width, and a parent with a height caps it. |
+| `.gravity-spot` | The center of mass | Where the system starts. Its `--o-force` is the **reach** of gravity: the diameter of `orbit-12`. By default it is the shorter side of the universe. |
+| `.orbit-N` | A lane | The radius is split into 12 lanes. `orbit-N` runs N lanes from the center; `.orbit-0` is the center itself, and `orbit-13` to `orbit-24` lie past the edge. `.orbit` without a number takes the next lane in DOM order. |
+| `.satellite` | A world on its lane | Positions an item on a ring, one lane wide. It is also a universe: a `.gravity-spot` inside it reaches the satellite's edge. |
+| `.capsule` | What a world carries | Wraps the content of a satellite and keeps it upright. |
+| `.vector` | A ray | A tick or line on a ring, pointing out from the center. |
+| `.side` | A chord | A straight line between neighboring positions on a ring. |
+| `<o-arc>` | An arc of the lane | Draws a segment. Without `value`, sibling arcs split the range; with `value`, they stack in HTML order. Text inside is drawn along the arc. |
+| `<o-progress>` | A filled lane | Draws a progress value over a background track. |
+
+So the size of a layout is set in one place: the box of its `.bigbang`. Everything else is a fraction of it.
+
+- Elements on a ring are **one lane thick**: a twelfth of the radius. Set `--o-size-ratio` on the ring (or the whole `.gravity-spot`) to make them thicker or thinner; satellites, ticks and arcs all follow.
+- The edge of an element on `orbit-N` sits half its thickness past lane N. To keep a ring of thickness 2 inside the universe, put it on `orbit-11`.
+- To use a fixed size instead, set a length: `.gravity-spot { --o-force: 400px }`. To make the reach the width of a wide universe, use `--o-force: 100cqw`.
+
+The [universe demo](demos/00-universe.html) shows the lanes and lets you resize the space.
+
+### Rules of the structure
+
+```
+.bigbang
+└── .gravity-spot
+    ├── .orbit-N
+    │   ├── .satellite > .capsule   ← your content
+    │   ├── .vector · .side
+    │   └── <o-arc> · <o-progress>
+    └── .orbit-M …
+```
+
+- Rings are direct children of `.gravity-spot`, never of another ring.
+- A ring holds only `.satellite`, `.vector`, `.side`, `<o-arc>` and `<o-progress>`.
+- Content goes in a `.capsule` inside a `.satellite`. Centered content goes in `.orbit-0 > .satellite.at-center > .capsule`.
+- To nest a system, put a `.gravity-spot` (or a `.bigbang > .gravity-spot`) inside a satellite. It fills that satellite.
+
+Add `dev-orbit` to a `.bigbang` while you build. Broken structure is outlined on the page and explained in the console.
+
+### Angles and spacing
+
+Set `--o-range` to control the angular span and `--o-from` to rotate it; `0deg` is the top and angles grow clockwise. Classes such as `range-270`, `from-225`, `ccw` and `fit-range` set common values. `fit-range` puts the first and last satellites or ticks on the two ends of the range; arcs always fill it.
+
+| Property | Default | Set it on | Purpose |
+| --- | --- | --- | --- |
+| `--o-force` | `100cqmin` | `.gravity-spot` | Reach: diameter of `orbit-12`. |
+| `--o-size-ratio` | `1` | system, ring or element | Thickness, in lanes. |
+| `--o-range` | `360deg` | system or ring | Angular span. |
+| `--o-from` | `0deg` | system or ring | Start angle. |
+| `--o-gap` | `1` | system, ring or arc | Space between sibling arcs. |
+| `--o-alignment` | `0px` | element | Move an element in (positive) or out (negative) from its lane. Also set by `.inner-orbit` and `.outer-orbit`. |
+
+Values cascade: set one on the `.gravity-spot` for the whole system, on a ring for its elements, or on a single element. Every `.gravity-spot` starts from the defaults, so nested systems do not inherit their parent's values.
+
+### Arcs and progress
+
+Arcs and progress elements use `value` relative to `max`, which defaults to `100`. Endings (`shape="rounded"`, `arrow`, `circle`, `slash`, `zigzag`…) are sized from the band, so they look the same on every ring.
+
+Progress rings draw filled bands by default. For a stroked line, use `variant="stroke"` and set `--o-stroke` and `--o-back-stroke` instead of the fill colors.
+
+Both are decorative by default: they do not take the pointer. Add `interactive` to make the band clickable, even where it is transparent; on `<o-progress>` the whole track is clickable. `hit-width="12"` adds 12px of touch area on each side. A touchable full ring is a single arc on its own ring:
+
+```html
+<div class="orbit-10" style="--o-size-ratio: 2">
+  <o-arc interactive hit-width="8" style="--o-fill: transparent" aria-label="Volume"></o-arc>
 </div>
 ```
 
-## Examples
+Supply the keyboard behavior and accessible labels for any controls you build. Arcs are placed with the `rotate` property, so your own `transform` or `scale` (for example on hover) adds to it instead of replacing it.
 
-- **A dashboard**  
-  ![demo1](https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/demo1.png)  
+Text inside an `<o-arc>` is drawn along it. With `range="auto"` the arc takes the length of its text, and consecutive `range="auto"` arcs follow each other, which makes curved labels easy:
 
-- **A watch**  
-  ![demo3](https://raw.githubusercontent.com/zumerlab/orbit-docs/main/public/images/demo3.png)  
+```html
+<div class="orbit-11 from-300">
+  <o-arc range="auto">Home</o-arc><o-arc range="auto">Projects</o-arc><o-arc range="auto">About</o-arc>
+</div>
+```
 
-Explore more examples in our [doc site](https://zumerlab.github.io/orbit-docs/examples/progress).
+An auto arc starts at its angle. Give it `text-anchor="middle"` to center it there instead, or `"end"` to end it there. A label centered at −30°:
 
-## Stay in Orbit
+```html
+<div class="orbit-11" style="--o-from: -30deg">
+  <o-arc range="auto" text-anchor="middle">Label</o-arc>
+</div>
+```
 
-There are many ways to **contribute** to **Orbit** development:
+### Depth layers
 
-- [**Contribution guidelines**](https://github.com/zumerlab/orbit/blob/main/CONTRIBUTING.md): This guide outlines how you can contribute to Orbit, help us test and improve it, and share your experiences with the community.
-- [**GitHub discussions**](https://github.com/zumerlab/orbit/discussions): Engage with other contributors, ask questions, and share your experiences.
-- [**Telegram group**](https://t.me/ZumlyCommunity): Join our Telegram group for real-time discussions and updates.
+Add `depth` to a `.gravity-spot` to stack its rings in 3D. Each direct child ring (or a nested `.bigbang`) is a layer: `data-depth="1"` moves it one step back, and `.layer-front` marks the active layer at depth 0. Layers keep their apparent size, because the scale compensates for the perspective, and they animate when their depth changes.
 
+```html
+<div class="gravity-spot depth" style="--o-depth-grow: .42">
+  <div class="orbit-4 layer-front"><o-progress value="82"></o-progress></div>
+  <div class="orbit-4" data-depth="1"><o-progress value="40"></o-progress></div>
+  <div class="orbit-4" data-depth="2"><o-progress value="65"></o-progress></div>
+</div>
+```
 
-## License 
+| Property | Default | Purpose |
+| --- | --- | --- |
+| `--o-z` | `depth × step` | Position on the z axis in unitless pixels; negative values are farther away. Set it on a ring to override `data-depth`. |
+| `--o-depth-step` | `-110` | Distance between depth steps. |
+| `--o-perspective` | `900` | Perspective in unitless pixels. |
+| `--o-depth-grow` | `0` | Extra size per step back; `.42` gives 1×, 1.42×, 1.84×. |
+| `--o-depth-compensate` | `1` | Set to `0` to let farther layers look smaller. |
+| `--o-back-opacity` | `1` | Opacity of layers behind the front one. |
+| `--o-depth-duration` / `--o-depth-easing` | `.8s` / `cubic-bezier(.2,.8,.2,1)` | Depth transition. Disabled with `prefers-reduced-motion`. |
 
-[MIT](https://github.com/zumerlab/orbit/blob/main/LICENSE)
+`data-depth` accepts 0 to 8. Rings outside `.depth` are not transformed.
+
+A layer can be a whole system: a ring, a label and a face together. Make it a nested `.gravity-spot` with `data-depth`. It has the same reach as its parent, so it needs no `--o-force`, and it does not block the pointer outside its satellites.
+
+```html
+<div class="gravity-spot depth">
+  <div class="gravity-spot layer-front" data-depth="0">
+    <div class="orbit-10"><o-progress value="72"></o-progress></div>
+    <div class="orbit-0" style="--o-size-ratio: 12"><div class="satellite at-center"><div class="capsule">CPU</div></div></div>
+  </div>
+  <div class="gravity-spot" data-depth="1">…</div>
+</div>
+```
+
+To let an ancestor own the perspective, for example to tilt the whole object with the pointer, add `outer-perspective` next to `depth` and set `--o-perspective` to the ancestor's value, so layers still keep their size. See the [depth demo](demos/11-depth-layers.html).
+
+## In an app
+
+Orbit observes added, removed and reordered elements, style and attribute changes, and container resizes. Updates are grouped into the next animation frame.
+
+Importing the package during server rendering is safe. Include it in the browser entrypoint too, so it can register the custom elements and observe the rendered layout. The module exports `Orbit`, `OrbitArc`, `OrbitProgress` and `registerOrbit`; registration happens on import, and repeated calls to `registerOrbit()` are safe.
+
+Arcs are drawn on the next animation frame, or right away in a hidden tab. To wait for them, for example in tests or before measuring, await `Orbit.ready()`; it resolves when pending layouts of the document (or of the element or shadow root you pass) are drawn. Each `<o-arc>` and `<o-progress>` also fires a bubbling `o-rendered` event after it redraws:
+
+```js
+await Orbit.ready()
+gauge.addEventListener('o-rendered', () => measure(gauge))
+```
+
+Use `Orbit.refresh()` when you need an immediate update, or after changes Orbit cannot observe, such as editing stylesheet rules through CSSOM or changing an external control used by a CSS selector:
+
+```js
+import { Orbit } from '@zumer/orbit'
+
+const panel = document.querySelector('#instrument-panel')
+Orbit.refresh(panel)
+```
+
+`refresh()` accepts an element, document or shadow root. With no argument, it refreshes the document. The CDN script exposes the same API as `window.Orbit`.
+
+Layouts scale with their `.bigbang` without any code. `Orbit.resize(target)` is only for systems that set a fixed px `--o-force`: it scales them with the target's width, taking 500px as 1×, and returns a function that stops observing.
+
+For shadow DOM, include the stylesheet inside each shadow root. An `<o-arc>` or `<o-progress>` registers its layout there automatically. If the shadow tree contains only CSS elements, register it with `Orbit.refresh(shadowRoot)`. Open and closed roots are supported.
+
+Use the documented CSS properties for overrides. The runtime manages `data-orbit-ring`, `--o-layout-*` and `--o-arc-start` internally.
+
+### TypeScript and editors
+
+The package ships types for the API and for `document.querySelector('o-progress')`. For JSX, load the element types once, for example in a `.d.ts` file of your app:
+
+```ts
+import type {} from '@zumer/orbit/react'
+```
+
+Then `<o-progress value={72} shape="rounded" />` and `<o-arc>` are checked like other elements.
+
+`@zumer/orbit/custom-elements.json` is a [Custom Elements Manifest](https://custom-elements-manifest.open-wc.org/) for tools that read it. For attribute completion in VS Code, add the HTML data file to your settings:
+
+```json
+{ "html.customData": ["./node_modules/@zumer/orbit/dist/vscode.html-custom-data.json"] }
+```
+
+## When something looks wrong
+
+Orbit explains the common problems in the browser console, prefixed with `[orbit]`:
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| Nothing shows up, console says *has no size* | The `.bigbang` is 0px wide or tall, usually inside a parent that shrinks to fit. | Give the `.bigbang` (or its parent) a width. |
+| The layout is as big as the window | The `.gravity-spot` is not inside a `.bigbang`, so it measures the viewport. | Wrap it in a `.bigbang`. |
+| An arc or ring is empty | `value` is not a number, or `max` is not positive. | Fix the attribute; the console names it. |
+| Content overlaps or sits off the ring | It is a direct child of a ring instead of a `.satellite`. | Add `dev-orbit` to see where, then wrap it. |
+| Curved text is cut off | The text is longer than its arc. | Shorten it, widen `--o-range`, or add `fit-range`. |
+| Everything looks too thin | Elements are one lane thick. | Raise `--o-size-ratio` on the ring or system. |
+| An arc's fill is barely visible | A wide `--o-stroke-width` covers the band. | Use a thin stroke, or `--o-stroke: none`. |
+| An arc never takes clicks | Arcs are decorative by default. | Add `interactive`, and `hit-width` for a bigger target. |
+
+Orbit needs CSS trigonometric functions (`sin` and `cos`) and container query units. Without JavaScript, a CSS fallback can position simple elements on up to 24 ring levels, with up to 60 children per type; it also requires `:has()` and `:nth-child(... of ...)`. The JavaScript runtime supports larger layouts. `<o-arc>` and `<o-progress>` always need JavaScript.
+
+Add `theme-cyan` for the built-in cyan colors; it combines with `dev-orbit`:
+
+```html
+<div class="bigbang theme-cyan dev-orbit">...</div>
+```
+
+## Migrating from 1.x
+
+Version 2 changes how a layout is sized. In 1.x every system was 500px across (`--o-force: 500px`) whatever the size of its `.bigbang`, and `Orbit.resize()` was needed to make it responsive. Now `orbit-12` reaches the edge of the `.bigbang`.
+
+- **Keep the 1.x size:** set `.gravity-spot { --o-force: 500px }`. `Orbit.resize()` still scales such systems.
+- **Or adopt the new model:** remove `--o-force` and `Orbit.resize()`, then choose rings by their share of the space. A 1.x ring `orbit-N` in a box `W` px wide lands near `orbit-(N × 500 / W)`, and its thickness near `--o-size-ratio: 500 / W`.
+- A `.bigbang` is a size container, so it is the containing block of `position: fixed` descendants.
+- A `.bigbang` directly in `<body>` is capped at the viewport height instead of forced to it, so a `width` and `aspect-ratio` of yours apply as written.
+- `.satellite` no longer resets `--o-size-ratio`, so a value set on its ring reaches it. `shrink-N` on a ring now changes only ring spacing.
+- `--o-gap` cascades from the ring and system. `--o-aligment` still works; prefer `--o-alignment`.
+- `fit-range` on a ring of arcs no longer makes the arcs overflow the range.
+- Satellites have no border by default, and the default theme has zero specificity and no hover colors, so your styles always apply.
+- `<o-arc>` and `<o-progress>` are placed with `rotate` instead of `transform`. Shape endings scale with the band instead of being fixed in degrees.
+- `interactive` now makes the whole band clickable, transparent or not.
+
+## Demos
+
+From a local checkout:
+
+```sh
+npm ci
+npm run demo
+```
+
+Open <http://127.0.0.1:5174>. The demo command compiles the source and serves [`demos/`](demos/) with that local build. Start with [The universe model](demos/00-universe.html), then the patterns: progress ring, donut, radial menu, gauges, knob, nested systems, compass, radar and depth layers. Use `PORT=5175 npm run demo` to choose another port.
+
+The [documentation site](https://zumerlab.github.io/orbit-docs/) has more [gauges](https://zumerlab.github.io/orbit-docs/examples/gauges/), [charts](https://zumerlab.github.io/orbit-docs/examples/charts/), [radial menus](https://zumerlab.github.io/orbit-docs/examples/piemenu/), [knobs](https://zumerlab.github.io/orbit-docs/examples/knobs/) and [watch faces](https://zumerlab.github.io/orbit-docs/examples/watches/). [Orbit Kit](https://zumerlab.com/orbit-kit) provides ready-made components built on Orbit.
+
+## Work on Orbit
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the source layout, tests and release steps.
+
+## Contributing and reference
+
+Report bugs in [Issues](https://github.com/zumerlab/orbit/issues), or share examples and ask questions in [Discussions](https://github.com/zumerlab/orbit/discussions). There is also a [Telegram group](https://t.me/ZumlyCommunity).
+
+For coding assistants, [llms.txt](https://zumerlab.github.io/orbit-docs/llms.txt) has a short reference and [llms-full.txt](https://zumerlab.github.io/orbit-docs/llms-full.txt) has the full class and property reference. Include the relevant sections when asking an assistant to generate Orbit markup.
+
+## License
+
+[MIT](LICENSE)

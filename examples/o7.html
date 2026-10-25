@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Orbit — Declarative Radial UI (CSS + Web Components)</title>
+
+<!-- Use local bundles -->
+<link rel="stylesheet" href="../dist/orbit.css" />
+<script defer src="../dist/orbit.js"></script>
+
+<!-- Or use CDN (uncomment and adjust to your dist path/version) -->
+<!--
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/orbit/dist/orbit.css" />
+<script defer src="https://cdn.jsdelivr.net/npm/orbit/dist/orbit.js"></script>
+-->
+
+<style>
+  :root{
+    --bg:#07090f; --panel:#0c111a; --ink:#e9eef7; --muted:#9aa7ba;
+    --brand:#7bd8ff; --accent:#c999ff; --ok:#39ef7d; --warn:#ffd166; --bad:#ff5c7a;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:
+    radial-gradient(1200px 700px at 70% -10%, #0d1524 0%, #07090f 55%, #05070b 100%);
+    color:var(--ink); font:14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  a{color:var(--brand); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1160px; margin:0 auto; padding:28px 16px 80px; display:grid; gap:26px}
+  header{
+    display:grid; gap:16px; grid-template-columns:1.2fr .8fr; align-items:center;
+  }
+  @media (max-width:980px){ header{ grid-template-columns:1fr; } }
+  .hero h1{margin:0; font-size:42px; line-height:1.06}
+  .hero p{margin:8px 0 0; color:var(--muted)}
+  .cta{display:flex; gap:10px; margin-top:14px}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:linear-gradient(180deg,#101a2b,#0a1422);
+    border:1px solid #18345a; color:#dff2ff; font-weight:750;
+    padding:10px 14px; border-radius:12px; cursor:pointer;
+    transition:transform .08s ease, box-shadow .2s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); box-shadow:0 8px 26px -12px rgba(123,216,255,.55) }
+  .btn.secondary{ background:#121824; border-color:#26324a; color:#cfe0ff }
+
+  .hero-demo{
+    background:linear-gradient(180deg, rgba(12,17,26,.9), rgba(6,9,14,.8));
+    border:1px solid #172235; border-radius:20px; padding:16px;
+  }
+  .row{display:grid; gap:12px; grid-template-columns:repeat(3, minmax(0,1fr))}
+  @media (max-width:720px){ .row{ grid-template-columns:1fr; } }
+  .card{
+    background:#0b1019; border:1px solid #162337; border-radius:16px; padding:12px;
+  }
+  .card h3{margin:0 0 6px 0; font-size:14px; color:#cfe3ff; letter-spacing:.2px}
+  .note{color:var(--muted); font-size:12px}
+
+  /* Orbit demo blocks */
+  .demo{display:grid; place-items:center; aspect-ratio:1/1; overflow:hidden}
+  .demo .satellite{border:none !important}
+
+  /* Code block */
+  pre{margin:0; overflow:auto}
+  .code{
+    background:#0a0f18; border:1px solid #15233a; border-radius:14px; padding:12px;
+    font:12px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:#dbe8ff;
+  }
+  .copyline{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px}
+  .pill{padding:6px 10px; border-radius:999px; border:1px solid #1b2a45; background:#0d1627; color:#d6eaff; font-weight:700}
+  .flex{display:flex; gap:10px; align-items:center}
+  .grid-2{display:grid; gap:16px; grid-template-columns:1fr 1fr}
+  @media (max-width:900px){ .grid-2{ grid-template-columns:1fr } }
+
+  section > h2{margin:0 0 6px 0; font-size:18px; letter-spacing:.2px}
+  section > p{margin:0 0 10px 0; color:var(--muted)}
+
+  .footer{
+    margin-top:10px; padding-top:20px; display:flex; flex-wrap:wrap;
+    gap:10px; align-items:center; justify-content:space-between; color:var(--muted);
+    border-top:1px solid #182234;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header>
+    <div class="hero">
+      <h1>Orbit — Declarative Radial UI<br/>(no JS layout)</h1>
+      <p>Construí <strong>gauges, donuts, knobs y menús radiales</strong> con <strong>CSS + Web Components</strong>.
+        Sin librerías pesadas, sin geometría en JS. Ideal para dashboards, HUDs automotrices, IoT y status boards.</p>
+      <div class="cta">
+        <a class="btn" href="#quickstart">🚀 Quickstart</a>
+        <a class="btn secondary" href="https://zumerlab.github.io/orbit-docs/introduction/" target="_blank" rel="noopener noreferrer">📚 Docs completas</a>
+        <a class="btn secondary" href="https://github.com/zumerlab/orbit" target="_blank" rel="noopener noreferrer">★ GitHub</a>
+      </div>
+    </div>
+
+    <!-- MINI DEMOS EN VIVO -->
+    <div class="hero-demo">
+      <div class="row">
+        <!-- Gauge 270° -->
+        <div class="card">
+          <h3>Gauge 270°</h3>
+          <div class="demo">
+            <div class="bigbang">
+              <div class="gravity-spot" style="--o-force: 420px;">
+                <div class="orbit-7 range-270 from-225 fit-range">
+                  <!-- ticks -->
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                  <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+                </div>
+                <div class="orbit-5 range-270 from-225">
+                  <o-arc class="gap-4" style="--o-fill:var(--ok)"></o-arc>
+                  <o-arc class="gap-4" style="--o-fill:var(--warn)"></o-arc>
+                  <o-arc class="gap-4" style="--o-fill:var(--bad)"></o-arc>
+                </div>
+                <div class="orbit-4 range-270 from-225">
+                  <o-arc id="needle-hero" value="62" shape="arrow" style="--o-fill:#eaf3ff"></o-arc>
+                </div>
+                <div class="orbit-0">
+                  <div class="satellite at-center">
+                    <div class="capsule" style="flex-direction:column;gap:4px">
+                      <div style="font-size:22px;font-weight:800;letter-spacing:.3px"><span id="val-hero">62</span>%</div>
+                      <div class="note">Performance</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="note">Ajustá el valor con el slider: <input id="rng-hero" type="range" min="0" max="100" value="62" style="vertical-align:middle;width:55%"/></p>
+        </div>
+
+        <!-- Donut multilayer -->
+        <div class="card">
+          <h3>Donut Gauge</h3>
+          <div class="demo">
+            <div class="bigbang"><div class="gravity-spot" style="--o-force: 380px">
+              <div class="orbit-3">
+                <o-arc value="55" style="--o-fill:var(--brand);--o-stroke:#152840;--o-stroke-width:8"></o-arc>
+                <o-arc value="25" style="--o-fill:#8ad8ff"></o-arc>
+                <o-arc value="20" style="--o-fill:var(--accent)"></o-arc>
+              </div>
+              <div class="orbit-0">
+                <div class="satellite at-center"><div class="capsule" style="font-weight:800">Q3</div></div>
+              </div>
+            </div></div>
+          </div>
+          <p class="note">Segmentos apilados con <code>&lt;o-arc&gt;</code>.</p>
+        </div>
+
+        <!-- Radial Menu -->
+        <div class="card">
+          <h3>Radial Menu</h3>
+          <div class="demo">
+            <div class="bigbang"><div class="gravity-spot" style="--o-force: 420px">
+              <div class="orbit-5 fit-range range-240 from-240">
+                <o-arc class="gap-6" style="--o-fill:var(--brand)"></o-arc>
+                <o-arc class="gap-6" style="--o-fill:#9be58c"></o-arc>
+                <o-arc class="gap-6" style="--o-fill:#ffd166"></o-arc>
+                <o-arc class="gap-6" style="--o-fill:#ff8ab8"></o-arc>
+              </div>
+              <div class="orbit-0">
+                <div class="satellite at-center">
+                  <div class="capsule" id="menu-label" style="font-weight:800;letter-spacing:.3px">ECO</div>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <p class="note">Click en sectores para elegir modo.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- QUICKSTART -->
+  <section id="quickstart">
+    <h2>Quickstart (60s)</h2>
+    <p>Incluir los bundles e insertar un donut de progreso.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>CDN / Bundles</h3>
+        <div class="code"><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/orbit/dist/orbit.css&quot;&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/orbit/dist/orbit.js&quot;&gt;&lt;/script&gt;
+</code></pre></div>
+        <div class="copyline">
+          <span class="pill">No setup · Works in plain HTML</span>
+          <button class="btn" data-copy="cdn" type="button">Copy</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>HTML mínimo</h3>
+        <div class="code"><pre><code>&lt;div class=&quot;bigbang&quot;&gt;
+  &lt;div class=&quot;gravity-spot&quot;&gt;
+    &lt;div class=&quot;orbit-4&quot;&gt;
+      &lt;o-progress value=&quot;72&quot;&gt;&lt;/o-progress&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+        <div class="copyline">
+          <span class="pill">Gauge listo en 10 líneas</span>
+          <button class="btn" data-copy="html" type="button">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTES PREARMADOS -->
+  <section>
+    <h2>Ready-made Components</h2>
+    <p>Usá estas piezas sin aprender toda la gramática. Después podés profundizar en la docu.</p>
+    <div class="row">
+      <div class="card">
+        <h3>Gauge 180°</h3>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-4 range-180 from-180"><o-arc value="48" shape="arrow" style="--o-fill:#fff"></o-arc></div>
+          </div></div>
+        </div>
+        <p class="note">Semicírculo con <code>range-180 from-180</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Knob</h3>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-4"><o-arc value="64" shape="circle-a" style="--o-stroke:#1e2636;--o-stroke-width:10;--o-fill:var(--brand)"></o-arc></div>
+            <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="font-weight:800">64%</div></div></div>
+          </div></div>
+        </div>
+        <p class="note">Perilla simple con etiqueta centrada.</p>
+      </div>
+      <div class="card">
+        <h3>Status Ring</h3>
+        <div class="demo">
+          <div class="bigbang"><div class="gravity-spot" style="--o-force: 360px">
+            <div class="orbit-3">
+              <o-arc value="70" style="--o-fill:var(--ok)"></o-arc>
+              <o-arc value="20" style="--o-fill:var(--warn)"></o-arc>
+              <o-arc value="10" style="--o-fill:var(--bad)"></o-arc>
+            </div>
+          </div></div>
+        </div>
+        <p class="note">Distribución por porcentaje.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASOS DE USO -->
+  <section>
+    <h2>Use cases</h2>
+    <p>Automotive HUD, IoT dashboards, Ops status, Fitness/Health rings…</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Automotive HUD</h3>
+        <p class="note">Velocímetro 270°, tacómetro, batería, temperatura, luces — 100% CSS + WC.</p>
+      </div>
+      <div class="card">
+        <h3>IoT / Smart-Home</h3>
+        <p class="note">Termostato radial, consumo eléctrico, humedad/CO₂, escenas con Radial Menu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEGRACIONES -->
+  <section>
+    <h2>Integrations</h2>
+    <p class="flex">
+      <span class="pill">React / Vue / Svelte</span>
+      <span class="pill">Export to Image with SnapDOM</span>
+    </p>
+    <p class="note">Ver ejemplos e integraciones en la <a href="https://zumerlab.github.io/orbit-docs/introduction/" target="_blank" rel="noopener noreferrer">documentación completa</a>.</p>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section>
+    <div class="card">
+      <div class="flex" style="justify-content:space-between; flex-wrap:wrap">
+        <div>
+          <h3 style="margin:0 0 6px 0">Listo para despegar 🚀</h3>
+          <div class="note">Orbit: componentes radiales declarativos sin JS de layout.</div>
+        </div>
+        <div class="flex">
+          <a class="btn" href="https://zumerlab.github.io/orbit-docs/introduction/" target="_blank" rel="noopener noreferrer">Leer Docs</a>
+          <a class="btn secondary" href="https://github.com/zumerlab/orbit" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div>© ZumerLab — Orbit</div>
+    <div class="note">Made with CSS custom properties + Web Components</div>
+  </div>
+</div>
+
+<script>
+  // live gauge slider (hero)
+  const rng = document.getElementById('rng-hero');
+  const needle = document.getElementById('needle-hero');
+  const val = document.getElementById('val-hero');
+  if (rng && needle && val) {
+    rng.addEventListener('input', (e) => {
+      const v = +e.target.value || 0;
+      needle.setAttribute('value', v);
+      val.textContent = v;
+    });
+  }
+
+  // radial menu demo: click on o-arc updates label (delegation) — robusto
+  const menuLabel = document.getElementById('menu-label');
+  document.addEventListener('click', (e) => {
+    const el = e.target instanceof Element ? e.target : null;
+    const arc = el ? el.closest('o-arc') : null;
+    if (!arc) return;
+    const options = ['ECO','COMF','SPORT','TRACK'];
+    const idx = Math.floor(Math.random() * options.length);
+    if (menuLabel) menuLabel.textContent = options[idx];
+  });
+
+  // copy buttons
+  const CDN_SNIPPET = `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/zumer/dist/orbit.css">
+<script src="https://cdn.jsdelivr.net/npm/zumer/dist/orbit.js"><\/script>`;
+  const HTML_SNIPPET = `<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-4">
+      <o-progress value="72"></o-progress>
+    </div>
+  </div>
+</div>`;
+
+  document.querySelectorAll('button[data-copy]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const t = btn.getAttribute('data-copy');
+      const text = t==='cdn' ? CDN_SNIPPET : HTML_SNIPPET;
+      navigator.clipboard.writeText(text).then(()=>{
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(()=> btn.textContent = orig, 900);
+      });
+    });
+  });
+</script>
+</body>
+</html>

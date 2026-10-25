@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>04 — Speedometer | Orbit</title>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
+  <script src="../dist/orbit.js"></script>
+  <style>
+    .speedo { --face: #10151b; }
+    .speedo .face { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 40%, #18202a, var(--face) 70%); box-shadow: inset 0 0 0 1px #233040, 0 30px 80px -30px #000; }
+    .speedo .minor .vector { background: #3a4757; }
+    .speedo .major .vector { background: #c3ccd6; height: 3px; }
+    .speedo .number { font: 600 13px/1 var(--mono); color: #c3ccd6; }
+    .speedo .zones o-arc { --o-stroke: none; }
+    .speedo .needle-ring { rotate: var(--needle, -135deg); transition: rotate .6s cubic-bezier(.3, 1.4, .5, 1); }
+    .speedo .needle { height: 4px; border-radius: 2px; background: linear-gradient(90deg, transparent 0 18%, var(--coral) 18%); box-shadow: 0 0 12px color-mix(in srgb, var(--coral) 60%, transparent); }
+    .speedo .hub { width: 100%; aspect-ratio: 1; border-radius: 50%; background: #1b232d; border: 2px solid var(--coral); }
+    .speedo .readout strong { font-size: 34px; }
+  </style>
+</head>
+<body>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="./">← All demos</a><span class="num">04 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang speedo" role="meter" aria-label="Speed" aria-valuemin="0" aria-valuemax="220" aria-valuenow="0">
+      <div class="gravity-spot">
+        <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center"><div class="capsule face"></div></div></div>
+        <!-- One 270° dial: zones, ticks and numbers share range and start. -->
+        <div class="orbit-11 range-270 from-225 zones" style="--o-size-ratio: .4; --o-gap: 0">
+          <o-arc value="64" style="--o-fill: #2b6f69"></o-arc>
+          <o-arc value="18" style="--o-fill: var(--amber)"></o-arc>
+          <o-arc value="18" style="--o-fill: var(--coral)"></o-arc>
+        </div>
+        <div class="orbit-10 range-270 from-225 fit-range minor" id="minor" style="--o-size-ratio: .5"></div>
+        <div class="orbit-10 range-270 from-225 fit-range major" id="major" style="--o-size-ratio: 1"></div>
+        <div class="orbit-8 range-270 from-225 fit-range" id="numbers"></div>
+        <!-- The needle: a vector 9 lanes long, turned with rotate. -->
+        <div class="orbit-5 needle-ring" style="--o-size-ratio: 9"><div class="vector needle"></div></div>
+        <div class="orbit-0" style="--o-size-ratio: 1.6"><div class="satellite at-center"><div class="capsule hub"></div></div></div>
+        <div class="orbit-6"><div class="satellite angle-180"><div class="capsule readout"><strong id="speed">0</strong><span>km/h</span></div></div></div>
+      </div>
+    </div>
+  </section>
+  <aside class="notes">
+    <h1>Speedometer</h1>
+    <p>A 270° dial. Ticks, numbers and colored zones live on separate rings that share <code>range-270 from-225</code>, so they always line up.</p>
+    <div class="controls">
+      <label for="value">Speed <output id="value-out">0 km/h</output></label><input id="value" type="range" min="0" max="220" value="96">
+      <div class="row"><button id="floor">Floor it</button><button id="brake">Brake</button></div>
+    </div>
+    <h2>How it's built</h2>
+    <ul>
+      <li><code>fit-range</code> puts the first and last tick on the ends of the range: 45 minor and 12 major <code>.vector</code>s.</li>
+      <li>Numbers are satellites on lane 8; zones are three stacked <code>&lt;o-arc value&gt;</code> on lane 11.</li>
+      <li>The needle is one <code>.vector</code> nine lanes long. Its ring turns with <code>rotate</code>, which transitions smoothly.</li>
+      <li>The readout is a satellite placed at the bottom with <code>.angle-180</code>.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  const add = (id, count, html) => document.getElementById(id).insertAdjacentHTML('beforeend', Array.from({ length: count }, (_, i) => html(i)).join(''));
+  add('minor', 45, () => '<div class="vector"></div>');
+  add('major', 12, () => '<div class="vector"></div>');
+  add('numbers', 12, i => `<div class="satellite"><div class="capsule number">${i * 20}</div></div>`);
+
+  const dial = document.querySelector('.speedo'), input = document.getElementById('value');
+  const set = speed => {
+    speed = Math.max(0, Math.min(220, Math.round(speed)));
+    input.value = speed;
+    dial.style.setProperty('--needle', `${-135 + speed / 220 * 270}deg`);
+    dial.setAttribute('aria-valuenow', speed);
+    document.getElementById('speed').textContent = speed;
+    document.getElementById('value-out').value = speed + ' km/h';
+  };
+  input.addEventListener('input', () => set(input.value));
+  let timer;
+  const drive = (to, step) => { clearInterval(timer); timer = setInterval(() => { const next = Number(input.value) + step; set(next); if ((step > 0 && next >= to) || (step < 0 && next <= to)) clearInterval(timer); }, 40); };
+  document.getElementById('floor').onclick = () => drive(212, 6);
+  document.getElementById('brake').onclick = () => drive(0, -9);
+  set(input.value);
+</script>
+</body>
+</html>

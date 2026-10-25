@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>08 — Nested systems | Orbit</title>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
+  <script src="../dist/orbit.js"></script>
+  <style>
+    .sky .path { border: 1px solid #1f2731; }
+    .sky .moon-path { border: 1px dashed #33404e; }
+    .sky .body { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 40%, white), var(--c) 55%, color-mix(in srgb, var(--c) 50%, black)); }
+    .sky .sun { --c: #ffb547; box-shadow: 0 0 60px #ffb54788, 0 0 140px #ffb54744; }
+    .sky .spin { animation: spin calc(var(--period) / var(--speed, 1)) linear infinite; }
+    @keyframes spin { to { rotate: 360deg; } }
+  </style>
+</head>
+<body>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="./">← All demos</a><span class="num">08 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang sky">
+      <div class="gravity-spot">
+        <div class="orbit-3 path"></div><div class="orbit-5 path"></div><div class="orbit-8 path"></div><div class="orbit-11 path"></div>
+        <div class="orbit-0" style="--o-size-ratio: 3.4"><div class="satellite at-center"><div class="capsule body sun"></div></div></div>
+        <div class="orbit-3 spin" style="--period: 6s; --o-size-ratio: .6"><div class="satellite"><div class="capsule body" style="--c: #a8a29e"></div></div></div>
+        <div class="orbit-5 spin" style="--period: 11s; --o-size-ratio: .9"><div class="satellite"><div class="capsule body" style="--c: #fbbf24"></div></div></div>
+        <!-- The Earth's satellite is 4 lanes wide and holds a system of its own. -->
+        <div class="orbit-8 spin" style="--period: 18s">
+          <div class="satellite" style="--o-size-ratio: 4">
+            <div class="gravity-spot">
+              <div class="orbit-10 moon-path"></div>
+              <div class="orbit-0" style="--o-size-ratio: 7"><div class="satellite at-center"><div class="capsule body" style="--c: #60a5fa"></div></div></div>
+              <div class="orbit-10 spin" style="--period: 2.5s; --o-size-ratio: 2.5"><div class="satellite"><div class="capsule body" style="--c: #d6dde5"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="orbit-11 spin" style="--period: 30s; --o-size-ratio: 1.1"><div class="satellite"><div class="capsule body" style="--c: #ff7a6b"></div></div></div>
+      </div>
+    </div>
+  </section>
+  <aside class="notes">
+    <h1>Nested systems</h1>
+    <p>The Moon orbits the Earth while the Earth orbits the Sun. The Moon's orbit is defined inside the Earth's satellite, so it scales and travels with it.</p>
+    <div class="controls">
+      <label for="speed">Speed <output id="speed-out">1×</output></label><input id="speed" type="range" min="0" max="4" step=".25" value="1">
+    </div>
+    <h2>How it's built</h2>
+    <ul>
+      <li>A <code>.satellite</code> is a universe: the <code>.gravity-spot</code> inside it reaches the satellite's edge.</li>
+      <li>So the Moon on <code>orbit-10</code> of the Earth's system stays close to the Earth, whatever the size of the page.</li>
+      <li>Each orbit spins with a CSS animation of <code>rotate</code> on its ring.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  const speed = document.getElementById('speed');
+  speed.addEventListener('input', () => {
+    document.querySelector('.sky').style.setProperty('--speed', Math.max(.001, speed.value));
+    document.querySelectorAll('.spin').forEach(ring => ring.style.animationPlayState = speed.value == 0 ? 'paused' : 'running');
+    document.getElementById('speed-out').value = speed.value + '×';
+  });
+</script>
+</body>
+</html>

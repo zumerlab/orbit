@@ -1,0 +1,86 @@
+import { build } from 'esbuild'
+import * as sass from 'sass'
+import { copyFileSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { customElementsManifest, vscodeHtmlData } from './src/elements.mjs'
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf8'))
+const version = pkg.version || '0.0.0'
+const banner = `/*
+* orbit
+* v.${version}
+* Author Juan Martin Muda - Zumerlab
+* License MIT
+*/`
+
+/** @type {import('esbuild').BuildOptions} */
+const common = {
+  bundle: true,
+  sourcemap: false,
+  logLevel: 'info',
+  banner: { js: banner },
+}
+
+function buildCss() {
+  mkdirSync('dist', { recursive: true })
+  const fixCharset = (css) => {
+    // Compressed Sass emits a BOM. Strip it before adding @charset so it does
+    // not become a selector character in the middle of the stylesheet.
+    return '@charset "UTF-8";\n' + css.replace(/^\uFEFF/, '').replace(/^@charset[^;]+;\s*/i, '')
+  }
+  const expanded = sass.compile('src/orbit.scss', { loadPaths: ['src'] })
+  writeFileSync('dist/orbit.css', fixCharset(expanded.css))
+  const compressed = sass.compile('src/orbit.scss', { loadPaths: ['src'], style: 'compressed' })
+  writeFileSync('dist/orbit.min.css', fixCharset(compressed.css))
+}
+
+async function buildJs() {
+  await Promise.all([
+    build({
+      ...common,
+      entryPoints: ['src/orbit.js'],
+      outfile: 'dist/orbit.js',
+      format: 'iife',
+      platform: 'browser',
+      target: ['es2018'],
+      minify: false,
+    }),
+    build({
+      ...common,
+      entryPoints: ['src/orbit.js'],
+      outfile: 'dist/orbit.min.js',
+      format: 'iife',
+      platform: 'browser',
+      target: ['es2018'],
+      minify: true,
+    }),
+    build({
+      ...common,
+      entryPoints: ['src/orbit.js'],
+      outfile: 'dist/orbit.mjs',
+      format: 'esm',
+      platform: 'browser',
+      target: ['es2018'],
+      minify: false,
+    }),
+  ])
+}
+
+function buildMetadata() {
+  // Types and editor data for TypeScript, JSX, VS Code and other tools.
+  copyFileSync('src/types/orbit.d.ts', 'dist/orbit.d.ts')
+  copyFileSync('src/types/react.d.ts', 'dist/react.d.ts')
+  copyFileSync('src/types/style.d.ts', 'dist/style.d.ts')
+  writeFileSync('dist/custom-elements.json', JSON.stringify(customElementsManifest(version), null, 2) + '\n')
+  writeFileSync('dist/vscode.html-custom-data.json', JSON.stringify(vscodeHtmlData(), null, 2) + '\n')
+}
+
+async function main() {
+  buildCss()
+  await buildJs()
+  buildMetadata()
+}
+
+main().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})

@@ -1,30 +1,33 @@
-/* default theme */
+@use './variables' as *;
 
-.gravity-spot {
+/* default theme */
+/* Zero specificity, so any rule of yours wins, including on hover. */
+
+:where(.gravity-spot) {
   background: none;
   border: none; 
 }
 
-.orbit, [class*='orbit-'] {
+:where(#{$orbit-selector}) {
   border: 1px solid transparent;
 }
 
-.satellite {
+:where(.satellite) {
   background-color: transparent;
-  border: 1px solid currentcolor;
+  border: none;
 }
 
-.vector {
+:where(.vector) {
   border: none;
   background: currentcolor;
 }
 
-.side {
+:where(.side) {
   border: none;
   background: currentcolor;
 }
 
-o-progress {
+:where(o-progress) {
   --o-fill: var(--o-gray-light);
   --o-stroke: var(--o-fill);
   --o-stroke-width: 1;
@@ -33,26 +36,13 @@ o-progress {
   --o-back-stroke-width: 1;
 }
 
-o-progress:hover {
-  --o-fill: var(--o-gray-light);
-  --o-stroke: var(--o-fill);
-  --o-stroke-width: 1;
-  --o-back-fill: transparent;
-  --o-back-stroke: none;
-  --o-back-stroke-width: 1;
-}
 
-o-arc {
+:where(o-arc) {
   --o-fill: var(--o-gray-light);
   --o-stroke: var(--o-fill);
   --o-stroke-width: 1;
 }
 
-o-arc:hover {
-  --o-fill: var(--o-gray-light);
-  --o-stroke: var(--o-fill);
-  --o-stroke-width: 1;
-}
 
 /* Dev theme based on default*/
 .dev-orbit.gravity-spot {
@@ -66,7 +56,7 @@ o-arc:hover {
     border: 1px dashed var(--o-red-light); 
   }
   
-  .orbit, [class*='orbit-'] {
+  #{$orbit-selector} {
     border: 1px dashed var(--o-red-light);
   }
   
@@ -127,7 +117,7 @@ o-arc:hover {
     border: none; 
   }
 
-  .orbit, [class*='orbit-'] {
+  #{$orbit-selector} {
     border: 1px solid transparent;
   }
 
@@ -177,7 +167,6 @@ o-arc:hover {
   }
 
 }
-
 
 
 

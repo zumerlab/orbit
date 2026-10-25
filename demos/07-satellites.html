@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>07 — Team map | Orbit</title>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
+  <script src="../dist/orbit.js"></script>
+  <style>
+    .team .guide { border: 1px dashed #26303b; }
+    .team .avatar {
+      width: 100%; aspect-ratio: 1; border-radius: 50%;
+      display: grid; place-items: center;
+      background: hsl(var(--h) 45% 26%); color: hsl(var(--h) 90% 82%);
+      box-shadow: 0 0 0 2px #0c0f13, 0 0 0 3px hsl(var(--h) 45% 38%);
+      font: 600 13px/1 system-ui; cursor: default; transition: scale .15s;
+    }
+    .team .avatar:hover { scale: 1.15; }
+    .team .ring-5 .avatar { font-size: 15px; }
+    .team .ring-11 .avatar { font-size: 10px; }
+    .team .me { width: 100%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: var(--text); color: #0c0f13; }
+    .team .me .readout span { color: #4a5562; }
+    .team .me .readout strong { font-size: 16px; letter-spacing: 0; }
+  </style>
+</head>
+<body>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="./">← All demos</a><span class="num">07 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang team">
+      <div class="gravity-spot">
+        <div class="orbit-5 guide"></div><div class="orbit-8 guide"></div><div class="orbit-11 guide"></div>
+        <div class="orbit-5 ring-5" style="--o-size-ratio: 2.6"></div>
+        <div class="orbit-8 ring-8 from-20" style="--o-size-ratio: 2"></div>
+        <div class="orbit-11 ring-11 from-8" style="--o-size-ratio: 1.4"></div>
+        <div class="orbit-0" style="--o-size-ratio: 5"><div class="satellite at-center"><div class="capsule me"><div class="readout"><strong id="who">You</strong><span id="role">center</span></div></div></div></div>
+      </div>
+    </div>
+  </section>
+  <aside class="notes">
+    <h1>Team map</h1>
+    <p>People you work with, by how often you work together. Hover a face to see who it is.</p>
+    <h2>How it's built</h2>
+    <ul>
+      <li>Three rings of satellites on lanes 5, 8 and 11; Orbit spreads each group evenly.</li>
+      <li>Each ring sets its own <code>--o-size-ratio</code>, so closer people are bigger.</li>
+      <li><code>from-N</code> shifts a ring so faces on different rings don't line up.</li>
+      <li>The dashed paths are empty rings with a border.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  const people = {
+    'ring-5': [['Ana Ruiz', 'Design'], ['Ben Ito', 'Engineering'], ['Chloé Martin', 'Product'], ['Dev Patel', 'Engineering']],
+    'ring-8': [['Eva Kim', 'Research'], ['Femi Ade', 'Engineering'], ['Gus Lind', 'Data'], ['Hana Sato', 'Design'], ['Iker Gil', 'Sales'], ['Jo Park', 'Support'], ['Kai Moe', 'Engineering']],
+    'ring-11': [['Lea Roth'], ['Mo Diaz'], ['Nia Cole'], ['Omar Haddad'], ['Pia Berg'], ['Quinn Shaw'], ['Rui Costa'], ['Sara Holm'], ['Tom Ng'], ['Uma Rao'], ['Vic Lane'], ['Wen Li'], ['Xavi Pons'], ['Yara Said']],
+  };
+  const who = document.getElementById('who'), role = document.getElementById('role');
+  let hue = 0;
+  for (const [ring, list] of Object.entries(people)) {
+    const el = document.querySelector('.' + ring);
+    for (const [name, team = 'Company'] of list) {
+      const initials = name.split(' ').map(word => word[0]).join('');
+      el.insertAdjacentHTML('beforeend', `<div class="satellite"><div class="capsule avatar" style="--h:${(hue += 47) % 360}" data-name="${name}" data-team="${team}" title="${name}">${initials}</div></div>`);
+    }
+  }
+  document.querySelectorAll('.avatar').forEach(face => {
+    face.addEventListener('pointerenter', () => { who.textContent = face.dataset.name.split(' ')[0]; role.textContent = face.dataset.team; });
+    face.addEventListener('pointerleave', () => { who.textContent = 'You'; role.textContent = 'center'; });
+  });
+</script>
+</body>
+</html>

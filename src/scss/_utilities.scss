@@ -1,6 +1,7 @@
+@use 'sass:math';
 @use './variables' as *;
 
-/* radial elements  aligment utilities */
+/* radial elements alignment utilities */
 .at-top-left {
   align-items: flex-start !important;
   justify-content: flex-start !important;
@@ -81,8 +82,8 @@ $max-grade: 360;
   Sector gap 
 */ 
 
-$max-gaps: calc($max-orbiters / 2);
-@for $i from 0 through  $max-gaps {
+$max-gaps: math.div($max-orbiters, 2);
+@for $i from 0 through $max-gaps {
   o-arc.gap-#{$i} {
     --o-gap: #{$i};
   }
@@ -92,18 +93,19 @@ $max-gaps: calc($max-orbiters / 2);
 Sector, Progress and Vector size-ratio
 Can be used in parent elements or in each orbiter class
 */ 
-@for $i from 1 through  9  {
-  $percent: calc($i * 10);
-  $value: calc($i / 10);
-  .orbit.shrink-#{$percent}, [class*='orbit-'].shrink-#{$percent} {
+@for $i from 0 through  20  {
+  $percent: calc($i * 5);
+  $value: calc(($i * 5 / 100));
+  #{$orbit-selector}.shrink-#{$percent} {
     --o-orbit-ratio: #{$value}; 
   }
 }
 
-@for $i from 1 through  9  {
-  $percent: calc($i * 10);
-  $value: calc(1 - $i / 10);
-  .shrink-#{$percent} {
+@for $i from 0 through  20  {
+  $percent: calc($i * 5);
+  $value: calc(1 - ($i * 5 / 100));
+  // On a ring, shrink-N changes ring spacing (above), not the size of its elements.
+  :not(.orbit, [data-orbit-ring], [class^="orbit-"], [class*=" orbit-"]).shrink-#{$percent} {
     --o-size-ratio: #{$value} !important; 
   }
 }
@@ -134,23 +136,23 @@ Can be used in parent elements or in each orbiter class
   Orbit child elements could be placed at low / middle / high-orbit
 */ 
 .inner-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / 2;
 }
 .quarter-inner-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / 3.75;
 }
 .quarter-outer-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / -3.75;
 }
 
 .outer-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / -2;
 }
@@ -161,7 +163,7 @@ Can be used in parent elements or in each orbiter class
 
 .ccw{
   --o-direction: -1 !important;
-  --o-offset: - -90deg !important;
+  --o-offset: 90deg !important;
 }
 
 /* 

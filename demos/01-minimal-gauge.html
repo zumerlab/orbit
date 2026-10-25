@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>01 — Progress rings | Orbit</title>
+  <link rel="stylesheet" href="../dist/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
+  <script src="../dist/orbit.js"></script>
+  <style>
+    .rings o-progress { --o-stroke: none; --o-fill: var(--c); --o-back-fill: color-mix(in srgb, var(--c) 16%, transparent); }
+    .rings .move { --c: var(--coral); }
+    .rings .exercise { --c: var(--lime); }
+    .rings .stand { --c: var(--teal); }
+    .legend { display: grid; gap: 10px; margin-top: 18px; }
+    .legend div { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; font-size: 14px; }
+    .legend i { width: 12px; height: 12px; border-radius: 50%; background: var(--c); }
+    .legend output { font-family: var(--mono); }
+  </style>
+</head>
+<body>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="./">← All demos</a><span class="num">01 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang rings">
+      <!-- --o-size-ratio on the system: every band is 1.7 lanes thick. -->
+      <div class="gravity-spot" style="--o-size-ratio: 1.7">
+        <div class="orbit-11"><o-progress class="move" shape="rounded" value="0" role="progressbar" aria-label="Move"></o-progress></div>
+        <div class="orbit-9"><o-progress class="exercise" shape="rounded" value="0" role="progressbar" aria-label="Exercise"></o-progress></div>
+        <div class="orbit-7"><o-progress class="stand" shape="rounded" value="0" role="progressbar" aria-label="Stand"></o-progress></div>
+        <div class="orbit-0" style="--o-size-ratio: 9">
+          <div class="satellite at-center"><div class="capsule readout"><strong id="total">0%</strong><span>of today's goals</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="notes">
+    <h1>Progress rings</h1>
+    <p>Three goals on three lanes. The rings fill the box they are given: resize the window and they keep their proportions.</p>
+    <div class="controls">
+      <label for="move">Move <output id="move-out"></output></label><input id="move" type="range" min="0" max="100" value="82">
+      <label for="exercise">Exercise <output id="exercise-out"></output></label><input id="exercise" type="range" min="0" max="100" value="64">
+      <label for="stand">Stand <output id="stand-out"></output></label><input id="stand" type="range" min="0" max="100" value="45">
+    </div>
+    <h2>How it's built</h2>
+    <ul>
+      <li>Lanes 11, 9 and 7 of 12. <code>orbit-12</code> would touch the edge.</li>
+      <li><code>--o-size-ratio: 1.7</code> on the <code>.gravity-spot</code> sets the thickness of every ring at once.</li>
+      <li><code>shape="rounded"</code> rounds the ends in proportion to the band.</li>
+      <li>The track is <code>--o-back-fill</code>, a tint of the ring color.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  const ids = ['move', 'exercise', 'stand'];
+  const set = () => {
+    let sum = 0;
+    for (const id of ids) {
+      const value = Number(document.getElementById(id).value);
+      const ring = document.querySelector('.' + id);
+      ring.setAttribute('value', value);
+      ring.setAttribute('aria-valuenow', value);
+      document.getElementById(id + '-out').value = value + '%';
+      sum += value;
+    }
+    document.getElementById('total').textContent = Math.round(sum / ids.length) + '%';
+  };
+  ids.forEach(id => document.getElementById(id).addEventListener('input', set));
+  // Fill the rings on load.
+  const targets = ids.map(id => Number(document.getElementById(id).value));
+  const started = performance.now();
+  const grow = now => {
+    const t = Math.min(1, (now - started) / 900), ease = 1 - (1 - t) ** 3;
+    ids.forEach((id, i) => { document.getElementById(id).value = Math.round(targets[i] * ease); });
+    set();
+    if (t < 1) requestAnimationFrame(grow);
+  };
+  requestAnimationFrame(grow);
+</script>
+</body>
+</html>

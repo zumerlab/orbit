@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="../dist/orbit.css">
+  <script src="../dist/orbit.js"></script>
+  <title>Orbit — Pro KPIs</title>
+  <style>
+    :root { --card-bg:#0f1115; --ink:#e6e6e6; --muted:#9aa4af; }
+    body { margin:0; background:#0b0d12; color:var(--ink); font:14px/1.4 system-ui, sans-serif; }
+    .wrap { max-width:1100px; margin:48px auto; padding:0 20px; display:grid; gap:18px; grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .card { background:var(--card-bg); border:1px solid #1a1f2a; border-radius:16px; padding:20px; }
+    .title { font-weight:600; letter-spacing:.2px; color:var(--muted); margin-bottom:8px; }
+    .kpi { display:flex; align-items:center; justify-content:center; height:260px; }
+    .label { text-align:center; font-size:13px; color:var(--muted); margin-top:8px; }
+    .value { font-size:28px; font-weight:700; color:#fff; }
+    .delta { font-size:12px; margin-top:4px; color:var(--o-green-light); }
+    .ring { --size: 240px; width:var(--size); height:var(--size); }
+    .satellite { border:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Revenue -->
+    <div class="card">
+      <div class="title">Revenue</div>
+      <div class="kpi">
+        <div class="bigbang ring">
+          <div class="gravity-spot">
+            <div class="orbit-4">
+              <o-progress value="72" style="--o-fill:var(--o-cyan); --o-stroke:#1b2a35; --o-stroke-width:10"></o-progress>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center">
+                <div class="capsule" style="flex-direction:column;">
+                  <div class="value">$1.42M</div>
+                  <div class="delta">+8.4% vs LY</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><div class="label">QTD achievement</div>
+    </div>
+
+    <!-- Conversion -->
+    <div class="card">
+      <div class="title">Conversion</div>
+      <div class="kpi">
+        <div class="bigbang ring">
+          <div class="gravity-spot">
+            <div class="orbit-4">
+              <o-progress value="38" style="--o-fill:var(--o-purple); --o-stroke:#2a1f35; --o-stroke-width:10"></o-progress>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center">
+                <div class="capsule" style="flex-direction:column;">
+                  <div class="value">3.8%</div>
+                  <div class="delta" style="color:var(--o-green)">+0.3 pp</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><div class="label">From visits to orders</div>
+    </div>
+
+    <!-- Uptime -->
+    <div class="card">
+      <div class="title">Service Uptime</div>
+      <div class="kpi">
+        <div class="bigbang ring">
+          <div class="gravity-spot">
+            <div class="orbit-4">
+              <o-progress value="99" shape="circle-a" style="--o-fill:var(--o-green); --o-stroke:#1b2a1f; --o-stroke-width:10"></o-progress>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center"><div class="capsule"><div class="value">99.96%</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div><div class="label">SLA last 30 days</div>
+    </div>
+
+    <!-- NPS -->
+    <div class="card">
+      <div class="title">NPS</div>
+      <div class="kpi">
+        <div class="bigbang ring">
+          <div class="gravity-spot">
+            <div class="orbit-4">
+              <o-progress value="64" shape="zigzag" style="--o-fill:var(--o-yellow); --o-stroke:#2a271b; --o-stroke-width:10"></o-progress>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center"><div class="capsule"><div class="value">+64</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div><div class="label">Promoters – Detractors</div>
+    </div>
+  </div>
+</body>
+</html>

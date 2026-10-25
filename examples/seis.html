@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../dist/orbit.css">
+
+  <title>Testing orbit</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+    body {
+      font-family: "Open Sans";
+      color: black;
+      font-size: calc(15px * var(--o-force-ratio, 1));
+      background-color: rgb(255, 255, 255);
+     
+    }
+   
+    a {
+      color: var(--o-cyan);
+      text-decoration: none;
+    }
+    [class*=orbit-]{
+      border: none;
+    }
+
+    /* Basic styling for the grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      /* 3 equal columns */
+      gap: 50px;
+      /* Space between grid items */
+      max-width: 1600px;
+      /* Adjust as needed */
+      margin: 50px auto;
+      /* Center the grid */
+    }
+
+    .grid-item {
+      height: 500px;
+      border: 1px solid #000000;
+      border-radius: 15px;
+      /* Light border */
+      padding: 2px;
+      /* Space inside each cell */
+      text-align: center;
+      /* Center text */
+    }
+
+   
+
+    .satellite {
+      border-color: transparent;
+    }
+
+    .gray-border {
+      border-color: black;
+    }
+
+   
+
+    .red {
+      background-color: var(--o-red);
+    }
+
+    .orange {
+      background-color: var(--o-orange);
+    }
+    
+
+    .yellow {
+      background-color: var(--o-yellow);
+    }
+
+    .green {
+      background-color: var(--o-green);
+    }
+
+    .cyan {
+      background-color: var(--o-cyan);
+    }
+
+    .gray {
+      background-color: var(--o-gray-lighter);
+    }
+
+    .purple {
+      background-color: var(--o-purple);
+    }
+
+    .transparent {
+      background-color: transparent;
+    }
+
+   
+    .vector.day {
+      height: 3px;
+      border-color: transparent
+    }
+
+    .vector.month {
+      height: 7px;
+      border-color: transparent
+    }
+
+    .week {
+      background-color: var(--o-gray-lighter);
+    }
+    .colors {
+      --light: calc(50 * 1%);
+            --sat: calc(100 * 1%);
+           background: 
+            conic-gradient(from 90deg,
+              hsl(0, var(--sat), var(--light)),   
+              hsl(60, var(--sat), var(--light)), 
+              hsl(120, var(--sat), var(--light)),
+              hsl(180, var(--sat), var(--light)), 
+              hsl(240, var(--sat), var(--light)), 
+              hsl(300, var(--sat), var(--light)), 
+              hsl(360, var(--sat), var(--light))
+            );
+            mask-image: radial-gradient(circle, #4a5dec00 52%, #000000 53%)
+    }
+    .option-color, .option-size, .option-format,  .active-color, .active-size, .active-format, .suboption-align, .subactive-align {
+     visibility: hidden;
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+
+    o-arc {
+      cursor: pointer;
+    }
+   
+  </style>
+</head>
+<body>
+   
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-1">
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-2">
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-3">
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-4">
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-5">
+        <o-arc class="gap-1 shrink-30" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 shrink-30" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 shrink-30" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-6">
+        <o-arc class="gap-1 shrink-60" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 shrink-60" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 shrink-60" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-7">
+        <o-arc class="gap-1 shrink-90" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 shrink-90" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 shrink-90" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-3">
+        <o-arc class="gap-1 grow-1x outer-orbita" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 grow-1x outer-orbita" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 grow-1x outer-orbita" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-9">
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-18">
+        <o-arc class="gap-0 grow-1x" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-0 grow-1x" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-0 grow-1x" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-11">
+        <o-arc class="gap-0 shrink-10" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-0 shrink-10" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-0 shrink-10" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+      <div class="orbit-13">
+        <o-arc class="gap-1 grow-1x" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 grow-1x" shape="circle1"  style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+        <o-arc class="gap-1 grow-1x" shape="circle1" style="--o-fill: var(--o-indigo); --o-stroke: var(--o-gray-black); --o-stroke-width: 1"></o-arc>
+      </div>
+
+      
+    </div>
+  </div>
+          <script src="../dist/orbit.js"></script>
+</body>
+</html>

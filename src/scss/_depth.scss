@@ -1,0 +1,66 @@
+@use './variables' as *;
+
+/* Depth layers
+   Add .depth to the element that holds the layers (usually .gravity-spot).
+   Each layer is a direct child: a ring or a nested .bigbang / .gravity-spot.
+   --o-z is unitless pixels (negative = farther). By default it is derived
+   from data-depth, and the scale compensates the perspective so a layer
+   keeps its apparent size: scale = (perspective - z) / perspective.
+   --o-depth-grow enlarges each step back (.42 = 1×, 1.42×, 1.84×…) so no two
+   layers share a radius. */
+
+$max-depth: 8;
+$layer-selector: ':is(#{$orbit-selector}, [data-depth], .layer-front):not(.satellite, .side, .vector, o-arc, o-progress)';
+
+.depth {
+  --o-perspective: 900;
+  --o-depth-step: -110;
+  perspective: calc(var(--o-perspective) * 1px);
+  transform-style: preserve-3d;
+}
+
+/* The perspective comes from an ancestor, for example to tilt the whole
+   object with parallax. Set the same value there and in --o-perspective, so
+   layers still keep their apparent size. Elements between that ancestor and
+   .depth need transform-style: preserve-3d; .bigbang has it here. */
+.depth.outer-perspective {
+  perspective: none;
+}
+.bigbang:has(> .depth.outer-perspective) {
+  transform-style: preserve-3d;
+}
+
+.depth > #{$layer-selector} {
+  --o-z: calc(var(--o-depth, 0) * var(--o-depth-step));
+  transform:
+    translateZ(calc(var(--o-z) * 1px))
+    scale(calc(
+      (1 + var(--o-depth-grow, 0) * var(--o-depth, 0)) *
+      (1 - var(--o-depth-compensate, 1) * var(--o-z) / var(--o-perspective))
+    ));
+  transform-style: preserve-3d;
+  transition:
+    transform var(--o-depth-duration, .8s) var(--o-depth-easing, cubic-bezier(.2, .8, .2, 1)),
+    opacity var(--o-depth-duration, .8s) var(--o-depth-easing, cubic-bezier(.2, .8, .2, 1));
+}
+
+@for $i from 0 through $max-depth {
+  [data-depth="#{$i}"] {
+    --o-depth: #{$i};
+  }
+}
+
+/* The active layer: the one that is read and used. */
+.layer-front {
+  --o-depth: 0;
+}
+
+.depth > [data-depth]:not([data-depth="0"], .layer-front) {
+  opacity: var(--o-back-opacity, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth > #{$layer-selector} {
+    transition: none;
+  }
+}

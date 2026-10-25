@@ -1,39 +1,52 @@
-export class OrbitProgress extends HTMLElement {
+import { OrbitBase } from './orbit-base.js';
+
+export class OrbitProgress extends OrbitBase {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    
     this.shadowRoot.innerHTML = `
       <style>
         :host {
-        --o-fill: var(--o-gray-light);
-        --o-stroke: var(--o-fill);
-        --o-stroke-width: 1;
-        --o-back-fill: transparent;
-        --o-back-stroke: none;
-        --o-back-stroke-width: 1;
-      }
-      :host(:hover){
-        --o-fill: var(--o-gray-light);
-        --o-stroke: var(--o-fill);
-        --o-stroke-width: 1;
-        --o-back-fill: transparent;
-        --o-back-stroke: none;
-        --o-back-stroke-width: 1;
-      }
-      svg {
-          width: 100%;
-          height: 100%;
+          --o-fill: var(--o-gray-light);
+          --o-stroke: var(--o-fill);
+          --o-stroke-width: 1;
+          --o-back-fill: transparent;
+          --o-back-stroke: none;
+          --o-back-stroke-width: 1;
+        }
+        svg {
+          position: absolute;
+          inset: 0;
+          width: auto;
+          height: auto;
           overflow: visible;
           pointer-events: none;
         }
+        /* Display element by default: never steals clicks (see orbit-arc).
+           Interaction is opt-in via the "interactive" attribute. */
         svg * {
+          pointer-events: none;
+        }
+        :host([interactive]) svg * {
           pointer-events: visiblePainted;
+        }
+        /* The touch area covers the whole track, whatever its colors. */
+        .hit {
+          fill: none;
+          stroke: transparent;
+        }
+        :host([interactive]) .hit {
+          pointer-events: stroke;
+        }
+        :host([interactive]) {
+          cursor: pointer;
         }
         .progress-bar {
           fill: var(--o-fill);
           stroke: var(--o-stroke);
           stroke-width: var(--o-stroke-width);
-          transition: all 0.3s;
+          transition: fill 0.25s, stroke 0.25s;
           stroke-linejoin: round;
         }
         .progress-bg {
@@ -41,118 +54,89 @@ export class OrbitProgress extends HTMLElement {
           stroke: var(--o-back-stroke);
           stroke-width: var(--o-back-stroke-width);
         }
+        /* variant="stroke": the thin, legible gauge.
+           The default band is a FILLED donut wedge, so everyone building a
+           thin gauge tripped on --o-fill/--o-back-fill. With this variant the
+           paths are open arcs and the data color lives where you expect it:
+           --o-stroke for the bar, --o-back-stroke for the track. */
+        :host([variant="stroke"]) .progress-bar {
+          fill: none;
+          stroke: var(--o-stroke);
+          stroke-width: var(--o-stroke-width, 2);
+          stroke-linecap: round;
+        }
+        :host([variant="stroke"]) .progress-bg {
+          fill: none;
+          stroke: var(--o-back-stroke, var(--o-gray-light));
+          stroke-width: var(--o-back-stroke-width, 1);
+          stroke-linecap: round;
+        }
       </style>
       <svg viewBox="0 0 100 100">
+        <path class="hit" vector-effect="non-scaling-stroke"></path>
         <path class="progress-bg" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
         <path class="progress-bar" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
       </svg>
-    `
+    `;
   }
-  connectedCallback() {
-    this.update()
-    this.observer = new MutationObserver((mutations) => {
-      this.observer.disconnect()
-      mutations.forEach((mutation) => {
-        this.update()
-      })
-      this.observer.observe(this, { attributes: true, childList: true })
-    })
-    this.observer.observe(this, { attributes: true, childList: true })
-  }
+
   update() {
-    const progressBg = this.shadowRoot.querySelector('.progress-bg');
-    const progressBar = this.shadowRoot.querySelector('.progress-bar');
-    this.updateArc(progressBg, true);
-    this.updateArc(progressBar, false);
+    const attrs = this.getAttributes();
+    const isStroke = this.getAttribute('variant') === 'stroke';
+    const dBg = isStroke ? this.calculateStrokeArc(attrs, true) : this.calculateArcParameters(attrs, true);
+    const dBar = isStroke ? this.calculateStrokeArc(attrs, false) : this.calculateArcParameters(attrs, false);
+    this.shadowRoot.querySelector('.progress-bg').setAttribute('d', dBg);
+    this.shadowRoot.querySelector('.progress-bar').setAttribute('d', dBar);
+    this.updateHitArea(this.shadowRoot.querySelector('.hit'), attrs, 0, attrs.range);
   }
-  updateArc(arc, full) {
-    const { d } = this.calculateArcParameters(full);
-    arc.setAttribute('d', d);
+
+  /**
+   * variant="stroke": open arc along the orbit radius (no closed band),
+   * stroked by CSS. Same progress math as the band variant.
+   */
+  calculateStrokeArc(attrs, full) {
+    const { realRadius } = attrs;
+    const arcAngle = Math.max(0, Math.min(this.getProgressAngle(attrs, full), 360));
+    if (!(arcAngle > 0) || !(attrs.orbitRadius > 0)) return '';
+    const start = -Math.PI / 2;
+    return this.linePath(realRadius, start, start + arcAngle * Math.PI / 180);
   }
+
   getAttributes() {
-    const orbitRadius = parseFloat(getComputedStyle(this).getPropertyValue('r') || 0);
-    let orbitNumber = parseFloat(getComputedStyle(this).getPropertyValue('--o-orbit-number'))
-    let size = parseFloat(getComputedStyle(this).getPropertyValue('--o-size-ratio'))
-    const range = parseFloat(getComputedStyle(this).getPropertyValue('--o-range') || 360);
-    const progress = parseFloat( getComputedStyle(this).getPropertyValue('--o-progress') || this.getAttribute('value') || 0);
-    const shape = this.getAttribute('shape') || 'none';
-    const strokeWidth = parseFloat(getComputedStyle(this).getPropertyValue('--o-stroke-width'))
-    const arcHeight = orbitRadius / orbitNumber * size - strokeWidth + 0.3 // 0.3 tries to fix bug when render arcs
-    const arcHeightPercentage = ((arcHeight / 2 ) * 100) / orbitRadius / 2
-    const maxAngle = range;
-    const maxValue = parseFloat(this.getAttribute('max')) || 100;
-    let innerOuter
-    if (this.classList.contains('outer-orbit')) {
-      innerOuter = arcHeightPercentage
-    } else if (this.classList.contains('quarter-outer-orbit')) {
-      innerOuter = arcHeightPercentage * -0.5
-    } else if (this.classList.contains('inner-orbit')) {
-      innerOuter = arcHeightPercentage * -1
-    } else if (this.classList.contains('quarter-inner-orbit')) {
-      innerOuter = arcHeightPercentage * 0.5
-    } else {
-      innerOuter = 0
-    }
-    const realRadius = 50 + innerOuter
+    const common = super.getCommonAttributes(this);
+    const range = Math.max(0, Math.min(360, this.readAngle(common.style, '--o-range', 360)));
+    const rawValue = common.style.getPropertyValue('--o-progress').trim();
+    const progress = rawValue ? this.readNumber(common.style, '--o-progress', 0) : this.readValue();
+    const maxValue = this.readMax();
+    
     return {
-      orbitRadius,
+      ...common,
+      range,
       progress,
-      strokeWidth,
-      realRadius,
-      maxAngle,
-      maxValue,
-      shape,
-      arcHeightPercentage,
-      orbitNumber
+      maxValue
     };
   }
-  getProgressAngle(full) {
-    const {maxAngle, progress, maxValue} = this.getAttributes()
-    return full
-      ? ((maxValue - 0.00001) / maxValue) * maxAngle
-      : (progress / maxValue) * maxAngle;
-  }
-  calculateArcParameters(full) {
-    const arcAngle = this.getProgressAngle(full);
-    const {realRadius, arcHeightPercentage, orbitNumber, shape, strokeWidth} = this.getAttributes()
-    const radius = realRadius
-    let startX, startY, endX, endY, largeArcFlag, startX1, startY1, endX1, endY1, dShape, pointX, pointX1, pointY, pointY1
-    let offset = Math.PI / 2
-    let stroke = strokeWidth
-    let fangle =  arcAngle * Math.PI / 180
-    let bigRadius = radius + arcHeightPercentage
-    let smallRadius = (radius - arcHeightPercentage) !== 0 ? radius - arcHeightPercentage : radius
-    let bigGap = (stroke * 2) / orbitNumber / 2 / bigRadius
-    let smallGap = (stroke * 2)  / orbitNumber / 2  / smallRadius
-    let startAngle = bigGap  - offset
-    let endAngle = fangle  - bigGap - offset
-    let startAngle1 = smallGap - offset
-    let endAngle1 = fangle  - smallGap - offset
-    // upper arc
-    startX = 50 + bigRadius * Math.cos(startAngle );
-    startY = 50 + bigRadius * Math.sin(startAngle );
-    endX = 50 + bigRadius * Math.cos(endAngle );
-    endY = 50 + bigRadius * Math.sin(endAngle );
-    pointX = 50 + bigRadius * Math.cos(endAngle + 3 * Math.PI / 180);
-    pointY = 50 + bigRadius  * Math.sin(endAngle + 3 * Math.PI / 180);
-    // inner arc
-    startX1 = 50 + smallRadius * Math.cos(startAngle1 );
-    startY1 = 50 + smallRadius * Math.sin(startAngle1 );
-    endX1 = 50 + smallRadius * Math.cos(endAngle1 );
-    endY1 = 50 + smallRadius * Math.sin(endAngle1 );
-    pointX1 = 50 + smallRadius * Math.cos(endAngle1 + 3 * Math.PI / 180);
-    pointY1 = 50 + smallRadius * Math.sin(endAngle1 + 3 * Math.PI / 180);
-    largeArcFlag = arcAngle <= 180 ? 0 : 1;
 
-    let d = `M ${startX},${startY} A ${bigRadius},${bigRadius} 0 ${largeArcFlag} 1 ${endX},${endY}`
-    if (shape === "arrow") d += `L ${(pointX + pointX1) / 2}  ${(pointY + pointY1) / 2} `
-    if (shape === "circle" || shape === 'bullet') d += `A ${(arcHeightPercentage)}, ${(arcHeightPercentage)} 0 0 1 ${endX1},${endY1} `
-    d += `L ${endX1} ${endY1}`
-    d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlag} 0 ${startX1},${startY1}`
-    if (shape === "circle") d += `A ${(arcHeightPercentage)}, ${(arcHeightPercentage)} 0 0 1 ${startX},${startY} `
-    if (shape === "bullet") d += `A ${(arcHeightPercentage)}, ${(arcHeightPercentage)} 0 0 0 ${startX},${startY} `
-    if (shape === "arrow") d += `L ${startX1 + 3} ${(startY + startY1) / 2}  `
-    d += `Z`
-    return { d }
+  getProgressAngle(attrs, full) {
+    const { range, progress, maxValue } = attrs;
+    return full ? range : super.getProgressAngle(range, progress, maxValue);
+  }
+
+  calculateArcParameters(attrs, full) {
+    const { shape, realRadius, arcHeightPercentage, orbitNumber, strokeWidth, arcHeight } = attrs;
+    const arcAngle = this.getProgressAngle(attrs, full);
+    if (!(arcAngle > 0) || !(attrs.orbitRadius > 0)) return '';
+    
+    const params = super.calculateCommonArcParameters(
+      arcAngle, 
+      realRadius, 
+      arcHeightPercentage, 
+      orbitNumber, 
+      shape, 
+      strokeWidth, 
+      arcHeight
+    );
+    
+    return super.generatePathData(shape, params);
   }
 }

@@ -1,40 +1,46 @@
-**Contributing Guide to Orbit**
+# Contributing to Orbit
 
-**Welcome to Orbit!**
+Thanks for helping. Bug reports, examples and pull requests are all welcome. Ask questions in [Discussions](https://github.com/zumerlab/orbit/discussions) or the [Telegram group](https://t.me/ZumlyCommunity), and report bugs in [Issues](https://github.com/zumerlab/orbit/issues) with the smallest HTML that shows the problem.
 
-We're excited to have you on board! This guide outlines how you can contribute to Orbit, help us test and improve it, and share your experiences with the community.
+## Set up
 
-**Getting Started**
+```sh
+npm ci
+npm run demo
+```
 
-1. **Try Orbit out**: Play around with Orbit, explore its features, and see how it works. 
-2. **Provide feedback**: Share your thoughts, suggestions, and ideas on how to improve Orbit.
-3. **Report bugs**: If you encounter any issues, please report them on our GitHub issue tracker.
-4. **Show your examples**: Help us build a showcase gallery of examples by contributing your own use cases.
-5. **Join the discussion**: Participate in our [GitHub discussions](https://github.com/zumerlab/orbit/discussions) and [Telegram group](https://t.me/ZumlyCommunity) to connect with other contributors and get updates.
+`npm run demo` compiles the source and serves [`demos/`](demos/) at <http://127.0.0.1:5174> with the local build. Recompile with `npm run compile` after a change and reload the page.
 
-**Documentation**
+## Where things are
 
-- **Read the docs**: Familiarize yourself with our documentation to understand how Orbit works.
-- **Suggest improvements**: If you find any errors or have suggestions for improving the documentation, please let us know.
+| Path | What it holds |
+| --- | --- |
+| `src/scss/` | Geometry and appearance. `_bigbang.scss` and `_gravity-spot.scss` define the universe model; `_orbit-class.scss` the lanes; `_satellite.scss`, `_vector.scss`, `_side.scss` the elements; `_utilities.scss` the helper classes. |
+| `src/js/orbit-layout.js` | The layout runtime: finds rings, numbers their children, batches updates per frame and explains broken layouts in the console. |
+| `src/js/orbit-base.js`, `orbit-arc.js`, `orbit-progress.js` | The `<o-arc>` and `<o-progress>` elements and their SVG paths. |
+| `src/js/orbit-resize.js` | `Orbit.refresh()` and `Orbit.resize()`. |
+| `src/types/` | TypeScript declarations, copied to `dist/`. Update them with any public API change. |
+| `src/elements.mjs` | Attributes and CSS properties of the custom elements. The build turns it into `custom-elements.json` and the VS Code data file. |
+| `demos/` | One page per pattern, built on `../dist/`. |
+| `test/` | Package, browser and shadow DOM tests. |
 
-**Code Contributions**
+## Guidelines
 
-- **Fix bugs**: Help us squash bugs by submitting pull requests.
-- **New features**: Suggest new features or enhancements and collaborate with us to implement them.
+- Keep the metaphor consistent: the `.bigbang` is the space, the `.gravity-spot` reaches it, rings are lanes. New features should size themselves from that, not from fixed pixels.
+- Library defaults that people commonly override belong in zero-specificity `:where()` rules, or in the `.gravity-spot` defaults so they cascade.
+- When a mistake is easy to make, report it once with `warnOnce()` from `orbit-layout.js`, with the fix in the message. Structural checks run only inside `.dev-orbit`.
+- Write code, comments and demo text in English.
+- Add a test in `test/` for every fixed bug or new behavior.
 
-**Spread the Word!**
+## Test
 
-1. **Share your experience**: Share your experience with Orbit on social media, blogs, or with your friends and colleagues.
-2. **Write a review**: Write a review of Orbit on our GitHub page or on your blog.
-3. **Give a talk**: Give a talk about Orbit at a conference, meetup, or webinar.
-4. **Create content**: Create content (videos, tutorials, blog posts, etc.) to help others learn about Orbit.
-5. **Invite others**: Invite others to join the Orbit community and contribute to its growth.
+```sh
+npx playwright install chromium firefox webkit
+BROWSERS=chromium,firefox,webkit npm test
+```
 
-**Community**
+`npm test` compiles first and uses Chromium unless `BROWSERS` is set. Run `npm run test:package`, `npm run test:browser` or `npm run test:shadow` for a single suite.
 
-- [**GitHub discussions**](https://github.com/zumerlab/orbit/discussions): Engage with other contributors, ask questions, and share your experiences.
-- [**Telegram group**](https://t.me/ZumlyCommunity): Join our Telegram group for real-time discussions and updates.
+## Release
 
-**Thank you!**
-
-Your contributions are invaluable to us. By participating in this community, you're helping shape the future of Orbit. Let's work together to make it amazing!
+`npm run compile` writes the CSS, JavaScript, types and editor data to `dist/`. `npm run build` also creates the npm tarball. Maintainers bump the version and changelog with `npm run bump`.

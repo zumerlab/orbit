@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orbit – iCloud‑style radial</title>
+
+    <!-- Usa tus archivos reales -->
+    <link rel="stylesheet" href="../dist/orbit.css" />
+    <script src="../dist/orbit.js" defer></script>
+
+    <style>
+      /* Fondo y layout */
+      html, body { height: 100%; margin: 0; background: radial-gradient(120% 120% at 50% 50%, #0e1220 0%, #080a12 60%, #05070d 100%); }
+      body { display: grid; place-items: center; }
+
+      /* Registramos la custom property para que pueda animarse de forma suave */
+      @property --o-from { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+
+      /* Tweaks visuales para dots “gooey” tipo iCloud */
+      .satellite.dot { 
+        border: none; 
+        background: currentColor; 
+        border-radius: 50%;
+        opacity: .95;
+        mix-blend-mode: screen; /* realza mezcla de colores */
+        box-shadow: 0 0 16px currentColor, 0 0 32px currentColor;
+      }
+      .satellite.dot.small { --o-size-ratio: .7 !important; }
+      .satellite.dot.tiny  { --o-size-ratio: .5 !important; }
+
+      /* Animación de rotación basada en la variable propia de orbit (--o-from) */
+      @keyframes spin     { to { --o-from:  360deg; } }
+      @keyframes spin-ccw { to { --o-from: -360deg; } }
+      .orbit { animation: spin var(--spd, 48s) linear infinite; }
+      .orbit.ccw { animation-name: spin-ccw; }
+
+      /* Velocidades por anillo (puedes ajustar a gusto) */
+      .orbit-1 { --spd: 22s; }
+      .orbit-2 { --spd: 28s; }
+      .orbit-3 { --spd: 36s; }
+      .orbit-4 { --spd: 44s; }
+      .orbit-5 { --spd: 56s; }
+      .orbit-6 { --spd: 68s; }
+
+      /* Tamaño global del sistema */
+      .bigbang { --o-force: min(78vmin, 760px); }
+
+      /* Centro opcional (logo/cta) */
+      .center-badge {
+        position: absolute; inset: auto; width: clamp(64px, 10vmin, 96px); height: clamp(64px, 10vmin, 96px); border-radius: 24px;
+        display: grid; place-items: center; font: 600 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; letter-spacing:.3px;
+        color: white; background: linear-gradient(145deg, #19a2ff, #00d4ff); box-shadow: 0 12px 40px rgba(0,180,255,.35);
+      }
+
+      /* Colores por anillo (usamos tu paleta CSS vars) */
+      .ring-blue   { color: var(--o-blue-light); }
+      .ring-cyan   { color: var(--o-cyan-light); }
+      .ring-green  { color: var(--o-green-light); }
+      .ring-yellow { color: var(--o-yellow-light); }
+      .ring-orange { color: var(--o-orange-light); }
+      .ring-pink   { color: var(--o-pink-light); }
+
+      /* Efecto gooey de tu lib */
+      .gooey-fx { /* clase ya definida en orbit.css con filtro SVG */ }
+    </style>
+  </head>
+  <body>
+    <!-- Contenedor Orbit: centrado a pantalla, tema cian + efecto gooey -->
+    <section class="bigbang theme-cyan gooey-fx">
+      <button class="gravity-spot" aria-hidden="true">
+
+        
+
+        <!-- Anillo 1: 8 dots -->
+        <div class="orbit orbit-1 ring-blue">
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+        </div>
+
+        <!-- Anillo 2: 12 dots, CCW -->
+        <div class="orbit orbit-2 ccw ring-cyan">
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot"></div>
+        </div>
+
+        <!-- Anillo 3: 16 dots -->
+        <div class="orbit orbit-3 ring-green">
+          <div class="satellite dot tiny"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot small"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot tiny"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot small"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot tiny"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot small"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot tiny"></div>
+          <div class="satellite dot"></div>
+          <div class="satellite dot small"></div>
+          <div class="satellite dot"></div>
+        </div>
+
+        <!-- Anillo 4: 20 dots, CCW -->
+        <div class="orbit orbit-4 ccw ring-yellow">
+          <!-- 20 items -->
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+        </div>
+
+        <!-- Anillo 5: 24 dots -->
+        <div class="orbit orbit-5 ring-orange">
+          <!-- 24 items -->
+          <div class="satellite dot small"></div><div class="satellite dot"></div><div class="satellite dot tiny"></div><div class="satellite dot"></div>
+          <div class="satellite dot small"></div><div class="satellite dot"></div><div class="satellite dot tiny"></div><div class="satellite dot"></div>
+          <div class="satellite dot small"></div><div class="satellite dot"></div><div class="satellite dot tiny"></div><div class="satellite dot"></div>
+          <div class="satellite dot small"></div><div class="satellite dot"></div><div class="satellite dot tiny"></div><div class="satellite dot"></div>
+          <div class="satellite dot small"></div><div class="satellite dot"></div><div class="satellite dot tiny"></div><div class="satellite dot"></div>
+          <div class="satellite dot small"></div><div class="satellite dot"></div><div class="satellite dot tiny"></div><div class="satellite dot"></div>
+        </div>
+
+        <!-- Anillo 6: 28 dots, CCW, más lento -->
+        <div class="orbit orbit-6 ccw ring-pink" style="--spd: 82s;">
+          <!-- 28 items -->
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+          <div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div><div class="satellite dot"></div>
+        </div>
+
+      </button>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../dist/orbit.css">
+  <title>Orbit dashboard</title>
+  <style>
+    body {
+      background-color: black; 
+      font-weight: lighter;
+      font-size: 16px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      --fx-color: var(--o-blue);
+      --fx-font: var(--o-blue);
+      
+      
+    }
+
+    .fx-icon-main {
+      display: none;
+    }
+    .eco {
+      --fx-color: var(--o-green);
+      --fx-font: green;
+
+      .fx-icon-main {
+        display: block;
+      }
+      .eye-info{
+        display: none;
+      }
+    }
+
+    .armed {
+      --fx-color: red;
+      --fx-font: red;
+
+      
+    }
+
+    .satellite {
+      border: none;
+    }
+
+    .ring {
+      border-width: 2px;
+      border-style: solid;
+    }
+    .ring.glow-blue {
+      border-color: var(--fx-color);
+    }
+    .ring.bold {
+      border-width: 3px;
+    }
+
+    .vector.glow-blue {
+      background-color: var(--fx-color);
+    }
+    .satellite.glow-blue {
+      border: none;
+      color: var(--fx-color);
+    }
+    .satellite.glow-blue .capsule{
+      width: fit-content;
+      padding: 2px;
+      border: 1px solid var(--fx-font);
+      border: none;
+      border-radius: 5px;
+    }
+    o-arc.transparent {
+      --o-fill: none
+    }
+    
+    o-arc.glow-blue {
+      --o-fill: var(--fx-color);
+    }
+    
+   
+    .translucid {
+      opacity: 0.5;
+    }
+
+    .NOeye {
+      background: radial-gradient(ellipse at center, orange 0%, orange 1%, red 25%, black 65%, black 100%);
+    }
+    .eye-info {
+      width: 200px; text-align: center; color: var(--fx-font); flex-direction: column;
+    }
+
+    .emphasis {
+       font-weight: bold; font-size: 20px
+    }
+    .mode-label {
+      font-weight: bold;
+    }
+    .selector {
+      opacity: 0;
+      color: var(--fx-font); fill-opacity: 0.1; --o-fill: var(--fx-color); --o-stroke: var(--fx-color);
+      
+    }
+    .selector:hover {
+      transition: opacity 1s;
+      opacity: 1;
+      cursor: pointer;
+      color: var(--fx-font); fill-opacity: 0.1; --o-fill: var(--fx-color); --o-stroke: var(--fx-color);
+    }
+    .label {
+      color: var(--fx-font)
+    }
+    .numpad {
+      display: flex;
+      width: 210px;
+    }
+    .numpad span {
+      text-align: center;
+      padding: 10px;
+      margin: 5px;
+      border: 2px solid var(--o-blue);
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+    }
+    .alarm-code {
+      text-align: center;
+      padding: 10px;
+      margin: 5px;
+      border: 2px solid var(--o-blue);
+      height: 60px;
+      width: 200px;
+      border-radius: 8px;
+    }
+    .arm {
+      border: 2px solid var(--o-pink);
+      color: var(--o-pink)
+    }
+  </style>
+</head>
+<body>
+<div class="bigbang">
+  <div class="gravity-spot">
+   <div class="orbit-8 range-45 from-337 fit-range">
+    <div class="satellite grow-2x arm"><div class="capsule">ARM AWAY</div></div>
+    <div class="satellite grow-2x arm"><div class="capsule">ARM HOME</div></div>
+   </div>
+    <div class="orbit-4">
+      <div class="satellite angle-180">
+        <div class="capsule" style="flex-direction: column; color: var(--o-blue-light); font-size: 30px;">
+          <div class="alarm-code"><span></span></div>
+          <div class="numpad"><span>1</span><span>2</span><span>3</span></div>
+          <div class="numpad"><span>4</span><span>5</span><span>6</span></div>
+          <div class="numpad"><span>7</span><span>8</span><span>9</span></div>
+          <div class="numpad"><span>clear</span></div>
+
+        </div>
+      </div>
+    </div>
+  
+    <div class="orbit-22">
+      <div class="satellite">
+        <div class="gravity-spot gyro  ">
+          <div class="orbit-7 shrink-70  translucid range-150 from-240">
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+            <div class="vector shrink-60 inner-orbit glow-blue"></div>
+          </div>
+          <div class="orbit-3 eye">
+            <div class="satellite grow-2x at-center">
+              <div class="capsule">
+                <svg class="fx-icon-main"  xmlns="http://www.w3.org/2000/svg" height="98px" viewBox="0 -960 960 960" width="98px" fill="var(--o-green-light)"><path d="M216-176q-45-45-70.5-104T120-402q0-63 24-124.5T222-642q35-35 86.5-60t122-39.5Q501-756 591.5-759t202.5 7q8 106 5 195t-16.5 160.5q-13.5 71.5-38 125T684-182q-53 53-112.5 77.5T450-80q-65 0-127-25.5T216-176Zm112-16q29 17 59.5 24.5T450-160q46 0 91-18.5t86-59.5q18-18 36.5-50.5t32-85Q709-426 716-500.5t2-177.5q-49-2-110.5-1.5T485-670q-61 9-116 29t-90 55q-45 45-62 89t-17 85q0 59 22.5 103.5T262-246q42-80 111-153.5T534-520q-72 63-125.5 142.5T328-192Zm0 0Zm0 0Z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="orbit-4 from-310 range-240 ring translucid ">
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+            <o-arc class=" glow-blue gap-10 shrink-70"></o-arc>
+          </div>
+          <div class="orbit-4 from-190 range-80">
+            <o-arc class="glow-blue inner-orbit shrink-90 translucid"></o-arc>
+          </div>
+          <div class="orbit-4 from-270 range-40 translucid">
+            <o-arc class="glow-blue shrink-70"></o-arc>
+          </div>
+          <div class="orbit-5 range-180 from-45 ring bold glow-blue" >
+            <o-arc class="glow-blue outer-orbit"></o-arc>
+            <o-arc class="outer-orbit transparent" ></o-arc>
+            <o-arc class="glow-blue outer-orbit flip mode-label">ECO MODE</o-arc>
+          </div>
+          <div class="orbit-5">
+            <div class="satellite at-center">
+              <div class="capsule eye-info">
+                <span>11:53 AM <br>Monday, Oct.</span> 
+                <br>
+                <span class="emphasis">Night mode</span> 
+                <br>
+                <span>Outside 29˚C<br> cloudy</span>
+              </div>
+            </div>
+          </div>
+          <div class="orbit-9 shrink-20 from-90 range-180 fit-range">
+            <div class="satellite grow-1.2x glow-blue">
+              <div class="capsule">
+                <svg class="fx-icon"   height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--fx-font)"><path d="M221-240q42 0 71-29t29-71q0-24-11-47t-33-37l-36-24v-252q0-9-5.5-14.5T221-720q-9 0-14.5 5.5T201-700v252l-36 24q-22 15-33 37t-11 47q0 42 29 71t71 29Zm0 80q-75 0-127.5-52T41-340q0-48 22-86t58-62v-212q0-42 29-71t71-29q42 0 71 29t29 71v212q36 24 58 62t22 86q0 75-52.5 127.5T221-160Zm327-200q-48-33-78-85t-30-115q0-100 70-170t170-70q100 0 170 70t70 170q0 63-30 115t-78 85H548Zm28-80h212q27-24 39.5-54t12.5-66q0-66-47-113t-113-47q-66 0-113 47t-47 113q0 36 14.5 66t41.5 54Zm104 280q-24 0-42-18t-18-42h120q0 24-18 42t-42 18Zm-120-80v-80h240v80H560ZM221-340Zm459-240Z"/></svg>
+              </div>
+              <div class="gravity-spot">
+                <div class="orbit">
+                  <div class="satellite angle-180">
+                    <div class="capsule label">Devices</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="satellite grow-1.2x glow-blue">
+              <div class="capsule">
+                <svg class="fx-icon"   height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--fx-font)"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h480q33 0 56.5 23.5T720-720v180l160-160v440L720-420v180q0 33-23.5 56.5T640-160H160Zm0-80h480v-480H160v480Zm0 0v-480 480Z"/></svg>
+              </div>
+              <div class="gravity-spot">
+                <div class="orbit">
+                  <div class="satellite angle-180">
+                    <div class="capsule label">Cameras</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="satellite grow-1.2x glow-blue">
+              <div class="capsule">
+                <svg class="fx-icon"   height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--fx-font)"><path d="M480-440q17 0 28.5-11.5T520-480q0-17-11.5-28.5T480-520q-17 0-28.5 11.5T440-480q0 17 11.5 28.5T480-440Zm120 0q17 0 28.5-11.5T640-480q0-17-11.5-28.5T600-520q-17 0-28.5 11.5T560-480q0 17 11.5 28.5T600-440Zm-240 0q17 0 28.5-11.5T400-480q0-17-11.5-28.5T360-520q-17 0-28.5 11.5T320-480q0 17 11.5 28.5T360-440Zm120 120q17 0 28.5-11.5T520-360q0-17-11.5-28.5T480-400q-17 0-28.5 11.5T440-360q0 17 11.5 28.5T480-320Zm120 0q17 0 28.5-11.5T640-360q0-17-11.5-28.5T600-400q-17 0-28.5 11.5T560-360q0 17 11.5 28.5T600-320Zm-240 0q17 0 28.5-11.5T400-360q0-17-11.5-28.5T360-400q-17 0-28.5 11.5T320-360q0 17 11.5 28.5T360-320Zm120-240q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560Zm120 0q17 0 28.5-11.5T640-600q0-17-11.5-28.5T600-640q-17 0-28.5 11.5T560-600q0 17 11.5 28.5T600-560Zm-240 0q17 0 28.5-11.5T400-600q0-17-11.5-28.5T360-640q-17 0-28.5 11.5T320-600q0 17 11.5 28.5T360-560ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Zm0-320Z"/></svg>
+              </div>
+              <div class="gravity-spot">
+                <div class="orbit">
+                  <div class="satellite angle-180">
+                    <div class="capsule label">Alarm</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="satellite grow-1.2x glow-blue">
+              <div class="capsule">
+                <svg class="fx-icon"   height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--fx-font)"><path d="M160-120v-480l320-240 320 240v480H160Zm80-80h280v-120H240v120Zm360 0h120v-120H600v120ZM240-400h120v-119H240v119Zm200 0h280v-119H440v119ZM292-599h376L480-740 292-599Z"/></svg>
+              </div>
+              <div class="gravity-spot">
+                <div class="orbit">
+                  <div class="satellite angle-180">
+                    <div class="capsule label">Rooms</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="satellite grow-1.2x glow-blue">
+              <div class="capsule">
+                <svg class="fx-icon"   height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--fx-font)"><path d="M120-120v-80h80v-640h400v40h160v240h-80v-160h-80v240h-80v-280H280v560h200v80H120Zm560 40-12-60q-12-5-22.5-11T625-165l-58 20-40-69 45-40q-2-15-2-25.5t2-25.5l-45-40 40-69 58 20q10-8 20.5-14.5T668-420l12-60h80l12 60q12 5 22.5 11t20.5 14l58-20 40 69-45 40q2 15 2 25.5t-2 25.5l45 40-40 69-58-19q-10 8-20.5 14T772-140l-12 60h-80Zm40-120q33 0 56.5-23.5T800-280q0-33-23.5-56.5T720-360q-33 0-56.5 23.5T640-280q0 33 23.5 56.5T720-200ZM440-440q-17 0-28.5-11.5T400-480q0-17 11.5-28.5T440-520q17 0 28.5 11.5T480-480q0 17-11.5 28.5T440-440ZM280-200v-560 560Z"/></svg>
+              </div>
+              <div class="gravity-spot">
+                <div class="orbit">
+                  <div class="satellite angle-180">
+                    <div class="capsule label">Scenes</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="orbit-11 from-68 range-180 fit-range">
+            <o-arc flip class="inner-orbit grow-2.2x no-active selector"></o-arc>
+            <o-arc flip class="inner-orbit grow-2.2x selector"></o-arc>
+            <o-arc flip class="inner-orbit grow-2.2x no-active selector"></o-arc>
+            <o-arc flip class="inner-orbit grow-2.2x no-active selector"></o-arc>
+            <o-arc flip class="inner-orbit grow-2.2x no-active selector"></o-arc>
+          </div>
+        </div>
+      </div>
+      <div class="satellite"></div>
+      <div class="satellite"></div>
+      <div class="satellite"></div>
+      <div class="satellite"></div>
+    </div>
+  </div>
+</div>
+  <script src="../dist/orbit.js">
+  </script>
+  <script>
+     //Orbit.resize('.bigbang')
+  </script>
+</body>
+</html>

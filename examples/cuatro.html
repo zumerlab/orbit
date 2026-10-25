@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../dist/orbit.css">
+
+  <title>Testing orbit</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+    body {
+      font-family: "Open Sans";
+      color: darkgray;
+      font-size: calc(15px * var(--o-force-ratio, 1));
+    }
+
+    a {
+      color: var(--o-cyan);
+      text-decoration: none;
+    }
+
+    /* Basic styling for the grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      /* 3 equal columns */
+      gap: 10px;
+      /* Space between grid items */
+      max-width: 600px;
+      /* Adjust as needed */
+      margin: 0 auto;
+      /* Center the grid */
+    }
+
+    .grid-item {
+      height: 450px;
+      border: 1px solid #ccc;
+      /* Light border */
+      padding: 2px;
+      /* Space inside each cell */
+      text-align: center;
+      /* Center text */
+    }
+
+    /* Some visual styling */
+    .capsule {
+      width: 200px;
+    }
+
+    .satellite {
+      border-color: white;
+    }
+
+    .gray-border {
+      border-color: darkgray;
+    }
+
+    o-arc {
+      --o-arc-color: var(--o-gray-white);
+      --o-hover-arc-color: var(--o-cyan);
+    }
+
+    o-arc.active {
+      --o-arc-color: var(--o-purple-white);
+      --o-hover-arc-color: var(--o-purple-lighter);
+    }
+
+    o-arc.past {
+      --o-arc-color: var(--o-purple-lighter);
+      --o-hover-arc-color: var(--o-cyan);
+    }
+
+    .red {
+      background-color: var(--o-red);
+    }
+
+    .orange {
+      background-color: var(--o-orange);
+    }
+
+    .yellow {
+      background-color: var(--o-yellow);
+    }
+
+    .green {
+      background-color: var(--o-green);
+    }
+
+    .cyan {
+      background-color: var(--o-cyan);
+    }
+
+    .gray {
+      background-color: var(--o-gray-lighter);
+    }
+
+    .purple {
+      background-color: var(--o-purple);
+    }
+
+    .transparent {
+      background-color: transparent;
+    }
+
+    .day {
+      background-color: var(--o-purple);
+      border-color: var(--o-purple);
+
+    }
+
+    .month {
+      background-color: var(--o-purple);
+      border-color: var(--o-purple);
+
+    }
+
+    .vector.day {
+      height: 3px;
+      border-color: transparent
+    }
+
+    .vector.month {
+      height: 7px;
+      border-color: transparent
+    }
+
+    .week {
+      background-color: var(--o-gray-lighter);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-container">
+    <div class="grid-item">
+      <div class="bigbang">
+        <div class="gravity-spot">
+
+          <div class="orbit-3 gray-border">
+            <div class="satellite at-center grow-2x transparent">
+              <div class="capsule" style="font-weight: bold; font-size: 20px;">2024</div>
+            </div>
+          </div>
+
+          <div class="orbit-3 gray-border from-355">
+            <o-text class="outer-orbit">Winter</o-text>
+            <o-text class="outer-orbit" flip>Spring</o-text>
+            <o-text class="outer-orbit" flip>Summer</o-text>
+            <o-text class="outer-orbit">Autumn</o-text>
+          </div>
+
+          <div class="orbit-4 gray-border from-355">
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+          </div>
+
+          <div class="orbit-8 from-300 range-31">
+            <o-arc class="active grow-2x inner-orbit"></o-arc>
+          </div>
+
+          <div class="orbit-4 gray-border">
+            <o-text class="outer-orbit">Jan</o-text>
+            <o-text class="outer-orbit">Feb</o-text>
+            <o-text class="outer-orbit">Mar</o-text>
+            <o-text class="outer-orbit" flip>Apr</o-text>
+            <o-text class="outer-orbit" flip>May</o-text>
+            <o-text class="outer-orbit" flip>Jun</o-text>
+            <o-text class="outer-orbit" flip>Jul</o-text>
+            <o-text class="outer-orbit" flip>Aug</o-text>
+            <o-text class="outer-orbit" flip>Sep</o-text>
+            <o-text class="outer-orbit">Oct</o-text>
+            <o-text class="outer-orbit" style="font-weight: bold;">Nov</o-text>
+            <o-text class="outer-orbit">Dic</o-text>
+
+          </div>
+          <div class="orbit-5 gray-border">
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+          </div>
+
+          <div class="orbit-9 from-300 range-31">
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+          </div>
+
+
+          <div class="orbit-8 gray-border from-355">
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+            <div class="vector inner-orbit grow-1.9x week"></div>
+          </div>
+
+          <div class="orbit-7 from-323 range-40">
+            <div class="satellite red shrink-70"></div>
+            <div class="satellite yellow shrink-70"></div>
+
+            <div class="satellite organge shrink-70"></div>
+            <div class="satellite cyan shrink-70"></div>
+            <div class="satellite cyan shrink-70"></div>
+            <div class="satellite red shrink-70"></div>
+          </div>
+          <div class="orbit-7 shrink-30 from-323 range-20">
+            <div class="satellite green shrink-70"></div>
+            <div class="satellite green shrink-70"></div>
+            <div class="satellite green shrink-70"></div>
+          </div>
+          <div class="orbit-7 shrink-90 from-303 range-80">
+            <o-progress value="50" class="shrink-80"></o-progress>
+          </div>
+          <div class="orbit-7 shrink-60 from-0 range-270">
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+          </div>
+          <div class="orbit-7 from-0 range-290">
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+          </div>
+          <div class="orbit-7 shrink-30 from-0 range-180">
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+          </div>
+          <div class="orbit-7 shrink-60 from-200 range-80">
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+            <div class="satellite gray shrink-70"></div>
+          </div>
+          <div class="orbit-3">
+            <o-progress value="315" max="360" class="inner-orbit shrink-90"
+              style="--o-progress-color: var(--o-purple)"></o-progress>
+          </div>
+          <div class="orbit-3  shrink-40 from-270 range-180">
+            <o-text style="font-size: 9px">day 300 | week 54 | month 11</o-text>
+          </div>
+
+          <div class="orbit-11 ">
+            <div class="satellite outer-orbit grow-0.3x angle-315 day">
+              <div class="capsule" style="color: white">15</div>
+              <div class="gravity-spot">
+                <div class="orbit-2 shrink-30 range-90 from-270">
+                  <o-text style="font-size: 10px">Thursday</o-text>
+                </div>
+                <div class="orbit-1">
+                  <o-progress value="50" class="inner-orbit shrink-90"></o-progress>
+                </div>
+
+                <div class="orbit-2 shrink-50">
+                  <div class="satellite outer-orbit sync-rotation angle-180">
+                    <div class="capsule" style="font-size: 7px;">
+                      12:00 pm
+                    </div>
+                  </div>
+                </div>
+
+                <div class="orbit-1  from-240 range-80">
+                  <div class="satellite inner-orbit shrink-70 green"></div>
+                  <div class="satellite inner-orbit shrink-70 yellow"></div>
+                  <div class="satellite inner-orbit shrink-70 red"></div>
+                  <div class="satellite inner-orbit shrink-70 red"></div>
+                  <div class="satellite inner-orbit shrink-70 cyan"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit-10 shrink-30 from-300 range-30">
+            <o-text style="font-size: 4px;" fit-range>01-03 04-10 11-17 18-24 25-30</o-text>
+          </div>
+
+
+          <div class="orbit-11 ">
+            <div class="vector inner-orbit grow-3.1x angle-315 day"></div>
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="bigbang">
+        <div class="gravity-spot">
+
+          <div class="orbit-3 gray-border">
+            <div class="satellite at-center grow-2x transparent">
+              <div class="capsule" style="font-weight: bold; font-size: 20px;">2024</div>
+            </div>
+          </div>
+
+          <div class="orbit-3 gray-border from-355">
+            <o-text class="outer-orbit">Winter</o-text>
+            <o-text class="outer-orbit" flip>Spring</o-text>
+            <o-text class="outer-orbit" flip>Summer</o-text>
+            <o-text class="outer-orbit">Autumn</o-text>
+          </div>
+
+          <div class="orbit-4 gray-border from-355">
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+            <div class="vector inner-orbit"></div>
+          </div>
+
+          <div class="orbit-6 "></div>
+
+          <div class="orbit-7 from-15 ">
+            <o-text class="">Jan</o-text>
+            <o-text class="">Feb</o-text>
+            <o-text class="">Mar</o-text>
+            <o-text class="" flip>Apr</o-text>
+            <o-text class="" flip>May</o-text>
+            <o-text class="" flip>Jun</o-text>
+            <o-text class="" flip>Jul</o-text>
+            <o-text class="" flip>Aug</o-text>
+            <o-text class="" flip>Sep</o-text>
+            <o-text class="">Oct</o-text>
+            <o-text class="" style="font-weight: bold;">Nov</o-text>
+            <o-text class="">Dic</o-text>
+          </div>
+          <div class="orbit-8 ">
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+            <div class="vector shrink-50"></div>
+          </div>
+          <div class="orbit-11">
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+            <div class="vector inner-orbit shrink-50"></div>
+
+
+          </div>
+          <div class="orbit-9  from-6 gray-border">
+            <o-text class="outer-orbit">1</o-text>
+            <o-text class="outer-orbit">2</o-text>
+            <o-text class="outer-orbit">3</o-text>
+            <o-text class="outer-orbit">4</o-text>
+            <o-text class="outer-orbit">5</o-text>
+            <o-text class="outer-orbit">6</o-text>
+            <o-text class="outer-orbit">7</o-text>
+            <o-text class="outer-orbit">8</o-text>
+            <o-text class="outer-orbit">9</o-text>
+            <o-text class="outer-orbit">10</o-text>
+            <o-text class="outer-orbit">11</o-text>
+            <o-text class="outer-orbit">12</o-text>
+            <o-text class="outer-orbit">13</o-text>
+            <o-text class="outer-orbit">14</o-text>
+            <o-text class="outer-orbit">15</o-text>
+            <o-text class="outer-orbit">16</o-text>
+            <o-text class="outer-orbit">17</o-text>
+            <o-text class="outer-orbit">18</o-text>
+            <o-text class="outer-orbit">19</o-text>
+            <o-text class="outer-orbit">20</o-text>
+            <o-text class="outer-orbit">21</o-text>
+            <o-text class="outer-orbit">22</o-text>
+            <o-text class="outer-orbit">23</o-text>
+            <o-text class="outer-orbit">24</o-text>
+            <o-text class="outer-orbit">25</o-text>
+            <o-text class="outer-orbit">26</o-text>
+            <o-text class="outer-orbit">27</o-text>
+            <o-text class="outer-orbit">28</o-text>
+            <o-text class="outer-orbit">29</o-text>
+            <o-text class="outer-orbit">30</o-text>
+
+
+          </div>
+          <div class="orbit-11 from-216 range-13">
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+            <div class="vector inner-orbit week "></div>
+
+          </div>
+
+
+          <div class="orbit-8  from-355">
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+            <div class="vector inner-orbit week shrink-70"></div>
+          </div>
+
+
+          <div class="orbit-3">
+            <o-progress value="315" max="360" class="inner-orbit shrink-90"
+              style="--o-progress-color: var(--o-purple)"></o-progress>
+          </div>
+          <div class="orbit-3  shrink-40 from-270 range-180">
+            <o-text style="font-size: 9px">day 300 | week 54 | month 11</o-text>
+          </div>
+
+
+
+          <div class="orbit-9 shrink-30 ">
+            <div class="vector inner-orbit grow-3x angle-340 month"></div>
+
+          </div>
+          <div class="orbit-11 gray-border ">
+
+            <div class="vector inner-orbit grow-4.1x angle-222 day"></div>
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../dist/orbit.js"></script>
+  <script>
+    //Orbit.resize('.bigbang')
+  </script>
+</body>
+
+</html>

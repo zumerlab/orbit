@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Orbit — Car Dashboard Pro (Bundles)</title>
+
+<!-- Usa tus bundles reales -->
+<link rel="stylesheet" href="../dist/orbit.css">
+<script defer src="../dist/orbit.js"></script>
+
+<style>
+  :root{
+    --bg:#07090f; --panel:#0c111a; --ink:#e9eef7; --muted:#93a0b5;
+    --good:#38ef7d; --warn:#ffd166; --bad:#ff5c7a;
+    --accent:#7bd8ff; --ambience:#00c2ff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:radial-gradient(1200px 700px at 60% -10%, #0d1524 0%, #07090f 55%, #05070b 100%);
+    color:var(--ink); font:14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  .wrap{max-width:1200px;margin:28px auto;padding:0 16px;display:grid;gap:16px;grid-template-columns:1.2fr 1fr}
+  @media (max-width:1024px){ .wrap{grid-template-columns:1fr} }
+
+  .cluster,.side{
+    background:linear-gradient(180deg, rgba(12,17,26,.9), rgba(6,9,14,.9));
+    border:1px solid #172235; border-radius:20px; padding:16px; position:relative; overflow:hidden;
+  }
+  .cluster:before{
+    content:""; position:absolute; inset:-30% -30% auto auto; height:70%; width:70%;
+    background:radial-gradient(400px 280px at 100% 0, color-mix(in oklab, var(--ambience) 30%, transparent) 0%, transparent 70%);
+    filter: blur(40px); opacity:.6; pointer-events:none;
+  }
+  .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;color:var(--muted)}
+  .hdr .brand{font-weight:700;letter-spacing:.5px;color:#cce3ff}
+  .hdr .chip{font-variant-numeric:tabular-nums;font-weight:600;background:#101b2b;border:1px solid #1a2a45;padding:6px 10px;border-radius:999px}
+
+  .grid-gauges{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  @media (max-width:560px){ .grid-gauges{grid-template-columns:1fr} }
+
+  .gauge,.mini{background:#0b1019;border:1px solid #162337;border-radius:16px;padding:10px}
+  .gauge{display:grid;place-items:center;aspect-ratio:1.3/1}
+  .mini{display:grid;place-items:center;aspect-ratio:1/1}
+  .label{text-align:center;color:var(--muted);margin-top:6px}
+  .val{font-size:32px;font-weight:800;letter-spacing:.5px}
+  .unit{opacity:.7;margin-left:4px;font-weight:600}
+
+  .side .cards{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  @media (max-width:520px){ .side .cards{grid-template-columns:1fr} }
+  .card{background:#0b1019;border:1px solid #162337;border-radius:14px;padding:12px}
+  .card h4{margin:0 0 6px 0;color:var(--muted);font-weight:600}
+  .row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+
+  .btn{
+    background:linear-gradient(180deg,#0f1a2b,#0a1422);border:1px solid #173156;color:#d9eeff;font-weight:700;
+    padding:10px 14px;border-radius:12px;cursor:pointer;transition:transform .08s ease,box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px -10px color-mix(in oklab,var(--ambience) 50%, transparent)}
+  .btn:active{transform:translateY(0) scale(.98)}
+  .seg{display:flex;background:#0b1322;border:1px solid #173156;border-radius:12px;padding:4px;gap:4px}
+  .seg label{flex:1;padding:8px 10px;text-align:center;border-radius:8px;font-weight:700;color:#cfe7ff;opacity:.6;cursor:pointer;transition:background .2s,opacity .2s}
+  .seg input:checked + label{background:#0f1f35;opacity:1;border:1px solid #235c93}
+  .pill{padding:6px 10px;border-radius:999px;border:1px solid #1b2a45;background:#0d1627;font-weight:700;color:#d6eaff}
+  .big-status{display:flex;gap:10px;align-items:center;justify-content:center;padding:10px 0 4px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--good);box-shadow:0 0 18px -2px var(--good)}
+  .blinker{width:10px;height:10px;border-radius:2px;background:#2a2a2a;box-shadow:0 0 0 0 transparent}
+  .blinker.on{background:#ffd166;box-shadow:0 0 14px -2px #ffd166}
+  input[type="range"]{width:100%;accent-color:var(--ambience)}
+  .glow{height:32px;border-radius:10px;border:1px solid #1b2a45;background:color-mix(in oklab,var(--ambience) 35%,#0b1019);box-shadow:inset 0 0 24px -10px var(--ambience),0 0 34px -18px var(--ambience)}
+
+  /* IMPORTANTE: tu bundle posiciona .satellite/.vector con variables trig y ángulos */
+  .satellite{border:none!important} /* limpio, sin bordes debug */
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- CLUSTER PRINCIPAL -->
+  <section class="cluster">
+    <div class="hdr">
+      <div class="brand">ORBIT GT • e-SPORT</div>
+      <div class="chip"><span id="clock">--:--</span> | ODO 12 483 km</div>
+    </div>
+
+    <div class="grid-gauges">
+
+      <!-- Velocímetro (270°: from-225 + range-270) -->
+      <div class="gauge">
+        <div class="bigbang">
+          <div class="gravity-spot" style="--o-force: 520px"><!-- tu CSS usa --o-force para derivar radios/anchos. :contentReference[oaicite:1]{index=1} -->
+            <!-- ticks -->
+            <div class="orbit-7 range-270 from-225 fit-range">
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+              <div class="vector" style="height:3px;background:#1b2640"></div><div class="vector" style="height:3px;background:#1b2640"></div>
+            </div>
+            <!-- bandas -->
+            <div class="orbit-5 range-270 from-225">
+              <o-arc class="gap-4 inner-orbit" style="--o-fill:var(--good)"></o-arc>
+              <o-arc class="gap-4 inner-orbit" style="--o-fill:var(--warn)"></o-arc>
+              <o-arc class="gap-4 inner-orbit" style="--o-fill:var(--bad)"></o-arc>
+            </div>
+            <!-- aguja (usa value 0..100) -->
+            <div class="orbit-4 range-270 from-225">
+              <o-arc id="speed-needle" value="0" shape="arrow" style="--o-fill:#eaf3ff"></o-arc>
+            </div>
+            <!-- lectura central -->
+            <div class="orbit-0">
+              <div class="satellite at-center">
+                <div class="capsule" style="flex-direction:column;gap:4px">
+                  <div class="val"><span id="speed-val">0</span><span class="unit">km/h</span></div>
+                  <div class="label">Velocidad</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tacómetro -->
+      <div class="gauge">
+        <div class="bigbang">
+          <div class="gravity-spot" style="--o-force: 520px">
+            <div class="orbit-6 range-270 from-225 fit-range">
+              <div class="vector" style="height:3px;background:#2a1f35"></div><div class="vector" style="height:3px;background:#2a1f35"></div>
+              <div class="vector" style="height:3px;background:#2a1f35"></div><div class="vector" style="height:3px;background:#2a1f35"></div>
+              <div class="vector" style="height:3px;background:#2a1f35"></div><div class="vector" style="height:3px;background:#2a1f35"></div>
+              <div class="vector" style="height:3px;background:#2a1f35"></div><div class="vector" style="height:3px;background:#2a1f35"></div>
+            </div>
+            <div class="orbit-5 range-270 from-225">
+              <o-arc class="gap-6" style="--o-fill:#8ad8ff"></o-arc>
+              <o-arc class="gap-6" style="--o-fill:#c395ff"></o-arc>
+              <o-arc class="gap-6" style="--o-fill:#ff7b9c"></o-arc>
+            </div>
+            <div class="orbit-4 range-270 from-225">
+              <o-arc id="rpm-needle" value="0" shape="arrow" style="--o-fill:#ffffff"></o-arc>
+            </div>
+            <div class="orbit-0">
+              <div class="satellite at-center">
+                <div class="capsule" style="flex-direction:column;gap:4px">
+                  <div class="val"><span id="rpm-val">0.0</span><span class="unit">k</span></div>
+                  <div class="label">RPM ×1000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combustible -->
+      <div class="mini">
+        <div class="bigbang"><div class="gravity-spot" style="--o-force: 400px">
+          <div class="orbit-4"><o-arc id="fuel-arc" value="72" style="--o-stroke:#162337;--o-stroke-width:10;--o-fill:var(--good)"></o-arc></div>
+          <div class="orbit-0"><div class="satellite at-center">
+            <div class="capsule" style="flex-direction:column;gap:4px">
+              <div class="val" style="font-size:22px"><span id="fuel-val">72</span><span class="unit">%</span></div>
+              <div class="label">Combustible</div>
+            </div>
+          </div></div>
+        </div></div>
+      </div>
+
+      <!-- Batería -->
+      <div class="mini">
+        <div class="bigbang"><div class="gravity-spot" style="--o-force: 400px">
+          <div class="orbit-4"><o-arc id="bat-arc" value="82" style="--o-stroke:#162337;--o-stroke-width:10;--o-fill:var(--accent)"></o-arc></div>
+          <div class="orbit-0"><div class="satellite at-center">
+            <div class="capsule" style="flex-direction:column;gap:4px">
+              <div class="val" style="font-size:22px"><span id="bat-val">82</span><span class="unit">%</span></div>
+              <div class="label">Batería</div>
+            </div>
+          </div></div>
+        </div></div>
+      </div>
+
+      <!-- Temperatura -->
+      <div class="mini">
+        <div class="bigbang"><div class="gravity-spot" style="--o-force: 400px">
+          <div class="orbit-4"><o-arc id="temp-arc" value="45" style="--o-stroke:#162337;--o-stroke-width:10;--o-fill:var(--warn)"></o-arc></div>
+          <div class="orbit-0"><div class="satellite at-center">
+            <div class="capsule" style="flex-direction:column;gap:4px">
+              <div class="val" style="font-size:22px"><span id="temp-val">84</span><span class="unit">°C</span></div>
+              <div class="label">Temperatura</div>
+            </div>
+          </div></div>
+        </div></div>
+      </div>
+
+      <!-- Estado + direccionales -->
+      <div class="mini">
+        <div class="big-status"><span class="dot" id="car-status"></span><strong id="status-label">READY</strong></div>
+        <div class="label">Sistemas</div>
+        <div style="height:10px"></div>
+        <div class="row" style="justify-content:center; gap:10px">
+          <div class="blinker" id="bl-left" title="Izquierda"></div>
+          <div class="blinker" id="bl-right" title="Derecha"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTROLES -->
+  <aside class="side">
+    <div class="hdr" style="margin-bottom:12px">
+      <div style="display:flex; gap:8px; align-items:center"><span class="pill">HUD Controls</span></div>
+      <div class="pill">bundles</div>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <h4>Encendido & Marchas</h4>
+        <div class="row" style="gap:8px">
+          <button class="btn" id="btn-start">START</button>
+          <button class="btn" id="btn-stop" style="background:#1a0f15;border-color:#4a1d2a">STOP</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="seg" id="gear">
+          <input type="radio" name="gear" id="g-p" value="P" checked hidden><label for="g-p">P</label>
+          <input type="radio" name="gear" id="g-r" value="R" hidden><label for="g-r">R</label>
+          <input type="radio" name="gear" id="g-n" value="N" hidden><label for="g-n">N</label>
+          <input type="radio" name="gear" id="g-d" value="D" hidden><label for="g-d">D</label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Modo de Manejo</h4>
+        <div class="seg" id="mode">
+          <input type="radio" name="mode" id="m-eco"   value="ECO"   checked hidden><label for="m-eco">ECO</label>
+          <input type="radio" name="mode" id="m-comf"  value="COMF"  hidden><label for="m-comf">COMF</label>
+          <input type="radio" name="mode" id="m-sport" value="SPORT" hidden><label for="m-sport">SPORT</label>
+          <input type="radio" name="mode" id="m-track" value="TRACK" hidden><label for="m-track">TRACK</label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Simulación</h4>
+        <div class="label">Velocidad (km/h)</div><input id="rng-speed" type="range" min="0" max="260" value="0"/>
+        <div class="label">RPM ×1000</div><input id="rng-rpm"   type="range" min="0" max="8" step="0.1" value="0"/>
+        <div class="label">Combustible (%)</div><input id="rng-fuel" type="range" min="0" max="100" value="72"/>
+        <div class="label">Batería (%)</div><input id="rng-bat"  type="range" min="0" max="100" value="82"/>
+        <div class="label">Temperatura (°C)</div><input id="rng-temp" type="range" min="60" max="120" value="84"/>
+        <div style="height:6px"></div>
+        <div class="row">
+          <button class="btn" id="demo-accel">Acelerar 0→140</button>
+          <button class="btn" id="demo-brake">Frenar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Luces</h4>
+        <div class="row">
+          <label class="row" style="gap:8px"><input id="chk-left"  type="checkbox"/><span>Direccional Izq.</span></label>
+          <label class="row" style="gap:8px"><input id="chk-right" type="checkbox"/><span>Direccional Der.</span></label>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <label class="row" style="gap:8px"><input id="chk-high" type="checkbox"/><span>Altas</span></label>
+          <label class="row" style="gap:8px"><input id="chk-fog"  type="checkbox"/><span>Antiniebla</span></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Ambiente</h4>
+        <div class="row" style="gap:8px">
+          <input id="amb-color" type="color" value="#00c2ff" style="width:46%;height:38px;border-radius:10px;border:1px solid #1b2a45;background:#0d1627"/>
+          <button class="btn" id="amb-random">Random</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="glow" id="amb-glow"></div>
+      </div>
+
+    </div>
+  </aside>
+</div>
+
+<script>
+(() => {
+  // === SHORTCUTS ===
+  const $ = (s, el=document) => el.querySelector(s);
+  const speedNeedle = $('#speed-needle'), speedVal = $('#speed-val');
+  const rpmNeedle = $('#rpm-needle'), rpmVal = $('#rpm-val');
+  const fuelArc = $('#fuel-arc'), fuelVal = $('#fuel-val');
+  const batArc = $('#bat-arc'), batVal = $('#bat-val');
+  const tempArc = $('#temp-arc'), tempVal = $('#temp-val');
+  const rSpeed = $('#rng-speed'), rRpm = $('#rng-rpm'), rFuel = $('#rng-fuel'), rBat = $('#rng-bat'), rTemp = $('#rng-temp');
+  const btnStart = $('#btn-start'), btnStop = $('#btn-stop');
+  const chkLeft = $('#chk-left'), chkRight = $('#chk-right'), chkHigh = $('#chk-high'), chkFog = $('#chk-fog');
+  const ambColor = $('#amb-color'), ambGlow = $('#amb-glow'), ambRandom = $('#amb-random');
+  const statusDot = $('#car-status'), statusLabel = $('#status-label');
+
+  // Reloj simple
+  const tick = () => {
+    const d = new Date(); const hh = String(d.getHours()).padStart(2,'0'); const mm = String(d.getMinutes()).padStart(2,'0');
+    $('#clock').textContent = `${hh}:${mm}`;
+  };
+  tick(); setInterval(tick, 15000);
+
+  // === RENDER HELPERS ===
+  function setSpeed(v){
+    v = Math.max(0, Math.min(260, +v||0));
+    speedVal.textContent = v.toFixed(0);
+    // <o-arc value> controla el avance de aguja (0..100) según tu bundle. :contentReference[oaicite:2]{index=2}
+    speedNeedle.setAttribute('value', Math.round((v/260)*100));
+  }
+  function setRPM(k){
+    k = Math.max(0, Math.min(8, +k||0));
+    rpmVal.textContent = k.toFixed(1);
+    rpmNeedle.setAttribute('value', Math.round((k/8)*100));
+  }
+  function setFuel(p){
+    p = Math.max(0, Math.min(100, +p||0));
+    fuelVal.textContent = p.toFixed(0);
+    fuelArc.setAttribute('value', p);
+    fuelArc.style.setProperty('--o-fill', p<15 ? 'var(--bad)' : p<35 ? 'var(--warn)' : 'var(--good)');
+  }
+  function setBat(p){
+    p = Math.max(0, Math.min(100, +p||0));
+    batVal.textContent = p.toFixed(0);
+    batArc.setAttribute('value', p);
+  }
+  function setTemp(c){
+    c = Math.max(60, Math.min(120, +c||0));
+    tempVal.textContent = c.toFixed(0);
+    const rel = (c-60)/(120-60)*100;
+    tempArc.setAttribute('value', Math.round(rel));
+    tempArc.style.setProperty('--o-fill', c>105 ? 'var(--bad)' : c>95 ? 'var(--warn)' : 'var(--accent)');
+  }
+  function setReady(on){
+    statusDot.style.background = on ? 'var(--good)' : 'var(--bad)';
+    statusDot.style.boxShadow  = on ? '0 0 18px -2px var(--good)' : '0 0 18px -2px var(--bad)';
+    statusLabel.textContent = on ? 'READY' : 'OFF';
+  }
+
+  // Blinkers
+  let tL=null, tR=null;
+  function upBlink(){
+    clearInterval(tL); clearInterval(tR);
+    $('#bl-left').classList.remove('on'); $('#bl-right').classList.remove('on');
+    if(chkLeft.checked) tL = setInterval(()=> $('#bl-left').classList.toggle('on'), 450);
+    if(chkRight.checked) tR = setInterval(()=> $('#bl-right').classList.toggle('on'), 450);
+  }
+  function upLights(){
+    const base = getComputedStyle(document.documentElement).getPropertyValue('--ambience').trim() || '#00c2ff';
+    ambGlow.style.boxShadow = `inset 0 0 24px -10px ${base}, 0 0 34px -18px ${base}`
+      + (chkHigh.checked ? ', 0 0 42px -10px rgba(255,255,255,.35)' : '')
+      + (chkFog.checked  ? ', 0 0 50px -12px rgba(255,209,102,.35)' : '');
+  }
+  function setAmb(hex){
+    document.documentElement.style.setProperty('--ambience', hex);
+    ambGlow.style.background = `color-mix(in oklab, ${hex} 35%, #0b1019)`;
+    ambGlow.style.boxShadow = `inset 0 0 24px -10px ${hex}, 0 0 34px -18px ${hex}`;
+  }
+
+  // DEMOS
+  function accelTo(target=140){
+    let v = +rSpeed.value;
+    const step = () => {
+      v += Math.max(1, (target - v)*0.08);
+      if(v >= target) v = target;
+      rSpeed.value = v; setSpeed(v);
+      const rpm = Math.min(8, 1.0 + v/45);
+      rRpm.value = rpm; setRPM(rpm);
+      if(v < target) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function brakeToZero(){
+    let v = +rSpeed.value;
+    const step = () => {
+      v -= Math.max(2, v*0.12);
+      if(v <= 0) v = 0;
+      rSpeed.value = v; setSpeed(v);
+      const rpm = Math.max(0.7, +rRpm.value*0.9 - 0.05);
+      rRpm.value = rpm; setRPM(rpm);
+      if(v > 0.2) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // EVENTOS
+  rSpeed.addEventListener('input', e=> setSpeed(e.target.value));
+  rRpm  .addEventListener('input', e=> setRPM(e.target.value));
+  rFuel .addEventListener('input', e=> setFuel(e.target.value));
+  rBat  .addEventListener('input', e=> setBat(e.target.value));
+  rTemp .addEventListener('input', e=> setTemp(e.target.value));
+
+  btnStart.addEventListener('click', ()=> setReady(true));
+  btnStop .addEventListener('click', ()=> setReady(false));
+  $('#demo-accel').addEventListener('click', ()=> accelTo(140));
+  $('#demo-brake').addEventListener('click', ()=> brakeToZero());
+
+  chkLeft.addEventListener('change', upBlink);
+  chkRight.addEventListener('change', upBlink);
+  chkHigh.addEventListener('change', upLights);
+  chkFog .addEventListener('change', upLights);
+
+  ambColor.addEventListener('input', e=> setAmb(e.target.value));
+  ambRandom.addEventListener('click', ()=>{
+    const hex = '#'+Math.floor(Math.random()*0xffffff).toString(16).padStart(6,'0');
+    ambColor.value = hex; setAmb(hex);
+  });
+
+  // INIT
+  (function init(){
+    // “--o-force” y las clases orbit-*/vector/satellite son resueltas por tu CSS (posicionamiento polar). :contentReference[oaicite:3]{index=3}
+    setAmb(getComputedStyle(document.documentElement).getPropertyValue('--ambience').trim() || '#00c2ff');
+    setSpeed(rSpeed.value); setRPM(rRpm.value); setFuel(rFuel.value); setBat(rBat.value); setTemp(rTemp.value);
+    setReady(true); upLights(); tick();
+  })();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../dist/orbit.css">
+<title>Orbit — Network Radar</title>
+<style>
+  body{margin:0;background:#0b0d12;color:#e6e6e6;font:13px system-ui,sans-serif;display:grid;place-items:center;height:100svh}
+  .radar{width:min(680px,92vw);aspect-ratio:1;background:#0f1116;border:1px solid #1a1f2a;border-radius:18px;padding:14px}
+  .badge{padding:2px 8px;border-radius:999px;border:1px solid currentColor;font-weight:600}
+  .ok{color:var(--o-green)}
+  .warn{color:var(--o-yellow)}
+  .down{color:var(--o-red)}
+  .satellite{border:none}
+  .legend{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:8px;opacity:.8}
+</style>
+</head>
+<body>
+  <div class="radar">
+    <div class="bigbang">
+      <div class="gravity-spot" style="--o-force: 520px;">
+        <div class="orbit-2"></div>
+        <div class="orbit-4"></div>
+        <div class="orbit-6"></div>
+        <div class="orbit-8"></div>
+        <!-- Nodos -->
+        <div class="orbit-4">
+          <div class="satellite angle-40"><div class="capsule badge ok">API</div></div>
+          <div class="satellite angle-180"><div class="capsule badge warn">Payments</div></div>
+        </div>
+        <div class="orbit-6">
+          <div class="satellite angle-300"><div class="capsule badge ok">Auth</div></div>
+          <div class="satellite angle-230"><div class="capsule badge down">DB</div></div>
+          <div class="satellite angle-20"><div class="capsule badge ok">Cache</div></div>
+        </div>
+        <div class="orbit-8">
+          <div class="satellite angle-120"><div class="capsule badge warn">Search</div></div>
+          <div class="satellite angle-340"><div class="capsule badge ok">CDN</div></div>
+        </div>
+        <!-- Centro -->
+        <div class="orbit-0">
+          <div class="satellite at-center">
+            <div class="capsule" style="flex-direction:column;gap:6px;text-align:center">
+              <div style="font-size:26px;font-weight:800">Network</div>
+              <div style="opacity:.7">Live status</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="legend">
+      <span class="badge ok">OK</span>
+      <span class="badge warn">WARN</span>
+      <span class="badge down">DOWN</span>
+    </div>
+  </div>
+</body>
+</html>

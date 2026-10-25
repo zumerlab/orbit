@@ -1,39 +1,45 @@
 
 @use './variables' as *;
 
+#{$orbit-selector} {
+  --o-orbit-number: var(--o-layout-number, 1);
+  --o-angle: var(--o-layout-angle, 0deg);
+}
+
+.satellite, .side, .vector, o-arc, o-progress {
+  --o-orbit-child-number: var(--o-layout-index, 0);
+}
+
 .orbit-0 {
-  --o-orbit-number: 0.00001;
+  --o-orbit-number: var(--o-layout-number, 0.00001);
 }
 @for $i from 1 through $extra-orbits {
     :nth-child(#{$i} of .orbit), .orbit-#{$i} {
-    --o-orbit-number: #{$i};
+    --o-orbit-number: var(--o-layout-number, #{$i});
     }
 }
 
 /* Satellites, sectors, label, side, and vectors layout */
 @for $i from 1 through $max-orbiters {
  :nth-child(#{$i} of .side){
-    --o-orbit-child-number: #{$i - 2}; // Uses - 1 to start from 0 deg.
+    --o-orbit-child-number: var(--o-layout-index, #{$i - 2});
     }
 }
 
 @for $i from 1 through $max-orbiters {
   :nth-child(#{$i} of .satellite),:nth-child(#{$i} of o-arc), :nth-child(#{$i} of .vector) {
-    --o-orbit-child-number: #{$i - 1}; // Uses - 1 to start from 0 deg.
+    --o-orbit-child-number: var(--o-layout-index, #{$i - 1});
     }
 }
 
 @for $i from 1 through $max-orbiters {
-    .orbit:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-arc), > :nth-child(#{$i} of .vector), > :nth-child(#{$i} of .side)), 
-    [class*='orbit-']:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-arc), > :nth-child(#{$i} of .vector), > :nth-child(#{$i} of .side)) {
-    --o-angle: calc(var(--o-range) / (#{$i} - var(--o-fit-range, 0)));
+    #{$orbit-selector}:has(> :nth-child(#{$i} of .satellite), > :nth-child(#{$i} of o-arc), > :nth-child(#{$i} of .vector), > :nth-child(#{$i} of .side)) {
+    --o-angle: var(--o-layout-angle, calc(var(--o-range) / max(1, #{$i} - var(--o-fit-range, 0))));
     }
 }
 
 @for $i from 1 through $max-orbiters {
-  .orbit:has(> :nth-child(#{$i} of .side)), 
-  [class*='orbit-']:has(> :nth-child(#{$i} of .side)) {
-  --o-angle: calc(var(--o-range) / #{$i});
+  #{$orbit-selector}:has(> :nth-child(#{$i} of .side)) {
+  --o-angle: var(--o-layout-angle, calc(var(--o-range) / #{$i}));
   }
 }
-
