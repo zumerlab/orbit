@@ -123,6 +123,10 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
     const innerSweep = innerAngleEnd - innerAngleStart; // fangle - 2*smallGap
     const largeArcFlagUpper = upperSweep > Math.PI ? 1 : 0;
     const largeArcFlagInner = innerSweep > Math.PI ? 1 : 0;
+    // A closed band (no gap left at either radius) has endpoints that almost
+    // coincide; a single SVG arc between them is numerically unstable and
+    // Chrome may not paint it at all. generatePathData draws it as a ring.
+    const full = innerSweep >= 359.9 * Math.PI / 180;
 
     return {
       upperArcStart,
@@ -132,6 +136,7 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
       largeArcFlag: largeArcFlagUpper, // back-compat alias; prefer the two below
       largeArcFlagUpper,
       largeArcFlagInner,
+      full,
       bigRadius,
       smallRadius,
       radius,
@@ -144,7 +149,9 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
 
   generatePathData(shape, params, arcHeight, orbitNumber) {
     let d = '';
-    
+    // A full ring has no ends, so end shapes do not apply.
+    if (params.full) return this.generateFullRingPath(params);
+
     switch (shape) {
       case "rounded":
         d = this.generateRoundedPath(params, arcHeight, orbitNumber);
@@ -309,6 +316,15 @@ generateZigzagPath(params, arcHeight, orbitNumber) {
   d += `Z`;
   
   return d;
+}
+
+// Two circles in opposite directions, each drawn as two half arcs, so the
+// nonzero fill leaves the hole and no arc has coincident endpoints.
+generateFullRingPath(params) {
+  const { bigRadius, smallRadius } = params;
+  const circle = (r, sweep) =>
+    `M 50,${50 - r} A ${r},${r} 0 1 ${sweep} 50,${50 + r} A ${r},${r} 0 1 ${sweep} 50,${50 - r} Z`;
+  return `${circle(bigRadius, 1)} ${circle(smallRadius, 0)}`;
 }
 
 generateDefaultPath(params) {

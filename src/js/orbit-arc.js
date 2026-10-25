@@ -44,10 +44,14 @@ if (template) template.innerHTML = `
     text {
       fill: var(--o-color);
     }
+    /* Invisible guide for the text. fill:none (not transparent) and no
+       pointer events: with "interactive", a transparent fill counts as
+       painted and the whole chord area of the arc would take clicks. */
     #orbitPath {
-      fill: transparent;
+      fill: none;
       stroke: none;
       stroke-width: 0;
+      pointer-events: none;
     }
   </style>
   <svg viewBox="0 0 100 100">
