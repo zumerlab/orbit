@@ -3,40 +3,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>02 — Spend Overview | Orbit</title>
+  <title>02 — Donut chart | Orbit</title>
   <link rel="stylesheet" href="../dist/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
   <script src="../dist/orbit.js"></script>
   <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: linear-gradient(180deg, #1c1917 0%, #0c0a09 100%); }
-    .demo { width: 260px; aspect-ratio: 1; }
-    .demo .satellite { border: none; }
-    .demo .capsule {
-      font: 800 18px/1.1 system-ui; color: #fafaf9;
-      text-shadow: 0 1px 2px rgba(0,0,0,.5);
-      padding: 12px;
-    }
-    .demo .capsule span { display: block; font-size: 11px; font-weight: 600; color: #a8a29e; margin-top: 2px; }
-    .shadow { filter: drop-shadow(0 8px 32px rgba(0,0,0,.4)); }
-    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #0c0a09; color: #78716c; font: 13px/1.5 system-ui; border-top: 1px solid #292524; }
-    .doc code { color: #fbbf24; }
+    .donut o-arc { --o-fill: var(--c); --o-stroke: none; transition: opacity .2s, scale .2s; }
+    .donut.focus o-arc:not(.on) { opacity: .25; }
+    .donut o-arc.on { scale: 1.04; }
+    .legend { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 4px; }
+    .legend li { display: grid; grid-template-columns: 12px 1fr auto auto; gap: 10px; align-items: center; padding: 7px 8px; border-radius: 8px; cursor: default; }
+    .legend li.on { background: #1a2029; }
+    .legend i { width: 12px; height: 12px; border-radius: 3px; background: var(--c); }
+    .legend span { font-family: var(--mono); font-size: 13px; }
+    .legend em { font-style: normal; color: var(--muted); font-family: var(--mono); font-size: 12px; width: 38px; text-align: right; }
   </style>
 </head>
 <body>
-  <div class="demo bigbang shadow">
-    <div class="gravity-spot">
-      <div class="orbit-9" style="--o-size-ratio: 3">
-        <o-arc value="52" style="--o-fill:#f97316;--o-stroke:#451a03;--o-stroke-width:5"></o-arc>
-        <o-arc value="28" style="--o-fill:#eab308;--o-stroke:#422006;--o-stroke-width:5"></o-arc>
-        <o-arc value="20" style="--o-fill:#22c55e;--o-stroke:#052e16;--o-stroke-width:5"></o-arc>
-      </div>
-      <div class="orbit-0">
-        <div class="satellite at-center"><div class="capsule">$2.4k<span>this month</span></div></div>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="./">← All demos</a><span class="num">02 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang donut">
+      <div class="gravity-spot">
+        <!-- Arcs with value stack in DOM order; lanes 7.5 to 10.5. -->
+        <div class="orbit-9" id="ring" style="--o-size-ratio: 3; --o-gap: 2"></div>
+        <div class="orbit-0" style="--o-size-ratio: 10">
+          <div class="satellite at-center"><div class="capsule readout"><strong id="amount">$0</strong><span id="label">spent in May</span></div></div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="doc">
-    <a href="./">← All demos</a> · <strong>02 — Spend overview</strong> · Arcs with <code>value</code> stack in DOM order. Lane 9, three lanes thick, so the donut fills most of its universe.
-  </div>
+  </section>
+  <aside class="notes">
+    <h1>Donut chart</h1>
+    <p>Each category is an <code>&lt;o-arc value&gt;</code>. Values are shares of 100, and arcs stack in the order they appear in the HTML.</p>
+    <ul class="legend" id="legend"></ul>
+    <h2>How it's built</h2>
+    <ul>
+      <li>One ring on lane 9, three lanes thick, with <code>--o-gap</code> between segments.</li>
+      <li><code>interactive</code> makes each segment hoverable; the rest of the square stays click-through.</li>
+      <li>Change a <code>value</code> and the following segments move along.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  const data = [
+    ['Housing', 1240, 'var(--teal)'], ['Food', 520, 'var(--amber)'], ['Transport', 310, 'var(--blue)'],
+    ['Health', 190, 'var(--violet)'], ['Fun', 160, 'var(--coral)'],
+  ];
+  const total = data.reduce((sum, [, amount]) => sum + amount, 0);
+  const ring = document.getElementById('ring'), legend = document.getElementById('legend');
+  const money = n => '$' + n.toLocaleString('en-US');
+  data.forEach(([name, amount, color], i) => {
+    const share = (amount / total * 100).toFixed(2);
+    ring.insertAdjacentHTML('beforeend', `<o-arc interactive value="${share}" style="--c:${color}" aria-label="${name}"></o-arc>`);
+    legend.insertAdjacentHTML('beforeend', `<li style="--c:${color}"><i></i>${name}<span>${money(amount)}</span><em>${Math.round(share)}%</em></li>`);
+  });
+  const arcs = [...ring.children], rows = [...legend.children];
+  const focus = i => {
+    document.querySelector('.donut').classList.toggle('focus', i >= 0);
+    arcs.forEach((arc, j) => arc.classList.toggle('on', i === j));
+    rows.forEach((row, j) => row.classList.toggle('on', i === j));
+    document.getElementById('amount').textContent = money(i < 0 ? total : data[i][1]);
+    document.getElementById('label').textContent = i < 0 ? 'spent in May' : data[i][0];
+  };
+  [...arcs, ...rows].forEach((el, k) => {
+    el.addEventListener('pointerenter', () => focus(k % data.length));
+    el.addEventListener('pointerleave', () => focus(-1));
+  });
+  focus(-1);
+</script>
 </body>
 </html>

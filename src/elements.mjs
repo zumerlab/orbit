@@ -7,7 +7,8 @@ const common = {
   value: { type: 'number', description: 'Value relative to max.' },
   max: { type: 'number', default: '100', description: 'Value that fills the ring\'s range. Must be positive.' },
   shape: { type: shapes.map(shape => `'${shape}'`).join(' | '), default: 'none', values: shapes, description: 'Ending of the band.' },
-  interactive: { type: 'boolean', description: 'Let the painted shape receive pointer events. Decorative by default.' },
+  interactive: { type: 'boolean', description: 'Let the band receive pointer events, even where it is transparent. Decorative by default.' },
+  'hit-width': { type: 'number', default: '0', description: 'Extra touch area in px on each side of an interactive band.' },
 };
 
 const colors = [
@@ -27,6 +28,7 @@ export const elements = [
       'text-anchor': { type: "'start' | 'middle' | 'end'", default: 'middle', values: ['start', 'middle', 'end'], description: 'Where curved text starts.' },
       flip: { type: 'boolean', description: 'Reverse the direction of curved text.' },
       'fit-range': { type: 'boolean', description: 'Squeeze curved text to the length of the arc.' },
+      range: { type: "'auto'", values: ['auto'], description: 'Size the arc to its text. Consecutive range="auto" arcs follow each other.' },
     },
     cssProperties: [...colors, ['--o-color', 'Text color.'], ['--o-gap', 'Space between sibling arcs. Default 1; cascades from the ring or system.']],
   },
@@ -69,6 +71,7 @@ export function customElementsManifest(version) {
           ...(attribute.default ? { default: attribute.default } : {}),
         })),
         cssProperties: element.cssProperties.map(([name, description]) => ({ name, description })),
+        events: [{ name: 'o-rendered', description: 'Fired after the element redraws. Bubbles and crosses shadow roots.' }],
       })),
       exports: elements.flatMap(element => [
         { kind: 'js', name: element.className, declaration: { name: element.className, module: 'dist/orbit.mjs' } },

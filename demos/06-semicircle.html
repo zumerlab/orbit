@@ -3,41 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>06 — Battery | Orbit</title>
+  <title>06 — Half gauge | Orbit</title>
   <link rel="stylesheet" href="../dist/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
   <script src="../dist/orbit.js"></script>
   <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0a0a0a; }
-    .demo { width: 200px; aspect-ratio: 2/1; }
-    .demo .satellite { border: none; }
-    .demo o-arc { --o-stroke: none; --o-fill: #22c55e; }
-    .demo .capsule { font: 800 20px/1 system-ui; color: #22c55e; }
-    .demo .capsule.label { translate: 0 -70%; }
-    .ring { filter: drop-shadow(0 0 20px rgba(34,197,94,.2)); }
-    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #0a0a0a; color: #525252; font: 13px/1.5 system-ui; border-top: 1px solid #262626; }
-    .doc code { color: #22c55e; }
+    .stage > .battery { width: min(100%, 520px); aspect-ratio: 2 / 1; }
+    .battery o-arc { --o-stroke: none; --o-fill: #1d2630; }
+    .battery o-arc.on { --o-fill: var(--level); }
+    .battery { --level: var(--teal); }
+    .battery.low { --level: var(--amber); }
+    .battery.critical { --level: var(--coral); }
+    .battery .label { translate: 0 -62%; }
+    .battery .readout strong { font-size: 52px; color: var(--level); }
+    .battery .readout span { letter-spacing: .08em; }
+    .battery .scale { font: 12px var(--mono); color: var(--muted); }
   </style>
 </head>
 <body>
-  <div class="demo bigbang ring at-bottom">
-    <div class="gravity-spot" style="--o-force: 100cqw">
-      <div class="orbit-10 range-180 from-270" style="--o-size-ratio: 2">
-        <o-arc id="gauge" value="84" shape="arrow" style="--o-fill:#22c55e"></o-arc>
-      </div>
-      <div class="orbit-0">
-        <div class="satellite at-center"><div class="capsule label"><span id="val">84</span>%</div></div>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="./">← All demos</a><span class="num">06 / 11</span></header>
+  <section class="stage">
+    <!-- A 2:1 universe with its center at the bottom; the reach is the width. -->
+    <div class="bigbang battery at-bottom" role="meter" aria-label="Battery" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="gravity-spot" style="--o-force: 100cqw">
+        <div class="orbit-10 range-180 from-270" id="cells" style="--o-size-ratio: 2.6; --o-gap: 3"></div>
+        <div class="orbit-12 range-180 from-270 fit-range">
+          <div class="satellite"><div class="capsule scale">0</div></div>
+          <div class="satellite"><div class="capsule scale">50</div></div>
+          <div class="satellite"><div class="capsule scale">100</div></div>
+        </div>
+        <div class="orbit-0" style="--o-size-ratio: 12"><div class="satellite at-center"><div class="capsule label readout"><strong id="pct">0%</strong><span id="status">on battery</span></div></div></div>
       </div>
     </div>
-  </div>
-  <input id="rng" type="range" min="0" max="100" value="84" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:160px;accent-color:#22c55e">
-
-  <div class="doc">
-    <a href="./">← All demos</a> · <strong>06 — Battery</strong> · A 2:1 universe with its center at the bottom (<code>.at-bottom</code>). <code>--o-force: 100cqw</code> makes the reach the width, so the half ring spans the box.
-  </div>
-
-  <script>
-    const r=document.getElementById('rng'), g=document.getElementById('gauge'), v=document.getElementById('val');
-    r.oninput=()=>{ const x=r.value; g.setAttribute('value',x); v.textContent=x; };
-  </script>
+  </section>
+  <aside class="notes">
+    <h1>Half gauge</h1>
+    <p>A battery level as 20 cells on a half circle. Below 30% it turns amber, below 15% coral.</p>
+    <div class="controls">
+      <label for="level">Charge <output id="level-out"></output></label><input id="level" type="range" min="0" max="100" value="72">
+      <div class="row"><button id="charge">Plug in</button></div>
+    </div>
+    <h2>How it's built</h2>
+    <ul>
+      <li>The universe is 2:1 with <code>.at-bottom</code>, so the center sits on the bottom edge.</li>
+      <li><code>--o-force: 100cqw</code> makes the reach the width instead of the shorter side.</li>
+      <li>20 <code>&lt;o-arc&gt;</code> without value split <code>range-180 from-270</code>; lit cells get a class.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  const cells = document.getElementById('cells');
+  cells.innerHTML = '<o-arc></o-arc>'.repeat(20);
+  const gauge = document.querySelector('.battery'), input = document.getElementById('level');
+  let charging = false, timer;
+  const set = v => {
+    const level = Math.max(0, Math.min(100, Math.round(v)));
+    input.value = level;
+    [...cells.children].forEach((cell, i) => cell.classList.toggle('on', (i + 1) * 5 <= level + 2.4));
+    gauge.classList.toggle('low', level < 30);
+    gauge.classList.toggle('critical', level < 15);
+    gauge.setAttribute('aria-valuenow', level);
+    document.getElementById('pct').textContent = level + '%';
+    document.getElementById('level-out').value = level + '%';
+    document.getElementById('status').textContent = charging ? (level === 100 ? 'charged' : 'charging') : 'on battery';
+  };
+  input.addEventListener('input', () => set(input.value));
+  document.getElementById('charge').onclick = event => {
+    charging = !charging;
+    event.target.textContent = charging ? 'Unplug' : 'Plug in';
+    clearInterval(timer);
+    if (charging) timer = setInterval(() => set(Number(input.value) + 1), 120);
+    set(input.value);
+  };
+  set(input.value);
+</script>
 </body>
 </html>

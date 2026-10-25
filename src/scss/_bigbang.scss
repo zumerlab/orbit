@@ -24,6 +24,8 @@
    inherits the reach of the system that holds it. */
 .gravity-spot > .bigbang {
   flex: none;
+  /* Its box covers the system below it; only its satellites take the pointer. */
+  pointer-events: none;
   width: calc(var(--o-force) * var(--o-force-ratio));
   height: calc(var(--o-force) * var(--o-force-ratio));
   max-height: none;

@@ -11,6 +11,8 @@ o-arc {
   position: absolute;
   pointer-events: none;
   width: 100%;
+  aspect-ratio: 1;
   r: var(--o-radius);
-  transform: rotate(calc(var(--o-from) + var(--o-angle-composite)));
+  /* Placed with rotate, so your own transform (for example a hover scale) composes with it. */
+  rotate: calc(var(--o-from) + var(--o-angle-composite));
 }

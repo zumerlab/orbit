@@ -148,10 +148,21 @@ function registryFor(doc) {
   return doc[REGISTRY];
 }
 
+function cancel(state) {
+  if (state.frame < 0) state.view.clearTimeout(-state.frame);
+  else if (state.frame) state.view.cancelAnimationFrame(state.frame);
+  state.frame = 0;
+}
+
+function settle(state) {
+  for (const resolve of state.waiters.splice(0)) resolve();
+}
+
 function dispose(state) {
   if (state.disposed) return;
   state.disposed = true;
-  state.view.cancelAnimationFrame(state.frame);
+  cancel(state);
+  settle(state);
   state.observer.disconnect();
   state.resize.disconnect();
   for (const remove of state.listeners) remove();
@@ -204,16 +215,19 @@ function createState(scope) {
   const view = doc.defaultView;
   const registry = registryFor(doc);
   const state = { scope, doc, view, registry, rings: new Set(), visuals: new Set(), dirty: new Set(),
-    scan: true, all: true, frame: 0, disposed: false, listeners: [] };
+    scan: true, all: true, frame: 0, disposed: false, listeners: [], waiters: [] };
   const listen = (target, event, listener, options) => {
     target?.addEventListener(event, listener, options);
     state.listeners.push(() => target?.removeEventListener(event, listener, options));
   };
+  // Draw on the next frame. Hidden pages get no frames, so they use a task:
+  // layouts are ready in background tabs and in tests.
   const queue = () => {
-    if (!state.disposed && !state.frame) state.frame = view.requestAnimationFrame(() => {
-      state.frame = 0;
-      state.flush();
-    });
+    if (state.disposed || state.frame) return;
+    const run = () => { state.frame = 0; state.flush(); };
+    state.frame = doc.visibilityState === 'hidden'
+      ? -view.setTimeout(run, 0)
+      : view.requestAnimationFrame(run);
   };
   state.queue = queue;
   state.flush = () => flush(state);
@@ -252,6 +266,13 @@ function createState(scope) {
     invalidateDescendants(state);
     queue();
   };
+  // A frame requested before the page was hidden would wait until it shows.
+  listen(doc, 'visibilitychange', () => {
+    if (doc.visibilityState === 'hidden' && state.frame > 0) {
+      cancel(state);
+      queue();
+    }
+  });
   // A document state supplies viewport/font events for all its shadow scopes.
   if (scope === doc) {
     listen(view, 'resize', invalidateAll);
@@ -321,6 +342,7 @@ function flush(state) {
   if (state.scope.host && !state.scope.host.isConnected) { dispose(state); return; }
   // Discard only our synchronous layout writes, not future user mutations.
   state.observer.disconnect();
+  const drawn = [];
   try {
     if (state.scan) discover(state);
     const dirty = state.all ? new Set([...state.rings, ...state.visuals]) : state.dirty;
@@ -334,12 +356,19 @@ function flush(state) {
       } else if (state.visuals.has(target)) visuals.add(target);
     }
     // DOM order matters for cumulative arcs, including reorders and removals.
-    for (const visual of state.visuals) if (visuals.has(visual)) visual.update?.();
+    for (const visual of state.visuals) if (visuals.has(visual) && visual.update) {
+      visual.update();
+      drawn.push(visual);
+    }
     state.dirty = new Set();
     state.all = false;
   } finally {
     if (!state.disposed) state.observer.observe(state.scope, OBSERVE);
   }
+  // Tell listeners after the whole batch, with observation back on, so they
+  // measure final geometry and their own changes are picked up.
+  for (const visual of drawn) visual.dispatchEvent(new state.view.Event('o-rendered', { bubbles: true, composed: true }));
+  if (!state.frame) settle(state);
 }
 
 export function requestLayout(element = globalThis.document) {
@@ -362,8 +391,24 @@ export function refreshLayout(root = globalThis.document) {
     if (current !== state && (!current.scope.host || !composedContains(root, current.scope.host))) continue;
     current.scan = true;
     current.all = true;
-    current.view.cancelAnimationFrame(current.frame);
-    current.frame = 0;
+    cancel(current);
     current.flush();
   }
+}
+
+/**
+ * Resolves once every pending layout of `root` (and of shadow roots inside it)
+ * has been drawn: arcs exist and have their final geometry.
+ */
+export function layoutReady(root = globalThis.document) {
+  const scope = scopeFor(root);
+  const state = scope && ensureState(scope);
+  if (!state) return Promise.resolve();
+  pruneDisconnected(state.registry);
+  const pending = [...state.registry.states].filter(current =>
+    current === state || (current.scope.host && composedContains(root, current.scope.host)));
+  return Promise.all(pending.map(current => new Promise(resolve => {
+    current.waiters.push(resolve);
+    current.queue();
+  }))).then(() => {});
 }

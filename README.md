@@ -73,7 +73,7 @@ Orbit borrows its names from a solar system. Each name says what the element doe
 | `.bigbang` | The universe | Its box is the space. Square by default: it takes its parent's width, and a parent with a height caps it. |
 | `.gravity-spot` | The center of mass | Where the system starts. Its `--o-force` is the **reach** of gravity: the diameter of `orbit-12`. By default it is the shorter side of the universe. |
 | `.orbit-N` | A lane | The radius is split into 12 lanes. `orbit-N` runs N lanes from the center; `.orbit-0` is the center itself, and `orbit-13` to `orbit-24` lie past the edge. `.orbit` without a number takes the next lane in DOM order. |
-| `.satellite` | A world on its lane | Positions an item on a ring. It is also a universe: a `.gravity-spot` inside it reaches the satellite's edge. |
+| `.satellite` | A world on its lane | Positions an item on a ring, one lane wide. It is also a universe: a `.gravity-spot` inside it reaches the satellite's edge. |
 | `.capsule` | What a world carries | Wraps the content of a satellite and keeps it upright. |
 | `.vector` | A ray | A tick or line on a ring, pointing out from the center. |
 | `.side` | A chord | A straight line between neighboring positions on a ring. |
@@ -122,9 +122,29 @@ Set `--o-range` to control the angular span and `--o-from` to rotate it; `0deg` 
 
 Values cascade: set one on the `.gravity-spot` for the whole system, on a ring for its elements, or on a single element. Every `.gravity-spot` starts from the defaults, so nested systems do not inherit their parent's values.
 
-Arcs and progress elements use `value` relative to `max`, which defaults to `100`. Add `interactive` when you need their SVG shapes to receive pointer events; they are decorative by default. Supply the keyboard behavior and accessible labels for any controls you build.
+### Arcs and progress
+
+Arcs and progress elements use `value` relative to `max`, which defaults to `100`. Endings (`shape="rounded"`, `arrow`, `circle`, `slash`, `zigzag`…) are sized from the band, so they look the same on every ring.
 
 Progress rings draw filled bands by default. For a stroked line, use `variant="stroke"` and set `--o-stroke` and `--o-back-stroke` instead of the fill colors.
+
+Both are decorative by default: they do not take the pointer. Add `interactive` to make the band clickable, even where it is transparent; on `<o-progress>` the whole track is clickable. `hit-width="12"` adds 12px of touch area on each side. A touchable full ring is a single arc on its own ring:
+
+```html
+<div class="orbit-10" style="--o-size-ratio: 2">
+  <o-arc interactive hit-width="8" style="--o-fill: transparent" aria-label="Volume"></o-arc>
+</div>
+```
+
+Supply the keyboard behavior and accessible labels for any controls you build. Arcs are placed with the `rotate` property, so your own `transform` or `scale` (for example on hover) adds to it instead of replacing it.
+
+Text inside an `<o-arc>` is drawn along it. With `range="auto"` the arc takes the length of its text, and consecutive `range="auto"` arcs follow each other, which makes curved labels easy:
+
+```html
+<div class="orbit-11 from-300">
+  <o-arc range="auto">Home</o-arc><o-arc range="auto">Projects</o-arc><o-arc range="auto">About</o-arc>
+</div>
+```
 
 ### Depth layers
 
@@ -150,11 +170,32 @@ Add `depth` to a `.gravity-spot` to stack its rings in 3D. Each direct child rin
 
 `data-depth` accepts 0 to 8. Rings outside `.depth` are not transformed.
 
+A layer can be a whole system: a ring, a label and a face together. Make it a nested `.gravity-spot` with `data-depth`. It has the same reach as its parent, so it needs no `--o-force`, and it does not block the pointer outside its satellites.
+
+```html
+<div class="gravity-spot depth">
+  <div class="gravity-spot layer-front" data-depth="0">
+    <div class="orbit-10"><o-progress value="72"></o-progress></div>
+    <div class="orbit-0" style="--o-size-ratio: 12"><div class="satellite at-center"><div class="capsule">CPU</div></div></div>
+  </div>
+  <div class="gravity-spot" data-depth="1">…</div>
+</div>
+```
+
+To let an ancestor own the perspective, for example to tilt the whole object with the pointer, add `outer-perspective` next to `depth` and set `--o-perspective` to the ancestor's value, so layers still keep their size. See the [depth demo](demos/11-depth-layers.html).
+
 ## In an app
 
 Orbit observes added, removed and reordered elements, style and attribute changes, and container resizes. Updates are grouped into the next animation frame.
 
 Importing the package during server rendering is safe. Include it in the browser entrypoint too, so it can register the custom elements and observe the rendered layout. The module exports `Orbit`, `OrbitArc`, `OrbitProgress` and `registerOrbit`; registration happens on import, and repeated calls to `registerOrbit()` are safe.
+
+Arcs are drawn on the next animation frame, or right away in a hidden tab. To wait for them, for example in tests or before measuring, await `Orbit.ready()`; it resolves when pending layouts of the document (or of the element or shadow root you pass) are drawn. Each `<o-arc>` and `<o-progress>` also fires a bubbling `o-rendered` event after it redraws:
+
+```js
+await Orbit.ready()
+gauge.addEventListener('o-rendered', () => measure(gauge))
+```
 
 Use `Orbit.refresh()` when you need an immediate update, or after changes Orbit cannot observe, such as editing stylesheet rules through CSSOM or changing an external control used by a CSS selector:
 
@@ -201,6 +242,8 @@ Orbit explains the common problems in the browser console, prefixed with `[orbit
 | Content overlaps or sits off the ring | It is a direct child of a ring instead of a `.satellite`. | Add `dev-orbit` to see where, then wrap it. |
 | Curved text is cut off | The text is longer than its arc. | Shorten it, widen `--o-range`, or add `fit-range`. |
 | Everything looks too thin | Elements are one lane thick. | Raise `--o-size-ratio` on the ring or system. |
+| An arc's fill is barely visible | A wide `--o-stroke-width` covers the band. | Use a thin stroke, or `--o-stroke: none`. |
+| An arc never takes clicks | Arcs are decorative by default. | Add `interactive`, and `hit-width` for a bigger target. |
 
 Orbit needs CSS trigonometric functions (`sin` and `cos`) and container query units. Without JavaScript, a CSS fallback can position simple elements on up to 24 ring levels, with up to 60 children per type; it also requires `:has()` and `:nth-child(... of ...)`. The JavaScript runtime supports larger layouts. `<o-arc>` and `<o-progress>` always need JavaScript.
 
@@ -221,6 +264,9 @@ Version 2 changes how a layout is sized. In 1.x every system was 500px across (`
 - `.satellite` no longer resets `--o-size-ratio`, so a value set on its ring reaches it. `shrink-N` on a ring now changes only ring spacing.
 - `--o-gap` cascades from the ring and system. `--o-aligment` still works; prefer `--o-alignment`.
 - `fit-range` on a ring of arcs no longer makes the arcs overflow the range.
+- Satellites have no border by default, and the default theme has zero specificity and no hover colors, so your styles always apply.
+- `<o-arc>` and `<o-progress>` are placed with `rotate` instead of `transform`. Shape endings scale with the band instead of being fixed in degrees.
+- `interactive` now makes the whole band clickable, transparent or not.
 
 ## Demos
 

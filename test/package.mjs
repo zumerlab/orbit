@@ -43,6 +43,7 @@ try {
     }
     assert.equal(typeof core.Orbit.resize, 'function');
     assert.equal(typeof core.Orbit.refresh, 'function');
+    assert.equal(typeof core.Orbit.ready, 'function');
     assert.ok(import.meta.resolve('@zumer/orbit').endsWith('/dist/orbit.mjs'));
     assert.ok(import.meta.resolve('@zumer/orbit/style').endsWith('/dist/orbit.css'));
     const manifest = (await import('@zumer/orbit/custom-elements.json', { with: { type: 'json' } })).default;

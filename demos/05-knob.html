@@ -3,40 +3,89 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>05 — Volume | Orbit</title>
+  <title>05 — Knob | Orbit</title>
   <link rel="stylesheet" href="../dist/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
   <script src="../dist/orbit.js"></script>
   <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #09090b; }
-    .demo { width: 180px; aspect-ratio: 1; }
-    .demo .satellite { border: none; }
-    .demo o-arc { --o-stroke: #27272a; --o-stroke-width: 4; --o-fill: #a1a1aa; }
-    .demo .capsule { font: 700 15px/1 system-ui; color: #a1a1aa; }
-    .ring { filter: drop-shadow(0 4px 20px rgba(0,0,0,.6)); }
-    .doc { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px; background: #09090b; color: #525252; font: 13px/1.5 system-ui; border-top: 1px solid #27272a; }
-    .doc code { color: #71717a; }
+    .knob { touch-action: none; cursor: grab; }
+    .knob:active { cursor: grabbing; }
+    .knob .ticks .vector { background: #3a4757; }
+    .knob .ticks .vector.lit { background: var(--teal); }
+    .knob o-progress { --o-stroke: none; --o-fill: var(--teal); --o-back-fill: #1d2630; }
+    .knob .body {
+      width: 100%; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 50% 30%, #2b3542, #151b22 70%);
+      box-shadow: 0 18px 40px -12px #000, inset 0 1px 0 #3b4655, inset 0 -6px 14px #0a0d11;
+    }
+    .knob .turn { rotate: var(--turn, 0deg); transition: rotate .08s linear; }
+    .knob .dot { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); }
+    .knob .readout strong { font-size: 28px; }
+    .knob:focus-visible { outline: none; }
+    .knob:focus-visible .body { box-shadow: 0 0 0 3px var(--teal), 0 18px 40px -12px #000; }
   </style>
 </head>
 <body>
-  <div class="demo bigbang ring">
-    <div class="gravity-spot">
-      <div class="orbit-9" style="--o-size-ratio: 3">
-        <o-arc id="knob" value="65" shape="circle-a" style="--o-stroke:#27272a;--o-stroke-width:4;--o-fill:#a1a1aa"></o-arc>
-      </div>
-      <div class="orbit-0">
-        <div class="satellite at-center"><div class="capsule"><span id="val">65</span>%</div></div>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="./">← All demos</a><span class="num">05 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang knob" tabindex="0" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="gravity-spot">
+        <div class="orbit-11 range-270 from-225 fit-range ticks" id="ticks" style="--o-size-ratio: .8"></div>
+        <div class="orbit-10 range-270 from-225" style="--o-size-ratio: .9"><o-progress shape="rounded" value="0"></o-progress></div>
+        <!-- The knob body is a satellite 15 lanes wide, and a universe of its own. -->
+        <div class="orbit-0" style="--o-size-ratio: 15">
+          <div class="satellite at-center">
+            <div class="capsule body"></div>
+            <div class="gravity-spot">
+              <div class="orbit-9 range-270 from-225 turn" style="--o-size-ratio: 1.2"><div class="satellite"><div class="capsule dot"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="orbit-11"><div class="satellite angle-180"><div class="capsule readout"><strong id="level">0</strong><span>volume</span></div></div></div>
       </div>
     </div>
-  </div>
-  <input id="rng" type="range" min="0" max="100" value="65" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:150px">
-
-  <div class="doc">
-    <a href="./">← All demos</a> · <strong>05 — Volume</strong> · <code>shape="circle-a"</code> gives round ends. Lane 9, three lanes thick.
-  </div>
-
-  <script>
-    const r=document.getElementById('rng'), k=document.getElementById('knob'), v=document.getElementById('val');
-    r.oninput=()=>{ const x=r.value; k.setAttribute('value',x); v.textContent=x; };
-  </script>
+  </section>
+  <aside class="notes">
+    <h1>Knob</h1>
+    <p>Drag around the knob, scroll over it, or focus it and use the arrow keys.</p>
+    <h2>How it's built</h2>
+    <ul>
+      <li>The body is a satellite 15 lanes wide on <code>orbit-0</code>. A satellite is a universe too, so the <code>.gravity-spot</code> inside it places the indicator dot relative to the knob.</li>
+      <li>Turning the knob turns that inner ring with <code>rotate</code>.</li>
+      <li>Ticks and the progress band share <code>range-270 from-225</code>; ticks light up with a class.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  document.getElementById('ticks').innerHTML = '<div class="vector"></div>'.repeat(21);
+  const knob = document.querySelector('.knob'), ticks = [...document.querySelectorAll('#ticks .vector')];
+  let value = 0;
+  const set = v => {
+    value = Math.max(0, Math.min(100, Math.round(v)));
+    knob.querySelector('o-progress').setAttribute('value', value);
+    knob.style.setProperty('--turn', value * 2.7 + 'deg');
+    knob.setAttribute('aria-valuenow', value);
+    document.getElementById('level').textContent = value;
+    ticks.forEach((tick, i) => tick.classList.toggle('lit', i * 5 <= value && value > 0));
+  };
+  // Pointer angle around the center, 0 at the start of the 270° range.
+  const fromPointer = event => {
+    const box = knob.getBoundingClientRect();
+    const angle = Math.atan2(event.clientX - (box.left + box.width / 2), (box.top + box.height / 2) - event.clientY) * 180 / Math.PI;
+    const along = (angle + 360 + 135) % 360;
+    if (along <= 270) set(along / 2.7);
+  };
+  knob.addEventListener('pointerdown', event => { knob.setPointerCapture(event.pointerId); fromPointer(event); });
+  knob.addEventListener('pointermove', event => { if (knob.hasPointerCapture(event.pointerId)) fromPointer(event); });
+  knob.addEventListener('wheel', event => { event.preventDefault(); set(value - Math.sign(event.deltaY) * 2); }, { passive: false });
+  knob.addEventListener('keydown', event => {
+    const step = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 10, PageDown: -10 }[event.key];
+    if (step) { event.preventDefault(); set(value + step); }
+    if (event.key === 'Home') set(0);
+    if (event.key === 'End') set(100);
+  });
+  set(64);
+</script>
 </body>
 </html>

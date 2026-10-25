@@ -89,7 +89,7 @@ Ring on lane N. `.orbit-0` = center point (use for center content). `.orbit-1` =
 Auto-numbered by DOM order among siblings. First `.orbit` = orbit-1, etc.
 
 ### .satellite
-Item placed on a ring. Positioned via CSS `cos()`/`sin()` transforms. Auto-distributed evenly. `position: absolute; border-radius: 50%; pointer-events: all`. Default: transparent background, 1px solid currentColor border (remove with `border: none`). One lane wide times `--o-size-ratio`. It is also a size container: a `.gravity-spot` placed directly inside it fills the satellite.
+Item placed on a ring. Positioned via CSS `cos()`/`sin()` transforms. Auto-distributed evenly. `position: absolute; border-radius: 50%; pointer-events: all`. No border or background by default. One lane wide times `--o-size-ratio`. It is also a size container: a `.gravity-spot` placed directly inside it fills the satellite.
 
 ### .capsule
 Content wrapper. Counter-rotates so text stays upright. `display: flex; position: absolute; align-items: center; justify-content: center`. ALL visible content goes here.
@@ -189,7 +189,7 @@ Angle reference: `from-0` = top, `from-90` = right, `from-180` = bottom, `from-2
 
 Placement: DIRECTLY inside `.orbit-N`. Never in `.satellite`.
 
-**Attributes:** `value` (0-100), `shape` (none|rounded|circle|circle-a|circle-b|bullet|arrow|slash|backslash|zigzag), `flip`, `fit-range`, `text-anchor` (start|middle|end)
+**Attributes:** `value` (0-100), `max`, `shape` (none|rounded|circle|circle-a|circle-b|bullet|arrow|slash|backslash|zigzag), `flip`, `fit-range`, `text-anchor` (start|middle|end), `range="auto"` (arc sized to its text; consecutive auto arcs follow each other), `interactive` (band takes the pointer, even if transparent), `hit-width` (extra px of touch area)
 
 **Stacking (donut chart):** Multiple `<o-arc>` with `value` auto-stack end-to-end. Values should sum to ≤100.
 ```html
@@ -216,7 +216,7 @@ Placement: DIRECTLY inside `.orbit-N`. Never in `.satellite`.
 
 Placement: DIRECTLY inside `.orbit-N`. Never in `.satellite`.
 
-**Attributes:** `value` (0-100), `max` (default 100), `shape` (same as o-arc)
+**Attributes:** `value` (0-100), `max` (default 100), `shape` (same as o-arc), `variant="stroke"`, `interactive` (whole track takes the pointer), `hit-width`
 
 **Update dynamically:** `element.setAttribute('value', 75)`
 
@@ -236,7 +236,7 @@ Dynamic: set `--o-color: #ff6600` then use `var(--o-color-light)`, etc.
 
 ## THEMES
 
-- Default (no class): transparent orbits, currentColor borders
+- Default (no class): no borders on rings or satellites; ticks and chords in currentColor; gray arcs. Zero specificity, so any style of yours wins
 - `.theme-cyan` on `.bigbang`: cyan styling
 - `.dev-orbit` on `.bigbang`: red dashed borders (debugging)
 
@@ -256,7 +256,7 @@ Nothing to do: a layout scales with its `.bigbang`. `Orbit.resize('.parent')` on
       <o-progress value="72" shape="rounded" style="--o-fill:#818cf8; --o-back-fill:rgba(100,100,100,.3); --o-stroke:none"></o-progress>
     </div>
     <div class="orbit-0">
-      <div class="satellite at-center" style="border:none"><div class="capsule" style="font-size:24px; font-weight:800; white-space:nowrap">72%</div></div>
+      <div class="satellite at-center"><div class="capsule" style="font-size:24px; font-weight:800; white-space:nowrap">72%</div></div>
     </div>
   </div>
 </div>
@@ -272,7 +272,7 @@ Nothing to do: a layout scales with its `.bigbang`. `Orbit.resize('.parent')` on
       <o-arc value="20" style="--o-fill:#22c55e"></o-arc>
     </div>
     <div class="orbit-0">
-      <div class="satellite at-center" style="border:none"><div class="capsule" style="font-weight:800; white-space:nowrap">$2.4k</div></div>
+      <div class="satellite at-center"><div class="capsule" style="font-weight:800; white-space:nowrap">$2.4k</div></div>
     </div>
   </div>
 </div>
@@ -289,7 +289,7 @@ Nothing to do: a layout scales with its `.bigbang`. `Orbit.resize('.parent')` on
       <o-arc interactive style="--o-fill:#ef4444">Delete</o-arc>
     </div>
     <div class="orbit-0">
-      <div class="satellite at-center" style="border:none"><div class="capsule" style="font-weight:800">MENU</div></div>
+      <div class="satellite at-center"><div class="capsule" style="font-weight:800">MENU</div></div>
     </div>
   </div>
 </div>
@@ -316,7 +316,7 @@ Nothing to do: a layout scales with its `.bigbang`. `Orbit.resize('.parent')` on
       <o-arc value="58" shape="arrow" style="--o-fill:white"></o-arc>
     </div>
     <div class="orbit-0">
-      <div class="satellite at-center" style="border:none"><div class="capsule" style="font-size:22px;font-weight:800;white-space:nowrap">125 km/h</div></div>
+      <div class="satellite at-center"><div class="capsule" style="font-size:22px;font-weight:800;white-space:nowrap">125 km/h</div></div>
     </div>
   </div>
 </div>
@@ -363,13 +363,13 @@ A `.gravity-spot` inside a satellite fills that satellite. Make the satellite bi
 <div class="bigbang" style="width: 340px">
   <div class="gravity-spot">
     <div class="orbit-0">
-      <div class="satellite at-center" style="border:none"><div class="capsule" style="width:40px;height:40px;border-radius:50%;background:gold"></div></div>
+      <div class="satellite at-center"><div class="capsule" style="width:40px;height:40px;border-radius:50%;background:gold"></div></div>
     </div>
     <div class="orbit-8">
-      <div class="satellite" style="border:none; --o-size-ratio: 5">
+      <div class="satellite" style="--o-size-ratio: 5">
         <div class="gravity-spot">
-          <div class="orbit-0"><div class="satellite at-center" style="border:none"><div class="capsule" style="width:12px;height:12px;border-radius:50%;background:dodgerblue"></div></div></div>
-          <div class="orbit-10"><div class="satellite" style="border:none"><div class="capsule" style="width:5px;height:5px;border-radius:50%;background:silver"></div></div></div>
+          <div class="orbit-0"><div class="satellite at-center"><div class="capsule" style="width:12px;height:12px;border-radius:50%;background:dodgerblue"></div></div></div>
+          <div class="orbit-10"><div class="satellite"><div class="capsule" style="width:5px;height:5px;border-radius:50%;background:silver"></div></div></div>
         </div>
       </div>
     </div>
@@ -385,7 +385,7 @@ A `.gravity-spot` inside a satellite fills that satellite. Make the satellite bi
       <o-arc id="knob" value="65" shape="circle-a" style="--o-stroke:#27272a;--o-stroke-width:4;--o-fill:#a1a1aa"></o-arc>
     </div>
     <div class="orbit-0">
-      <div class="satellite at-center" style="border:none"><div class="capsule" style="font-weight:700">65%</div></div>
+      <div class="satellite at-center"><div class="capsule" style="font-weight:700">65%</div></div>
     </div>
   </div>
 </div>
@@ -404,12 +404,14 @@ A `.gravity-spot` inside a satellite fills that satellite. Make the satellite bi
 7. `from-0` = top (12 o'clock), not right (3 o'clock)
 8. `<o-arc>` and `<o-progress>` DO NOT work in elliptical layouts (ellipse-x or ellipse-y != 1)
 9. DO NOT invent classes — only use documented classes (NO `.orbit-ring`, `.orbit-item`, `.orbit-center`, etc.)
-10. DO NOT use `transform` on `.satellite` — it overrides the positioning calculation
+10. DO NOT use `transform` on `.satellite` — it overrides the positioning calculation. On `<o-arc>`/`<o-progress>` use `scale`/`transform` freely: they are placed with `rotate`
 11. DO NOT set `--o-orbit-number`, `--o-angle`, or `--o-radius` manually — they are auto-calculated
 12. Always include both CSS and JS files — JS registers the web components
 13. Thickness comes from `--o-size-ratio` on the ring, not from width/height on elements
 14. A stroke wider than the band hides the fill: keep `--o-stroke-width` small or set `--o-stroke: none`
 15. While building, add `dev-orbit` to the `.bigbang`; the console explains structural mistakes
+16. Wait for drawing with `await Orbit.ready()`; each arc fires `o-rendered` after it redraws
+17. Depth layers can be composite: a nested `.gravity-spot` with `data-depth` holding ring + label + face
 
 ## QUICK REFERENCE
 

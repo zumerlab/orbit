@@ -19,6 +19,17 @@ $layer-selector: ':is(#{$orbit-selector}, [data-depth], .layer-front):not(.satel
   transform-style: preserve-3d;
 }
 
+/* The perspective comes from an ancestor, for example to tilt the whole
+   object with parallax. Set the same value there and in --o-perspective, so
+   layers still keep their apparent size. Elements between that ancestor and
+   .depth need transform-style: preserve-3d; .bigbang has it here. */
+.depth.outer-perspective {
+  perspective: none;
+}
+.bigbang:has(> .depth.outer-perspective) {
+  transform-style: preserve-3d;
+}
+
 .depth > #{$layer-selector} {
   --o-z: calc(var(--o-depth, 0) * var(--o-depth-step));
   transform:

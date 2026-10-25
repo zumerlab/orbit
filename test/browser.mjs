@@ -103,7 +103,7 @@ for (const name of browsers) {
     }
     await fixture(ring('<o-progress id="full" variant="stroke" value="100"></o-progress>'));
     const fullPath = await page.locator('#full').evaluate(el => el.shadowRoot.querySelector('.progress-bar').getAttribute('d'));
-    assert.equal((fullPath.match(/A /g) || []).length, 2, 'a 360° stroke is drawn as two half arcs');
+    assert.equal((fullPath.match(/A /g) || []).length, 4, 'a 360° stroke is drawn as four quarter arcs');
 
     await fixture('<div class="bigbang" style="width:400px;height:400px"><div class="gravity-spot depth"><div id="front" class="orbit-4 layer-front"></div><div id="back" class="orbit-6" data-depth="1"></div><div id="custom-z" class="orbit-8" style="--o-z:-220"></div></div></div><div class="bigbang"><div class="gravity-spot"><div id="flat" class="orbit-4" data-depth="2"></div></div></div>');
     const depth = await page.evaluate(() => Object.fromEntries(['front', 'back', 'custom-z', 'flat'].map(id => [id, new DOMMatrix(getComputedStyle(document.getElementById(id)).transform)])));
@@ -154,6 +154,39 @@ for (const name of browsers) {
     await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot depth"><div class="bigbang layer-front" id="layer"><div class="gravity-spot"><div class="orbit-12" id="layer-edge"></div></div></div></div></div>');
     assert.equal(await page.locator('#layer').evaluate(el => el.offsetWidth), 400, 'a universe inside a system takes its reach');
     assert.equal(await page.locator('#layer-edge').evaluate(el => el.offsetWidth), 400, 'and its orbit-12 reaches the same edge');
+
+    // Full circles, touch areas, text-sized arcs and render notifications.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-10" style="--o-size-ratio:2"><o-arc id="whole" interactive style="--o-fill:transparent;--o-stroke:none">All the way round</o-arc></div></div></div>');
+    const whole = await page.locator('#whole').evaluate(el => ({ shape: el.shadowRoot.querySelector('#orbitShape').getAttribute('d'), text: el.shadowRoot.querySelector('#orbitPath').getAttribute('d') }));
+    assert(!/NaN|Infinity/.test(whole.shape + whole.text), 'a 360° arc has finite geometry');
+    assert((whole.text.match(/A /g) || []).length >= 4, 'curved text on a full circle is split into quarter arcs');
+    const box = await page.locator('#whole').boundingBox();
+    const hit = await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.id, [box.x + box.width / 2, box.y + 4]);
+    assert.equal(hit, 'whole', 'a transparent interactive arc receives the pointer on its band');
+    assert.notEqual(await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.id, [box.x + box.width / 2, box.y + box.height / 2]), 'whole', 'the center of the ring stays click-through');
+    assert.notEqual(await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.id, [box.x + box.width / 2, box.y - 26]), 'whole', 'the touch area ends with the band');
+    await page.locator('#whole').evaluate(el => el.setAttribute('hit-width', '20'));
+    await settle();
+    assert.equal(await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.id, [box.x + box.width / 2, box.y - 26]), 'whole', 'hit-width widens the touch area');
+
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-10"><o-arc id="short" range="auto">Hi</o-arc><o-arc id="long" range="auto">A much longer label</o-arc></div></div></div>');
+    const auto = await page.evaluate(() => ['short', 'long'].map(id => document.getElementById(id).getAttributes()));
+    assert(auto[0].arcAngle > 0 && auto[1].arcAngle > auto[0].arcAngle * 3, 'range="auto" sizes arcs to their text');
+    assert(Math.abs(auto[1].stackOffset - auto[0].arcAngle) < 1e-6, 'auto arcs follow each other');
+
+    const events = await page.evaluate(async () => {
+      document.body.innerHTML = '<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8"><o-progress id="late" value="40"></o-progress></div></div></div>';
+      let fired = 0;
+      document.body.addEventListener('o-rendered', () => fired++);
+      await window.Orbit.ready();
+      return { fired, drawn: !!document.getElementById('late').shadowRoot.querySelector('.progress-bar').getAttribute('d') };
+    });
+    assert.deepEqual(events, { fired: 1, drawn: true }, 'Orbit.ready() resolves after drawing, and o-rendered fires once');
+
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot depth"><div class="gravity-spot" data-depth="1" id="composite"><div class="orbit-12" id="composite-edge"></div><div class="orbit-0"><div class="satellite at-center"><div class="capsule">label</div></div></div></div></div></div>');
+    assert.equal(await page.locator('#composite-edge').evaluate(el => el.offsetWidth), 400, 'a nested .gravity-spot layer keeps the reach of its universe');
+    assert.notEqual(await page.locator('#composite').evaluate(el => getComputedStyle(el).transform), 'none', 'and moves back as a depth layer');
+    assert.equal(await page.locator('.satellite').first().evaluate(el => getComputedStyle(el).borderTopStyle), 'none', 'satellites have no border by default');
 
     // Orbit.resize() only scales systems with a fixed --o-force.
     await fixture('<div id="panel" style="width:250px"><div class="bigbang"><div class="gravity-spot" id="fluid-spot"></div></div><div class="bigbang"><div class="gravity-spot" id="px-spot" style="--o-force:500px"></div></div></div>');

@@ -27,8 +27,12 @@ export interface OrbitArcAttributes {
   flip?: BooleanAttribute;
   /** Squeeze curved text to the length of the arc. */
   'fit-range'?: BooleanAttribute;
-  /** Let the painted shape receive pointer events. Arcs are decorative by default. */
+  /** Size the arc to its text. Consecutive `range="auto"` arcs follow each other. */
+  range?: 'auto';
+  /** Let the band receive pointer events, even where it is transparent. Arcs are decorative by default. */
   interactive?: BooleanAttribute;
+  /** Extra touch area in px on each side of an interactive band. */
+  'hit-width'?: Numeric;
 }
 
 /** Attributes of `<o-progress>`. */
@@ -40,8 +44,10 @@ export interface OrbitProgressAttributes {
   shape?: OrbitShape;
   /** `stroke` draws open lines colored by `--o-stroke` and `--o-back-stroke`. */
   variant?: 'stroke';
-  /** Let the painted shape receive pointer events. Progress is decorative by default. */
+  /** Let the whole track receive pointer events, whatever its colors. Progress is decorative by default. */
   interactive?: BooleanAttribute;
+  /** Extra touch area in px on each side of an interactive track. */
+  'hit-width'?: Numeric;
 }
 
 export declare class OrbitArc extends HTMLElement {
@@ -57,6 +63,11 @@ export declare class OrbitProgress extends HTMLElement {
 export interface OrbitApi {
   /** Update layouts now, after changes Orbit cannot observe (for example CSSOM edits). Defaults to the document. */
   refresh(root?: Element | Document | ShadowRoot): void;
+  /**
+   * Resolves when pending layouts of `root` (default: the document) are drawn.
+   * Each `<o-arc>` and `<o-progress>` also fires a bubbling `o-rendered` event after it redraws.
+   */
+  ready(root?: Element | Document | ShadowRoot): Promise<void>;
   /**
    * Scale systems that set a fixed px `--o-force` with a container's width (500px = 1).
    * Not needed for the default `--o-force`, which follows its `.bigbang`.
@@ -77,5 +88,8 @@ declare global {
   }
   interface Window {
     Orbit: OrbitApi;
+  }
+  interface HTMLElementEventMap {
+    'o-rendered': Event;
   }
 }

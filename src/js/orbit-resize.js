@@ -1,10 +1,13 @@
-import { refreshLayout, warnOnce } from './orbit-layout.js';
+import { layoutReady, refreshLayout, warnOnce } from './orbit-layout.js';
 
 const resizing = new WeakMap();
 const FIXED = /^[+-]?(?:\d+\.?\d*|\.\d+)px$/;
 
 const Orbit = {
   refresh: refreshLayout,
+
+  /** A promise that resolves when pending layouts are drawn. */
+  ready: layoutReady,
 
   /**
    * Scale systems that use a fixed px --o-force with their container's width
