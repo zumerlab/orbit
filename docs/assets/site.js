@@ -151,7 +151,7 @@ function nav() {
   const exact = NAV.some(([, items]) => items.some(([, path]) => isHere(path)));
   el.innerHTML = NAV.map(([title, items]) => `<h2>${title}</h2><ul>${items.map(([label, path]) =>
     `<li><a href="${at(path)}"${isHere(path) ? ' aria-current="page"' : (!exact && inSection(path) ? ' aria-current="true"' : '')}>${label}</a></li>`).join('')}</ul>`).join('') +
-    `<p class="nav-sponsor"><a href="https://github.com/${REPO}">Star on GitHub</a><a href="https://github.com/sponsors/tinchox5">Sponsor Orbit</a></p>`;
+    `<p class="nav-sponsor"><a href="https://github.com/${REPO}">Star on GitHub</a><a href="https://github.com/sponsors/tinchox5">Sponsor Orbit</a><a href="/privacy.html">Privacy</a><span data-cookie-settings hidden><a href="#">Cookie settings</a></span></p>`;
 }
 
 function pager() {
