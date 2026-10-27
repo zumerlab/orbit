@@ -47,10 +47,10 @@ body { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; align
 import '@zumer/orbit'
 import '@zumer/orbit-kit'</code></pre>
 <p>Or in a plain page:</p>
-<pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css"&gt;
-&lt;script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"&gt;&lt;/script&gt;
-&lt;script type="module" src="https://unpkg.com/@zumer/orbit-kit@2.0.0/src/orbit-kit.js"&gt;&lt;/script&gt;</code></pre>
-<p>The entry registers every component. To load only some, import their files: <code>import '@zumer/orbit-kit/o-gauge.js'</code>. Orbit is a peer dependency (<code>^2.0.0</code>); the kit does not work with Orbit 1.x.</p>
+<pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css"&gt;
+&lt;script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"&gt;&lt;/script&gt;
+&lt;script type="module" src="https://unpkg.com/@zumer/orbit-kit/src/orbit-kit.js"&gt;&lt;/script&gt;</code></pre>
+<p>The entry registers every component. To load only some, import their files: <code>import '@zumer/orbit-kit/o-gauge.js'</code>. Orbit 2 is a peer dependency; the kit does not work with Orbit 1.x.</p>
 
 <h2>Components</h2>
 <ul class="cards kit-cards">

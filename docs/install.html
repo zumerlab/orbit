@@ -28,14 +28,14 @@ import '@zumer/orbit';
 <p>The package is safe to import during server rendering. Import it in the browser entry too, so it can register the elements and watch the page. It exports <code>Orbit</code>, <code>OrbitArc</code>, <code>OrbitProgress</code> and <code>registerOrbit</code>; registration happens on import.</p>
 
 <h2>From a CDN</h2>
-<p>Pin the version, so it only changes when you decide:</p>
-<pre><code class="language-html">&lt;link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css"&gt;
-&lt;script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"&gt;&lt;/script&gt;
+<p>Load it from unpkg. This always gets the latest release; add a version after the name (<code>@zumer/orbit@2</code>) if you want it to change only when you decide.</p>
+<pre><code class="language-html">&lt;link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css"&gt;
+&lt;script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"&gt;&lt;/script&gt;
 </code></pre>
-<p>The script puts the API on <code>window.Orbit</code>. To load it as an ES module instead: <code>import { Orbit } from 'https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.mjs'</code>.</p>
+<p>The script puts the API on <code>window.Orbit</code>. To load it as an ES module instead: <code>import { Orbit } from 'https://unpkg.com/@zumer/orbit/dist/orbit.mjs'</code>.</p>
 
 <h2>What is in the package</h2>
-<p>Everything lives in <code>dist/</code>. You can <a href="https://unpkg.com/browse/@zumer/orbit@2.0.0/dist/">browse it on unpkg</a>.</p>
+<p>Everything lives in <code>dist/</code>. You can <a href="https://unpkg.com/browse/@zumer/orbit/dist/">browse it on unpkg</a>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>File</th><th>Import as</th><th>What it is</th></tr></thead>
 <tbody>

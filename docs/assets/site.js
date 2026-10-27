@@ -327,9 +327,9 @@ const accentCSS = () => {
 };
 
 function exampleDocument({ html = '', css = '', js = '', kit = false, light = false, body = '' }, standalone = false) {
-  const css1 = standalone ? 'https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css' : at('orbit/orbit.min.css');
-  const js1 = standalone ? 'https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js' : at('orbit/orbit.min.js');
-  const kitSrc = standalone ? 'https://unpkg.com/@zumer/orbit-kit@2.0.0/src/orbit-kit.js' : at('kit/src/orbit-kit.js');
+  const css1 = standalone ? 'https://unpkg.com/@zumer/orbit/dist/orbit.min.css' : at('orbit/orbit.min.css');
+  const js1 = standalone ? 'https://unpkg.com/@zumer/orbit/dist/orbit.min.js' : at('orbit/orbit.min.js');
+  const kitSrc = standalone ? 'https://unpkg.com/@zumer/orbit-kit/src/orbit-kit.js' : at('kit/src/orbit-kit.js');
   const classes = [light ? 'light' : '', body].filter(Boolean).join(' ');
   return `<!doctype html>
 <html lang="en">

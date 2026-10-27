@@ -27,8 +27,8 @@ import '@zumer/orbit'
 Or, in a plain page:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css">
-<script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css">
+<script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"></script>
 ```
 
 ## Your first universe
@@ -42,8 +42,8 @@ Save this as `index.html` and open it. It draws a progress ring with a label in 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>A first Orbit</title>
-  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css">
-  <script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css">
+  <script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"></script>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: system-ui, sans-serif; }
     .gauge { width: 240px; }

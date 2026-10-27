@@ -14,6 +14,7 @@ Orbit is a CSS layout system for things that grow around a center: gauges, dials
 
 [How Orbit thinks](https://zumerlab.github.io/orbit/universe.html)
 [See examples](https://zumerlab.github.io/orbit/examples/index.html)
+[Star on GitHub](https://github.com/zumerlab/orbit)
 
 `npm install @zumer/orbit`
 
@@ -439,18 +440,18 @@ The package is safe to import during server rendering. Import it in the browser 
 
 ## From a CDN
 
-Pin the version, so it only changes when you decide:
+Load it from unpkg. This always gets the latest release; add a version after the name (`@zumer/orbit@2`) if you want it to change only when you decide.
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css">
-<script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css">
+<script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"></script>
 ```
 
-The script puts the API on `window.Orbit`. To load it as an ES module instead: `import { Orbit } from 'https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.mjs'`.
+The script puts the API on `window.Orbit`. To load it as an ES module instead: `import { Orbit } from 'https://unpkg.com/@zumer/orbit/dist/orbit.mjs'`.
 
 ## What is in the package
 
-Everything lives in `dist/`. You can [browse it on unpkg](https://unpkg.com/browse/@zumer/orbit@2.0.0/dist/).
+Everything lives in `dist/`. You can [browse it on unpkg](https://unpkg.com/browse/@zumer/orbit/dist/).
 
 | File | Import as | What it is |
 | `orbit.css`, `orbit.min.css` | `@zumer/orbit/style` | The stylesheet: geometry, reset, default theme, `theme-cyan`, the color palette and `dev-orbit`. About 18 kB gzipped. |
@@ -4731,6 +4732,8 @@ Source: https://zumerlab.github.io/orbit/kit/
 
 Ready-made components built on Orbit: gauges, charts, knobs, menus, pickers, clocks, timers, spinners and status rings, one tag each.
 
+[Star Orbit Kit](https://github.com/zumerlab/orbit-kit) [Sponsor](https://github.com/sponsors/tinchox5)
+
 ```html
 <o-gauge value="72" unit="%" size="150px"></o-gauge>
 <o-knob value="40" label="Gain" aria-label="Gain" fill="#ffb547" size="150px"></o-knob>
@@ -4766,12 +4769,12 @@ import '@zumer/orbit-kit'
 Or in a plain page:
 
 ```
-<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css">
-<script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"></script>
-<script type="module" src="https://unpkg.com/@zumer/orbit-kit@2.0.0/src/orbit-kit.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css">
+<script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"></script>
+<script type="module" src="https://unpkg.com/@zumer/orbit-kit/src/orbit-kit.js"></script>
 ```
 
-The entry registers every component. To load only some, import their files: `import '@zumer/orbit-kit/o-gauge.js'`. Orbit is a peer dependency (`^2.0.0`); the kit does not work with Orbit 1.x.
+The entry registers every component. To load only some, import their files: `import '@zumer/orbit-kit/o-gauge.js'`. Orbit 2 is a peer dependency; the kit does not work with Orbit 1.x.
 
 ## Components
 

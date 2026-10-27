@@ -130,13 +130,13 @@ const home = take('index.html');
 const line = (p) => `- [${p.title}](${p.url})${p.desc ? `: ${p.desc}` : ''}`;
 const short = `# Orbit
 
-> Orbit is a CSS layout system for radial interfaces: gauges, dials, knobs, radial menus, donut charts, watch faces. You write plain HTML with a few classes; CSS does the geometry and a small runtime keeps numbering, spacing and SVG arcs right. Package: \`@zumer/orbit\` (2.0, MIT).
+> Orbit is a CSS layout system for radial interfaces: gauges, dials, knobs, radial menus, donut charts, watch faces. You write plain HTML with a few classes; CSS does the geometry and a small runtime keeps numbering, spacing and SVG arcs right. Package: \`@zumer/orbit\` (Orbit 2, MIT).
 
 Install: \`npm install @zumer/orbit\`, then \`import '@zumer/orbit/style'\` and \`import '@zumer/orbit'\`. Or in a page:
 
 \`\`\`html
-<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.css">
-<script defer src="https://unpkg.com/@zumer/orbit@2.0.0/dist/orbit.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css">
+<script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"></script>
 \`\`\`
 
 ## The model
