@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>240° gauge · Orbit</title>
+  <meta name="description" content="A stepped speedometer on a 240° arc: fifteen bands that light up with the speed, and curved numbers over them.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>240° gauge</h1>
+<p class="lede">A stepped speedometer: fifteen bands on a 240° arc light up with the speed, each with its number curved over it.</p>
+<figure class="example" data-height="400">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <!-- The dial is open at the bottom, so the universe is cut short there. -->
+  <div class="bigbang speedo at-top" role="meter" aria-label="Speed"
+       aria-valuemin="0" aria-valuemax="150" aria-valuenow="0">
+    <!-- One 240° dial: numbers and bands share range and start. -->
+    <div class="gravity-spot" style="--o-range: 240deg; --o-from: 240deg">
+      <div class="orbit-11 numbers" id="numbers"></div>
+      <div class="orbit-9 bands" id="bands" style="--o-size-ratio: 2.4; --o-gap: 3"></div>
+      <div class="orbit-0" style="--o-size-ratio: 10">
+        <div class="satellite at-center">
+          <div class="capsule readout"><strong id="speed">0</strong><span>km/h</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Speed <input id="value" type="range" min="0" max="150" value="0"></label>
+    <button id="drive" aria-pressed="false">Drive</button>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 4px; align-content: center; }
+.stage > .speedo { width: min(100%, (100vh - 80px) / .78); aspect-ratio: 1 / .78; }
+/* Reach = the width; the center sits half a width from the top. */
+.speedo > .gravity-spot { --o-force: 100cqw; margin-top: 50cqw; }
+
+.bands o-arc { --o-stroke: none; --o-fill: #1d2630; transition: --o-fill .15s; }
+.bands o-arc.on { --o-fill: var(--accent); }
+.bands o-arc.on:nth-child(n + 10) { --o-fill: var(--amber); }
+.bands o-arc.on:nth-child(n + 13) { --o-fill: var(--coral); }
+.numbers o-arc { --o-fill: transparent; --o-stroke: none; --o-color: var(--faint); font: 12px var(--mono); }
+.numbers o-arc.on { --o-color: var(--text); }
+.readout strong { font-size: clamp(28px, 13cqmin, 56px); }
+  </script>
+  <script type="text/plain" data-js>
+// Fifteen steps of 10 km/h. Arcs without value split the 240° evenly.
+const steps = Array.from({ length: 15 }, (_, i) => (i + 1) * 10);
+document.getElementById('bands').innerHTML = steps.map(() => '<o-arc></o-arc>').join('');
+document.getElementById('numbers').innerHTML = steps.map(n => `<o-arc>${n}</o-arc>`).join('');
+
+const speedo = document.querySelector('.speedo'), input = document.getElementById('value');
+const bands = [...document.querySelectorAll('#bands o-arc')], numbers = [...document.querySelectorAll('#numbers o-arc')];
+const set = speed => {
+  speed = Math.max(0, Math.min(150, Math.round(speed)));
+  input.value = speed;
+  // A band lights up once the speed is past the middle of its step.
+  steps.forEach((top, i) => {
+    bands[i].classList.toggle('on', speed >= top - 5);
+    numbers[i].classList.toggle('on', speed >= top - 5);
+  });
+  speedo.setAttribute('aria-valuenow', speed);
+  document.getElementById('speed').textContent = speed;
+};
+input.addEventListener('input', () => set(input.value));
+
+// Drive: the speed wanders toward a new target every couple of seconds.
+let timer, target = 0;
+document.getElementById('drive').addEventListener('click', event => {
+  const on = event.target.getAttribute('aria-pressed') !== 'true';
+  event.target.setAttribute('aria-pressed', on);
+  event.target.textContent = on ? 'Stop' : 'Drive';
+  clearInterval(timer);
+  timer = setInterval(() => {
+    if (on && Math.random() < .03) target = 30 + Math.random() * 115;
+    const speed = Number(input.value);
+    set(speed + Math.sign((on ? target : 0) - speed) * Math.min(2, Math.abs((on ? target : 0) - speed)));
+    if (!on && speed === 0) clearInterval(timer);
+  }, 50);
+  if (on) target = 90;
+});
+set(72);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li><code>--o-range: 240deg; --o-from: 240deg</code> on the <a href="../../reference/gravity-spot.html"><code>.gravity-spot</code></a> opens the dial at the bottom, and every ring inherits it.</li>
+<li>Fifteen <a href="../../reference/arc.html"><code>&lt;o-arc&gt;</code></a> without <code>value</code> split the range into equal steps. <code>--o-gap: 3</code> keeps a dark line between them, so each step reads on its own.</li>
+<li>The numbers are fifteen more arcs on <code>orbit-11</code>, with text and a transparent fill. Same count, same range: each number sits over its band.</li>
+<li>Lit bands get a class; <code>:nth-child(n + 10)</code> and <code>(n + 13)</code> turn the last steps amber and coral.</li>
+<li>The universe is shorter than it is wide, since the dial leaves the bottom free. <code>--o-force: 100cqw</code> keeps the reach at the full width, and <code>.at-top</code> plus a top margin of half a width puts the center where it would be in a square.</li>
+<li>The readout is a centered satellite ten lanes wide, and the universe is a <code>role="meter"</code>.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="180-degree-gauge.html">180° gauge</a>: a half circle with a needle</li>
+<li><a href="fuel-gauge.html">Fuel gauge</a>: a 90° instrument</li>
+<li><a href="../../demos/04-arrow-gauge.html">Speedometer demo</a>: a 270° dial with ticks and a needle</li>
+<li><a href="../../kit/gauge.html">Orbit Kit gauge</a>: a ready-made component</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

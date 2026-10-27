@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Depth layers · Orbit</title>
+  <meta name="description" content="Stack Orbit rings in 3D with .depth, data-depth and .layer-front. Layers keep their apparent size and animate when they move forward or back.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Depth layers</h1>
+<p class="lede">Add <code>depth</code> to a <code>.gravity-spot</code> and its rings stack on the z axis. The layer in front is the one people read and use; the others wait behind it.</p>
+<p>Each direct child of the <code>.depth</code> element is a layer: a ring, or a nested <code>.gravity-spot</code> when a layer needs several rings of its own.</p>
+<ul>
+<li><code>data-depth="1"</code> moves a layer one step back. Values go from <code>0</code> to <code>8</code>.</li>
+<li><code>.layer-front</code> marks the active layer and places it at depth 0.</li>
+<li><code>--o-z</code> sets the position directly, in unitless pixels. Negative values are farther away.</li>
+</ul>
+<p>Layers keep their apparent size: the scale makes up for the perspective, <code>(perspective − z) / perspective</code>. So three rings on <code>orbit-6</code> would sit exactly on top of each other. <code>--o-depth-grow</code> makes each step back a bit bigger, so you can see them all. Depth changes animate.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <!-- Each ring is a layer; data-depth sends it back. -->
+  <div class="gravity-spot depth">
+    <div class="orbit-6 layer-front" data-depth="0">
+      <o-progress value="82" shape="rounded"></o-progress>
+    </div>
+    <div class="orbit-6" data-depth="1">
+      <o-progress value="40" shape="rounded"></o-progress>
+    </div>
+    <div class="orbit-6" data-depth="2">
+      <o-progress value="65" shape="rounded"></o-progress>
+    </div>
+  </div>
+</div>
+<div class="controls"><button id="next">Next layer</button></div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100vh;
+  padding: 16px 16px 14px;
+}
+.bigbang { max-height: 100%; }
+.controls { justify-content: center; }
+.gravity-spot {
+  --o-size-ratio: 1.2;
+  --o-depth-grow: .42;
+  --o-back-opacity: .5;
+}
+o-progress {
+  --o-stroke: none;
+  --o-fill: var(--faint);
+  --o-back-fill: var(--line);
+}
+.layer-front o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+  </script>
+  <script type="text/plain" data-js>
+const layers = [...document.querySelectorAll('.depth > [data-depth]')];
+let front = 0;
+document.querySelector('#next').addEventListener('click', () => {
+  front = (front + 1) % layers.length;
+  layers.forEach((layer, i) => {
+    const depth = (i - front + layers.length) % layers.length;
+    layer.dataset.depth = depth;
+    layer.classList.toggle('layer-front', depth === 0);
+  });
+});
+  </script>
+</figure>
+
+<h2>A whole system as a layer</h2>
+<p>A layer can hold several rings, a label and a face that move together. Make it a nested <code>.gravity-spot</code> with <code>data-depth</code>. It has the same reach as its parent, so it needs no <code>--o-force</code>, and it does not block the pointer outside its satellites.</p>
+<p>Below, three gauges are stacked that way. Click a face to bring it forward, and move the pointer over the frame to tilt the stack.</p>
+<figure class="example" data-height="380">
+  <script type="text/plain" data-html>
+<div class="tilt">
+  <div class="bigbang">
+    <div class="gravity-spot depth outer-perspective stack">
+      <div class="gravity-spot layer layer-front" data-depth="0" style="--c: var(--accent)">
+        <div class="orbit-10" style="--o-size-ratio: 1.6"><o-progress value="72" shape="rounded"></o-progress></div>
+        <div class="orbit-0" style="--o-size-ratio: 14">
+          <div class="satellite at-center"><button class="capsule face" type="button"><strong>72%</strong><span>CPU</span></button></div>
+        </div>
+      </div>
+      <div class="gravity-spot layer" data-depth="1" style="--c: var(--amber)">
+        <div class="orbit-10" style="--o-size-ratio: 1.6"><o-progress value="48" shape="rounded"></o-progress></div>
+        <div class="orbit-0" style="--o-size-ratio: 14">
+          <div class="satellite at-center"><button class="capsule face" type="button"><strong>48%</strong><span>Memory</span></button></div>
+        </div>
+      </div>
+      <div class="gravity-spot layer" data-depth="2" style="--c: var(--violet)">
+        <div class="orbit-10" style="--o-size-ratio: 1.6"><o-progress value="91" shape="rounded"></o-progress></div>
+        <div class="orbit-0" style="--o-size-ratio: 14">
+          <div class="satellite at-center"><button class="capsule face" type="button"><strong>91%</strong><span>Disk</span></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+/* The ancestor that owns the perspective. */
+.tilt {
+  width: min(90vw, 260px);
+  perspective: 1000px;
+}
+.tilt > .bigbang {
+  rotate: x var(--rx, 0deg);
+  transform: rotateY(var(--ry, 0deg));
+  transition: rotate .2s, transform .2s;
+}
+/* Same value as the perspective above, without the unit. */
+.stack {
+  --o-perspective: 1000;
+  --o-depth-grow: .24;
+  --o-back-opacity: .3;
+}
+.layer o-progress {
+  --o-stroke: none;
+  --o-fill: var(--c);
+  --o-back-fill: color-mix(in srgb, var(--c) 14%, var(--bg));
+}
+.face {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: color-mix(in srgb, var(--c) 10%, var(--panel));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 40%, transparent);
+  border: 0;
+  padding: 0;
+  color: var(--text);
+  cursor: pointer;
+}
+.face strong {
+  color: var(--c);
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+}
+.face span {
+  font-size: 13px;
+  color: var(--muted);
+}
+  </script>
+  <script type="text/plain" data-js>
+const layers = [...document.querySelectorAll('.stack > .layer')];
+let front = 0;
+const bring = (index) => {
+  front = (index + layers.length) % layers.length;
+  layers.forEach((layer, i) => {
+    const depth = (i - front + layers.length) % layers.length;
+    layer.dataset.depth = depth;
+    layer.classList.toggle('layer-front', depth === 0);
+    layer.style.zIndex = layers.length - depth;
+  });
+};
+layers.forEach((layer, i) => {
+  layer.querySelector('.face').addEventListener('click', () => bring(i === front ? i + 1 : i));
+});
+bring(0);
+
+const tilt = document.querySelector('.tilt');
+document.addEventListener('pointermove', (e) => {
+  tilt.style.setProperty('--ry', (e.clientX / innerWidth - .5) * 30 + 'deg');
+  tilt.style.setProperty('--rx', -(e.clientY / innerHeight - .5) * 30 + 'deg');
+});
+document.addEventListener('pointerleave', () => {
+  tilt.style.setProperty('--rx', '0deg');
+  tilt.style.setProperty('--ry', '0deg');
+});
+  </script>
+</figure>
+
+<h2>Perspective from an ancestor</h2>
+<p>By default the <code>.depth</code> element owns the perspective. To tilt the whole object, as above, an ancestor has to own it instead: add <code>outer-perspective</code> next to <code>depth</code>, give the ancestor a <code>perspective</code>, and set <code>--o-perspective</code> to the same number so layers still keep their apparent size. Elements between that ancestor and <code>.depth</code> need <code>transform-style: preserve-3d</code>; a <code>.bigbang</code> that holds the <code>.depth</code> element gets it automatically.</p>
+<pre><code class="language-html">&lt;div style="perspective: 1000px"&gt;
+  &lt;div class="bigbang"&gt;
+    &lt;div class="gravity-spot depth outer-perspective" style="--o-perspective: 1000"&gt;
+      &lt;div class="gravity-spot layer-front" data-depth="0"&gt;…&lt;/div&gt;
+      &lt;div class="gravity-spot" data-depth="1"&gt;…&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h2>Properties</h2>
+<p>Set these on the <code>.depth</code> element, or on a single layer.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--o-z</code></td><td><code>depth × step</code></td><td>Position on the z axis in unitless pixels. Set it on a layer to override <code>data-depth</code>.</td></tr>
+<tr><td><code>--o-depth-step</code></td><td><code>-110</code></td><td>Distance between depth steps.</td></tr>
+<tr><td><code>--o-perspective</code></td><td><code>900</code></td><td>Perspective in unitless pixels.</td></tr>
+<tr><td><code>--o-depth-grow</code></td><td><code>0</code></td><td>Extra size per step back. <code>.42</code> gives 1×, 1.42×, 1.84×, so no two layers share a radius.</td></tr>
+<tr><td><code>--o-depth-compensate</code></td><td><code>1</code></td><td><code>0</code> lets farther layers look smaller.</td></tr>
+<tr><td><code>--o-back-opacity</code></td><td><code>1</code></td><td>Opacity of the layers behind the front one.</td></tr>
+<tr><td><code>--o-depth-duration</code></td><td><code>.8s</code></td><td>Duration of the depth transition.</td></tr>
+<tr><td><code>--o-depth-easing</code></td><td><code>cubic-bezier(.2,.8,.2,1)</code></td><td>Easing of the depth transition.</td></tr>
+</tbody>
+</table></div>
+<p>The transition is off when the user prefers reduced motion.</p>
+
+<h2>Rules</h2>
+<ul>
+<li><strong>Layers are direct children of <code>.depth</code>.</strong> An element in between flattens the 3D context.</li>
+<li><strong>Rings outside <code>.depth</code> are not transformed.</strong> <code>data-depth</code> alone does nothing.</li>
+<li><strong>Satellites, vectors, sides, <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code> are never layers.</strong> They keep their own transforms; put them in a ring and move the ring.</li>
+<li><strong>Back layers still receive clicks.</strong> Rings ignore the pointer and satellites accept it, so a click on a satellite of a back layer reaches it. That is how the faces above come forward.</li>
+</ul>
+<p>The <a href="../demos/11-depth-layers.html">depth demo</a> has the gauges above at full size, and <a href="../examples/layered-status-rings.html">layered status rings</a> a fuller example with alerts.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

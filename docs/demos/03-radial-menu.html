@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script>
+    // #embed shows only the drawing, for the rotating stage on the home page.
+    if (location.hash === '#embed') document.documentElement.classList.add('embed');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>03 — Radial menu | Orbit</title>
+  <link rel="stylesheet" href="../orbit/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
+  <script src="../assets/accent.js"></script>
+  <script src="../orbit/orbit.js"></script>
+  <style>
+    .menu o-arc {
+      --o-fill: #1b232d;
+      --o-stroke: #2c3846;
+      --o-stroke-width: 1;
+      transition: scale .18s cubic-bezier(.2, .8, .2, 1);
+    }
+    /* Orbit places arcs with `rotate`, so a hover scale composes with it. */
+    .menu o-arc:hover, .menu o-arc:focus-visible, .menu o-arc.active {
+      --o-fill: var(--accent);
+      --o-stroke: var(--accent);
+      scale: 1.045;
+      outline: none;
+    }
+    .menu o-arc:nth-child(1) { --accent: #4fd1c5; }
+    .menu o-arc:nth-child(2) { --accent: #60a5fa; }
+    .menu o-arc:nth-child(3) { --accent: #a78bfa; }
+    .menu o-arc:nth-child(4) { --accent: #ff7a6b; }
+    .menu o-arc:nth-child(5) { --accent: #ffb547; }
+    .menu o-arc:nth-child(6) { --accent: #a3e635; }
+    /* Labels sit on the same lane as the wedges, and let pointer events through. */
+    .menu .labels .satellite { pointer-events: none; }
+    .menu .label { display: grid; justify-items: center; gap: 4px; color: #c3ccd6; font-size: 12px; font-weight: 600; white-space: nowrap; transition: color .18s; }
+    .menu .label svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .menu .label.on { color: #0c0f13; }
+    .menu .hub { width: 100%; aspect-ratio: 1; border-radius: 50%; background: #12161c; border: 1px solid #2c3846; display: grid; place-items: center; }
+    .menu .hub .readout strong { font-size: 18px; letter-spacing: 0; }
+  </style>
+</head>
+<body>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="../examples/index.html#demos">← All examples</a><span class="num">03 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang menu" role="menu" aria-label="Quick actions">
+      <div class="gravity-spot" style="--o-from: -30deg">
+        <!-- Six wedges on lanes 6.5 to 11.5: lane 9, five lanes thick. -->
+        <div class="orbit-9 wedges" style="--o-size-ratio: 5; --o-gap: 3">
+          <o-arc interactive role="menuitem" tabindex="0" aria-label="Home"></o-arc>
+          <o-arc interactive role="menuitem" tabindex="0" aria-label="Search"></o-arc>
+          <o-arc interactive role="menuitem" tabindex="0" aria-label="Edit"></o-arc>
+          <o-arc interactive role="menuitem" tabindex="0" aria-label="Delete"></o-arc>
+          <o-arc interactive role="menuitem" tabindex="0" aria-label="Share"></o-arc>
+          <o-arc interactive role="menuitem" tabindex="0" aria-label="Settings"></o-arc>
+        </div>
+        <!-- One label per wedge, turned half a wedge so each sits in the middle of its arc. -->
+        <div class="orbit-9 labels" style="--o-from: 0deg" aria-hidden="true">
+          <div class="satellite"><div class="capsule label"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</div></div>
+          <div class="satellite"><div class="capsule label"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Search</div></div>
+          <div class="satellite"><div class="capsule label"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Edit</div></div>
+          <div class="satellite"><div class="capsule label"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>Delete</div></div>
+          <div class="satellite"><div class="capsule label"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.6M8.2 13.2l7.6 4.6"/></svg>Share</div></div>
+          <div class="satellite"><div class="capsule label"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Settings</div></div>
+        </div>
+        <div class="orbit-0" style="--o-size-ratio: 9">
+          <div class="satellite at-center"><div class="capsule hub"><div class="readout"><strong id="choice">Menu</strong><span id="hint">pick one</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="notes">
+    <h1>Radial menu</h1>
+    <p>Six actions around a hub. Every wedge is the same distance from the pointer, which makes radial menus fast to use.</p>
+    <p>Hover, click, or use <kbd>Tab</kbd> and <kbd>Enter</kbd>.</p>
+    <h2>How it's built</h2>
+    <ul>
+      <li>Six <code>&lt;o-arc&gt;</code> without <code>value</code> split the ring evenly. <code>--o-gap</code> and the thickness are set once, on the ring.</li>
+      <li><code>interactive</code> lets the painted wedge receive the pointer; the rest of the square stays click-through.</li>
+      <li>Labels are satellites on a second ring of the same lane, turned half a wedge with <code>--o-from</code>.</li>
+      <li>The hover scale uses <code>scale</code>; Orbit positions arcs with <code>rotate</code>, so both apply.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  const wedges = [...document.querySelectorAll('.wedges o-arc')];
+  const labels = [...document.querySelectorAll('.labels .label')];
+  const choice = document.getElementById('choice'), hint = document.getElementById('hint');
+  const show = (i, picked) => {
+    labels.forEach((label, j) => label.classList.toggle('on', i === j));
+    choice.textContent = i < 0 ? 'Menu' : wedges[i].getAttribute('aria-label');
+    hint.textContent = picked ? 'selected' : i < 0 ? 'pick one' : 'release to pick';
+  };
+  wedges.forEach((wedge, i) => {
+    wedge.addEventListener('pointerenter', () => show(i));
+    wedge.addEventListener('focus', () => show(i));
+    wedge.addEventListener('pointerleave', () => show(wedges.findIndex(w => w.classList.contains('active')), true));
+    const pick = () => { wedges.forEach(w => w.classList.toggle('active', w === wedge)); show(i, true); };
+    wedge.addEventListener('click', pick);
+    wedge.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); pick(); } });
+  });
+</script>
+</body>
+</html>

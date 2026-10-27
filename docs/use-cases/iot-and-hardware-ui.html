@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IoT and hardware interfaces · Orbit</title>
+  <meta name="description" content="Thermostat dials, gauges, knobs and level rings for smart-home and device interfaces, built with Orbit.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>IoT and hardware interfaces</h1>
+<p>Devices are full of dials: thermostats, fan speeds, fuel and battery levels, valve positions. The quantities are continuous and bounded, so a radial control matches how people think of the thing. Orbit gives you those controls as HTML that any framework, or none, can update from a WebSocket or MQTT message.</p>
+<h2>Where it fits</h2>
+<ul>
+<li>Smart-home panels and cards that should look the same across platforms.</li>
+<li>Companion apps for devices with a knob or a gauge of their own: e-bikes, printers, brewing controllers.</li>
+<li>Device screens prototyped in HTML, then shipped in a web view.</li>
+<li>Live telemetry: one attribute or custom property per message, redrawn on the next frame.</li>
+</ul>
+<h2>Where it does not</h2>
+<ul>
+<li>Old embedded browsers. Orbit needs container query units and CSS <code>sin()</code> and <code>cos()</code>.</li>
+<li>Illustrated, branded controls. Draw the illustration and put an Orbit gauge on top for the values.</li>
+</ul>
+<h2>Start from</h2>
+<ul class="cards">
+<li><a class="card" href="../demos/06-semicircle.html"><img class="thumb dark" src="../demos/thumbs/06-semicircle.webp" alt="" loading="lazy"><strong>Half gauge</strong><span>A battery in 20 cells on a half circle.</span></a></li>
+<li><a class="card" href="../examples/gauges/fuel-gauge.html"><img class="thumb" src="../examples/thumbs/fuel-gauge.webp" alt="" loading="lazy"><strong>Fuel gauge</strong><span>A compact level instrument.</span></a></li>
+<li><a class="card" href="../examples/knobs/knob-with-progress-bar.html"><img class="thumb" src="../examples/thumbs/knob-with-progress-bar.webp" alt="" loading="lazy"><strong>Knob with progress bar</strong><span>A setpoint control.</span></a></li>
+<li><a class="card" href="../examples/layered-status-rings.html"><img class="thumb" src="../examples/thumbs/layered-status-rings.webp" alt="" loading="lazy"><strong>Layered status rings</strong><span>Several channels in one object; alerts come to the front.</span></a></li>
+<li><a class="card" href="../examples/progress/circular-progress-with-background.html"><img class="thumb" src="../examples/thumbs/circular-progress-with-background.webp" alt="" loading="lazy"><strong>Progress with background</strong><span>Battery, fill level, filter life.</span></a></li>
+</ul>
+<p>A thermostat screen could be a large temperature gauge, a knob for the setpoint and two small rings for humidity and filter life. The <a href="../kit/instrument.html">Kit instrument</a> and <a href="../kit/gauge.html">gauge</a> are good starting points.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="audio-app-ui.html">Audio app interfaces</a></li>
+<li><a href="dashboards.html">Dashboards</a></li>
+<li><a href="fitness-and-health-apps.html">Fitness and health apps</a></li>
+<li><a href="sci-fi-game-uis.html">Sci-fi and game interfaces</a></li>
+<li><a href="../examples/index.html">All examples</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

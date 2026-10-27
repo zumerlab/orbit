@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="../docs/brand/favicon.svg">
   <title>Orbit — Radial UI with CSS only</title>
   <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css" />
   <script defer src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>
@@ -29,6 +30,8 @@
     .wrap { max-width: 1000px; margin: 0 auto; padding: 28px 16px 80px; display: grid; gap: 28px; }
     header { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; align-items: center; }
     @media (max-width: 800px) { header { grid-template-columns: 1fr; } }
+    .wrap > *, .grid-2 > *, header > * { min-width: 0; }
+    .hero-brand { display: block; width: 104px; height: 104px; margin-bottom: 20px; }
     .hero h1 { margin: 0; font-size: 36px; line-height: 1.1; }
     .hero p { margin: 8px 0 0; color: var(--muted); }
     .cta { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
@@ -72,6 +75,7 @@
 
   <header>
     <div class="hero">
+      <img class="hero-brand" src="../docs/brand/orbit-mark-animated.svg" width="104" height="104" alt="">
       <h1>Orbit — Radial UI with CSS only</h1>
       <p>Build <strong>gauges, donuts, knobs, and radial menus</strong> with CSS + Web Components. No layout JavaScript. Ideal for dashboards, automotive HUDs, IoT, and status boards.</p>
       <div class="cta">

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abstract orbital map · Orbit</title>
+  <meta name="description" content="A decorative star chart in HTML and CSS: planets that are systems inside satellites, each ring turning at its own speed with a plain CSS animation. Built with Orbit.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Abstract orbital map</h1>
+<p class="lede">A star chart where every planet is a system of its own, with its own rings and moons. Each ring turns at its own speed with a plain CSS animation on <code>rotate</code>.</p>
+<figure class="example" data-height="500">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang map" role="img" aria-label="Star chart with two planets and their moons">
+    <div class="gravity-spot">
+      <div class="orbit-12 line"></div>
+      <div class="orbit-12 ticks" style="--o-size-ratio: .35"></div>
+      <div class="orbit-9 line dashed"></div>
+      <div class="orbit-6 line dashed"></div>
+      <div class="orbit-3 line"></div>
+      <!-- Meridians: twelve long vectors from the center. -->
+      <div class="orbit-6 meridians" style="--o-size-ratio: 12"></div>
+
+      <!-- A planet: a satellite with a system inside. Its ring turns, and the planet with it. -->
+      <div class="orbit-9 turn" style="--time: 90s">
+        <div class="satellite angle-60" style="--o-size-ratio: 5">
+          <div class="gravity-spot">
+            <div class="orbit-0" style="--o-size-ratio: 9"><div class="satellite at-center planet"></div></div>
+            <div class="orbit-8 line dashed"></div>
+            <div class="orbit-11 turn" style="--time: 12s">
+              <div class="satellite moon" style="--o-size-ratio: 2"></div>
+            </div>
+            <div class="orbit-16 turn" style="--time: 90s; --dir: reverse">
+              <div class="satellite angle-135 label"><div class="capsule">Meridian</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="orbit-6 turn" style="--time: 50s; --dir: reverse">
+        <div class="satellite angle-210" style="--o-size-ratio: 3.4">
+          <div class="gravity-spot">
+            <div class="orbit-0" style="--o-size-ratio: 7"><div class="satellite at-center planet small"></div></div>
+            <div class="orbit-10 turn" style="--time: 8s">
+              <div class="satellite moon" style="--o-size-ratio: 2.4"></div>
+              <div class="satellite moon" style="--o-size-ratio: 1.6"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="orbit-3 turn" style="--time: 20s"><div class="satellite moon angle-20" style="--o-size-ratio: .6"></div></div>
+      <div class="orbit-0" style="--o-size-ratio: 1.6"><div class="satellite at-center star"></div></div>
+    </div>
+  </div>
+  <div class="controls"><button type="button" class="pause" aria-pressed="false">Pause</button></div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 10px; }
+.stage > .bigbang { width: min(100%, 100vh - 80px); }
+.line { border-color: var(--line); }
+.dashed { border-style: dashed; }
+.ticks .vector { background: var(--faint); }
+.meridians .vector { background: color-mix(in srgb, var(--line) 70%, transparent); }
+.star { background: var(--amber); box-shadow: 0 0 24px 6px color-mix(in srgb, var(--amber) 45%, transparent); }
+.planet { background: radial-gradient(circle at 35% 30%, var(--accent), color-mix(in oklab, var(--accent) 40%, black)); }
+.planet.small { background: radial-gradient(circle at 35% 30%, var(--violet), #4b3a87); }
+.moon { background: var(--text); }
+.label .capsule { font-size: 12px; color: var(--muted); white-space: nowrap; }
+/* Every .turn ring spins; --time and --dir set its speed and way. */
+.turn { animation: spin var(--time) linear infinite var(--dir, normal); }
+.paused .turn { animation-play-state: paused; }
+@keyframes spin { to { rotate: 360deg; } }
+  </script>
+  <script type="text/plain" data-js>
+document.querySelector('.ticks').innerHTML = '<div class="vector inner-orbit"></div>'.repeat(72);
+document.querySelector('.meridians').innerHTML = '<div class="vector"></div>'.repeat(12);
+
+// Moving content that runs for long should have a way to stop it.
+const pause = document.querySelector('.pause');
+pause.addEventListener('click', () => {
+  const paused = document.querySelector('.map').classList.toggle('paused');
+  pause.setAttribute('aria-pressed', paused);
+  pause.textContent = paused ? 'Play' : 'Pause';
+});
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Each planet is a satellite with its own <code>.gravity-spot</code>, so it gets its own twelve lanes for a core, a dashed ring and moons. See <a href="../reference/satellite.html">satellites</a>.</li>
+<li>Rings are drawn by their border. An empty ring is just a circle, so the chart's guides are rings with nothing on them; the ticks and meridians are <a href="../reference/vector.html">vectors</a>.</li>
+<li>A ring with <code>rotate</code> turns everything on it. The <code>.turn</code> class animates it, and <code>--time</code> and <code>--dir</code> on each ring set the speed and the direction.</li>
+<li>The label rides on <code>orbit-16</code> of the planet's system, past its edge. That ring turns back as fast as the planet's ring, so the two cancel out and the word stays upright beside the planet.</li>
+</ul>
+<p>Inspired by a design found on <a href="https://pin.it/dP9PlNjFc">Pinterest</a>.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="scifi.html">Sci-fi interface</a></li>
+<li><a href="../demos/08-nested-orbits.html">Nested systems demo</a></li>
+<li><a href="../reference/gravity-spot.html">Gravity spot</a>: a satellite is a universe too</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

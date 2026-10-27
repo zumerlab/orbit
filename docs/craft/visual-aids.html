@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visual aids · Orbit</title>
+  <meta name="description" content="dev-orbit draws the lanes of an Orbit layout, outlines elements in the wrong place and explains them in the console.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Visual aids</h1>
+<p class="lede">Add <code>dev-orbit</code> to a <code>.bigbang</code> while you build. It draws the gravity spot, the rings and the satellites with dashed red lines, outlines anything in the wrong place, and explains it in the console.</p>
+<p>It changes how things look, never where they are, so you can switch it on and off freely. It combines with a theme on the same element. <a href="themes.html">Themes</a> shows a full layout with it on.</p>
+
+<h2>Wrong children of a gravity spot</h2>
+<p>A <code>.gravity-spot</code> holds rings (<code>.orbit</code>, <code>.orbit-N</code>) and nested gravity spots, nothing else. If it holds anything else, the whole system is dimmed and a warning sign pulses at its center. Here a satellite sits directly in the gravity spot:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang dev-orbit">
+  <div class="gravity-spot">
+    <div class="orbit-8">
+      <div class="satellite"><div class="capsule">A</div></div>
+      <div class="satellite"><div class="capsule">B</div></div>
+      <div class="satellite"><div class="capsule">C</div></div>
+    </div>
+    <!-- A satellite needs a ring -->
+    <div class="satellite"></div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 {
+  --o-size-ratio: 2;
+}
+  </script>
+</figure>
+
+<h2>Wrong children of a satellite or a ring</h2>
+<p>A <code>.satellite</code> holds a <code>.capsule</code> or a nested <code>.gravity-spot</code>. With anything else in it, it gets an orange dotted border and the console names the element. A ring nested in another ring is outlined the same way. This example logs on purpose:</p>
+<pre><code>[orbit] &lt;div .orbit-10&gt; sits directly in a .satellite. Put content in a .capsule so it stays upright and centered.
+</code></pre>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang dev-orbit">
+  <div class="gravity-spot">
+    <div class="orbit-8">
+      <div class="satellite"><div class="capsule">A</div></div>
+      <div class="satellite">
+        <!-- A ring needs a gravity spot -->
+        <div class="orbit-10"></div>
+      </div>
+      <div class="satellite"><div class="capsule">C</div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 {
+  --o-size-ratio: 2;
+}
+  </script>
+</figure>
+<p>Content placed directly in a ring, instead of in a <code>.satellite</code>, is not outlined, but the console reports it. The full list of messages and their fixes is on the <a href="../install.html#console">install page</a>.</p>
+<p class="note">The outlines use <code>:has()</code>. In a browser without it you still get the console messages. The pulsing sign stops when the user prefers reduced motion.</p>
+
+<h2>Arcs on ellipses</h2>
+<p><code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code> are drawn on circles only. On a ring stretched into an ellipse with <code>--o-ellipse-x</code> or <code>--o-ellipse-y</code>, they are hidden. Satellites, vectors and sides follow the ellipse. See <a href="../reference/orbit.html#ellipses">Orbits</a>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

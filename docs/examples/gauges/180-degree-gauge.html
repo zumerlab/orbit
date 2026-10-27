@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>180° gauge · Orbit</title>
+  <meta name="description" content="A half-circle rating gauge: five named zones, a needle and a readout, on a 2:1 universe with its center on the bottom edge.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>180° gauge</h1>
+<p class="lede">A rating on a half circle: five named zones, a needle, and the zone you are in lit up.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <!-- A 2:1 universe with its center on the bottom edge. -->
+  <div class="bigbang rating at-bottom" role="meter" aria-label="Rating"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="gravity-spot" style="--o-force: 100cqw">
+      <!-- Names and zones share range-180 from-270, so each name sits over its zone. -->
+      <div class="orbit-11 range-180 from-270 names" id="names" style="--o-size-ratio: 1.4"></div>
+      <div class="orbit-9 range-180 from-270 zones" id="zones" style="--o-size-ratio: 1.6; --o-gap: 3"></div>
+      <!-- The needle: a vector 8 lanes long, turned with rotate. -->
+      <div class="orbit-4 needle-ring" style="--o-size-ratio: 8"><div class="vector needle"></div></div>
+      <div class="orbit-0" style="--o-size-ratio: 1.4">
+        <div class="satellite at-center"><div class="capsule hub"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="readout"><strong id="score">0</strong><span id="zone">very poor</span></div>
+  <div class="controls">
+    <label>Rating <input id="value" type="range" min="0" max="100" value="68"></label>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 14px; align-content: center; }
+.stage > .rating { width: min(100%, 520px, 200vh - 340px); aspect-ratio: 2 / 1; }
+
+.zones o-arc { --o-stroke: none; --o-fill: var(--c); opacity: .3; transition: opacity .3s; }
+.zones o-arc.on { opacity: 1; }
+.names o-arc { --o-fill: transparent; --o-stroke: none; --o-color: var(--muted); font-size: 13px; }
+.names o-arc.on { --o-color: var(--text); }
+
+.needle-ring { rotate: var(--needle, -90deg); transition: rotate .5s cubic-bezier(.3, 1.4, .5, 1); }
+.needle { height: 4px; border-radius: 2px; background: var(--text); }
+.hub { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--panel); border: 2px solid var(--text); }
+.readout strong { color: var(--c); }
+  </script>
+  <script type="text/plain" data-js>
+const zones = [
+  ['very poor', 'var(--coral)'], ['poor', 'var(--amber)'],
+  ['fair', 'color-mix(in srgb, var(--amber), var(--lime))'],
+  ['good', 'var(--lime)'], ['excellent', 'var(--accent)'],
+];
+// Arcs without value split the range evenly: five zones of 36°.
+document.getElementById('zones').innerHTML = zones.map(([, c]) => `<o-arc style="--c: ${c}"></o-arc>`).join('');
+document.getElementById('names').innerHTML = zones.map(([name]) => `<o-arc>${name}</o-arc>`).join('');
+
+const gauge = document.querySelector('.rating'), input = document.getElementById('value');
+const arcs = [...document.querySelectorAll('.zones o-arc, .names o-arc')];
+const set = value => {
+  const i = Math.min(4, Math.floor(value / 20)), [name, color] = zones[i];
+  gauge.style.setProperty('--needle', `${value * 1.8 - 90}deg`);
+  gauge.setAttribute('aria-valuenow', value);
+  gauge.setAttribute('aria-valuetext', `${value}, ${name}`);
+  arcs.forEach((arc, j) => arc.classList.toggle('on', j % 5 === i));
+  document.querySelector('.readout').style.setProperty('--c', color);
+  document.getElementById('score').textContent = value;
+  document.getElementById('zone').textContent = name;
+};
+input.addEventListener('input', () => set(Number(input.value)));
+set(Number(input.value));
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>The <a href="../../reference/bigbang.html">universe</a> is 2:1 with <code>.at-bottom</code>, so the center sits on its bottom edge. <code>--o-force: 100cqw</code> makes the reach the width instead of the shorter side.</li>
+<li>Zones and names live on two rings that share <code>range-180 from-270</code>. Five <a href="../../reference/arc.html"><code>&lt;o-arc&gt;</code></a> without <code>value</code> split the half circle evenly, so each name lands in the middle of its zone with no math.</li>
+<li>The names are text arcs with a transparent fill: <code>--o-color</code> colors the letters, and <code>font-size</code> is the same px size on any ring.</li>
+<li>The needle is one <a href="../../reference/vector.html"><code>.vector</code></a> eight lanes long. Its ring turns with <code>rotate</code>, from <code>-90deg</code> for 0 to <code>90deg</code> for 100.</li>
+<li>The universe is a <code>role="meter"</code>. The script keeps <code>aria-valuenow</code>, and an <code>aria-valuetext</code> with the zone name, in step with the drawing.</li>
+</ul>
+<p>For "lower is better" metrics like latency, list the zones the other way round, teal first.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="240-degree-gauge.html">240° gauge</a>: a speedometer with numbers</li>
+<li><a href="fuel-gauge.html">Fuel gauge</a>: a quarter circle for tight spaces</li>
+<li><a href="../../demos/06-semicircle.html">Half gauge demo</a>: the same universe, in cells</li>
+<li><a href="../../kit/gauge.html">Orbit Kit gauge</a>: a ready-made component</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

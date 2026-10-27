@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 104" width="104" height="104" fill="none" stroke="currentColor" stroke-width="8" color="#0b1015" role="img" aria-labelledby="orbit-brand-title">
+  <title id="orbit-brand-title">Orbit</title>
+
+  <style>@media (prefers-color-scheme:dark) { :root { color:#f4f6f7 } }</style>
+  <path d="M52 9a43 43 0 1 1-43 43"/>
+  <path class="orbit-brand-inner" d="M52 29a23 23 0 1 0 23 23"/>
+  <g class="orbit-brand-satellite"><circle cx="21.594" cy="21.594" r="6.5" fill="currentColor" stroke="none"/></g>
+</svg>

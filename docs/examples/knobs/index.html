@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knobs and menus · Orbit</title>
+  <meta name="description" content="Rotary knobs and a radial pie menu built with Orbit.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Knobs and menus</h1>
+<p>Controls that live on a circle. A knob is a body, ticks and an indicator that turns; a pie menu is a ring of clickable arcs. Use a continuous arc for values like gain, LEDs for discrete steps, and a pie menu when the choices fit around a point.</p>
+<ul class="cards">
+<li><a class="card" href="knob-with-progress-bar.html"><img class="thumb dark" src="../thumbs/knob-with-progress-bar.webp" alt="" loading="lazy"><strong>Knob with progress bar</strong><span>A gain knob whose arc grows from the center.</span></a></li>
+<li><a class="card" href="led-knob.html"><img class="thumb dark" src="../thumbs/led-knob.webp" alt="" loading="lazy"><strong>LED knob</strong><span>Eleven LEDs and a knob that snaps between them.</span></a></li>
+<li><a class="card" href="../piemenu.html"><img class="thumb dark" src="../thumbs/piemenu.webp" alt="" loading="lazy"><strong>Pie menu</strong><span>Wedges that open their options on an outer ring.</span></a></li>
+</ul>
+<p>All three work with the pointer and the keyboard. <a href="../../guide.html">Build a knob</a> explains that part step by step, and the <a href="../../kit/knob.html">Kit knob</a> and <a href="../../kit/menu.html">Kit menu</a> come with it built in.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="../progress/index.html">Progress rings</a></li>
+<li><a href="../../use-cases/audio-app-ui.html">Audio app interfaces</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

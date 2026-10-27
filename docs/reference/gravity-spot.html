@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gravity spot · Orbit</title>
+  <meta name="description" content="The .gravity-spot is the center of an Orbit system. Its reach sets the size of every ring.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Gravity spot</h1>
+<p class="lede">The <code>.gravity-spot</code> is the center of mass of a system. Every ring is its direct child, and its gravity reaches as far as the shorter side of the universe.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <!-- The default reach: the shorter side of the universe. -->
+    <div class="gravity-spot">
+      <div class="orbit-12"></div>
+      <div class="orbit-9" style="--o-size-ratio: 1.4"><div class="satellite angle-120"></div></div>
+      <div class="orbit-6"></div>
+      <div class="orbit-0" style="--o-size-ratio: .8"><div class="satellite at-center"></div></div>
+    </div>
+    <!-- A second system in the same universe, with a fixed reach. -->
+    <div class="gravity-spot fixed" id="fixed" style="--o-force: 120px">
+      <div class="orbit-12"></div>
+      <div class="orbit-8" style="--o-size-ratio: 2"><div class="satellite angle-300"></div></div>
+      <div class="orbit-4"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>--o-force <input id="force" type="range" min="40" max="360" value="120"></label>
+    <output id="out">120px</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+/* A wide universe, tinted so you can see its box. */
+.stage > .bigbang {
+  width: 100%;
+  height: calc(100vh - 84px);
+  aspect-ratio: auto;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border-radius: 6px;
+}
+.gravity-spot > [class*="orbit-"] { border-color: var(--accent); }
+.gravity-spot > .orbit-9, .gravity-spot > .orbit-6 { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.satellite { background: var(--accent); }
+.fixed > [class*="orbit-"] { border: 1px dashed var(--amber); }
+.fixed .satellite { background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const force = document.getElementById('force');
+force.addEventListener('input', () => {
+  document.getElementById('fixed').style.setProperty('--o-force', force.value + 'px');
+  document.getElementById('out').value = force.value + 'px';
+});
+  </script>
+  <figcaption>Two systems in one universe. The teal one uses the default reach and touches the top and bottom of the box; the amber one has <code>--o-force</code> in px and ignores the box.</figcaption>
+</figure>
+
+<h2>Reach</h2>
+<p>The reach is <code>--o-force</code>, the diameter of <code>orbit-12</code>. Between the center and that edge there are 12 lanes. The default, <code>100cqmin</code>, is the shorter side of the nearest <code>.bigbang</code> or satellite, so the system follows its box as it resizes. Set it when you want something else:</p>
+<ul>
+<li>a length, for a fixed size that ignores the box: <code>--o-force: 120px</code>;</li>
+<li><code>100cqw</code>, to reach the width of a wide universe instead of its height;</li>
+<li>a fraction of the default, like <code>calc(100cqmin * .8)</code>, to leave a margin around the system.</li>
+</ul>
+<p>Systems with a fixed px reach can still scale with their container through <code>Orbit.resize()</code>. See <a href="../craft/runtime.html">Runtime and resizing</a>.</p>
+
+<h2>Every system starts fresh</h2>
+<p>A <code>.gravity-spot</code> resets the reach, the angles, the thickness and the spacing to their defaults. A system nested in a satellite does not inherit any of them from the one around it.</p>
+<p>A satellite is a universe too: a <code>.gravity-spot</code> inside one reaches the satellite's edge, so its <code>orbit-12</code> is the satellite's outline. Here the outer system makes its planets five lanes thick, and each planet holds a system of its own whose moons start again from one lane and set their own size.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <!-- Planets five lanes thick... -->
+    <div class="gravity-spot" style="--o-size-ratio: 5">
+      <div class="orbit-0" style="--o-size-ratio: 4">
+        <div class="satellite at-center sun"></div>
+      </div>
+      <div class="orbit-8">
+        <div class="satellite planet">
+          <!-- ...each a universe with its own system: moons start again from one lane. -->
+          <div class="gravity-spot">
+            <div class="orbit-8 moons" style="--o-size-ratio: 3">
+              <div class="satellite moon"></div>
+              <div class="satellite moon"></div>
+              <div class="satellite moon"></div>
+            </div>
+          </div>
+        </div>
+        <div class="satellite planet">
+          <div class="gravity-spot">
+            <div class="orbit-8 moons" style="--o-size-ratio: 3">
+              <div class="satellite moon"></div>
+              <div class="satellite moon"></div>
+            </div>
+          </div>
+        </div>
+        <div class="satellite planet">
+          <div class="gravity-spot">
+            <div class="orbit-8 moons" style="--o-size-ratio: 3">
+              <div class="satellite moon"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.gravity-spot > .orbit-8 { border-color: var(--line); }
+.sun { background: var(--amber); box-shadow: 0 0 24px color-mix(in srgb, var(--amber) 60%, transparent); }
+/* The planet's outline is the orbit-12 of the system inside it. */
+.planet {
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+  border: 1px solid var(--accent);
+}
+.moons {
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: turn 12s linear infinite;
+}
+.moon { background: var(--accent); }
+@keyframes turn { to { rotate: 360deg; } }
+  </script>
+  <figcaption>Each planet holds a system of its own. Its moons are three lanes of the planet, not of the sun.</figcaption>
+</figure>
+
+<h2>An empty core</h2>
+<p><code>.core-1</code> to <code>.core-12</code> on a <code>.gravity-spot</code> leave an empty core in the middle, N lanes wide. With <code>core-4</code> the radius is split into 16 lanes instead of 12 and <code>orbit-N</code> lands on lane N + 4: rings sit closer together, further from the center, and <code>orbit-12</code> still touches the edge. Compare the cyan rings (default) with the purple ones (<code>core-4</code>), both <code>orbit-4</code>, <code>orbit-8</code> and <code>orbit-12</code>.</p>
+<p>In 1.x these classes were <code>from-1x</code> to <code>from-12x</code>. They still work.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-4"></div>
+      <div class="orbit-8"></div>
+      <div class="orbit-12"></div>
+    </div>
+    <!-- The same three rings, with an empty core. -->
+    <div class="gravity-spot core-4" id="cored">
+      <div class="orbit-4"></div>
+      <div class="orbit-8"></div>
+      <div class="orbit-12"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>core <input id="core" type="range" min="0" max="8" value="4"></label>
+    <output id="out">core-4</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.gravity-spot > * { border-color: color-mix(in srgb, var(--accent) 55%, transparent); }
+#cored > * { border: 1px dashed var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const core = document.getElementById('core'), cored = document.getElementById('cored');
+core.addEventListener('input', () => {
+  cored.className = 'gravity-spot' + (core.value > 0 ? ' core-' + core.value : '');
+  document.getElementById('out').value = core.value > 0 ? 'core-' + core.value : 'no core';
+});
+  </script>
+  <figcaption>Teal: <code>orbit-4</code>, <code>orbit-8</code> and <code>orbit-12</code> with no core. Amber: the same rings in a system with an empty core.</figcaption>
+</figure>
+
+<h2>Rings off the center</h2>
+<p>A <code>.gravity-spot</code> centers its rings on itself. An alignment class on it (<code>.at-top-left</code>, <code>.at-top</code>, <code>.at-bottom-right</code> and the rest) moves every ring toward that edge or corner, so the rings touch the center instead of surrounding it. Four systems in the same spot, one per corner:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <!-- Four systems on the same spot, each pushed toward a corner. -->
+    <div class="gravity-spot at-top-left"><div class="orbit-3"></div><div class="orbit-6"></div></div>
+    <div class="gravity-spot at-top-right"><div class="orbit-3"></div><div class="orbit-6"></div></div>
+    <div class="gravity-spot at-bottom-left"><div class="orbit-3"></div><div class="orbit-6"></div></div>
+    <div class="gravity-spot at-bottom-right"><div class="orbit-3"></div><div class="orbit-6"></div></div>
+    <div class="gravity-spot">
+      <div class="orbit-0" style="--o-size-ratio: .8"><div class="satellite at-center center"></div></div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.gravity-spot[class*="at-"] > * {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.center { background: var(--amber); }
+  </script>
+  <figcaption>Every ring touches the center, the amber dot, instead of surrounding it.</figcaption>
+</figure>
+
+<h2>Reference</h2>
+<p>Set these on the <code>.gravity-spot</code> to change the whole system, or on a ring or element for just that part.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Class or property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--o-force</code></td><td><code>100cqmin</code></td><td>Reach: the diameter of <code>orbit-12</code>.</td></tr>
+<tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Thickness of the elements on the rings, in lanes.</td></tr>
+<tr><td><code>--o-range</code></td><td><code>360deg</code></td><td>How much of the circle the rings use. See <a href="orbit.html#angles">Orbits</a>.</td></tr>
+<tr><td><code>--o-from</code></td><td><code>0deg</code></td><td>Where the range starts, clockwise from the top.</td></tr>
+<tr><td><code>--o-gap</code></td><td><code>1</code></td><td>Space between sibling arcs.</td></tr>
+<tr><td><code>--o-ellipse-x</code> / <code>--o-ellipse-y</code></td><td><code>1</code></td><td>Stretch the rings into ellipses. See <a href="orbit.html#ellipses">Orbits</a>.</td></tr>
+<tr><td><code>.core-1</code> … <code>.core-12</code></td><td></td><td>An empty core N lanes wide; every ring moves N lanes out. Old name: <code>from-Nx</code>.</td></tr>
+<tr><td><code>.at-top-left</code> … <code>.at-bottom-right</code></td><td><code>.at-center</code></td><td>Move the rings toward an edge or a corner, touching the center.</td></tr>
+<tr><td><code>.depth</code></td><td></td><td>Stacks the rings as 3D layers. See <a href="../craft/depth.html">Depth layers</a>.</td></tr>
+</tbody>
+</table></div>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

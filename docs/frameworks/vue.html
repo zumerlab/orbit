@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vue · Orbit</title>
+  <meta name="description" content="Use Orbit in Vue: install, tell the compiler that o-arc and o-progress are custom elements, and bind values in templates.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Vue</h1>
+<p class="lede">In Vue you write Orbit's markup straight into templates. The only setup is telling the compiler that <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code> are custom elements, not Vue components.</p>
+<h2>Install</h2>
+<pre><code class="language-sh">npm install @zumer/orbit
+</code></pre>
+<p>Import the stylesheet and the runtime in your entry file:</p>
+<pre><code class="language-js">// main.js
+import '@zumer/orbit/style';
+import '@zumer/orbit';
+
+import { createApp } from 'vue';
+import App from './App.vue';
+
+createApp(App).mount('#app');
+</code></pre>
+<p>Then, in the Vite config:</p>
+<pre><code class="language-js">// vite.config.js
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) =&gt; tag.startsWith('o-'),
+        },
+      },
+    }),
+  ],
+});
+</code></pre>
+<h2>A gauge</h2>
+<p>A progress ring with its value in the middle, bound to a ref:</p>
+<pre><code class="language-vue">&lt;script setup&gt;
+import { ref } from 'vue';
+import './gauge.css';
+
+const value = ref(72);
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div class="gauge"&gt;
+    &lt;div class="bigbang"&gt;
+      &lt;div class="gravity-spot"&gt;
+        &lt;div class="orbit-10"&gt;
+          &lt;o-progress :value="value" shape="rounded"&gt;&lt;/o-progress&gt;
+        &lt;/div&gt;
+        &lt;div class="orbit-0"&gt;
+          &lt;div class="satellite at-center"&gt;
+            &lt;div class="capsule"&gt;{{ value }}%&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;input type="range" min="0" max="100" v-model.number="value"&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="language-css">/* gauge.css */
+.gauge { width: 220px; }
+.gauge .orbit-10 { --o-size-ratio: 2; }
+.gauge .orbit-0 { --o-size-ratio: 12; }
+.gauge o-progress {
+  --o-fill: var(--o-cyan);
+  --o-back-fill: var(--o-cyan-lighter);
+  --o-stroke: none;
+}
+.gauge .capsule { font-size: 28px; font-weight: 600; }
+</code></pre>
+<p>Satellites rendered with <code>v-for</code> are spread around their ring however many there are.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="gauge">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10">
+        <o-progress value="72" shape="rounded"></o-progress>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule">72%</div></div>
+      </div>
+    </div>
+  </div>
+  <input type="range" min="0" max="100" value="72" aria-label="Value">
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.gauge { width: 220px; display: grid; gap: 10px; }
+.gauge .orbit-10 { --o-size-ratio: 2; }
+.gauge .orbit-0 { --o-size-ratio: 12; }
+.gauge o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.gauge .capsule { font-size: 34px; font-weight: 650; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const progress = document.querySelector('o-progress');
+const label = document.querySelector('.capsule');
+document.querySelector('input').addEventListener('input', (e) => {
+  progress.setAttribute('value', e.target.value);
+  label.textContent = e.target.value + '%';
+});
+  </script>
+  <figcaption>The same markup in plain HTML. Move the slider: changing <code>value</code> is all it takes.</figcaption>
+</figure>
+<p>Orbit watches the page for added, removed and reordered elements, attribute and style changes, and containers that change size, so a re-render needs no extra call. To wait until arcs are drawn, or to update after a change Orbit cannot see, use the <a href="../craft/runtime.html">runtime API</a>.</p>
+<h2>Nuxt</h2>
+<p>Importing Orbit on the server is safe. Put the stylesheet in <code>css</code>, the custom element rule in <code>vue.compilerOptions</code>, and the runtime in a client plugin:</p>
+<pre><code class="language-js">// nuxt.config.ts
+export default defineNuxtConfig({
+  css: ['@zumer/orbit/style'],
+  vue: {
+    compilerOptions: { isCustomElement: (tag) =&gt; tag.startsWith('o-') },
+  },
+});
+
+// app/plugins/orbit.client.ts
+import '@zumer/orbit';
+export default defineNuxtPlugin(() =&gt; {});
+</code></pre>
+<p>In Nuxt 3 the plugin is <code>plugins/orbit.client.ts</code>, at the root. Nuxt 4 ignores that folder, so there the elements would never be defined.</p>
+<h2>Without a build step</h2>
+<p>With Vue from a CDN, load Orbit's two files with <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code> (see <a href="../install.html">Install</a>) and set the same rule on the app:</p>
+<pre><code class="language-js">const app = Vue.createApp({ data: () =&gt; ({ value: 72 }) });
+app.config.compilerOptions.isCustomElement = (tag) =&gt; tag.startsWith('o-');
+app.mount('#app');
+</code></pre>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

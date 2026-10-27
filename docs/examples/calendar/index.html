@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendars · Orbit</title>
+  <meta name="description" content="Circular calendars and planners built with Orbit: a year on one dial and a Chronodex day planner.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Calendars</h1>
+<p>Time goes around, so a circle suits it: a year as a dial of months, a day as wedges of hours.</p>
+<ul class="cards">
+<li><a class="card" href="circular-year-calendar.html"><img class="thumb" src="../thumbs/circular-year-calendar.webp" alt="" loading="lazy"><strong>Circular year calendar</strong><span>Seasons, months and days on one dial; step through the year.</span></a></li>
+<li><a class="card" href="index.html#chronodex"><img class="thumb" src="../thumbs/chronodex.webp" alt="" loading="lazy"><strong>Chronodex day planner</strong><span>A day as wedges; click one to plan that hour.</span></a></li>
+</ul>
+<h2 id="chronodex">Chronodex day planner</h2>
+<p>A Chronodex is a radial day planner from paper journaling: each hour is a wedge, and you fill the wedge to plan that hour. Here every wedge is an <code>&lt;o-arc&gt;</code> you can click.</p>
+<figure class="example" data-height="460">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang planner" role="group" aria-label="Day planner">
+    <div class="gravity-spot">
+      <!-- Twelve hours, 10am to 9pm. Each wedge starts on lane 4 and grows outward. -->
+      <div class="orbit-4 hours"></div>
+      <!-- The morning, 7am to 9am, on an inner quarter. -->
+      <div class="orbit-1 from-210 range-90 morning"></div>
+      <!-- Hour labels just past the tip of their wedge: see the JS tab. -->
+      <div class="labels"></div>
+    </div>
+  </div>
+  <p class="controls"><output class="count"></output></p>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 4px; }
+.stage > .bigbang { width: min(100%, 100vh - 64px); }
+.controls { margin: 0; }
+.planner o-arc { --o-stroke: none; --o-fill: color-mix(in srgb, var(--text) 7%, transparent); --o-gap: 2; }
+.planner o-arc:hover { --o-fill: color-mix(in srgb, var(--text) 14%, transparent); }
+.planner o-arc[aria-pressed="true"] { --o-fill: color-mix(in srgb, var(--accent) 70%, transparent); }
+.planner o-arc:focus-visible { outline: none; --o-stroke: var(--accent); --o-stroke-width: 2; }
+.label { pointer-events: none; }
+.label .capsule { font-size: 12px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.morning-label .capsule { font-size: 11px; }
+  </script>
+  <script type="text/plain" data-js>
+const $ = (s) => document.querySelector(s);
+const hourName = (h) => `${h % 12 || 12}${h < 12 ? 'am' : 'pm'}`;
+const wedge = (h, lanes) => `<o-arc interactive tabindex="0" role="button" aria-label="${hourName(h)}" aria-pressed="false"
+  class="outer-orbit" style="--o-size-ratio: ${lanes}" data-hour="${h}"></o-arc>`;
+
+// Wedge k covers the hour from k to k+1 on the clock face. Thickness cycles 3, 4, 5 lanes.
+const outer = Array.from({ length: 12 }, (_, k) => (k >= 10 ? k : k + 12));
+$('.hours').innerHTML = outer.map((h, k) => wedge(h, 3 + (k % 3))).join('');
+$('.morning').innerHTML = [7, 8, 9].map((h) => wedge(h, 3)).join('');
+
+// One ring of labels per thickness, centered on the wedges (from 15° + 30° per step).
+$('.labels').outerHTML = [0, 1, 2].map((t) => `
+  <div class="orbit-${8 + t} from-${15 + 30 * t}" style="--o-size-ratio: 1.6">
+    ${[0, 3, 6, 9].map((k) => `<div class="satellite label"><div class="capsule">${hourName(outer[k + t])}</div></div>`).join('')}
+  </div>`).join('') + `
+  <div class="orbit-3 shrink-50 from-225 range-60 fit-range morning-label" style="--o-size-ratio: 1.2">
+    ${[7, 8, 9].map((h) => `<div class="satellite label"><div class="capsule">${h}</div></div>`).join('')}
+  </div>`;
+
+// Click, Enter or Space to plan an hour.
+const count = () => { $('.count').value = `${document.querySelectorAll('[aria-pressed="true"]').length} hours planned`; };
+const toggle = (arc) => { arc.setAttribute('aria-pressed', arc.getAttribute('aria-pressed') !== 'true'); count(); };
+document.querySelectorAll('.planner o-arc').forEach((arc) => {
+  arc.addEventListener('click', () => toggle(arc));
+  arc.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(arc); } });
+});
+[8, 13, 14, 18].forEach((h) => toggle($(`[data-hour="${h}"]`)));
+  </script>
+</figure>
+<h3>How it's built</h3>
+<ul>
+<li>Twelve <a href="../../reference/arc.html"><code>&lt;o-arc&gt;</code></a> elements without a <code>value</code> share <code>orbit-4</code>, 30° each. <code>outer-orbit</code> makes every wedge start on the ring and grow outward, and its own <code>--o-size-ratio</code> sets how far: 3, 4 or 5 lanes.</li>
+<li>The morning is three more arcs on <code>orbit-1</code>, three lanes long, limited to a quarter with <code>from-210 range-90</code>.</li>
+<li><code>interactive</code> makes an arc take clicks; <code>role="button"</code>, <code>tabindex</code> and <code>aria-pressed</code> make it a toggle for the keyboard and screen readers.</li>
+<li>The labels are satellites on three rings, one per wedge length, each turned with <code>from-N</code> to the middle of its wedges.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="../watches/index.html">Watches and clocks</a></li>
+<li><a href="../../demos/03-radial-menu.html">Radial menu demo</a>: arcs that respond to hover and keys</li>
+<li><a href="../../reference/arc.html">Arcs</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

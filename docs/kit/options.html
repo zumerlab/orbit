@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shared options · Orbit</title>
+  <meta name="description" content="Themes, number format, min, max and step, and forms work the same in every Orbit Kit component.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Shared options</h1>
+<p class="lede">Themes, number format, <code>min</code>, <code>max</code> and <code>step</code>, and forms work the same in every kit component that has them.</p>
+
+<h2 id="themes">Themes</h2>
+<p>Put <code>theme="dark"</code>, <code>"light"</code> or <code>"glass"</code> on a component, or the class <code>ok-theme-dark</code>, <code>ok-theme-light</code> or <code>ok-theme-glass</code> on a container. Everything inside follows, so one class themes a whole dashboard.</p>
+<figure class="example" data-kit data-height="330">
+  <script type="text/plain" data-html>
+<!-- One class per panel; every component inside takes the theme. -->
+<section class="panel ok-theme-dark">
+  <o-gauge value="64" unit="%" size="120px"></o-gauge>
+  <o-knob value="64" size="96px" aria-label="Dark level"></o-knob>
+  <p>Dark</p>
+</section>
+<section class="panel ok-theme-light">
+  <o-gauge value="64" unit="%" size="120px"></o-gauge>
+  <o-knob value="64" size="96px" aria-label="Light level"></o-knob>
+  <p>Light</p>
+</section>
+<section class="panel ok-theme-glass">
+  <o-gauge value="64" unit="%" size="120px"></o-gauge>
+  <o-knob value="64" size="96px" aria-label="Glass level"></o-knob>
+  <p>Glass</p>
+</section>
+  </script>
+  <script type="text/plain" data-css>
+body { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; padding: 16px; }
+.panel { display: grid; justify-items: center; gap: 10px; padding: 18px 22px 12px; border-radius: 16px; border: 1px solid var(--line); }
+.panel p { margin: 0; font-size: 13px; color: var(--ok-text); opacity: .7; }
+.ok-theme-dark { background: var(--panel); }
+.ok-theme-light { background: #f6f7f9; }
+.ok-theme-glass { background: linear-gradient(140deg, #6d28d9, #0ea5e9 60%, #14b8a6); }
+  </script>
+  <script type="text/plain" data-js>
+// Each knob drives the gauge in its panel.
+for (const panel of document.querySelectorAll('.panel')) {
+  const gauge = panel.querySelector('o-gauge');
+  panel.querySelector('o-knob').addEventListener('input', (e) => gauge.setAttribute('value', e.detail.value));
+}
+  </script>
+  <figcaption>Turn a knob: the gauge next to it follows.</figcaption>
+</figure>
+<ul>
+<li>A theme is a set of the <code>--ok-*</code> custom properties, inside <code>:where()</code>. It has zero specificity, so any rule of yours wins, and color attributes like <code>fill</code> win too.</li>
+<li>Custom properties inherit, so the closest theme wins: a <code>theme="light"</code> gauge inside an <code>ok-theme-dark</code> panel is light.</li>
+<li>Without a theme, components keep their own defaults.</li>
+<li>Glass makes faces and panels translucent and blurs what is behind them (<code>backdrop-filter</code>). It wants a colorful or photographic background.</li>
+</ul>
+<p>The properties a theme sets, and what reads them:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>What it colors</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-fill</code>, <code>--ok-track</code></td><td>Value arcs and their tracks.</td></tr>
+<tr><td><code>--ok-accent</code></td><td>Needles, second hands, compass index, menu highlight.</td></tr>
+<tr><td><code>--ok-text</code></td><td>Readouts, numerals and labels.</td></tr>
+<tr><td><code>--ok-face</code>, <code>--ok-bezel</code>, <code>--ok-case</code></td><td>Dials, their rims and the case around them.</td></tr>
+<tr><td><code>--ok-tick</code>, <code>--ok-hand</code></td><td>Minor ticks; hands, major ticks and strong numbers.</td></tr>
+<tr><td><code>--ok-surface</code></td><td>Panels such as the menu hub and the needle cap.</td></tr>
+<tr><td><code>--ok-focus</code></td><td>Focus rings.</td></tr>
+<tr><td><code>--ok-backdrop</code></td><td>The <code>backdrop-filter</code> of faces and panels. Set by glass.</td></tr>
+</tbody>
+</table></div>
+<p>To tweak a theme, set a property next to it:</p>
+<pre><code>.dashboard { --ok-fill: #ffb547; }   /* beats the theme */
+&lt;div class="dashboard ok-theme-dark"&gt; … &lt;/div&gt;</code></pre>
+<p>The menu already had a <code>theme</code> attribute for its sector colors. That is now <code>palette="mono|color"</code>; <code>theme="color"</code> still works and combines with the others, as in <code>theme="color light"</code>.</p>
+
+<h2 id="format">Number format</h2>
+<p><code>format</code> picks how numbers are written, through <code>Intl.NumberFormat</code>. It reaches the readout, the tick labels and <code>aria-valuetext</code>.</p>
+<figure class="example" data-kit data-height="380">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <o-instrument id="dial" min="0" max="2000" value="1234.5" ticks="5" minor="4" size="250px"></o-instrument>
+  <div class="controls">
+    <span id="formats"></span>
+    <label>Locale
+      <select id="locale">
+        <option>en-US</option><option>de-DE</option><option>fr-FR</option><option>ja-JP</option><option>hi-IN</option>
+      </select>
+    </label>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 14px; align-content: center; }
+.controls { justify-content: center; }
+#formats { display: flex; flex-wrap: wrap; gap: 6px; }
+button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+select { font: inherit; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+  </script>
+  <script type="text/plain" data-js>
+const dial = document.getElementById('dial');
+// Each button is a set of attributes; "plain" removes them all.
+const formats = {
+  plain: {},
+  decimal: { format: 'decimal', decimals: '1' },
+  percent: { format: 'percent' },
+  currency: { format: 'currency', currency: 'EUR' },
+  unit: { format: 'unit', unit: 'megabyte' },
+  compact: { format: 'compact' }
+};
+const buttons = document.getElementById('formats');
+for (const name of Object.keys(formats)) {
+  const button = document.createElement('button');
+  button.textContent = name;
+  button.setAttribute('aria-pressed', name === 'plain');
+  button.onclick = () => {
+    for (const attr of ['format', 'decimals', 'currency', 'unit']) dial.removeAttribute(attr);
+    for (const [attr, value] of Object.entries(formats[name])) dial.setAttribute(attr, value);
+    for (const other of buttons.children) other.setAttribute('aria-pressed', other === button);
+  };
+  buttons.append(button);
+}
+document.getElementById('locale').onchange = (e) => dial.setAttribute('locale', e.target.value);
+  </script>
+  <figcaption>Switch the format and the locale: the readout and the scale change together.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>format</code></td><td><code>decimal</code>, <code>percent</code>, <code>currency</code>, <code>unit</code> or <code>compact</code> (1.2K, 3.4M).</td></tr>
+<tr><td><code>decimals</code></td><td>Digits after the decimal point, fixed. Without it, each format uses its usual number.</td></tr>
+<tr><td><code>currency</code></td><td>ISO code for <code>format="currency"</code>, <code>USD</code> by default. Setting it alone implies the currency format.</td></tr>
+<tr><td><code>unit</code></td><td>Text after the number, as before (<code>unit="%"</code>). With <code>format="unit"</code> it names an Intl unit instead: <code>kilometer-per-hour</code>, <code>celsius</code>, <code>megabyte</code>.</td></tr>
+<tr><td><code>locale</code></td><td>A language tag like <code>de-DE</code>. Without it, the closest <code>lang</code> attribute, then the browser's language.</td></tr>
+</tbody>
+</table></div>
+<p><code>percent</code> shows where the value sits between <code>min</code> and <code>max</code>: 50 on a 0 to 200 gauge reads 25%. In a donut it is the share of the total. Without any of these attributes, numbers look the way they did in 1.0. A bad currency or unit never breaks the component: it falls back to a plain number.</p>
+<h3 id="formatter">A formatter for full control</h3>
+<p>Set <code>formatter</code> to a function and it writes every number. The second argument says where the number goes: <code>kind</code> is <code>value</code>, <code>tick</code> or <code>aria</code>, and you get <code>min</code>, <code>max</code> and <code>locale</code>. Its text is used as is, without the unit.</p>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-gauge id="time" value="95" max="240" fill="#a78bfa" aria-label="Screen time"></o-gauge>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+// Minutes as "1h 35m" on screen, and in words for screen readers.
+document.getElementById('time').formatter = (minutes, { kind }) => {
+  const h = Math.floor(minutes / 60), m = Math.round(minutes % 60);
+  return kind === 'aria' ? `${h} hours ${m} minutes` : `${h}h ${String(m).padStart(2, '0')}m`;
+};
+  </script>
+</figure>
+
+<h2 id="range">min, max and step</h2>
+<p>Every component with a value reads <code>min</code>, <code>max</code> and <code>step</code> the way <code>&lt;input type="range"&gt;</code> does.</p>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <!-- Half-decibel steps from -12 to +12; the readout uses one decimal. -->
+  <o-knob id="trim" min="-12" max="12" step="0.5" value="-3" format="decimal" decimals="1" unit=" dB" fill="#ffb547" aria-label="Trim"></o-knob>
+  <p class="controls">Screen readers hear <output id="said"></output></p>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 6px; align-content: center; }
+.controls { margin: 0; }
+  </script>
+  <script type="text/plain" data-js>
+const trim = document.getElementById('trim'), said = document.getElementById('said');
+const show = () => { said.textContent = trim.getAttribute('aria-valuetext'); };
+trim.addEventListener('input', show);
+customElements.whenDefined('o-knob').then(show);
+  </script>
+  <figcaption>Drag, scroll or use the arrow keys: every value lands on a half step.</figcaption>
+</figure>
+<ul>
+<li>Values are clamped to the range, readouts included. A <code>max</code> below <code>min</code> becomes <code>min</code>.</li>
+<li><code>step</code> snaps values to a grid that starts at <code>min</code>. Both ends stay reachable, even when the step does not divide the range. <code>step="any"</code> turns snapping off.</li>
+<li>Display components (gauge, meter, instrument) do not snap unless you give them a <code>step</code>. The knob steps by 1.</li>
+<li>Keys: arrows move one step, Page Up and Page Down ten, Home and End go to the ends. Without a step they move 1% of the range.</li>
+<li><code>aria-valuemin</code>, <code>aria-valuemax</code>, <code>aria-valuenow</code> and <code>aria-valuetext</code> follow, the last one through the number format.</li>
+</ul>
+<p>Rings read <code>min</code> and <code>max</code> as defaults for each ring, and a ring in <code>data</code> can set its own. The radar reads <code>dist</code> between them, so blips can be in kilometers. On the rings, <code>step</code> was already the space between rings; it keeps that meaning, and <code>spacing</code> is its new name.</p>
+
+<h2 id="forms">Forms</h2>
+<p><code>&lt;o-knob&gt;</code> and <code>&lt;o-menu&gt;</code> are form controls. Give them a <code>name</code> and they submit with their form like an <code>&lt;input&gt;</code>.</p>
+<figure class="example" data-kit data-height="380">
+  <script type="text/plain" data-html>
+<form id="order" class="stage">
+  <div class="row">
+    <o-knob name="strength" min="1" max="5" value="3" size="130px" aria-label="Strength"></o-knob>
+    <!-- required: the form will not submit until a size is picked. -->
+    <o-menu name="size" required label="Size" size="170px" items='[
+      {"label":"S","value":"small"},{"label":"M","value":"medium"},{"label":"L","value":"large"}]'></o-menu>
+  </div>
+  <div class="controls">
+    <button>Order</button>
+    <button type="reset">Reset</button>
+    <output id="sent"></output>
+  </div>
+</form>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 14px; align-content: center; }
+.row { display: flex; gap: 28px; align-items: center; justify-content: center; }
+.controls { justify-content: center; }
+  </script>
+  <script type="text/plain" data-js>
+const form = document.getElementById('order'), sent = document.getElementById('sent');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  sent.textContent = new URLSearchParams(new FormData(form)).toString();
+});
+form.addEventListener('reset', () => { sent.textContent = ''; });
+  </script>
+  <figcaption>Order without a size and the browser points at the menu. Reset puts the knob back on 3.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>name</code></td><td>The field name in the form data. Without it, nothing is sent.</td></tr>
+<tr><td><code>value</code></td><td>The attribute is the default value: the control starts there and a form reset goes back to it. The property is the current value; setting it fires no event.</td></tr>
+<tr><td><code>disabled</code></td><td>Out of the tab order, ignores input and is not sent. A disabled <code>&lt;fieldset&gt;</code> does the same. <code>:disabled</code> works in CSS.</td></tr>
+<tr><td><code>required</code></td><td>Menu only: the form does not submit until an item is picked. A knob always has a value.</td></tr>
+<tr><td><code>input</code>, <code>change</code></td><td>Events, as on native inputs: <code>input</code> on every change by the user, <code>change</code> when a gesture ends, on each key press, and on each menu pick. <code>event.detail.value</code> has the value.</td></tr>
+<tr><td><code>form</code>, <code>labels</code>, <code>validity</code>, <code>checkValidity()</code>, <code>reportValidity()</code></td><td>The same as on an <code>&lt;input&gt;</code>. A <code>&lt;label for&gt;</code> names the control.</td></tr>
+</tbody>
+</table></div>
+<p>The menu submits the <code>value</code> of the picked item, as JSON when it is an object. Pages restored with the back button come back with the values they had.</p>
+
+<h2 id="support">Which component takes what</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Component</th><th>Theme</th><th>Format</th><th>min / max / step</th><th>Form</th></tr></thead>
+<tbody>
+<tr><td><a href="gauge.html">Gauge</a></td><td>yes</td><td>readout</td><td>all three</td><td></td></tr>
+<tr><td><a href="knob.html">Knob</a></td><td>yes</td><td>readout</td><td>all three, keys</td><td>yes</td></tr>
+<tr><td><a href="menu.html">Menu</a></td><td>yes</td><td></td><td></td><td>yes</td></tr>
+<tr><td><a href="instrument.html">Instrument</a></td><td>yes</td><td>readout, scale</td><td>all three</td><td></td></tr>
+<tr><td><a href="donut.html">Donut</a></td><td>yes</td><td>segments</td><td></td><td></td></tr>
+<tr><td><a href="rings.html">Rings</a></td><td>yes</td><td>rings</td><td><code>min</code>, <code>max</code></td><td></td></tr>
+<tr><td><a href="compass.html">Compass</a></td><td>yes</td><td>heading</td><td></td><td></td></tr>
+<tr><td><a href="radar.html">Radar</a></td><td>yes</td><td>distances</td><td><code>min</code>, <code>max</code></td><td></td></tr>
+<tr><td><a href="radar-chart.html">Radar chart</a></td><td>yes</td><td>tooltip, scale, table</td><td><code>min</code>, <code>max</code>, also per axis</td><td></td></tr>
+<tr><td><a href="spinner.html">Spinner</a></td><td>yes</td><td>progress readout</td><td><code>min</code>, <code>max</code></td><td></td></tr>
+<tr><td><a href="sunburst.html">Sunburst</a></td><td>yes</td><td>values, middle</td><td></td><td></td></tr>
+<tr><td><a href="range.html">Range</a></td><td>yes</td><td>readout</td><td>all three, keys</td><td>yes</td></tr>
+<tr><td><a href="time-picker.html">Time picker</a></td><td>yes</td><td></td><td><code>min</code>, <code>max</code> (times)</td><td>yes</td></tr>
+<tr><td><a href="color-wheel.html">Color wheel</a></td><td>yes</td><td></td><td></td><td>yes</td></tr>
+<tr><td><a href="wheel.html">Wheel</a></td><td>yes</td><td></td><td></td><td></td></tr>
+<tr><td><a href="clock.html">Clock</a>, <a href="timer.html">Timer</a>, <a href="status.html">Status</a></td><td>yes</td><td></td><td></td><td></td></tr>
+</tbody>
+</table></div>
+<p><code>&lt;o-meter&gt;</code> takes the same as the instrument. Clocks and timers show times, not numbers, so they have no number format.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fuel gauge · Orbit</title>
+  <meta name="description" content="A 90° fuel gauge with E and F, ticks, a red reserve and a needle, in a universe cut to the size of the dial.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Fuel gauge</h1>
+<p class="lede">A 90° instrument for a corner of a dashboard: E to F, a red reserve and a needle, in a universe cut to the size of the dial.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <!-- Only the top of the circle is used: a 4:3 universe with the center near its bottom. -->
+  <div class="bigbang fuel at-bottom" role="meter" aria-label="Fuel"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="gravity-spot" style="--o-range: 90deg; --o-from: 315deg">
+      <div class="orbit-12" style="--o-size-ratio: .35"><o-arc class="reserve" value="12.5"></o-arc></div>
+      <div class="orbit-11 fit-range minor" id="minor" style="--o-size-ratio: .5"></div>
+      <div class="orbit-11 fit-range major" id="major" style="--o-size-ratio: 1"></div>
+      <div class="orbit-9 fit-range">
+        <div class="satellite"><div class="capsule mark">E</div></div>
+        <div class="satellite"><div class="capsule mark">½</div></div>
+        <div class="satellite"><div class="capsule mark">F</div></div>
+      </div>
+      <!-- The side pieces and the needle go back to a full ring, where angle-N and rotate count from the top. -->
+      <div class="orbit-6" style="--o-range: 360deg; --o-from: 0deg">
+        <div class="satellite angle-270"><div class="capsule pump">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h12M4 10h10M14 8l3 3v6a1.5 1.5 0 0 0 3 0V9l-3-3"/></svg>
+        </div></div>
+        <div class="satellite angle-90"><div class="capsule readout"><strong id="litres">0 L</strong><span id="range">0 km</span></div></div>
+      </div>
+      <div class="orbit-5 needle-ring" style="--o-size-ratio: 10; --o-range: 360deg; --o-from: 0deg"><div class="vector needle"></div></div>
+      <div class="orbit-0" style="--o-size-ratio: 1.3">
+        <div class="satellite at-center"><div class="capsule hub"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="drive" aria-pressed="false">Drive</button>
+    <button id="fill">Fill up</button>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 10px; align-content: center; }
+.stage > .fuel { width: min(100%, 420px, (100vh - 90px) * 4 / 3); aspect-ratio: 4 / 3; }
+/* Reach: 138% of the width, so the 90° dial spans the box. The margin lifts the center off the edge. */
+.fuel > .gravity-spot { --o-force: 138cqw; margin-bottom: 7cqw; }
+
+.minor .vector { background: var(--faint); }
+.major .vector { background: var(--muted); height: 3px; }
+.reserve { --o-fill: var(--coral); --o-stroke: none; }
+.mark { font-size: clamp(13px, 5cqw, 20px); font-weight: 650; color: var(--muted); }
+.pump svg { width: clamp(20px, 8cqw, 34px); fill: none; stroke: var(--muted); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.low .pump svg { stroke: var(--coral); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .35; } }
+.readout strong { font-size: clamp(18px, 7cqw, 30px); }
+
+.needle-ring { rotate: var(--needle, -45deg); transition: rotate .4s cubic-bezier(.3, 1.3, .5, 1); }
+.needle { height: 4px; border-radius: 2px; background: linear-gradient(90deg, transparent 0 8%, var(--coral) 8%); }
+.hub { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--panel); border: 2px solid var(--coral); }
+  </script>
+  <script type="text/plain" data-js>
+document.getElementById('minor').innerHTML = '<div class="vector"></div>'.repeat(17);
+document.getElementById('major').innerHTML = '<div class="vector"></div>'.repeat(5);
+
+const tank = 48, perLitre = 14; // litres, km per litre
+const gauge = document.querySelector('.fuel');
+let level = 0, timer;
+const set = value => {
+  level = Math.max(0, Math.min(100, value));
+  gauge.style.setProperty('--needle', `${level * .9 - 45}deg`);
+  gauge.classList.toggle('low', level < 12.5);
+  gauge.setAttribute('aria-valuenow', Math.round(level));
+  const litres = level / 100 * tank;
+  document.getElementById('litres').textContent = `${Math.round(litres)} L`;
+  document.getElementById('range').textContent = `${Math.round(litres * perLitre)} km`;
+};
+const run = (step, until) => {
+  clearInterval(timer);
+  timer = setInterval(() => { set(level + step); if (until(level)) clearInterval(timer); }, 60);
+};
+const drive = document.getElementById('drive');
+drive.addEventListener('click', () => {
+  const on = drive.getAttribute('aria-pressed') !== 'true';
+  drive.setAttribute('aria-pressed', on);
+  drive.textContent = on ? 'Park' : 'Drive';
+  if (on) run(-.15, l => l <= 0); else clearInterval(timer);
+});
+document.getElementById('fill').addEventListener('click', () => {
+  drive.setAttribute('aria-pressed', false);
+  drive.textContent = 'Drive';
+  run(1.5, l => l >= 100);
+});
+set(30);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li><code>--o-range: 90deg; --o-from: 315deg</code> on the <a href="../../reference/gravity-spot.html"><code>.gravity-spot</code></a> centers a quarter circle on the top. Every ring inherits it, so ticks, labels and the reserve line up.</li>
+<li>The universe is 4:3 with <code>.at-bottom</code>. <code>--o-force: 138cqw</code> makes the reach larger than the box, so the 90° of dial that is used fills it, and a bottom margin keeps the hub inside.</li>
+<li><code>fit-range</code> puts the first and last tick, and E and F, on the two ends of the range: 17 minor and 5 major <a href="../../reference/vector.html"><code>.vector</code></a>s.</li>
+<li>The reserve is one <a href="../../reference/arc.html"><code>&lt;o-arc value="12.5"&gt;</code></a>: a value counts out of the ring's range, so it covers the first eighth of the 90°.</li>
+<li>The pump, the readout and the needle sit on rings that set the range back to 360° from 0°, so <code>angle-270</code> and <code>angle-90</code> mean left and right of the hub, and the needle turns from <code>-45deg</code> (E) to <code>45deg</code> (F).</li>
+</ul>
+<p>For a temperature gauge, use C and H and put the red arc on the high end: give it <code>--o-from: 33.75deg</code> on its ring.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="180-degree-gauge.html">180° gauge</a></li>
+<li><a href="240-degree-gauge.html">240° gauge</a></li>
+<li><a href="../dashboard.html">Car dashboard</a></li>
+<li><a href="../../reference/vector.html">Vectors</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

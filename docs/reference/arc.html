@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arcs · Orbit</title>
+  <meta name="description" content="<o-arc> draws a piece of a lane: segmented rings, pies, donut charts and curved text.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Arcs</h1>
+<p class="lede"><code>&lt;o-arc&gt;</code> draws a piece of a lane, with text along it if you want. Sibling arcs split their ring between them, or stack one after another by value.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <!-- Text only: a label as long as its words. -->
+      <div class="orbit-11 label">
+        <o-arc range="auto" text-anchor="middle">Segments</o-arc>
+      </div>
+      <!-- No value: eight arcs split the ring evenly. -->
+      <div class="orbit-9 segments" id="segments" style="--o-size-ratio: 1.5"></div>
+      <!-- With value: arcs stack one after another, a donut. -->
+      <div class="orbit-5 donut" style="--o-size-ratio: 3">
+        <o-arc value="45"></o-arc>
+        <o-arc value="30"></o-arc>
+        <o-arc value="25"></o-arc>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.label o-arc { --o-fill: transparent; color: var(--muted); font-size: 13px; }
+.segments o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 22%, transparent);
+  --o-gap: 3;
+  cursor: pointer;
+}
+.segments o-arc:hover { --o-fill: var(--accent); }
+.donut o-arc { --o-stroke: none; }
+.donut o-arc:nth-child(1) { --o-fill: var(--accent); }
+.donut o-arc:nth-child(2) { --o-fill: color-mix(in srgb, var(--accent) 55%, var(--bg)); }
+.donut o-arc:nth-child(3) { --o-fill: color-mix(in srgb, var(--accent) 25%, var(--bg)); }
+  </script>
+  <script type="text/plain" data-js>
+document.getElementById('segments').innerHTML = '<o-arc interactive></o-arc>'.repeat(8);
+  </script>
+  <figcaption>A label that fits its text, eight equal segments (hover them), and a donut of 45, 30 and 25.</figcaption>
+</figure>
+<p>Arcs go straight into a ring, next to satellites or vectors if you like. They are drawn by the runtime, so they need the Orbit script.</p>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td></td><td>Share of the ring's range, out of <code>max</code>. Without it, arcs split the range equally. See <a href="#split-or-stack">Split or stack</a>.</td></tr>
+<tr><td><code>max</code></td><td><code>100</code></td><td>The value that fills the whole range.</td></tr>
+<tr><td><code>range</code></td><td></td><td><code>auto</code> makes the arc as long as its text. See <a href="#fit-the-text">Arcs that fit their text</a>.</td></tr>
+<tr><td><code>shape</code></td><td><code>none</code></td><td>The ending. See <a href="#endings">Endings</a>.</td></tr>
+<tr><td><code>text-anchor</code></td><td><code>middle</code></td><td>Text along the arc: <code>start</code>, <code>middle</code> or <code>end</code>. On a <code>range="auto"</code> arc, where the arc sits around its angle.</td></tr>
+<tr><td><code>flip</code></td><td></td><td>Runs the text the other way, so it reads upright at the bottom. Also works as a class.</td></tr>
+<tr><td><code>fit-range</code></td><td></td><td>Stretches or squeezes the text to the whole arc. Also works as a class.</td></tr>
+<tr><td><code>interactive</code></td><td></td><td>Makes the whole band clickable, even where it is transparent. See <a href="#pointer">Pointer interaction</a>.</td></tr>
+<tr><td><code>hit-width</code></td><td><code>0</code></td><td>Extra touch area, in px, on each side of an <code>interactive</code> band.</td></tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Property or class</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--o-fill</code></td><td><code>var(--o-gray-light)</code></td><td>Band color. <code>transparent</code> for text only.</td></tr>
+<tr><td><code>--o-stroke</code></td><td><code>var(--o-fill)</code></td><td>Outline color.</td></tr>
+<tr><td><code>--o-stroke-width</code></td><td><code>1</code></td><td>Outline width, in px.</td></tr>
+<tr><td><code>color</code> or <code>--o-color</code></td><td><code>currentcolor</code></td><td>Text color. Other font properties apply too.</td></tr>
+<tr><td><code>--o-gap</code>, <code>.gap-0</code> … <code>.gap-30</code></td><td><code>1</code></td><td>Space at each end of the arc. Cascades from the ring and the system.</td></tr>
+<tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Thickness, in lanes. <code>.grow-*</code> and <code>.shrink-*</code> work as on <a href="satellite.html">satellites</a>.</td></tr>
+<tr><td><code>.inner-orbit</code>, <code>.outer-orbit</code>, <code>.quarter-*-orbit</code></td><td></td><td>Moves the band in or out from its lane.</td></tr>
+<tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>Starts the arc at that angle.</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="split-or-stack">Split or stack</h2>
+<p>Without <code>value</code>, sibling arcs share the ring equally: a segmented ring, or a pie when they are thick. With <code>value</code>, each takes its share of the range and starts where the previous one ended: a donut chart. Values are not normalized, so make them add up to <code>max</code> for a full ring. With <code>max="24"</code>, <code>value="6"</code> is a quarter. An explicit <code>value="0"</code> draws nothing and takes no room.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-7 slices" style="--o-size-ratio: 5; --o-gap: 0">
+        <o-arc value="50" style="--o-fill: var(--accent)"></o-arc>
+        <o-arc value="25" style="--o-fill: var(--blue)"></o-arc>
+        <o-arc value="15" style="--o-fill: var(--violet)"></o-arc>
+        <o-arc value="5" style="--o-fill: var(--amber)"></o-arc>
+        <o-arc value="5" style="--o-fill: var(--coral)"></o-arc>
+      </div>
+      <!-- Labels at the middle angle of the three big slices. -->
+      <div class="orbit-7">
+        <div class="satellite angle-90"><div class="capsule">50</div></div>
+        <div class="satellite angle-225"><div class="capsule">25</div></div>
+        <div class="satellite angle-297"><div class="capsule">15</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.slices o-arc { --o-stroke: var(--bg); --o-stroke-width: 2; }
+.capsule {
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+  </script>
+  <figcaption>Five arcs with values 50, 25, 15, 5 and 5, and three satellites at the middle angle of the big ones.</figcaption>
+</figure>
+
+<h2>Color</h2>
+<p><code>--o-fill</code> colors the band, and <code>--o-stroke</code> and <code>--o-stroke-width</code> its outline. They change with a short transition, so a hover state is one rule. Hover needs <code>interactive</code>: arcs ignore the pointer until you ask.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8" id="ring" style="--o-size-ratio: 2"></div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-arc { cursor: pointer; }
+o-arc.outlined {
+  --o-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: var(--accent);
+  --o-stroke-width: 2;
+}
+o-arc.plain {
+  --o-fill: var(--line);
+}
+/* One rule per state: the colors change with a short transition. */
+o-arc.outlined:hover { --o-fill: var(--accent); }
+o-arc.plain:hover { --o-fill: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+document.getElementById('ring').innerHTML =
+  '<o-arc interactive class="outlined"></o-arc><o-arc interactive class="plain"></o-arc>'.repeat(4);
+  </script>
+  <figcaption>Hover the segments.</figcaption>
+</figure>
+
+<h2 id="endings">Endings</h2>
+<p><code>shape</code> sets how each end looks: <code>circle</code> (or <code>circle-a</code>), <code>circle-b</code>, <code>bullet</code>, <code>arrow</code>, <code>slash</code>, <code>backslash</code>, <code>rounded</code> and <code>zigzag</code>. Endings are sized from the band, so they look the same on every ring and at every size.</p>
+<figure class="example" data-height="330">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="grid" id="grid"></div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 92px);
+  justify-content: center;
+  justify-items: center;
+  width: min(100%, 560px);
+  gap: 14px 24px;
+}
+.cell { display: grid; justify-items: center; gap: 4px; }
+.cell code { color: var(--muted); }
+.bigbang { width: 92px; }
+.gravity-spot { --o-size-ratio: 3; --o-gap: 6; }
+o-arc { --o-stroke: none; }
+o-arc:nth-child(1) { --o-fill: color-mix(in srgb, var(--accent) 35%, var(--bg)); }
+o-arc:nth-child(2) { --o-fill: color-mix(in srgb, var(--accent) 65%, var(--bg)); }
+o-arc:nth-child(3) { --o-fill: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+const shapes = ['none', 'circle', 'circle-b', 'bullet', 'arrow', 'slash', 'backslash', 'rounded', 'zigzag'];
+// Three arcs per ring, all with the same ending.
+document.getElementById('grid').innerHTML = shapes.map(shape => `
+  <div class="cell">
+    <div class="bigbang"><div class="gravity-spot"><div class="orbit-9">
+      ${`<o-arc shape="${shape}"></o-arc>`.repeat(3)}
+    </div></div></div>
+    <code>${shape}</code>
+  </div>`).join('');
+  </script>
+</figure>
+
+<h2>Thickness, position and gaps</h2>
+<p>An arc is one lane thick. Set <code>--o-size-ratio</code> in lanes on the arc, its ring or the <code>.gravity-spot</code>, or use the <code>.grow-*</code> and <code>.shrink-*</code> classes on the arc. <code>.inner-orbit</code> and <code>.outer-orbit</code> move the band in or out so one of its edges sits on the lane, and the <code>.quarter-</code> versions go part of the way.</p>
+<p><code>--o-gap</code> is the space left at each end of an arc. It cascades, so one value on the ring spaces all its arcs; <code>.gap-0</code> to <code>.gap-30</code> set it on one arc. A ring of 3 to 6 thick segments usually wants <code>--o-gap</code> between 24 and 60 to read as separate pieces.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10 lane" style="--o-size-ratio: 2">
+        <o-arc class="outer-orbit"></o-arc>
+        <o-arc class="quarter-outer-orbit"></o-arc>
+        <o-arc></o-arc>
+        <o-arc class="quarter-inner-orbit"></o-arc>
+        <o-arc class="inner-orbit"></o-arc>
+      </div>
+      <div class="orbit-5 gaps" id="gaps" style="--o-size-ratio: 3; --o-gap: 40">
+        <o-arc></o-arc><o-arc></o-arc><o-arc></o-arc><o-arc></o-arc>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>--o-gap on orbit-5 <input id="gap" type="range" min="0" max="60" value="40"></label>
+    <output id="out">40</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+/* The lane on top, so you can see where each band sits. */
+.lane { border: 2px solid var(--amber); z-index: 1; }
+.lane o-arc { --o-fill: color-mix(in srgb, var(--accent) 35%, transparent); --o-stroke: none; }
+.gaps o-arc { --o-fill: var(--accent); --o-stroke: none; }
+  </script>
+  <script type="text/plain" data-js>
+const gap = document.getElementById('gap');
+gap.addEventListener('input', () => {
+  document.getElementById('gaps').style.setProperty('--o-gap', gap.value);
+  document.getElementById('out').value = gap.value;
+});
+  </script>
+  <figcaption>Outer ring, clockwise from the top: <code>outer-orbit</code>, <code>quarter-outer-orbit</code>, default, <code>quarter-inner-orbit</code>, <code>inner-orbit</code>. Inner ring: <code>--o-gap</code>.</figcaption>
+</figure>
+<p>Arcs follow the ring's <code>--o-range</code>, <code>--o-from</code> and <code>.ccw</code> (see <a href="orbit.html#angles">Orbits</a>). <code>.angle-N</code> on an arc starts it at that angle instead of its turn on the ring.</p>
+
+<h2>Curved text</h2>
+<p>Text inside an <code>&lt;o-arc&gt;</code> is drawn along it. Style it like any text: <code>color</code>, <code>font-size</code>, <code>font-weight</code>, <code>text-transform</code>. The font size is the same in px on every ring. Set <code>--o-fill: transparent</code> for text with no band.</p>
+<p><code>text-anchor</code> places the text at the <code>start</code>, <code>middle</code> (default) or <code>end</code> of its arc.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-9" style="--o-size-ratio: 2">
+        <o-arc text-anchor="start">start</o-arc>
+        <o-arc text-anchor="middle">middle</o-arc>
+        <o-arc text-anchor="end">end</o-arc>
+      </div>
+      <div class="orbit-5 range-180 from-270">
+        <o-arc class="plain">No band, in bold</o-arc>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 18%, transparent);
+  --o-stroke: none;
+  --o-gap: 4;
+  color: var(--text);
+  font-size: 14px;
+}
+o-arc.plain {
+  --o-fill: transparent;
+  color: var(--accent);
+  font-weight: 700;
+}
+  </script>
+</figure>
+<p>Text runs clockwise, so on the lower half of a ring it reads upside down. <code>flip</code> runs it the other way:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10" id="months" style="--o-size-ratio: 1.6"></div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 18%, transparent);
+  --o-stroke: none;
+  --o-gap: 3;
+  color: var(--text);
+  font-size: 13px;
+}
+o-arc[flip] {
+  --o-fill: color-mix(in srgb, var(--amber) 20%, transparent);
+}
+  </script>
+  <script type="text/plain" data-js>
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// April to September sit on the lower half: flip them so they read upright.
+document.getElementById('months').innerHTML = months.map((month, i) =>
+  `<o-arc${i >= 3 && i <= 8 ? ' flip' : ''}>${month}</o-arc>`).join('');
+  </script>
+  <figcaption>April to September, in amber, have <code>flip</code>.</figcaption>
+</figure>
+<p>Text longer than its arc is cut off, and the console says so with an <code>[orbit]</code> message. Shorten it, widen the range, let the arc fit the text with <code>range="auto"</code>, or add <code>fit-range</code> to squeeze or stretch the text to the arc:</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 from-225" id="ring" style="--o-range: 270deg; --o-size-ratio: 2">
+        <o-arc fit-range>This text runs along the whole arc</o-arc>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Range <input id="range" type="range" min="150" max="360" step="5" value="270"></label>
+    <output id="out">270°</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 18%, transparent);
+  --o-stroke: none;
+  color: var(--text);
+  font-size: 14px;
+}
+  </script>
+  <script type="text/plain" data-js>
+const range = document.getElementById('range');
+range.addEventListener('input', () => {
+  document.getElementById('ring').style.setProperty('--o-range', range.value + 'deg');
+  document.getElementById('out').value = range.value + '°';
+});
+  </script>
+  <figcaption>Change the range: the text stretches or squeezes to fill it.</figcaption>
+</figure>
+
+<h2 id="fit-the-text">Arcs that fit their text</h2>
+<p>With <code>range="auto"</code> an arc is as long as its text, with half a letter of room at each end. Consecutive auto arcs follow each other, which makes curved menus easy:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <nav class="orbit-10 from-300 menu" style="--o-size-ratio: 2" aria-label="Sections">
+        <o-arc interactive range="auto" tabindex="0" role="link" aria-current="page">Home</o-arc>
+        <o-arc interactive range="auto" tabindex="0" role="link">Projects</o-arc>
+        <o-arc interactive range="auto" tabindex="0" role="link">About</o-arc>
+      </nav>
+      <div class="orbit-0" style="--o-size-ratio: 12">
+        <div class="satellite at-center"><div class="capsule readout"><strong id="page">Home</strong><span>you are here</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+  --o-gap: 4;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+o-arc:hover, o-arc:focus-visible { --o-fill: color-mix(in srgb, var(--accent) 32%, transparent); outline: none; }
+.menu { border-color: var(--line); }
+o-arc[aria-current] { --o-fill: var(--accent); color: var(--bg); font-weight: 600; }
+.readout strong { font-size: 30px; }
+  </script>
+  <script type="text/plain" data-js>
+const items = document.querySelectorAll('.menu o-arc');
+const pick = item => {
+  items.forEach(other => other.toggleAttribute('aria-current', other === item));
+  document.getElementById('page').textContent = item.textContent;
+};
+items.forEach(item => {
+  item.addEventListener('click', () => pick(item));
+  item.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); pick(item); } });
+});
+  </script>
+  <figcaption>Three auto arcs, one after another. Click one, or tab to it and press Enter.</figcaption>
+</figure>
+<p>An auto arc starts at its angle. <code>text-anchor="middle"</code> centers it there instead, and <code>text-anchor="end"</code> ends it there. Both labels here are anchored at the top:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10 lane">
+        <o-arc range="auto" text-anchor="middle">Centered at 0°</o-arc>
+      </div>
+      <div class="orbit-7 lane">
+        <o-arc range="auto" text-anchor="end">Ends at 0°</o-arc>
+      </div>
+      <!-- A line pointing at 0°, the angle both labels are anchored to. -->
+      <div class="orbit-3" style="--o-size-ratio: 6"><div class="vector angle-0 mark"></div></div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.lane { border: 1px dashed var(--line); }
+o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 18%, transparent);
+  --o-stroke: none;
+  color: var(--text);
+  font-size: 14px;
+}
+.mark { height: 2px; background: var(--amber); }
+  </script>
+  <figcaption>The amber line points at 0°.</figcaption>
+</figure>
+
+<h2 id="pointer">Pointer interaction</h2>
+<p>Arcs are decorative by default, so they never steal clicks from controls nearby. <code>interactive</code> makes the whole band clickable, even where its fill is transparent, and <code>hit-width</code> adds touch area in px on each side, which helps with thin arcs on touch screens.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 range-270 from-225" style="--o-size-ratio: 2">
+        <o-arc interactive hit-width="12" tabindex="0" role="switch" aria-checked="false" aria-label="Toggle"></o-arc>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-arc {
+  --o-fill: transparent;
+  --o-stroke: var(--accent);
+  --o-stroke-width: 2;
+  cursor: pointer;
+}
+o-arc:focus-visible { outline: none; --o-stroke-width: 3; }
+o-arc[aria-checked="true"] { --o-stroke: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const arc = document.querySelector('o-arc');
+const toggle = () => arc.setAttribute('aria-checked', String(arc.getAttribute('aria-checked') !== 'true'));
+arc.addEventListener('click', toggle);
+arc.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); } });
+  </script>
+  <figcaption>Only the outline is drawn, yet a click anywhere on the band, or up to 12px around it, toggles the color.</figcaption>
+</figure>
+<p>When an arc acts as a control, you bring the keyboard behavior and the accessible name. Arcs are placed with the <code>rotate</code> property, so your own <code>transform</code> or <code>scale</code> (on hover, say) adds to it instead of replacing it.</p>
+
+<h2>After drawing</h2>
+<p>Each <code>&lt;o-arc&gt;</code> fires a bubbling <code>o-rendered</code> event after it redraws. To wait for every arc on the page, for example before measuring, use <code>await Orbit.ready()</code>. See <a href="../craft/runtime.html">Runtime and resizing</a>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

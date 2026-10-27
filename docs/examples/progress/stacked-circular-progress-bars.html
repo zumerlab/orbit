@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stacked circular progress bars · Orbit</title>
+  <meta name="description" content="Three live metrics on three concentric 270° rings, each labeled with curved text in the gap where it starts.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Stacked circular progress bars</h1>
+<p class="lede">Three metrics around one center, each ring labeled in the open quarter where it starts.</p>
+<figure class="example" data-height="380">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang server" role="group" aria-label="web-01 usage">
+    <!-- Every ring uses three quarters of the circle, from the top. -->
+    <div class="gravity-spot" style="--o-range: 270deg; --o-size-ratio: 1.6">
+      <div class="orbit-11"><o-progress class="cpu" shape="rounded" role="progressbar" aria-label="CPU"></o-progress></div>
+      <div class="orbit-9"><o-progress class="memory" shape="rounded" role="progressbar" aria-label="Memory"></o-progress></div>
+      <div class="orbit-7"><o-progress class="disk" shape="rounded" role="progressbar" aria-label="Disk"></o-progress></div>
+      <!-- Labels: curved text on the same lanes, ending just before the top. -->
+      <div class="orbit-11 label" style="--o-from: 356deg"><o-arc class="cpu" range="auto" text-anchor="end">CPU</o-arc></div>
+      <div class="orbit-9 label" style="--o-from: 356deg"><o-arc class="memory" range="auto" text-anchor="end">Memory</o-arc></div>
+      <div class="orbit-7 label" style="--o-from: 356deg"><o-arc class="disk" range="auto" text-anchor="end">Disk</o-arc></div>
+      <div class="orbit-0" style="--o-size-ratio: 8">
+        <div class="satellite at-center"><div class="capsule readout"><strong>web-01</strong><span>live</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage > .server { width: min(100%, 100vh - 56px); }
+.cpu { --c: var(--accent); }
+.memory { --c: var(--violet); }
+.disk { --c: var(--amber); }
+.server o-progress { --o-stroke: none; --o-fill: var(--c); --o-back-fill: color-mix(in srgb, var(--c) 14%, transparent); }
+.label o-arc { --o-fill: transparent; --o-stroke: none; --o-color: var(--c); font: 600 13px system-ui, sans-serif; }
+.server .readout strong { font-size: clamp(18px, 14cqmin, 30px); }
+  </script>
+  <script type="text/plain" data-js>
+// Each metric drifts a little every second, like a live feed.
+const metrics = [['cpu', 42], ['memory', 68], ['disk', 81]];
+const tick = () => {
+  for (const metric of metrics) {
+    const [name, value] = metric;
+    const drift = name === 'disk' ? .2 : 9;
+    metric[1] = Math.round(Math.max(3, Math.min(97, value + (Math.random() - .5) * drift)));
+    const ring = document.querySelector('o-progress.' + name);
+    ring.setAttribute('value', metric[1]);
+    ring.setAttribute('aria-valuenow', metric[1]);
+    const label = document.querySelector('o-arc.' + name);
+    label.textContent = `${label.textContent.split(' ')[0]} ${metric[1]}%`;
+  }
+};
+tick();
+setInterval(tick, 1200);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Three <a href="../../reference/progress.html"><code>&lt;o-progress&gt;</code></a> on lanes 11, 9 and 7 of one <a href="../../reference/gravity-spot.html"><code>.gravity-spot</code></a>: concentric with no positioning.</li>
+<li><code>--o-range: 270deg</code> and <code>--o-size-ratio: 1.6</code> are set once on the system. Every ring picks them up, and 1.6 lanes on rings two lanes apart leaves a thin gap.</li>
+<li>Each label is an <a href="../../reference/arc.html"><code>&lt;o-arc range="auto"&gt;</code></a> on the same lane as its ring: the arc is as long as its text. <code>text-anchor="end"</code> ends it at <code>--o-from: 356deg</code>, just before the ring starts.</li>
+<li>Changing <code>value</code> or the text is all the script does; Orbit redraws the arcs.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="circular-progress-with-background.html">Progress with background</a></li>
+<li><a href="../layered-status-rings.html">Layered status rings</a>: rings stacked in depth instead</li>
+<li><a href="../../demos/01-minimal-gauge.html">Progress rings demo</a>: three full rings with a total</li>
+<li><a href="../../kit/rings.html">Orbit Kit rings</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

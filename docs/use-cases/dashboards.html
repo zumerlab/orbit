@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboards · Orbit</title>
+  <meta name="description" content="Gauges, progress rings and donut charts for dashboards, built with Orbit as plain HTML you can theme.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Dashboards</h1>
+<p>A single headline number, a part of a whole, progress toward a goal: these read best on a circle. Orbit builds gauges, rings and donuts from HTML and CSS, so they take your design tokens, dark mode and transitions like the rest of the page, and you can inspect them in DevTools.</p>
+<h2>Where it fits</h2>
+<ul>
+<li>A design system that needs its own gauge, donut and progress components instead of a chart library's defaults.</li>
+<li>Small pages where a chart library would be most of the JavaScript.</li>
+<li>Values that change: set <code>value</code> on an <code>&lt;o-progress&gt;</code> or <code>&lt;o-arc&gt;</code> and it redraws on the next frame.</li>
+</ul>
+<h2>Where it does not</h2>
+<ul>
+<li>Time series and multi-series charts. Use a charting library.</li>
+<li>Thousands of data points. Canvas handles that better than the DOM.</li>
+</ul>
+<h2>Start from</h2>
+<ul class="cards">
+<li><a class="card" href="../demos/04-arrow-gauge.html"><img class="thumb dark" src="../demos/thumbs/04-arrow-gauge.webp" alt="" loading="lazy"><strong>Speedometer</strong><span>Ticks, zones and a needle on one 270° dial.</span></a></li>
+<li><a class="card" href="../examples/gauges/240-degree-gauge.html"><img class="thumb" src="../examples/thumbs/240-degree-gauge.webp" alt="" loading="lazy"><strong>240° gauge</strong><span>A headline KPI on a dial.</span></a></li>
+<li><a class="card" href="../examples/progress/stacked-circular-progress-bars.html"><img class="thumb" src="../examples/thumbs/stacked-circular-progress-bars.webp" alt="" loading="lazy"><strong>Stacked progress</strong><span>Three related metrics around one center.</span></a></li>
+<li><a class="card" href="../examples/charts/donut-chart.html"><img class="thumb" src="../examples/thumbs/donut-chart.webp" alt="" loading="lazy"><strong>Donut chart</strong><span>A breakdown with room for a total.</span></a></li>
+<li><a class="card" href="../examples/dashboard.html"><img class="thumb" src="../examples/thumbs/dashboard.webp" alt="" loading="lazy"><strong>Car dashboard</strong><span>A whole panel built from nested systems.</span></a></li>
+</ul>
+<p>A monitoring view could pair a 240° gauge for CPU with three small rings for memory, disk and network, and a donut for traffic by region. Each one is a <code>.bigbang</code> as big as its card. The <a href="../kit/index.html">Orbit Kit</a> has gauge, donut and rings components ready to use.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="audio-app-ui.html">Audio app interfaces</a></li>
+<li><a href="fitness-and-health-apps.html">Fitness and health apps</a></li>
+<li><a href="iot-and-hardware-ui.html">IoT and hardware interfaces</a></li>
+<li><a href="sci-fi-game-uis.html">Sci-fi and game interfaces</a></li>
+<li><a href="../examples/index.html">All examples</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

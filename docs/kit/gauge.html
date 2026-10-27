@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gauge · Orbit</title>
+  <meta name="description" content="o-gauge shows one value on an arc, with a readout in the middle.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Gauge</h1>
+<p class="lede"><code>&lt;o-gauge&gt;</code> shows one value on an arc, with a readout in the middle.</p>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-gauge value="72" unit="%"></o-gauge>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>The arc is a band on <code>orbit-12</code>, so it touches the edge of the widget, and the gap of the default 270° range sits at the bottom. Change <code>value</code> and only the arc redraws.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td><code>min</code></td><td>The current value, kept in range: a value past the end is drawn and shown at the end.</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td><code>0</code> / <code>100</code></td><td>The range of the value. A <code>max</code> below <code>min</code> becomes <code>min</code>.</td></tr>
+<tr><td><code>step</code></td><td>none</td><td>Snaps the value to a grid that starts at <code>min</code>. See <a href="options.html#range">min, max and step</a>.</td></tr>
+<tr><td><code>range</code></td><td><code>270</code></td><td>Arc span in degrees: <code>360</code> is a full ring, <code>180</code> a semicircle.</td></tr>
+<tr><td><code>from</code></td><td>auto</td><td>Start angle, clockwise from the top. By default the gap is centered at the bottom.</td></tr>
+<tr><td><code>label</code></td><td></td><td>Text in the middle. Without it, the readout is <code>value</code> followed by <code>unit</code>.</td></tr>
+<tr><td><code>unit</code></td><td></td><td>Suffix for the value, like <code>%</code> or <code>&quot; km/h&quot;</code>. With <code>format=&quot;unit&quot;</code>, an Intl unit such as <code>kilometer-per-hour</code>.</td></tr>
+<tr><td><code>fill</code></td><td><code>#6366f1</code></td><td>Color of the value arc. Sets <code>--ok-fill</code>.</td></tr>
+<tr><td><code>track</code></td><td><code>#262d38</code></td><td>Color of the track behind it. Sets <code>--ok-track</code>.</td></tr>
+<tr><td><code>thickness</code></td><td><code>2.4</code></td><td>Band thickness in lanes. A lane is a twelfth of the radius.</td></tr>
+<tr><td><code>shape</code></td><td><code>rounded</code></td><td>Ending of the arc: any Orbit shape, such as <code>none</code>, <code>rounded</code>, <code>arrow</code> or <code>slash</code>.</td></tr>
+<tr><td><code>size</code></td><td><code>200px</code></td><td>Width of the widget. Any CSS length; <code>100%</code> follows its container.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow in the value color. <code>glow=&quot;12&quot;</code> sets the blur radius in px.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code></td><td></td><td>Number format of the readout and <code>aria-valuetext</code>, through <code>Intl.NumberFormat</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+<p>Two attributes from 0.x still work: <code>orbit</code> sets the thickness the old way, and <code>stroke-width</code> draws an outline in the band's own color, in px.</p>
+
+<h2>Styling</h2>
+<p>Colors are custom properties that inherit, so you can theme every gauge on a page from one rule.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-fill</code></td><td><code>#6366f1</code></td><td>Value arc.</td></tr>
+<tr><td><code>--ok-track</code></td><td><code>#262d38</code></td><td>Track.</td></tr>
+<tr><td><code>--ok-hub-color</code></td><td>inherits</td><td>Color of the readout in the middle.</td></tr>
+<tr><td><code>--ok-hub-bg</code></td><td><code>none</code></td><td>Background of the hole in the middle.</td></tr>
+<tr><td><code>--ok-hub-size</code></td><td><code>1.4em</code></td><td>Font size of the readout.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base font size, as a share of the widget. Text scales with it.</td></tr>
+</tbody>
+</table></div>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<div class="panel">
+  <o-gauge value="38" unit="°" label="38°"></o-gauge>
+  <o-gauge value="64" unit="%"></o-gauge>
+  <o-gauge value="91" unit="%"></o-gauge>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; align-items: center; height: 100vh; }
+.panel { display: contents; --ok-fill: var(--accent); --ok-track: color-mix(in oklab, var(--accent) 22%, #0c0f13); }
+.panel o-gauge:last-child { --ok-fill: #ffb547; --ok-track: #3a2112; }
+  </script>
+  <figcaption>One rule themes the group; the last gauge overrides it.</figcaption>
+</figure>
+
+<h2>More examples</h2>
+<h3>Semicircle with a range</h3>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-gauge value="1450" min="0" max="2000" range="180" label="1,450 kWh" thickness="3" shape="none" fill="#ffb547" size="240px"></o-gauge>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>Full ring with a glow</h3>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-gauge value="125" max="240" label="125 km/h" range="360" glow fill="#ff7a6b"></o-gauge>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>Live value</h3>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-gauge id="cpu" value="0" unit="%" thickness="1.4" fill="#a3e635"></o-gauge>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+const gauge = document.getElementById('cpu');
+setInterval(() => {
+  gauge.setAttribute('value', Math.round(30 + Math.random() * 60));
+}, 1200);
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The gauge has <code>role="meter"</code> with <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code> and <code>aria-valuetext</code> kept in sync; <code>aria-valuetext</code> uses the number format. Its name is the readout; set <code>aria-label</code> or <code>aria-labelledby</code> to give it a better one, and the gauge keeps it. Color is never the only signal: the number is always in the middle unless you replace it with <code>label</code>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

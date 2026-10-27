@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbits · Orbit</title>
+  <meta name="description" content="Rings (.orbit-N) are the lanes around a gravity spot. Which lane, thickness, spacing, angles and ellipses.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Orbits</h1>
+<p class="lede">Gravity draws orbits. A ring, <code>.orbit-N</code>, is a lane around the gravity spot, N twelfths of the way out to the edge, and it is where satellites, vectors, sides, arcs and progress travel.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot" id="lanes"></div>
+  </div>
+  <div class="controls">
+    <label>Lane <input id="lane" type="range" min="0" max="12" value="6"></label>
+    <output id="out"></output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+#lanes > * { border-color: var(--line); }
+#lanes > .orbit-12 { border-color: var(--accent); }
+/* The chosen lane, filled so you can see its diameter. */
+#lanes > .on {
+  border: 2px solid var(--amber);
+  background: color-mix(in srgb, var(--amber) 10%, transparent);
+}
+.dot { background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const lanes = document.getElementById('lanes'), lane = document.getElementById('lane');
+// orbit-1 … orbit-12, and a dot on orbit-0, the center.
+lanes.innerHTML = Array.from({ length: 12 }, (_, i) => `<div class="orbit-${i + 1}"></div>`).join('') +
+  '<div class="orbit-0" style="--o-size-ratio: .8"><div class="satellite at-center dot"></div></div>';
+const show = () => {
+  const n = Number(lane.value);
+  lanes.querySelectorAll(':scope > *').forEach(ring => ring.classList.toggle('on', ring.matches('.orbit-' + n) && n > 0));
+  document.getElementById('out').value = n ? `orbit-${n}: ${n}/12 of the reach` : 'orbit-0: the center';
+};
+lane.addEventListener('input', show);
+show();
+  </script>
+  <figcaption>The 12 lanes. <code>orbit-6</code> is halfway and <code>orbit-12</code>, in teal, touches the edge of the universe.</figcaption>
+</figure>
+
+<h2>Which lane</h2>
+<ul>
+<li>The diameter of <code>orbit-N</code> is N/12 of the reach (<code>--o-force</code>): <code>orbit-3</code> is a quarter, <code>orbit-6</code> half, <code>orbit-12</code> all of it.</li>
+<li><code>orbit-0</code> is the center itself. It holds centered content; see <a href="#center">The center</a>.</li>
+<li><code>orbit-13</code> to <code>orbit-24</code> lie past the edge, for things that should stick out. With the runtime, higher numbers work too.</li>
+<li><code>.orbit</code> without a number takes the next lane in order: the first <code>.orbit</code> of a system is lane 1, the second lane 2. Numbered rings are not counted.</li>
+</ul>
+<p>Rings are direct children of a <code>.gravity-spot</code>, never of another ring. A ring holds only <code>.satellite</code>, <code>.vector</code>, <code>.side</code>, <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code>. With <code>dev-orbit</code> on the <code>.bigbang</code>, the console points out anything else.</p>
+
+<h2>Look</h2>
+<p>Rings are invisible. Give them a border or a background to draw them.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-11 glow"></div>
+      <div class="orbit-7 dotted"></div>
+      <div class="orbit-3 filled"></div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+/* A ring is a round box: borders, backgrounds and shadows draw it. */
+.glow {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 50%, transparent),
+              inset 0 0 18px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.dotted {
+  border: 3px dotted var(--amber);
+}
+.filled {
+  border: 1px dashed var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+  </script>
+</figure>
+
+<h2>Thickness</h2>
+<p>Everything on a ring is one lane thick: a twelfth of the radius. Set <code>--o-size-ratio</code>, in lanes, on the ring to change all its elements, on the <code>.gravity-spot</code> for the whole system, or on one element. An element on <code>orbit-N</code> reaches half its thickness past lane N, so a band two lanes thick on <code>orbit-11</code> ends exactly at the edge.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-4" id="a"></div>
+      <div class="orbit-7" id="b" style="--o-size-ratio: 2"></div>
+      <div class="orbit-10" id="c" style="--o-size-ratio: .5"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>--o-size-ratio on orbit-7 <input id="size" type="range" min=".5" max="3" step=".1" value="2"></label>
+    <output id="out">2</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+[class*="orbit-"] { border-color: var(--line); }
+.satellite { background: var(--accent); }
+#b .satellite { background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const fill = (id, count) => document.getElementById(id).innerHTML = '<div class="satellite"></div>'.repeat(count);
+fill('a', 3); fill('b', 4); fill('c', 6);
+const size = document.getElementById('size');
+size.addEventListener('input', () => {
+  document.getElementById('b').style.setProperty('--o-size-ratio', size.value);
+  document.getElementById('out').value = size.value;
+});
+  </script>
+  <figcaption><code>orbit-4</code> at the default, <code>orbit-10</code> at half a lane, and <code>orbit-7</code> at the thickness you pick.</figcaption>
+</figure>
+
+<h2>Spacing</h2>
+<p><code>.shrink-5</code> to <code>.shrink-100</code>, in steps of 5, move a ring toward the previous lane: <code>orbit-10 shrink-40</code> sits 40% of a lane inside lane 10. On a ring, <code>shrink-N</code> only changes where it sits; the elements on it keep their size.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <!-- Zoomed in: the center sits on the bottom edge, and the reach is twice the box. -->
+  <div class="bigbang at-bottom">
+    <div class="gravity-spot" style="--o-force: 200cqmin">
+      <div class="orbit-10 lane"><div class="satellite angle-322"><div class="capsule"><span class="label">orbit-10</span></div></div></div>
+      <div class="orbit-9 lane"><div class="satellite angle-38"><div class="capsule"><span class="label">orbit-9</span></div></div></div>
+      <div class="orbit-10 shrink-40 range-100 from-310 fit-range" id="ring" style="--o-size-ratio: .6">
+        <div class="satellite"></div><div class="satellite"></div><div class="satellite"></div>
+        <div class="satellite"></div><div class="satellite"></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>shrink <input id="shrink" type="range" min="0" max="100" step="5" value="40"></label>
+    <output id="out">shrink-40</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: 100%; height: calc(100vh - 84px); aspect-ratio: auto; overflow: hidden; }
+.lane { border-color: var(--faint); }
+#ring { border: 2px solid var(--amber); }
+#ring .satellite { background: var(--accent); }
+.label {
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--panel);
+  font: 12px var(--mono);
+  color: var(--muted);
+}
+  </script>
+  <script type="text/plain" data-js>
+const shrink = document.getElementById('shrink'), ring = document.getElementById('ring');
+shrink.addEventListener('input', () => {
+  const n = Number(shrink.value);
+  ring.className = 'orbit-10 range-100 from-310 fit-range' + (n ? ' shrink-' + n : '');
+  document.getElementById('out').value = n ? 'shrink-' + n : 'no shrink';
+});
+  </script>
+  <figcaption>The amber ring is <code>orbit-10</code> with <code>shrink-N</code>: at 100 it reaches <code>orbit-9</code>. Its satellites keep their size.</figcaption>
+</figure>
+
+<h2 id="angles">Angles</h2>
+<p>A ring spreads its elements evenly. Five satellites on a full ring sit 72° apart, starting at the top and going clockwise. Each kind is spread on its own, so five satellites and twelve vectors can share a ring.</p>
+<ul>
+<li><code>--o-range</code> is how much of the circle the ring uses (<code>360deg</code> by default). <code>.range-0</code> to <code>.range-360</code> set it in whole degrees.</li>
+<li><code>--o-from</code> is where the range starts, clockwise from the top. <code>.from-0</code> to <code>.from-360</code> set it.</li>
+<li><code>.fit-range</code> puts the first and last element on the two ends of a partial range, instead of leaving one step free at the end.</li>
+<li><code>.ccw</code> goes counterclockwise.</li>
+</ul>
+<p>All of them cascade, so you can set them on the <code>.gravity-spot</code> for every ring at once. To place one element at an exact angle, use <code>.angle-N</code> on it; see <a href="satellite.html#angle">Satellites</a>.</p>
+<figure class="example" data-height="400">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <!-- A band over the part of the circle the ring uses. -->
+      <div class="orbit-9 band" id="band" style="--o-size-ratio: 2.4"><o-arc></o-arc></div>
+      <div class="orbit-9" id="ring" style="--o-size-ratio: 2.4"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>range <input id="range" type="range" min="45" max="360" step="15" value="180"></label>
+    <label>from <input id="from" type="range" min="0" max="345" step="15" value="270"></label>
+    <label><input id="fit" type="checkbox"> fit-range</label>
+    <label><input id="ccw" type="checkbox"> ccw</label>
+  </div>
+  <code id="classes"></code>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 10px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 120px); }
+#ring { border: 1px dashed var(--line); }
+.band o-arc { --o-fill: color-mix(in srgb, var(--accent) 14%, transparent); }
+.satellite { background: var(--accent); }
+.capsule { color: var(--bg); font-weight: 650; font-variant-numeric: tabular-nums; }
+#classes { color: var(--muted); }
+input[type=checkbox] { accent-color: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+const ring = document.getElementById('ring'), band = document.getElementById('band');
+ring.innerHTML = [1, 2, 3, 4, 5].map(n => `<div class="satellite"><div class="capsule">${n}</div></div>`).join('');
+const $ = id => document.getElementById(id);
+const set = () => {
+  const range = Number($('range').value), from = Number($('from').value), ccw = $('ccw').checked;
+  // The ring: what you would write in your markup.
+  ring.className = `orbit-9 range-${range} from-${from}` + ($('fit').checked ? ' fit-range' : '') + (ccw ? ' ccw' : '');
+  // The band always runs clockwise, so a ccw range starts `range` degrees earlier.
+  band.style.setProperty('--o-range', range + 'deg');
+  band.style.setProperty('--o-from', (ccw ? from - range : from) + 'deg');
+  $('classes').textContent = ring.className;
+};
+document.querySelectorAll('input').forEach(input => input.addEventListener('input', set));
+set();
+  </script>
+  <figcaption>Five satellites and the range they share. Try <code>range-180</code> with and without <code>fit-range</code>.</figcaption>
+</figure>
+
+<h2 id="center">The center</h2>
+<p><code>orbit-0</code> is the center of the system. Put a <code>.satellite.at-center</code> in it for centered content, and size it with <code>--o-size-ratio</code> on <code>orbit-0</code>: the value is its diameter in lanes, so <code>12</code> reaches <code>orbit-6</code> and <code>24</code> fills the universe.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-12 guide"><div class="satellite angle-45"><div class="capsule"><span class="label">orbit-12</span></div></div></div>
+      <div class="orbit-6 guide"><div class="satellite angle-45"><div class="capsule"><span class="label">orbit-6</span></div></div></div>
+      <!-- The center: its --o-size-ratio is a diameter, in lanes. -->
+      <div class="orbit-0" id="center" style="--o-size-ratio: 16">
+        <div class="satellite at-center disc"></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>--o-size-ratio on orbit-0 <input id="size" type="range" min="1" max="24" value="16"></label>
+    <output id="out">16</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.guide { border: 1px dashed var(--faint); z-index: 1; }
+.disc {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  border: 2px solid var(--accent);
+}
+.label {
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--panel);
+  font: 12px var(--mono);
+  color: var(--muted);
+}
+  </script>
+  <script type="text/plain" data-js>
+const size = document.getElementById('size');
+size.addEventListener('input', () => {
+  document.getElementById('center').style.setProperty('--o-size-ratio', size.value);
+  document.getElementById('out').value = size.value;
+});
+  </script>
+  <figcaption>At 12 the disc reaches <code>orbit-6</code>; at 24 it fills the universe.</figcaption>
+</figure>
+
+<h2 id="ellipses">Ellipses</h2>
+<p><code>--o-ellipse-x</code> and <code>--o-ellipse-y</code> stretch a ring into an ellipse. Values below 1 stretch it along that axis: <code>--o-ellipse-x: .5</code> makes it twice as wide. Satellites and vectors follow the ellipse; arcs, progress and sides are drawn for circles, so leave them on round rings.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-6 round"></div>
+      <div class="orbit-6 stretched" id="ring" style="--o-ellipse-x: .5; --o-ellipse-y: 1"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>--o-ellipse-x <input id="x" type="range" min=".4" max="1" step=".05" value=".5"></label>
+    <output id="x-out">0.5</output>
+    <label>--o-ellipse-y <input id="y" type="range" min=".5" max="1" step=".05" value="1"></label>
+    <output id="y-out">1</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.round { border: 1px dashed var(--faint); }
+.stretched { border: 1px solid var(--accent); }
+.satellite { background: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+const ring = document.getElementById('ring');
+ring.innerHTML = '<div class="satellite"></div>'.repeat(8);
+for (const axis of ['x', 'y']) {
+  const input = document.getElementById(axis);
+  input.addEventListener('input', () => {
+    ring.style.setProperty('--o-ellipse-' + axis, input.value);
+    document.getElementById(axis + '-out').value = Number(input.value);
+  });
+}
+  </script>
+  <figcaption>Eight satellites on a stretched <code>orbit-6</code>, over the round one.</figcaption>
+</figure>
+
+<h2>Gooey effect</h2>
+<p><code>.gooey-fx</code> (or <code>.gooey-fx-light</code>), <code>.gooey-fx-medium</code> and <code>.gooey-fx-max</code> blend touching elements of a ring into one blob with an SVG filter. Safari does not support it.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 track"></div>
+      <!-- Four satellites over 90°: when they touch, the filter melts them together. -->
+      <div class="orbit-8 range-90 gooey-fx blob" id="ring" style="--o-size-ratio: 3.5">
+        <div class="satellite"></div><div class="satellite"></div>
+        <div class="satellite"></div><div class="satellite"></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>--o-size-ratio <input id="size" type="range" min="1.5" max="5" step=".1" value="3.5"></label>
+    <output id="out">3.5</output>
+    <label><input id="gooey" type="checkbox" checked> gooey-fx</label>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.track { border-color: var(--line); }
+.satellite { background: var(--accent); }
+.blob { animation: turn 8s linear infinite; }
+input[type=checkbox] { accent-color: var(--accent); }
+@keyframes turn { to { rotate: 360deg; } }
+  </script>
+  <script type="text/plain" data-js>
+const ring = document.getElementById('ring'), size = document.getElementById('size');
+size.addEventListener('input', () => {
+  ring.style.setProperty('--o-size-ratio', size.value);
+  document.getElementById('out').value = size.value;
+});
+document.getElementById('gooey').addEventListener('change', (event) => ring.classList.toggle('gooey-fx', event.target.checked));
+  </script>
+</figure>
+
+<h2>Stacking</h2>
+<p>Rings stack in document order: a later ring paints over an earlier one. To stack them in 3D, with perspective and animated depth changes, see <a href="../craft/depth.html">Depth layers</a>.</p>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class or property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>.orbit-0</code> … <code>.orbit-24</code></td><td></td><td>A ring on lane N. 0 is the center, 13 and up stick out.</td></tr>
+<tr><td><code>.orbit</code></td><td></td><td>A ring on the next lane, counted in document order.</td></tr>
+<tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Thickness of the ring's elements, in lanes.</td></tr>
+<tr><td><code>--o-range</code>, <code>.range-N</code></td><td><code>360deg</code></td><td>How much of the circle the ring uses.</td></tr>
+<tr><td><code>--o-from</code>, <code>.from-N</code></td><td><code>0deg</code></td><td>Where the range starts, clockwise from the top.</td></tr>
+<tr><td><code>.fit-range</code></td><td></td><td>First and last element on the two ends of the range.</td></tr>
+<tr><td><code>.ccw</code></td><td></td><td>Counterclockwise.</td></tr>
+<tr><td><code>.shrink-5</code> … <code>.shrink-100</code></td><td></td><td>Moves the ring toward the previous lane, by that percentage of a lane.</td></tr>
+<tr><td><code>--o-ellipse-x</code> / <code>--o-ellipse-y</code></td><td><code>1</code></td><td>Stretch the ring into an ellipse.</td></tr>
+<tr><td><code>.gooey-fx</code>, <code>-medium</code>, <code>-max</code></td><td></td><td>Blends touching elements together.</td></tr>
+</tbody>
+</table></div>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

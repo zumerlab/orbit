@@ -6,8 +6,8 @@ dist/
 #docs-*
 docs-*/
 
-assets/
-assets/css/
+/assets/
+/assets/css/
 
 #binaries
 *.zip

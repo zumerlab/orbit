@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashed circular progress bar · Orbit</title>
+  <meta name="description" content="Progress counted in steps: ten o-arc segments split the ring, the done ones lit and the next one pulsing.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Dashed circular progress bar</h1>
+<p class="lede">Progress counted in steps, for onboarding, quizzes or streaks: ten arcs split the ring, one per step.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang steps" role="progressbar" aria-label="Onboarding"
+       aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+    <div class="gravity-spot">
+      <!-- Arcs without value share the ring equally; --o-gap opens the dashes. -->
+      <div class="orbit-10" id="dashes" style="--o-size-ratio: 1.6; --o-gap: 8"></div>
+      <div class="orbit-0" style="--o-size-ratio: 14">
+        <div class="satellite at-center">
+          <div class="capsule readout"><strong id="done">0 of 10</strong><span id="label">steps done</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="back">Back</button>
+    <button id="next">Next step</button>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .steps { width: min(100%, 100vh - 80px); }
+
+.steps o-arc { --o-stroke: none; --o-fill: #1d2630; }
+.steps o-arc.done { --o-fill: var(--blue); }
+/* The step in progress breathes. */
+.steps o-arc.now { --o-fill: color-mix(in srgb, var(--blue) 45%, #1d2630); animation: breathe 1.4s ease-in-out infinite alternate; }
+@keyframes breathe { to { opacity: .45; } }
+.steps .readout strong { font-size: clamp(26px, 18cqmin, 52px); }
+  </script>
+  <script type="text/plain" data-js>
+const total = 10;
+document.getElementById('dashes').innerHTML = '<o-arc></o-arc>'.repeat(total);
+const dashes = [...document.querySelectorAll('#dashes o-arc')], meter = document.querySelector('.steps');
+let done = 0;
+const set = n => {
+  done = Math.max(0, Math.min(total, n));
+  dashes.forEach((dash, i) => {
+    dash.classList.toggle('done', i < done);
+    dash.classList.toggle('now', i === done);
+  });
+  meter.setAttribute('aria-valuenow', done);
+  document.getElementById('done').textContent = `${done} of ${total}`;
+  document.getElementById('label').textContent = done === total ? 'all done' : 'steps done';
+};
+document.getElementById('next').addEventListener('click', () => set(done + 1));
+document.getElementById('back').addEventListener('click', () => set(done - 1));
+set(6);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Ten <a href="../../reference/arc.html"><code>&lt;o-arc&gt;</code></a> without <code>value</code> share the ring equally, so ten arcs are ten steps. Twelve arcs would be twelve.</li>
+<li><code>--o-gap: 8</code> on the ring opens the space between dashes, for all of them at once.</li>
+<li>Each step is a class: <code>.done</code> fills it, <code>.now</code> makes the next one breathe with a CSS animation.</li>
+<li>The universe is a <code>role="progressbar"</code> with <code>aria-valuemax="10"</code>, so the count is read as steps, not percent.</li>
+</ul>
+<p>To name each step, add a second ring further out with one satellite per arc. Same count, same ring: each name sits over its dash.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="circular-progress-with-background.html">Progress with background</a>: a continuous value</li>
+<li><a href="../gauges/240-degree-gauge.html">240° gauge</a>: steps on a partial range</li>
+<li><a href="../../reference/arc.html">Arcs</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

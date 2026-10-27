@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chronograph watch face · Orbit</title>
+  <meta name="description" content="A chronograph watch face in HTML and CSS with a working stopwatch: three sub-dials, each a system nested in a satellite, built with Orbit.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Chronograph watch face</h1>
+<p class="lede">Each sub-dial is a whole clock inside a satellite, with its own center, ticks and hand. Start the stopwatch and three systems run at once.</p>
+<figure class="example" data-height="460">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang watch" role="img" aria-label="Chronograph">
+    <div class="gravity-spot">
+      <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center"><div class="capsule face"></div></div></div>
+      <div class="orbit-11 ticks"></div>
+      <!-- Three satellites at 3, 6 and 9 o'clock, six lanes wide.
+           Each one holds a system: see the JS tab. -->
+      <div class="orbit-5 from-90 range-180 fit-range subdials" style="--o-size-ratio: 6"></div>
+      <div class="orbit-3 hand hour" style="--o-size-ratio: 6.6"><div class="vector"></div></div>
+      <div class="orbit-5 hand minute" style="--o-size-ratio: 10.6"><div class="vector"></div></div>
+      <div class="orbit-4 hand chrono" style="--o-size-ratio: 13"><div class="vector"></div></div>
+      <div class="orbit-0" style="--o-size-ratio: .7"><div class="satellite at-center"><div class="capsule pin"></div></div></div>
+    </div>
+  </div>
+  <div class="controls">
+    <button type="button" class="toggle">Start</button>
+    <button type="button" class="reset">Reset</button>
+    <output class="elapsed" aria-label="Elapsed time">00:00.0</output>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.face { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #1a222c, #0e1318 72%); box-shadow: inset 0 0 0 1px #26313d; }
+.ticks .vector { background: var(--faint); }
+.ticks .vector.major { height: 3px; background: var(--text); }
+.subdials .face { background: #0b0f14; box-shadow: inset 0 0 0 1px var(--line); }
+.subdials .ticks .vector { background: var(--muted); }
+.subdials .numbers .capsule { font: max(9px, 70cqmin) var(--mono); color: var(--muted); }
+.subdials .ticks .vector.major { height: 2px; background: var(--text); }
+.hand { rotate: var(--turn, 0deg); }
+.hand .vector { height: clamp(2px, 1.4cqmin, 6px); border-radius: 3px; background: var(--text); }
+.chrono .vector, .subdials .hand .vector { height: 2px; background: var(--coral); }
+.pin { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--coral); }
+.elapsed { font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const $ = (s) => document.querySelector(s);
+const repeat = (count, item) => Array.from({ length: count }, (_, i) => item(i)).join('');
+const ticks = (count, every) => repeat(count, (i) => i % every
+  ? '<div class="vector inner-orbit" style="--o-size-ratio: .5"></div>'
+  : '<div class="vector inner-orbit major" style="--o-size-ratio: 1.1"></div>');
+
+// A sub-dial: a satellite with its own gravity-spot. Its lanes are twelfths of the satellite.
+const subdial = (name, count, every, numbers) => `
+  <div class="satellite" aria-hidden="true">
+    <div class="gravity-spot ${name}">
+      <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center"><div class="capsule face"></div></div></div>
+      <div class="orbit-11 ticks">${ticks(count, every)}</div>
+      <div class="orbit-7 numbers" style="--o-size-ratio: 3">
+        ${numbers.map((n) => `<div class="satellite"><div class="capsule">${n}</div></div>`).join('')}
+      </div>
+      <div class="orbit-4 hand" style="--o-size-ratio: 9"><div class="vector"></div></div>
+    </div>
+  </div>`;
+
+$('.watch > .gravity-spot > .ticks').innerHTML = ticks(60, 5);
+$('.subdials').innerHTML =
+  subdial('minutes', 30, 5, [30, 10, 20]) +   // 3 o'clock: 30 minutes a turn
+  subdial('tenths', 10, 5, []) +              // 6 o'clock: one second a turn
+  subdial('seconds', 60, 15, [60, 15, 30, 45]); // 9 o'clock: the running seconds
+
+const turn = (selector, deg) => $(selector).style.setProperty('--turn', `${deg}deg`);
+
+// The time: hours, minutes and the small seconds.
+function time() {
+  const d = new Date(), s = d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+  turn('.watch .hour', s / 120);
+  turn('.watch .minute', s / 10);
+  turn('.seconds .hand', s * 6);
+}
+time();
+setInterval(time, 1000);
+
+// The stopwatch: the big center hand, minutes at 3, tenths at 6.
+let elapsed = 0, since = null;
+function chrono() {
+  const ms = elapsed + (since ? performance.now() - since : 0);
+  turn('.chrono', ms / 1000 * 6);
+  turn('.minutes .hand', ms / 60000 * 12);
+  turn('.tenths .hand', ms / 1000 * 360);
+  const m = Math.floor(ms / 60000), s = (ms / 1000) % 60;
+  $('.elapsed').value = `${String(m).padStart(2, '0')}:${s.toFixed(1).padStart(4, '0')}`;
+  if (since) requestAnimationFrame(chrono);
+}
+$('.toggle').addEventListener('click', () => {
+  if (since) { elapsed += performance.now() - since; since = null; }
+  else { since = performance.now(); requestAnimationFrame(chrono); }
+  $('.toggle').textContent = since ? 'Stop' : 'Start';
+});
+$('.reset').addEventListener('click', () => {
+  elapsed = 0;
+  if (since) since = performance.now();
+  chrono();
+});
+chrono();
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>The three sub-dials are satellites on <code>orbit-5</code>. <code>from-90 range-180 fit-range</code> puts the first at three o'clock, the last at nine and one between. See <a href="../../reference/orbit.html">rings</a>.</li>
+<li><code>--o-size-ratio: 6</code> on that ring makes each one six lanes wide. The <code>.gravity-spot</code> inside a satellite takes the satellite as its universe and starts from the defaults, so the sub-dial uses the same <code>orbit-11</code> ticks and <code>orbit-4</code> hand as a big clock. See <a href="../../reference/satellite.html">satellites</a>.</li>
+<li>Every hand is one <a href="../../reference/vector.html">vector</a> on a ring turned with <code>rotate</code>. The stopwatch only sets an angle per hand, sixty times a second while it runs.</li>
+<li>The JS tab writes the ticks and the sub-dials, so the markup of a sub-dial appears once.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="minimalist-analog-clock.html">Minimalist analog clock</a>: the same hands, one system</li>
+<li><a href="smartwatch-face.html">Smartwatch face</a></li>
+<li><a href="../../demos/08-nested-orbits.html">Nested systems demo</a></li>
+<li><a href="../../reference/gravity-spot.html">Gravity spot</a>: every system starts from the defaults</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

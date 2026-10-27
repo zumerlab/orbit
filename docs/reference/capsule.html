@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Capsules · Orbit</title>
+  <meta name="description" content="A .capsule holds your content inside a satellite or a side, centered and upright.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Capsules</h1>
+<p class="lede">A <code>.capsule</code> is the cargo a satellite carries: your content. It stays centered and upright however far around the ring the satellite travels.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8" style="--o-size-ratio: 4">
+        <div class="satellite">
+          <div class="capsule">Text</div>
+        </div>
+        <div class="satellite">
+          <div class="capsule">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentcolor"/></svg>
+          </div>
+        </div>
+        <div class="satellite">
+          <div class="capsule"><button type="button" id="add" aria-label="Add one">+1</button></div>
+        </div>
+        <div class="satellite">
+          <div class="capsule number"><strong id="count">72</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 { border-color: var(--faint); }
+.satellite {
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.capsule { color: var(--accent); font-size: 14px; }
+.capsule button { padding: 4px 8px; }
+.number strong { font-size: 18px; font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const count = document.getElementById('count');
+document.getElementById('add').addEventListener('click', () => {
+  count.textContent = (Number(count.textContent) + 1) % 100;
+});
+  </script>
+  <figcaption>Text, an SVG icon, a button and a number, each in a capsule.</figcaption>
+</figure>
+<p>Any HTML goes in a capsule. It works inside a <code>.satellite</code> and inside a <code>.side</code>. Content placed directly in a satellite is not centered or kept upright, and with <code>dev-orbit</code> on the <code>.bigbang</code> the console says so.</p>
+<p>A capsule is as wide as its satellite and as tall as its content, so text wraps at the satellite's width. Give the capsule its own <code>width</code> for a label wider than the satellite. Like satellites, capsules have no border or background until you give them one.</p>
+
+<h2>Where it sits in the satellite</h2>
+<p>A capsule is centered in its satellite. An alignment class on the satellite moves it: <code>.at-top-left</code>, <code>.at-top</code>, <code>.at-top-right</code>, <code>.at-center-left</code>, <code>.at-center-right</code>, <code>.at-bottom-left</code>, <code>.at-bottom</code> or <code>.at-bottom-right</code>. <code>.at-center</code> is the exception: on a satellite it places the satellite itself at the center of the system.</p>
+
+<h2>Turning the content</h2>
+<p><code>.flip</code> turns a capsule upside down, <code>.turn-left</code> a quarter turn left and <code>.turn-right</code> a quarter turn right. In a <code>.spin-lock</code> satellite the content turns with the satellite and points its top at the center; <code>.flip</code> makes it point outward.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-9" style="--o-size-ratio: 3.4">
+        <div class="satellite"><div class="capsule">Orbit</div></div>
+        <div class="satellite"><div class="capsule turn-right">right</div></div>
+        <div class="satellite"><div class="capsule flip">flip</div></div>
+        <div class="satellite"><div class="capsule turn-left">left</div></div>
+      </div>
+      <!-- spin-lock satellites point their top at the center; flip makes them read outward. -->
+      <div class="orbit-4 inner" style="--o-size-ratio: 3.4">
+        <div class="satellite spin-lock"><div class="capsule flip">out</div></div>
+        <div class="satellite spin-lock"><div class="capsule flip">out</div></div>
+        <div class="satellite spin-lock"><div class="capsule flip">out</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-9, .orbit-4 { border-color: var(--faint); }
+.satellite {
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg));
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+.inner .satellite {
+  background: color-mix(in srgb, var(--amber) 14%, var(--bg));
+  color: var(--amber);
+}
+  </script>
+  <figcaption>Outer ring: the four orientations. Inner ring: <code>spin-lock</code> satellites with flipped capsules, reading outward.</figcaption>
+</figure>
+
+<h2>In a side</h2>
+<p>In a <code>.side</code>, a capsule lies along the side and turns with it, which suits labels on the edges of a polygon. Labels on the lower edges read upright; <code>.flip</code> turns over the ones at the top, and <code>.horizontal</code> keeps a capsule level instead.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10">
+        <div class="side"><div class="capsule flip"><span>flip</span></div></div>
+        <div class="side"><div class="capsule"><span>along</span></div></div>
+        <div class="side"><div class="capsule"><span>along</span></div></div>
+        <div class="side"><div class="capsule horizontal"><span>horizontal</span></div></div>
+        <div class="side"><div class="capsule"><span>along</span></div></div>
+        <div class="side"><div class="capsule flip"><span>flip</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.side { height: 2px; background: var(--faint); }
+.capsule span {
+  padding: 2px 9px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg));
+  color: var(--accent);
+  font-size: 12px;
+  white-space: nowrap;
+}
+  </script>
+</figure>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class</th><th>Goes on</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>.capsule</code></td><td>child of <code>.satellite</code> or <code>.side</code></td><td>Holds content, centered and upright. As wide as its satellite.</td></tr>
+<tr><td><code>.flip</code></td><td>capsule</td><td>Upside down.</td></tr>
+<tr><td><code>.turn-left</code> / <code>.turn-right</code></td><td>capsule</td><td>A quarter turn.</td></tr>
+<tr><td><code>.horizontal</code></td><td>capsule in a side</td><td>Stays level instead of following the side.</td></tr>
+<tr><td><code>.at-top-left</code> … <code>.at-bottom-right</code></td><td>satellite</td><td>Moves the capsule inside the satellite.</td></tr>
+<tr><td><code>.spin-lock</code></td><td>satellite</td><td>The capsule turns with the satellite. See <a href="satellite.html">Satellites</a>.</td></tr>
+</tbody>
+</table></div>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

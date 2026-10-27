@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Satellites · Orbit</title>
+  <meta name="description" content="A .satellite travels a ring and carries your content. Size, shape, position, angle and direction.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Satellites</h1>
+<p class="lede">Satellites travel the orbits. A <code>.satellite</code> sits on a ring and carries your content in a <code>.capsule</code>; Orbit spreads all the satellites of a ring evenly around it.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8" id="ring" style="--o-size-ratio: 2.4"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Satellites <input id="count" type="range" min="1" max="12" value="5"></label>
+    <output id="out">5</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.orbit-8 { border-color: var(--faint); }
+.satellite { background: var(--accent); }
+.capsule { color: var(--bg); font-weight: 650; font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const ring = document.getElementById('ring'), count = document.getElementById('count');
+// Orbit spreads whatever is on the ring: change the count, the spacing follows.
+const fill = () => {
+  ring.innerHTML = Array.from({ length: count.value }, (_, i) =>
+    `<div class="satellite"><div class="capsule">${i + 1}</div></div>`).join('');
+  document.getElementById('out').value = count.value;
+};
+count.addEventListener('input', fill);
+fill();
+  </script>
+</figure>
+<p>A satellite is a circle one lane across, with no border or background until you give it one. Put content in a <code>.capsule</code> inside it, never directly in the satellite: the capsule keeps it centered and upright. See <a href="capsule.html">Capsules</a>.</p>
+
+<h2>Size</h2>
+<p>Set <code>--o-size-ratio</code>, in lanes, on the satellite, its ring or the <code>.gravity-spot</code>. For one satellite there are also classes, which win over any ratio set around them:</p>
+<ul>
+<li><code>.shrink-5</code> to <code>.shrink-100</code> make it smaller than a lane: <code>shrink-30</code> is 0.7 lanes.</li>
+<li><code>.grow-1x</code> to <code>.grow-12x</code> make it 2 to 24 lanes. Decimals add fifths of a lane: <code>grow-1.2x</code> is 2.4 lanes.</li>
+<li><code>.grow-0.1x</code> to <code>.grow-0.9x</code> add tenths of a lane: <code>grow-0.5x</code> is 1.5 lanes.</li>
+</ul>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8">
+        <div class="satellite shrink-50"></div>
+        <div class="satellite"></div>
+        <div class="satellite grow-0.5x"></div>
+        <div class="satellite grow-1x"></div>
+        <div class="satellite grow-1.5x"></div>
+        <div class="satellite grow-2x"></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 { border-color: var(--faint); }
+.satellite { background: var(--accent); }
+  </script>
+  <figcaption>Clockwise from the top: half a lane, one lane, 1.5, 2, 3 and 4 lanes.</figcaption>
+</figure>
+
+<h2>Shape and look</h2>
+<p>Satellites are round. <code>.box</code> makes one square and <code>.rounded-box</code> a square with soft corners. Anything else is plain CSS: backgrounds, borders, images, SVG.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8" style="--o-size-ratio: 2.6">
+        <div class="satellite"></div>
+        <div class="satellite box"></div>
+        <div class="satellite rounded-box"></div>
+        <div class="satellite sphere"></div>
+        <div class="satellite outline"></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 { border-color: var(--faint); }
+.satellite { background: var(--accent); }
+/* Anything else is plain CSS. */
+.sphere {
+  background: radial-gradient(circle at 35% 30%, #fff, var(--accent) 35%, color-mix(in oklab, var(--accent) 35%, black));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.outline {
+  background: var(--bg);
+  border: 2px dashed var(--accent);
+}
+  </script>
+  <figcaption>Clockwise from the top: round, <code>.box</code>, <code>.rounded-box</code>, a gradient and a border.</figcaption>
+</figure>
+
+<h2>Position on the lane</h2>
+<p>A satellite is centered on its lane. <code>.inner-orbit</code> moves it in so its outer edge touches the lane, and <code>.outer-orbit</code> moves it out so its inner edge does. <code>.quarter-inner-orbit</code> and <code>.quarter-outer-orbit</code> move it part of the way. For any other offset, set <code>--o-alignment</code>: a positive length moves it in, a negative one out.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8" style="--o-size-ratio: 3">
+        <div class="satellite outer-orbit"></div>
+        <div class="satellite quarter-outer-orbit"></div>
+        <div class="satellite"></div>
+        <div class="satellite quarter-inner-orbit"></div>
+        <div class="satellite inner-orbit"></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+/* The lane on top, so you can see where each satellite sits. */
+.orbit-8 { border: 2px solid var(--amber); z-index: 1; }
+.satellite {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  border: 1px solid var(--accent);
+}
+  </script>
+  <figcaption>Clockwise from the top: <code>outer-orbit</code>, <code>quarter-outer-orbit</code>, default, <code>quarter-inner-orbit</code>, <code>inner-orbit</code>.</figcaption>
+</figure>
+
+<h2 id="angle">An exact angle</h2>
+<p><code>.angle-0</code> to <code>.angle-360</code> place a satellite at that angle, clockwise from the top, instead of its turn on the ring. It ignores the ring's <code>--o-from</code>.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 lane" style="--o-size-ratio: 3">
+        <div class="satellite angle-45" id="moon"><div class="capsule" id="label">45°</div></div>
+      </div>
+      <!-- A vector 8 lanes long on orbit-4 starts at the center: a hand pointing at it. -->
+      <div class="orbit-4" style="--o-size-ratio: 8">
+        <div class="vector angle-45" id="hand"></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Angle <input id="angle" type="range" min="0" max="360" step="5" value="45"></label>
+    <output id="out">angle-45</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.lane { border-color: var(--faint); }
+.satellite { background: var(--accent); }
+.capsule { color: var(--bg); font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.vector { height: 2px; background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const angle = document.getElementById('angle');
+angle.addEventListener('input', () => {
+  const n = angle.value;
+  document.getElementById('moon').className = `satellite angle-${n}`;
+  document.getElementById('hand').className = `vector angle-${n}`;
+  document.getElementById('label').textContent = n + '°';
+  document.getElementById('out').value = 'angle-' + n;
+});
+  </script>
+</figure>
+
+<h2>Facing the center</h2>
+<p>A satellite keeps its content upright wherever it is. With <code>.spin-lock</code> it turns with its angle instead, so the top of its content always points at the center, like the labels on a wheel. Add <code>.flip</code> to the capsule to make it point outward. Left, the default; right, <code>spin-lock</code>.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage pair">
+  <div class="cell">
+    <div class="bigbang">
+      <div class="gravity-spot">
+        <div class="orbit-8" id="upright" style="--o-size-ratio: 3"></div>
+      </div>
+    </div>
+    <code>default</code>
+  </div>
+  <div class="cell">
+    <div class="bigbang">
+      <div class="gravity-spot">
+        <div class="orbit-8" id="locked" style="--o-size-ratio: 3"></div>
+      </div>
+    </div>
+    <code>spin-lock</code>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.pair { grid-auto-flow: column; justify-content: center; gap: 48px; }
+.cell { display: grid; justify-items: center; gap: 8px; }
+.cell .bigbang { width: min(210px, 38vw, 100vh - 70px); }
+.cell code { color: var(--muted); }
+.orbit-8 { border-color: var(--faint); }
+.satellite { background: color-mix(in srgb, var(--accent) 20%, var(--bg)); border: 1px solid var(--accent); }
+.capsule { color: var(--accent); font-size: 18px; font-weight: 700; }
+  </script>
+  <script type="text/plain" data-js>
+const arrows = cls => '<div class="satellite ' + cls + '"><div class="capsule">↑</div></div>';
+document.getElementById('upright').innerHTML = arrows('').repeat(6);
+document.getElementById('locked').innerHTML = arrows('spin-lock').repeat(6);
+  </script>
+  <figcaption>Left, every arrow points up. Right, with <code>spin-lock</code>, every arrow points at the center.</figcaption>
+</figure>
+
+<h2>Which way is out</h2>
+<p>Each satellite exposes <code>--o-dir-x</code> and <code>--o-dir-y</code>: the direction from the center of its system to the satellite, from -1 to 1. <code>x</code> grows to the right and <code>y</code> grows down, so a satellite at the top has <code>0</code> and <code>-1</code>, and a <code>.satellite.at-center</code> has both at <code>0</code>. Its content inherits them, so CSS can push a label outward whatever the angle:</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-7" id="ring"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Push <input id="push" type="range" min="0" max="40" value="22"></label>
+    <output id="out">22px</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.bigbang { --push: 22px; }
+.orbit-7 { border-color: var(--faint); }
+.satellite { background: var(--accent); }
+/* --o-dir-x/-y point away from the center: move each label along them. */
+.label {
+  translate: calc(var(--o-dir-x) * var(--push)) calc(var(--o-dir-y) * var(--push));
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+  </script>
+  <script type="text/plain" data-js>
+const points = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+document.getElementById('ring').innerHTML = points.map(p =>
+  `<div class="satellite"><div class="capsule"><span class="label">${p}</span></div></div>`).join('');
+const push = document.getElementById('push');
+push.addEventListener('input', () => {
+  document.querySelector('.bigbang').style.setProperty('--push', push.value + 'px');
+  document.getElementById('out').value = push.value + 'px';
+});
+  </script>
+  <figcaption>Each label moves away from the center along its own direction.</figcaption>
+</figure>
+<p><a href="../universe.html">How Orbit thinks</a> shows the other common use: labels that hang above the satellites of the upper half and below the rest.</p>
+
+<h2>A satellite is a universe</h2>
+<p>Put a <code>.gravity-spot</code> directly inside a satellite and it reaches the satellite's edge: a moon system around a planet, a gauge inside a menu item. Make the satellite thicker to give it room. See <a href="gravity-spot.html">Gravity spot</a>.</p>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class or property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Diameter, in lanes.</td></tr>
+<tr><td><code>.shrink-5</code> … <code>.shrink-100</code></td><td></td><td>Smaller than a lane: <code>shrink-N</code> is 1 − N/100 lanes.</td></tr>
+<tr><td><code>.grow-1x</code> … <code>.grow-12x</code>, <code>.grow-0.1x</code> … </td><td></td><td>Bigger: <code>grow-Nx</code> is 2N lanes.</td></tr>
+<tr><td><code>.box</code>, <code>.rounded-box</code>, <code>.circle</code></td><td>round</td><td>Shape.</td></tr>
+<tr><td><code>.inner-orbit</code>, <code>.outer-orbit</code>, <code>.quarter-inner-orbit</code>, <code>.quarter-outer-orbit</code></td><td></td><td>Moves it in or out from its lane.</td></tr>
+<tr><td><code>--o-alignment</code></td><td><code>0px</code></td><td>Any offset from the lane; positive is inward.</td></tr>
+<tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>An exact angle, clockwise from the top.</td></tr>
+<tr><td><code>.spin-lock</code></td><td></td><td>Turns with its angle instead of staying upright.</td></tr>
+<tr><td><code>.at-center</code></td><td></td><td>In <code>orbit-0</code>: the satellite sits at the center.</td></tr>
+<tr><td><code>.at-top-left</code> … <code>.at-bottom-right</code></td><td></td><td>Where the capsule sits inside the satellite.</td></tr>
+<tr><td><code>--o-dir-x</code> / <code>--o-dir-y</code></td><td>read only</td><td>Direction from the center, from -1 to 1.</td></tr>
+</tbody>
+</table></div>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

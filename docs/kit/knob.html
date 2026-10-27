@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knob · Orbit</title>
+  <meta name="description" content="o-knob is a rotary control you turn with the pointer, the wheel or the keyboard.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Knob</h1>
+<p class="lede"><code>&lt;o-knob&gt;</code> is a rotary control you turn with the pointer, the wheel or the keyboard.</p>
+<figure class="example" data-kit data-height="240">
+  <script type="text/plain" data-html>
+<o-knob value="65" unit="%" aria-label="Volume"></o-knob>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>Grab the band and turn it, or drag up and down anywhere else on the knob. The track is an <code>interactive</code> <code>&lt;o-arc&gt;</code> with a <code>hit-width</code>, so it takes the pointer along its whole length, a few pixels past its edges too.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td><code>min</code></td><td>Starting value, snapped to <code>step</code> and kept in range. It is also the default a form reset returns to; the attribute follows the knob as it turns.</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td><code>0</code> / <code>100</code></td><td>The range. A <code>max</code> below <code>min</code> becomes <code>min</code>.</td></tr>
+<tr><td><code>step</code></td><td><code>1</code></td><td>Increment for keys and the wheel, and the snapping grid. Decimals work; <code>any</code> turns snapping off.</td></tr>
+<tr><td><code>range</code> / <code>from</code></td><td><code>270</code> / auto</td><td>Arc span and start angle.</td></tr>
+<tr><td><code>label</code></td><td></td><td>Text in the middle instead of the value. It is also the default accessible name.</td></tr>
+<tr><td><code>unit</code></td><td></td><td>Suffix for the value. With <code>format=&quot;unit&quot;</code>, an Intl unit.</td></tr>
+<tr><td><code>fill</code> / <code>track</code></td><td><code>#a1a1aa</code> / <code>#27272a</code></td><td>Value and track colors.</td></tr>
+<tr><td><code>thickness</code></td><td><code>2.4</code></td><td>Band thickness in lanes.</td></tr>
+<tr><td><code>shape</code></td><td><code>rounded</code></td><td>Ending of the value arc.</td></tr>
+<tr><td><code>name</code></td><td></td><td>Field name: with it, the knob submits its value with the form. See <a href="options.html#forms">Forms</a>.</td></tr>
+<tr><td><code>disabled</code></td><td>off</td><td>Dimmed, out of the tab order and not submitted. A disabled <code>&lt;fieldset&gt;</code> does the same. Setting <code>value</code> from code still works.</td></tr>
+<tr><td><code>size</code></td><td><code>160px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow in the value color.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code></td><td></td><td>Number format of the readout and <code>aria-valuetext</code>, through <code>Intl.NumberFormat</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Properties and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td>Reads or sets the value. Setting it snaps and clamps like the attribute and fires no event, like a native input.</td></tr>
+<tr><td><code>min</code>, <code>max</code>, <code>step</code>, <code>stepUp()</code>, <code>stepDown()</code></td><td>As on <code>&lt;input type="range"&gt;</code>.</td></tr>
+<tr><td><code>form</code>, <code>labels</code>, <code>defaultValue</code>, <code>validity</code></td><td>As on a native input.</td></tr>
+<tr><td><code>formatter</code></td><td>A function that writes the readout and <code>aria-valuetext</code>. See <a href="options.html#formatter">Shared options</a>.</td></tr>
+<tr><td><code>input</code></td><td>Fires on every change you make: turning, keys, the wheel. <code>event.detail.value</code> has the value.</td></tr>
+<tr><td><code>change</code></td><td>Fires once a gesture ends with a different value, and on each key press or wheel step.</td></tr>
+</tbody>
+</table></div>
+<pre><code>knob.addEventListener('input', (e) =&gt; preview(e.detail.value))
+knob.addEventListener('change', (e) =&gt; save(e.detail.value))
+knob.value = 40</code></pre>
+<p>The knob is a form control. Inside a <code>&lt;form&gt;</code> with a <code>name</code>, it submits its value, resets with the form and comes back on page restore:</p>
+<pre><code>&lt;form&gt;
+  &lt;o-knob name="volume" value="30"&gt;&lt;/o-knob&gt;
+&lt;/form&gt;</code></pre>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-fill</code></td><td><code>#a1a1aa</code></td><td>Value arc.</td></tr>
+<tr><td><code>--ok-track</code></td><td><code>#27272a</code></td><td>Track.</td></tr>
+<tr><td><code>--ok-focus</code></td><td><code>#3da9fc</code></td><td>Focus ring.</td></tr>
+<tr><td><code>--ok-hub-color</code></td><td>inherits</td><td>Color of the readout in the middle.</td></tr>
+<tr><td><code>--ok-hub-bg</code></td><td><code>none</code></td><td>Background of the hole in the middle.</td></tr>
+<tr><td><code>--ok-hub-size</code></td><td><code>1.4em</code></td><td>Font size of the readout.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base font size, as a share of the widget. Text scales with it.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>A row of knobs with readouts</h3>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-knob value="40" label="Bass" aria-label="Bass" fill="#ff7a6b"></o-knob>
+<o-knob value="55" label="Mid" aria-label="Mid" fill="#ffb547"></o-knob>
+<o-knob value="70" label="Treble" aria-label="Treble"></o-knob>
+<output id="out">Turn a knob</output>
+  </script>
+  <script type="text/plain" data-css>
+body { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; align-items: center; height: 100vh; }
+output { width: 100%; text-align: center; color: var(--muted); }
+  </script>
+  <script type="text/plain" data-js>
+const out = document.getElementById('out');
+document.addEventListener('input', (e) => {
+  out.textContent = `${e.target.getAttribute('aria-label')}: ${e.detail.value}`;
+});
+  </script>
+</figure>
+<h3>Decimals and a full turn</h3>
+<figure class="example" data-kit data-height="240">
+  <script type="text/plain" data-html>
+<o-knob min="0" max="1" step="0.05" value="0.35" range="360" thickness="1.2" shape="none" fill="#a78bfa" aria-label="Mix"></o-knob>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>Disabled</h3>
+<figure class="example" data-kit data-height="240">
+  <script type="text/plain" data-html>
+<o-knob value="30" disabled aria-label="Locked"></o-knob>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The knob is a <code>role="slider"</code> with <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code>, <code>aria-valuetext</code> and <code>aria-disabled</code>. It is one tab stop. Arrow keys move one step, Page Up and Page Down ten, Home and End go to the ends. The wheel only turns it while it has focus, so scrolling the page never changes a value by accident.</p>
+<p>Without a name it is called “Rotary control”, or takes its <code>label</code>. Give each knob an <code>aria-label</code> or <code>aria-labelledby</code>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

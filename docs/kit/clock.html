@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clock · Orbit</title>
+  <meta name="description" content="o-clock is an analog clock or watch face, live or set to a time.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Clock</h1>
+<p class="lede"><code>&lt;o-clock&gt;</code> is an analog clock or watch face, live or set to a time.</p>
+<figure class="example" data-kit data-height="340">
+  <script type="text/plain" data-html>
+<o-clock live seconds></o-clock>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>The dial is the universe: ticks are vectors on <code>orbit-11</code>, numerals are satellites on <code>orbit-9</code>, and the hands are vectors on the center orbit, turned with <code>--o-angle-composite</code>. Sub-dials are satellites that hold a universe of their own. A live clock only moves its hands; the face is built once.</p>
+
+<h2>Presets</h2>
+<p><code>classic</code>, <code>roman</code>, <code>minimal</code>, <code>chrono</code> and <code>smartwatch</code>. As with instruments, any attribute you write wins over the preset.</p>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-clock preset="roman" time="10:08:30" size="150px"></o-clock>
+<o-clock preset="minimal" time="10:08:30" size="150px"></o-clock>
+<o-clock preset="chrono" time="10:08:30" size="150px"></o-clock>
+<o-clock preset="smartwatch" time="10:08:30" size="150px"></o-clock>
+  </script>
+  <script type="text/plain" data-css>
+body { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; align-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>time</code></td><td>now</td><td>A fixed time, <code>HH:MM</code> or <code>HH:MM:SS</code>.</td></tr>
+<tr><td><code>live</code></td><td>off</td><td>Follows the real clock, once a second.</td></tr>
+<tr><td><code>smooth</code></td><td>off</td><td>A sweeping second hand, redrawn every frame. Implies <code>seconds</code>.</td></tr>
+<tr><td><code>seconds</code></td><td>off</td><td>Shows the second hand.</td></tr>
+<tr><td><code>numerals</code></td><td><code>arabic</code></td><td><code>arabic</code>, <code>roman</code> or <code>none</code>.</td></tr>
+<tr><td><code>case</code></td><td><code>round</code></td><td><code>round</code>, <code>square</code>, <code>rounded</code> or <code>rectangle</code>.</td></tr>
+<tr><td><code>dial</code></td><td><code>round</code></td><td><code>oval</code> stretches the dial to follow the case; <code>rings</code> replaces the hands with three activity rings.</td></tr>
+<tr><td><code>digital</code></td><td>off</td><td>A digital time below the center.</td></tr>
+<tr><td><code>date</code></td><td>off</td><td>A date window at 3 o'clock.</td></tr>
+<tr><td><code>brand</code></td><td></td><td>A name above the center.</td></tr>
+<tr><td><code>subdials</code></td><td>off</td><td>Chronograph sub-dials: small seconds, 24 hours and date. They replace <code>digital</code> and <code>date</code>.</td></tr>
+<tr><td><code>accent</code> / <code>hand-color</code> / <code>tick-color</code></td><td></td><td>Second hand and cap, hour and minute hands, minute ticks.</td></tr>
+<tr><td><code>face</code> / <code>bezel</code> / <code>case-bg</code></td><td></td><td>Dial background, its rim and the case around it.</td></tr>
+<tr><td><code>hour-color</code> / <code>minute-color</code> / <code>second-color</code></td><td></td><td>Ring colors of <code>dial=&quot;rings&quot;</code>.</td></tr>
+<tr><td><code>size</code></td><td><code>300px</code></td><td>Width of the widget. A rectangle case is 1.26 times as tall.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow on the hands.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Falls back to</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-clock-accent</code></td><td><code>--ok-accent</code></td><td>Second hand, cap, brand.</td></tr>
+<tr><td><code>--ok-clock-hand</code></td><td></td><td>Hour and minute hands.</td></tr>
+<tr><td><code>--ok-clock-face</code></td><td><code>--ok-face</code></td><td>Dial background.</td></tr>
+<tr><td><code>--ok-clock-bezel</code></td><td><code>--ok-bezel</code></td><td>Dial rim.</td></tr>
+<tr><td><code>--ok-clock-case-bg</code></td><td><code>--ok-case</code></td><td>Case around a non-round dial.</td></tr>
+<tr><td><code>--ok-clock-tick</code></td><td><code>--ok-tick</code></td><td>Minute ticks.</td></tr>
+<tr><td><code>--ok-clock-tick-h</code></td><td></td><td>Hour ticks.</td></tr>
+<tr><td><code>--ok-clock-numeral</code></td><td><code>--ok-text</code></td><td>Numerals and readouts.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td></td><td>Base text size, <code>7.5cqmin</code> by default.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>A tonneau watch</h3>
+<figure class="example" data-kit data-height="320">
+  <script type="text/plain" data-html>
+<o-clock case="rectangle" dial="oval" live smooth size="200px" accent="#ffb547"></o-clock>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>Activity rings for hours, minutes and seconds</h3>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-clock dial="rings" live seconds size="220px"></o-clock>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>A light face</h3>
+<figure class="example" data-kit data-light data-height="340">
+  <script type="text/plain" data-html>
+<o-clock live seconds numerals="roman" face="#fdfcf8" bezel="#d8d2c4" hand-color="#1f2937" tick-color="#9ca3af" accent="#b91c1c" style="--ok-clock-numeral: #1f2937; --ok-clock-tick-h: #1f2937;"></o-clock>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The clock has <code>role="img"</code> and its time as the name, like “10:08:30”. The name follows the time, but a screen reader does not announce each change. Set <code>aria-label</code> to give it a fixed name, such as “Time in Tokyo”. The live loop stops while the clock is out of the document.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

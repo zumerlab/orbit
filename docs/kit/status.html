@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Status · Orbit</title>
+  <meta name="description" content="o-status shows the health of a set of things as colored segments, in layers when they are grouped.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Status</h1>
+<p class="lede"><code>&lt;o-status&gt;</code> shows the health of a set of things as colored segments, in layers when they are grouped.</p>
+<figure class="example" data-kit data-height="290">
+  <script type="text/plain" data-html>
+<o-status label="Services" labels data='[
+  {"label": "API", "status": "ok"},
+  {"label": "Web", "status": "ok"},
+  {"label": "DB", "status": "warn", "note": "slow queries"},
+  {"label": "Queue", "status": "error", "note": "backlog 12k"},
+  {"label": "CDN", "status": "ok"}
+]'></o-status>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>Each item is an <code>&lt;o-arc&gt;</code> with a <code>value</code>, so the segments stack around the ring. The middle counts the problems; point at a segment or focus it and the middle shows that item instead.</p>
+
+<h2>Layers</h2>
+<p>Items with <code>children</code> become an inner ring of groups, each as wide as its children on the outer ring. A group without its own <code>status</code> takes the worst one of its children.</p>
+<figure class="example" data-kit data-height="330">
+  <script type="text/plain" data-html>
+<o-status label="Regions" labels pulse size="280px" data='[
+  {"label": "EU", "children": [
+    {"label": "api", "status": "ok"}, {"label": "web", "status": "ok"}, {"label": "db", "status": "ok"}]},
+  {"label": "US", "children": [
+    {"label": "api", "status": "ok"}, {"label": "web", "status": "down"}, {"label": "db", "status": "degraded"}]},
+  {"label": "Asia", "children": [
+    {"label": "api", "status": "ok"}, {"label": "web", "status": "unknown"}]}
+]'></o-status>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>data</code></td><td><code>[]</code></td><td>Items: <code>[{ label, status, note?, color?, value?, children? }]</code>, up to three levels deep.</td></tr>
+<tr><td><code>label</code></td><td></td><td>A title in the middle, above the count.</td></tr>
+<tr><td><code>labels</code></td><td>off</td><td>Writes each label along its segment. Keep labels short: text longer than its arc is cut.</td></tr>
+<tr><td><code>pulse</code></td><td>off</td><td>Error segments pulse, except with reduced motion.</td></tr>
+<tr><td><code>range</code> / <code>from</code></td><td><code>360</code> / auto</td><td>Arc span and start angle.</td></tr>
+<tr><td><code>thickness</code></td><td><code>2.4</code>, <code>2</code> with layers</td><td>Ring thickness in lanes.</td></tr>
+<tr><td><code>gap</code></td><td><code>0.8</code></td><td>Space between segments, in percent of the widget width.</td></tr>
+<tr><td><code>shape</code></td><td><code>none</code></td><td>Segment endings.</td></tr>
+<tr><td><code>size</code></td><td><code>220px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Status</th><th>Also accepted</th><th>Color</th></tr></thead>
+<tbody>
+<tr><td><code>ok</code></td><td>good, up, healthy, success</td><td><code>#16a34a</code></td></tr>
+<tr><td><code>warn</code></td><td>warning, degraded</td><td><code>#d97706</code></td></tr>
+<tr><td><code>error</code></td><td>down, critical, fail, failed, danger</td><td><code>#dc2626</code></td></tr>
+<tr><td><code>info</code></td><td>maintenance</td><td><code>#2563eb</code></td></tr>
+<tr><td><code>off</code></td><td>unknown, idle, disabled, anything else</td><td><code>#475569</code></td></tr>
+</tbody>
+</table></div>
+<p><code>note</code> adds a detail to the item's name and to the middle while it is shown. <code>color</code> overrides the status color of one item; <code>value</code> is passed back in <code>select</code> untouched.</p>
+
+<h2>Events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>select</code></td><td>A segment was clicked, or activated with Enter or Space. <code>event.detail</code> has <code>label</code>, <code>status</code>, <code>note</code>, <code>value</code>, <code>item</code> and <code>path</code>, the indexes from the top level.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-status-ok</code></td><td><code>#16a34a</code></td><td>OK segments and text.</td></tr>
+<tr><td><code>--ok-status-warn</code></td><td><code>#d97706</code></td><td>Warnings.</td></tr>
+<tr><td><code>--ok-status-error</code></td><td><code>#dc2626</code></td><td>Errors.</td></tr>
+<tr><td><code>--ok-status-info</code></td><td><code>#2563eb</code></td><td>Info.</td></tr>
+<tr><td><code>--ok-status-off</code></td><td><code>#475569</code></td><td>Off and unknown.</td></tr>
+<tr><td><code>--ok-status-text</code></td><td><code>#fff</code></td><td>Labels on the segments.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>4.6cqmin</code></td><td>Label size, as a share of the widget. The middle scales with it.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Reacting to a selection</h3>
+<figure class="example" data-kit data-height="320">
+  <script type="text/plain" data-html>
+<o-status id="s" label="Services" data='[
+  {"label": "API", "status": "ok"},
+  {"label": "Web", "status": "ok"},
+  {"label": "DB", "status": "warn", "note": "slow queries"},
+  {"label": "Queue", "status": "error", "note": "backlog 12k"},
+  {"label": "CDN", "status": "ok"}
+]'></o-status>
+<p id="detail">Click a segment</p>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 8px; height: 100vh; }
+p { margin: 0; color: var(--muted); }
+  </script>
+  <script type="text/plain" data-js>
+const detail = document.getElementById('detail');
+document.getElementById('s').addEventListener('select', (e) => {
+  const { label, status, note } = e.detail;
+  detail.textContent = `${label} is ${status}${note ? ` (${note})` : ''}`;
+});
+  </script>
+</figure>
+<h3>Many small checks</h3>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-status id="grid" thickness="1.4" gap="0.5" size="200px"></o-status>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+const grid = document.getElementById('grid');
+const states = ['ok', 'ok', 'ok', 'ok', 'ok', 'ok', 'warn', 'error', 'off'];
+const render = () => grid.setAttribute('data', JSON.stringify(
+  Array.from({ length: 24 }, (_, i) => ({ label: `Check ${i + 1}`, status: states[Math.floor(Math.random() * states.length)] }))
+));
+render();
+setInterval(render, 2500);
+  </script>
+</figure>
+<h3>A light, half-ring version</h3>
+<figure class="example" data-kit data-light data-height="300">
+  <script type="text/plain" data-html>
+<o-status label="Deploy" labels range="240" size="260px" data='[
+  {"label": "Build", "status": "ok"},
+  {"label": "Test", "status": "ok"},
+  {"label": "Stage", "status": "info", "note": "in progress"},
+  {"label": "Prod", "status": "off"}
+]'></o-status>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The element has <code>role="group"</code> and a name that counts each status, like “Services: 1 error, 1 warning, 3 ok”. Each segment is a button named after its item, such as “DB: Warning, slow queries”, so status is never only a color.</p>
+<p>The ring is one tab stop. Left and Right move around a ring, Up goes out to the first child of a group, Down comes back in to the group, Home and End jump to the ends, Enter and Space fire <code>select</code>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

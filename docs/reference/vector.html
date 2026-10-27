@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vectors · Orbit</title>
+  <meta name="description" content="A .vector is a ray pointing out from the center: ticks, scales and needles.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Vectors</h1>
+<p class="lede">A <code>.vector</code> is a ray pointing out from the center, laid across its ring. A ring of vectors is a scale; a long one is a needle.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang clock" role="img" aria-label="Clock">
+    <div class="gravity-spot">
+      <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center face"></div></div>
+      <!-- Two scales on one lane: 60 short ticks and 12 long ones. -->
+      <div class="orbit-11 minutes" id="minutes" style="--o-size-ratio: .5"></div>
+      <div class="orbit-11 hours" id="hours"></div>
+      <!-- Each hand is a vector twice as long as its lane, so it starts at the center. -->
+      <div class="orbit-3 hand" id="hour" style="--o-size-ratio: 6"><div class="vector"></div></div>
+      <div class="orbit-4 hand" id="minute" style="--o-size-ratio: 8"><div class="vector"></div></div>
+      <div class="orbit-5 hand" id="second" style="--o-size-ratio: 10"><div class="vector"></div></div>
+      <div class="orbit-0" style="--o-size-ratio: 1"><div class="satellite at-center hub"></div></div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.face {
+  background: radial-gradient(circle at 50% 35%, #1a222c, #0e1318 72%);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.minutes .vector { background: var(--faint); }
+.hours .vector { height: 3px; background: var(--text); }
+/* A hand turns with its ring. */
+.hand { rotate: var(--turn, 0deg); }
+#hour .vector { height: 5px; border-radius: 3px; background: var(--text); }
+#minute .vector { height: 3px; border-radius: 2px; background: var(--accent); }
+#second .vector { height: 1px; background: var(--amber); }
+.hub { background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+document.getElementById('minutes').innerHTML = '<div class="vector"></div>'.repeat(60);
+document.getElementById('hours').innerHTML = '<div class="vector"></div>'.repeat(12);
+const turn = (id, deg) => document.getElementById(id).style.setProperty('--turn', deg + 'deg');
+const tick = () => {
+  const now = new Date(), s = now.getSeconds(), m = now.getMinutes() + s / 60, h = now.getHours() % 12 + m / 60;
+  turn('second', s * 6);
+  turn('minute', m * 6);
+  turn('hour', h * 30);
+  document.querySelector('.clock').setAttribute('aria-label', now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }));
+};
+tick();
+setInterval(tick, 1000);
+  </script>
+  <figcaption>60 and 12 ticks share <code>orbit-11</code>. The three hands are vectors on <code>orbit-3</code>, <code>orbit-4</code> and <code>orbit-5</code>, each turned with <code>rotate</code>.</figcaption>
+</figure>
+
+<h2>Length and look</h2>
+<p>A vector is one lane long and 1px thick, in the text color. Its look is plain CSS: <code>height</code> for the thickness, <code>background</code> for the color, <code>border-radius</code> for round ends. For the length, set <code>--o-size-ratio</code> in lanes on the vector, its ring or the <code>.gravity-spot</code>, or use the classes:</p>
+<ul>
+<li><code>.shrink-5</code> to <code>.shrink-100</code>: shorter than a lane. <code>shrink-30</code> is 0.7 lanes.</li>
+<li><code>.grow-1x</code> to <code>.grow-12x</code>: 2 to 24 lanes, with decimals like <code>grow-1.5x</code> (3 lanes). <code>.grow-0.1x</code> to <code>.grow-0.9x</code> add tenths of a lane.</li>
+</ul>
+<p>Like every element on a ring, a vector is centered on its lane and reaches half its length to each side. So a vector <code>2N</code> lanes long on <code>orbit-N</code> starts at the center: that is the minute hand above, 8 lanes on <code>orbit-4</code>.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8">
+        <div class="vector shrink-50"></div>
+        <div class="vector"></div>
+        <div class="vector grow-0.5x"></div>
+        <div class="vector grow-1x"></div>
+        <div class="vector grow-1.5x"></div>
+        <div class="vector grow-2x"></div>
+        <div class="vector thick"></div>
+        <div class="vector dashed"></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 { border: 1px dashed var(--faint); }
+.vector { height: 3px; border-radius: 2px; background: var(--accent); }
+/* The look is plain CSS. */
+.thick { --o-size-ratio: 2; height: 8px; border-radius: 4px; background: var(--amber); }
+.dashed {
+  --o-size-ratio: 3;
+  border-radius: 0;
+  background: repeating-linear-gradient(90deg, var(--amber) 0 5px, transparent 5px 9px);
+}
+  </script>
+  <figcaption>Clockwise from the top: half a lane, one, 1.5, 2, 3 and 4 lanes, then two styled with CSS.</figcaption>
+</figure>
+
+<h2>Position and angle</h2>
+<p><code>.inner-orbit</code> moves a vector in so it ends on its lane, and <code>.outer-orbit</code> moves it out so it starts there; <code>.quarter-inner-orbit</code> and <code>.quarter-outer-orbit</code> go part of the way, and <code>--o-alignment</code> takes any length. <code>.angle-0</code> to <code>.angle-360</code> point a vector at an exact angle, clockwise from the top. The ring's range, start and direction work as for satellites; see <a href="orbit.html#angles">Orbits</a>.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 lane" style="--o-size-ratio: 3">
+        <div class="vector angle-0 outer-orbit"></div>
+        <div class="vector angle-90"></div>
+        <div class="vector angle-180 inner-orbit"></div>
+      </div>
+      <!-- Seven ticks over 90°, from 225°: the first and last on the ends. -->
+      <div class="orbit-11 range-90 from-225 fit-range ticks" id="ticks"></div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.lane { border: 1px dashed var(--faint); }
+.lane .vector { height: 4px; border-radius: 2px; background: var(--accent); }
+.ticks .vector { height: 2px; background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+document.getElementById('ticks').innerHTML = '<div class="vector"></div>'.repeat(7);
+  </script>
+  <figcaption>On <code>orbit-8</code>: <code>outer-orbit</code> at 0°, default at 90°, <code>inner-orbit</code> at 180°. On <code>orbit-11</code>: seven ticks over 90° from 225°.</figcaption>
+</figure>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class or property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Length, in lanes.</td></tr>
+<tr><td><code>height</code>, <code>background</code></td><td><code>1px</code>, <code>currentcolor</code></td><td>Thickness and color.</td></tr>
+<tr><td><code>.shrink-5</code> … <code>.shrink-100</code></td><td></td><td>Shorter: <code>shrink-N</code> is 1 − N/100 lanes.</td></tr>
+<tr><td><code>.grow-1x</code> … <code>.grow-12x</code>, <code>.grow-0.1x</code> …</td><td></td><td>Longer: <code>grow-Nx</code> is 2N lanes.</td></tr>
+<tr><td><code>.inner-orbit</code>, <code>.outer-orbit</code>, <code>.quarter-inner-orbit</code>, <code>.quarter-outer-orbit</code></td><td></td><td>Moves it in or out from its lane.</td></tr>
+<tr><td><code>--o-alignment</code></td><td><code>1px</code></td><td>Any offset from the lane; positive is inward.</td></tr>
+<tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>An exact angle, clockwise from the top.</td></tr>
+</tbody>
+</table></div>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sides · Orbit</title>
+  <meta name="description" content="A .side is a chord between neighbors on a ring. Several sides close a regular polygon.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Sides</h1>
+<p class="lede">A <code>.side</code> is a straight line between two neighbors on a ring. Put N sides on a ring and they close a regular polygon with N corners.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-11 outer" id="outer"></div>
+      <div class="orbit-8 mid">
+        <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+      </div>
+      <div class="orbit-5 inner">
+        <div class="side"></div><div class="side"></div><div class="side"></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Sides on orbit-11 <input id="count" type="range" min="3" max="12" value="6"></label>
+    <output id="out">6</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.side { height: 2px; background: var(--accent); }
+.mid .side { background: color-mix(in srgb, var(--accent) 60%, transparent); }
+.inner .side { background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const outer = document.getElementById('outer'), count = document.getElementById('count');
+const draw = () => {
+  outer.innerHTML = '<div class="side"></div>'.repeat(count.value);
+  document.getElementById('out').value = count.value;
+};
+count.addEventListener('input', draw);
+draw();
+  </script>
+  <figcaption>Sides on <code>orbit-11</code>, four on <code>orbit-8</code> and three on <code>orbit-5</code>.</figcaption>
+</figure>
+<p>A side is 1px thick, in the text color. Its look is plain CSS: <code>height</code> for the thickness and <code>background</code> for the color. Its length comes from the number of sides on the ring, so it has no size classes.</p>
+
+<h2>Inside or around the ring</h2>
+<p>By default the corners of the polygon sit on the ring. With <code>.outer-orbit</code> on every side, the middle of each side touches the ring instead, and the polygon wraps around it.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 ring">
+        <div class="side"></div><div class="side"></div><div class="side"></div>
+        <div class="side"></div><div class="side"></div>
+      </div>
+      <!-- The same five sides, touching the ring at their middle. -->
+      <div class="orbit-8">
+        <div class="side outer-orbit"></div><div class="side outer-orbit"></div><div class="side outer-orbit"></div>
+        <div class="side outer-orbit"></div><div class="side outer-orbit"></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.ring { border: 1px dashed var(--faint); }
+.side { height: 2px; background: var(--accent); }
+.outer-orbit { background: var(--amber); }
+  </script>
+  <figcaption>Teal: corners on the ring. Amber: <code>.outer-orbit</code>, sides touching it.</figcaption>
+</figure>
+
+<h2>Partial polygons</h2>
+<p>Sides follow the ring's <code>--o-range</code> and <code>--o-from</code>: three sides on <code>range-180</code> are half a hexagon. To put a single side at a given angle, use <code>.angle-N</code> on it, as with satellites: <code>angle-90</code> is the right edge.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10 range-180 from-270">
+        <div class="side"></div><div class="side"></div><div class="side"></div>
+      </div>
+      <div class="orbit-6 range-240 from-240 four">
+        <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-10, .orbit-6 { border: 1px dashed var(--line); }
+.side { height: 3px; background: var(--accent); }
+.four .side { background: var(--amber); }
+  </script>
+  <figcaption>Half a hexagon on <code>orbit-10</code> (<code>range-180 from-270</code>), and four sides over 240° on <code>orbit-6</code>.</figcaption>
+</figure>
+<p>A side can carry a <code>.capsule</code> for a label along its edge. See <a href="capsule.html">Capsules</a>.</p>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class or property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>.side</code></td><td></td><td>One edge of a regular polygon, as long as the ring's range divided by the number of sides.</td></tr>
+<tr><td><code>height</code>, <code>background</code></td><td><code>1px</code>, <code>currentcolor</code></td><td>Thickness and color.</td></tr>
+<tr><td><code>.outer-orbit</code></td><td></td><td>The side touches the ring at its middle, so the polygon wraps around it.</td></tr>
+<tr><td><code>--o-range</code>, <code>--o-from</code>, <code>.ccw</code></td><td></td><td>From the ring. See <a href="orbit.html#angles">Orbits</a>.</td></tr>
+<tr><td><code>.angle-N</code></td><td></td><td>Puts the side at N degrees, clockwise from the top.</td></tr>
+</tbody>
+</table></div>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

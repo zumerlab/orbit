@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geometric square mandala · Orbit</title>
+  <meta name="description" content="A geometric mandala of nested squares in HTML and CSS: one pattern copied and turned by Orbit, from one to eight folds.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Geometric square mandala</h1>
+<p class="lede">One pattern of nested squares, copied and turned. The copies sit on one ring, and Orbit spreads them over a quarter turn: pick the number of folds and the angles follow.</p>
+<figure class="example" data-height="440">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang mandala" role="img" aria-label="Square mandala">
+    <div class="gravity-spot">
+      <!-- The copies: centered satellites on one ring. range-90 spreads their angles over 90°. -->
+      <div class="orbit-0 range-90 folds" style="--o-size-ratio: 24"></div>
+      <div class="orbit-0" style="--o-size-ratio: .6"><div class="satellite at-center dot"></div></div>
+    </div>
+  </div>
+  <div class="controls" role="group" aria-label="Folds">
+    <span>Folds</span>
+    <button type="button" aria-pressed="false">1</button>
+    <button type="button" aria-pressed="false">2</button>
+    <button type="button" aria-pressed="true">4</button>
+    <button type="button" aria-pressed="false">8</button>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.square { border: 1px solid color-mix(in srgb, var(--c) 75%, transparent); background: color-mix(in srgb, var(--c) 4%, transparent); }
+.outer { --c: var(--violet); }
+.inner { --c: var(--accent); }
+.diamond { --c: var(--amber); }
+.dot { background: var(--amber); }
+.controls button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+// One copy of the pattern: a satellite as big as the universe, with its own system inside.
+// spin-lock turns a satellite, and everything in it, by its angle on the ring.
+const pattern = `
+  <div class="satellite at-center spin-lock">
+    <div class="gravity-spot">
+      <div class="orbit-0">
+        <div class="satellite at-center box square outer" style="--o-size-ratio: 15"></div>
+        <div class="satellite at-center box square outer" style="--o-size-ratio: 11"></div>
+        <div class="satellite at-center box square inner" style="--o-size-ratio: 7"></div>
+        <div class="satellite at-center box square diamond spin-lock angle-45" style="--o-size-ratio: 7"></div>
+        <div class="satellite at-center box square inner spin-lock angle-45" style="--o-size-ratio: 3.4"></div>
+      </div>
+    </div>
+  </div>`;
+
+const mandala = document.querySelector('.mandala');
+const buttons = document.querySelectorAll('.controls button');
+function folds(n) {
+  document.querySelector('.folds').innerHTML = pattern.repeat(n);
+  mandala.setAttribute('aria-label', `Square mandala, ${n} ${n === 1 ? 'fold' : 'folds'}`);
+  buttons.forEach((b) => b.setAttribute('aria-pressed', b.textContent === String(n)));
+}
+buttons.forEach((b) => b.addEventListener('click', () => folds(Number(b.textContent))));
+folds(4);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Each copy is an <code>at-center</code> satellite with <code>--o-size-ratio: 24</code>, as wide as the universe. The <code>.gravity-spot</code> inside it has the same lanes as the main system. See <a href="../../reference/satellite.html">satellites</a>.</li>
+<li>All copies sit on one <code>orbit-0</code> with <code>range-90</code>. Orbit gives each one an angle, 90° divided by the number of copies, and <code>spin-lock</code> turns the copy by that angle.</li>
+<li>A square is a satellite with the <code>box</code> class. <code>at-center</code> keeps it on the center, so only <code>--o-size-ratio</code> sets its size, in lanes.</li>
+<li>The diamonds are squares with <code>spin-lock angle-45</code>: the same turn, for a single satellite.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="radial-symmetry-mandala.html">Radial symmetry mandala</a></li>
+<li><a href="index.html#starters">Starter patterns</a></li>
+<li><a href="../chemical_structures.html">Chemical structure</a>: systems inside satellites again</li>
+<li><a href="../../reference/capsule.html">Capsules</a>: <code>spin-lock</code></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

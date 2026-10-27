@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smartwatch face · Orbit</title>
+  <meta name="description" content="A smartwatch face in HTML and CSS with live time and date written along the bezel as curved text, and two complications, built with Orbit arcs.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Smartwatch face</h1>
+<p class="lede">Text written along the bezel: the digital time at the top, the date at the bottom and two complications on the sides, all <code>&lt;o-arc&gt;</code> elements that follow the live clock.</p>
+<figure class="example" data-height="440">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang watch" role="img" aria-label="Smartwatch face">
+    <div class="gravity-spot">
+      <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center"><div class="capsule face"></div></div></div>
+      <!-- Curved text: an arc as long as its text (range="auto"), centered on its ring's from. -->
+      <div class="orbit-11 from-0 text time"><o-arc range="auto" text-anchor="middle"></o-arc></div>
+      <div class="orbit-11 from-180 text date"><o-arc range="auto" text-anchor="middle" flip></o-arc></div>
+      <!-- Complications: a progress band and its value on each side. -->
+      <div class="orbit-11 from-230 range-80 band steps"><o-progress shape="rounded" max="10000"></o-progress></div>
+      <div class="orbit-11 from-50 range-80 band battery"><o-progress shape="rounded"></o-progress></div>
+      <div class="orbit-10 from-270 text value steps"><o-arc range="auto" text-anchor="middle"></o-arc></div>
+      <div class="orbit-10 from-90 text value battery"><o-arc range="auto" text-anchor="middle"></o-arc></div>
+      <div class="orbit-9 marks" style="--o-size-ratio: .8"></div>
+      <div class="orbit-3 hand hour" style="--o-size-ratio: 6"><div class="vector"></div></div>
+      <div class="orbit-5 hand minute" style="--o-size-ratio: 9.4"><div class="vector"></div></div>
+      <div class="orbit-4 hand second" style="--o-size-ratio: 11"><div class="vector"></div></div>
+      <div class="orbit-0" style="--o-size-ratio: .7"><div class="satellite at-center"><div class="capsule pin"></div></div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.face { width: 100%; aspect-ratio: 1; border-radius: 50%; background: #000; box-shadow: inset 0 0 0 2px #1d242d; }
+.text o-arc { --o-fill: none; }
+.time, .date { font-weight: 600; font-variant-numeric: tabular-nums; }
+.time { color: var(--text); }
+.date { color: var(--muted); }
+.band { --o-size-ratio: .5; }
+.band o-progress { --o-stroke: none; --o-fill: var(--c); --o-back-fill: color-mix(in srgb, var(--c) 18%, transparent); }
+.value { font-size: 13px; color: var(--c); font-variant-numeric: tabular-nums; }
+.steps { --c: var(--lime); }
+.battery { --c: var(--amber); }
+.marks .vector { height: 3px; border-radius: 2px; background: var(--muted); }
+.hand { rotate: var(--turn, 0deg); }
+.hand .vector { height: clamp(3px, 1.6cqmin, 7px); border-radius: 4px; background: var(--text); }
+.second .vector { height: 2px; background: var(--accent); }
+.pin { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+const $ = (s) => document.querySelector(s);
+$('.marks').innerHTML = '<div class="vector inner-orbit"></div>'.repeat(12);
+
+// Complications. Changing value, or the text of an arc, redraws it.
+const steps = 6840, battery = 72;
+$('.band.steps o-progress').setAttribute('value', steps);
+$('.band.battery o-progress').setAttribute('value', battery);
+$('.value.steps o-arc').textContent = `${steps.toLocaleString('en')} steps`;
+$('.value.battery o-arc').textContent = `${battery}%`;
+
+const watch = $('.watch');
+function tick() {
+  const d = new Date(), s = d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+  $('.hour').style.setProperty('--turn', `${s / 120}deg`);
+  $('.minute').style.setProperty('--turn', `${s / 10}deg`);
+  $('.second').style.setProperty('--turn', `${s * 6}deg`);
+  const time = d.toLocaleTimeString('en', { hour: 'numeric', minute: '2-digit' });
+  const date = d.toLocaleDateString('en', { weekday: 'short', day: 'numeric', month: 'short' });
+  // Only touch the arcs when the text changes.
+  if ($('.time o-arc').textContent !== time) {
+    $('.time o-arc').textContent = time;
+    $('.date o-arc').textContent = date;
+    watch.setAttribute('aria-label', `Smartwatch face: ${time}, ${date}, ${steps} steps, battery ${battery}%`);
+  }
+}
+tick();
+setInterval(tick, 1000);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Text inside an <a href="../../reference/arc.html"><code>&lt;o-arc&gt;</code></a> is drawn along it. <code>range="auto"</code> makes the arc as long as its text and <code>text-anchor="middle"</code> centers it on the <code>from-N</code> of its ring, so the time stays centered at the top whatever its length.</li>
+<li><code>flip</code> on the date turns the text so it reads left to right at the bottom of the dial.</li>
+<li>The complications are <a href="../../reference/progress.html"><code>&lt;o-progress&gt;</code></a> bands on an 80° range of <code>orbit-11</code>, half a lane thick, with their value as curved text one lane in.</li>
+<li>The script only writes text and attributes. Orbit watches the arcs and redraws them on the next frame.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="minimalist-analog-clock.html">Minimalist analog clock</a>: the hands, explained</li>
+<li><a href="chronograph-watch-face.html">Chronograph</a></li>
+<li><a href="../calendar/circular-year-calendar.html">Circular year calendar</a>: more curved text</li>
+<li><a href="../../demos/01-minimal-gauge.html">Progress rings demo</a></li>
+<li><a href="../../kit/clock.html">Orbit Kit clock</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

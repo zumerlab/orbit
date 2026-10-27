@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Circular progress with background · Orbit</title>
+  <meta name="description" content="The everyday progress ring: one o-progress draws the fill and the track behind it, with the percentage in the middle.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Circular progress with background</h1>
+<p class="lede">The everyday progress ring: one <code>&lt;o-progress&gt;</code> draws both the fill and the track behind it.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang upload">
+    <div class="gravity-spot">
+      <div class="orbit-10" style="--o-size-ratio: 1.6">
+        <o-progress value="0" shape="circle" role="progressbar" aria-label="Upload"
+                    aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></o-progress>
+      </div>
+      <div class="orbit-0" style="--o-size-ratio: 14">
+        <div class="satellite at-center">
+          <div class="capsule readout"><strong id="pct">0%</strong><span id="size">0 of 24 MB</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="upload">Upload</button>
+    <label>Value <input id="value" type="range" min="0" max="100" value="0"></label>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .upload { width: min(100%, 100vh - 80px); }
+
+/* The fill and its track: two custom properties on one element. */
+.upload o-progress {
+  --o-stroke: none;
+  --o-fill: var(--violet);
+  --o-back-fill: color-mix(in srgb, var(--violet) 14%, transparent);
+}
+.upload .readout strong { font-size: clamp(28px, 22cqmin, 60px); }
+  </script>
+  <script type="text/plain" data-js>
+const ring = document.querySelector('o-progress'), input = document.getElementById('value');
+const set = value => {
+  value = Math.max(0, Math.min(100, value));
+  input.value = value;
+  ring.setAttribute('value', value);
+  ring.setAttribute('aria-valuenow', Math.round(value));
+  document.getElementById('pct').textContent = Math.round(value) + '%';
+  document.getElementById('size').textContent = `${(value * .24).toFixed(1)} of 24 MB`;
+};
+input.addEventListener('input', () => set(Number(input.value)));
+
+// A fake upload: uneven chunks, like a real network.
+let timer;
+document.getElementById('upload').addEventListener('click', () => {
+  clearInterval(timer);
+  set(0);
+  timer = setInterval(() => {
+    set(Number(input.value) + Math.random() * 3);
+    if (Number(input.value) >= 100) clearInterval(timer);
+  }, 60);
+});
+set(64);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>One <a href="../../reference/progress.html"><code>&lt;o-progress&gt;</code></a> on <code>orbit-10</code>, 1.6 lanes thick. <code>value</code> drives the fill and the element redraws when it changes.</li>
+<li><code>--o-fill</code> colors the fill and <code>--o-back-fill</code> the track. A faint tint of the same color says how much is left without competing with it.</li>
+<li><code>shape="circle"</code> rounds both ends in proportion to the band.</li>
+<li>The readout is a satellite on <code>orbit-0</code>, fourteen lanes wide, centered with <code>.at-center</code>.</li>
+<li><code>role="progressbar"</code> with <code>aria-valuenow</code> gives screen readers the same number as the ring.</li>
+</ul>
+<h2>Color by value</h2>
+<p>A status ring changes color with the value. The color is a custom property, so one line of script does it.</p>
+<figure class="example" data-height="220">
+  <script type="text/plain" data-html>
+<main class="stage row">
+  <div class="bigbang status" data-value="18"></div>
+  <div class="bigbang status" data-value="56"></div>
+  <div class="bigbang status" data-value="92"></div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.row { display: flex; justify-content: center; gap: 6%; }
+.row > .bigbang { width: min(28%, 100vh - 40px); }
+.status o-progress { --o-stroke: none; --o-fill: var(--c); --o-back-fill: color-mix(in srgb, var(--c) 14%, transparent); }
+.status .readout strong { font-size: clamp(16px, 20cqmin, 34px); color: var(--c); }
+  </script>
+  <script type="text/plain" data-js>
+for (const dial of document.querySelectorAll('.status')) {
+  const value = Number(dial.dataset.value);
+  const color = value < 30 ? 'var(--coral)' : value < 70 ? 'var(--amber)' : 'var(--accent)';
+  dial.style.setProperty('--c', color);
+  dial.innerHTML = `
+    <div class="gravity-spot">
+      <div class="orbit-10" style="--o-size-ratio: 2">
+        <o-progress value="${value}" shape="circle" role="progressbar" aria-label="Status" aria-valuenow="${value}"></o-progress>
+      </div>
+      <div class="orbit-0" style="--o-size-ratio: 14">
+        <div class="satellite at-center"><div class="capsule readout"><strong>${value}%</strong></div></div>
+      </div>
+    </div>`;
+}
+  </script>
+</figure>
+<h2>Related</h2>
+<ul>
+<li><a href="dashed-circular-progress-bar.html">Dashed progress bar</a>: progress in steps</li>
+<li><a href="circular-progress-with-handle.html">Progress with handle</a>: a circular slider</li>
+<li><a href="stacked-circular-progress-bars.html">Stacked progress bars</a></li>
+<li><a href="../../reference/progress.html">Progress</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

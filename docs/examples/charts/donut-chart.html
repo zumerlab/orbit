@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Donut chart · Orbit</title>
+  <meta name="description" content="A donut chart of five arcs with values, shares printed in the band, a total in the middle and two datasets to switch between.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Donut chart</h1>
+<p class="lede">Arcs with a <code>value</code> follow each other around the ring, so a donut chart is just your data in order.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage chart">
+  <div class="bigbang donut" role="img" aria-label="Energy use by room">
+    <div class="gravity-spot">
+      <!-- Arcs with value stack in DOM order; shares sit on the same lane. -->
+      <div class="orbit-8" id="ring" style="--o-size-ratio: 4; --o-gap: 2"></div>
+      <div class="orbit-8" id="shares" aria-hidden="true"></div>
+      <div class="orbit-0" style="--o-size-ratio: 11">
+        <div class="satellite at-center"><div class="capsule readout"><strong id="total">0</strong><span>kWh</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="key">
+    <ul class="legend" id="legend"></ul>
+    <div class="controls">
+      <button aria-pressed="true" data-week="0">This week</button>
+      <button aria-pressed="false" data-week="1">Last week</button>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.chart { display: flex; align-items: center; justify-content: center; gap: 6%; }
+.chart > .donut { width: min(56%, 100vh - 40px); flex: none; }
+
+.donut o-arc { --o-stroke: none; --o-fill: var(--c); }
+.share { font: 600 12px var(--mono); color: var(--bg); }
+
+.key { display: grid; gap: 18px; }
+.legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+.legend li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+.legend span { font: 13px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.key .controls { gap: 8px; }
+button[aria-pressed="true"] { border-color: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+const rooms = [['Kitchen', 'var(--accent)'], ['Living', 'var(--blue)'], ['Office', 'var(--violet)'], ['Bedroom', 'var(--amber)'], ['Bath', 'var(--coral)']];
+const weeks = [[52, 38, 31, 14, 9], [41, 46, 22, 19, 12]]; // kWh per room
+const ring = document.getElementById('ring'), shares = document.getElementById('shares'), legend = document.getElementById('legend');
+ring.innerHTML = rooms.map(([, c]) => `<o-arc style="--c: ${c}"></o-arc>`).join('');
+legend.innerHTML = rooms.map(([name, c]) => `<li style="--c: ${c}"><i></i>${name}<span></span></li>`).join('');
+
+let shown = weeks[0];
+const draw = data => {
+  const total = data.reduce((a, b) => a + b, 0);
+  let before = 0;
+  shares.innerHTML = '';
+  data.forEach((kwh, i) => {
+    const share = kwh / total * 100;
+    ring.children[i].setAttribute('value', share);
+    // A share label goes to the middle of its arc: everything before it, plus half of it.
+    const middle = Math.round((before + share / 2) * 3.6);
+    if (share >= 6) shares.insertAdjacentHTML('beforeend', `<div class="satellite angle-${middle}"><div class="capsule share">${Math.round(share)}%</div></div>`);
+    before += share;
+    legend.children[i].querySelector('span').textContent = Math.round(kwh) + ' kWh';
+  });
+  document.getElementById('total').textContent = Math.round(total);
+};
+// Switching weeks eases from one dataset to the other.
+const show = target => {
+  const from = shown, start = performance.now();
+  const step = now => {
+    const t = Math.min(1, (now - start) / 600), ease = 1 - (1 - t) ** 3;
+    shown = from.map((v, i) => v + (target[i] - v) * ease);
+    draw(shown);
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+};
+document.querySelectorAll('[data-week]').forEach(button => button.addEventListener('click', () => {
+  document.querySelectorAll('[data-week]').forEach(b => b.setAttribute('aria-pressed', b === button));
+  show(weeks[button.dataset.week]);
+}));
+draw(shown);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Each room is an <a href="../../reference/arc.html"><code>&lt;o-arc value&gt;</code></a>. Values are shares of 100 (or of <code>max</code>), and each arc starts where the one before it ends.</li>
+<li>One ring on lane 8, four lanes thick, leaves room in the middle for the total. <code>--o-gap: 2</code> draws the thin line between segments.</li>
+<li>The shares are <a href="../../reference/satellite.html">satellites</a> on the same lane, turned with <code>angle-N</code> to the middle of their arc: the running total before it plus half its own share, times 3.6.</li>
+<li>Switching weeks only rewrites the <code>value</code>s, a little at a time; Orbit restacks the arcs on every frame.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="pie-chart.html">Pie chart</a>: the hole closed</li>
+<li><a href="sunburst-chart.html">Sunburst chart</a>: nested data</li>
+<li><a href="../../demos/02-donut-multilayer.html">Donut chart demo</a>: a hoverable legend</li>
+<li><a href="../../kit/donut.html">Orbit Kit donut</a>: a ready-made component</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

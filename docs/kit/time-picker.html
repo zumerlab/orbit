@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Time picker · Orbit</title>
+  <meta name="description" content="o-time-picker picks a time by turning a clock: hours first, then minutes.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Time picker</h1>
+<p class="lede"><code>&lt;o-time-picker&gt;</code> picks a time by turning a clock: hours first, then minutes.</p>
+<figure class="example" data-kit data-height="420">
+  <script type="text/plain" data-html>
+<o-time-picker value="07:30" label="Alarm" size="280px"></o-time-picker>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <figcaption>Tap or drag an hour; let go and the dial turns to minutes.</figcaption>
+</figure>
+<p>The dial is an Orbit universe. Hours and minutes are two rings of twelve satellites on <code>orbit-10</code>, and only one shows at a time. The hand is a <code>.vector</code> and the knob a satellite on the same ring; both are turned by one registered custom property, so switching from hours to minutes sweeps them round the dial instead of jumping. The fields above are ordinary elements, for reading and for the keyboard.</p>
+
+<h2>24 hours</h2>
+<p>With <code>hours="24"</code> the dial gets an inner ring for 00 and 13 to 23, like a phone's clock. Without the attribute, the picker follows the hour cycle of the page's language.</p>
+<figure class="example" data-kit data-height="420">
+  <script type="text/plain" data-html>
+<o-time-picker value="18:45" hours="24" size="280px" aria-label="Departure"></o-time-picker>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td>empty</td><td>The time, <code>HH:MM</code> in 24 hours. It is also the default a form reset returns to; the attribute follows the picker.</td></tr>
+<tr><td><code>hours</code></td><td>from the locale</td><td><code>12</code> (with AM and PM) or <code>24</code> (with an inner ring).</td></tr>
+<tr><td><code>minute-step</code></td><td><code>1</code></td><td>Minutes snap to multiples of it; minute labels it cannot reach are dimmed.</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td></td><td>Earliest and latest time, <code>HH:MM</code>. Hours and minutes outside are dimmed and cannot be picked. A <code>min</code> after <code>max</code> is a window across midnight.</td></tr>
+<tr><td><code>view</code></td><td><code>hours</code></td><td><code>hours</code> or <code>minutes</code>: which ring the dial shows. It follows the picker.</td></tr>
+<tr><td><code>label</code></td><td></td><td>The accessible name of the group, read with the time.</td></tr>
+<tr><td><code>fill</code></td><td><code>#4fd1c5</code></td><td>Hand, knob and the active field.</td></tr>
+<tr><td><code>name</code></td><td></td><td>Field name: the picker submits <code>HH:MM</code>, or an empty string. See <a href="options.html#forms">Forms</a>.</td></tr>
+<tr><td><code>required</code></td><td>off</td><td>The form is invalid until a time is picked.</td></tr>
+<tr><td><code>disabled</code></td><td>off</td><td>Dimmed, out of the tab order and not submitted. A disabled <code>&lt;fieldset&gt;</code> does the same.</td></tr>
+<tr><td><code>size</code></td><td><code>280px</code></td><td>Width of the widget; the fields scale with it.</td></tr>
+<tr><td><code>locale</code></td><td>the page's</td><td>Picks the hour cycle when <code>hours</code> is not set.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Properties and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td><code>"07:30"</code>, or <code>""</code>. Setting it snaps and clamps like the attribute and fires no event.</td></tr>
+<tr><td><code>valueAsNumber</code></td><td>Minutes after midnight, or <code>NaN</code>.</td></tr>
+<tr><td><code>view</code></td><td>Reads or sets the ring on the dial.</td></tr>
+<tr><td><code>min</code>, <code>max</code></td><td>As the attributes.</td></tr>
+<tr><td><code>form</code>, <code>labels</code>, <code>defaultValue</code>, <code>validity</code></td><td>As on a native input.</td></tr>
+<tr><td><code>input</code></td><td>Fires on every change you make. <code>event.detail.value</code> has the time.</td></tr>
+<tr><td><code>change</code></td><td>Fires when you let go of the dial with a different time, and on each key press.</td></tr>
+</tbody>
+</table></div>
+<pre><code>picker.addEventListener('change', (e) =&gt; save(e.detail.value))
+picker.value = '06:15'</code></pre>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-fill</code></td><td><code>#4fd1c5</code></td><td>Hand, knob, pivot and the active field.</td></tr>
+<tr><td><code>--ok-time-face</code></td><td><code>--ok-face</code>, <code>#161b22</code></td><td>The dial face.</td></tr>
+<tr><td><code>--ok-text</code></td><td><code>#e8edf2</code></td><td>Numbers and fields.</td></tr>
+<tr><td><code>--ok-on-fill</code></td><td><code>#0c0f13</code></td><td>The number under the knob.</td></tr>
+<tr><td><code>--ok-focus</code></td><td><code>--ok-fill</code></td><td>Focus ring of the fields and buttons.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base font size of the dial, as a share of it.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Office hours in quarter hours</h3>
+<p><code>min</code>, <code>max</code> and <code>minute-step</code> together: only 9:00 to 17:30, every fifteen minutes.</p>
+<figure class="example" data-kit data-height="460">
+  <script type="text/plain" data-html>
+<o-time-picker id="meet" hours="24" min="09:00" max="17:30" minute-step="15" value="10:15"
+  label="Meeting" size="260px"></o-time-picker>
+<output id="out"></output>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 14px; height: 100vh; }
+output { color: var(--muted); font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const meet = document.getElementById('meet'), out = document.getElementById('out');
+const show = () => { out.textContent = `Meeting at ${meet.value}`; };
+meet.addEventListener('input', show);
+customElements.whenDefined('o-time-picker').then(show);
+  </script>
+</figure>
+<h3>Required, in a form</h3>
+<figure class="example" data-kit data-height="480">
+  <script type="text/plain" data-html>
+<form>
+  <o-time-picker name="pickup" required hours="12" size="240px" aria-label="Pickup time"></o-time-picker>
+  <div class="controls"><button>Book</button><output></output></div>
+</form>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+form { display: grid; justify-items: center; gap: 14px; }
+output { font-family: var(--mono); }
+  </script>
+  <script type="text/plain" data-js>
+const form = document.querySelector('form'), out = form.querySelector('output');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  out.textContent = `pickup=${new FormData(form).get('pickup')}`;
+});
+form.addEventListener('invalid', () => { out.textContent = 'Pick a time first'; }, true);
+  </script>
+</figure>
+<h3>Light</h3>
+<figure class="example" data-kit data-light data-height="420">
+  <script type="text/plain" data-html>
+<o-time-picker theme="light" value="16:20" hours="12" size="260px" aria-label="Reminder"></o-time-picker>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The picker is a <code>role="group"</code> whose name says the time. The hours and the minutes are each a <code>role="spinbutton"</code> and a tab stop, with <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code> and <code>aria-valuetext</code>; AM and PM are toggle buttons with <code>aria-pressed</code>. The dial repeats what the fields say, so it is hidden from screen readers.</p>
+<p>Up and Down change the focused field: hours round the day, minutes by <code>minute-step</code> round the hour, skipping anything outside <code>min</code> and <code>max</code>. Page Up and Page Down take bigger steps, digits type a value, Left and Right move between fields, and A or P switch the half of the day. Focusing a field turns the dial to it.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

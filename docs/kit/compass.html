@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compass · Orbit</title>
+  <meta name="description" content="o-compass is a heading indicator: the card turns so the heading sits under the index.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Compass</h1>
+<p class="lede"><code>&lt;o-compass&gt;</code> is a heading indicator: the card turns so the heading sits under the index at the top.</p>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-compass heading="45"></o-compass>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>The card is two rings, ticks and cardinal letters, turned by their own <code>--o-from</code>. The letters stay upright because capsules do by default. A new <code>heading</code> only changes that angle.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>heading</code></td><td><code>0</code></td><td>Heading in degrees, clockwise from north.</td></tr>
+<tr><td><code>labels</code></td><td><code>N,E,S,W</code></td><td>Card letters, comma-separated and spread evenly. The first one is colored.</td></tr>
+<tr><td><code>accent</code></td><td><code>#ef4444</code></td><td>Index and first letter. <code>fill</code> still works too.</td></tr>
+<tr><td><code>unit</code></td><td><code>°</code></td><td>Suffix of the readout.</td></tr>
+<tr><td><code>size</code></td><td><code>220px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow on the index.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code></td><td></td><td>Number format of the heading readout, through <code>Intl.NumberFormat</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Falls back to</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-cmp-accent</code></td><td><code>--ok-accent</code></td><td>Index and the first letter.</td></tr>
+<tr><td><code>--ok-cmp-face</code></td><td><code>--ok-face</code></td><td>Dial background.</td></tr>
+<tr><td><code>--ok-cmp-bezel</code></td><td><code>--ok-bezel</code></td><td>Dial rim.</td></tr>
+<tr><td><code>--ok-cmp-tick</code></td><td><code>--ok-tick</code></td><td>Small ticks.</td></tr>
+<tr><td><code>--ok-cmp-tick-M</code></td><td></td><td>Ticks at the four cardinal points.</td></tr>
+<tr><td><code>--ok-cmp-text</code></td><td><code>--ok-text</code></td><td>Letters and readout.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td></td><td>Base text size, <code>7cqmin</code> by default.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Eight points</h3>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-compass heading="120" labels="N,NE,E,SE,S,SW,W,NW" accent="#60a5fa"></o-compass>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>Following the pointer</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-compass id="c" size="240px"></o-compass>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+const compass = document.getElementById('c');
+addEventListener('pointermove', (e) => {
+  const angle = Math.atan2(e.clientX - innerWidth / 2, innerHeight / 2 - e.clientY) * 180 / Math.PI;
+  compass.setAttribute('heading', Math.round((angle + 360) % 360));
+});
+  </script>
+  <figcaption>Move the pointer over the frame.</figcaption>
+</figure>
+<h3>A light dial</h3>
+<figure class="example" data-kit data-light data-height="280">
+  <script type="text/plain" data-html>
+<o-compass heading="300" style="--ok-face: #f8fafc; --ok-bezel: #cbd5e1; --ok-tick: #94a3b8; --ok-cmp-tick-M: #0f172a; --ok-text: #0f172a;"></o-compass>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The compass has <code>role="img"</code> and a name like “Heading 45°, NE”, kept in sync with <code>heading</code>. Set <code>aria-label</code> to replace it.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

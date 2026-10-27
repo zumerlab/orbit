@@ -29,6 +29,8 @@
   "scripts": {
     "compile": "node esbuild.config.mjs",
     "demo": "npm run compile && node scripts/demo.mjs",
+    "docs": "npm run compile && node scripts/docs-sync.mjs && node scripts/demo.mjs",
+    "docs:sync": "node scripts/docs-sync.mjs",
     "bump:dry": "npx @zumerbox/bump -d",
     "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
     "build": "npm run compile && npm pack",
@@ -62,5 +64,9 @@
     "esbuild": "^0.25.12",
     "playwright": "^1.55.1",
     "sass": "^1.77.0"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/tinchox5"
   }
 }

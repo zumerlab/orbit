@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Range · Orbit</title>
+  <meta name="description" content="o-range is a circular range slider: two handles on one ring pick a start and an end, numbers or times of day.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Range</h1>
+<p class="lede"><code>&lt;o-range&gt;</code> is a circular range slider: two handles on one ring pick a start and an end, numbers or times of day.</p>
+<figure class="example" data-kit data-height="380">
+  <script type="text/plain" data-html>
+<o-range mode="time" start="22:30" end="06:45" start-icon="moon" end-icon="bell"
+  start-label="Bedtime" end-label="Wake up" label="Sleep" size="320px"></o-range>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <figcaption>Drag a handle, drag the band to move both, or tap the track.</figcaption>
+</figure>
+<p>The dial is a whole day, so the band wraps through midnight. The track and the band are two <code>interactive</code> <code>&lt;o-arc&gt;</code>s on <code>orbit-12</code>: the band's ring takes the start as its <code>--o-from</code> and the span as its <code>value</code>. Each handle is a satellite on the same lane, placed by its angle, and the hours are satellites spread around an inner ring.</p>
+
+<h2>Numbers</h2>
+<p>Without <code>mode</code>, the range is a pair of numbers between <code>min</code> and <code>max</code> on a 270° arc, and the end never comes before the start. The middle shows the span, formatted like any kit readout.</p>
+<figure class="example" data-kit data-height="320">
+  <script type="text/plain" data-html>
+<o-range start="20" end="80" unit="%" size="260px" aria-label="Comfort zone"></o-range>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>start</code> / <code>end</code></td><td><code>22:00</code> / <code>06:00</code>, or a quarter / three quarters of the range</td><td>The two values: <code>HH:MM</code> in time mode, numbers otherwise. They are also the default a form reset returns to; the attributes follow the handles.</td></tr>
+<tr><td><code>mode</code></td><td>numbers</td><td><code>time</code> makes the dial a 24-hour day, in minutes.</td></tr>
+<tr><td><code>hours</code></td><td>from the locale</td><td><code>12</code> or <code>24</code>: how times read, <code>10:30 PM</code> or <code>22:30</code>. The value is always 24-hour.</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td><code>0</code> / <code>100</code></td><td>The range of a number dial. See <a href="options.html#range">Shared options</a>.</td></tr>
+<tr><td><code>step</code></td><td><code>1</code>, or <code>5</code> minutes</td><td>Snapping grid for handles and keys. <code>any</code> turns it off.</td></tr>
+<tr><td><code>wrap</code></td><td>on for time</td><td>A number dial that goes round, like hues or angles: the start can come after the end.</td></tr>
+<tr><td><code>min-span</code> / <code>max-span</code></td><td>one step / the whole dial</td><td>Limits for the span, in values (minutes in time mode, or <code>h:mm</code>). A handle pushed past a limit carries the other one along.</td></tr>
+<tr><td><code>range</code> / <code>from</code></td><td><code>270</code> / auto</td><td>Arc span and start angle of a number dial that does not wrap.</td></tr>
+<tr><td><code>label</code></td><td></td><td>A caption under the span. It is also the accessible name of the group.</td></tr>
+<tr><td><code>start-label</code> / <code>end-label</code></td><td><code>Start</code> / <code>End</code></td><td>Accessible names of the handles.</td></tr>
+<tr><td><code>start-icon</code> / <code>end-icon</code></td><td></td><td><code>moon</code>, <code>sun</code>, <code>bell</code>, a short text or a small inline SVG.</td></tr>
+<tr><td><code>ticks</code></td><td><code>48</code> / <code>40</code></td><td>Marks around the inside of the band; <code>0</code> hides them.</td></tr>
+<tr><td><code>numbers</code></td><td><code>12</code> / <code>4</code> / <code>5</code></td><td>Labels on the dial; <code>0</code> hides them.</td></tr>
+<tr><td><code>fill</code> / <code>track</code></td><td><code>#4fd1c5</code> / <code>#1f2630</code></td><td>Band and track colors.</td></tr>
+<tr><td><code>thickness</code></td><td><code>2.4</code></td><td>Band thickness in lanes. The handles follow it.</td></tr>
+<tr><td><code>name</code></td><td></td><td>Field name: the range submits <code>start-end</code> with the form. See <a href="options.html#forms">Forms</a>.</td></tr>
+<tr><td><code>disabled</code></td><td>off</td><td>Dimmed, out of the tab order and not submitted. A disabled <code>&lt;fieldset&gt;</code> does the same.</td></tr>
+<tr><td><code>size</code></td><td><code>280px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow in the band color.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>unit</code>, <code>locale</code></td><td></td><td>Number format of a number dial. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Properties and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td><code>"22:30-06:45"</code> or <code>"20-80"</code>. Setting it (also as <code>[start, end]</code>) fires no event.</td></tr>
+<tr><td><code>start</code>, <code>end</code></td><td>One end each: <code>"22:30"</code> in time mode, a number otherwise.</td></tr>
+<tr><td><code>span</code></td><td>The distance from start to end, in values (minutes in time mode). Read only.</td></tr>
+<tr><td><code>form</code>, <code>labels</code>, <code>defaultValue</code>, <code>validity</code></td><td>As on a native input.</td></tr>
+<tr><td><code>formatter</code></td><td>A function that writes the numbers. It also gets <code>kind: 'span'</code> for the readout in the middle.</td></tr>
+<tr><td><code>input</code></td><td>Fires on every change you make. <code>event.detail</code> has <code>value</code>, <code>start</code>, <code>end</code> and <code>span</code>.</td></tr>
+<tr><td><code>change</code></td><td>Fires once a drag ends with a different value, and on each key press.</td></tr>
+</tbody>
+</table></div>
+<pre><code>sleep.addEventListener('change', (e) =&gt; save(e.detail.start, e.detail.end))
+sleep.value = '23:00-07:00'</code></pre>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-fill</code></td><td><code>#4fd1c5</code></td><td>Band, and the icons on the handles.</td></tr>
+<tr><td><code>--ok-track</code></td><td><code>#1f2630</code></td><td>Track.</td></tr>
+<tr><td><code>--ok-range-handle</code></td><td><code>--ok-surface</code></td><td>Handle color.</td></tr>
+<tr><td><code>--ok-range-icon</code></td><td><code>--ok-fill</code></td><td>Icon color.</td></tr>
+<tr><td><code>--ok-tick</code></td><td><code>currentColor</code></td><td>Dial marks.</td></tr>
+<tr><td><code>--ok-focus</code></td><td><code>#3da9fc</code></td><td>Focus ring of a handle.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base font size, as a share of the widget.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Opening hours with limits</h3>
+<p>A 24-hour clock with a 15-minute step, at least two hours and at most twelve.</p>
+<figure class="example" data-kit data-height="340">
+  <script type="text/plain" data-html>
+<o-range id="hours" mode="time" hours="24" step="15" min-span="2:00" max-span="12:00"
+  start="09:00" end="17:30" start-icon="sun" label="Open" size="280px"></o-range>
+<output id="out"></output>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 12px; height: 100vh; }
+output { color: var(--muted); font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const range = document.getElementById('hours'), out = document.getElementById('out');
+const show = () => { out.textContent = `Open ${range.start} to ${range.end}`; };
+range.addEventListener('input', show);
+customElements.whenDefined('o-range').then(show);
+  </script>
+</figure>
+<h3>Hues that go round</h3>
+<p>With <code>wrap</code>, a number dial is a circle too: here a band of hues from magenta to orange.</p>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-range id="hue" wrap min="0" max="360" start="300" end="40" unit="°" ticks="36"
+  size="240px" aria-label="Hues"></o-range>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+const hue = document.getElementById('hue');
+// Each tick shows its own hue; the band takes the hue in the middle of the span.
+const paint = () => {
+  hue.querySelectorAll('.ok-range-tick').forEach((tick, i) => {
+    tick.style.background = `hsl(${i * 10} 80% 62%)`;
+    tick.style.opacity = 1;
+  });
+  hue.style.setProperty('--ok-fill', `hsl(${(hue.start + hue.span / 2) % 360} 80% 62%)`);
+};
+hue.addEventListener('input', paint);
+customElements.whenDefined('o-range').then(paint);
+  </script>
+</figure>
+<h3>Light, in a form</h3>
+<figure class="example" data-kit data-light data-height="340">
+  <script type="text/plain" data-html>
+<form class="ok-theme-light">
+  <o-range name="quiet" mode="time" hours="12" start="21:00" end="07:00" start-icon="moon"
+    end-icon="sun" label="Do not disturb" size="240px"></o-range>
+  <button type="reset">Reset</button>
+  <output></output>
+</form>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+form { display: grid; justify-items: center; gap: 12px; }
+output { color: var(--muted); font: 13px var(--mono); }
+  </script>
+  <script type="text/plain" data-js>
+const form = document.querySelector('form'), out = form.querySelector('output');
+const show = () => { out.textContent = `quiet=${new FormData(form).get('quiet')}`; };
+form.addEventListener('input', show);
+form.addEventListener('reset', () => setTimeout(show));
+customElements.whenDefined('o-range').then(show);
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The range is a <code>role="group"</code> named by <code>label</code> (or “Time range” / “Range”), with two handles that are each a <code>role="slider"</code> and a tab stop, named by <code>start-label</code> and <code>end-label</code>. Each has <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code> and an <code>aria-valuetext</code> that reads the time or number and the span, like “22:30, span 8 h 15 min”.</p>
+<p>Arrow keys move the focused handle one step, Page Up and Page Down ten steps (an hour in time mode), Home and End go to the ends. Shift with an arrow moves both handles. A handle pushed past <code>min-span</code> or <code>max-span</code> carries the other one, so keys never get stuck.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Progress rings · Orbit</title>
+  <meta name="description" content="Circular progress bars built with Orbit: solid, dashed, with a handle, and stacked.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Progress rings</h1>
+<p>A circular progress bar in Orbit is one element, <code>&lt;o-progress value="60"&gt;</code>, inside a ring. Its color, track, ends and thickness are CSS. These four cover the usual patterns.</p>
+<ul class="cards">
+<li><a class="card" href="circular-progress-with-background.html"><img class="thumb dark" src="../thumbs/circular-progress-with-background.webp" alt="" loading="lazy"><strong>Progress with background</strong><span>A fill over its track, number in the middle.</span></a></li>
+<li><a class="card" href="dashed-circular-progress-bar.html"><img class="thumb dark" src="../thumbs/dashed-circular-progress-bar.webp" alt="" loading="lazy"><strong>Dashed progress</strong><span>Ten segments for progress counted in steps.</span></a></li>
+<li><a class="card" href="circular-progress-with-handle.html"><img class="thumb dark" src="../thumbs/circular-progress-with-handle.webp" alt="" loading="lazy"><strong>Progress with handle</strong><span>A circular slider you can drag.</span></a></li>
+<li><a class="card" href="stacked-circular-progress-bars.html"><img class="thumb dark" src="../thumbs/stacked-circular-progress-bars.webp" alt="" loading="lazy"><strong>Stacked progress</strong><span>Three live metrics, labeled in the open quarter.</span></a></li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="../../reference/progress.html">Progress</a></li>
+<li><a href="../../kit/rings.html">Orbit Kit rings</a></li>
+<li><a href="../gauges/index.html">Gauges</a>: when you want a needle</li>
+<li><a href="../../use-cases/fitness-and-health-apps.html">Fitness and health apps</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

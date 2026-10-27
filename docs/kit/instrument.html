@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instrument · Orbit</title>
+  <meta name="description" content="o-instrument is a needle gauge with ticks, a scale, color zones and presets for cars, aircraft and computers.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Instrument</h1>
+<p class="lede"><code>&lt;o-instrument&gt;</code> is a needle gauge with ticks, a scale, color zones and a digital readout. Presets cover cars, aircraft and computers.</p>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-instrument preset="tachometer" value="6.2"></o-instrument>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>Ticks are <code>.vector</code>s spread over the range with <code>fit-range</code>, the scale is a ring of satellites, zones are arcs on the tick ring and the needle is a vector from the center. They all share one <code>--o-from</code> and <code>--o-range</code>, so they always agree. Changing <code>value</code> only turns the needle.</p>
+
+<h2>Presets</h2>
+<p><code>tachometer</code>, <code>speedometer</code>, <code>fuel</code>, <code>temp</code>, <code>boost</code>, <code>voltmeter</code>, <code>airspeed</code>, <code>altimeter</code>, <code>cpu</code>, <code>gpu</code> and <code>vu</code>. A preset is a set of defaults: any attribute you write wins over it.</p>
+<figure class="example" data-kit data-height="440">
+  <script type="text/plain" data-html>
+<o-instrument preset="speedometer" value="88" size="180px"></o-instrument>
+<o-instrument preset="airspeed" value="120" size="180px"></o-instrument>
+<o-instrument preset="fuel" size="180px"></o-instrument>
+<o-instrument preset="voltmeter" size="180px"></o-instrument>
+<o-instrument preset="cpu" value="64" case="square" size="180px"></o-instrument>
+<o-instrument preset="vu" size="180px"></o-instrument>
+  </script>
+  <script type="text/plain" data-css>
+body { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; align-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>preset</code></td><td></td><td>One of the presets above.</td></tr>
+<tr><td><code>value</code></td><td><code>min</code></td><td>The reading, kept in the scale: the needle and the readout stop at its ends.</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td><code>0</code> / <code>100</code></td><td>Scale range.</td></tr>
+<tr><td><code>range</code> / <code>from</code></td><td><code>270</code> / auto</td><td>Sweep and start angle.</td></tr>
+<tr><td><code>ticks</code></td><td><code>7</code></td><td>Major ticks, each with a scale label.</td></tr>
+<tr><td><code>minor</code></td><td><code>5</code></td><td>Minor ticks between two majors.</td></tr>
+<tr><td><code>zones</code></td><td><code>[]</code></td><td>Color bands in value units: <code>[{ from, to, color }]</code>.</td></tr>
+<tr><td><code>redline</code></td><td></td><td>Shorthand for a red zone from this value to <code>max</code>.</td></tr>
+<tr><td><code>tick-labels</code></td><td>numbers</td><td>Your own scale labels, as a JSON array: <code>&#x27;[&quot;E&quot;, &quot;½&quot;, &quot;F&quot;]&#x27;</code>.</td></tr>
+<tr><td><code>step</code></td><td>none</td><td>Snaps the reading. See <a href="options.html#range">min, max and step</a>.</td></tr>
+<tr><td><code>unit</code> / <code>label</code></td><td></td><td>Unit and caption under the readout. With <code>format=&quot;unit&quot;</code>, <code>unit</code> is an Intl unit and the readout writes it.</td></tr>
+<tr><td><code>digital</code></td><td>on</td><td><code>digital=&quot;false&quot;</code> hides the number.</td></tr>
+<tr><td><code>case</code></td><td>auto</td><td><code>round</code>, <code>square</code>, <code>rounded</code> or <code>bare</code>. Sweeps of 180° or less default to <code>bare</code>: a track band, centered in the box, without a dial.</td></tr>
+<tr><td><code>accent</code> / <code>needle-color</code></td><td>preset</td><td>Needle color. <code>needle-color</code> wins.</td></tr>
+<tr><td><code>face</code> / <code>bezel</code> / <code>tick-color</code></td><td></td><td>Dial background, its rim and the minor ticks.</td></tr>
+<tr><td><code>size</code></td><td><code>240px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow on the needle and the zones.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code></td><td></td><td>Number format of the readout, the scale and <code>aria-valuetext</code>, through <code>Intl.NumberFormat</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Styling</h2>
+<p>The attributes above set these properties on the element. Each one falls back to a kit-wide name, so <code>--ok-accent</code> on a parent colors every instrument and clock inside it.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Falls back to</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-inst-accent</code></td><td><code>--ok-accent</code></td><td>Needle and center cap.</td></tr>
+<tr><td><code>--ok-inst-face</code></td><td><code>--ok-face</code></td><td>Dial background.</td></tr>
+<tr><td><code>--ok-inst-bezel</code></td><td><code>--ok-bezel</code></td><td>Dial rim.</td></tr>
+<tr><td><code>--ok-inst-tick</code></td><td><code>--ok-tick</code></td><td>Minor ticks.</td></tr>
+<tr><td><code>--ok-inst-tick-M</code></td><td></td><td>Major ticks.</td></tr>
+<tr><td><code>--ok-inst-label</code></td><td><code>--ok-text</code></td><td>Scale numbers and caption.</td></tr>
+<tr><td><code>--ok-inst-readout-color</code></td><td></td><td>The digital value.</td></tr>
+<tr><td><code>--ok-inst-track</code></td><td><code>--ok-track</code></td><td>Track band of a <code>bare</code> instrument.</td></tr>
+<tr><td><code>--ok-inst-case-bg</code></td><td><code>--ok-case</code></td><td>Background of a square or rounded case.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td></td><td>Base text size, <code>7.2cqmin</code> by default.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Your own scale</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-instrument min="0" max="100" ticks="6" value="40" unit="%" label="Load"
+  zones='[{"from": 70, "to": 85, "color": "#ffb547"}, {"from": 85, "to": 100, "color": "#ff7a6b"}]'
+  accent="#60a5fa"></o-instrument>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>A themed panel</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<div class="panel">
+  <o-instrument preset="boost" value="1.4" size="200px"></o-instrument>
+  <o-instrument preset="temp" size="200px" case="bare"></o-instrument>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; align-items: center; height: 100vh; }
+.panel { display: contents; --ok-face: radial-gradient(circle at 50% 30%, #2b2116, #120d08); --ok-bezel: #5b4630; --ok-accent: #fb923c; --ok-text: #f5deb3; }
+  </script>
+</figure>
+<h3>A moving needle</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-instrument id="rpm" preset="tachometer" glow></o-instrument>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+const rpm = document.getElementById('rpm');
+let t = 0;
+setInterval(() => {
+  t += 0.08;
+  rpm.setAttribute('value', (4 + 3.6 * Math.sin(t)).toFixed(1));
+}, 250);
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>An instrument has <code>role="meter"</code> with <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code> and <code>aria-valuetext</code>, and a name made of its caption, value and range, like “CPU: 64%; range 0 to 100”. Set <code>aria-label</code> to replace it. The needle eases to a new value, except with reduced motion.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

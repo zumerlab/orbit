@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Colors · Orbit</title>
+  <meta name="description" content="Orbit&#39;s color palette: ten hues in seven shades each, as CSS custom properties.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Colors</h1>
+<p class="lede">Orbit's stylesheet defines a palette of custom properties: ten hues, each in seven shades. The themes use it, and you can too, or ignore it and use your own colors.</p>
+<p>The hues are <code>red</code>, <code>orange</code>, <code>yellow</code>, <code>green</code>, <code>cyan</code>, <code>blue</code>, <code>indigo</code>, <code>purple</code>, <code>pink</code> and <code>gray</code>. Each one comes as <code>--o-{hue}</code> plus six shades mixed from it in OKLab. For cyan:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Mix</th></tr></thead>
+<tbody>
+<tr><td><code>--o-cyan-white</code></td><td>95% white</td></tr>
+<tr><td><code>--o-cyan-lighter</code></td><td>75% white</td></tr>
+<tr><td><code>--o-cyan-light</code></td><td>30% white</td></tr>
+<tr><td><code>--o-cyan</code></td><td>the hue itself</td></tr>
+<tr><td><code>--o-cyan-dark</code></td><td>20% black</td></tr>
+<tr><td><code>--o-cyan-darker</code></td><td>40% black</td></tr>
+<tr><td><code>--o-cyan-black</code></td><td>78% black</td></tr>
+</tbody>
+</table></div>
+<p>Below, every shade on an arc: one ring per shade, from <code>-black</code> in the middle to <code>-white</code> outside, and one arc per hue. A few lines of JavaScript write the seventy arcs.</p>
+<figure class="example" data-height="400">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot" id="wheel">
+    <!-- One ring per shade (orbit-3 to orbit-9) and one arc per hue,
+         written by the script. Hue names sit on orbit-11. -->
+    <div class="orbit-11 from-18" id="names"></div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+o-arc {
+  --o-stroke: none;
+}
+.name {
+  font: 12px var(--mono);
+  color: var(--muted);
+}
+  </script>
+  <script type="text/plain" data-js>
+const hues = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'indigo', 'purple', 'pink', 'gray'];
+const shades = ['-black', '-darker', '-dark', '', '-light', '-lighter', '-white'];
+const wheel = document.getElementById('wheel');
+
+shades.forEach((shade, i) => {
+  const arcs = hues.map((hue) =>
+    `<o-arc class="shrink-10 gap-2" style="--o-fill: var(--o-${hue}${shade})"></o-arc>`).join('');
+  wheel.insertAdjacentHTML('afterbegin', `<div class="orbit-${i + 3}">${arcs}</div>`);
+});
+
+document.getElementById('names').innerHTML = hues.map((hue) =>
+  `<div class="satellite"><div class="capsule name">${hue}</div></div>`).join('');
+  </script>
+</figure>
+
+<h2>Your own color</h2>
+<p><code>--o-color</code> is the eleventh hue, and it is yours. Set it on a system, a ring or a satellite, and <code>--o-color-white</code> to <code>--o-color-black</code> are mixed from it right there. Each ring below sets its own <code>--o-color</code> and the arcs use the same three shades: <code>-lighter</code>, <code>-light</code> and <code>-dark</code>.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-11" style="--o-color: #ff7a6b"><o-arc></o-arc><o-arc></o-arc><o-arc></o-arc></div>
+    <div class="orbit-8" style="--o-color: #60a5fa"><o-arc></o-arc><o-arc></o-arc><o-arc></o-arc></div>
+    <div class="orbit-5" style="--o-color: #a3e635"><o-arc></o-arc><o-arc></o-arc><o-arc></o-arc></div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.gravity-spot { --o-size-ratio: 2.4; }
+o-arc { --o-gap: 3; --o-stroke: none; }
+o-arc:nth-child(1) { --o-fill: var(--o-color-lighter); }
+o-arc:nth-child(2) { --o-fill: var(--o-color-light); }
+o-arc:nth-child(3) { --o-fill: var(--o-color-dark); }
+  </script>
+</figure>
+<p>Arcs and progress take the shades of their ring. On an <code>&lt;o-arc&gt;</code> itself, <code>--o-color</code> is the color of its text. To change one shade only, set it on the element that uses it.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

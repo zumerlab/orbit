@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radar chart · Orbit</title>
+  <meta name="description" content="o-radar-chart compares a few values across several axes as polygons on a web, one per series.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Radar chart</h1>
+<p class="lede"><code>&lt;o-radar-chart&gt;</code> compares values across several axes, one polygon per series on a shared web.</p>
+<figure class="example" data-kit data-height="440">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <o-radar-chart label="Two players" size="340px"
+    data='["Pace", "Shooting", "Passing", "Dribbling", "Defending", "Physical"]'
+    series='[
+      {"label": "Rivera", "values": [88, 79, 91, 90, 42, 64]},
+      {"label": "Okafor", "values": [76, 58, 70, 66, 89, 91]}
+    ]'></o-radar-chart>
+</main>
+  </script>
+</figure>
+<p>The web is Orbit: one spoke per axis is a <code>.vector</code>, and each level is a ring of <code>.side</code>s, chords that close into a regular polygon. The labels are satellites on a ring just outside it, pushed outward with <code>--o-dir-x</code> and <code>--o-dir-y</code>. The values are an SVG polygon drawn in lanes, because every corner sits at its own distance. Point at a corner, or tab to it, to read its value. Click a name in the legend to hide that series.</p>
+<p>Not to be confused with <a href="radar.html"><code>&lt;o-radar&gt;</code></a>, the scope with a sweep and blips.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>data</code></td><td><code>[]</code></td><td>The axes, clockwise from the top: names (<code>["Speed", "Range"]</code>) or <code>[{ label, max?, min?, value? }]</code>. Items with a <code>value</code> make a single series without <code>series</code>.</td></tr>
+<tr><td><code>series</code></td><td></td><td><code>[{ label, values, color?, hidden? }]</code>, with one value per axis. A missing value sits at the axis minimum; values past the ends are drawn at the ends.</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td><code>0</code> / auto</td><td>The scale every axis shares, unless an axis sets its own. The automatic <code>max</code> rounds the largest value up to 1, 2, 2.5 or 5 times a power of ten.</td></tr>
+<tr><td><code>levels</code></td><td><code>4</code></td><td>Rings of the web, 1 to 12.</td></tr>
+<tr><td><code>grid</code></td><td><code>polygon</code></td><td><code>polygon</code> or <code>circle</code>. Fewer than three axes always draw circles.</td></tr>
+<tr><td><code>scale</code></td><td>on</td><td>Numbers on the levels, along the first axis. Shown only when the axes share a scale; <code>scale=&quot;false&quot;</code> hides them.</td></tr>
+<tr><td><code>legend</code></td><td>auto</td><td>Shown with two or more series. <code>legend</code> forces it, <code>legend=&quot;false&quot;</code> hides it.</td></tr>
+<tr><td><code>points</code></td><td>on</td><td><code>points=&quot;false&quot;</code> draws the polygons without corner points, and without the tooltip.</td></tr>
+<tr><td><code>label</code></td><td></td><td>The chart's name, for its accessible name and the table caption. Also the name of a series made from <code>data</code>.</td></tr>
+<tr><td><code>size</code></td><td><code>320px</code></td><td>Width of the chart. The legend goes under it.</td></tr>
+<tr><td><code>duration</code></td><td><code>600</code></td><td>Milliseconds for the shapes to glide to new values. <code>0</code> jumps.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code>, <code>unit</code></td><td></td><td>Number format of the tooltip, the scale and the table. <code>percent</code> is where a value sits on its axis. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Properties and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>select</code></td><td>A point was clicked, or activated with Enter or Space. <code>event.detail</code> has <code>axis</code>, <code>series</code>, <code>value</code>, <code>axisIndex</code> and <code>seriesIndex</code>.</td></tr>
+<tr><td><code>toggle</code></td><td>The legend hid or showed a series. <code>event.detail</code> has <code>series</code>, <code>seriesIndex</code> and <code>hidden</code>. The last visible series cannot be hidden.</td></tr>
+<tr><td><code>hiddenSeries</code></td><td>The indexes of the series the legend has hidden.</td></tr>
+<tr><td><code>formatter</code></td><td>A function <code>(value, { kind, min, max, axis, axisIndex, series, seriesIndex }) =&gt; string</code> for every number the chart prints. See <a href="options.html#format">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Changing the data</h2>
+<p>Set <code>data</code> or <code>series</code> again and each polygon glides from its old shape to the new one. The web, the labels and the legend stay put; only a different number of axes or series rebuilds them.</p>
+<figure class="example" data-kit data-height="420">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <o-radar-chart id="week" label="Workouts" size="300px" max="60" unit=" min"></o-radar-chart>
+  <div class="controls">
+    <button id="prev">Last week</button>
+    <button id="next">This week</button>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 14px; align-content: center; }
+  </script>
+  <script type="text/plain" data-js>
+const days = [
+  { label: 'Run', value: 0 }, { label: 'Bike', value: 0 }, { label: 'Swim', value: 0 },
+  { label: 'Yoga', value: 0 }, { label: 'Lift', value: 0 }
+];
+const weeks = { prev: [42, 20, 15, 30, 25], next: [30, 55, 25, 20, 45] };
+const chart = document.getElementById('week');
+const show = (week) => chart.setAttribute('data',
+  JSON.stringify(days.map((d, i) => ({ ...d, value: weeks[week][i] }))));
+show('prev');
+document.getElementById('prev').addEventListener('click', () => show('prev'));
+document.getElementById('next').addEventListener('click', () => show('next'));
+  </script>
+</figure>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-fill</code></td><td><code>#4fd1c5</code></td><td>The first series, when it has no <code>color</code>. The next ones take amber, coral, violet, blue and lime.</td></tr>
+<tr><td><code>--ok-radar-chart-grid</code></td><td><code>var(--ok-track, rgba(138,151,165,.3))</code></td><td>Spokes and levels.</td></tr>
+<tr><td><code>--ok-radar-chart-edge</code></td><td>a little stronger</td><td>The outer level.</td></tr>
+<tr><td><code>--ok-radar-chart-fill-opacity</code></td><td><code>.18</code></td><td>How much the areas are filled.</td></tr>
+<tr><td><code>--ok-radar-chart-stroke</code></td><td><code>2px</code></td><td>Outline of the areas.</td></tr>
+<tr><td><code>--ok-radar-chart-label</code></td><td>inherits</td><td>Color of the axis labels.</td></tr>
+<tr><td><code>--ok-radar-chart-tip</code> / <code>--ok-radar-chart-tip-text</code></td><td><code>var(--ok-surface)</code> / <code>var(--ok-text)</code></td><td>The tooltip.</td></tr>
+<tr><td><code>--ok-radar-chart-legend-size</code></td><td><code>.875em</code></td><td>Font size of the legend.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>4.1cqmin</code></td><td>Size of the labels and tooltip, as a share of the chart.</td></tr>
+</tbody>
+</table></div>
+<figure class="example" data-kit data-height="400">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <o-radar-chart class="bold" size="300px" levels="5" grid="circle" scale="false"
+    data='["Taste", "Price", "Speed", "Service", "Place"]'
+    series='[{"label": "Café", "values": [9, 6, 7, 9, 8], "color": "#ffb547"}]'></o-radar-chart>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+/* Round levels, a stronger fill and a thicker outline. */
+.bold {
+  --ok-radar-chart-fill-opacity: .35;
+  --ok-radar-chart-stroke: 3px;
+  --ok-radar-chart-grid: rgba(255, 181, 71, .16);
+}
+  </script>
+</figure>
+
+<h2>More examples</h2>
+<h3>A scale for each axis</h3>
+<p>Give an axis its own <code>max</code> (and <code>min</code>) when the axes measure different things. Each value is then drawn as a share of its own axis, and the level numbers go away because they would mean something different on every spoke.</p>
+<figure class="example" data-kit data-height="440">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <o-radar-chart id="cars" label="Two cars" size="330px" levels="5"
+    data='[
+      {"label": "Top speed", "max": 250},
+      {"label": "Range", "max": 700},
+      {"label": "Seats", "max": 7},
+      {"label": "Trunk", "max": 600},
+      {"label": "Power", "max": 400}
+    ]'
+    series='[
+      {"label": "City EV", "values": [150, 320, 4, 280, 135]},
+      {"label": "Tourer", "values": [230, 610, 5, 520, 310]}
+    ]'></o-radar-chart>
+</main>
+  </script>
+  <script type="text/plain" data-js>
+// One unit per axis, through the shared formatter.
+const units = [' km/h', ' km', ' seats', ' l', ' hp'];
+const cars = document.getElementById('cars');
+cars.formatter = (value, { axisIndex }) => value + units[axisIndex];
+  </script>
+</figure>
+<h3>Reacting to a point</h3>
+<figure class="example" data-kit data-height="430">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <o-radar-chart id="skills" label="Team skills" size="300px" max="10"
+    data='["Design", "Frontend", "Backend", "Data", "Ops", "Writing", "Research"]'
+    series='[{"label": "Team", "values": [8, 9, 6, 4, 5, 7, 6]}]'></o-radar-chart>
+  <p class="readout"><span id="picked">Click a point</span></p>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 4px; align-content: center; }
+  </script>
+  <script type="text/plain" data-js>
+const picked = document.getElementById('picked');
+document.getElementById('skills').addEventListener('select', (e) => {
+  const { axis, value } = e.detail;
+  picked.textContent = `${axis}: ${value} of 10`;
+});
+  </script>
+</figure>
+<h3>On a light page</h3>
+<figure class="example" data-kit data-light data-height="420">
+  <script type="text/plain" data-html>
+<main class="stage ok-theme-light">
+  <o-radar-chart size="300px" format="percent"
+    data='["North", "East", "South", "West", "Online"]'
+    series='[
+      {"label": "2025", "values": [62, 48, 71, 55, 80], "color": "#0d9488"},
+      {"label": "2026", "values": [70, 66, 69, 61, 92], "color": "#ea580c"}
+    ]'></o-radar-chart>
+</main>
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The chart has <code>role="figure"</code> and a name that counts what it holds, like “Two players: 6 axes, 2 series”. Inside it, a visually hidden table lists every value by axis and series, captioned with <code>label</code>, so a screen reader can read the numbers in order instead of guessing them from a shape.</p>
+<p>The points are one tab stop. Left and Right walk the axes, Up and Down switch series, Home and End jump to the first and last axis, Enter and Space fire <code>select</code>, and Escape hides the tooltip. Each point is named after its series, axis and value, such as “Rivera, Passing: 91”. The legend entries are buttons with <code>aria-pressed</code>, and a hidden series leaves the keyboard path too. With reduced motion, new data replaces the old shapes at once.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

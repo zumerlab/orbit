@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Angular · Orbit</title>
+  <meta name="description" content="Use Orbit in Angular: add the stylesheet, import the runtime, allow custom elements with CUSTOM_ELEMENTS_SCHEMA and bind values as attributes.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Angular</h1>
+<p class="lede">In Angular, Orbit's markup goes into component templates. Two details matter: allow custom elements with <code>CUSTOM_ELEMENTS_SCHEMA</code>, and bind <code>value</code> as an attribute.</p>
+<h2>Install</h2>
+<pre><code class="language-sh">npm install @zumer/orbit
+</code></pre>
+<p>Add the stylesheet to the global styles in <code>angular.json</code>:</p>
+<pre><code class="language-json">"styles": [
+  "node_modules/@zumer/orbit/dist/orbit.css",
+  "src/styles.css"
+]
+</code></pre>
+<p>Import the runtime once, in <code>src/main.ts</code>:</p>
+<pre><code class="language-ts">import '@zumer/orbit';
+</code></pre>
+<h2>A gauge</h2>
+<p>A progress ring with its value in the middle, bound to a signal. <code>value</code> works as an attribute and as a property, so <code>[value]</code> and <code>[attr.value]</code> both redraw the ring. <code>[attr.value]</code> also writes it into the server-rendered HTML.</p>
+<pre><code class="language-ts">import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-gauge',
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: './gauge.component.html',
+  styleUrl: './gauge.component.css',
+})
+export class GaugeComponent {
+  value = signal(72);
+}
+</code></pre>
+<pre><code class="language-html">&lt;!-- gauge.component.html --&gt;
+&lt;div class="gauge"&gt;
+  &lt;div class="bigbang"&gt;
+    &lt;div class="gravity-spot"&gt;
+      &lt;div class="orbit-10"&gt;
+        &lt;o-progress [attr.value]="value()" shape="rounded"&gt;&lt;/o-progress&gt;
+      &lt;/div&gt;
+      &lt;div class="orbit-0"&gt;
+        &lt;div class="satellite at-center"&gt;
+          &lt;div class="capsule"&gt;{{ value() }}%&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;input type="range" min="0" max="100" [value]="value()"
+    (input)="value.set(+$any($event.target).value)"&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">/* gauge.component.css */
+.gauge { width: 220px; }
+.orbit-10 { --o-size-ratio: 2; }
+.orbit-0 { --o-size-ratio: 12; }
+o-progress {
+  --o-fill: var(--o-cyan);
+  --o-back-fill: var(--o-cyan-lighter);
+  --o-stroke: none;
+}
+.capsule { font-size: 28px; font-weight: 600; }
+</code></pre>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="gauge">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10">
+        <o-progress value="72" shape="rounded"></o-progress>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule">72%</div></div>
+      </div>
+    </div>
+  </div>
+  <input type="range" min="0" max="100" value="72" aria-label="Value">
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.gauge { width: 220px; display: grid; gap: 10px; }
+.gauge .orbit-10 { --o-size-ratio: 2; }
+.gauge .orbit-0 { --o-size-ratio: 12; }
+.gauge o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.gauge .capsule { font-size: 34px; font-weight: 650; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const progress = document.querySelector('o-progress');
+const label = document.querySelector('.capsule');
+document.querySelector('input').addEventListener('input', (e) => {
+  progress.setAttribute('value', e.target.value);
+  label.textContent = e.target.value + '%';
+});
+  </script>
+  <figcaption>The same markup in plain HTML. Move the slider: changing <code>value</code> is all it takes.</figcaption>
+</figure>
+<p>Orbit watches the page for added, removed and reordered elements, attribute and style changes, and containers that change size, so bound values and <code>@for</code> blocks need no extra call. Importing Orbit during server rendering is safe. To wait until arcs are drawn, use the <a href="../craft/runtime.html">runtime API</a>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

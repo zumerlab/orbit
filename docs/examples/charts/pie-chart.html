@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pie chart · Orbit</title>
+  <meta name="description" content="A pie chart from five o-arc slices that reach the center; hover or focus a slice and it slides out.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Pie chart</h1>
+<p class="lede">A pie is a donut with the hole closed: each slice is an arc that reaches all the way to the center.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage chart">
+  <div class="bigbang pie">
+    <div class="gravity-spot">
+      <!-- inner-orbit puts the outer edge on lane 11; 11 lanes thick reaches the center. -->
+      <div class="orbit-11" id="slices" style="--o-size-ratio: 11; --o-gap: 0" role="list" aria-label="How people get to work"></div>
+    </div>
+  </div>
+  <div class="key">
+    <div class="readout"><strong id="share">1,240</strong><span id="name">people asked</span></div>
+    <ul class="legend" id="legend"></ul>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.chart { display: flex; align-items: center; justify-content: center; gap: 7%; }
+.chart > .pie { width: min(54%, 100vh - 72px); flex: none; }
+
+.pie o-arc {
+  --o-stroke: var(--bg); --o-stroke-width: 2; --o-fill: var(--c);
+  transition: translate .25s cubic-bezier(.3, 1.4, .5, 1), opacity .2s;
+}
+/* The slice in focus slides out along its middle; the others step back. */
+.pie o-arc.on { translate: var(--dx) var(--dy); }
+.pie.focus o-arc:not(.on) { opacity: .45; }
+.pie o-arc:focus-visible { outline: none; }
+
+.key { display: grid; gap: 16px; justify-items: start; }
+.key .readout { justify-items: start; }
+.key .readout strong { font-size: 34px; }
+.legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+.legend li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 3px 8px; margin-left: -8px; border-radius: 6px; cursor: default; }
+.legend li.on { background: var(--panel); }
+.legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+.legend span { font: 13px var(--mono); color: var(--muted); padding-left: 12px; }
+  </script>
+  <script type="text/plain" data-js>
+const data = [['Car', 35, 'var(--blue)'], ['Transit', 25, 'var(--accent)'], ['Bike', 15, 'var(--lime)'], ['Walk', 15, 'var(--amber)'], ['Remote', 10, 'var(--violet)']];
+const slices = document.getElementById('slices'), legend = document.getElementById('legend'), pie = document.querySelector('.pie');
+let before = 0;
+data.forEach(([name, share, c]) => {
+  // The direction of the slice's middle, for sliding it out 4% of the chart.
+  const middle = (before + share / 2) * 3.6 * Math.PI / 180;
+  const dx = (Math.sin(middle) * 4).toFixed(2), dy = (-Math.cos(middle) * 4).toFixed(2);
+  slices.insertAdjacentHTML('beforeend', `<o-arc class="inner-orbit" value="${share}" interactive tabindex="0" role="listitem" aria-label="${name}, ${share}%" style="--c: ${c}; --dx: ${dx}cqmin; --dy: ${dy}cqmin"></o-arc>`);
+  legend.insertAdjacentHTML('beforeend', `<li style="--c: ${c}"><i></i>${name}<span>${share}%</span></li>`);
+  before += share;
+});
+const arcs = [...slices.children], rows = [...legend.children];
+const focus = i => {
+  pie.classList.toggle('focus', i >= 0);
+  arcs.forEach((arc, j) => arc.classList.toggle('on', i === j));
+  rows.forEach((row, j) => row.classList.toggle('on', i === j));
+  document.getElementById('share').textContent = i < 0 ? '1,240' : data[i][1] + '%';
+  document.getElementById('name').textContent = i < 0 ? 'people asked' : data[i][0].toLowerCase();
+};
+[...arcs, ...rows].forEach((el, k) => {
+  el.addEventListener('pointerenter', () => focus(k % data.length));
+  el.addEventListener('pointerleave', () => focus(-1));
+});
+arcs.forEach((arc, i) => {
+  arc.addEventListener('focus', () => focus(i));
+  arc.addEventListener('blur', () => focus(-1));
+});
+  </script>
+  <figcaption>Hover a slice or a row, or Tab through the slices.</figcaption>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Five <a href="../../reference/arc.html"><code>&lt;o-arc value&gt;</code></a> that add up to 100, stacked in DOM order on one ring.</li>
+<li><code>inner-orbit</code> puts the outer edge of each arc on <code>orbit-11</code>, and <code>--o-size-ratio: 11</code> makes it eleven lanes thick: all the way in. Lower it to 6 and you have a donut of the same size.</li>
+<li>A thin <code>--o-stroke</code> in the background color separates the slices instead of <code>--o-gap</code>, which would leave wedges that narrow to nothing at the center.</li>
+<li><code>interactive</code> lets each slice take the pointer and focus. Orbit places arcs with <code>rotate</code>, so a <code>translate</code> of yours adds to it: the slice in focus slides out along its middle.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="donut-chart.html">Donut chart</a></li>
+<li><a href="sunburst-chart.html">Sunburst chart</a></li>
+<li><a href="../../reference/arc.html">Arcs</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

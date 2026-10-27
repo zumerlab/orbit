@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sci-fi interface · Orbit</title>
+  <meta name="description" content="A sci-fi HUD in HTML and CSS: partial arcs and dashes on rings at different depths, turning at their own speed and tilting with the pointer. Built with Orbit.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Sci-fi interface</h1>
+<p class="lede">A HUD made of loose pieces: partial arcs and rows of dashes, each ring at its own distance from the eye. Tilt it and the rings slide past each other. Move the pointer over the frame.</p>
+<figure class="example" data-height="480">
+  <script type="text/plain" data-html>
+<div class="stage tilt">
+  <div class="bigbang hud" role="img" aria-label="Shields at 87 percent">
+    <!-- depth: each ring is a layer; --o-z sets its distance, negative is farther. -->
+    <div class="gravity-spot depth outer-perspective">
+      <div class="orbit-12 rim" style="--o-z: 40"></div>
+      <div class="orbit-11 from-120 range-240 dashes spin-slow" style="--o-z: -20; --o-size-ratio: .5" data-count="48"></div>
+      <div class="orbit-10" style="--o-z: 10; --o-size-ratio: .4">
+        <o-arc value="22" class="from-215 coral"></o-arc>
+      </div>
+      <div class="orbit-9" style="--o-z: -60; --o-size-ratio: .25">
+        <o-arc value="35" class="from-320 teal"></o-arc>
+      </div>
+      <div class="orbit-8 from-30 spin-back" style="--o-z: -110; --o-size-ratio: .6">
+        <o-arc class="teal faint"></o-arc><o-arc class="none"></o-arc><o-arc class="teal faint"></o-arc><o-arc class="none"></o-arc>
+      </div>
+      <div class="orbit-7 from-180 range-100 dashes" style="--o-z: -80; --o-size-ratio: .7" data-count="16"></div>
+      <div class="orbit-6" style="--o-z: -150; --o-size-ratio: .35">
+        <o-progress class="shields" value="87" shape="rounded"></o-progress>
+      </div>
+      <div class="orbit-0" style="--o-z: 20; --o-size-ratio: 6">
+        <div class="satellite at-center"><div class="capsule readout"><strong>87%</strong><span>Shields</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls"><button type="button" class="pause" aria-pressed="false">Pause</button></div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* The perspective lives on the stage; --o-perspective on the system matches it. */
+.tilt { perspective: 700px; gap: 10px; }
+.tilt > .bigbang { width: min(100%, 100vh - 80px); }
+.hud .depth { --o-perspective: 700; }
+.hud { rotate: x var(--rx, 0deg); transform: rotateY(var(--ry, 0deg)); }
+.rim { border-color: var(--line); }
+.dashes .vector { height: 3px; background: color-mix(in srgb, var(--accent) 55%, transparent); }
+.hud o-arc { --o-stroke: none; }
+.teal { --o-fill: var(--accent); }
+.coral { --o-fill: var(--coral); }
+.faint { opacity: .45; }
+.none { --o-fill: none; }
+.shields { --o-stroke: none; --o-fill: var(--accent); --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent); }
+.readout strong { font-size: clamp(20px, 24cqmin, 40px); color: var(--accent); }
+/* Rings turn with rotate; depth uses transform, so the two add up. */
+.spin-slow { animation: spin 60s linear infinite; }
+.spin-back { animation: spin 40s linear infinite reverse; }
+.paused .spin-slow, .paused .spin-back { animation-play-state: paused; }
+@keyframes spin { to { rotate: 360deg; } }
+  </script>
+  <script type="text/plain" data-js>
+// The dashes: data-count vectors per ring.
+document.querySelectorAll('[data-count]').forEach((ring) => {
+  ring.innerHTML = '<div class="vector"></div>'.repeat(Number(ring.dataset.count));
+});
+
+// Tilt toward the pointer, up to 25°. Without a pointer, sway slowly.
+const stage = document.querySelector('.tilt'), hud = document.querySelector('.hud');
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let pointer = null, rx = 0, ry = 0, paused = false;
+const pause = document.querySelector('.pause');
+pause.addEventListener('click', () => {
+  paused = hud.classList.toggle('paused');
+  pause.setAttribute('aria-pressed', paused);
+  pause.textContent = paused ? 'Play' : 'Pause';
+});
+stage.addEventListener('pointermove', (e) => {
+  const r = stage.getBoundingClientRect();
+  pointer = [(e.clientX - r.left) / r.width - 0.5, (e.clientY - r.top) / r.height - 0.5];
+});
+stage.addEventListener('pointerleave', () => { pointer = null; });
+function frame(t) {
+  const [x, y] = pointer || (still || paused ? [0, 0] : [Math.sin(t / 2400) * 0.3, Math.cos(t / 3100) * 0.25]);
+  ry += (x * 50 - ry) * 0.08;
+  rx += (-y * 50 - rx) * 0.08;
+  hud.style.setProperty('--rx', `${rx}deg`);
+  hud.style.setProperty('--ry', `${ry}deg`);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Arcs with a <code>value</code> and a <code>from-N</code> draw a partial band anywhere on a ring; arcs without one split the ring, and a transparent one leaves a gap. See <a href="../reference/arc.html">arcs</a>.</li>
+<li>The dashes are <a href="../reference/vector.html">vectors</a> written by the script, 48 on a 240° range and 16 on 100°.</li>
+<li><code>depth</code> on the <code>.gravity-spot</code> turns each ring into a layer, and <code>--o-z</code> places it in front or behind. Layers keep their apparent size, so the face looks flat until it tilts. See <a href="../craft/depth.html">depth</a>.</li>
+<li><code>outer-perspective</code> leaves the perspective to the stage, so the whole universe can turn with <code>rotateY</code> and <code>rotate: x</code>.</li>
+<li>Two rings also spin with a CSS animation on <code>rotate</code>, which adds to the depth transform instead of replacing it. The button pauses them and the sway.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="abstract_map.html">Abstract orbital map</a></li>
+<li><a href="layered-status-rings.html">Layered status rings</a>: depth layers that change order</li>
+<li><a href="../demos/11-depth-layers.html">Depth layers demo</a></li>
+<li><a href="../use-cases/sci-fi-game-uis.html">Sci-fi and game interfaces</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

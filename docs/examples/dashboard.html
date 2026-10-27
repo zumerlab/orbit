@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Car dashboard · Orbit</title>
+  <meta name="description" content="A car dashboard screen made of nested systems: a live clock with a seconds ring between a climate pod and a battery pod.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Car dashboard</h1>
+<p class="lede">A dashboard screen made of nested systems: a clock and two pods, each a satellite with its own rings inside.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <!-- A 2:1 universe: lanes count from the height, pods sit past orbit-12. -->
+  <div class="bigbang dash" role="group" aria-label="Dashboard">
+    <div class="gravity-spot">
+      <!-- The clock: one satellite 19 lanes wide, with a seconds ring of its own. -->
+      <div class="orbit-0" style="--o-size-ratio: 19">
+        <div class="satellite at-center face">
+          <div class="gravity-spot">
+            <div class="orbit-11 seconds" id="seconds" style="--o-size-ratio: .8"></div>
+            <div class="orbit-0" style="--o-size-ratio: 18">
+              <div class="satellite at-center">
+                <div class="capsule readout clock"><span id="date">Sun 11 Apr</span><strong id="time">6:59</strong><span>12° outside</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Two satellites alone on a ring sit opposite each other: right and left. -->
+      <div class="orbit-17" style="--o-from: 90deg; --o-size-ratio: 11">
+        <div class="satellite pod" role="meter" aria-label="Battery" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63">
+          <div class="gravity-spot">
+            <div class="orbit-10" style="--o-size-ratio: 1.6"><o-progress class="battery" value="63" shape="rounded"></o-progress></div>
+            <div class="orbit-0" style="--o-size-ratio: 14">
+              <div class="satellite at-center"><div class="capsule readout"><strong>63%</strong><span>214 km</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="satellite pod">
+          <div class="gravity-spot">
+            <div class="orbit-10 range-270 from-225" style="--o-size-ratio: 1.6"><o-progress class="heat" value="0" shape="rounded"></o-progress></div>
+            <!-- Two buttons alone on a ring: one on top, one at the bottom. -->
+            <div class="orbit-7" style="--o-size-ratio: 4">
+              <div class="satellite"><div class="capsule"><button data-step=".5" aria-label="Warmer">+</button></div></div>
+              <div class="satellite"><div class="capsule"><button data-step="-.5" aria-label="Cooler">−</button></div></div>
+            </div>
+            <div class="orbit-0" style="--o-size-ratio: 8">
+              <div class="satellite at-center"><div class="capsule readout"><strong id="temp" aria-live="polite">21.5°</strong></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage > .dash { width: min(100%, (100vh - 32px) * 2); aspect-ratio: 2 / 1; }
+
+.face, .pod { border-radius: 50%; background: radial-gradient(circle at 50% 35%, #18202a, var(--panel) 70%); box-shadow: inset 0 0 0 1px var(--line), 0 20px 50px -24px #000; }
+.seconds .vector { background: var(--faint); height: 2px; transition: background .3s; }
+.seconds .vector.past { background: var(--accent); }
+.clock { gap: 4px; }
+.clock strong { font-size: clamp(30px, 24cqmin, 92px); font-weight: 300; letter-spacing: -.04em; }
+.clock span { font-size: clamp(11px, 5cqmin, 16px); }
+.pod .readout strong { font-size: clamp(14px, 16cqmin, 30px); }
+.pod .readout span { font-size: clamp(10px, 8cqmin, 13px); }
+
+.pod o-progress { --o-stroke: none; --o-back-fill: #1d2630; }
+.battery { --o-fill: var(--accent); }
+.heat { --o-fill: var(--amber); }
+.pod button { width: 100%; aspect-ratio: 1; padding: 0; border-radius: 50%; font-size: clamp(13px, 9cqmin, 20px); line-height: 1; }
+  </script>
+  <script type="text/plain" data-js>
+// Sixty ticks; the ones up to the current second light up.
+const seconds = document.getElementById('seconds');
+seconds.innerHTML = '<div class="vector"></div>'.repeat(60);
+const tick = () => {
+  const now = new Date();
+  [...seconds.children].forEach((v, i) => v.classList.toggle('past', i <= now.getSeconds()));
+  document.getElementById('time').textContent = now.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' });
+  document.getElementById('date').textContent = now.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+};
+tick();
+setInterval(tick, 1000);
+
+// Climate: 16° to 28°, drawn on the pod's 270° ring.
+let temp = 21.5;
+const setTemp = t => {
+  temp = Math.max(16, Math.min(28, t));
+  document.querySelector('.heat').setAttribute('value', (temp - 16) / 12 * 100);
+  document.getElementById('temp').textContent = temp.toFixed(1) + '°';
+};
+document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => setTemp(temp + Number(b.dataset.step))));
+setTemp(temp);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>The <a href="../reference/bigbang.html">universe</a> is 2:1, so the reach is its height. The clock fills the middle, and the pods sit on <code>orbit-17</code>, past the edge of the circle but inside the wide box.</li>
+<li>Two <a href="../reference/satellite.html">satellites</a> alone on a ring are spread half a turn apart. <code>--o-from: 90deg</code> on the ring turns that pair to right and left.</li>
+<li>The clock and each pod are satellites with a <a href="../reference/gravity-spot.html"><code>.gravity-spot</code></a> inside. Every system starts from the defaults, so their rings are counted from their own edge: the seconds ticks, the battery ring and the climate arc.</li>
+<li>The climate buttons are two satellites on one ring of the pod, so they land at the top and the bottom with no angles.</li>
+<li>The clock ticks with a one-second timer that lights the <a href="../reference/vector.html"><code>.vector</code></a>s up to the current second.</li>
+</ul>
+<p>Inspired by a design found on <a href="https://pin.it/dP9PlNjFc">Pinterest</a>; an earlier version is on <a href="https://codepen.io/zircle/pen/eYqwYPB">CodePen</a>.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="gauges/fuel-gauge.html">Fuel gauge</a></li>
+<li><a href="watches/index.html">Watch faces</a></li>
+<li><a href="../use-cases/dashboards.html">Dashboards</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

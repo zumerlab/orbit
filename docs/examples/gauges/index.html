@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gauges · Orbit</title>
+  <meta name="description" content="Gauges built with Orbit: a 180° rating gauge, a 240° stepped speedometer and a 90° fuel gauge.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Gauges</h1>
+<p>A gauge is an arc, some labels and something that points. In Orbit the arc is a ring of <code>&lt;o-arc&gt;</code> bands, the labels are curved text or satellites, and the needle is a <code>.vector</code> on a ring turned with <code>rotate</code>. All of it is HTML you can style and inspect.</p>
+<ul class="cards">
+<li><a class="card" href="180-degree-gauge.html"><img class="thumb dark" src="../thumbs/180-degree-gauge.webp" alt="" loading="lazy"><strong>180° gauge</strong><span>Five named zones and a needle on a half circle.</span></a></li>
+<li><a class="card" href="240-degree-gauge.html"><img class="thumb dark" src="../thumbs/240-degree-gauge.webp" alt="" loading="lazy"><strong>240° gauge</strong><span>A stepped speedometer: bands light up with the speed.</span></a></li>
+<li><a class="card" href="fuel-gauge.html"><img class="thumb dark" src="../thumbs/fuel-gauge.webp" alt="" loading="lazy"><strong>Fuel gauge</strong><span>A 90° dial with E, F and a reserve, in a box cut to fit.</span></a></li>
+</ul>
+<p>For a gauge with ticks, ranges and a value API already wired, see the <a href="../../kit/gauge.html">Orbit Kit gauge</a>.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="../progress/index.html">Progress rings</a>: a value without a needle</li>
+<li><a href="../knobs/index.html">Knobs</a>: gauges you can turn</li>
+<li><a href="../../reference/arc.html">Arcs</a> and <a href="../../reference/vector.html">vectors</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

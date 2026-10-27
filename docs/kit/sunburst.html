@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunburst · Orbit</title>
+  <meta name="description" content="o-sunburst draws a tree as nested rings: one ring per level, every child inside its parent, with zoom, hover and keyboard.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Sunburst</h1>
+<p class="lede"><code>&lt;o-sunburst&gt;</code> draws a tree as nested rings: one ring per level, each child inside its parent. Click a branch to zoom in, click the middle to go back.</p>
+<figure class="example" data-kit data-height="420">
+  <script type="text/plain" data-html>
+<o-sunburst label="Week" unit=" h" size="min(380px, 86vw)" data='[
+  {"label": "Work", "children": [
+    {"label": "Meetings", "value": 12},
+    {"label": "Focus", "children": [
+      {"label": "Code", "value": 14}, {"label": "Docs", "value": 5}, {"label": "Review", "value": 3}]},
+    {"label": "Email", "value": 8}]},
+  {"label": "Home", "children": [
+    {"label": "Cooking", "value": 8}, {"label": "Chores", "value": 9}, {"label": "Family", "value": 14}]},
+  {"label": "Rest", "children": [
+    {"label": "Reading", "value": 7},
+    {"label": "Sport", "children": [{"label": "Run", "value": 3}, {"label": "Gym", "value": 3}]},
+    {"label": "Friends", "value": 10}, {"label": "Screens", "value": 16}]}
+]'></o-sunburst>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <figcaption>Point at a slice: its branch lights up and the middle shows where it is and what it is worth.</figcaption>
+</figure>
+<p>Every level is a ring of <code>&lt;o-arc&gt;</code>s with a <code>value</code>. Orbit stacks them in order, and because children come in the same order as their parents, each one lands inside its parent with no angles to compute. A branch that ends early leaves a transparent spacer in the rings outside it, so everything stays lined up.</p>
+<p>A node is worth its <code>value</code>, or the sum of its children when there is no value or the sum is larger. A value above the sum leaves part of the branch empty in the next ring, which is how you show “the rest”.</p>
+
+<h2>Zoom</h2>
+<p>Clicking a branch puts it in the middle and spreads its children around the whole circle. The rings move in, the slices outside the branch fold away, and the middle gets a tint of the branch color. Click the middle to go up one level. With <code>prefers-reduced-motion</code> the change is instant.</p>
+<p><code>levels</code> sets how many rings show at once (4 by default). A deeper tree is still there: zooming in brings the next levels into view.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>data</code></td><td><code>[]</code></td><td>The tree: <code>{ label, value?, color?, children? }</code>, or an array of top-level nodes. Up to eight levels; deeper ones count as part of their parent.</td></tr>
+<tr><td><code>label</code></td><td>the root's <code>label</code></td><td>Name of the whole, shown in the middle and used as the accessible name.</td></tr>
+<tr><td><code>levels</code></td><td><code>4</code></td><td>Rings shown at once, 1 to 6.</td></tr>
+<tr><td><code>hole</code></td><td>auto</td><td>Radius of the middle, in lanes (a lane is a twelfth of the radius). By default 3.6, or more when there are few rings so they do not get too thick.</td></tr>
+<tr><td><code>gap</code></td><td><code>1</code></td><td>Space between slices.</td></tr>
+<tr><td><code>from</code></td><td><code>0</code></td><td>Angle where the first slice starts, in degrees.</td></tr>
+<tr><td><code>labels</code></td><td><code>true</code></td><td>Names along the slices that have room for them. <code>labels="false"</code> turns them off.</td></tr>
+<tr><td><code>size</code></td><td><code>320px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>unit</code>, <code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code></td><td></td><td>Number format of the middle and the accessible names. <code>percent</code> is the share of the whole tree. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+<p>Top-level branches take the next color of the palette (teal, amber, coral, violet, blue, lime, pink, yellow) and their children lighter shades of it. A <code>color</code> on any node replaces its shade, and its children are shaded from it. A label shows only when it fits along its slice and across the band, so small slices stay clean; it reads upright on the lower half.</p>
+
+<h2>Properties, methods and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>data</code></td><td>The tree as an object. Setting it writes the attribute. When the new tree still has the branch you zoomed into, the zoom stays.</td></tr>
+<tr><td><code>path</code></td><td>Indexes of the branch in the middle, <code>[]</code> at the top.</td></tr>
+<tr><td><code>zoom(path)</code></td><td>Zoom into the branch at <code>path</code>, such as <code>[0, 1]</code>.</td></tr>
+<tr><td><code>zoomOut()</code>, <code>reset()</code></td><td>Go up one level, or back to the top.</td></tr>
+<tr><td><code>formatter</code></td><td>A function <code>(value, context) =&gt; string</code> for every number. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>select</code></td><td>A slice was clicked, or chosen with Enter or Space. <code>event.detail</code> has <code>label</code>, <code>value</code>, <code>item</code> (your object), <code>path</code>, <code>labels</code> (the names from the top) and <code>depth</code>.</td></tr>
+<tr><td><code>navigate</code></td><td>The branch in the middle changed. <code>event.detail</code> has <code>path</code> and <code>depth</code>.</td></tr>
+</tbody>
+</table></div>
+<p>Both events bubble. Clicking a branch fires <code>select</code> and then zooms; clicking a leaf only selects it.</p>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-sunburst-tint</code></td><td><code>#fff</code></td><td>What children are mixed with to get their lighter shade.</td></tr>
+<tr><td><code>--ok-sunburst-label</code></td><td><code>#0c0f13</code></td><td>Color of the names on the slices.</td></tr>
+<tr><td><code>--ok-sunburst-label-size</code></td><td><code>clamp(10px, 3.3cqmin, 15px)</code></td><td>Size of those names.</td></tr>
+<tr><td><code>--ok-sunburst-dim</code></td><td><code>.3</code></td><td>Opacity of the slices outside the lit branch.</td></tr>
+<tr><td><code>--ok-sunburst-muted</code></td><td>the text color at 62%</td><td>The path and the share in the middle.</td></tr>
+<tr><td><code>--ok-text</code></td><td>inherits</td><td>The value in the middle.</td></tr>
+<tr><td><code>--ok-focus</code></td><td><code>#e8edf2</code></td><td>Outline of the slice in keyboard focus.</td></tr>
+<tr><td><code>--ok-sunburst-value-size</code></td><td><code>23cqmin</code></td><td>Size of the value in the middle, as a share of the middle.</td></tr>
+</tbody>
+</table></div>
+<p>While a zoom runs, the element has the class <code>is-moving</code> and the names on the slices are hidden.</p>
+
+<h2>More examples</h2>
+<h3>Following the selection</h3>
+<figure class="example" data-kit data-height="440">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <o-sunburst id="files" label="Project" format="unit" unit="kilobyte" size="min(320px, 80vw)"></o-sunburst>
+  <div class="controls">
+    <button id="up" type="button">Up</button>
+    <output id="where">Project</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { align-content: center; gap: 14px; }
+.controls output { min-width: 16ch; font-family: inherit; }
+button:disabled { opacity: .4; cursor: default; }
+  </script>
+  <script type="text/plain" data-js>
+const files = document.getElementById('files');
+const where = document.getElementById('where');
+// Folders hold files; sizes in kilobytes.
+files.data = [
+  { label: 'src', children: [
+    { label: 'components', children: [{ label: 'menu.js', value: 18 }, { label: 'knob.js', value: 9 }, { label: 'gauge.js', value: 4 }] },
+    { label: 'base.js', value: 26 }, { label: 'index.js', value: 2 }] },
+  { label: 'docs', children: [{ label: 'guide.md', value: 21 }, { label: 'api.md', value: 14 }] },
+  { label: 'test', children: [{ label: 'unit.mjs', value: 12 }, { label: 'browser.mjs', value: 17 }] }
+];
+files.addEventListener('select', (e) => { where.textContent = ['Project', ...e.detail.labels].join(' / '); });
+files.addEventListener('navigate', () => { document.getElementById('up').disabled = !files.path.length; });
+document.getElementById('up').addEventListener('click', () => files.zoomOut());
+document.getElementById('up').disabled = true;
+  </script>
+  <figcaption><code>select</code> writes the path under the chart; <code>navigate</code> turns the button on when there is somewhere to go back to.</figcaption>
+</figure>
+
+<h3>Two rings at a time</h3>
+<figure class="example" data-kit data-height="400">
+  <script type="text/plain" data-html>
+<o-sunburst levels="2" label="Budget" currency="USD" decimals="0" size="min(340px, 86vw)" data='[
+  {"label": "Housing", "color": "#60a5fa", "children": [
+    {"label": "Rent", "value": 1450},
+    {"label": "Utilities", "children": [{"label": "Power", "value": 80}, {"label": "Water", "value": 35}, {"label": "Internet", "value": 60}]}]},
+  {"label": "Food", "color": "#a3e635", "children": [
+    {"label": "Groceries", "children": [{"label": "Market", "value": 380}, {"label": "Bakery", "value": 60}]},
+    {"label": "Eating out", "value": 210}]},
+  {"label": "Savings", "color": "#a78bfa", "value": 600},
+  {"label": "Other", "color": "#ff7a6b", "value": 900, "children": [
+    {"label": "Transport", "value": 160}, {"label": "Health", "value": 120}]}
+]'></o-sunburst>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <figcaption>Utilities and Groceries have a third level: zoom in to see it. “Other” is worth more than its children, so part of it stays empty.</figcaption>
+</figure>
+
+<h3>Percent of the whole</h3>
+<figure class="example" data-kit data-height="360">
+  <script type="text/plain" data-html>
+<o-sunburst format="percent" label="Traffic" size="min(300px, 86vw)" hole="4" gap="2" data='[
+  {"label": "Search", "children": [{"label": "Google", "value": 41}, {"label": "Bing", "value": 6}, {"label": "Other", "value": 3}]},
+  {"label": "Direct", "value": 22},
+  {"label": "Social", "children": [{"label": "Mastodon", "value": 9}, {"label": "Reddit", "value": 7}, {"label": "HN", "value": 5}]},
+  {"label": "Email", "value": 7}
+]'></o-sunburst>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The element is one tab stop with <code>role="tree"</code>. The drawing is hidden from assistive technology; next to it is a visually hidden list with the same tree, one <code>treeitem</code> per node with its level, position and a name like “Focus: 22 h, 52% of Work”. Keyboard focus moves through that list with <code>aria-activedescendant</code>, and the focused slice gets an outline and lights its branch.</p>
+<p>Left and Right move to the previous and next sibling, Home and End to the first and last. Up goes out to the first child, zooming in when the children are past the outer ring. Down comes back in to the parent, and from the first ring to the middle. Enter or Space chooses a slice (and zooms into a branch), or goes up from the middle; Escape and Backspace go up one level.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

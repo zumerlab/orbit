@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Circular progress with handle · Orbit</title>
+  <meta name="description" content="A circular slider: an o-progress and a handle on the same lane, dragged with the pointer or set with the arrow keys.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Circular progress with handle</h1>
+<p class="lede">A circular slider: a progress ring and a handle on the same lane, so the handle always sits where the fill ends.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang dimmer" tabindex="0" role="slider" aria-label="Brightness"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="gravity-spot">
+      <div class="orbit-10" style="--o-size-ratio: 1.2">
+        <o-progress value="0" shape="circle"></o-progress>
+      </div>
+      <!-- Same lane, its own ring: turning the ring moves the handle. -->
+      <div class="orbit-10 handle-ring" style="--o-size-ratio: 2">
+        <div class="satellite"><div class="capsule handle"></div></div>
+      </div>
+      <div class="orbit-0" style="--o-size-ratio: 14">
+        <div class="satellite at-center">
+          <div class="capsule readout"><strong id="level">0%</strong><span>brightness</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="controls">Drag the handle or use the arrow keys.</p>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 8px; align-content: center; }
+.stage > .dimmer { width: min(100%, 100vh - 70px); touch-action: none; cursor: grab; }
+.controls { margin: 0; }
+
+.dimmer o-progress { --o-stroke: none; --o-fill: var(--amber); --o-back-fill: #1d2630; }
+.handle-ring { rotate: var(--turn, 0deg); }
+.handle {
+  width: 100%; aspect-ratio: 1; border-radius: 50%;
+  background: var(--text); box-shadow: 0 0 0 4px var(--amber), 0 4px 14px #000;
+}
+.dimmer:focus-visible { outline: none; }
+.dimmer:focus-visible .handle { box-shadow: 0 0 0 4px var(--amber), 0 0 0 8px color-mix(in srgb, var(--amber) 35%, transparent); }
+.dimmer .readout strong { font-size: clamp(28px, 22cqmin, 60px); }
+  </script>
+  <script type="text/plain" data-js>
+const slider = document.querySelector('.dimmer'), ring = slider.querySelector('o-progress');
+let value = 0;
+const set = v => {
+  value = Math.max(0, Math.min(100, Math.round(v)));
+  ring.setAttribute('value', value);
+  // Progress and angle-N both start at the top and grow clockwise: 1% is 3.6°.
+  slider.style.setProperty('--turn', value * 3.6 + 'deg');
+  slider.setAttribute('aria-valuenow', value);
+  document.getElementById('level').textContent = value + '%';
+};
+const fromPointer = event => {
+  const box = slider.getBoundingClientRect();
+  const angle = Math.atan2(event.clientX - (box.left + box.width / 2), (box.top + box.height / 2) - event.clientY) * 180 / Math.PI;
+  const next = ((angle + 360) % 360) / 3.6;
+  // Don't jump from 100 to 0 across the top.
+  if (Math.abs(next - value) < 50) set(next);
+};
+slider.addEventListener('pointerdown', event => { slider.setPointerCapture(event.pointerId); fromPointer(event); });
+slider.addEventListener('pointermove', event => { if (slider.hasPointerCapture(event.pointerId)) fromPointer(event); });
+slider.addEventListener('keydown', event => {
+  const step = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 10, PageDown: -10 }[event.key];
+  if (step) { event.preventDefault(); set(value + step); }
+  if (event.key === 'Home') set(0);
+  if (event.key === 'End') set(100);
+});
+set(60);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>The <a href="../../reference/progress.html"><code>&lt;o-progress&gt;</code></a> and the handle are on two rings of the same lane, <code>orbit-10</code>, so they line up at any size.</li>
+<li>The band is 1.2 lanes thick and the handle 2 lanes wide, set with <code>--o-size-ratio</code> on each ring, so the handle stands out past the edges.</li>
+<li>A <a href="../../reference/satellite.html">satellite</a> alone on a ring sits at the top. Turning its ring with <code>rotate</code> moves it smoothly to any angle: <code>value × 3.6deg</code>, the same angle where the fill ends.</li>
+<li>The universe is the <code>role="slider"</code>: focusable, with arrow keys, Page Up/Down, Home and End, and pointer capture for dragging.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="circular-progress-with-background.html">Progress with background</a></li>
+<li><a href="../knobs/knob-with-progress-bar.html">Knob with progress bar</a>: the same value as a knob</li>
+<li><a href="../../guide.html">Build a knob</a>: drag and keyboard, step by step</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

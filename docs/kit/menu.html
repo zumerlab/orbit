@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu · Orbit</title>
+  <meta name="description" content="o-menu is a radial menu, flat or nested, that opens branches in place or as outer rings.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Menu</h1>
+<p class="lede"><code>&lt;o-menu&gt;</code> is a radial menu, flat or nested. Branches open in place or as rings around their parent.</p>
+<figure class="example" data-kit data-height="360">
+  <script type="text/plain" data-html>
+<o-menu label="Edit" items='[
+  {"label": "Size", "icon": "🔠", "children": [
+    {"label": "Bigger", "value": "size.up"},
+    {"label": "Smaller", "value": "size.down"}]},
+  {"label": "Format", "icon": "✏️", "children": [
+    {"label": "Bold", "value": "fmt.bold"},
+    {"label": "Italic", "value": "fmt.italic"}]},
+  {"label": "Color", "icon": "🎨", "value": "color"}
+]'></o-menu>
+<output id="out">Pick something</output>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 12px; height: 100vh; }
+output { color: var(--muted); }
+  </script>
+  <script type="text/plain" data-js>
+const out = document.getElementById('out');
+document.querySelector('o-menu').addEventListener('select', (e) => {
+  out.textContent = `Selected ${e.detail.value}`;
+});
+  </script>
+</figure>
+<p>Each sector is an <code>interactive</code> <code>&lt;o-arc&gt;</code> with its label drawn along the arc. Click a branch to open it; the middle becomes a back button.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>items</code></td><td><code>[]</code></td><td>Items: <code>[{ label, value?, icon?, color?, children? }]</code>, nested as deep as you like. <code>value</code> defaults to the label.</td></tr>
+<tr><td><code>expand</code></td><td><code>drill</code></td><td><code>drill</code> replaces the ring with the open branch. <code>concentric</code> keeps the parent and fans the children out around it.</td></tr>
+<tr><td><code>palette</code></td><td><code>mono</code></td><td><code>mono</code> draws slate sectors that turn <code>accent</code> on hover and focus. <code>color</code> gives each item its own color. Before 2.0 this was <code>theme</code>, and <code>theme="color"</code> still works.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>, like every component (<a href="options.html#themes">Shared options</a>). It combines with <code>color</code>: <code>theme="color light"</code>.</td></tr>
+<tr><td><code>accent</code></td><td><code>#3da9fc</code></td><td>Highlight color of the <code>mono</code> theme.</td></tr>
+<tr><td><code>label</code></td><td><code>MENU</code></td><td>Text in the middle.</td></tr>
+<tr><td><code>label-color</code></td><td><code>#f8fafc</code></td><td>Color of the sector labels.</td></tr>
+<tr><td><code>range</code> / <code>from</code></td><td><code>360</code> / auto</td><td>Arc span and start angle. A partial menu centers its gap at the bottom.</td></tr>
+<tr><td><code>thickness</code></td><td><code>3.6</code></td><td>Ring thickness in lanes.</td></tr>
+<tr><td><code>gap</code></td><td><code>1.2</code></td><td>Space between sectors, in percent of the widget width.</td></tr>
+<tr><td><code>size</code></td><td><code>280px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>value</code></td><td></td><td>Picks the leaf with this value. It is also the default a form reset returns to.</td></tr>
+<tr><td><code>name</code></td><td></td><td>Field name: with it, the menu submits the picked value with the form. See <a href="options.html#forms">Forms</a>.</td></tr>
+<tr><td><code>required</code></td><td>off</td><td>The form does not submit until a leaf is picked.</td></tr>
+<tr><td><code>disabled</code></td><td>off</td><td>Dimmed, ignores pointer and keys, and is not submitted.</td></tr>
+</tbody>
+</table></div>
+<p><code>icon</code> takes an emoji, text, or a small inline SVG. SVG is cleaned down to basic shapes: scripts, links, event handlers and external resources are dropped. An item with an icon shows the icon instead of the curved label and keeps the label as its accessible name. Labels are always text, never HTML.</p>
+
+<h2>Properties and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>select</code></td><td>A leaf was chosen. <code>event.detail</code> has <code>value</code>, <code>label</code>, <code>item</code> and <code>path</code>, the indexes from the root.</td></tr>
+<tr><td><code>navigate</code></td><td>The open branch changed. <code>event.detail</code> has <code>path</code> and <code>depth</code>.</td></tr>
+<tr><td><code>input</code>, <code>change</code></td><td>Fire with every pick, after <code>select</code>, like a <code>&lt;select&gt;</code>. Same <code>detail</code>.</td></tr>
+<tr><td><code>value</code></td><td>The value of the last selected leaf. Setting it picks the leaf with that value (or none with <code>null</code>) and fires no event.</td></tr>
+<tr><td><code>form</code>, <code>labels</code>, <code>validity</code>, <code>checkValidity()</code></td><td>As on a native input.</td></tr>
+<tr><td><code>path</code></td><td>Indexes of the open branches, <code>[]</code> at the root.</td></tr>
+<tr><td><code>selectedIndex</code></td><td>Index of the selected leaf in the visible level, or <code>-1</code>.</td></tr>
+<tr><td><code>back()</code></td><td>Closes the innermost open branch.</td></tr>
+<tr><td><code>reset()</code></td><td>Goes back to the root.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-menu-accent</code></td><td><code>#3da9fc</code></td><td>Highlight of the <code>mono</code> theme and the focus glow. Falls back to <code>--ok-accent</code>.</td></tr>
+<tr><td><code>--ok-menu-slate</code></td><td><code>#2b333f</code></td><td>Sector color of the <code>mono</code> theme.</td></tr>
+<tr><td><code>--ok-menu-text</code></td><td><code>#f8fafc</code></td><td>Labels and the middle text.</td></tr>
+<tr><td><code>--ok-menu-hub</code></td><td>dark slate</td><td>Background of the middle.</td></tr>
+<tr><td><code>--ok-menu-hub-hover</code></td><td>lighter slate</td><td>Background of the middle when it is a back button.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>5cqmin</code></td><td>Label size, as a share of the widget.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Concentric branches</h3>
+<figure class="example" data-kit data-height="340">
+  <script type="text/plain" data-html>
+<o-menu expand="concentric" label="Insert" items='[
+  {"label": "Text", "children": [{"label": "Title"}, {"label": "Body"}]},
+  {"label": "Media", "children": [{"label": "Image"}, {"label": "Video"}, {"label": "Audio"}]},
+  {"label": "Table"},
+  {"label": "Link"}
+]'></o-menu>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <figcaption>Open Media: its children fan out over its slice, and the root ring moves inward to make room.</figcaption>
+</figure>
+<h3>A colored half menu</h3>
+<figure class="example" data-kit data-height="340">
+  <script type="text/plain" data-html>
+<o-menu theme="color" range="180" from="270" label="Go" thickness="4" items='[
+  {"label": "Home", "color": "#60a5fa"},
+  {"label": "Files", "color": "#4fd1c5"},
+  {"label": "Share", "color": "#ffb547"},
+  {"label": "Help", "color": "#ff7a6b"}
+]'></o-menu>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>SVG icons and a custom accent</h3>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-menu label="Player" accent="#a3e635" size="220px" items='[
+  {"label": "Previous", "icon": "<svg viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M3 3h2v10H3zM13 3v10L6 8z\"/></svg>"},
+  {"label": "Play", "icon": "<svg viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M4 2.5v11l9-5.5z\"/></svg>"},
+  {"label": "Next", "icon": "<svg viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M11 3h2v10h-2zM3 3v10l7-5z\"/></svg>"},
+  {"label": "Stop", "icon": "<svg viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M3.5 3.5h9v9h-9z\"/></svg>"}
+]'></o-menu>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The menu has <code>role="menu"</code> and each sector <code>role="menuitem"</code>; branches add <code>aria-haspopup</code> and <code>aria-expanded</code>, and the selected leaf gets <code>aria-current</code>. Tab enters the menu once and leaves it on the next Tab. Arrow keys move around the visible items, Home and End jump to the first and last, Enter and Space activate, Escape and Backspace go back one level. Opening a branch moves focus to its first child; going back returns it to the branch.</p>
+<p>The menu is called by its <code>label</code>; set <code>aria-label</code> to name it otherwise.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

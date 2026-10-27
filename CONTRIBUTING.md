@@ -6,10 +6,10 @@ Thanks for helping. Bug reports, examples and pull requests are all welcome. Ask
 
 ```sh
 npm ci
-npm run demo
+npm run docs
 ```
 
-`npm run demo` compiles the source and serves [`demos/`](demos/) at <http://127.0.0.1:5174> with the local build. Recompile with `npm run compile` after a change and reload the page.
+`npm run docs` compiles the source and serves the documentation site in [`docs/`](docs/), at <http://127.0.0.1:5174> with the local build. Recompile with `npm run compile` after a change and reload the page.
 
 ## Where things are
 
@@ -21,7 +21,7 @@ npm run demo
 | `src/js/orbit-resize.js` | `Orbit.refresh()` and `Orbit.resize()`. |
 | `src/types/` | TypeScript declarations, copied to `dist/`. Update them with any public API change. |
 | `src/elements.mjs` | Attributes and CSS properties of the custom elements. The build turns it into `custom-elements.json` and the VS Code data file. |
-| `demos/` | One page per pattern, built on `../dist/`. |
+| `docs/` | The documentation site (plain HTML, GitHub Pages). `docs/demos/` has the full-page examples. `npm run docs:sync` copies the build into `docs/orbit/`. |
 | `test/` | Package, browser and shadow DOM tests. |
 
 ## Guidelines

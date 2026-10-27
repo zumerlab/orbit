@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timer · Orbit</title>
+  <meta name="description" content="o-timer is a countdown ring with start, pause and reset.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Timer</h1>
+<p class="lede"><code>&lt;o-timer&gt;</code> is a countdown ring with start, pause and reset.</p>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-timer duration="1:30" label="Tea"></o-timer>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>The time left is an <code>&lt;o-progress&gt;</code> on <code>orbit-12</code> that shrinks back toward 12 o'clock. The buttons in the middle are real buttons inside the center capsule. The ring is redrawn in small steps rather than every frame, and the digits change once a second.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>duration</code></td><td><code>60</code></td><td>Length of the countdown: seconds (<code>90</code> or <code>90s</code>), <code>m:ss</code> or <code>h:mm:ss</code>.</td></tr>
+<tr><td><code>remaining</code></td><td><code>duration</code></td><td>Time left to start from, in the same formats.</td></tr>
+<tr><td><code>running</code></td><td>off</td><td>Present while the timer runs. Add it to start, remove it to pause.</td></tr>
+<tr><td><code>label</code></td><td></td><td>A caption under the time. It is also part of the accessible name.</td></tr>
+<tr><td><code>warn</code></td><td></td><td>When the time left drops to this, the ring takes the warning color.</td></tr>
+<tr><td><code>ticks</code></td><td><code>0</code></td><td>Marks around the inside of the ring, such as <code>60</code> or <code>12</code>.</td></tr>
+<tr><td><code>controls</code></td><td>on</td><td><code>controls=&quot;false&quot;</code> hides the buttons, for a timer you drive from code.</td></tr>
+<tr><td><code>fill</code> / <code>track</code></td><td><code>#3da9fc</code> / faint gray</td><td>Ring colors.</td></tr>
+<tr><td><code>thickness</code></td><td><code>1.4</code></td><td>Ring thickness in lanes.</td></tr>
+<tr><td><code>shape</code></td><td><code>rounded</code></td><td>Ending of the ring.</td></tr>
+<tr><td><code>size</code></td><td><code>200px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow in the ring color.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Properties, methods and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>start()</code>, <code>pause()</code>, <code>toggle()</code>, <code>reset()</code></td><td>Control the countdown. <code>start()</code> after the end starts over.</td></tr>
+<tr><td><code>remaining</code></td><td>Seconds left. You can set it, also while running.</td></tr>
+<tr><td><code>running</code></td><td><code>true</code> while counting down. Setting it starts or pauses.</td></tr>
+<tr><td><code>duration</code></td><td>Length in seconds. Setting it writes the attribute.</td></tr>
+<tr><td><code>start</code>, <code>pause</code>, <code>reset</code></td><td>Fire when the state changes.</td></tr>
+<tr><td><code>tick</code></td><td>Fires each time the shown second changes while running.</td></tr>
+<tr><td><code>done</code></td><td>Fires once when the time is up.</td></tr>
+</tbody>
+</table></div>
+<p>The methods exist once the element is defined. A classic script that runs before the kit module can write <code>running</code> instead, or wait for <code>customElements.whenDefined('o-timer')</code>.</p>
+<p>Every event bubbles and carries <code>remaining</code> and <code>duration</code> in <code>event.detail</code>. While it runs, the element has the class <code>is-running</code>; near the end <code>is-warning</code>, and at zero <code>is-done</code>.</p>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-fill</code></td><td><code>#3da9fc</code></td><td>Ring and main button.</td></tr>
+<tr><td><code>--ok-track</code></td><td>faint gray</td><td>Track.</td></tr>
+<tr><td><code>--ok-timer-warn</code></td><td><code>#f59e0b</code></td><td>Ring color in the warning time.</td></tr>
+<tr><td><code>--ok-timer-done</code></td><td><code>#ef4565</code></td><td>Ring color at zero.</td></tr>
+<tr><td><code>--ok-timer-button</code></td><td><code>--ok-fill</code></td><td>Background of the start and pause button.</td></tr>
+<tr><td><code>--ok-timer-button-text</code></td><td><code>#0c0f13</code></td><td>Its icon color.</td></tr>
+<tr><td><code>--ok-timer-button-alt</code></td><td>translucent gray</td><td>Background of the reset button.</td></tr>
+<tr><td><code>--ok-tick</code></td><td><code>currentColor</code></td><td>Tick marks.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base text size.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>A dial with a warning</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-timer duration="20" warn="5" ticks="60" label="Plank" size="220px"></o-timer>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <figcaption>The ring turns amber in the last five seconds.</figcaption>
+</figure>
+<h3>Driven from code</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-timer id="lap" duration="10" running controls="false" thickness="3" shape="none" fill="#a78bfa"></o-timer>
+<p id="log">Starting…</p>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 8px; height: 100vh; }
+p { margin: 0; color: var(--muted); }
+  </script>
+  <script type="text/plain" data-js>
+const timer = document.getElementById('lap');
+const log = document.getElementById('log');
+timer.addEventListener('tick', (e) => { log.textContent = `${Math.ceil(e.detail.remaining)} s left`; });
+timer.addEventListener('done', () => {
+  log.textContent = 'Done. Again in 2 s';
+  setTimeout(() => timer.start(), 2000);
+});
+  </script>
+</figure>
+<h3>A light pomodoro</h3>
+<figure class="example" data-kit data-light data-height="280">
+  <script type="text/plain" data-html>
+<o-timer duration="25:00" label="Focus" fill="#ef4565" track="#fde2e4" style="--ok-timer-button-alt: #f1f5f9;"></o-timer>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The timer has <code>role="timer"</code> and a name like “Tea: 1:30 left of 1:30”. The ticking digits are not announced, which is how a timer should behave. When the time is up, a polite live region says so (“Tea: time is up”). The buttons are named Start, Pause, Resume and Reset as the state changes, and work with Enter and Space like any button.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>
