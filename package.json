@@ -29,7 +29,7 @@
   "scripts": {
     "compile": "node esbuild.config.mjs",
     "demo": "npm run compile && node scripts/demo.mjs",
-    "docs": "npm run compile && node scripts/docs-sync.mjs && node scripts/demo.mjs",
+    "docs": "npm run compile && node scripts/docs-sync.mjs && node scripts/sitemap.mjs && node scripts/demo.mjs",
     "docs:sync": "node scripts/docs-sync.mjs",
     "bump:dry": "npx @zumerbox/bump -d",
     "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",

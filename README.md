@@ -11,7 +11,7 @@ Orbit puts HTML on circles. Gauges, dials, knobs, radial menus, donut charts, wa
 
 You write plain HTML with a few classes. CSS does the geometry and the look; a small runtime keeps numbering, spacing and SVG arcs right as things change. It works the same in plain HTML, React, Vue, Svelte or anything else that renders the DOM.
 
-[Documentation and examples](https://zumerlab.com/orbit/) · [npm](https://www.npmjs.com/package/@zumer/orbit) · [Orbit 1.x docs](https://zumerlab.com/orbit-docs/)
+[Documentation and examples](https://zumerlab.com/orbit/) · [npm](https://www.npmjs.com/package/@zumer/orbit)
 
 ## Install
 
@@ -294,7 +294,7 @@ Version 2 changes where size comes from. In 1.x every system was 500px across, w
 - `<o-arc>` and `<o-progress>` are placed with `rotate` instead of `transform`, and endings scale with the band. `interactive` makes the whole band clickable.
 - `variant="stroke"` on `<o-progress>` draws a 2px line over a gray track by default.
 
-The [1.x documentation](https://zumerlab.com/orbit-docs/) stays online.
+The 1.x source and README stay on GitHub, at the [v1.6.0 tag](https://github.com/zumerlab/orbit/tree/v1.6.0#readme).
 
 ## Demos
 

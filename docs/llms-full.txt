@@ -80,7 +80,7 @@ A whole Orbit: a progress ring and a label. Nothing in it has a size in pixels, 
 - [Orbit Kit](https://zumerlab.com/orbit/kit/index.html): Ready-made gauges, donuts, knobs and clocks, one tag each.
 - [Coming from 1.x](https://zumerlab.com/orbit/migrating.html): What changed in 2.0, and one line to keep everything as it was.
 
-Orbit is open source under the MIT license, made by [Zumerlab](https://github.com/zumerlab). If it saves you time, you can [sponsor its development](https://github.com/sponsors/tinchox5). Using Orbit 1.x? Its [documentation](https://zumerlab.com/orbit-docs/) stays online.
+Orbit is open source under the MIT license, made by [Zumerlab](https://github.com/zumerlab). If it saves you time, you can [sponsor its development](https://github.com/sponsors/tinchox5). Using Orbit 1.x? [Coming from 1.x](https://zumerlab.com/orbit/migrating.html) shows what changed.
 
 ---
 
@@ -931,7 +931,7 @@ Source: https://zumerlab.com/orbit/migrating.html
 
 Orbit 2 changes one big thing: where size comes from. Everything else is smaller and mostly in your favor. You can move a layout over in a few minutes, or keep it exactly as it was with one line of CSS.
 
-The [1.x documentation](https://zumerlab.com/orbit-docs/) stays online.
+The 1.x source and README stay on GitHub, at the [v1.6.0 tag](https://github.com/zumerlab/orbit/tree/v1.6.0#readme).
 
 ## Size comes from the universe
 
