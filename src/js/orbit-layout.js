@@ -54,7 +54,7 @@ function diagnose(ring) {
   for (const child of ring.children) {
     if (orbitNumber(child) !== undefined) {
       warnOnce(child, 'nested-ring', `${describe(child)} is inside another ring. Rings must be direct children of .gravity-spot; ` +
-        'to nest a system, put a .bigbang > .gravity-spot inside a .satellite > .capsule.');
+        'to nest a system, put a .gravity-spot directly inside a .satellite.');
     } else if (!child.matches(KINDS)) {
       warnOnce(child, 'ring-child', `${describe(child)} is not placed by its ring. A ring holds only .satellite, .vector, .side, <o-arc> and <o-progress>; ` +
         'wrap content as <div class="satellite"><div class="capsule">…</div></div>.');

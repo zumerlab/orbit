@@ -59,6 +59,12 @@ export class OrbitProgress extends OrbitBase {
            thin gauge tripped on --o-fill/--o-back-fill. With this variant the
            paths are open arcs and the data color lives where you expect it:
            --o-stroke for the bar, --o-back-stroke for the track. */
+        /* The stroke variant draws a 2px bar over a gray 1px track unless you
+           set your own values on the element. */
+        :host([variant="stroke"]) {
+          --o-stroke-width: 2;
+          --o-back-stroke: var(--o-gray-light);
+        }
         :host([variant="stroke"]) .progress-bar {
           fill: none;
           stroke: var(--o-stroke);

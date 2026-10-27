@@ -1,26 +1,25 @@
 @use './variables'  as *;
 
-/* Orbit basic reset */
+/* Orbit basic reset.
+   Zero specificity, like the theme: any rule of yours wins, also on content
+   inside a .capsule. */
 
-.gravity-spot * {
-  ::before, ::after {
-    box-sizing: border-box;
-  }
-
+:where(.gravity-spot) :where(*, *::before, *::after) {
   box-sizing: border-box;
-  
-  margin: 0;
-  
-  input, button, textarea, select {
-    font: inherit;
-  }
-  
-  p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
-  }
+}
 
-  img, picture, video, canvas, svg {
-    max-width: unset;
-  }
-  
+:where(.gravity-spot *) {
+  margin: 0;
+}
+
+:where(.gravity-spot) :where(input, button, textarea, select) {
+  font: inherit;
+}
+
+:where(.gravity-spot) :where(p, h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: break-word;
+}
+
+:where(.gravity-spot) :where(img, picture, video, canvas, svg) {
+  max-width: unset;
 }

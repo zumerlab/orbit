@@ -55,11 +55,19 @@ export interface OrbitProgressAttributes {
 }
 
 export declare class OrbitArc extends HTMLElement {
+  /** Mirrors the `value` attribute; null when it is not set. Setting it redraws. */
+  value: number | null;
+  /** Mirrors the `max` attribute (default 100). Setting it redraws. */
+  max: number;
   /** Redraw now. The runtime calls this when the arc or its layout changes. */
   update(): void;
 }
 
 export declare class OrbitProgress extends HTMLElement {
+  /** Mirrors the `value` attribute; null when it is not set. Setting it redraws. */
+  value: number | null;
+  /** Mirrors the `max` attribute (default 100). Setting it redraws. */
+  max: number;
   /** Redraw now. The runtime calls this when the progress or its layout changes. */
   update(): void;
 }

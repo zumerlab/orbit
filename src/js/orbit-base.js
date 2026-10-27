@@ -6,7 +6,37 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
   }
 
   connectedCallback() {
+    // A framework may set .value or .max before the element is defined; apply
+    // those now so they reach the attribute.
+    for (const name of ['value', 'max']) {
+      if (Object.prototype.hasOwnProperty.call(this, name)) {
+        const pending = this[name];
+        delete this[name];
+        this[name] = pending;
+      }
+    }
     requestLayout(this);
+  }
+
+  /** value and max mirror their attributes, so property bindings redraw too. */
+  get value() {
+    const raw = this.getAttribute('value');
+    return raw === null || raw.trim() === '' ? null : Number(raw);
+  }
+
+  set value(next) {
+    if (next === null || next === undefined || next === '') this.removeAttribute('value');
+    else this.setAttribute('value', String(next));
+  }
+
+  get max() {
+    const raw = this.getAttribute('max');
+    return raw === null ? 100 : Number(raw);
+  }
+
+  set max(next) {
+    if (next === null || next === undefined || next === '') this.removeAttribute('max');
+    else this.setAttribute('max', String(next));
   }
 
   disconnectedCallback() {

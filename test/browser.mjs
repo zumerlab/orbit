@@ -219,6 +219,92 @@ for (const name of browsers) {
     assert.equal(await page.locator('#fluid-spot').evaluate(el => el.style.getPropertyValue('--o-force-ratio')), '', 'resize leaves fluid systems alone');
     assert.equal(await page.locator('#px-spot').evaluate(el => el.style.getPropertyValue('--o-force-ratio')), '0.5', 'resize scales fixed systems');
 
+    // Each satellite exposes its direction from the center (--o-dir-x, --o-dir-y),
+    // and its content inherits the numbers, not the capsule's own angle.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-6"><div class="satellite"><div class="capsule"><span id="dir-top">a</span></div></div><div class="satellite"><div class="capsule"><span id="dir-right">b</span></div></div><div class="satellite"><div class="capsule"><span id="dir-bottom">c</span></div></div><div class="satellite"><div class="capsule"><span id="dir-left">d</span></div></div></div><div class="orbit-0"><div class="satellite at-center"><div class="capsule"><span id="dir-center">e</span></div></div></div></div></div>');
+    const dir = id => page.locator(id).evaluate(el => [getComputedStyle(el).getPropertyValue('--o-dir-x'), getComputedStyle(el).getPropertyValue('--o-dir-y')].map(v => Math.round(parseFloat(v) * 1000) / 1000 + 0));
+    assert.deepEqual(await dir('#dir-top'), [0, -1], 'the first satellite points up');
+    assert.deepEqual(await dir('#dir-right'), [1, 0], 'then right');
+    assert.deepEqual(await dir('#dir-bottom'), [0, 1], 'then down');
+    assert.deepEqual(await dir('#dir-left'), [-1, 0], 'then left');
+    assert.deepEqual(await dir('#dir-center'), [0, 0], 'the center satellite has no direction');
+
+    // The reset has zero specificity: a single class of yours wins inside a capsule.
+    await page.addStyleTag({ content: '.mine { margin: 7px; font-size: 13px; }' });
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-6"><div class="satellite"><div class="capsule"><button class="mine" id="mine">x</button></div></div></div></div></div>');
+    assert.deepEqual(await page.locator('#mine').evaluate(el => [getComputedStyle(el).marginTop, getComputedStyle(el).fontSize]), ['7px', '13px'], 'user classes beat the reset');
+
+    // A nested system starts from the defaults: the shrink of the ring that holds it does not reach it.
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-10 shrink-50"><div class="satellite grow-4x"><div class="gravity-spot"><div class="orbit-0"><div class="satellite at-center grow-6x" id="nested-center"></div></div></div></div></div></div></div>');
+    assert(await page.locator('#nested-center').evaluate(el => el.offsetWidth) > 0, 'shrink-N does not leak into a nested system');
+
+    // dev-orbit combines with a theme on the same element.
+    await fixture('<div class="bigbang theme-cyan dev-orbit" style="width:300px"><div class="gravity-spot"><div class="orbit-8"><div class="satellite" id="dev-sat"><div class="capsule">A</div></div></div></div></div>');
+    assert.equal(await page.locator('#dev-sat').evaluate(el => getComputedStyle(el).borderTopStyle), 'dashed', 'dev-orbit wins over theme-cyan');
+
+    // theme-cyan does not outrank a single class of yours.
+    await page.addStyleTag({ content: '.my-sat { border: 3px solid rgb(1, 2, 3); }' });
+    await fixture('<div class="bigbang theme-cyan" style="width:300px"><div class="gravity-spot"><div class="orbit-8"><div class="satellite my-sat" id="cy-sat"><div class="capsule">A</div></div></div></div></div>');
+    assert.equal(await page.locator('#cy-sat').evaluate(el => getComputedStyle(el).borderTopColor), 'rgb(1, 2, 3)', 'a single class beats theme-cyan');
+
+    // variant="stroke" draws a 2px bar over a gray track by default.
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8"><o-progress id="sv" variant="stroke" value="40"></o-progress></div></div></div>');
+    await settle();
+    const sv = await page.locator('#sv').evaluate(el => { const r = el.shadowRoot; const s = p => getComputedStyle(r.querySelector(p)); return [s('.progress-bar').strokeWidth, s('.progress-bg').stroke]; });
+    assert.equal(sv[0], '2px', 'stroke variant bar is 2px');
+    assert.notEqual(sv[1], 'none', 'stroke variant draws its track');
+
+    // angle-N points satellites, vectors and sides the same way.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot" id="ang-gs"><div class="orbit-8"><div class="satellite angle-90" id="ang-sat"></div></div><div class="orbit-6"><div class="vector angle-90" id="ang-vec"></div></div><div class="orbit-10"><div class="side angle-90" id="ang-side"></div><div class="side angle-90" style="opacity:0"></div><div class="side angle-90" style="opacity:0"></div></div></div></div>');
+    await settle();
+    const angleOffset = id => page.evaluate(([gsId, elId]) => {
+      const c = r => [r.left + r.width / 2, r.top + r.height / 2];
+      const [gx, gy] = c(document.getElementById(gsId).getBoundingClientRect());
+      const [x, y] = c(document.getElementById(elId).getBoundingClientRect());
+      return [Math.round(x - gx), Math.round(y - gy)];
+    }, ['ang-gs', id]);
+    for (const id of ['ang-sat', 'ang-vec', 'ang-side']) {
+      const [dx, dy] = await angleOffset(id);
+      assert(dx > 20 && Math.abs(dy) < 3, `${id}: angle-90 points right (got ${dx}, ${dy})`);
+    }
+
+    // Only real angle-N classes reset --o-from.
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8 from-90"><div class="satellite triangle-icon" id="tri"></div></div></div></div>');
+    assert.equal(await page.locator('#tri').evaluate(el => getComputedStyle(el).getPropertyValue('--o-from').trim()), '90deg', 'a class that merely contains "angle-" keeps --o-from');
+
+    // core-N is the new name of from-Nx.
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot core-4"><div class="orbit-4" id="core-new"></div></div></div><div class="bigbang" style="width:300px"><div class="gravity-spot from-4x"><div class="orbit-4" id="core-old"></div></div></div>');
+    const coreNew = await page.locator('#core-new').evaluate(el => el.offsetWidth);
+    assert.equal(coreNew, await page.locator('#core-old').evaluate(el => el.offsetWidth), 'core-4 and from-4x match');
+    assert(coreNew > 300 * 4 / 12 + 5, 'core-4 pushes orbit-4 outward');
+
+    // --o-color on an element gives it its own shades.
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8" style="--o-color: rgb(255, 0, 0)"><div class="satellite" id="shade" style="background: var(--o-color-dark)"></div></div></div></div>');
+    const shade = await page.locator('#shade').evaluate(el => getComputedStyle(el).backgroundColor);
+    assert(/^(rgb|oklab|color)/.test(shade) && !/rgba?\(0, 0, 0/.test(shade) && shade !== 'rgba(0, 0, 0, 0)', `--o-color-dark follows a local --o-color (got ${shade})`);
+    const red = await page.locator('#shade').evaluate(el => { const c = document.createElement('canvas').getContext('2d'); c.fillStyle = getComputedStyle(el).backgroundColor; c.fillRect(0, 0, 1, 1); return [...c.getImageData(0, 0, 1, 1).data]; });
+    assert(red[0] > 150 && red[1] < 60 && red[2] < 60, `the shade is a dark red (got ${red})`);
+
+    // Utility classes carry no !important: an inline style or a more specific rule of yours wins.
+    await page.addStyleTag({ content: '.ring .big { --o-size-ratio: 1; }' });
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-6 ring"><div class="satellite" id="u-plain"></div><div class="satellite grow-2x" id="u-grow"></div><div class="satellite grow-2x" style="--o-size-ratio: 1" id="u-inline"></div><div class="satellite grow-2x big" id="u-rule"></div></div></div></div>');
+    const uw = id => page.locator(id).evaluate(el => el.offsetWidth);
+    const plain = await uw('#u-plain');
+    assert(await uw('#u-grow') > plain * 3, 'grow-2x makes a satellite four lanes thick');
+    assert.equal(await uw('#u-inline'), plain, 'an inline --o-size-ratio beats grow-2x');
+    assert.equal(await uw('#u-rule'), plain, 'a more specific rule beats grow-2x');
+
+    // value and max are properties too, so frameworks that bind properties redraw.
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8"><o-progress id="prop" value="72"></o-progress></div></div></div>');
+    await settle();
+    const bar = () => page.locator('#prop').evaluate(el => el.shadowRoot.querySelector('.progress-bar').getAttribute('d'));
+    const before = await bar();
+    await page.locator('#prop').evaluate(el => { el.value = 30; });
+    await settle();
+    assert.equal(await page.locator('#prop').getAttribute('value'), '30', 'setting .value writes the attribute');
+    assert.notEqual(await bar(), before, 'setting .value redraws');
+    assert.equal(await page.locator('#prop').evaluate(el => [el.value, el.max].join()), '30,100', 'value and max read back as numbers');
+
     // Problems are explained in the console.
     warnings.length = 0;
     await fixture('<span style="display:inline-block"><div class="bigbang"><div class="gravity-spot"><div class="orbit-6"></div></div></div></span><div class="bigbang dev-orbit" style="width:200px"><div class="gravity-spot"><div class="orbit-6"><p>loose</p><div class="satellite"><span>bare</span></div><o-progress value="lots"></o-progress><o-arc value="5" max="0"></o-arc></div></div></div>');
@@ -231,6 +317,6 @@ for (const name of browsers) {
     assert.equal(warnings.length, count, 'each problem is reported once');
 
     assert.deepEqual(errors, [], `${name} has no browser errors`);
-    console.log(`${name}: layout, stacking, zero, responsive SVG, CSS overrides, lifecycle, geometry, universe sizing, cascade and diagnostics passed`);
+    console.log(`${name}: layout, stacking, zero, responsive SVG, CSS overrides, lifecycle, geometry, universe sizing, cascade, directions, reset and diagnostics passed`);
   } finally { await browser.close(); }
 }

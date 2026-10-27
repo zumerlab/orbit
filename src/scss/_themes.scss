@@ -36,6 +36,11 @@
   --o-back-stroke-width: 1;
 }
 
+/* The stroke variant: a 2px bar over a gray track. */
+:where(o-progress[variant="stroke"]) {
+  --o-stroke-width: 2;
+  --o-back-stroke: var(--o-gray-light);
+}
 
 :where(o-arc) {
   --o-fill: var(--o-gray-light);
@@ -44,7 +49,67 @@
 }
 
 
-/* Dev theme based on default*/
+/* Cyan theme. Only its class counts for specificity, so a single class of
+   yours wins over it, as with the default theme. */
+
+:where(.theme-cyan) {
+  .gravity-spot {
+    background: none;
+    border: none; 
+  }
+
+  #{$orbit-selector} {
+    border: 1px solid transparent;
+  }
+
+  .satellite {
+    background-color: transparent;
+    border: 1px solid var(--o-cyan);
+  }
+
+  .vector {
+    border: none;
+    background: var(--o-cyan);
+  }
+
+  .side {
+    border: none;
+    background: var(--o-cyan);
+  }
+
+  o-progress {
+    --o-fill: var(--o-cyan-light);
+    --o-stroke: var(--o-fill);
+    --o-stroke-width: 1;
+    --o-back-fill: transparent;
+    --o-back-stroke: none;
+    --o-back-stroke-width: 1;
+  }
+
+  o-progress:hover {
+    --o-fill: var(--o-cyan-lighter);
+    --o-stroke: var(--o-fill);
+    --o-stroke-width: 2;
+    --o-back-fill: transparent;
+    --o-back-stroke: none;
+    --o-back-stroke-width: 2;
+  }
+
+  o-arc {
+    --o-fill: var(--o-cyan-light);
+    --o-stroke: var(--o-fill);
+    --o-stroke-width: 1;
+  }
+
+  o-arc:hover {
+    --o-fill: var(--o-cyan-lighter);
+    --o-stroke: var(--o-fill);
+    --o-stroke-width: 2;
+  }
+
+}
+
+/* Developer mode last: it combines with a theme on the same element. */
 .dev-orbit.gravity-spot {
     background: none;
     border: 1px dashed var(--o-red-light); 
@@ -108,66 +173,3 @@
   }
   
 }
-
-/* cyan theme based on default*/
-
-.theme-cyan {
-  .gravity-spot {
-    background: none;
-    border: none; 
-  }
-
-  #{$orbit-selector} {
-    border: 1px solid transparent;
-  }
-
-  .satellite {
-    background-color: transparent;
-    border: 1px solid var(--o-cyan);
-  }
-
-  .vector {
-    border: none;
-    background: var(--o-cyan);
-  }
-
-  .side {
-    border: none;
-    background: var(--o-cyan);
-  }
-
-  o-progress {
-    --o-fill: var(--o-cyan-light);
-    --o-stroke: var(--o-fill);
-    --o-stroke-width: 1;
-    --o-back-fill: transparent;
-    --o-back-stroke: none;
-    --o-back-stroke-width: 1;
-  }
-
-  o-progress:hover {
-    --o-fill: var(--o-cyan-lighter);
-    --o-stroke: var(--o-fill);
-    --o-stroke-width: 2;
-    --o-back-fill: transparent;
-    --o-back-stroke: none;
-    --o-back-stroke-width: 2;
-  }
-
-  o-arc {
-    --o-fill: var(--o-cyan-light);
-    --o-stroke: var(--o-fill);
-    --o-stroke-width: 1;
-  }
-
-  o-arc:hover {
-    --o-fill: var(--o-cyan-lighter);
-    --o-stroke: var(--o-fill);
-    --o-stroke-width: 2;
-  }
-
-}
-
-
-
-

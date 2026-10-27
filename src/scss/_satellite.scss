@@ -1,3 +1,16 @@
+/* Direction from the center to the satellite, as a unit vector: x grows to
+   the right and y grows down. Registered so they are computed on the satellite
+   and its content inherits the numbers (a .capsule resets its own angle). */
+@property --o-dir-x {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+@property --o-dir-y {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
 
 .satellite {
   container-name: satellite;
@@ -14,6 +27,8 @@
         sin(var(--o-from) + var(--o-angle-composite))
     )
   );
+  --o-dir-x: cos(var(--o-from) + var(--o-angle-composite));
+  --o-dir-y: sin(var(--o-from) + var(--o-angle-composite));
   transform: var(--o-transform) var(--o-transform-custom, rotate(0deg));
   width: calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1));
   height: calc(var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0))* var(--o-size-ratio, 1));
@@ -27,6 +42,8 @@
 
 .satellite.at-center {
   --o-transform: rotate(0deg);
+  --o-dir-x: 0;
+  --o-dir-y: 0;
 }
 .satellite.circle {
   border-radius: 50%;
