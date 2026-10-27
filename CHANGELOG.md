@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v2.0.0](https://github.com/zumerlab/orbit/compare/v1.6.0...v2.0.0)
+
+> 27 October 2026
+
+Orbit 2 changes where size comes from: the `.bigbang` is the universe and its box sets the size, so layouts follow their container with no code. To keep a 1.x layout exactly as it was, set `.gravity-spot { --o-force: 500px; }`. See [Coming from 1.x](https://zumerlab.com/orbit/migrating.html).
+
+**Features**
+
+- The universe model: `--o-force` defaults to `100cqmin`, every ring is a share of the box, satellites are universes too.
+- New documentation site at [zumerlab.com/orbit](https://zumerlab.com/orbit/), with live editable examples, demos and Orbit Kit.
+- `range="auto"` and `text-anchor` for arcs that fit their text; `interactive` and `hit-width` for touch.
+- `--o-dir-x` / `--o-dir-y` on satellites; depth layers; `Orbit.ready()` and the `o-rendered` event.
+- `value` and `max` are properties on `<o-arc>` and `<o-progress>`, so framework bindings redraw.
+- `core-N` as the new name of `from-Nx` (the old name still works).
+- `[orbit]` messages in the console explain broken layouts.
+
+**Fixes**
+
+- Reset and themes have zero specificity; utility classes no longer use `!important`.
+- Nested systems start from the defaults; `shrink-N` does not leak into them.
+- `angle-N` on `.side` points like on satellites; only real `angle-N` classes reset `--o-from`.
+- `--o-color` on a ring or satellite gives it its own shades.
+- Arcs and progress hide on elliptical rings, as documented.
+
 #### [v1.6.0](https://github.com/zumerlab/orbit/compare/v1.5.0...v1.6.0)
 
 > 25 October 2026

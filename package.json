@@ -1,6 +1,6 @@
 {
   "name": "@zumer/orbit",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "Orbit builds radial interfaces with CSS geometry and a small JavaScript layout runtime",
   "main": "./dist/orbit.js",
   "module": "./dist/orbit.mjs",
@@ -34,6 +34,7 @@
     "bump:dry": "npx @zumerbox/bump -d",
     "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
     "build": "npm run compile && npm pack",
+    "prepublishOnly": "npm run compile",
     "test": "npm run compile && npm run test:package && npm run test:browser && npm run test:shadow",
     "test:package": "node test/package.mjs",
     "test:browser": "node test/browser.mjs",
@@ -59,7 +60,7 @@
   "bugs": {
     "url": "https://github.com/zumerlab/orbit/issues"
   },
-  "homepage": "https://github.com/zumerlab/orbit#readme",
+  "homepage": "https://zumerlab.com/orbit/",
   "devDependencies": {
     "esbuild": "^0.25.12",
     "playwright": "^1.55.1",

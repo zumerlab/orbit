@@ -5,7 +5,7 @@ import { join, dirname, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DOCS = join(dirname(fileURLToPath(import.meta.url)), '..', 'docs');
-const SITE = 'https://zumerlab.github.io/orbit/';
+const SITE = 'https://zumerlab.com/orbit/';
 const read = (p) => readFileSync(join(DOCS, p), 'utf8');
 
 // ─── Which pages, in which order ───────────────────────────
@@ -158,7 +158,7 @@ ${examples.length ? `\n## Examples\n\n${examples.map(line).join('\n')}\n` : ''}$
 
 - [llms-full.txt](${SITE}llms-full.txt): the text and code of every page above in one file
 - [Source on GitHub](https://github.com/zumerlab/orbit)
-- [1.x documentation](https://zumerlab.github.io/orbit-docs/v1/)
+- [1.x documentation](https://zumerlab.com/orbit-docs/v1/)
 `;
 
 // ─── llms-full.txt ─────────────────────────────────────────

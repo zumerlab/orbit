@@ -11,7 +11,7 @@ Orbit puts HTML on circles. Gauges, dials, knobs, radial menus, donut charts, wa
 
 You write plain HTML with a few classes. CSS does the geometry and the look; a small runtime keeps numbering, spacing and SVG arcs right as things change. It works the same in plain HTML, React, Vue, Svelte or anything else that renders the DOM.
 
-[Documentation and examples](https://zumerlab.github.io/orbit/) · [npm](https://www.npmjs.com/package/@zumer/orbit) · [Orbit 1.x docs](https://zumerlab.github.io/orbit-docs/)
+[Documentation and examples](https://zumerlab.com/orbit/) · [npm](https://www.npmjs.com/package/@zumer/orbit) · [Orbit 1.x docs](https://zumerlab.com/orbit-docs/)
 
 ## Install
 
@@ -224,7 +224,7 @@ A system can stack its rings in 3D. Add `depth` to the `.gravity-spot` and each 
 | `--o-back-opacity` | `1` | Opacity of the layers behind the front one. |
 | `--o-depth-duration` / `--o-depth-easing` | `.8s` / `cubic-bezier(.2,.8,.2,1)` | The depth transition. Off with `prefers-reduced-motion`. |
 
-A layer can be a whole system, ring, label and face together: make it a nested `.gravity-spot` with `data-depth`. To tilt the whole object from outside (with the pointer, say), add `outer-perspective` next to `depth` and set `--o-perspective` to the perspective of the ancestor that owns it. The [depth demo](https://zumerlab.github.io/orbit/demos/11-depth-layers.html) shows both.
+A layer can be a whole system, ring, label and face together: make it a nested `.gravity-spot` with `data-depth`. To tilt the whole object from outside (with the pointer, say), add `outer-perspective` next to `depth` and set `--o-perspective` to the perspective of the ancestor that owns it. The [depth demo](https://zumerlab.com/orbit/demos/11-depth-layers.html) shows both.
 
 ## In an app
 
@@ -294,7 +294,7 @@ Version 2 changes where size comes from. In 1.x every system was 500px across, w
 - `<o-arc>` and `<o-progress>` are placed with `rotate` instead of `transform`, and endings scale with the band. `interactive` makes the whole band clickable.
 - `variant="stroke"` on `<o-progress>` draws a 2px line over a gray track by default.
 
-The [1.x documentation](https://zumerlab.github.io/orbit-docs/) stays online.
+The [1.x documentation](https://zumerlab.com/orbit-docs/) stays online.
 
 ## Demos
 
@@ -307,13 +307,13 @@ npm run docs
 
 Then open <http://127.0.0.1:5174> (`PORT=5175 npm run docs` for another port). That is this repo's documentation site, from `docs/`, running on your local build. Start with [the universe model](docs/demos/00-universe.html): drag the corner of the box and watch the system follow. All the examples are in the gallery, from full pages to small pieces with their code open.
 
-The [documentation site](https://zumerlab.github.io/orbit/) has many more: [gauges](https://zumerlab.github.io/orbit/examples/gauges/), [charts](https://zumerlab.github.io/orbit/examples/charts/), [radial menus](https://zumerlab.github.io/orbit/examples/piemenu.html), [knobs](https://zumerlab.github.io/orbit/examples/knobs/), [watch faces](https://zumerlab.github.io/orbit/examples/watches/). [Orbit Kit](https://zumerlab.github.io/orbit/kit/) has ready-made components built on Orbit.
+The [documentation site](https://zumerlab.com/orbit/) has many more: [gauges](https://zumerlab.com/orbit/examples/gauges/), [charts](https://zumerlab.com/orbit/examples/charts/), [radial menus](https://zumerlab.com/orbit/examples/piemenu.html), [knobs](https://zumerlab.com/orbit/examples/knobs/), [watch faces](https://zumerlab.com/orbit/examples/watches/). [Orbit Kit](https://zumerlab.com/orbit/kit/) has ready-made components built on Orbit.
 
 ## Help and contributing
 
 Report bugs in [Issues](https://github.com/zumerlab/orbit/issues), share what you made or ask in [Discussions](https://github.com/zumerlab/orbit/discussions), or say hi in the [Telegram group](https://t.me/ZumlyCommunity). To work on Orbit itself, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-For coding assistants, [llms.txt](https://zumerlab.github.io/orbit/llms.txt) is a short reference and [llms-full.txt](https://zumerlab.github.io/orbit/llms-full.txt) the complete one.
+For coding assistants, [llms.txt](https://zumerlab.com/orbit/llms.txt) is a short reference and [llms-full.txt](https://zumerlab.com/orbit/llms-full.txt) the complete one.
 
 ## Sponsor
 

@@ -24,127 +24,127 @@ Install: `npm install @zumer/orbit`, then `import '@zumer/orbit/style'` and `imp
 
 ## Start
 
-- [Home](https://zumerlab.github.io/orbit/): Orbit is a CSS layout system for radial interfaces: gauges, dials, knobs, radial menus, charts and watch faces, in plain HTML.
-- [How Orbit thinks](https://zumerlab.github.io/orbit/universe.html): The Orbit model in one page. A bigbang is the universe, a gravity-spot its center, orbits are lanes, satellites travel them. Everything is a fraction of one box.
-- [Install](https://zumerlab.github.io/orbit/install.html): Install Orbit 2 from npm or a CDN, what each file in the package is for, the [orbit] console messages and browser support.
-- [Build a knob](https://zumerlab.github.io/orbit/guide.html): Build a volume knob with Orbit step by step: a universe, a center, rings, ticks, a progress band and a body that is a system of its own.
-- [Coming from 1.x](https://zumerlab.github.io/orbit/migrating.html): What changed in Orbit 2 and how to move a 1.x layout to the new model, or keep it exactly as it was.
+- [Home](https://zumerlab.com/orbit/): Orbit is a CSS layout system for radial interfaces: gauges, dials, knobs, radial menus, charts and watch faces, in plain HTML.
+- [How Orbit thinks](https://zumerlab.com/orbit/universe.html): The Orbit model in one page. A bigbang is the universe, a gravity-spot its center, orbits are lanes, satellites travel them. Everything is a fraction of one box.
+- [Install](https://zumerlab.com/orbit/install.html): Install Orbit 2 from npm or a CDN, what each file in the package is for, the [orbit] console messages and browser support.
+- [Build a knob](https://zumerlab.com/orbit/guide.html): Build a volume knob with Orbit step by step: a universe, a center, rings, ticks, a progress band and a body that is a system of its own.
+- [Coming from 1.x](https://zumerlab.com/orbit/migrating.html): What changed in Orbit 2 and how to move a 1.x layout to the new model, or keep it exactly as it was.
 
 ## Elements
 
-- [Bigbang](https://zumerlab.github.io/orbit/reference/bigbang.html): The .bigbang is the universe of an Orbit layout. Its box sets the size of everything inside it.
-- [Gravity spot](https://zumerlab.github.io/orbit/reference/gravity-spot.html): The .gravity-spot is the center of an Orbit system. Its reach sets the size of every ring.
-- [Orbits](https://zumerlab.github.io/orbit/reference/orbit.html): Rings (.orbit-N) are the lanes around a gravity spot. Which lane, thickness, spacing, angles and ellipses.
-- [Satellites](https://zumerlab.github.io/orbit/reference/satellite.html): A .satellite travels a ring and carries your content. Size, shape, position, angle and direction.
-- [Capsules](https://zumerlab.github.io/orbit/reference/capsule.html): A .capsule holds your content inside a satellite or a side, centered and upright.
-- [Vectors](https://zumerlab.github.io/orbit/reference/vector.html): A .vector is a ray pointing out from the center: ticks, scales and needles.
-- [Sides](https://zumerlab.github.io/orbit/reference/side.html): A .side is a chord between neighbors on a ring. Several sides close a regular polygon.
-- [Arcs](https://zumerlab.github.io/orbit/reference/arc.html): <o-arc> draws a piece of a lane: segmented rings, pies, donut charts and curved text.
-- [Progress](https://zumerlab.github.io/orbit/reference/progress.html): <o-progress> fills a lane up to a value: progress rings, gauges and meters.
+- [Bigbang](https://zumerlab.com/orbit/reference/bigbang.html): The .bigbang is the universe of an Orbit layout. Its box sets the size of everything inside it.
+- [Gravity spot](https://zumerlab.com/orbit/reference/gravity-spot.html): The .gravity-spot is the center of an Orbit system. Its reach sets the size of every ring.
+- [Orbits](https://zumerlab.com/orbit/reference/orbit.html): Rings (.orbit-N) are the lanes around a gravity spot. Which lane, thickness, spacing, angles and ellipses.
+- [Satellites](https://zumerlab.com/orbit/reference/satellite.html): A .satellite travels a ring and carries your content. Size, shape, position, angle and direction.
+- [Capsules](https://zumerlab.com/orbit/reference/capsule.html): A .capsule holds your content inside a satellite or a side, centered and upright.
+- [Vectors](https://zumerlab.com/orbit/reference/vector.html): A .vector is a ray pointing out from the center: ticks, scales and needles.
+- [Sides](https://zumerlab.com/orbit/reference/side.html): A .side is a chord between neighbors on a ring. Several sides close a regular polygon.
+- [Arcs](https://zumerlab.com/orbit/reference/arc.html): <o-arc> draws a piece of a lane: segmented rings, pies, donut charts and curved text.
+- [Progress](https://zumerlab.com/orbit/reference/progress.html): <o-progress> fills a lane up to a value: progress rings, gauges and meters.
 
 ## Craft
 
-- [Depth layers](https://zumerlab.github.io/orbit/craft/depth.html): Stack Orbit rings in 3D with .depth, data-depth and .layer-front. Layers keep their apparent size and animate when they move forward or back.
-- [Themes](https://zumerlab.github.io/orbit/craft/themes.html): Orbit's default theme, theme-cyan and the dev-orbit helper. All have zero specificity, so one class of yours always wins.
-- [Colors](https://zumerlab.github.io/orbit/craft/colors.html): Orbit's color palette: ten hues in seven shades each, as CSS custom properties.
-- [Visual aids](https://zumerlab.github.io/orbit/craft/visual-aids.html): dev-orbit draws the lanes of an Orbit layout, outlines elements in the wrong place and explains them in the console.
-- [Runtime and resizing](https://zumerlab.github.io/orbit/craft/runtime.html): How Orbit sizes layouts without code, and the small runtime API: Orbit.ready(), the o-rendered event, Orbit.refresh() and Orbit.resize() for fixed-size systems.
+- [Depth layers](https://zumerlab.com/orbit/craft/depth.html): Stack Orbit rings in 3D with .depth, data-depth and .layer-front. Layers keep their apparent size and animate when they move forward or back.
+- [Themes](https://zumerlab.com/orbit/craft/themes.html): Orbit's default theme, theme-cyan and the dev-orbit helper. All have zero specificity, so one class of yours always wins.
+- [Colors](https://zumerlab.com/orbit/craft/colors.html): Orbit's color palette: ten hues in seven shades each, as CSS custom properties.
+- [Visual aids](https://zumerlab.com/orbit/craft/visual-aids.html): dev-orbit draws the lanes of an Orbit layout, outlines elements in the wrong place and explains them in the console.
+- [Runtime and resizing](https://zumerlab.com/orbit/craft/runtime.html): How Orbit sizes layouts without code, and the small runtime API: Orbit.ready(), the o-rendered event, Orbit.refresh() and Orbit.resize() for fixed-size systems.
 
 ## Frameworks
 
-- [React](https://zumerlab.github.io/orbit/frameworks/react.html): Use Orbit in React: install, import the stylesheet and runtime, render the markup, and load the JSX types for o-arc and o-progress.
-- [Vue](https://zumerlab.github.io/orbit/frameworks/vue.html): Use Orbit in Vue: install, tell the compiler that o-arc and o-progress are custom elements, and bind values in templates.
-- [Svelte](https://zumerlab.github.io/orbit/frameworks/svelte.html): Use Orbit in Svelte and SvelteKit: install, import the stylesheet and runtime, and bind values in markup.
-- [Angular](https://zumerlab.github.io/orbit/frameworks/angular.html): Use Orbit in Angular: add the stylesheet, import the runtime, allow custom elements with CUSTOM_ELEMENTS_SCHEMA and bind values as attributes.
-- [Astro](https://zumerlab.github.io/orbit/frameworks/astro.html): Use Orbit in Astro: import the stylesheet in frontmatter and the runtime in a script tag. No island needed.
+- [React](https://zumerlab.com/orbit/frameworks/react.html): Use Orbit in React: install, import the stylesheet and runtime, render the markup, and load the JSX types for o-arc and o-progress.
+- [Vue](https://zumerlab.com/orbit/frameworks/vue.html): Use Orbit in Vue: install, tell the compiler that o-arc and o-progress are custom elements, and bind values in templates.
+- [Svelte](https://zumerlab.com/orbit/frameworks/svelte.html): Use Orbit in Svelte and SvelteKit: install, import the stylesheet and runtime, and bind values in markup.
+- [Angular](https://zumerlab.com/orbit/frameworks/angular.html): Use Orbit in Angular: add the stylesheet, import the runtime, allow custom elements with CUSTOM_ELEMENTS_SCHEMA and bind values as attributes.
+- [Astro](https://zumerlab.com/orbit/frameworks/astro.html): Use Orbit in Astro: import the stylesheet in frontmatter and the runtime in a script tag. No island needed.
 
 ## Orbit Kit
 
-- [Orbit Kit](https://zumerlab.github.io/orbit/kit/): Orbit Kit: ready-made radial components built on Orbit 2. Gauges, charts, knobs, menus, instruments, clocks, timers and status rings, one tag each.
-- [Shared options](https://zumerlab.github.io/orbit/kit/options.html): Themes, number format, min, max and step, and forms work the same in every Orbit Kit component.
-- [Gauge](https://zumerlab.github.io/orbit/kit/gauge.html): o-gauge shows one value on an arc, with a readout in the middle.
-- [Donut](https://zumerlab.github.io/orbit/kit/donut.html): o-donut draws a donut chart from a JSON array.
-- [Rings](https://zumerlab.github.io/orbit/kit/rings.html): o-rings draws concentric activity rings, outermost first.
-- [Knob](https://zumerlab.github.io/orbit/kit/knob.html): o-knob is a rotary control you turn with the pointer, the wheel or the keyboard.
-- [Menu](https://zumerlab.github.io/orbit/kit/menu.html): o-menu is a radial menu, flat or nested, that opens branches in place or as outer rings.
-- [Instrument](https://zumerlab.github.io/orbit/kit/instrument.html): o-instrument is a needle gauge with ticks, a scale, color zones and presets for cars, aircraft and computers.
-- [Clock](https://zumerlab.github.io/orbit/kit/clock.html): o-clock is an analog clock or watch face, live or set to a time.
-- [Compass](https://zumerlab.github.io/orbit/kit/compass.html): o-compass is a heading indicator: the card turns so the heading sits under the index.
-- [Radar](https://zumerlab.github.io/orbit/kit/radar.html): o-radar is a scope with range rings, spokes, a rotating sweep and blips.
-- [Timer](https://zumerlab.github.io/orbit/kit/timer.html): o-timer is a countdown ring with start, pause and reset.
-- [Status](https://zumerlab.github.io/orbit/kit/status.html): o-status shows the health of a set of things as colored segments, in layers when they are grouped.
-- [Range](https://zumerlab.github.io/orbit/kit/range.html): o-range is a circular range slider: two handles on one ring pick a start and an end, numbers or times of day.
-- [Time picker](https://zumerlab.github.io/orbit/kit/time-picker.html): o-time-picker picks a time by turning a clock: hours first, then minutes.
-- [Spinner](https://zumerlab.github.io/orbit/kit/spinner.html): o-spinner is a circular loading indicator in five variants, with determinate progress and a calm version for reduced motion.
-- [Radar chart](https://zumerlab.github.io/orbit/kit/radar-chart.html): o-radar-chart compares a few values across several axes as polygons on a web, one per series.
-- [Sunburst](https://zumerlab.github.io/orbit/kit/sunburst.html): o-sunburst draws a tree as nested rings: one ring per level, every child inside its parent, with zoom, hover and keyboard.
-- [Wheel](https://zumerlab.github.io/orbit/kit/wheel.html): o-wheel is a prize wheel: it spins, slows down and lands on a result picked by weight.
-- [Color wheel](https://zumerlab.github.io/orbit/kit/color-wheel.html): o-color-wheel is a color picker: a hue ring around a saturation and brightness square, with optional swatches.
+- [Orbit Kit](https://zumerlab.com/orbit/kit/): Orbit Kit: ready-made radial components built on Orbit 2. Gauges, charts, knobs, menus, instruments, clocks, timers and status rings, one tag each.
+- [Shared options](https://zumerlab.com/orbit/kit/options.html): Themes, number format, min, max and step, and forms work the same in every Orbit Kit component.
+- [Gauge](https://zumerlab.com/orbit/kit/gauge.html): o-gauge shows one value on an arc, with a readout in the middle.
+- [Donut](https://zumerlab.com/orbit/kit/donut.html): o-donut draws a donut chart from a JSON array.
+- [Rings](https://zumerlab.com/orbit/kit/rings.html): o-rings draws concentric activity rings, outermost first.
+- [Knob](https://zumerlab.com/orbit/kit/knob.html): o-knob is a rotary control you turn with the pointer, the wheel or the keyboard.
+- [Menu](https://zumerlab.com/orbit/kit/menu.html): o-menu is a radial menu, flat or nested, that opens branches in place or as outer rings.
+- [Instrument](https://zumerlab.com/orbit/kit/instrument.html): o-instrument is a needle gauge with ticks, a scale, color zones and presets for cars, aircraft and computers.
+- [Clock](https://zumerlab.com/orbit/kit/clock.html): o-clock is an analog clock or watch face, live or set to a time.
+- [Compass](https://zumerlab.com/orbit/kit/compass.html): o-compass is a heading indicator: the card turns so the heading sits under the index.
+- [Radar](https://zumerlab.com/orbit/kit/radar.html): o-radar is a scope with range rings, spokes, a rotating sweep and blips.
+- [Timer](https://zumerlab.com/orbit/kit/timer.html): o-timer is a countdown ring with start, pause and reset.
+- [Status](https://zumerlab.com/orbit/kit/status.html): o-status shows the health of a set of things as colored segments, in layers when they are grouped.
+- [Range](https://zumerlab.com/orbit/kit/range.html): o-range is a circular range slider: two handles on one ring pick a start and an end, numbers or times of day.
+- [Time picker](https://zumerlab.com/orbit/kit/time-picker.html): o-time-picker picks a time by turning a clock: hours first, then minutes.
+- [Spinner](https://zumerlab.com/orbit/kit/spinner.html): o-spinner is a circular loading indicator in five variants, with determinate progress and a calm version for reduced motion.
+- [Radar chart](https://zumerlab.com/orbit/kit/radar-chart.html): o-radar-chart compares a few values across several axes as polygons on a web, one per series.
+- [Sunburst](https://zumerlab.com/orbit/kit/sunburst.html): o-sunburst draws a tree as nested rings: one ring per level, every child inside its parent, with zoom, hover and keyboard.
+- [Wheel](https://zumerlab.com/orbit/kit/wheel.html): o-wheel is a prize wheel: it spins, slows down and lands on a result picked by weight.
+- [Color wheel](https://zumerlab.com/orbit/kit/color-wheel.html): o-color-wheel is a color picker: a hue ring around a saturation and brightness square, with optional swatches.
 
 ## See it working
 
-- [Examples](https://zumerlab.github.io/orbit/examples/): A gallery of Orbit examples: gauges, progress rings, knobs, charts, watch faces, calendars, mandalas and more, each live and editable.
-- [Use cases](https://zumerlab.github.io/orbit/use-cases/): Where Orbit fits: dashboards, IoT and hardware, fitness apps, audio tools and game interfaces.
+- [Examples](https://zumerlab.com/orbit/examples/): A gallery of Orbit examples: gauges, progress rings, knobs, charts, watch faces, calendars, mandalas and more, each live and editable.
+- [Use cases](https://zumerlab.com/orbit/use-cases/): Where Orbit fits: dashboards, IoT and hardware, fitness apps, audio tools and game interfaces.
 
 ## Examples
 
-- [00 — The universe model | Orbit](https://zumerlab.github.io/orbit/demos/00-universe.html)
-- [Orbit — playground](https://zumerlab.github.io/orbit/demos/playground.html)
-- [01 — Progress rings | Orbit](https://zumerlab.github.io/orbit/demos/01-minimal-gauge.html)
-- [02 — Donut chart | Orbit](https://zumerlab.github.io/orbit/demos/02-donut-multilayer.html)
-- [03 — Radial menu | Orbit](https://zumerlab.github.io/orbit/demos/03-radial-menu.html)
-- [04 — Speedometer | Orbit](https://zumerlab.github.io/orbit/demos/04-arrow-gauge.html)
-- [05 — Knob | Orbit](https://zumerlab.github.io/orbit/demos/05-knob.html)
-- [06 — Half gauge | Orbit](https://zumerlab.github.io/orbit/demos/06-semicircle.html)
-- [07 — Team map | Orbit](https://zumerlab.github.io/orbit/demos/07-satellites.html)
-- [08 — Nested systems | Orbit](https://zumerlab.github.io/orbit/demos/08-nested-orbits.html)
-- [09 — Compass | Orbit](https://zumerlab.github.io/orbit/demos/09-compass.html)
-- [10 — Radar | Orbit](https://zumerlab.github.io/orbit/demos/10-radar.html)
-- [11 — Depth layers | Orbit](https://zumerlab.github.io/orbit/demos/11-depth-layers.html)
-- [180° gauge](https://zumerlab.github.io/orbit/examples/gauges/180-degree-gauge.html): A half-circle rating gauge: five named zones, a needle and a readout, on a 2:1 universe with its center on the bottom edge.
-- [240° gauge](https://zumerlab.github.io/orbit/examples/gauges/240-degree-gauge.html): A stepped speedometer on a 240° arc: fifteen bands that light up with the speed, and curved numbers over them.
-- [Fuel gauge](https://zumerlab.github.io/orbit/examples/gauges/fuel-gauge.html): A 90° fuel gauge with E and F, ticks, a red reserve and a needle, in a universe cut to the size of the dial.
-- [Circular progress with background](https://zumerlab.github.io/orbit/examples/progress/circular-progress-with-background.html): The everyday progress ring: one o-progress draws the fill and the track behind it, with the percentage in the middle.
-- [Dashed circular progress bar](https://zumerlab.github.io/orbit/examples/progress/dashed-circular-progress-bar.html): Progress counted in steps: ten o-arc segments split the ring, the done ones lit and the next one pulsing.
-- [Circular progress with handle](https://zumerlab.github.io/orbit/examples/progress/circular-progress-with-handle.html): A circular slider: an o-progress and a handle on the same lane, dragged with the pointer or set with the arrow keys.
-- [Stacked circular progress bars](https://zumerlab.github.io/orbit/examples/progress/stacked-circular-progress-bars.html): Three live metrics on three concentric 270° rings, each labeled with curved text in the gap where it starts.
-- [Knob with progress bar](https://zumerlab.github.io/orbit/examples/knobs/knob-with-progress-bar.html): A gain knob from −12 to +12 dB whose arc grows from the center position, left or right, built with a ring whose range follows the value.
-- [LED knob](https://zumerlab.github.io/orbit/examples/knobs/led-knob.html): A stepped knob with eleven LEDs, one per position, that snaps from step to step.
-- [Pie menu](https://zumerlab.github.io/orbit/examples/piemenu.html): A two-level pie menu for text formatting: each wedge opens its options on an outer ring limited to its own slice.
-- [Donut chart](https://zumerlab.github.io/orbit/examples/charts/donut-chart.html): A donut chart of five arcs with values, shares printed in the band, a total in the middle and two datasets to switch between.
-- [Pie chart](https://zumerlab.github.io/orbit/examples/charts/pie-chart.html): A pie chart from five o-arc slices that reach the center; hover or focus a slice and it slides out.
-- [Sunburst chart](https://zumerlab.github.io/orbit/examples/charts/sunburst-chart.html): A two-level sunburst: categories on the inner ring, their parts on the outer one, lined up because arcs with values stack in order.
-- [Minimalist analog clock](https://zumerlab.github.io/orbit/examples/watches/minimalist-analog-clock.html): A minimalist analog clock in HTML and CSS that tells the real time: sixty ticks, twelve numbers and three hands, built with Orbit.
-- [Chronograph watch face](https://zumerlab.github.io/orbit/examples/watches/chronograph-watch-face.html): A chronograph watch face in HTML and CSS with a working stopwatch: three sub-dials, each a system nested in a satellite, built with Orbit.
-- [Roman numeral clock](https://zumerlab.github.io/orbit/examples/watches/roman-numeral-clock-face.html): A Roman numeral clock face in HTML and CSS: numerals that stand along the radius with spin-lock and flip, a railroad minute track and live hands, built with Orbit.
-- [Smartwatch face](https://zumerlab.github.io/orbit/examples/watches/smartwatch-face.html): A smartwatch face in HTML and CSS with live time and date written along the bezel as curved text, and two complications, built with Orbit arcs.
-- [Circular timer](https://zumerlab.github.io/orbit/examples/circular_time.html): A kitchen-style timer in HTML and CSS: turn the wheel to set it, and the numbers, ticks and time sector turn together under a fixed pointer. Built with Orbit.
-- [Circular year calendar](https://zumerlab.github.io/orbit/examples/calendar/circular-year-calendar.html): A year on one dial in HTML and CSS: the days of the month, the months and the seasons as rings, with curved labels and a progress band for the year, built with Orbit.
-- [Calendars](https://zumerlab.github.io/orbit/examples/calendar/): Circular calendars and planners built with Orbit: a year on one dial and a Chronodex day planner.
-- [Geometric square mandala](https://zumerlab.github.io/orbit/examples/mandalas/geometric-square-mandala.html): A geometric mandala of nested squares in HTML and CSS: one pattern copied and turned by Orbit, from one to eight folds.
-- [Radial symmetry mandala](https://zumerlab.github.io/orbit/examples/mandalas/radial-symmetry-mandala.html): A radial symmetry mandala in HTML and CSS: rings of circle stacks and triangles that Orbit spaces evenly, with six, eight or twelve-fold symmetry.
-- [Mandalas](https://zumerlab.github.io/orbit/examples/mandalas/): Geometric mandalas built with Orbit: nested squares, rings of circles with six to twelve folds, and two starter patterns.
-- [Car dashboard](https://zumerlab.github.io/orbit/examples/dashboard.html): A car dashboard screen made of nested systems: a live clock with a seconds ring between a climate pod and a battery pod.
-- [Layered status rings](https://zumerlab.github.io/orbit/examples/layered-status-rings.html): Three channels of a home stacked in depth on one radial object; an alert brings its channel to the front.
-- [Sci-fi interface](https://zumerlab.github.io/orbit/examples/scifi.html): A sci-fi HUD in HTML and CSS: partial arcs and dashes on rings at different depths, turning at their own speed and tilting with the pointer. Built with Orbit.
-- [Abstract orbital map](https://zumerlab.github.io/orbit/examples/abstract_map.html): A decorative star chart in HTML and CSS: planets that are systems inside satellites, each ring turning at its own speed with a plain CSS animation. Built with Orbit.
-- [Chemical structure](https://zumerlab.github.io/orbit/examples/chemical_structures.html): The structure of caffeine drawn in HTML and CSS with Orbit: rings of sides for the bonds, satellites for the atoms, two systems sharing a bond.
-- [Gauges](https://zumerlab.github.io/orbit/examples/gauges/): Gauges built with Orbit: a 180° rating gauge, a 240° stepped speedometer and a 90° fuel gauge.
-- [Progress rings](https://zumerlab.github.io/orbit/examples/progress/): Circular progress bars built with Orbit: solid, dashed, with a handle, and stacked.
-- [Knobs and menus](https://zumerlab.github.io/orbit/examples/knobs/): Rotary knobs and a radial pie menu built with Orbit.
-- [Charts](https://zumerlab.github.io/orbit/examples/charts/): Radial charts built with Orbit arcs: donut, pie and sunburst.
-- [Watches and clocks](https://zumerlab.github.io/orbit/examples/watches/): Watch faces and clocks built with Orbit: minimalist, chronograph, Roman numerals, a live smartwatch face and a circular timer.
+- [00 — The universe model | Orbit](https://zumerlab.com/orbit/demos/00-universe.html)
+- [Orbit — playground](https://zumerlab.com/orbit/demos/playground.html)
+- [01 — Progress rings | Orbit](https://zumerlab.com/orbit/demos/01-minimal-gauge.html)
+- [02 — Donut chart | Orbit](https://zumerlab.com/orbit/demos/02-donut-multilayer.html)
+- [03 — Radial menu | Orbit](https://zumerlab.com/orbit/demos/03-radial-menu.html)
+- [04 — Speedometer | Orbit](https://zumerlab.com/orbit/demos/04-arrow-gauge.html)
+- [05 — Knob | Orbit](https://zumerlab.com/orbit/demos/05-knob.html)
+- [06 — Half gauge | Orbit](https://zumerlab.com/orbit/demos/06-semicircle.html)
+- [07 — Team map | Orbit](https://zumerlab.com/orbit/demos/07-satellites.html)
+- [08 — Nested systems | Orbit](https://zumerlab.com/orbit/demos/08-nested-orbits.html)
+- [09 — Compass | Orbit](https://zumerlab.com/orbit/demos/09-compass.html)
+- [10 — Radar | Orbit](https://zumerlab.com/orbit/demos/10-radar.html)
+- [11 — Depth layers | Orbit](https://zumerlab.com/orbit/demos/11-depth-layers.html)
+- [180° gauge](https://zumerlab.com/orbit/examples/gauges/180-degree-gauge.html): A half-circle rating gauge: five named zones, a needle and a readout, on a 2:1 universe with its center on the bottom edge.
+- [240° gauge](https://zumerlab.com/orbit/examples/gauges/240-degree-gauge.html): A stepped speedometer on a 240° arc: fifteen bands that light up with the speed, and curved numbers over them.
+- [Fuel gauge](https://zumerlab.com/orbit/examples/gauges/fuel-gauge.html): A 90° fuel gauge with E and F, ticks, a red reserve and a needle, in a universe cut to the size of the dial.
+- [Circular progress with background](https://zumerlab.com/orbit/examples/progress/circular-progress-with-background.html): The everyday progress ring: one o-progress draws the fill and the track behind it, with the percentage in the middle.
+- [Dashed circular progress bar](https://zumerlab.com/orbit/examples/progress/dashed-circular-progress-bar.html): Progress counted in steps: ten o-arc segments split the ring, the done ones lit and the next one pulsing.
+- [Circular progress with handle](https://zumerlab.com/orbit/examples/progress/circular-progress-with-handle.html): A circular slider: an o-progress and a handle on the same lane, dragged with the pointer or set with the arrow keys.
+- [Stacked circular progress bars](https://zumerlab.com/orbit/examples/progress/stacked-circular-progress-bars.html): Three live metrics on three concentric 270° rings, each labeled with curved text in the gap where it starts.
+- [Knob with progress bar](https://zumerlab.com/orbit/examples/knobs/knob-with-progress-bar.html): A gain knob from −12 to +12 dB whose arc grows from the center position, left or right, built with a ring whose range follows the value.
+- [LED knob](https://zumerlab.com/orbit/examples/knobs/led-knob.html): A stepped knob with eleven LEDs, one per position, that snaps from step to step.
+- [Pie menu](https://zumerlab.com/orbit/examples/piemenu.html): A two-level pie menu for text formatting: each wedge opens its options on an outer ring limited to its own slice.
+- [Donut chart](https://zumerlab.com/orbit/examples/charts/donut-chart.html): A donut chart of five arcs with values, shares printed in the band, a total in the middle and two datasets to switch between.
+- [Pie chart](https://zumerlab.com/orbit/examples/charts/pie-chart.html): A pie chart from five o-arc slices that reach the center; hover or focus a slice and it slides out.
+- [Sunburst chart](https://zumerlab.com/orbit/examples/charts/sunburst-chart.html): A two-level sunburst: categories on the inner ring, their parts on the outer one, lined up because arcs with values stack in order.
+- [Minimalist analog clock](https://zumerlab.com/orbit/examples/watches/minimalist-analog-clock.html): A minimalist analog clock in HTML and CSS that tells the real time: sixty ticks, twelve numbers and three hands, built with Orbit.
+- [Chronograph watch face](https://zumerlab.com/orbit/examples/watches/chronograph-watch-face.html): A chronograph watch face in HTML and CSS with a working stopwatch: three sub-dials, each a system nested in a satellite, built with Orbit.
+- [Roman numeral clock](https://zumerlab.com/orbit/examples/watches/roman-numeral-clock-face.html): A Roman numeral clock face in HTML and CSS: numerals that stand along the radius with spin-lock and flip, a railroad minute track and live hands, built with Orbit.
+- [Smartwatch face](https://zumerlab.com/orbit/examples/watches/smartwatch-face.html): A smartwatch face in HTML and CSS with live time and date written along the bezel as curved text, and two complications, built with Orbit arcs.
+- [Circular timer](https://zumerlab.com/orbit/examples/circular_time.html): A kitchen-style timer in HTML and CSS: turn the wheel to set it, and the numbers, ticks and time sector turn together under a fixed pointer. Built with Orbit.
+- [Circular year calendar](https://zumerlab.com/orbit/examples/calendar/circular-year-calendar.html): A year on one dial in HTML and CSS: the days of the month, the months and the seasons as rings, with curved labels and a progress band for the year, built with Orbit.
+- [Calendars](https://zumerlab.com/orbit/examples/calendar/): Circular calendars and planners built with Orbit: a year on one dial and a Chronodex day planner.
+- [Geometric square mandala](https://zumerlab.com/orbit/examples/mandalas/geometric-square-mandala.html): A geometric mandala of nested squares in HTML and CSS: one pattern copied and turned by Orbit, from one to eight folds.
+- [Radial symmetry mandala](https://zumerlab.com/orbit/examples/mandalas/radial-symmetry-mandala.html): A radial symmetry mandala in HTML and CSS: rings of circle stacks and triangles that Orbit spaces evenly, with six, eight or twelve-fold symmetry.
+- [Mandalas](https://zumerlab.com/orbit/examples/mandalas/): Geometric mandalas built with Orbit: nested squares, rings of circles with six to twelve folds, and two starter patterns.
+- [Car dashboard](https://zumerlab.com/orbit/examples/dashboard.html): A car dashboard screen made of nested systems: a live clock with a seconds ring between a climate pod and a battery pod.
+- [Layered status rings](https://zumerlab.com/orbit/examples/layered-status-rings.html): Three channels of a home stacked in depth on one radial object; an alert brings its channel to the front.
+- [Sci-fi interface](https://zumerlab.com/orbit/examples/scifi.html): A sci-fi HUD in HTML and CSS: partial arcs and dashes on rings at different depths, turning at their own speed and tilting with the pointer. Built with Orbit.
+- [Abstract orbital map](https://zumerlab.com/orbit/examples/abstract_map.html): A decorative star chart in HTML and CSS: planets that are systems inside satellites, each ring turning at its own speed with a plain CSS animation. Built with Orbit.
+- [Chemical structure](https://zumerlab.com/orbit/examples/chemical_structures.html): The structure of caffeine drawn in HTML and CSS with Orbit: rings of sides for the bonds, satellites for the atoms, two systems sharing a bond.
+- [Gauges](https://zumerlab.com/orbit/examples/gauges/): Gauges built with Orbit: a 180° rating gauge, a 240° stepped speedometer and a 90° fuel gauge.
+- [Progress rings](https://zumerlab.com/orbit/examples/progress/): Circular progress bars built with Orbit: solid, dashed, with a handle, and stacked.
+- [Knobs and menus](https://zumerlab.com/orbit/examples/knobs/): Rotary knobs and a radial pie menu built with Orbit.
+- [Charts](https://zumerlab.com/orbit/examples/charts/): Radial charts built with Orbit arcs: donut, pie and sunburst.
+- [Watches and clocks](https://zumerlab.com/orbit/examples/watches/): Watch faces and clocks built with Orbit: minimalist, chronograph, Roman numerals, a live smartwatch face and a circular timer.
 
 ## Use cases
 
-- [Dashboards](https://zumerlab.github.io/orbit/use-cases/dashboards.html): Gauges, progress rings and donut charts for dashboards, built with Orbit as plain HTML you can theme.
-- [IoT and hardware interfaces](https://zumerlab.github.io/orbit/use-cases/iot-and-hardware-ui.html): Thermostat dials, gauges, knobs and level rings for smart-home and device interfaces, built with Orbit.
-- [Fitness and health apps](https://zumerlab.github.io/orbit/use-cases/fitness-and-health-apps.html): Activity rings, heart-rate gauges and watch faces for fitness and health apps, built with Orbit.
-- [Audio app interfaces](https://zumerlab.github.io/orbit/use-cases/audio-app-ui.html): Knobs, meters and progress rings for web audio tools, synth prototypes and device companion apps, built with Orbit.
-- [Sci-fi and game interfaces](https://zumerlab.github.io/orbit/use-cases/sci-fi-game-uis.html): HUDs, menus and decorative geometry for games and sci-fi interfaces, built with Orbit rings, arcs and depth layers.
+- [Dashboards](https://zumerlab.com/orbit/use-cases/dashboards.html): Gauges, progress rings and donut charts for dashboards, built with Orbit as plain HTML you can theme.
+- [IoT and hardware interfaces](https://zumerlab.com/orbit/use-cases/iot-and-hardware-ui.html): Thermostat dials, gauges, knobs and level rings for smart-home and device interfaces, built with Orbit.
+- [Fitness and health apps](https://zumerlab.com/orbit/use-cases/fitness-and-health-apps.html): Activity rings, heart-rate gauges and watch faces for fitness and health apps, built with Orbit.
+- [Audio app interfaces](https://zumerlab.com/orbit/use-cases/audio-app-ui.html): Knobs, meters and progress rings for web audio tools, synth prototypes and device companion apps, built with Orbit.
+- [Sci-fi and game interfaces](https://zumerlab.com/orbit/use-cases/sci-fi-game-uis.html): HUDs, menus and decorative geometry for games and sci-fi interfaces, built with Orbit rings, arcs and depth layers.
 
 ## Optional
 
-- [llms-full.txt](https://zumerlab.github.io/orbit/llms-full.txt): the text and code of every page above in one file
+- [llms-full.txt](https://zumerlab.com/orbit/llms-full.txt): the text and code of every page above in one file
 - [Source on GitHub](https://github.com/zumerlab/orbit)
-- [1.x documentation](https://zumerlab.github.io/orbit-docs/v1/)
+- [1.x documentation](https://zumerlab.com/orbit-docs/v1/)
