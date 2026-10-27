@@ -305,6 +305,20 @@ for (const name of browsers) {
     assert.notEqual(await bar(), before, 'setting .value redraws');
     assert.equal(await page.locator('#prop').evaluate(el => [el.value, el.max].join()), '30,100', 'value and max read back as numbers');
 
+    // Arcs and progress are drawn on circles only: an elliptical ring hides them, and says why.
+    warnings.length = 0;
+    await fixture('<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8" id="round"><o-arc id="arc-round" value="40"></o-arc></div><div class="orbit-10" id="oval" style="--o-ellipse-x: .5"><o-arc id="arc-oval" value="40"></o-arc><o-progress id="prog-oval" value="40"></o-progress><div class="satellite" id="sat-oval"></div></div></div></div><div class="bigbang" style="width:300px"><div class="gravity-spot" style="--o-ellipse-y: .8"><div class="orbit-8"><o-progress id="prog-spot" value="40"></o-progress></div></div></div>');
+    await settle();
+    const shown = id => page.locator(id).evaluate(el => getComputedStyle(el).display !== 'none');
+    assert.equal(await shown('#arc-round'), true, 'an arc on a round ring shows');
+    assert.equal(await shown('#arc-oval'), false, 'an arc on an elliptical ring is hidden');
+    assert.equal(await shown('#prog-oval'), false, 'progress on an elliptical ring is hidden');
+    assert.equal(await shown('#prog-spot'), false, 'an ellipse set on the gravity spot hides it too');
+    assert.equal(await shown('#sat-oval'), true, 'satellites follow the ellipse');
+    assert(warnings.some(text => /stretched into an ellipse/.test(text)), 'the console explains the hidden arc');
+    await page.locator('#oval').evaluate(el => el.style.setProperty('--o-ellipse-x', '1.0'));
+    assert.equal(await shown('#arc-oval'), true, 'back to a circle (1.0), the arc shows again');
+
     // Problems are explained in the console.
     warnings.length = 0;
     await fixture('<span style="display:inline-block"><div class="bigbang"><div class="gravity-spot"><div class="orbit-6"></div></div></div></span><div class="bigbang dev-orbit" style="width:200px"><div class="gravity-spot"><div class="orbit-6"><p>loose</p><div class="satellite"><span>bare</span></div><o-progress value="lots"></o-progress><o-arc value="5" max="0"></o-arc></div></div></div>');

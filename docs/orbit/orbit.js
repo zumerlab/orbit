@@ -45,6 +45,14 @@
     } else if (universe.getClientRects().length && (!universe.clientWidth || !universe.clientHeight)) {
       warnOnce(universe, "empty", `${describe(universe)} has no size (${universe.clientWidth}\xD7${universe.clientHeight}px), so its system is invisible. Give it a width, or place it in a parent with a width.`);
     }
+    const visual = ring.querySelector(":scope > o-arc, :scope > o-progress");
+    if (visual) {
+      const style = ring.ownerDocument.defaultView.getComputedStyle(ring);
+      const x = style.getPropertyValue("--o-ellipse-x").trim(), y = style.getPropertyValue("--o-ellipse-y").trim();
+      if (x && Number(x) !== 1 || y && Number(y) !== 1) {
+        warnOnce(ring, "ellipse-visual", `${describe(visual)} is on ${describe(ring)}, which is stretched into an ellipse (--o-ellipse-x: ${x || 1}, --o-ellipse-y: ${y || 1}). Arcs and progress are drawn on circles only, so it is hidden. Put it on a round ring.`);
+      }
+    }
     if (!composedClosest(ring, ".dev-orbit")) return;
     for (const child of ring.children) {
       if (orbitNumber(child) !== void 0) {

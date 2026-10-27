@@ -1289,7 +1289,6 @@
 o-arc {
   --o-angle-composite: var(--o-arc-start, var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1));
   --o_stack: 0;
-  container-name: oslice;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9677,12 +9676,22 @@ Can be used in parent elements or in each orbiter class
     text-align: center;
   }
 }
-@container oslice not style(--o-ellipse-x: 1) {
+@property --o-ellipse-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --o-ellipse-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@container not style(--o-ellipse-x: 1) {
   o-arc, o-progress {
     display: none;
   }
 }
-@container oslice not style(--o-ellipse-y: 1) {
+@container not style(--o-ellipse-y: 1) {
   o-arc, o-progress {
     display: none;
   }

@@ -20,12 +20,20 @@
   }
 }
 
-@container oslice not style(--o-ellipse-x: 1) {
+// Arcs and progress are drawn on circles only, so they hide on a ring that is
+// stretched into an ellipse. A style query looks at the nearest ancestor, the
+// ring, which carries --o-ellipse-x/-y (inherited from the gravity spot).
+// Browsers without style queries for custom properties keep showing them.
+// Registered as numbers, so 1 and 1.0 compare equal, and an arc outside any
+// gravity spot (where nothing sets them) still counts as round.
+@property --o-ellipse-x { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --o-ellipse-y { syntax: '<number>'; inherits: true; initial-value: 1; }
+@container not style(--o-ellipse-x: 1) {
   o-arc, o-progress {
     display: none;
   }
 }
-@container oslice not style(--o-ellipse-y: 1) {
+@container not style(--o-ellipse-y: 1) {
   o-arc, o-progress {
     display: none;
   }

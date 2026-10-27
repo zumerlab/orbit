@@ -3,7 +3,6 @@
 o-arc {
   --o-angle-composite: var(--o-arc-start, var(--o-angle) * var(--o-orbit-child-number) * var(--o-direction, 1));
   --o_stack: 0;
-  container-name: oslice;
   display: flex;
   justify-content: center;
   align-items: center;
