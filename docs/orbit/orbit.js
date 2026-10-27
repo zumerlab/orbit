@@ -850,6 +850,12 @@
     :host([interactive]) svg * {
       pointer-events: visiblePainted;
     }
+    /* Text lets the pointer through to the band under it: WebKit fires no
+       click on SVG text inside a shadow root. */
+    :host([interactive]) svg text,
+    :host([interactive]) svg textPath {
+      pointer-events: none;
+    }
     /* The touch area catches the pointer even where the band is transparent. */
     #orbitHit {
       fill: none;

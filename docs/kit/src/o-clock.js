@@ -35,7 +35,7 @@ o-clock .ok-clock-case--round     { border-radius: 50%; }
 o-clock .ok-clock-case--square    { border-radius: 9%; padding: 8%; }
 o-clock .ok-clock-case--rounded   { border-radius: 26%; padding: 8%; }
 o-clock .ok-clock-case--rectangle { border-radius: 24%; padding: 8%; }
-o-clock .ok-clock-case--rectangle > .bigbang { height: 100%; aspect-ratio: auto; }
+o-clock .ok-clock-case--rectangle > .bigbang { height: auto; align-self: stretch; aspect-ratio: auto; }
 o-clock .ok-clock-case--square,
 o-clock .ok-clock-case--rounded,
 o-clock .ok-clock-case--rectangle {

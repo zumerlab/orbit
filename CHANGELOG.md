@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v2.0.1](https://github.com/zumerlab/orbit/compare/v2.0.0...v2.0.1)
+
+> 27 October 2026
+
+**Fixes**
+
+- Clicking the text of an `interactive` `<o-arc>` works in Safari: the text lets the pointer through to the band.
+
 #### [v2.0.0](https://github.com/zumerlab/orbit/compare/v1.6.0...v2.0.0)
 
 > 27 October 2026
