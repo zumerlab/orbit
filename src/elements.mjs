@@ -5,7 +5,7 @@ const shapes = ['none', 'rounded', 'circle', 'circle-a', 'circle-b', 'bullet', '
 
 const common = {
   value: { type: 'number', description: 'Value relative to max.' },
-  max: { type: 'number', default: '100', description: 'Value that fills the ring\'s range. Must be positive.' },
+  max: { type: 'number', default: '100', description: 'Value that fills the ring\'s range. Must be positive. Without it, --o-max of the ring or system.' },
   shape: { type: shapes.map(shape => `'${shape}'`).join(' | '), default: 'none', values: shapes, description: 'Ending of the band.' },
   interactive: { type: 'boolean', description: 'Let the band receive pointer events, even where it is transparent. Decorative by default.' },
   'hit-width': { type: 'number', default: '0', description: 'Extra touch area in px on each side of an interactive band.' },
@@ -25,12 +25,21 @@ export const elements = [
     attributes: {
       ...common,
       value: { type: 'number', description: 'Share of the ring\'s range, relative to max. Without it, sibling arcs split the range equally.' },
+      start: { type: 'number', description: 'Where the arc begins, on the same scale as value. A placed arc takes no slot and moves no other arc: text over a ring that already has arcs, or segments on a timeline.' },
       'text-anchor': { type: "'start' | 'middle' | 'end'", default: 'middle', values: ['start', 'middle', 'end'], description: 'Where curved text sits on the arc. With range="auto", an explicit value anchors the arc at its angle: middle centers it, end ends it there.' },
       flip: { type: 'boolean', description: 'Reverse the direction of curved text.' },
       'fit-range': { type: 'boolean', description: 'Squeeze curved text to the length of the arc.' },
       range: { type: "'auto'", values: ['auto'], description: 'Size the arc to its text. Consecutive range="auto" arcs follow each other.' },
     },
-    cssProperties: [...colors, ['--o-color', 'Text color.'], ['--o-gap', 'Space between sibling arcs. Default 1; cascades from the ring or system.']],
+    cssProperties: [
+      ...colors,
+      ['--o-color', 'Text color.'],
+      ['--o-gap', 'Space between sibling arcs. Default 1; cascades from the ring or system.'],
+      ['--o-max', 'Value that fills the range when there is no max attribute. Default 100; cascades from the ring or system.'],
+      ['--o-ripple-color', 'Color of the .ripple wave. Default --o-fill.'],
+      ['--o-ripple-duration', 'One wave of .ripple. Default 1.6s.'],
+      ['--o-ripple-scale', 'How far a .ripple wave grows, from the center of the ring. Default 1.14.'],
+    ],
   },
   {
     name: 'o-progress',
@@ -46,6 +55,7 @@ export const elements = [
       ['--o-back-stroke', 'Track outline color.'],
       ['--o-back-stroke-width', 'Track outline width, unitless.'],
       ['--o-progress', 'Progress value; overrides the value attribute.'],
+      ['--o-max', 'Value that fills the range when there is no max attribute. Default 100; cascades from the ring or system.'],
     ],
   },
 ];

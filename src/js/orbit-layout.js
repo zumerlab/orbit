@@ -114,7 +114,8 @@ export function cssNumber(element, value, fallback = 0, type = 'number') {
 }
 
 function group(element) {
-  if (element.localName === 'o-arc') return 'arc';
+  // An arc with start is placed on the ring's scale: it takes no slot.
+  if (element.localName === 'o-arc') return element.hasAttribute('start') ? null : 'arc';
   for (const name of ['satellite', 'vector', 'side']) if (element.classList.contains(name)) return name;
   return null;
 }

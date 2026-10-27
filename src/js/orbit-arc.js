@@ -1,5 +1,5 @@
 import { OrbitBase } from './orbit-base.js';
-import { cssNumber, setLayoutProperty } from './orbit-layout.js';
+import { cssNumber, setLayoutProperty, warnOnce } from './orbit-layout.js';
 
 const template = typeof document === 'undefined' ? null : document.createElement('template');
 if (template) template.innerHTML = `
@@ -60,9 +60,32 @@ if (template) template.innerHTML = `
       stroke: none;
       pointer-events: none;
     }
+    /* .ripple: a copy of the band grows out from the center of the ring and
+       fades, over and over. The band itself stays. */
+    #orbitWave {
+      display: none;
+      fill: var(--o-ripple-color, var(--o-fill));
+      stroke: none;
+      pointer-events: none;
+      transform-origin: 50px 50px;
+    }
+    :host(.ripple) #orbitWave {
+      display: inline;
+      animation: orbit-ripple var(--o-ripple-duration, 1.6s) ease-out infinite;
+    }
+    @keyframes orbit-ripple {
+      from { transform: scale(1); opacity: .9; }
+      to { transform: scale(var(--o-ripple-scale, 1.14)); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :host(.ripple) #orbitWave {
+        display: none;
+      }
+    }
   </style>
   <svg viewBox="0 0 100 100">
     <path id="orbitHit" vector-effect="non-scaling-stroke"></path>
+    <path id="orbitWave" shape-rendering="geometricPrecision"></path>
     <path id="orbitShape" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
     <path id="orbitPath" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
     <text>
@@ -99,7 +122,9 @@ export class OrbitArc extends OrbitBase {
     const orbitShape = this.shadowRoot.querySelector('#orbitShape');
     const textPath = this.shadowRoot.querySelector('textPath');
 
-    orbitShape.setAttribute('d', this.calculateArcParameters(attrs).dShape);
+    const { dShape } = this.calculateArcParameters(attrs);
+    orbitShape.setAttribute('d', dShape);
+    this.shadowRoot.querySelector('#orbitWave').setAttribute('d', dShape);
     orbitPath.setAttribute('d', this.calculateTextArcParameters(attrs).dPath);
     this.updateHitArea(this.shadowRoot.querySelector('#orbitHit'), attrs, 0, attrs.arcAngle);
     const textAnchor = attrs.textAnchor;
@@ -167,28 +192,53 @@ export class OrbitArc extends OrbitBase {
     // Font size in viewBox units: the same px size on every ring.
     const svgFontSize = `calc(${fontSize} * (100 / (${length}) * (12 / var(--o-orbit-number)))`;
     const auto = this.getAttribute('range') === 'auto';
-    const stacked = auto || this.hasAttribute('value');
+    const valued = this.hasAttribute('value');
+    const placed = this.hasAttribute('start');
+    const stacked = auto || valued || placed;
+    const max = this.readMax(style);
     let arcAngle;
     if (auto) arcAngle = this.measureTextAngle(svgFontSize, common.realRadius, gap);
-    else if (this.hasAttribute('value')) arcAngle = super.getProgressAngle(range, this.readValue(), this.readMax());
+    else if (valued) arcAngle = super.getProgressAngle(range, this.readValue(), max);
     else arcAngle = Math.max(0, Math.min(360, this.readAngle(style, '--o-angle', 0)));
     this._autoAngle = auto ? arcAngle : 0;
     let stackOffset = 0;
-    if (stacked) {
-      // Ignore unrelated siblings. Recompute from data so reorders/removals and
-      // a zero first segment cannot leave stale offsets on following arcs.
+    if (placed) {
+      // start puts the arc at a point of the ring's scale, out of the flow of
+      // its siblings: it takes no slot and moves no other arc.
+      stackOffset = max > 0 ? this.readStart() / max * range : 0;
+      // A segment stays inside a partial range; on a full ring it wraps around.
+      if (!auto && range < 360) {
+        const end = Math.min(range, stackOffset + arcAngle);
+        stackOffset = Math.max(0, stackOffset);
+        arcAngle = Math.max(0, end - stackOffset);
+      }
+    } else if (stacked) {
+      // Ignore unrelated siblings and placed arcs. Recompute from data so
+      // reorders/removals and a zero first segment cannot leave stale offsets
+      // on following arcs.
       for (let prev = this.previousElementSibling; prev; prev = prev.previousElementSibling) {
-        if (prev.localName !== 'o-arc') continue;
+        if (prev.localName !== 'o-arc' || prev.hasAttribute('start')) continue;
         const previousStyle = this.ownerDocument.defaultView.getComputedStyle(prev);
         if (prev.getAttribute('range') === 'auto') stackOffset += prev._autoAngle || 0;
         else if (prev.hasAttribute('value')) {
-          const prevMax = prev.hasAttribute('max') ? Number(prev.getAttribute('max')) : 100;
+          const prevMax = this.readMax.call(prev, previousStyle);
           const prevRange = cssNumber(prev, previousStyle.getPropertyValue('--o-range'), range, 'angle');
           stackOffset += super.getProgressAngle(prevRange, Number(prev.getAttribute('value')), prevMax);
         } else stackOffset += cssNumber(prev, previousStyle.getPropertyValue('--o-angle'), 0, 'angle');
       }
     }
-    return { ...common, gap, arcAngle, stackOffset, flip, fitRange, length, fontSize, svgFontSize, textAnchor, auto, stacked };
+    // How far a ripple grows past the band, so the canvas covers it.
+    const reach = this.classList.contains('ripple') ? Math.max(1, this.readNumber(style, '--o-ripple-scale', 1.14)) : 1;
+    return { ...common, gap, max, arcAngle, stackOffset, flip, fitRange, length, fontSize, svgFontSize, textAnchor, auto, placed, stacked, reach };
+  }
+
+  /** The start attribute: where a placed arc begins, on the ring's scale. */
+  readStart() {
+    const raw = this.getAttribute('start');
+    const start = Number(raw);
+    if (Number.isFinite(start)) return start;
+    warnOnce(this, 'start:' + raw, `<o-arc start="${raw}"> is not a number, so the arc starts at 0.`);
+    return 0;
   }
 
   /** range="auto": the angle that fits this arc's text, with half an em of room at each end. */

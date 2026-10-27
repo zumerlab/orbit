@@ -319,11 +319,79 @@ for (const name of browsers) {
     await page.locator('#oval').evaluate(el => el.style.setProperty('--o-ellipse-x', '1.0'));
     assert.equal(await shown('#arc-oval'), true, 'back to a circle (1.0), the arc shows again');
 
+    // A .satellite.at-value sits on the value of the o-progress in its ring: the knob of a dial.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-8" id="dial" style="--o-from:225deg; --o-range:270deg"><o-progress id="dial-bar" value="50"></o-progress><div class="satellite at-value" id="knob"><div class="capsule"><span id="knob-label">x</span></div></div></div></div></div>');
+    assert.equal(await page.locator('#dial').evaluate(el => el.style.getPropertyValue('--o-value-angle')), '135deg', 'o-progress writes the angle of its value on its ring');
+    assert.deepEqual(await dir('#knob-label'), [0, -1], 'half of a 270° dial from 225° is the top');
+    await page.locator('#dial-bar').evaluate(el => el.setAttribute('value', '0'));
+    await settle();
+    assert.deepEqual(await dir('#knob-label'), [-0.707, 0.707], 'at 0 the knob is at the start of the range');
+    await page.locator('#dial-bar').evaluate(el => el.remove());
+    await settle();
+    assert.equal(await page.locator('#dial').evaluate(el => el.style.getPropertyValue('--o-value-angle')), '', 'a removed progress takes its angle with it');
+
+    // --o-max sets the scale of a ring or system; a max attribute still wins.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot" style="--o-max:12"><div class="orbit-8"><o-progress id="hours" value="6"></o-progress><o-arc id="own-max" value="6" max="24"></o-arc></div></div></div>');
+    assert.equal(await page.locator('#hours').evaluate(el => el.getAttributes().maxValue), 12, '--o-max reaches progress');
+    assert.equal(await page.locator('#hours').evaluate(el => el.parentElement.style.getPropertyValue('--o-value-angle')), '180deg', '6 of 12 is half the ring');
+    assert.equal(await page.locator('#own-max').evaluate(el => el.getAttributes().arcAngle), 90, 'a max attribute overrides --o-max');
+
+    // start places an arc on the ring's scale: it takes no slot and moves no other arc.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-8" id="slots"><o-arc></o-arc><o-arc></o-arc><o-arc range="auto" start="50" text-anchor="middle" id="over">Label</o-arc><o-arc></o-arc><o-arc id="fourth"></o-arc></div><div class="orbit-10" style="--o-from:30deg; --o-range:330deg; --o-max:12"><o-arc value="3" id="stack-1"></o-arc><o-arc start="1" value="2" id="placed"></o-arc><o-arc value="3" id="stack-2"></o-arc><o-arc start="11" value="2" id="clipped"></o-arc><o-arc start="-1" value="2" id="early"></o-arc></div><div class="orbit-6" style="--o-max:24"><o-arc start="22" value="4" id="wraps"></o-arc></div></div></div>');
+    const arc = id => page.locator(id).evaluate(el => ({ ...el.getAttributes(), start: parseFloat(el.style.getPropertyValue('--o-arc-start')) }));
+    assert.equal((await arc('#fourth')).arcAngle, 90, 'four arcs still split the ring with a placed label among them');
+    assert.equal(await page.locator('#fourth').evaluate(el => getComputedStyle(el).getPropertyValue('--o-orbit-child-number').trim()), '3', 'and keep their slots');
+    const over = await arc('#over');
+    assert(over.arcAngle > 0 && Math.abs(over.start - (180 - over.arcAngle / 2)) < 1e-6, 'a placed label centers on its point');
+    assert.equal((await arc('#stack-2')).start, 82.5, 'stacked arcs skip placed ones');
+    const placed = await arc('#placed');
+    assert.deepEqual([placed.start, placed.arcAngle], [27.5, 55], 'start and value are on the ring\'s scale');
+    const clipped = await arc('#clipped');
+    assert.deepEqual([clipped.start, clipped.arcAngle], [302.5, 27.5], 'a segment stops at the end of a partial range');
+    const early = await arc('#early');
+    assert.deepEqual([early.start, early.arcAngle], [0, 27.5], 'and starts no earlier than its beginning');
+    const wraps = await arc('#wraps');
+    assert.deepEqual([wraps.start, wraps.arcAngle], [330, 60], 'on a full ring it wraps around');
+    await page.locator('#over').evaluate(el => { el.removeAttribute('start'); el.removeAttribute('range'); });
+    await settle();
+    assert.equal((await arc('#fourth')).arcAngle, 72, 'without start, the arc takes a slot again');
+
+    // .ripple: a copy of the band grows from it and fades; the canvas covers it.
+    await fixture(ring('<o-arc id="calm" value="25"></o-arc><o-arc id="calling" class="ripple" value="25"></o-arc>'));
+    const wave = id => page.locator(id).evaluate(el => {
+      const root = el.shadowRoot;
+      const w = root.querySelector('#orbitWave');
+      return { same: w.getAttribute('d') === root.querySelector('#orbitShape').getAttribute('d'), display: getComputedStyle(w).display, animation: getComputedStyle(w).animationName, canvas: Number(root.querySelector('svg').getAttribute('viewBox').split(' ')[2]) };
+    });
+    const calm = await wave('#calm'), calling = await wave('#calling');
+    assert.equal(calm.display, 'none', 'arcs have no ripple by default');
+    assert.deepEqual([calling.same, calling.display, calling.animation], [true, 'inline', 'orbit-ripple'], 'a ripple copies the band and animates it');
+    assert(calling.canvas > calm.canvas, 'the canvas grows to cover the ripple');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    assert.equal((await wave('#calling')).display, 'none', 'reduced motion turns the ripple off');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+
+    // .outward and .outward-y put a label just outside its satellite.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-8" style="--o-size-ratio:2">' +
+      ['top', 'right', 'bottom', 'left'].map(id => `<div class="satellite" id="sat-${id}"><div class="capsule"><span class="outward" id="out-${id}">Label</span><span class="outward-y" id="outy-${id}">Label</span></div></div>`).join('') +
+      '</div></div></div>');
+    const gaps = await page.evaluate(() => ['top', 'right', 'bottom', 'left'].map(id => {
+      const s = document.getElementById('sat-' + id).getBoundingClientRect();
+      const o = document.getElementById('out-' + id).getBoundingClientRect();
+      const y = document.getElementById('outy-' + id).getBoundingClientRect();
+      return { top: s.top - o.bottom, right: o.left - s.right, bottom: o.top - s.bottom, left: s.left - o.right, y: y.top - s.bottom, yAbove: s.top - y.bottom };
+    }).map(g => Object.fromEntries(Object.entries(g).map(([k, v]) => [k, Math.round(v)]))));
+    assert.equal(gaps[0].top, 4, '.outward hangs above a satellite at the top');
+    assert.equal(gaps[1].right, 4, 'right of one on the right');
+    assert.equal(gaps[2].bottom, 4, 'below one at the bottom');
+    assert.equal(gaps[3].left, 4, 'and left of one on the left');
+    assert.deepEqual([gaps[0].yAbove, gaps[1].y, gaps[2].y, gaps[3].y], [4, 4, 4, 4], '.outward-y goes above in the upper half and below the rest');
+
     // Problems are explained in the console.
     warnings.length = 0;
-    await fixture('<span style="display:inline-block"><div class="bigbang"><div class="gravity-spot"><div class="orbit-6"></div></div></div></span><div class="bigbang dev-orbit" style="width:200px"><div class="gravity-spot"><div class="orbit-6"><p>loose</p><div class="satellite"><span>bare</span></div><o-progress value="lots"></o-progress><o-arc value="5" max="0"></o-arc></div></div></div>');
+    await fixture('<span style="display:inline-block"><div class="bigbang"><div class="gravity-spot"><div class="orbit-6"></div></div></div></span><div class="bigbang dev-orbit" style="width:200px"><div class="gravity-spot"><div class="orbit-6"><p>loose</p><div class="satellite"><span>bare</span></div><o-progress value="lots"></o-progress><o-arc value="5" max="0"></o-arc><o-arc start="soon" value="5"></o-arc><o-progress value="5" style="--o-max: 0"></o-progress></div></div></div>');
     await settle();
-    for (const pattern of [/has no size/, /is not placed by its ring/, /sits directly in a \.satellite/, /value="lots"> is not a number/, /max="0"> must be a positive number/]) {
+    for (const pattern of [/has no size/, /is not placed by its ring/, /sits directly in a \.satellite/, /value="lots"> is not a number/, /max="0"> must be a positive number/, /start="soon"> is not a number/, /--o-max: 0 on <o-progress> must be a positive number/]) {
       assert(warnings.some(text => pattern.test(text)), `warns: ${pattern}`);
     }
     const count = warnings.length;
@@ -331,6 +399,6 @@ for (const name of browsers) {
     assert.equal(warnings.length, count, 'each problem is reported once');
 
     assert.deepEqual(errors, [], `${name} has no browser errors`);
-    console.log(`${name}: layout, stacking, zero, responsive SVG, CSS overrides, lifecycle, geometry, universe sizing, cascade, directions, reset and diagnostics passed`);
+    console.log(`${name}: layout, stacking, zero, responsive SVG, CSS overrides, lifecycle, geometry, universe sizing, cascade, directions, values, placed arcs, ripples, outward labels, reset and diagnostics passed`);
   } finally { await browser.close(); }
 }

@@ -18,6 +18,8 @@
   --o-gap: 1;
   --o-initial-orbit: 0;
   --o-angle: 0;
+  /* The value that fills a ring's range, for arcs and progress without a max attribute. */
+  --o-max: 100;
   width: 0;
   aspect-ratio: 1;
   position: relative;

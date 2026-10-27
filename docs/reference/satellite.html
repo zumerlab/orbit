@@ -270,7 +270,44 @@ push.addEventListener('input', () => {
   </script>
   <figcaption>Each label moves away from the center along its own direction.</figcaption>
 </figure>
-<p><a href="../universe.html">How Orbit thinks</a> shows the other common use: labels that hang above the satellites of the upper half and below the rest.</p>
+<p id="outward">For labels there are two classes. Put either on a capsule, or on an element inside one. <code>.outward</code> sets it just outside the satellite along its direction, with its nearest edge or corner <code>--o-outward-gap</code> (4px) away. <code>.outward-y</code> only goes up or down: above the satellites of the upper half and below the rest, so long labels stay inside a narrow screen.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-7" id="rooms" style="--o-size-ratio: 1.6"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label><input id="vertical" type="checkbox"> Only up or down</label>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.satellite { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+.label { display: grid; justify-items: center; font-size: 13px; line-height: 1.3; }
+.label strong { color: var(--text); font-weight: 600; }
+.label span { color: var(--muted); font-size: 12px; }
+  </script>
+  <script type="text/plain" data-js>
+const rooms = [['Kitchen', 'on'], ['Living room', 'on'], ['Office', 'off'], ['Bedroom', 'off'], ['Hall', 'on'], ['Porch', 'off'], ['Garage', 'on']];
+document.getElementById('rooms').innerHTML = rooms.map(([name, state]) =>
+  `<div class="satellite"><div class="capsule"><span class="label outward"><strong>${name}</strong><span>${state}</span></span></div></div>`).join('');
+document.getElementById('vertical').addEventListener('change', event => {
+  for (const label of document.querySelectorAll('.label')) {
+    label.classList.toggle('outward', !event.target.checked);
+    label.classList.toggle('outward-y', event.target.checked);
+  }
+});
+  </script>
+  <figcaption>Seven labels with <code>.outward</code>. Check the box to switch them to <code>.outward-y</code>.</figcaption>
+</figure>
+
+<h2 id="at-value">On the value of a progress</h2>
+<p>A <code>.satellite.at-value</code> sits on the value of the <code>&lt;o-progress&gt;</code> in its ring and follows it: the knob of a dial. See <a href="progress.html#on-the-value">A satellite on the value</a>.</p>
 
 <h2>A satellite is a universe</h2>
 <p>Put a <code>.gravity-spot</code> directly inside a satellite and it reaches the satellite's edge: a moon system around a planet, a gauge inside a menu item. Make the satellite thicker to give it room. See <a href="gravity-spot.html">Gravity spot</a>.</p>
@@ -288,8 +325,11 @@ push.addEventListener('input', () => {
 <tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>An exact angle, clockwise from the top.</td></tr>
 <tr><td><code>.spin-lock</code></td><td></td><td>Turns with its angle instead of staying upright.</td></tr>
 <tr><td><code>.at-center</code></td><td></td><td>In <code>orbit-0</code>: the satellite sits at the center.</td></tr>
+<tr><td><code>.at-value</code></td><td></td><td>Sits on the value of the <code>&lt;o-progress&gt;</code> in its ring.</td></tr>
 <tr><td><code>.at-top-left</code> … <code>.at-bottom-right</code></td><td></td><td>Where the capsule sits inside the satellite.</td></tr>
 <tr><td><code>--o-dir-x</code> / <code>--o-dir-y</code></td><td>read only</td><td>Direction from the center, from -1 to 1.</td></tr>
+<tr><td><code>.outward</code>, <code>.outward-y</code></td><td></td><td>On a capsule or inside one: a label just outside the satellite, along its direction or only up and down.</td></tr>
+<tr><td><code>--o-outward-gap</code></td><td><code>4px</code></td><td>Space between the satellite and an <code>.outward</code> label.</td></tr>
 </tbody>
 </table></div>
     </article>

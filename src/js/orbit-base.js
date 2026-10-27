@@ -64,10 +64,22 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
     return value;
   }
 
-  /** The max attribute (default 100). It must be a positive number. */
-  readMax() {
+  /**
+   * The max attribute, else --o-max from the ring or system (default 100).
+   * It must be a positive number.
+   */
+  readMax(style) {
     const raw = this.getAttribute('max');
-    if (raw === null) return 100;
+    if (raw === null) {
+      const css = style?.getPropertyValue('--o-max').trim();
+      if (!css) return 100;
+      const max = cssNumber(this, css, NaN);
+      if (!(max > 0)) {
+        warnOnce(this, 'o-max:' + css, `--o-max: ${css} on <${this.localName}> must be a positive number, so nothing is drawn.`);
+        return 0;
+      }
+      return max;
+    }
     const max = Number(raw);
     if (!(max > 0)) {
       warnOnce(this, 'max:' + raw, `<${this.localName} max="${raw}"> must be a positive number, so nothing is drawn.`);
@@ -311,14 +323,15 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
 
   /**
    * Grow the SVG canvas past the ring's box so it covers the whole band, its
-   * stroke and touch area. Some engines (WebKit) neither paint reliably nor
-   * hit-test SVG content that overflows its box.
+   * stroke and touch area, and as far as a ripple reaches (attrs.reach).
+   * Some engines (WebKit) neither paint reliably nor hit-test SVG content that
+   * overflows its box.
    */
   fitCanvas(attrs, extra) {
     const svg = this.shadowRoot.querySelector('svg');
     const scale = attrs.orbitRadius / 50;
     if (!svg || !(scale > 0)) return;
-    const outer = (attrs.realRadius + attrs.arcHeightPercentage) * scale + attrs.strokeWidth + extra;
+    const outer = ((attrs.realRadius + attrs.arcHeightPercentage) * scale + attrs.strokeWidth) * (attrs.reach || 1) + extra;
     const pad = Math.max(0, Math.ceil(outer - attrs.orbitRadius));
     const units = pad / scale;
     svg.setAttribute('viewBox', `${-units} ${-units} ${100 + 2 * units} ${100 + 2 * units}`);

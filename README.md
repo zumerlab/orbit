@@ -156,16 +156,12 @@ Values cascade, so set them once on the `.gravity-spot` for the whole system or 
 
 ### Which way is out
 
-Each satellite tells its content where it sits: `--o-dir-x` and `--o-dir-y` are the direction from the center, from `-1` to `1` (`y` grows down, and both are `0` on the center satellite). It is handy for labels that should hang outward, above the satellites of the upper half and below the rest:
+Each satellite tells its content where it sits: `--o-dir-x` and `--o-dir-y` are the direction from the center, from `-1` to `1` (`y` grows down, and both are `0` on the center satellite). Two classes use them for labels. On a capsule or inside one, `.outward` sets a label just outside its satellite along that direction, and `.outward-y` only above or below: above the satellites of the upper half, below the rest. `--o-outward-gap` (4px) is the space between them.
 
-```css
-.label {
-  /* -1 in the upper half, 1 in the lower half */
-  --side: clamp(-1, var(--o-dir-y) * 1000, 1);
-  position: absolute; left: 50%;
-  top: calc(50% + var(--side) * (50% + 4px));
-  translate: -50% calc((var(--side) - 1) * 50%);
-}
+```html
+<div class="satellite">
+  <div class="capsule"><span class="dot"></span><span class="outward-y">Mars</span></div>
+</div>
 ```
 
 ## Arcs and progress
@@ -190,7 +186,19 @@ Text inside an arc is drawn along it. With `range="auto"` the arc is as long as 
 </div>
 ```
 
-Progress rings draw filled bands. For a thin gauge line, use `variant="stroke"`: a 2px line over a gray track, colored with `--o-stroke` and `--o-back-stroke`.
+`start` places an arc at a point of its ring, on the same scale as `value`. A placed arc takes no slot and moves no other arc, so labels and segments can go over a ring that already has arcs. `--o-max` on a ring or system sets the scale for everything below it, so values stay in their own units, hours for example:
+
+```html
+<div class="orbit-9" style="--o-max: 12; --o-from: 40deg; --o-range: 320deg">
+  <o-arc value="12" style="--o-fill: #222a33"></o-arc>
+  <o-arc start="1" value="2.5" style="--o-fill: #4fd1c5"></o-arc>
+  <o-arc range="auto" start="0" text-anchor="end" style="--o-fill: transparent">Lights</o-arc>
+</div>
+```
+
+`class="ripple"` sends waves out of an arc to call for attention; `--o-ripple-color`, `--o-ripple-duration` and `--o-ripple-scale` tune them.
+
+Progress rings draw filled bands. For a thin gauge line, use `variant="stroke"`: a 2px line over a gray track, colored with `--o-stroke` and `--o-back-stroke`. A `.satellite.at-value` in the same ring sits on the value of the progress and follows it, like the knob of a dial.
 
 Arcs and progress are decorative until you say otherwise. `interactive` makes the whole band clickable, transparent or not, and `hit-width="12"` adds 12px of touch area on each side:
 

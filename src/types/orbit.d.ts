@@ -18,8 +18,13 @@ type BooleanAttribute = boolean | '' | undefined;
 export interface OrbitArcAttributes {
   /** Share of the ring's range, relative to `max`. Without it, sibling arcs split the range equally. */
   value?: Numeric;
-  /** Value that fills the whole range. Default `100`. */
+  /** Value that fills the whole range. Default `--o-max` of the ring or system, else `100`. */
   max?: Numeric;
+  /**
+   * Where the arc begins, on the same scale as `value` (0 is the start of the range).
+   * A placed arc takes no slot and moves no other arc, so it can sit over a ring that already has arcs.
+   */
+  start?: Numeric;
   shape?: OrbitShape;
   /**
    * Where curved text sits on the arc. Default `middle`.
@@ -43,7 +48,7 @@ export interface OrbitArcAttributes {
 export interface OrbitProgressAttributes {
   /** Progress relative to `max`. `--o-progress` overrides it. */
   value?: Numeric;
-  /** Value that fills the whole range. Default `100`. */
+  /** Value that fills the whole range. Default `--o-max` of the ring or system, else `100`. */
   max?: Numeric;
   shape?: OrbitShape;
   /** `stroke` draws open lines colored by `--o-stroke` and `--o-back-stroke`. */
@@ -68,7 +73,10 @@ export declare class OrbitProgress extends HTMLElement {
   value: number | null;
   /** Mirrors the `max` attribute (default 100). Setting it redraws. */
   max: number;
-  /** Redraw now. The runtime calls this when the progress or its layout changes. */
+  /**
+   * Redraw now. The runtime calls this when the progress or its layout changes.
+   * It also writes `--o-value-angle` on its ring, where a `.satellite.at-value` sits.
+   */
   update(): void;
 }
 
