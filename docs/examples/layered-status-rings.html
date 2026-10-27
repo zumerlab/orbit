@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layered status rings · Orbit</title>
+  <meta name="description" content="Three channels of a home stacked in depth on one radial object; an alert brings its channel to the front.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Layered status rings</h1>
+<p class="lede">Several channels on one radial object, stacked in depth: the one in front is the one you read, and an alert moves its channel to the front.</p>
+<p>A home, a car or a server has channels that compete for attention: climate, lights, security. As separate widgets they split the user's focus. Here they share one object, and the order says what matters now.</p>
+<figure class="example" data-height="400">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang home" role="group" aria-label="Home status">
+    <!-- depth turns the rings of this system into layers, front to back. -->
+    <div class="gravity-spot depth" style="--o-depth-grow: .42; --o-back-opacity: .4">
+      <div class="orbit-6 layer-front" data-depth="0" data-name="Climate" data-value="21.5°">
+        <o-progress variant="stroke" value="82"></o-progress>
+      </div>
+      <div class="orbit-6 segments" data-depth="1" data-name="Lights" data-value="5 of 6 on" id="lights"></div>
+      <div class="orbit-6 segments" data-depth="2" data-name="Security" data-value="6 of 6 closed" id="security"></div>
+      <div class="orbit-0" style="--o-size-ratio: 10">
+        <div class="satellite at-center">
+          <div class="capsule readout" aria-live="polite"><strong id="value">21.5°</strong><span id="name">Climate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="controls"><button id="alert">Open a window</button></div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 4px; align-content: center; }
+.stage > .home { width: min(100%, 100vh - 70px); }
+
+.home o-progress { --o-stroke: var(--text); --o-back-stroke: var(--line); }
+.segments o-arc { --o-fill: var(--line); --o-stroke: none; --o-gap: 24; --o-size-ratio: .16; }
+.segments o-arc.on { --o-fill: var(--text); }
+.segments o-arc.fail { --o-fill: var(--coral); }
+
+/* The alert ripple: only on the ring in front. */
+.alert.layer-front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--coral);
+  animation: ripple .9s ease-out infinite;
+}
+@keyframes ripple {
+  from { scale: 1; opacity: .8; }
+  to { scale: 1.45; opacity: 0; }
+}
+.home .readout strong { font-size: clamp(18px, 13cqmin, 30px); }
+.home.alerting .readout strong { color: var(--coral); }
+  </script>
+  <script type="text/plain" data-js>
+// Six segments per channel: lights that are on, windows that are closed.
+const segments = (ring, on) => {
+  ring.innerHTML = Array.from({ length: 6 }, (_, i) => `<o-arc value="16.66" class="${i < on ? 'on' : ''}"></o-arc>`).join('');
+};
+segments(document.getElementById('lights'), 5);
+segments(document.getElementById('security'), 6);
+
+const home = document.querySelector('.home');
+const layers = [...home.querySelectorAll('.depth > [data-depth]')];
+const security = document.getElementById('security');
+const windowArc = security.children[2];
+const button = document.getElementById('alert');
+
+// Order layers front to back and give each its depth.
+const order = list => {
+  list.forEach((layer, depth) => {
+    layer.dataset.depth = depth;
+    layer.classList.toggle('layer-front', depth === 0);
+  });
+  document.getElementById('name').textContent = list[0].dataset.name;
+  document.getElementById('value').textContent = list[0].dataset.value;
+};
+
+button.addEventListener('click', () => {
+  const alerting = security.classList.toggle('alert');
+  home.classList.toggle('alerting', alerting);
+  windowArc.classList.toggle('fail', alerting);
+  windowArc.classList.toggle('on', !alerting);
+  security.dataset.value = alerting ? 'Window open' : '6 of 6 closed';
+  button.textContent = alerting ? 'Close the window' : 'Open a window';
+  // An alert goes in front; resolving it restores the base order.
+  order(alerting ? [security, ...layers.filter(l => l !== security)] : layers);
+});
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li><code>.depth</code> on the <a href="../reference/gravity-spot.html"><code>.gravity-spot</code></a> turns its rings into layers. Each ring gets a <code>data-depth</code>, and <code>.layer-front</code> marks the one in front.</li>
+<li>All three channels use <code>orbit-6</code>. <code>--o-depth-grow: .42</code> makes each step back 42% larger (1×, 1.42×, 1.84×), so no two rings share a radius, and the perspective compensation keeps those sizes.</li>
+<li>Climate is a single <a href="../reference/progress.html"><code>&lt;o-progress variant="stroke"&gt;</code></a>. Lights and Security are six <a href="../reference/arc.html"><code>&lt;o-arc&gt;</code></a> segments each, spaced with <code>--o-gap</code> and thinned with <code>--o-size-ratio</code>.</li>
+<li>Color belongs to the alert: the failing segment, the ripple and the value in the center turn coral, and nothing else is painted.</li>
+<li>Order is data. The script keeps the base order, puts the alerting channel first, and writes <code>data-depth</code> from that list. The depth transition is Orbit's own.</li>
+</ul>
+<h2>Customization</h2>
+<ul>
+<li><code>--o-depth-step</code> (default <code>-110</code>) changes the spacing in z, and <code>--o-perspective</code> (default <code>900</code>) the perspective.</li>
+<li><code>--o-depth-compensate: 0</code> lets farther layers look smaller.</li>
+<li>To hide layers past the third, set <code>opacity: 0</code> on <code>[data-depth="3"]</code> and above, and show a count instead. Three visible layers is about what people read at a glance.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="../craft/depth.html">Depth layers</a>: properties and rules</li>
+<li><a href="../demos/11-depth-layers.html">Depth layers demo</a>: composite layers with tilt</li>
+<li><a href="progress/stacked-circular-progress-bars.html">Stacked circular progress bars</a>: the flat version</li>
+<li><a href="../use-cases/iot-and-hardware-ui.html">IoT and hardware UI</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

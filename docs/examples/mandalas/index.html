@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mandalas · Orbit</title>
+  <meta name="description" content="Geometric mandalas built with Orbit: nested squares, rings of circles with six to twelve folds, and two starter patterns.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Mandalas</h1>
+<p>Mandalas are repetition and nesting, which is what Orbit does: put copies of a satellite on a ring and they spread evenly; put a system inside a satellite and it gets its own center. Everything here is <code>&lt;div&gt;</code> elements with borders.</p>
+<ul class="cards">
+<li><a class="card" href="geometric-square-mandala.html"><img class="thumb" src="../thumbs/geometric-square-mandala.webp" alt="" loading="lazy"><strong>Geometric square mandala</strong><span>Nested squares, copied and turned; one to eight folds.</span></a></li>
+<li><a class="card" href="radial-symmetry-mandala.html"><img class="thumb" src="../thumbs/radial-symmetry-mandala.webp" alt="" loading="lazy"><strong>Radial symmetry mandala</strong><span>Rings of circles with six, eight or twelve folds.</span></a></li>
+<li><a class="card" href="index.html#starters"><img class="thumb" src="../thumbs/overlapping-circles.webp" alt="" loading="lazy"><strong>Starter patterns</strong><span>A hexagonal flower and a rosette.</span></a></li>
+</ul>
+<h2 id="starters">Starter patterns</h2>
+<h3>Hexagonal flower</h3>
+<p>Six circles around a hexagon. The hexagon is six <code>.side</code> elements on the outer ring of a system nested in the center satellite.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang" role="img" aria-label="Hexagon surrounded by six circles">
+    <div class="gravity-spot">
+      <!-- Six circles, 60° apart, each as wide as the distance to the center. -->
+      <div class="orbit-5 petals" style="--o-size-ratio: 10"></div>
+      <!-- The hexagon: a system in a satellite, with six sides on its orbit-12. -->
+      <div class="orbit-0" style="--o-size-ratio: 10">
+        <div class="satellite at-center">
+          <div class="gravity-spot"><div class="orbit-12 hexagon"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.petals .satellite { border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.hexagon .side { height: 2px; background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+document.querySelector('.petals').innerHTML = '<div class="satellite"></div>'.repeat(6);
+document.querySelector('.hexagon').innerHTML = '<div class="side"></div>'.repeat(6);
+  </script>
+</figure>
+<ul>
+<li>Circles on <code>orbit-5</code> with <code>--o-size-ratio: 10</code> pass through the center and touch their neighbors' centers: the flower of life.</li>
+<li>Sides connect the places of neighbors on a ring, so six of them on <code>orbit-12</code> of the nested system draw a hexagon that fits its satellite. See <a href="../../reference/side.html">sides</a>.</li>
+</ul>
+<h3>Rosette</h3>
+<p>Large circles on one small ring overlap into a rosette. Drag the slider: Orbit respaces them as their number changes.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang rosette" role="img" aria-label="Rosette of 18 circles">
+    <div class="gravity-spot">
+      <div class="orbit-5 circles" style="--o-size-ratio: 12"></div>
+    </div>
+  </div>
+  <label class="controls">Circles <input type="range" min="3" max="36" value="18"> <output>18</output></label>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 10px; }
+.stage > .bigbang { width: min(100%, 100vh - 76px); }
+.circles .satellite { border: 1px solid color-mix(in srgb, var(--violet) 70%, transparent); }
+.circles .satellite:nth-child(odd) { border-color: color-mix(in srgb, var(--accent) 70%, transparent); }
+  </script>
+  <script type="text/plain" data-js>
+const input = document.querySelector('input'), output = document.querySelector('output');
+function draw() {
+  const n = Number(input.value);
+  document.querySelector('.circles').innerHTML = '<div class="satellite"></div>'.repeat(n);
+  document.querySelector('.rosette').setAttribute('aria-label', `Rosette of ${n} circles`);
+  output.value = n;
+}
+input.addEventListener('input', draw);
+draw();
+  </script>
+</figure>
+<ul>
+<li>Every circle is twelve lanes wide on a ring of radius five, so each one reaches past the center to the other side. The count only changes the angle between them.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="../../reference/side.html">Sides</a> and <a href="../../reference/satellite.html">satellites</a></li>
+<li><a href="../../use-cases/sci-fi-game-uis.html">Sci-fi and game interfaces</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

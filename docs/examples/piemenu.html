@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pie menu · Orbit</title>
+  <meta name="description" content="A two-level pie menu for text formatting: each wedge opens its options on an outer ring limited to its own slice.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Pie menu</h1>
+<p class="lede">A two-level menu: each wedge opens its options on an outer ring that covers only its own slice.</p>
+<figure class="example" data-height="420">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang menu" role="menu" aria-label="Text format">
+    <div class="gravity-spot">
+      <!-- Three wedges split the inner ring; their names are the arcs' own text. -->
+      <div class="orbit-6 main" style="--o-size-ratio: 4; --o-gap: 3">
+        <o-arc interactive tabindex="0" role="menuitem" aria-haspopup="true" aria-expanded="false" data-open="size">Size</o-arc>
+        <o-arc interactive tabindex="0" role="menuitem" aria-haspopup="true" aria-expanded="false" data-open="style" class="flip">Style</o-arc>
+        <o-arc interactive tabindex="0" role="menuitem" aria-haspopup="true" aria-expanded="false" data-open="color">Color</o-arc>
+      </div>
+      <!-- Each submenu is a ring limited to its wedge's slice with from-N range-120. -->
+      <div class="orbit-10 sub" id="size" style="--o-size-ratio: 3; --o-gap: 3; --o-range: 120deg" role="menu" aria-label="Size">
+        <o-arc interactive tabindex="-1" role="menuitem" data-size="-2">Smaller</o-arc>
+        <o-arc interactive tabindex="-1" role="menuitem" data-size="2">Larger</o-arc>
+      </div>
+      <div class="orbit-10 sub" id="style" style="--o-size-ratio: 3; --o-gap: 3; --o-range: 120deg; --o-from: 120deg" role="menu" aria-label="Style">
+        <!-- Clockwise runs right to left down here: listed backwards, they read left to right. -->
+        <o-arc interactive tabindex="-1" role="menuitemcheckbox" aria-checked="false" data-toggle="underline" class="flip">Underline</o-arc>
+        <o-arc interactive tabindex="-1" role="menuitemcheckbox" aria-checked="false" data-toggle="italic" class="flip">Italic</o-arc>
+        <o-arc interactive tabindex="-1" role="menuitemcheckbox" aria-checked="false" data-toggle="bold" class="flip">Bold</o-arc>
+      </div>
+      <div class="orbit-10 sub swatches" id="color" style="--o-size-ratio: 3; --o-gap: 3; --o-range: 120deg; --o-from: 240deg" role="menu" aria-label="Color"></div>
+      <div class="orbit-0" style="--o-size-ratio: 8">
+        <div class="satellite at-center"><div class="capsule sample" id="sample">Aa</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage > .menu { width: min(100%, 100vh - 32px); }
+
+.menu o-arc {
+  --o-fill: #1b232d; --o-stroke: #2c3846; --o-color: var(--muted);
+  font: 600 13px system-ui, sans-serif;
+  transition: scale .18s cubic-bezier(.2, .8, .2, 1);
+}
+/* Orbit places arcs with rotate, so a hover scale adds to it. */
+.menu o-arc:is(:hover, :focus-visible) { --o-fill: #253040; --o-color: var(--text); scale: 1.03; outline: none; }
+.main o-arc[aria-expanded="true"] { --o-fill: var(--accent); --o-stroke: var(--accent); --o-color: var(--bg); }
+.sub o-arc[aria-checked="true"] { --o-color: var(--accent); --o-stroke: var(--accent); }
+.swatches o-arc { --o-fill: var(--c); --o-stroke: var(--c); }
+.swatches o-arc:is(:hover, :focus-visible) { --o-fill: var(--c); --o-stroke: var(--text); }
+
+/* Closed submenus fade and shrink toward the center. */
+.sub { opacity: 0; visibility: hidden; scale: .9; transition: opacity .2s, scale .2s, visibility .2s; }
+.sub.open { opacity: 1; visibility: visible; scale: 1; }
+
+.sample { font-size: 28px; color: var(--c, var(--text)); transition: font-size .15s; }
+  </script>
+  <script type="text/plain" data-js>
+const colors = [['White', 'var(--text)'], ['Teal', 'var(--accent)'], ['Blue', 'var(--blue)'], ['Violet', 'var(--violet)'], ['Coral', 'var(--coral)'], ['Amber', 'var(--amber)']];
+document.getElementById('color').innerHTML = colors.map(([name, c]) =>
+  `<o-arc interactive tabindex="-1" role="menuitem" aria-label="${name}" data-color="${c}" style="--c: ${c}"></o-arc>`).join('');
+
+const sample = document.getElementById('sample');
+const wedges = [...document.querySelectorAll('.main o-arc')];
+let size = 28;
+const open = wedge => {
+  const name = wedge && wedge.getAttribute('aria-expanded') !== 'true' ? wedge.dataset.open : null;
+  wedges.forEach(w => w.setAttribute('aria-expanded', w.dataset.open === name));
+  document.querySelectorAll('.sub').forEach(sub => {
+    sub.classList.toggle('open', sub.id === name);
+    sub.querySelectorAll('o-arc').forEach(o => { o.tabIndex = sub.id === name ? 0 : -1; });
+  });
+};
+// One handler for every option, by what its data says.
+const choose = option => {
+  const { size: step, toggle, color } = option.dataset;
+  if (step) size = Math.max(16, Math.min(44, size + Number(step)));
+  if (toggle) option.setAttribute('aria-checked', option.getAttribute('aria-checked') !== 'true');
+  if (color) sample.style.setProperty('--c', color);
+  const on = name => document.querySelector(`[data-toggle="${name}"]`).getAttribute('aria-checked') === 'true';
+  sample.style.fontSize = size + 'px';
+  sample.style.fontWeight = on('bold') ? 800 : 400;
+  sample.style.fontStyle = on('italic') ? 'italic' : 'normal';
+  sample.style.textDecoration = on('underline') ? 'underline' : 'none';
+};
+document.querySelectorAll('.menu o-arc').forEach(arc => {
+  const act = () => (arc.dataset.open ? open(arc) : choose(arc));
+  arc.addEventListener('click', act);
+  arc.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); act(); }
+    if (event.key === 'Escape') { open(null); wedges[0].focus(); }
+  });
+});
+open(wedges[1]);
+choose(document.querySelector('[data-toggle="bold"]'));
+  </script>
+  <figcaption>Click a wedge, or Tab to it and press Enter. Escape closes the submenu.</figcaption>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Three <a href="../reference/arc.html"><code>&lt;o-arc&gt;</code></a> without <code>value</code> split the inner ring into 120° wedges. Their text is drawn along the arc, and <code>flip</code> keeps the bottom one readable.</li>
+<li>Each submenu is a ring on <code>orbit-10</code> with <code>--o-range: 120deg</code> and the <code>--o-from</code> of its wedge. Its options split that slice evenly, so they always sit right outside the wedge that opened them.</li>
+<li><code>interactive</code> lets an arc take the pointer and focus; the rest of the square stays click-through. Hover and focus use <code>scale</code>, which adds to the <code>rotate</code> Orbit places arcs with.</li>
+<li>Closed submenus are faded and scaled to 90% from the center, so opening one grows it outward.</li>
+<li>Wedges are <code>menuitem</code>s with <code>aria-expanded</code>, style options are <code>menuitemcheckbox</code>es, and only the open submenu is in the Tab order.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="../demos/03-radial-menu.html">Radial menu demo</a>: one level, with icons</li>
+<li><a href="../kit/menu.html">Orbit Kit menu</a>: a ready-made radial menu</li>
+<li><a href="knobs/index.html">Knobs and menus</a></li>
+<li><a href="../reference/arc.html">Arcs</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

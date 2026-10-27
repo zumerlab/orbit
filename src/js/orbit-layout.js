@@ -14,6 +14,71 @@ export function orbitNumber(element) {
   return element.classList?.contains('orbit') ? null : undefined;
 }
 
+const WARNED = Symbol.for('zumer.orbit.warned.v1');
+
+/** Log a message once per element and key, so layout loops never flood the console. */
+export function warnOnce(element, key, message) {
+  const seen = element[WARNED] || (element[WARNED] = new Set());
+  if (seen.has(key)) return;
+  seen.add(key);
+  console.warn(`[orbit] ${message}`);
+}
+
+/** closest() that also climbs out of shadow roots, like container queries do. */
+export function composedClosest(element, selector) {
+  for (let current = element; current; current = current.parentElement || current.getRootNode?.().host) {
+    if (current.matches?.(selector)) return current;
+  }
+  return null;
+}
+
+const KINDS = '.satellite, .vector, .side, o-arc, o-progress';
+
+function describe(element) {
+  const classes = [...element.classList].slice(0, 3).map(name => '.' + name).join('');
+  return `<${element.localName}${classes ? ' ' + classes : ''}>`;
+}
+
+/** Explain empty or broken layouts: the usual reasons nothing shows up. */
+function diagnose(ring) {
+  const spot = ring.parentElement;
+  const universe = composedClosest(spot.parentElement, '.bigbang, .satellite');
+  if (!universe) {
+    warnOnce(spot, 'universe', 'A .gravity-spot is not inside a .bigbang, so it measures the viewport. ' +
+      'Wrap it: <div class="bigbang"><div class="gravity-spot">…</div></div>.');
+  } else if (universe.getClientRects().length && (!universe.clientWidth || !universe.clientHeight)) {
+    warnOnce(universe, 'empty', `${describe(universe)} has no size (${universe.clientWidth}×${universe.clientHeight}px), ` +
+      'so its system is invisible. Give it a width, or place it in a parent with a width.');
+  }
+  // Arcs and progress hide on an elliptical ring (see _support.scss); say why.
+  const visual = ring.querySelector(':scope > o-arc, :scope > o-progress');
+  if (visual) {
+    const style = ring.ownerDocument.defaultView.getComputedStyle(ring);
+    const x = style.getPropertyValue('--o-ellipse-x').trim(), y = style.getPropertyValue('--o-ellipse-y').trim();
+    if ((x && Number(x) !== 1) || (y && Number(y) !== 1)) {
+      warnOnce(ring, 'ellipse-visual', `${describe(visual)} is on ${describe(ring)}, which is stretched into an ellipse ` +
+        `(--o-ellipse-x: ${x || 1}, --o-ellipse-y: ${y || 1}). Arcs and progress are drawn on circles only, so it is hidden. ` +
+        'Put it on a round ring.');
+    }
+  }
+  if (!composedClosest(ring, '.dev-orbit')) return;
+  for (const child of ring.children) {
+    if (orbitNumber(child) !== undefined) {
+      warnOnce(child, 'nested-ring', `${describe(child)} is inside another ring. Rings must be direct children of .gravity-spot; ` +
+        'to nest a system, put a .gravity-spot directly inside a .satellite.');
+    } else if (!child.matches(KINDS)) {
+      warnOnce(child, 'ring-child', `${describe(child)} is not placed by its ring. A ring holds only .satellite, .vector, .side, <o-arc> and <o-progress>; ` +
+        'wrap content as <div class="satellite"><div class="capsule">…</div></div>.');
+    } else if (child.classList.contains('satellite')) {
+      for (const inner of child.children) {
+        if (!inner.matches('.capsule, .gravity-spot, .bigbang')) {
+          warnOnce(inner, 'satellite-child', `${describe(inner)} sits directly in a .satellite. Put content in a .capsule so it stays upright and centered.`);
+        }
+      }
+    }
+  }
+}
+
 export function setLayoutProperty(element, name, value) {
   const text = String(value);
   if (element.style.getPropertyValue(name) !== text) element.style.setProperty(name, text);
@@ -63,8 +128,10 @@ function layoutRing(ring) {
   }
   const count = Math.max(counts.arc, counts.satellite, counts.vector, 1);
   // Preserve Orbit's existing mixed-group convention. Sides close a polygon
-  // and therefore never subtract the fit-range endpoint.
-  const divisor = counts.side ? String(counts.side) : `max(1, ${count} - var(--o-fit-range, 0))`;
+  // and therefore never subtract the fit-range endpoint. fit-range puts points
+  // on both ends of the range; arcs are spans, so a ring of arcs only fills it.
+  const points = counts.satellite || counts.vector;
+  const divisor = counts.side ? String(counts.side) : points ? `max(1, ${count} - var(--o-fit-range, 0))` : String(count);
   setLayoutProperty(ring, '--o-layout-angle', `calc(var(--o-range, 360deg) / ${divisor})`);
 }
 
@@ -92,10 +159,21 @@ function registryFor(doc) {
   return doc[REGISTRY];
 }
 
+function cancel(state) {
+  if (state.frame < 0) state.view.clearTimeout(-state.frame);
+  else if (state.frame) state.view.cancelAnimationFrame(state.frame);
+  state.frame = 0;
+}
+
+function settle(state) {
+  for (const resolve of state.waiters.splice(0)) resolve();
+}
+
 function dispose(state) {
   if (state.disposed) return;
   state.disposed = true;
-  state.view.cancelAnimationFrame(state.frame);
+  cancel(state);
+  settle(state);
   state.observer.disconnect();
   state.resize.disconnect();
   for (const remove of state.listeners) remove();
@@ -148,16 +226,19 @@ function createState(scope) {
   const view = doc.defaultView;
   const registry = registryFor(doc);
   const state = { scope, doc, view, registry, rings: new Set(), visuals: new Set(), dirty: new Set(),
-    scan: true, all: true, frame: 0, disposed: false, listeners: [] };
+    scan: true, all: true, frame: 0, disposed: false, listeners: [], waiters: [] };
   const listen = (target, event, listener, options) => {
     target?.addEventListener(event, listener, options);
     state.listeners.push(() => target?.removeEventListener(event, listener, options));
   };
+  // Draw on the next frame. Hidden pages get no frames, so they use a task:
+  // layouts are ready in background tabs and in tests.
   const queue = () => {
-    if (!state.disposed && !state.frame) state.frame = view.requestAnimationFrame(() => {
-      state.frame = 0;
-      state.flush();
-    });
+    if (state.disposed || state.frame) return;
+    const run = () => { state.frame = 0; state.flush(); };
+    state.frame = doc.visibilityState === 'hidden'
+      ? -view.setTimeout(run, 0)
+      : view.requestAnimationFrame(run);
   };
   state.queue = queue;
   state.flush = () => flush(state);
@@ -196,6 +277,13 @@ function createState(scope) {
     invalidateDescendants(state);
     queue();
   };
+  // A frame requested before the page was hidden would wait until it shows.
+  listen(doc, 'visibilitychange', () => {
+    if (doc.visibilityState === 'hidden' && state.frame > 0) {
+      cancel(state);
+      queue();
+    }
+  });
   // A document state supplies viewport/font events for all its shadow scopes.
   if (scope === doc) {
     listen(view, 'resize', invalidateAll);
@@ -265,6 +353,7 @@ function flush(state) {
   if (state.scope.host && !state.scope.host.isConnected) { dispose(state); return; }
   // Discard only our synchronous layout writes, not future user mutations.
   state.observer.disconnect();
+  const drawn = [];
   try {
     if (state.scan) discover(state);
     const dirty = state.all ? new Set([...state.rings, ...state.visuals]) : state.dirty;
@@ -273,16 +362,24 @@ function flush(state) {
       if (!target.isConnected) continue;
       if (state.rings.has(target)) {
         layoutRing(target);
+        diagnose(target);
         for (const visual of target.querySelectorAll(VISUALS)) visuals.add(visual);
       } else if (state.visuals.has(target)) visuals.add(target);
     }
     // DOM order matters for cumulative arcs, including reorders and removals.
-    for (const visual of state.visuals) if (visuals.has(visual)) visual.update?.();
+    for (const visual of state.visuals) if (visuals.has(visual) && visual.update) {
+      visual.update();
+      drawn.push(visual);
+    }
     state.dirty = new Set();
     state.all = false;
   } finally {
     if (!state.disposed) state.observer.observe(state.scope, OBSERVE);
   }
+  // Tell listeners after the whole batch, with observation back on, so they
+  // measure final geometry and their own changes are picked up.
+  for (const visual of drawn) visual.dispatchEvent(new state.view.Event('o-rendered', { bubbles: true, composed: true }));
+  if (!state.frame) settle(state);
 }
 
 export function requestLayout(element = globalThis.document) {
@@ -305,8 +402,24 @@ export function refreshLayout(root = globalThis.document) {
     if (current !== state && (!current.scope.host || !composedContains(root, current.scope.host))) continue;
     current.scan = true;
     current.all = true;
-    current.view.cancelAnimationFrame(current.frame);
-    current.frame = 0;
+    cancel(current);
     current.flush();
   }
+}
+
+/**
+ * Resolves once every pending layout of `root` (and of shadow roots inside it)
+ * has been drawn: arcs exist and have their final geometry.
+ */
+export function layoutReady(root = globalThis.document) {
+  const scope = scopeFor(root);
+  const state = scope && ensureState(scope);
+  if (!state) return Promise.resolve();
+  pruneDisconnected(state.registry);
+  const pending = [...state.registry.states].filter(current =>
+    current === state || (current.scope.host && composedContains(root, current.scope.host)));
+  return Promise.all(pending.map(current => new Promise(resolve => {
+    current.waiters.push(resolve);
+    current.queue();
+  }))).then(() => {});
 }

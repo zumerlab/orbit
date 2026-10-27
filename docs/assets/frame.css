@@ -1,0 +1,82 @@
+/* The look of every live example: the same tokens and controls as the demos.
+   site.js puts this file inside each example, and inside "Copy page". */
+
+:root {
+  color-scheme: dark;
+  --bg: #0c0f13;
+  --panel: #12161c;
+  --line: #222a33;
+  --text: #e8edf2;
+  --muted: #8a97a5;
+  --faint: #4a5562;
+  /* The accent of this visit (assets/accent.js); teal until it runs. */
+  --accent: #4fd1c5;
+  --teal: #4fd1c5;
+  --amber: #ffb547;
+  --coral: #ff7a6b;
+  --violet: #a78bfa;
+  --blue: #60a5fa;
+  --lime: #a3e635;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* A light frame, for the few examples that are about paper-like layouts. */
+:root:has(body.light) {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --line: #dde3ea;
+  --text: #12161c;
+  --muted: #5d6b79;
+  --faint: #a3afbb;
+}
+
+/* Orbit Kit components in the examples follow the accent too. */
+:root { --ok-fill: var(--accent); --ok-focus: var(--accent); --ok-radar-color: var(--accent); }
+[theme~="dark"] { --ok-fill: var(--accent); --ok-focus: var(--accent); --ok-radar-color: var(--accent); }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(120% 80% at 30% 0%, #151b23 0%, var(--bg) 60%);
+  color: var(--text);
+  font: 15px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+body.light { background: var(--bg); }
+
+code { font-family: var(--mono); font-size: .88em; color: var(--accent); }
+
+/* The drawing, centered. Put the .bigbang in a .stage, or straight in body. */
+.stage { display: grid; place-items: center; min-height: 100vh; padding: 16px; }
+.stage > .bigbang { width: min(100%, 100vh - 32px); }
+
+/* Controls under or beside the drawing. */
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 13px; color: var(--muted); }
+.controls label { display: flex; align-items: center; gap: 8px; }
+.controls output { font-family: var(--mono); color: var(--text); min-width: 3ch; }
+input[type=range] { accent-color: var(--accent); }
+
+button {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 13px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 80%, var(--text) 6%);
+  color: var(--text);
+  cursor: pointer;
+}
+button:hover { background: color-mix(in srgb, var(--panel) 70%, var(--text) 12%); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* A number with a caption under it, for the middle of a dial. */
+.readout { display: grid; justify-items: center; gap: 2px; white-space: nowrap; text-align: center; }
+.readout strong { font-size: clamp(18px, 9cqmin, 44px); font-weight: 650; letter-spacing: -.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+.readout span { font-size: 13px; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
+}

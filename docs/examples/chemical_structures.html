@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chemical structure · Orbit</title>
+  <meta name="description" content="The structure of caffeine drawn in HTML and CSS with Orbit: rings of sides for the bonds, satellites for the atoms, two systems sharing a bond.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Chemical structure</h1>
+<p class="lede">Caffeine, drawn as two systems side by side: a six-membered ring and a five-membered one that share a bond. Each ring of bonds is a polygon of <code>.side</code> elements, each atom a satellite.</p>
+<figure class="example" data-height="420">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang molecule" role="img" aria-label="Structure of caffeine">
+    <!-- A reach of 150cqmin draws everything half again as large. -->
+    <div class="gravity-spot" style="--o-force: 150cqmin">
+      <!-- The six-membered ring: a system as wide as the universe, two lanes left of center. -->
+      <div class="orbit-2" style="--o-size-ratio: 24">
+        <div class="satellite angle-270">
+          <div class="gravity-spot">
+            <div class="orbit-3 bonds"></div>
+            <!-- Bonds to the outside, and the second line of the double bond at the top. -->
+            <div class="orbit-3" style="--o-size-ratio: 2.6">
+              <div class="vector outer-orbit angle-0"></div>
+              <div class="vector outer-orbit angle-180"></div>
+              <div class="vector outer-orbit angle-240"></div>
+              <div class="vector outer-orbit angle-300"></div>
+            </div>
+            <div class="orbit-3" style="--o-size-ratio: .5">
+              <div class="satellite angle-180 atom n"><div class="capsule">N</div></div>
+              <div class="satellite angle-300 atom n"><div class="capsule">N</div></div>
+            </div>
+            <!-- Groups on the outside, spread over half the circle, counterclockwise. -->
+            <div class="orbit-6 range-180 ccw fit-range" style="--o-size-ratio: .5">
+              <div class="satellite inner-orbit atom o"><div class="capsule">O</div></div>
+              <div class="satellite atom"><div class="capsule">H<sub>3</sub>C</div></div>
+              <div class="satellite atom o"><div class="capsule">O</div></div>
+              <div class="satellite atom"><div class="capsule">CH<sub>3</sub></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- The five-membered ring, its center placed so the two rings share a bond. -->
+      <div class="orbit-3 shrink-35" style="--o-size-ratio: 24">
+        <div class="satellite angle-90">
+          <div class="gravity-spot">
+            <div class="orbit-3 shrink-25 from-36 bonds"></div>
+            <div class="orbit-3 shrink-75 from-36 double"></div>
+            <div class="orbit-3 shrink-25" style="--o-size-ratio: 2.4"><div class="vector outer-orbit angle-18"></div></div>
+            <div class="orbit-3 shrink-25" style="--o-size-ratio: .6">
+              <div class="satellite angle-18 atom n"><div class="capsule">N</div></div>
+              <div class="satellite angle-165 atom n"><div class="capsule">N</div></div>
+            </div>
+            <div class="orbit-6 shrink-5" style="--o-size-ratio: .6">
+              <div class="satellite angle-18 atom"><div class="capsule">CH<sub>3</sub></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="readout"><strong>C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub></strong><span>Caffeine</span></p>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body { background: var(--bg); }
+.stage { gap: 4px; }
+.stage > .bigbang { width: min(100%, 100vh - 90px); }
+.molecule { color: #c3ccd6; }
+.vector, .side { height: 2px; }
+/* An atom hides the bonds behind its letter with the page color. */
+.atom { background: var(--bg); font-size: 15px; font-weight: 600; color: var(--text); }
+.atom sub { font-size: .7em; }
+.n { color: var(--blue); }
+.o { color: var(--coral); }
+.readout { margin: 0; }
+.readout strong { font-size: 20px; letter-spacing: 0; }
+  </script>
+  <script type="text/plain" data-js>
+// Six sides make the hexagon. The pentagon is drawn twice: once whole, once with
+// every other side left out, slightly inside, for the double bonds.
+document.querySelector('.molecule .bonds').innerHTML = '<div class="side"></div>'.repeat(6);
+document.querySelectorAll('.molecule .bonds')[1].innerHTML = '<div class="side"></div>'.repeat(5);
+document.querySelector('.molecule .double').innerHTML =
+  ['hidden', '', 'hidden', '', 'hidden'].map((c) => `<div class="side" ${c}></div>`).join('');
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Sides connect neighboring places on a ring, so six <a href="../reference/side.html"><code>.side</code></a> elements make a hexagon and five a pentagon. The double bonds of the pentagon are a second, smaller pentagon with every other side hidden.</li>
+<li>Each ring of atoms is its own <code>.gravity-spot</code> inside a satellite as wide as the universe, so both use lanes of the same size. See <a href="../reference/gravity-spot.html">gravity spot</a>.</li>
+<li>The hexagon's satellite sits two lanes left of the center, the pentagon's on <code>orbit-3 shrink-35</code> to the right: the distance at which the two rings share a bond. <code>--o-force: 150cqmin</code> makes the reach larger than the universe, so the molecule fills the frame.</li>
+<li>Atoms are satellites at fixed angles. Their background is the page color, which hides the bonds behind each letter.</li>
+<li>Single bonds to the outside are <a href="../reference/vector.html">vectors</a> at <code>angle-N</code>; methyls and oxygens ride on <code>orbit-6</code>, spread over half the circle with <code>range-180 ccw fit-range</code>.</li>
+</ul>
+<p>Benzene, pyridine or furan use the same parts with a different number of sides.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="mandalas/geometric-square-mandala.html">Geometric square mandala</a>: systems inside satellites</li>
+<li><a href="mandalas/index.html#starters">Hexagonal flower</a>: a hexagon of sides</li>
+<li><a href="../reference/side.html">Sides</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

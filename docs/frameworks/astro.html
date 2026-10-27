@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astro · Orbit</title>
+  <meta name="description" content="Use Orbit in Astro: import the stylesheet in frontmatter and the runtime in a script tag. No island needed.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Astro</h1>
+<p class="lede">Astro renders Orbit's markup on the server as plain HTML. Import the stylesheet in the frontmatter and the runtime in a <code>&lt;script&gt;</code>, which Astro bundles for the browser. No framework island or <code>client:</code> directive is needed.</p>
+<h2>Install</h2>
+<pre><code class="language-sh">npm install @zumer/orbit
+</code></pre>
+<h2>A gauge</h2>
+<pre><code class="language-astro">---
+import '@zumer/orbit/style';
+const value = 72;
+---
+
+&lt;div class="gauge"&gt;
+  &lt;div class="bigbang"&gt;
+    &lt;div class="gravity-spot"&gt;
+      &lt;div class="orbit-10"&gt;
+        &lt;o-progress value={value} shape="rounded"&gt;&lt;/o-progress&gt;
+      &lt;/div&gt;
+      &lt;div class="orbit-0"&gt;
+        &lt;div class="satellite at-center"&gt;
+          &lt;div class="capsule"&gt;{value}%&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  import '@zumer/orbit';
+&lt;/script&gt;
+
+&lt;style&gt;
+  .gauge { width: 220px; }
+  .gauge .orbit-10 { --o-size-ratio: 2; }
+  .gauge .orbit-0 { --o-size-ratio: 12; }
+  .gauge o-progress {
+    --o-fill: var(--o-cyan);
+    --o-back-fill: var(--o-cyan-lighter);
+    --o-stroke: none;
+  }
+  .gauge .capsule { font-size: 28px; font-weight: 600; }
+&lt;/style&gt;
+</code></pre>
+<p>To load Orbit from a CDN instead, put the <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code> from <a href="../install.html">Install</a> in your layout's <code>&lt;head&gt;</code>, with <code>is:inline</code> on the script so Astro leaves it alone.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="gauge">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10">
+        <o-progress value="72" shape="rounded"></o-progress>
+      </div>
+      <div class="orbit-0">
+        <div class="satellite at-center"><div class="capsule">72%</div></div>
+      </div>
+    </div>
+  </div>
+  <input type="range" min="0" max="100" value="72" aria-label="Value">
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.gauge { width: 220px; display: grid; gap: 10px; }
+.gauge .orbit-10 { --o-size-ratio: 2; }
+.gauge .orbit-0 { --o-size-ratio: 12; }
+.gauge o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.gauge .capsule { font-size: 34px; font-weight: 650; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const progress = document.querySelector('o-progress');
+const label = document.querySelector('.capsule');
+document.querySelector('input').addEventListener('input', (e) => {
+  progress.setAttribute('value', e.target.value);
+  label.textContent = e.target.value + '%';
+});
+  </script>
+  <figcaption>The same markup in plain HTML. Move the slider: changing <code>value</code> is all it takes.</figcaption>
+</figure>
+<p>Inside a React, Vue or Svelte island, Orbit works as described on those pages.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

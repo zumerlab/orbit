@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coming from 1.x · Orbit</title>
+  <meta name="description" content="What changed in Orbit 2 and how to move a 1.x layout to the new model, or keep it exactly as it was.">
+  <link rel="icon" href="brand/favicon.svg">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Coming from 1.x</h1>
+<p>Orbit 2 changes one big thing: where size comes from. Everything else is smaller and mostly in your favor. You can move a layout over in a few minutes, or keep it exactly as it was with one line of CSS.</p>
+<p>The <a href="https://zumerlab.com/orbit-docs/">1.x documentation</a> stays online.</p>
+<h2>Size comes from the universe</h2>
+<p>In 1.x every system was 500px across, whatever the size of its <code>.bigbang</code>. <code>orbit-12</code> was always 500px wide, and to make a layout follow its container you called <code>Orbit.resize()</code>.</p>
+<p>In 2.0 the <code>.bigbang</code> is the universe and its box sets the size. The <code>.gravity-spot</code> reaches the shorter side of it (<code>--o-force</code> defaults to <code>100cqmin</code>), so <code>orbit-12</code> touches the edge and every ring is a fraction of the box. Layouts follow their container with no code.</p>
+<p>Both previews below are the same ring in a 300px-tall frame. The first keeps the 1.x size with a fixed reach; the second is written for 2.0.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot" style="--o-force: 500px">
+    <div class="orbit-12 reach"></div>
+    <div class="orbit-4" style="--o-size-ratio: 1">
+      <o-progress value="70"></o-progress>
+    </div>
+    <div class="orbit-0" style="--o-size-ratio: 6">
+      <div class="satellite at-center"><div class="capsule readout"><strong>70%</strong><span>1.x size</span></div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* The reach of the system, drawn so you can compare. */
+.reach {
+  border: 1px dashed var(--faint);
+}
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.readout strong { font-size: 26px; }
+  </script>
+  <figcaption><code>--o-force: 500px</code>: the dashed <code>orbit-12</code> is 500px across, larger than the frame, as in 1.x.</figcaption>
+</figure>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-12 reach"></div>
+    <div class="orbit-7" style="--o-size-ratio: 1.7">
+      <o-progress value="70"></o-progress>
+    </div>
+    <div class="orbit-0" style="--o-size-ratio: 10">
+      <div class="satellite at-center"><div class="capsule readout"><strong>70%</strong><span>2.0 size</span></div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* The reach of the system, drawn so you can compare. */
+.reach {
+  border: 1px dashed var(--faint);
+}
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.readout strong { font-size: 26px; }
+  </script>
+  <figcaption>No <code>--o-force</code>: the dashed <code>orbit-12</code> touches the edge of the frame, and <code>orbit-7</code> lands where 1.x put <code>orbit-4</code>.</figcaption>
+</figure>
+<h2>Two ways to move</h2>
+<p><strong>Keep the 1.x size.</strong> Set the old reach back on your systems:</p>
+<pre><code class="language-css">.gravity-spot { --o-force: 500px; }
+</code></pre>
+<p>Your layouts look exactly as before. <code>Orbit.resize()</code> still scales systems with a fixed px reach, so code that used it keeps working.</p>
+<p><strong>Adopt the new model.</strong> Remove <code>--o-force</code> and <code>Orbit.resize()</code>, then pick rings by their share of the space. If your 1.x layout sat in a box <code>W</code> px wide:</p>
+<ul>
+<li>a ring <code>orbit-N</code> lands near <code>orbit-(N × 500 / W)</code>,</li>
+<li>a thickness ratio <code>r</code> lands near <code>--o-size-ratio: r × 500 / W</code>.</li>
+</ul>
+<p>Round to the nearest lane; if that is visibly off, try the neighbor or nudge with <code>--o-alignment</code> in px. When every ring of a system scales the same way, set <code>--o-size-ratio</code> once on the <code>.gravity-spot</code>. Give auto-numbered <code>.orbit</code> rings an explicit number while you are at it, so the result does not depend on DOM order.</p>
+<p>Text inside arcs keeps its font size, so on a smaller layout a label may no longer fit its arc. The console will tell you (<code>[orbit] &lt;o-arc&gt; text "…" overflows its arc</code>); widen the range, use <code>range="auto"</code>, or move the ring out a lane.</p>
+<h2>Everything else</h2>
+<ul>
+<li><strong>The universe.</strong> A <code>.bigbang</code> is square by default and a size container, so it is the containing block of <code>position: fixed</code> descendants. Directly in <code>&lt;body&gt;</code> it is capped at the viewport height instead of forced to it, so your own <code>width</code> and <code>aspect-ratio</code> apply.</li>
+<li><strong>Thickness.</strong> <code>.satellite</code> no longer resets <code>--o-size-ratio</code>, so a value set on its ring reaches it. <code>shrink-N</code> on a ring only changes how close it sits to the previous lane; it does not shrink what is on it.</li>
+<li><strong>Nested systems.</strong> Every <code>.gravity-spot</code> starts from the defaults, including ring spacing, so a <code>shrink-N</code> around a satellite does not leak into the system inside it.</li>
+<li><strong>Gaps and alignment.</strong> <code>--o-gap</code> cascades from the ring and the system. <code>--o-aligment</code> still works; <code>--o-alignment</code> is the right spelling.</li>
+<li><strong>Ranges.</strong> <code>fit-range</code> on a ring of arcs no longer makes the arcs overflow the range.</li>
+<li><strong>Styling.</strong> Satellites have no border by default. The reset, the default theme and <code>theme-cyan</code> count only their own class for specificity, so a single class of yours wins without <code>!important</code>, also inside a <code>.capsule</code>. <code>dev-orbit</code> combines with a theme.</li>
+<li><strong>Arcs and progress.</strong> They are placed with <code>rotate</code> instead of <code>transform</code>, so a <code>transform</code> of yours adds to it. Endings (<code>rounded</code>, <code>arrow</code>…) scale with the band. <code>interactive</code> makes the whole band clickable, transparent or not, and <code>hit-width</code> adds touch area. <code>variant="stroke"</code> draws a 2px line over a gray track by default.</li>
+<li><strong>New.</strong> <code>range="auto"</code> and <code>text-anchor</code> for arcs that fit their text, <code>--o-dir-x</code> / <code>--o-dir-y</code> on satellites, depth layers, <code>Orbit.ready()</code>, the <code>o-rendered</code> event, <code>value</code> and <code>max</code> as properties on arcs and progress (so <code>[value]</code> bindings redraw), and <code>[orbit]</code> messages in the console.</li>
+<li><strong>No <code>!important</code>.</strong> Utility classes (<code>grow-*x</code>, <code>shrink-N</code>, <code>angle-N</code>, <code>ccw</code>, <code>fit-range</code>, <code>at-*</code>, <code>flip</code>…) no longer use it. An inline style or a more specific rule of yours wins over them. In 1.x some of them could only be beaten with another <code>!important</code>; those still work, but you can drop them.</li>
+<li><strong>Renamed.</strong> <code>from-1x</code> … <code>from-12x</code> are now <code>core-1</code> … <code>core-12</code>, so they don't read like <code>from-N</code>. The old names still work.</li>
+<li><strong>Fixed.</strong> <code>angle-N</code> on a <code>.side</code> points where it does on a satellite. Only real <code>angle-N</code> classes reset <code>--o-from</code>, not any class that contains "angle-". <code>--o-color</code> set on a ring or satellite gives it its own <code>--o-color-*</code> shades.</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="assets/site.js" data-root=""></script>
+</body>
+</html>

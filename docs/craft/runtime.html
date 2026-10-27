@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Runtime and resizing · Orbit</title>
+  <meta name="description" content="How Orbit sizes layouts without code, and the small runtime API: Orbit.ready(), the o-rendered event, Orbit.refresh() and Orbit.resize() for fixed-size systems.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Runtime and resizing</h1>
+<p class="lede">Most of the time there is nothing to call. Layouts follow their box, and the runtime notices changes on its own. The few functions it exports are for waiting, forcing an update, and old fixed-size layouts.</p>
+
+<h2>Sizing needs no code</h2>
+<p>Every ring, satellite and band is a fraction of its <code>.bigbang</code>, so when the box changes size everything inside changes with it. There is no breakpoint to write. Drag the corner of the dashed box:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="wrapper">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-12 reach"></div>
+      <div class="orbit-8">
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* Drag the corner of the box. */
+.wrapper {
+  width: 280px;
+  height: 200px;
+  margin: 16px;
+  border: 1px dashed var(--faint);
+  border-radius: 10px;
+  resize: both;
+  overflow: hidden;
+}
+.reach {
+  border: 1px dashed var(--accent);
+}
+.orbit-8 {
+  --o-size-ratio: 2;
+}
+.satellite {
+  border-radius: 50%;
+  background: var(--accent);
+}
+  </script>
+</figure>
+<p>The <code>.bigbang</code> is square and as wide as its parent, and a parent with a height keeps it from growing taller. Here the box is 280 × 200, so the universe is 200px across. Give the <code>.bigbang</code> a <code>width</code>, <code>height</code> or <code>aspect-ratio</code> of its own and the system follows that instead.</p>
+
+<h2>What the runtime watches</h2>
+<p>Orbit watches the page for added, removed and reordered elements, attribute and style changes, and containers that change size. It batches what it sees into the next animation frame. That is why a framework can re-render a layout, or you can change <code>value</code> on an <code>&lt;o-progress&gt;</code>, and the drawing follows with no extra call.</p>
+
+<h2>Waiting for the drawing</h2>
+<p><code>Orbit.ready()</code> returns a promise that resolves when every pending layout is drawn. Pass an element, a document or a shadow root to wait only for that part. Use it in tests, or before you measure something.</p>
+<p>Each <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code> also fires an <code>o-rendered</code> event after it redraws. It bubbles and crosses shadow roots, so one listener on a container hears all of its arcs.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-10" style="--o-size-ratio: 2">
+      <o-progress value="40" shape="rounded" role="progressbar" aria-label="Value" aria-valuenow="40"></o-progress>
+    </div>
+    <div class="orbit-0" style="--o-size-ratio: 12">
+      <div class="satellite at-center">
+        <div class="capsule readout"><strong id="value">40%</strong><span id="draws">waiting</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<label class="controls">Value <input type="range" min="0" max="100" value="40"></label>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100vh;
+  padding: 16px 16px 14px;
+}
+.bigbang { max-height: 100%; }
+.controls { justify-content: center; }
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.readout strong { font-size: 34px; }
+  </script>
+  <script type="text/plain" data-js>
+const progress = document.querySelector('o-progress');
+let draws = 0;
+
+// Fires after every redraw of the arc.
+progress.addEventListener('o-rendered', () => {
+  draws++;
+  document.getElementById('value').textContent = progress.getAttribute('value') + '%';
+  document.getElementById('draws').textContent = `drawn ${draws}×`;
+});
+
+document.querySelector('input').addEventListener('input', (e) => {
+  progress.setAttribute('value', e.target.value);
+  progress.setAttribute('aria-valuenow', e.target.value);
+});
+
+Orbit.ready().then(() => console.log('ready'));
+  </script>
+</figure>
+
+<h2>Updating by hand</h2>
+<p>Two kinds of change are invisible to the runtime: rules you edit through CSSOM, and CSS that depends on something outside the layout, like a class on <code>&lt;html&gt;</code> or a checkbox elsewhere on the page. After one of those, call <code>Orbit.refresh()</code> with the part that changed. Without an argument it refreshes the whole document.</p>
+<pre><code class="language-js">sheet.cssRules[0].style.setProperty('--o-range', '180deg');
+Orbit.refresh(panel);
+</code></pre>
+<p>For shadow DOM, include the stylesheet inside each shadow root. Arcs and progress register their shadow root on their own; for a shadow tree with only CSS elements, call <code>Orbit.refresh(shadowRoot)</code> once.</p>
+
+<h2>Fixed sizes and Orbit.resize()</h2>
+<p>When a system should keep a fixed size, give its <code>.gravity-spot</code> a length: <code>--o-force: 300px</code>. That system no longer follows its box. <code>Orbit.resize()</code> brings part of that back: it watches a container and scales the fixed-size systems inside it with its <strong>width</strong>, taking 500px as 1×.</p>
+<pre><code class="language-js">const stopResizing = Orbit.resize('.wrapper');
+// When the container goes away:
+stopResizing();
+</code></pre>
+<p>It takes a selector or an element and returns a function that stops watching. Calling it again on the same container replaces the previous watcher. It leaves systems without a fixed reach alone, and if it finds none the console says <code>[orbit] Orbit.resize() has nothing to do here</code>.</p>
+<p>Here the same layout has <code>--o-force: 300px</code> and <code>Orbit.resize('.wrapper')</code>. At 280px wide the reach is 168px (300 × 280 / 500). Drag the corner: only the width counts.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="wrapper">
+  <div class="bigbang">
+    <div class="gravity-spot" style="--o-force: 300px">
+      <div class="orbit-12 reach"></div>
+      <div class="orbit-8">
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* Drag the corner of the box. */
+.wrapper {
+  width: 280px;
+  height: 200px;
+  margin: 16px;
+  border: 1px dashed var(--faint);
+  border-radius: 10px;
+  resize: both;
+  overflow: hidden;
+}
+.reach {
+  border: 1px dashed var(--accent);
+}
+.orbit-8 {
+  --o-size-ratio: 2;
+}
+.satellite {
+  border-radius: 50%;
+  background: var(--accent);
+}
+  </script>
+  <script type="text/plain" data-js>
+const stopResizing = Orbit.resize('.wrapper');
+  </script>
+</figure>
+<p>For new layouts, leave <code>--o-force</code> alone and size the <code>.bigbang</code> instead. <code>Orbit.resize()</code> is there mostly for layouts written for Orbit 1.x, where every system was 500px across. <a href="../migrating.html">Coming from 1.x</a> has the rest.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

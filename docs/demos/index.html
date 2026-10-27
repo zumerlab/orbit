@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Examples · Orbit</title>
+  <meta http-equiv="refresh" content="0; url=../examples/index.html#demos">
+  <link rel="canonical" href="../examples/index.html#demos">
+  <script>
+    // Works as /demos, /demos/ or /demos/index.html, at any site root.
+    const here = /(\/|\.html|\/index)$/.test(location.pathname) ? location.href : location.pathname + '/';
+    location.replace(new URL('../examples/index.html#demos', new URL(here, location.href)));
+  </script>
+</head>
+<body>
+<p>The demos are now part of the <a href="../examples/index.html#demos">examples</a>.</p>
+</body>
+</html>

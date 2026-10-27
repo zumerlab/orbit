@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Examples · Orbit</title>
+  <meta name="description" content="A gallery of Orbit examples: gauges, progress rings, knobs, charts, watch faces, calendars, mandalas and more, each live and editable.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Examples</h1>
+<p class="lede">What you can build with Orbit. The first ones are full pages with live controls; start with the universe model, it shows how size works. The rest are smaller pieces with the code open under them: edit it, or copy the whole page.</p>
+<p>For ready-made components, see <a href="../kit/index.html">Orbit Kit</a>.</p>
+<h2 id="demos">Full pages</h2>
+<ul class="cards">
+<li><a class="card" href="../demos/00-universe.html"><img class="thumb dark" src="../demos/thumbs/00-universe.webp" alt="" loading="lazy"><strong>The universe model</strong><span>Resize the space and watch the system follow: lanes, reach and size.</span></a></li>
+<li><a class="card" href="../demos/playground.html"><img class="thumb dark" src="../demos/thumbs/playground.webp" alt="" loading="lazy"><strong>Playground</strong><span>Satellites, stacked arcs and progress shapes with live controls.</span></a></li>
+<li><a class="card" href="../demos/01-minimal-gauge.html"><img class="thumb dark" src="../demos/thumbs/01-minimal-gauge.webp" alt="" loading="lazy"><strong>Progress rings</strong><span>Three goals, rounded ends, one thickness for all.</span></a></li>
+<li><a class="card" href="../demos/02-donut-multilayer.html"><img class="thumb dark" src="../demos/thumbs/02-donut-multilayer.webp" alt="" loading="lazy"><strong>Donut chart</strong><span>Stacked values with a hoverable legend.</span></a></li>
+<li><a class="card" href="../demos/03-radial-menu.html"><img class="thumb dark" src="../demos/thumbs/03-radial-menu.webp" alt="" loading="lazy"><strong>Radial menu</strong><span>Six wedges with icons, hover and keyboard.</span></a></li>
+<li><a class="card" href="../demos/04-arrow-gauge.html"><img class="thumb dark" src="../demos/thumbs/04-arrow-gauge.webp" alt="" loading="lazy"><strong>Speedometer</strong><span>Ticks, numbers, zones and a needle on one 270° dial.</span></a></li>
+<li><a class="card" href="../demos/05-knob.html"><img class="thumb dark" src="../demos/thumbs/05-knob.webp" alt="" loading="lazy"><strong>Knob</strong><span>Drag, scroll or use the keys; a system inside a satellite.</span></a></li>
+<li><a class="card" href="../demos/06-semicircle.html"><img class="thumb dark" src="../demos/thumbs/06-semicircle.webp" alt="" loading="lazy"><strong>Half gauge</strong><span>A battery in 20 cells on a 2:1 universe.</span></a></li>
+<li><a class="card" href="../demos/07-satellites.html"><img class="thumb dark" src="../demos/thumbs/07-satellites.webp" alt="" loading="lazy"><strong>Team map</strong><span>Faces on three rings, sized by closeness.</span></a></li>
+<li><a class="card" href="../demos/08-nested-orbits.html"><img class="thumb dark" src="../demos/thumbs/08-nested-orbits.webp" alt="" loading="lazy"><strong>Nested systems</strong><span>A moon orbiting a planet orbiting a sun.</span></a></li>
+<li><a class="card" href="../demos/09-compass.html"><img class="thumb dark" src="../demos/thumbs/09-compass.webp" alt="" loading="lazy"><strong>Compass</strong><span>A card that turns under a fixed mark.</span></a></li>
+<li><a class="card" href="../demos/10-radar.html"><img class="thumb dark" src="../demos/thumbs/10-radar.webp" alt="" loading="lazy"><strong>Radar</strong><span>A sweeping beam and contacts that flash in time.</span></a></li>
+<li><a class="card" href="../demos/11-depth-layers.html"><img class="thumb dark" src="../demos/thumbs/11-depth-layers.webp" alt="" loading="lazy"><strong>Depth layers</strong><span>Composite layers in 3D, with tilt.</span></a></li>
+</ul>
+<h2 id="gauges">Gauges</h2>
+<ul class="cards">
+<li><a class="card" href="gauges/180-degree-gauge.html"><img class="thumb dark" src="thumbs/180-degree-gauge.webp" alt="" loading="lazy"><strong>180° gauge</strong><span>Five named zones and a needle on a half circle.</span></a></li>
+<li><a class="card" href="gauges/240-degree-gauge.html"><img class="thumb dark" src="thumbs/240-degree-gauge.webp" alt="" loading="lazy"><strong>240° gauge</strong><span>A stepped speedometer: bands light up with the speed.</span></a></li>
+<li><a class="card" href="gauges/fuel-gauge.html"><img class="thumb dark" src="thumbs/fuel-gauge.webp" alt="" loading="lazy"><strong>Fuel gauge</strong><span>A 90° dial with E, F and a reserve, in a box cut to fit.</span></a></li>
+</ul>
+<h2 id="progress">Progress rings</h2>
+<ul class="cards">
+<li><a class="card" href="progress/circular-progress-with-background.html"><img class="thumb dark" src="thumbs/circular-progress-with-background.webp" alt="" loading="lazy"><strong>Progress with background</strong><span>A fill over its track, number in the middle.</span></a></li>
+<li><a class="card" href="progress/dashed-circular-progress-bar.html"><img class="thumb dark" src="thumbs/dashed-circular-progress-bar.webp" alt="" loading="lazy"><strong>Dashed progress</strong><span>Ten segments for progress counted in steps.</span></a></li>
+<li><a class="card" href="progress/circular-progress-with-handle.html"><img class="thumb dark" src="thumbs/circular-progress-with-handle.webp" alt="" loading="lazy"><strong>Progress with handle</strong><span>A circular slider you can drag.</span></a></li>
+<li><a class="card" href="progress/stacked-circular-progress-bars.html"><img class="thumb dark" src="thumbs/stacked-circular-progress-bars.webp" alt="" loading="lazy"><strong>Stacked progress</strong><span>Three live metrics, labeled in the open quarter.</span></a></li>
+</ul>
+<h2 id="knobs">Knobs and menus</h2>
+<ul class="cards">
+<li><a class="card" href="knobs/knob-with-progress-bar.html"><img class="thumb dark" src="thumbs/knob-with-progress-bar.webp" alt="" loading="lazy"><strong>Knob with progress bar</strong><span>A gain knob whose arc grows from the center.</span></a></li>
+<li><a class="card" href="knobs/led-knob.html"><img class="thumb dark" src="thumbs/led-knob.webp" alt="" loading="lazy"><strong>LED knob</strong><span>Eleven LEDs and a knob that snaps between them.</span></a></li>
+<li><a class="card" href="piemenu.html"><img class="thumb dark" src="thumbs/piemenu.webp" alt="" loading="lazy"><strong>Pie menu</strong><span>Wedges that open their options on an outer ring.</span></a></li>
+</ul>
+<h2 id="charts">Charts</h2>
+<ul class="cards">
+<li><a class="card" href="charts/donut-chart.html"><img class="thumb dark" src="thumbs/donut-chart.webp" alt="" loading="lazy"><strong>Donut chart</strong><span>Five arcs with values, and two weeks to switch.</span></a></li>
+<li><a class="card" href="charts/pie-chart.html"><img class="thumb dark" src="thumbs/pie-chart.webp" alt="" loading="lazy"><strong>Pie chart</strong><span>Slices that slide out on hover and focus.</span></a></li>
+<li><a class="card" href="charts/sunburst-chart.html"><img class="thumb dark" src="thumbs/sunburst-chart.webp" alt="" loading="lazy"><strong>Sunburst chart</strong><span>Two levels of nested data that line up on their own.</span></a></li>
+</ul>
+<h2 id="watches">Watches and clocks</h2>
+<ul class="cards">
+<li><a class="card" href="watches/minimalist-analog-clock.html"><img class="thumb" src="thumbs/minimalist-analog-clock.webp" alt="" loading="lazy"><strong>Minimalist analog clock</strong><span>Ticks, numbers and three hands, on the real time.</span></a></li>
+<li><a class="card" href="watches/chronograph-watch-face.html"><img class="thumb" src="thumbs/chronograph-watch-face.webp" alt="" loading="lazy"><strong>Chronograph</strong><span>Three sub-dials, each its own system, and a working stopwatch.</span></a></li>
+<li><a class="card" href="watches/roman-numeral-clock-face.html"><img class="thumb" src="thumbs/roman-numeral-clock-face.webp" alt="" loading="lazy"><strong>Roman numeral clock</strong><span>Numerals along the radius, with spin-lock and flip.</span></a></li>
+<li><a class="card" href="watches/smartwatch-face.html"><img class="thumb" src="thumbs/smartwatch-face.webp" alt="" loading="lazy"><strong>Smartwatch face</strong><span>Time and date as curved text along the bezel.</span></a></li>
+<li><a class="card" href="circular_time.html"><img class="thumb" src="thumbs/circular_time.webp" alt="" loading="lazy"><strong>Circular timer</strong><span>Turn the wheel to set it; three rings share one angle.</span></a></li>
+</ul>
+<h2 id="calendar">Calendars</h2>
+<ul class="cards">
+<li><a class="card" href="calendar/circular-year-calendar.html"><img class="thumb" src="thumbs/circular-year-calendar.webp" alt="" loading="lazy"><strong>Circular year calendar</strong><span>Seasons, months and days on one dial; step through the year.</span></a></li>
+<li><a class="card" href="calendar/index.html#chronodex"><img class="thumb" src="thumbs/chronodex.webp" alt="" loading="lazy"><strong>Chronodex day planner</strong><span>A day as wedges; click one to plan that hour.</span></a></li>
+</ul>
+<h2 id="mandalas">Mandalas</h2>
+<ul class="cards">
+<li><a class="card" href="mandalas/geometric-square-mandala.html"><img class="thumb" src="thumbs/geometric-square-mandala.webp" alt="" loading="lazy"><strong>Geometric square mandala</strong><span>Nested squares, copied and turned; one to eight folds.</span></a></li>
+<li><a class="card" href="mandalas/radial-symmetry-mandala.html"><img class="thumb" src="thumbs/radial-symmetry-mandala.webp" alt="" loading="lazy"><strong>Radial symmetry mandala</strong><span>Rings of circles with six, eight or twelve folds.</span></a></li>
+<li><a class="card" href="mandalas/index.html#starters"><img class="thumb" src="thumbs/overlapping-circles.webp" alt="" loading="lazy"><strong>Starter patterns</strong><span>A hexagonal flower and a rosette.</span></a></li>
+</ul>
+<h2 id="more">Interfaces and diagrams</h2>
+<ul class="cards">
+<li><a class="card" href="dashboard.html"><img class="thumb dark" src="thumbs/dashboard.webp" alt="" loading="lazy"><strong>Car dashboard</strong><span>A live clock and two pods, each its own system.</span></a></li>
+<li><a class="card" href="layered-status-rings.html"><img class="thumb dark" src="thumbs/layered-status-rings.webp" alt="" loading="lazy"><strong>Layered status rings</strong><span>Channels stacked in depth; alerts come to the front.</span></a></li>
+<li><a class="card" href="scifi.html"><img class="thumb" src="thumbs/scifi.webp" alt="" loading="lazy"><strong>Sci-fi interface</strong><span>Arcs and dashes at different depths, tilting with the pointer.</span></a></li>
+<li><a class="card" href="abstract_map.html"><img class="thumb" src="thumbs/abstract_map.webp" alt="" loading="lazy"><strong>Abstract orbital map</strong><span>Planets that are systems of their own, each ring turning.</span></a></li>
+<li><a class="card" href="chemical_structures.html"><img class="thumb" src="thumbs/chemical_structures.webp" alt="" loading="lazy"><strong>Chemical structure</strong><span>Caffeine, from sides and satellites.</span></a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

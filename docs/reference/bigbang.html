@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bigbang · Orbit</title>
+  <meta name="description" content="The .bigbang is the universe of an Orbit layout. Its box sets the size of everything inside it.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Bigbang</h1>
+<p class="lede">Every Orbit layout starts with a big bang. The <code>.bigbang</code> creates the universe your system lives in, and its box is the only size you set: every ring, satellite and band inside is a fraction of it.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<!-- The universe is the whole frame: wide and short, so the system takes its height. -->
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-12 edge">
+      <div class="satellite angle-62"><div class="capsule"><span class="label">orbit-12</span></div></div>
+    </div>
+    <div class="orbit-6 half">
+      <div class="satellite angle-135"><div class="capsule"><span class="label">orbit-6</span></div></div>
+    </div>
+    <!-- Two planets, each on a ring that turns. -->
+    <div class="orbit-9 turn" style="--o-size-ratio: 1.2"><div class="satellite planet"></div></div>
+    <div class="orbit-6 turn fast" style="--o-size-ratio: .8"><div class="satellite planet"></div></div>
+    <div class="orbit-0" style="--o-size-ratio: 3"><div class="satellite at-center sun"></div></div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* The universe box, tinted so you can see it. */
+.bigbang {
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  outline: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: -1px;
+}
+.edge { border-color: var(--accent); }
+.half { border-color: var(--faint); }
+.orbit-9 { border-color: var(--line); }
+.label {
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--panel);
+  font: 12px var(--mono);
+  color: var(--muted);
+}
+.sun { background: var(--amber); box-shadow: 0 0 18px var(--amber); }
+.planet { background: var(--text); }
+
+.turn { animation: turn 40s linear infinite; }
+.turn.fast { animation-duration: 16s; }
+@keyframes turn { to { rotate: 360deg; } }
+  </script>
+  <figcaption>The tinted box is the universe. <code>orbit-12</code> touches its top and bottom, and <code>orbit-6</code> is halfway.</figcaption>
+</figure>
+
+<h2>How big it is</h2>
+<p>A <code>.bigbang</code> is as wide as its parent and square by default. A parent with a definite height caps it, so in a wide, short container it becomes a wide, short box, and the system inside takes the shorter side.</p>
+<ul>
+<li>To size it, give the <code>.bigbang</code> or its parent a width. Your own <code>width</code>, <code>height</code> or <code>aspect-ratio</code> always win, because the defaults have zero specificity.</li>
+<li>Directly inside <code>&lt;body&gt;</code> it is capped at the viewport height. The previews on this site are pages like that, which is why the universe above is as tall as the frame.</li>
+<li>It is a size container: the <code>.gravity-spot</code> inside measures it with container query units. It is also the containing block of <code>position: fixed</code> descendants.</li>
+<li>A <code>.bigbang</code> with no width or height draws nothing, and the console says so with an <code>[orbit]</code> message.</li>
+</ul>
+<p>Drag the corner of the dotted box. The system follows with no JavaScript: make the box wide and short and it takes the height, tall and narrow and it takes the width.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <!-- Drag the corner: the universe fills the box, the system takes its shorter side. -->
+  <div class="box">
+    <div class="bigbang">
+      <div class="gravity-spot">
+        <div class="orbit-12"></div>
+        <div class="orbit-9" id="dots" style="--o-size-ratio: 2"></div>
+      </div>
+    </div>
+    <output class="size" id="size"></output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.box {
+  position: relative;
+  width: 320px;
+  height: 180px;
+  min-width: 60px;
+  min-height: 60px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  resize: both;
+  overflow: hidden;
+  border: 2px dotted var(--faint);
+  border-radius: 4px;
+}
+.bigbang { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.orbit-12 { border-color: var(--accent); }
+.orbit-9 { border-color: var(--line); }
+.satellite { background: var(--accent); }
+.size {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font: 12px var(--mono);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+  </script>
+  <script type="text/plain" data-js>
+document.getElementById('dots').innerHTML = '<div class="satellite"></div>'.repeat(8);
+// Only to show the size of the box: the layout itself needs no script.
+const box = document.querySelector('.box');
+new ResizeObserver(() => {
+  document.getElementById('size').value = `${box.clientWidth} × ${box.clientHeight}`;
+}).observe(box);
+  </script>
+</figure>
+
+<h2>Moving the center</h2>
+<p>The universe centers its system. An alignment class on the <code>.bigbang</code> puts the center on an edge or a corner of the box instead, so only part of the system shows. It is the quick way to a quarter dial in a corner or a half gauge along an edge.</p>
+<figure class="example" data-height="400">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="grid" id="grid"></div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 84px);
+  justify-items: center;
+  gap: 12px 44px;
+}
+.cell { display: grid; justify-items: center; gap: 6px; }
+.cell span { font: 12px var(--mono); color: var(--muted); white-space: nowrap; }
+.bigbang {
+  width: 84px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.orbit-6, .orbit-12 { border-color: var(--accent); }
+/* The center of the system. */
+.center { background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+const places = ['at-top-left', 'at-top', 'at-top-right', 'at-center-left', 'at-center',
+  'at-center-right', 'at-bottom-left', 'at-bottom', 'at-bottom-right'];
+// The same system nine times; only the class on the .bigbang changes.
+document.getElementById('grid').innerHTML = places.map(place => `
+  <div class="cell">
+    <div class="bigbang ${place}">
+      <div class="gravity-spot">
+        <div class="orbit-6"></div>
+        <div class="orbit-12"></div>
+        <div class="orbit-0" style="--o-size-ratio: 1.6"><div class="satellite at-center center"></div></div>
+      </div>
+    </div>
+    <span>${place}</span>
+  </div>`).join('');
+  </script>
+  <figcaption>The amber dot is the center of the system. <code>.at-center</code> is the default.</figcaption>
+</figure>
+
+<h2>A universe inside a system</h2>
+<p>A <code>.bigbang</code> placed directly in a <code>.gravity-spot</code> takes the reach of that system instead of measuring its own box. That is how a whole system becomes one layer of a <a href="../craft/depth.html">depth stack</a>.</p>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class or property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>.bigbang</code></td><td></td><td>Creates the universe. Holds one or more <code>.gravity-spot</code>.</td></tr>
+<tr><td><code>width</code> / <code>height</code> / <code>aspect-ratio</code></td><td><code>100%</code> / <code>auto</code> / <code>1</code></td><td>The size of the universe. Capped by a parent with a definite height, and by the viewport directly in <code>&lt;body&gt;</code>.</td></tr>
+<tr><td><code>.at-top-left</code> … <code>.at-bottom-right</code></td><td><code>.at-center</code></td><td>Puts the center of the system on an edge or a corner of the box.</td></tr>
+<tr><td><code>.dev-orbit</code></td><td></td><td>Draws the lanes and explains misplaced elements in the console. See <a href="../craft/visual-aids.html">Visual aids</a>.</td></tr>
+</tbody>
+</table></div>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

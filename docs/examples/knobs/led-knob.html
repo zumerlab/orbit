@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LED knob · Orbit</title>
+  <meta name="description" content="A stepped knob with eleven LEDs, one per position, that snaps from step to step.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>LED knob</h1>
+<p class="lede">A knob with discrete steps: eleven LEDs, one per position, lit up to the current one, and a pointer that snaps between them.</p>
+<figure class="example" data-height="380">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang knob" tabindex="0" role="slider" aria-label="Drive"
+       aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+    <div class="gravity-spot">
+      <!-- One LED per step: satellites on the knob's 290° sweep. -->
+      <div class="orbit-11 range-290 from-215 fit-range leds" id="leds" style="--o-size-ratio: 1.3"></div>
+      <div class="orbit-0" style="--o-size-ratio: 16">
+        <div class="satellite at-center">
+          <div class="capsule skirt"></div>
+          <div class="gravity-spot">
+            <div class="orbit-0" style="--o-size-ratio: 17"><div class="satellite at-center"><div class="capsule cap"></div></div></div>
+            <!-- The pointer turns with the system that holds it. -->
+            <div class="orbit-9 turn" style="--o-size-ratio: 4"><div class="vector pointer"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="orbit-11">
+        <div class="satellite angle-180"><div class="capsule readout"><strong id="step">0</strong><span>drive</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage > .knob { width: min(100%, 100vh - 40px); touch-action: none; cursor: grab; }
+.knob:active { cursor: grabbing; }
+
+.leds .capsule { width: 100%; aspect-ratio: 1; border-radius: 50%; background: #27313c; box-shadow: inset 0 1px 2px #000; transition: background .12s, box-shadow .12s; }
+.leds .on .capsule { --led: var(--accent); background: radial-gradient(circle at 50% 40%, #fff 0 12%, var(--led) 45%); box-shadow: 0 0 10px var(--led); }
+.leds .on:nth-child(n + 9) .capsule { --led: var(--amber); }
+.leds .on:nth-child(11) .capsule { --led: var(--coral); }
+
+.skirt { width: 100%; aspect-ratio: 1; border-radius: 50%; background: repeating-conic-gradient(#28313c 0 4deg, #1b222b 4deg 8deg); box-shadow: 0 18px 40px -12px #000; }
+.cap { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 30%, #2f3a47, #161c23 75%); box-shadow: inset 0 1px 0 #46525f; }
+.turn { rotate: var(--turn, -145deg); transition: rotate .15s cubic-bezier(.3, 1.6, .5, 1); }
+.pointer { height: 4px; border-radius: 2px; background: var(--text); }
+.knob:focus-visible { outline: none; }
+.knob:focus-visible .skirt { box-shadow: 0 0 0 3px var(--accent), 0 18px 40px -12px #000; }
+.knob .readout strong { font-size: clamp(20px, 7cqmin, 30px); }
+  </script>
+  <script type="text/plain" data-js>
+const leds = document.getElementById('leds');
+leds.innerHTML = '<div class="satellite"><div class="capsule"></div></div>'.repeat(11);
+const knob = document.querySelector('.knob');
+let step = 0;
+const set = s => {
+  step = Math.max(0, Math.min(10, Math.round(s)));
+  // 290° over ten steps, starting at 215° (-145° from the top).
+  knob.style.setProperty('--turn', `${-145 + step * 29}deg`);
+  [...leds.children].forEach((led, i) => led.classList.toggle('on', i <= step && step > 0));
+  knob.setAttribute('aria-valuenow', step);
+  document.getElementById('step').textContent = step;
+};
+const fromPointer = event => {
+  const box = knob.getBoundingClientRect();
+  const angle = Math.atan2(event.clientX - (box.left + box.width / 2), (box.top + box.height / 2) - event.clientY) * 180 / Math.PI;
+  if (Math.abs(angle) <= 160) set((angle + 145) / 29);
+};
+knob.addEventListener('pointerdown', event => { knob.setPointerCapture(event.pointerId); fromPointer(event); });
+knob.addEventListener('pointermove', event => { if (knob.hasPointerCapture(event.pointerId)) fromPointer(event); });
+knob.addEventListener('wheel', event => { event.preventDefault(); set(step - Math.sign(event.deltaY)); }, { passive: false });
+knob.addEventListener('keydown', event => {
+  const delta = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1 }[event.key];
+  if (delta) { event.preventDefault(); set(step + delta); }
+  if (event.key === 'Home') set(0);
+  if (event.key === 'End') set(10);
+});
+set(5);
+  </script>
+  <figcaption>Drag, scroll or use the arrow keys. The knob snaps to the nearest step.</figcaption>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Eleven <a href="../../reference/satellite.html">satellites</a> on <code>orbit-11</code> with <code>range-290 from-215 fit-range</code>: the first and last sit on the two ends of the sweep, the rest are spread evenly between them.</li>
+<li>A lit LED is a class on its satellite. <code>:nth-child(n + 9)</code> and <code>:nth-child(11)</code> turn the top steps amber and coral.</li>
+<li>The knob is a satellite on <code>orbit-0</code> with a <code>.gravity-spot</code> inside: its cap is a centered satellite of that inner system, and its pointer a <a href="../../reference/vector.html"><code>.vector</code></a> on <code>orbit-9</code>.</li>
+<li>The pointer's ring turns with <code>rotate</code>, 29° per step, the same spacing as the LEDs. A springy easing makes each step snap.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="knob-with-progress-bar.html">Knob with progress bar</a>: continuous values</li>
+<li><a href="../progress/dashed-circular-progress-bar.html">Dashed progress bar</a>: steps without a knob</li>
+<li><a href="../../kit/knob.html">Orbit Kit knob</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

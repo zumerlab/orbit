@@ -21,6 +21,8 @@ try {
     'package.json', 'README.md', 'LICENSE',
     'dist/orbit.css', 'dist/orbit.min.css',
     'dist/orbit.js', 'dist/orbit.min.js', 'dist/orbit.mjs',
+    'dist/orbit.d.ts', 'dist/react.d.ts', 'dist/style.d.ts',
+    'dist/custom-elements.json', 'dist/vscode.html-custom-data.json',
   ]) {
     assert.ok(files.has(file), `Missing published file: ${file}`)
   }
@@ -41,8 +43,11 @@ try {
     }
     assert.equal(typeof core.Orbit.resize, 'function');
     assert.equal(typeof core.Orbit.refresh, 'function');
+    assert.equal(typeof core.Orbit.ready, 'function');
     assert.ok(import.meta.resolve('@zumer/orbit').endsWith('/dist/orbit.mjs'));
     assert.ok(import.meta.resolve('@zumer/orbit/style').endsWith('/dist/orbit.css'));
+    const manifest = (await import('@zumer/orbit/custom-elements.json', { with: { type: 'json' } })).default;
+    assert.deepEqual(manifest.modules[0].declarations.map(d => d.tagName), ['o-arc', 'o-progress']);
     assert.equal(typeof globalThis.window, 'undefined');
     assert.equal(typeof globalThis.customElements, 'undefined');
   `], { cwd: scratch, stdio: 'pipe' })

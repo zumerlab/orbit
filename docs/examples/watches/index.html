@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watches and clocks · Orbit</title>
+  <meta name="description" content="Watch faces and clocks built with Orbit: minimalist, chronograph, Roman numerals, a live smartwatch face and a circular timer.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Watches and clocks</h1>
+<p>A watch face is many things around one center: a bezel, sixty ticks, twelve numbers, hands and sometimes whole sub-dials. In Orbit the ticks are vectors, the numbers are satellites, each hand is a vector on a ring that turns, and a sub-dial is a satellite with its own system. All of them tell the real time.</p>
+<ul class="cards">
+<li><a class="card" href="minimalist-analog-clock.html"><img class="thumb" src="../thumbs/minimalist-analog-clock.webp" alt="" loading="lazy"><strong>Minimalist analog clock</strong><span>Ticks, numbers and three hands, on the real time.</span></a></li>
+<li><a class="card" href="chronograph-watch-face.html"><img class="thumb" src="../thumbs/chronograph-watch-face.webp" alt="" loading="lazy"><strong>Chronograph</strong><span>Three sub-dials, each its own system, and a working stopwatch.</span></a></li>
+<li><a class="card" href="roman-numeral-clock-face.html"><img class="thumb" src="../thumbs/roman-numeral-clock-face.webp" alt="" loading="lazy"><strong>Roman numeral clock</strong><span>Numerals along the radius, with spin-lock and flip.</span></a></li>
+<li><a class="card" href="smartwatch-face.html"><img class="thumb" src="../thumbs/smartwatch-face.webp" alt="" loading="lazy"><strong>Smartwatch face</strong><span>Time and date as curved text along the bezel.</span></a></li>
+<li><a class="card" href="../circular_time.html"><img class="thumb" src="../thumbs/circular_time.webp" alt="" loading="lazy"><strong>Circular timer</strong><span>Turn the wheel to set it; three rings share one angle.</span></a></li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="../../kit/clock.html">Orbit Kit clock</a></li>
+<li><a href="../calendar/index.html">Calendars</a></li>
+<li><a href="../../reference/vector.html">Vectors</a> and <a href="../../reference/satellite.html">satellites</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

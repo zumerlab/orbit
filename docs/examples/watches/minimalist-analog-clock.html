@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minimalist analog clock · Orbit</title>
+  <meta name="description" content="A minimalist analog clock in HTML and CSS that tells the real time: sixty ticks, twelve numbers and three hands, built with Orbit.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Minimalist analog clock</h1>
+<p class="lede">A clock is a ring of ticks, a ring of numbers and three hands that share a center. This one tells the real time.</p>
+<figure class="example" data-height="380">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang clock" role="img" aria-label="Clock">
+    <div class="gravity-spot">
+      <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center"><div class="capsule face"></div></div></div>
+      <!-- 60 ticks and 12 numbers, written by the JS tab. -->
+      <div class="orbit-11 ticks"></div>
+      <div class="orbit-9 numbers" style="--o-size-ratio: 1.6"></div>
+      <!-- Each hand is one vector, pointing up. Its ring turns with rotate. -->
+      <div class="orbit-3 hand hour" style="--o-size-ratio: 6.6"><div class="vector"></div></div>
+      <div class="orbit-5 hand minute" style="--o-size-ratio: 10.6"><div class="vector"></div></div>
+      <div class="orbit-4 hand second" style="--o-size-ratio: 12"><div class="vector"></div></div>
+      <div class="orbit-0" style="--o-size-ratio: .7"><div class="satellite at-center"><div class="capsule pin"></div></div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.face { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #1a222c, #0e1318 72%); box-shadow: inset 0 0 0 1px #26313d; }
+.ticks .vector { background: var(--faint); }
+.ticks .vector.major { height: 3px; background: var(--text); }
+.numbers .capsule { font-size: 55cqmin; font-variant-numeric: tabular-nums; color: var(--muted); }
+.hand { rotate: var(--turn, 0deg); }
+.hand .vector { height: clamp(2px, 1.4cqmin, 6px); border-radius: 3px; background: var(--text); }
+.second .vector { height: 2px; background: var(--amber); }
+.running .second { transition: rotate .25s cubic-bezier(.4, 2, .6, 1); }
+.pin { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--amber); }
+  </script>
+  <script type="text/plain" data-js>
+// Write `count` items into a ring, from the top, clockwise.
+const fill = (ring, count, item) => {
+  document.querySelector(ring).innerHTML = Array.from({ length: count }, (_, i) => item(i)).join('');
+};
+fill('.ticks', 60, (i) => i % 5
+  ? '<div class="vector inner-orbit" style="--o-size-ratio: .5"></div>'
+  : '<div class="vector inner-orbit major" style="--o-size-ratio: 1.1"></div>');
+fill('.numbers', 12, (i) => `<div class="satellite"><div class="capsule">${i || 12}</div></div>`);
+
+// Seconds since midnight, counted up from the page load, so no hand ever jumps back.
+const clock = document.querySelector('.clock');
+const start = new Date();
+const base = start.getHours() * 3600 + start.getMinutes() * 60 + start.getSeconds();
+const turn = (hand, deg) => clock.querySelector(hand).style.setProperty('--turn', `${deg}deg`);
+function tick() {
+  const s = base + Math.round((Date.now() - start) / 1000);
+  turn('.hour', s / 120);
+  turn('.minute', s / 10);
+  turn('.second', s * 6);
+  clock.setAttribute('aria-label', `Clock showing ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`);
+}
+tick();
+requestAnimationFrame(() => clock.classList.add('running'));
+setInterval(tick, 1000);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>The face is a satellite in the center with <code>--o-size-ratio: 24</code>, as wide as the universe. See <a href="../../reference/satellite.html">satellites</a>.</li>
+<li>Sixty <a href="../../reference/vector.html">vectors</a> on <code>orbit-11</code>, spaced 6° apart by Orbit. <code>inner-orbit</code> hangs them inward from the ring; every fifth one is longer and brighter.</li>
+<li>The numbers are twelve satellites on <code>orbit-9</code>. The first child sits at the top, so the list starts with 12.</li>
+<li>Each hand is a single vector on its own ring. A lone vector points up; the ring turns with <code>rotate</code> and takes the hand with it. The lane and <code>--o-size-ratio</code> set where the hand starts and how long it is.</li>
+</ul>
+<h2>Variations</h2>
+<p>A quieter dial: no numbers, twelve hour marks and two hands.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang clock" role="img" aria-label="Clock">
+    <div class="gravity-spot">
+      <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center"><div class="capsule face"></div></div></div>
+      <div class="orbit-11 ticks" style="--o-size-ratio: 1.6"></div>
+      <div class="orbit-3 hand hour" style="--o-size-ratio: 6"><div class="vector"></div></div>
+      <div class="orbit-5 hand minute" style="--o-size-ratio: 10"><div class="vector"></div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.face { width: 100%; aspect-ratio: 1; border-radius: 50%; background: #10151b; box-shadow: inset 0 0 0 1px #26313d; }
+.ticks .vector, .hand .vector { height: clamp(3px, 1.6cqmin, 6px); border-radius: 3px; }
+.ticks .vector { background: var(--accent); }
+.hand { rotate: var(--turn, 0deg); }
+.hand .vector { background: var(--text); }
+  </script>
+  <script type="text/plain" data-js>
+document.querySelector('.ticks').innerHTML = '<div class="vector inner-orbit"></div>'.repeat(12);
+
+const clock = document.querySelector('.clock');
+function tick() {
+  const d = new Date(), s = d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+  clock.querySelector('.hour').style.setProperty('--turn', `${s / 120}deg`);
+  clock.querySelector('.minute').style.setProperty('--turn', `${s / 10}deg`);
+  clock.setAttribute('aria-label', `Clock showing ${d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`);
+}
+tick();
+setInterval(tick, 1000);
+  </script>
+</figure>
+<h2>Related</h2>
+<ul>
+<li><a href="chronograph-watch-face.html">Chronograph</a>: three sub-dials and a stopwatch</li>
+<li><a href="roman-numeral-clock-face.html">Roman numeral clock</a></li>
+<li><a href="smartwatch-face.html">Smartwatch face</a>: curved text along the bezel</li>
+<li><a href="../../demos/09-compass.html">Compass demo</a>: a whole dial that turns</li>
+<li><a href="../../kit/clock.html">Orbit Kit clock</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

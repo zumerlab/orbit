@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Donut · Orbit</title>
+  <meta name="description" content="o-donut draws a donut chart from a JSON array.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Donut</h1>
+<p class="lede"><code>&lt;o-donut&gt;</code> draws a donut chart from a JSON array.</p>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-donut label="$2.4k" data='[
+  {"value": 52, "color": "#ff7a6b", "label": "Rent"},
+  {"value": 28, "color": "#ffb547", "label": "Food"},
+  {"value": 20, "color": "#4fd1c5", "label": "Other"}
+]'></o-donut>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>Each item becomes an <code>&lt;o-arc&gt;</code> with a <code>value</code>, and Orbit stacks them one after another around the ring. Values are shares of their sum, or of <code>total</code> when you want a ring that is not full.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>data</code></td><td><code>[]</code></td><td>Segments: <code>[{ value, color?, label? }]</code>. Without a color, a segment takes the next one of the palette.</td></tr>
+<tr><td><code>total</code></td><td>the sum</td><td>What a full ring is worth. With <code>total=&quot;100&quot;</code> and values that add up to 70, 30% stays empty.</td></tr>
+<tr><td><code>range</code> / <code>from</code></td><td><code>360</code> / <code>0</code></td><td>Arc span and start angle, in degrees.</td></tr>
+<tr><td><code>label</code> / <code>unit</code></td><td></td><td>Text in the middle.</td></tr>
+<tr><td><code>thickness</code></td><td><code>3</code></td><td>Band thickness in lanes.</td></tr>
+<tr><td><code>gap</code></td><td><code>1.5</code></td><td>Space between segments, in percent of the widget width.</td></tr>
+<tr><td><code>shape</code></td><td><code>none</code></td><td>Segment endings. <code>rounded</code> gives pill-shaped segments.</td></tr>
+<tr><td><code>track</code></td><td>faint gray</td><td>Color of the ring behind the segments, seen in the gaps and in an empty part.</td></tr>
+<tr><td><code>size</code></td><td><code>200px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>glow</code></td><td>off</td><td>A glow in each segment color.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code></td><td></td><td>Number format of segment titles and the accessible name; <code>percent</code> is the share of the total, through <code>Intl.NumberFormat</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+<p>Change <code>data</code> with the same number of items and the arcs are patched in place. A different count rebuilds the ring.</p>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-track</code></td><td><code>rgba(127,127,127,.12)</code></td><td>Ring behind the segments.</td></tr>
+<tr><td><code>--ok-hub-color</code></td><td>inherits</td><td>Color of the readout in the middle.</td></tr>
+<tr><td><code>--ok-hub-bg</code></td><td><code>none</code></td><td>Background of the hole in the middle.</td></tr>
+<tr><td><code>--ok-hub-size</code></td><td><code>1.4em</code></td><td>Font size of the readout.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base font size, as a share of the widget. Text scales with it.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Rounded segments with wider gaps</h3>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-donut shape="rounded" gap="4" thickness="2" label="Q3" data='[
+  {"value": 40, "color": "#60a5fa"},
+  {"value": 25, "color": "#ff7a6b"},
+  {"value": 20, "color": "#8a97a5"},
+  {"value": 15, "color": "#ffb547"}
+]'></o-donut>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>A partial ring</h3>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-donut total="100" range="270" from="225" label="70%" thickness="2.4" data='[
+  {"value": 45, "color": "#a78bfa", "label": "Used"},
+  {"value": 25, "color": "#ff7a6b", "label": "Cached"}
+]'></o-donut>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <figcaption>45 + 25 out of a total of 100 leaves the last 30% of the 270° range empty.</figcaption>
+</figure>
+<h3>Updating the data</h3>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-donut id="votes" label="Votes" data='[{"value":1},{"value":1},{"value":1}]'></o-donut>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+const donut = document.getElementById('votes');
+setInterval(() => {
+  const data = [0, 1, 2].map(() => ({ value: 1 + Math.round(Math.random() * 9) }));
+  donut.setAttribute('data', JSON.stringify(data));
+}, 1500);
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The donut has <code>role="img"</code> and a name that lists every segment, such as “Rent: 52; Food: 28; Other: 20”. Give items a <code>label</code> so the list makes sense; each segment also shows it as a tooltip. Set <code>aria-label</code> to replace the generated name. When colors are close, add the numbers somewhere in text as well.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

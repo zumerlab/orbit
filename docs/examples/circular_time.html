@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Circular timer · Orbit</title>
+  <meta name="description" content="A kitchen-style timer in HTML and CSS: turn the wheel to set it, and the numbers, ticks and time sector turn together under a fixed pointer. Built with Orbit.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Circular timer</h1>
+<p class="lede">A timer you set by turning a wheel. The numbers, the ticks and the time sector are three rings that share one <code>--o-from</code>, so changing it turns them as one.</p>
+<figure class="example" data-height="460">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang timer" tabindex="0" role="slider" aria-label="Timer, seconds" aria-valuemin="0" aria-valuemax="60" aria-valuenow="15">
+    <div class="gravity-spot">
+      <div class="orbit-0" style="--o-size-ratio: 21"><div class="satellite at-center"><div class="capsule wheel"></div></div></div>
+      <!-- The wheel: every .turn ring gets the same --o-from from the script. -->
+      <div class="orbit-5 turn" style="--o-size-ratio: 10"><o-progress class="sector" max="360" value="90"></o-progress></div>
+      <div class="orbit-10 turn ticks"></div>
+      <div class="orbit-8 turn numbers" style="--o-size-ratio: 1.6"></div>
+      <!-- Fixed parts: the pointer at the top and the readout in the middle. -->
+      <div class="orbit-11"><div class="satellite"><div class="capsule pointer"></div></div></div>
+      <div class="orbit-0" style="--o-size-ratio: 7">
+        <div class="satellite at-center"><div class="capsule readout hub"><strong class="left">0:15</strong><span>left</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <button type="button" class="play">Start</button>
+    <button type="button" class="reset">Reset</button>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.timer { touch-action: none; cursor: grab; user-select: none; }
+.timer:focus-visible { outline: none; }
+.timer:focus-visible .wheel { box-shadow: inset 0 0 0 2px var(--accent); }
+.wheel { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #1a222c, #0e1318 72%); box-shadow: inset 0 0 0 1px #26313d; }
+.sector { --o-stroke: none; --o-fill: color-mix(in srgb, var(--accent) 30%, transparent); }
+.ticks .vector { background: var(--faint); }
+.ticks .vector.major { height: 2px; background: var(--text); }
+.numbers .capsule { font-size: 50cqmin; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pointer { width: 70%; aspect-ratio: 1; background: var(--accent); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.hub { width: 100%; aspect-ratio: 1; border-radius: 50%; place-content: center; background: var(--panel); box-shadow: 0 0 0 1px var(--line); }
+.hub strong { font-size: clamp(18px, 26cqmin, 40px); }
+  </script>
+  <script type="text/plain" data-js>
+const $ = (s) => document.querySelector(s);
+const timer = $('.timer');
+
+// Twelve numbers along the radius and sixty ticks.
+$('.numbers').innerHTML = Array.from({ length: 12 }, (_, i) =>
+  `<div class="satellite spin-lock"><div class="capsule flip">${i * 5}</div></div>`).join('');
+$('.ticks').innerHTML = Array.from({ length: 60 }, (_, i) =>
+  `<div class="vector inner-orbit ${i % 5 ? '' : 'major'}" style="--o-size-ratio: ${i % 5 ? 0.5 : 1}"></div>`).join('');
+
+// left: degrees of time on the wheel, 6 per second, so a full turn is a minute.
+let left = 90, running = null;
+function render() {
+  const from = (360 - left) % 360;
+  document.querySelectorAll('.turn').forEach((ring) => ring.style.setProperty('--o-from', `${from}deg`));
+  $('.sector').setAttribute('value', left);
+  const s = Math.ceil(left / 6);
+  $('.left').textContent = `0:${String(s).padStart(2, '0')}`;
+  timer.setAttribute('aria-valuenow', s);
+  $('.play').textContent = running ? 'Pause' : 'Start';
+}
+const set = (deg) => { left = Math.max(0, Math.min(359, Math.round(deg))); render(); };
+const stop = () => { clearInterval(running); running = null; render(); };
+function start() {
+  if (!left) return;
+  running = setInterval(() => { left -= 1; if (left <= 0) { left = 0; stop(); } else render(); }, 1000 / 6);
+  render();
+}
+$('.play').addEventListener('click', () => (running ? stop() : start()));
+$('.reset').addEventListener('click', () => { stop(); set(0); });
+
+// Drag: the wheel follows the change in the pointer's angle around the center.
+const angle = (e) => {
+  const r = timer.getBoundingClientRect();
+  return Math.atan2(e.clientY - r.top - r.height / 2, e.clientX - r.left - r.width / 2) * 180 / Math.PI;
+};
+let grab = null;
+timer.addEventListener('pointerdown', (e) => { stop(); timer.setPointerCapture(e.pointerId); grab = { at: angle(e), left }; });
+timer.addEventListener('pointermove', (e) => {
+  if (!grab) return;
+  const turned = ((angle(e) - grab.at + 540) % 360) - 180;
+  set(grab.left - turned);
+  grab = { at: angle(e), left };
+});
+timer.addEventListener('pointerup', () => { grab = null; });
+
+// Keys: arrows for a second, Page Up and Down for ten.
+timer.addEventListener('keydown', (e) => {
+  const step = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 10, PageDown: -10 }[e.key];
+  if (step) { e.preventDefault(); stop(); set(left + step * 6); }
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); running ? stop() : start(); }
+});
+render();
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>The numbers, the ticks and the sector are on three rings with the class <code>turn</code>. The script sets one <code>--o-from</code> on all three, and Orbit places their children from that angle. See <a href="../reference/orbit.html">rings</a>.</li>
+<li>The sector is an <a href="../reference/progress.html"><code>&lt;o-progress max="360"&gt;</code></a> whose <code>value</code> is the angle set. On <code>orbit-5</code> with <code>--o-size-ratio: 10</code> the band reaches from the center to lane 10.</li>
+<li>The numbers stand along the radius with <code>spin-lock</code> on the satellite and <code>flip</code> on the capsule.</li>
+<li>The pointer and the readout are on rings that never get the new <code>--o-from</code>, so they stay put.</li>
+<li>The whole universe is the slider: drag it, or focus it and use the arrow keys. Space starts and pauses.</li>
+</ul>
+<p>After a <a href="https://github.com/harfyzz/CircularTimer">SwiftUI original</a>. Thanks to <a href="https://github.com/andriytyurnikov">Andriy Tyurnikov</a>, who proposed the challenge.</p>
+<h2>Related</h2>
+<ul>
+<li><a href="watches/index.html">Watches and clocks</a></li>
+<li><a href="progress/circular-progress-with-handle.html">Progress with handle</a></li>
+<li><a href="../demos/05-knob.html">Knob demo</a>: another dial you drag</li>
+<li><a href="../kit/timer.html">Orbit Kit timer</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

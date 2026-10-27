@@ -1,6 +1,7 @@
 import { build } from 'esbuild'
 import * as sass from 'sass'
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { copyFileSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { customElementsManifest, vscodeHtmlData } from './src/elements.mjs'
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf8'))
 const version = pkg.version || '0.0.0'
@@ -64,9 +65,19 @@ async function buildJs() {
   ])
 }
 
+function buildMetadata() {
+  // Types and editor data for TypeScript, JSX, VS Code and other tools.
+  copyFileSync('src/types/orbit.d.ts', 'dist/orbit.d.ts')
+  copyFileSync('src/types/react.d.ts', 'dist/react.d.ts')
+  copyFileSync('src/types/style.d.ts', 'dist/style.d.ts')
+  writeFileSync('dist/custom-elements.json', JSON.stringify(customElementsManifest(version), null, 2) + '\n')
+  writeFileSync('dist/vscode.html-custom-data.json', JSON.stringify(vscodeHtmlData(), null, 2) + '\n')
+}
+
 async function main() {
   buildCss()
   await buildJs()
+  buildMetadata()
 }
 
 main().catch((err) => {

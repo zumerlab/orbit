@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbit Kit · Orbit</title>
+  <meta name="description" content="Orbit Kit: ready-made radial components built on Orbit 2. Gauges, charts, knobs, menus, instruments, clocks, timers and status rings, one tag each.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <style>.page ul.kit-cards { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); padding: 0; }</style>
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Orbit Kit</h1>
+<p class="lede">Ready-made components built on Orbit: gauges, charts, knobs, menus, pickers, clocks, timers, spinners and status rings, one tag each.</p>
+<p class="kit-actions"><a class="button primary" data-repo="zumerlab/orbit-kit" href="https://github.com/zumerlab/orbit-kit"><span class="gh"></span>Star Orbit Kit<b hidden></b></a> <a class="button" href="https://github.com/sponsors/tinchox5">Sponsor</a></p>
+<figure class="example" data-kit data-height="260">
+  <script type="text/plain" data-html>
+<o-gauge value="72" unit="%" size="150px"></o-gauge>
+<o-knob value="40" label="Gain" aria-label="Gain" fill="#ffb547" size="150px"></o-knob>
+<o-clock live seconds size="150px"></o-clock>
+<o-status label="Jobs" size="150px" data='[
+  {"label": "Build", "status": "ok"}, {"label": "Test", "status": "ok"},
+  {"label": "Lint", "status": "warn"}, {"label": "Deploy", "status": "off"}
+]'></o-status>
+  </script>
+  <script type="text/plain" data-css>
+body { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; align-items: center; height: 100vh; }
+  </script>
+  <figcaption>Four components, four tags. Turn the knob, or edit the HTML.</figcaption>
+</figure>
+<p>Each component writes the Orbit structure you would write by hand (a <code>.bigbang</code>, a <code>.gravity-spot</code>, rings, arcs and satellites) into the page, so it scales with its box, takes your CSS and shows up as plain elements in the inspector. When you need something the kit does not do, open the inspector and start from what it built.</p>
+
+<h2>Install</h2>
+<p>The kit needs Orbit 2 on the page: its stylesheet and its script, which draws the arcs. With npm:</p>
+<pre><code>npm install @zumer/orbit @zumer/orbit-kit</code></pre>
+<pre><code>import '@zumer/orbit/style'
+import '@zumer/orbit'
+import '@zumer/orbit-kit'</code></pre>
+<p>Or in a plain page:</p>
+<pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css"&gt;
+&lt;script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"&gt;&lt;/script&gt;
+&lt;script type="module" src="https://unpkg.com/@zumer/orbit-kit/src/orbit-kit.js"&gt;&lt;/script&gt;</code></pre>
+<p>The entry registers every component. To load only some, import their files: <code>import '@zumer/orbit-kit/o-gauge.js'</code>. Orbit 2 is a peer dependency; the kit does not work with Orbit 1.x.</p>
+
+<h2>Components</h2>
+<ul class="cards kit-cards">
+<li><a class="card" href="gauge.html"><img class="thumb dark" src="thumbs/gauge.webp" alt="" loading="lazy"><strong>Gauge</strong><span>One value on an arc.</span></a></li>
+<li><a class="card" href="donut.html"><img class="thumb dark" src="thumbs/donut.webp" alt="" loading="lazy"><strong>Donut</strong><span>A donut chart from an array.</span></a></li>
+<li><a class="card" href="rings.html"><img class="thumb dark" src="thumbs/rings.webp" alt="" loading="lazy"><strong>Rings</strong><span>Concentric activity rings.</span></a></li>
+<li><a class="card" href="knob.html"><img class="thumb dark" src="thumbs/knob.webp" alt="" loading="lazy"><strong>Knob</strong><span>A rotary control.</span></a></li>
+<li><a class="card" href="menu.html"><img class="thumb dark" src="thumbs/menu.webp" alt="" loading="lazy"><strong>Menu</strong><span>A radial menu, flat or nested.</span></a></li>
+<li><a class="card" href="instrument.html"><img class="thumb dark" src="thumbs/instrument.webp" alt="" loading="lazy"><strong>Instrument</strong><span>Needle gauges with presets.</span></a></li>
+<li><a class="card" href="clock.html"><img class="thumb dark" src="thumbs/clock.webp" alt="" loading="lazy"><strong>Clock</strong><span>Clocks and watch faces.</span></a></li>
+<li><a class="card" href="compass.html"><img class="thumb dark" src="thumbs/compass.webp" alt="" loading="lazy"><strong>Compass</strong><span>A heading indicator.</span></a></li>
+<li><a class="card" href="radar.html"><img class="thumb dark" src="thumbs/radar.webp" alt="" loading="lazy"><strong>Radar</strong><span>A scope with a sweep and blips.</span></a></li>
+<li><a class="card" href="timer.html"><img class="thumb dark" src="thumbs/timer.webp" alt="" loading="lazy"><strong>Timer</strong><span>A countdown ring with controls.</span></a></li>
+<li><a class="card" href="status.html"><img class="thumb dark" src="thumbs/status.webp" alt="" loading="lazy"><strong>Status</strong><span>Health of many things, in layers.</span></a></li>
+<li><a class="card" href="range.html"><img class="thumb dark" src="thumbs/range.webp" alt="" loading="lazy"><strong>Range</strong><span>Two handles on one ring: a span of values or hours.</span></a></li>
+<li><a class="card" href="time-picker.html"><img class="thumb dark" src="thumbs/time-picker.webp" alt="" loading="lazy"><strong>Time picker</strong><span>Pick a time by turning a clock.</span></a></li>
+<li><a class="card" href="spinner.html"><img class="thumb dark" src="thumbs/spinner.webp" alt="" loading="lazy"><strong>Spinner</strong><span>Loading rings, dots and orbits.</span></a></li>
+<li><a class="card" href="radar-chart.html"><img class="thumb dark" src="thumbs/radar-chart.webp" alt="" loading="lazy"><strong>Radar chart</strong><span>Values across axes, on a web.</span></a></li>
+<li><a class="card" href="sunburst.html"><img class="thumb dark" src="thumbs/sunburst.webp" alt="" loading="lazy"><strong>Sunburst</strong><span>A tree as nested rings, with zoom.</span></a></li>
+<li><a class="card" href="wheel.html"><img class="thumb dark" src="thumbs/wheel.webp" alt="" loading="lazy"><strong>Wheel</strong><span>A prize wheel that spins to a result.</span></a></li>
+<li><a class="card" href="color-wheel.html"><img class="thumb dark" src="thumbs/color-wheel.webp" alt="" loading="lazy"><strong>Color wheel</strong><span>A hue ring color picker.</span></a></li>
+</ul>
+
+<h2 id="conventions">What they share</h2>
+<p>Once you know one component, you know most of the others.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>size</code></td><td>Width of the widget, as any CSS length. Most are square; <code>100%</code> follows the container as it resizes.</td></tr>
+<tr><td><code>thickness</code></td><td>Band thickness in lanes, Orbit's unit: a lane is a twelfth of the radius.</td></tr>
+<tr><td><code>fill</code>, <code>track</code></td><td>Value and track colors of the band components: gauge, knob and timer.</td></tr>
+<tr><td><code>accent</code></td><td>The highlight of the dial components: instrument, clock, compass and menu.</td></tr>
+<tr><td><code>label</code>, <code>unit</code></td><td>The text in the middle.</td></tr>
+<tr><td><code>range</code>, <code>from</code></td><td>Arc span and start angle in degrees. Partial ranges center their gap at the bottom.</td></tr>
+<tr><td><code>glow</code></td><td>A glow in the indicator color; <code>glow=&quot;12&quot;</code> sets the blur in px.</td></tr>
+<tr><td><code>data</code>, <code>items</code>, <code>targets</code>, <code>zones</code></td><td>Lists, as JSON in the attribute.</td></tr>
+<tr><td><code>min</code>, <code>max</code>, <code>step</code></td><td>The range of a value, read like <code>&lt;input type="range"&gt;</code>.</td></tr>
+<tr><td><code>format</code>, <code>locale</code></td><td>How numbers are written: percent, currency, units, compact.</td></tr>
+<tr><td><code>theme</code></td><td><code>dark</code>, <code>light</code> or <code>glass</code>, or an <code>ok-theme-*</code> class on a container.</td></tr>
+<tr><td><code>name</code></td><td>The knob and the menu are form controls.</td></tr>
+</tbody>
+</table></div>
+<p>The last four work the same everywhere; <a href="options.html">Shared options</a> has the details and live examples.</p>
+<p>Change an attribute and the component updates. Values only move what moves; a new structure, like a different number of segments, rebuilds the inside.</p>
+<p>Colors live in custom properties that inherit, so one rule themes a whole panel:</p>
+<pre><code>.dashboard {
+  --ok-fill: var(--accent);    /* value arcs */
+  --ok-track: color-mix(in oklab, var(--accent) 22%, #0c0f13);   /* tracks */
+  --ok-accent: #f97316;  /* needles, hands, highlights */
+  --ok-text: #e2e8f0;    /* readouts */
+  --ok-face: #0b1220;    /* dials */
+}</code></pre>
+<p>Each page lists the properties of its component. Attributes set the same properties on the element itself, so an attribute wins over a rule on a parent.</p>
+<p>Text inside a component scales with it: the base font size is a share of the widget (<code>--ok-font-size</code>), and readouts are sized in <code>em</code>. A 120px gauge and a 400px gauge look the same, only bigger.</p>
+<p>Every component has a role and a name that follow its value: gauges and instruments are meters, the knob is a slider, the menu is a menu, the timer is a timer. Write your own <code>aria-label</code> and the component keeps it. Decorative motion stops when the system asks for reduced motion.</p>
+
+<h2>Coming from 0.x</h2>
+<p>Tag names and attributes from 0.x still work. What changed is underneath:</p>
+<ul>
+<li>The kit runs on Orbit 2 and no longer works with 1.x.</li>
+<li>Components are sized by their universe. The outer band touches the edge of the widget, so a gauge looks a little bigger in the same <code>size</code>.</li>
+<li><code>thickness</code> sets band thickness. <code>orbit</code> and <code>stroke-width</code> still work as before.</li>
+<li><code>gap</code> is now a share of the widget width, the same in the donut, the menu and the status ring.</li>
+<li>Colors are custom properties you can set from CSS, and text scales with the widget.</li>
+<li>New: <a href="timer.html"><code>&lt;o-timer&gt;</code></a> and <a href="status.html"><code>&lt;o-status&gt;</code></a>, <code>min</code> on the gauge, <code>accent</code> on the compass and the radar.</li>
+<li><code>&lt;o-meter&gt;</code> still ships; <a href="instrument.html"><code>&lt;o-instrument&gt;</code></a> does all it does and more.</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

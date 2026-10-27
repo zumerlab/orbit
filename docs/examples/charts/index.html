@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Charts · Orbit</title>
+  <meta name="description" content="Radial charts built with Orbit arcs: donut, pie and sunburst.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Charts</h1>
+<p>Pies, donuts and sunbursts are arcs with values. Put <code>&lt;o-arc value="…"&gt;</code> elements in a ring and they follow each other around it, each taking its share. Orbit draws the paths; you bring the data.</p>
+<ul class="cards">
+<li><a class="card" href="donut-chart.html"><img class="thumb dark" src="../thumbs/donut-chart.webp" alt="" loading="lazy"><strong>Donut chart</strong><span>Five arcs with values, and two weeks to switch.</span></a></li>
+<li><a class="card" href="pie-chart.html"><img class="thumb dark" src="../thumbs/pie-chart.webp" alt="" loading="lazy"><strong>Pie chart</strong><span>Slices that slide out on hover and focus.</span></a></li>
+<li><a class="card" href="sunburst-chart.html"><img class="thumb dark" src="../thumbs/sunburst-chart.webp" alt="" loading="lazy"><strong>Sunburst chart</strong><span>Two levels of nested data that line up on their own.</span></a></li>
+</ul>
+<ul>
+<li>A donut leaves room in the middle for a total.</li>
+<li>A pie is denser, and pairs well with a legend outside it.</li>
+<li>A sunburst shows nested categories, one ring per level.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="../../reference/arc.html">Arcs</a></li>
+<li><a href="../../kit/donut.html">Orbit Kit donut</a></li>
+<li><a href="../../use-cases/dashboards.html">Dashboards</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

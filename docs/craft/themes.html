@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Themes · Orbit</title>
+  <meta name="description" content="Orbit's default theme, theme-cyan and the dev-orbit helper. All have zero specificity, so one class of yours always wins.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Themes</h1>
+<p class="lede">Orbit ships a plain default look, a cyan theme and a helper for building. All of them are written with <code>:where()</code>, so they have zero specificity apart from their own class: a single class of yours wins, without <code>!important</code>.</p>
+<h2>Default theme</h2>
+<p>Always on. Satellites have no border or background, arcs and progress bands are light gray, and vectors and sides take the current text color. There are no hover colors.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot" style="--o-size-ratio: 1.25">
+    <div class="orbit-3">
+      <o-arc class="shrink-10 gap-2"></o-arc>
+      <o-arc class="shrink-10 gap-2"></o-arc>
+    </div>
+    <div class="orbit-5">
+      <div class="satellite"><div class="capsule">A</div></div>
+      <div class="satellite"><div class="capsule">B</div></div>
+      <div class="satellite"><div class="capsule">C</div></div>
+      <div class="satellite"><div class="capsule">D</div></div>
+    </div>
+    <div class="orbit-8">
+      <o-progress shape="arrow" value="67"></o-progress>
+    </div>
+    <div class="orbit-10 from-23">
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+    </div>
+    <div class="orbit-10">
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+    </div>
+  </div>
+</div>
+  </script>
+</figure>
+<h2>Cyan theme</h2>
+<p>Add <code>theme-cyan</code> to the <code>.bigbang</code>, or to any ancestor. It outlines satellites, colors everything cyan and adds hover colors to arcs and progress bands.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<div class="bigbang theme-cyan">
+  <div class="gravity-spot" style="--o-size-ratio: 1.25">
+    <div class="orbit-3">
+      <o-arc class="shrink-10 gap-2"></o-arc>
+      <o-arc class="shrink-10 gap-2"></o-arc>
+    </div>
+    <div class="orbit-5">
+      <div class="satellite"><div class="capsule">A</div></div>
+      <div class="satellite"><div class="capsule">B</div></div>
+      <div class="satellite"><div class="capsule">C</div></div>
+      <div class="satellite"><div class="capsule">D</div></div>
+    </div>
+    <div class="orbit-8">
+      <o-progress shape="arrow" value="67"></o-progress>
+    </div>
+    <div class="orbit-10 from-23">
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+    </div>
+    <div class="orbit-10">
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+    </div>
+  </div>
+</div>
+  </script>
+</figure>
+<h2>dev-orbit</h2>
+<p>Add <code>dev-orbit</code> while you build. It draws the gravity spot, rings and satellites with dashed red lines, and outlines broken structure. It goes on top of a theme on the same element. See <a href="visual-aids.html">Visual aids</a>.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<div class="bigbang dev-orbit">
+  <div class="gravity-spot" style="--o-size-ratio: 1.25">
+    <div class="orbit-3">
+      <o-arc class="shrink-10 gap-2"></o-arc>
+      <o-arc class="shrink-10 gap-2"></o-arc>
+    </div>
+    <div class="orbit-5">
+      <div class="satellite"><div class="capsule">A</div></div>
+      <div class="satellite"><div class="capsule">B</div></div>
+      <div class="satellite"><div class="capsule">C</div></div>
+      <div class="satellite"><div class="capsule">D</div></div>
+    </div>
+    <div class="orbit-8">
+      <o-progress shape="arrow" value="67"></o-progress>
+    </div>
+    <div class="orbit-10 from-23">
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+    </div>
+    <div class="orbit-10">
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+    </div>
+  </div>
+</div>
+  </script>
+</figure>
+<h2>Your own look</h2>
+<p>Style Orbit like anything else: satellites and capsules with ordinary CSS, arcs and progress with custom properties. The <a href="colors.html">color palette</a> is there if you want it. Here is the same layout once more, with a few rules of its own and a hover color on the satellites.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot" style="--o-size-ratio: 1.25">
+    <div class="orbit-3">
+      <o-arc class="shrink-10 gap-2"></o-arc>
+      <o-arc class="shrink-10 gap-2"></o-arc>
+    </div>
+    <div class="orbit-5">
+      <div class="satellite"><div class="capsule">A</div></div>
+      <div class="satellite"><div class="capsule">B</div></div>
+      <div class="satellite"><div class="capsule">C</div></div>
+      <div class="satellite"><div class="capsule">D</div></div>
+    </div>
+    <div class="orbit-8">
+      <o-progress shape="arrow" value="67"></o-progress>
+    </div>
+    <div class="orbit-10 from-23">
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+      <div class="side"></div><div class="side"></div><div class="side"></div><div class="side"></div>
+    </div>
+    <div class="orbit-10">
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* Your own look: ordinary CSS and Orbit's custom properties. */
+.orbit-5 .satellite {
+  border-radius: 50%;
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--text);
+  font-size: 13px;
+}
+.orbit-5 .satellite:hover { box-shadow: inset 0 0 0 1.5px var(--accent); color: var(--accent); }
+o-arc { --o-fill: var(--line); --o-stroke: none; }
+o-progress { --o-fill: var(--accent); --o-back-fill: color-mix(in srgb, var(--accent) 12%, transparent); --o-stroke: none; }
+.vector { background: var(--faint); }
+.side { background: var(--line); }
+  </script>
+</figure>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

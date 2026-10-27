@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color wheel · Orbit</title>
+  <meta name="description" content="o-color-wheel is a color picker: a hue ring around a saturation and brightness square, with optional swatches.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Color wheel</h1>
+<p class="lede"><code>&lt;o-color-wheel&gt;</code> is a color picker: a hue ring around a saturation and brightness square, with optional swatches.</p>
+<figure class="example" data-kit data-height="400">
+  <script type="text/plain" data-html>
+<o-color-wheel id="picker" value="#4fd1c5" aria-label="Accent color"></o-color-wheel>
+<p class="readout"><strong id="hex">#4fd1c5</strong><span id="name">teal</span></p>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 14px; height: 100vh; --accent: #4fd1c5; }
+.readout { margin: 0; }
+.readout strong { font-family: var(--mono); font-size: 22px; color: var(--accent, var(--text)); }
+  </script>
+  <script type="text/plain" data-js>
+const picker = document.getElementById('picker');
+picker.addEventListener('input', (e) => {
+  document.getElementById('hex').textContent = e.detail.value;
+  document.getElementById('name').textContent = e.detail.name;
+  document.body.style.setProperty('--accent', e.detail.value);
+});
+  </script>
+</figure>
+<p>Drag around the ring for the hue, and inside the square for saturation (left to right) and brightness (bottom to top). The hue handle is the only satellite of an <code>orbit-12</code> whose <code>--o-from</code> is the hue, so Orbit puts it on the ring; the ring and the square sit in center capsules. A gray keeps the hue you had, so turning the saturation back up brings it back.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td><code>#4fd1c5</code></td><td>The color: hex, <code>rgb()</code>, <code>hsl()</code> or a CSS name. It is read as hex. It is also the default a form reset returns to; the attribute follows the picker as you change it.</td></tr>
+<tr><td><code>format</code></td><td><code>hex</code></td><td>How the color is submitted with a form: <code>hex</code> (<code>#1e90ff</code>), <code>rgb</code> (<code>rgb(30, 144, 255)</code>) or <code>hsl</code> (<code>hsl(210, 100%, 56%)</code>).</td></tr>
+<tr><td><code>swatches</code></td><td></td><td>JSON: colors, or <code>{ color, label }</code>. They go around the outside as satellites, and the picker shrinks to make room. Up to 36.</td></tr>
+<tr><td><code>thickness</code></td><td><code>1.9</code>, <code>1.7</code> with swatches</td><td>Hue ring thickness in lanes.</td></tr>
+<tr><td><code>label</code></td><td><code>Color picker</code></td><td>Accessible name of the group, unless you give it an <code>aria-label</code>.</td></tr>
+<tr><td><code>name</code></td><td></td><td>Field name: with it, the picker submits its color with the form. See <a href="options.html#forms">Forms</a>.</td></tr>
+<tr><td><code>disabled</code></td><td>off</td><td>Dimmed, out of the tab order and not submitted. A disabled <code>&lt;fieldset&gt;</code> does the same.</td></tr>
+<tr><td><code>size</code></td><td><code>240px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Properties and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td>The color as hex. Setting it takes any CSS color and fires no event, like a native input.</td></tr>
+<tr><td><code>rgb</code>, <code>hsl</code></td><td>The color as <code>rgb()</code> and <code>hsl()</code> text.</td></tr>
+<tr><td><code>colorName</code></td><td>A plain name, like “dark blue” or “light gray”.</td></tr>
+<tr><td><code>form</code>, <code>labels</code>, <code>defaultValue</code>, <code>validity</code></td><td>As on a native input.</td></tr>
+<tr><td><code>input</code></td><td>Fires on every change you make. <code>event.detail</code> has <code>value</code> (hex), <code>rgb</code>, <code>hsl</code> and <code>name</code>.</td></tr>
+<tr><td><code>change</code></td><td>Fires once a drag ends with a different color, on each key press and on each swatch you pick.</td></tr>
+</tbody>
+</table></div>
+<pre><code>picker.addEventListener('input', (e) =&gt; preview(e.detail.value))
+picker.value = 'tomato'
+picker.value // '#ff6347'</code></pre>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-cw-thumb-border</code></td><td><code>#fff</code></td><td>Ring of the handles and of the picked swatch.</td></tr>
+<tr><td><code>--ok-cw-swatch-border</code></td><td>faint white</td><td>Edge of the swatches, so dark ones show on a dark page.</td></tr>
+<tr><td><code>--ok-cw-radius</code></td><td><code>.3em</code></td><td>Corner radius of the square.</td></tr>
+<tr><td><code>--ok-focus</code></td><td><code>#3da9fc</code></td><td>Focus ring.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base size, as a share of the widget. The square's handle scales with it.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Swatches</h3>
+<p>A palette of your own around the picker. The swatch that matches the color is pressed.</p>
+<figure class="example" data-kit data-height="380">
+  <script type="text/plain" data-html>
+<o-color-wheel id="paint" size="300px" value="#ffb547" swatches='[
+  {"color": "#4fd1c5", "label": "Teal"}, {"color": "#ffb547", "label": "Amber"},
+  {"color": "#ff7a6b", "label": "Coral"}, {"color": "#a78bfa", "label": "Violet"},
+  {"color": "#60a5fa", "label": "Blue"}, {"color": "#a3e635", "label": "Lime"},
+  {"color": "#e8edf2", "label": "Snow"}, {"color": "#8a97a5", "label": "Slate"},
+  {"color": "#f472b6", "label": "Pink"}, {"color": "#facc15", "label": "Sun"}
+]'></o-color-wheel>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h3>In a form</h3>
+<p>With a <code>name</code> it submits like an input, here as <code>hsl()</code>.</p>
+<figure class="example" data-kit data-height="380">
+  <script type="text/plain" data-html>
+<form id="theme">
+  <o-color-wheel name="brand" format="hsl" value="#a78bfa" size="220px" aria-label="Brand color"></o-color-wheel>
+  <p class="controls">
+    <button type="reset">Reset</button>
+    <output id="sent"></output>
+  </p>
+</form>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+form { display: grid; justify-items: center; gap: 14px; }
+p { margin: 0; }
+  </script>
+  <script type="text/plain" data-js>
+const form = document.getElementById('theme');
+const show = () => { document.getElementById('sent').textContent = new FormData(form).get('brand'); };
+form.addEventListener('input', show);
+form.addEventListener('reset', () => setTimeout(show));
+customElements.whenDefined('o-color-wheel').then(show);
+  </script>
+</figure>
+
+<h3>A light theme</h3>
+<figure class="example" data-kit data-light data-height="320">
+  <script type="text/plain" data-html>
+<o-color-wheel theme="light" value="#0d9488" size="240px" swatches='["#0d9488", "#ea580c", "#2563eb", "#db2777", "#12161c", "#ffffff"]'></o-color-wheel>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+o-color-wheel { --ok-cw-swatch-border: rgba(18, 22, 28, .2); }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The picker is a <code>role="group"</code> with two sliders, each one tab stop. The hue slider is called “Hue” and reads like “210 degrees, blue”; arrows move it one degree, Shift and Page Up or Page Down ten, Home and End go to the ends, and it wraps around. The square is called “Saturation and brightness”: Left and Right change the saturation, Up and Down the brightness, one percent at a time or ten with Shift. It reads like “Saturation 80%, brightness 60%, dark blue, #1f4c99”.</p>
+<p>Swatches are buttons named after their label or their color, with <code>aria-pressed</code> on the one that matches. They share one tab stop; arrows move between them and Enter or Space picks one.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

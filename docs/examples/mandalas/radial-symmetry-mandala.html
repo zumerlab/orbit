@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radial symmetry mandala · Orbit</title>
+  <meta name="description" content="A radial symmetry mandala in HTML and CSS: rings of circle stacks and triangles that Orbit spaces evenly, with six, eight or twelve-fold symmetry.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Radial symmetry mandala</h1>
+<p class="lede">Symmetry for free: put copies of a satellite on a ring and Orbit spaces them evenly. Change the number of copies and the whole pattern redraws with six, eight or twelve folds.</p>
+<figure class="example" data-height="440">
+  <script type="text/plain" data-html>
+<div class="stage">
+  <div class="bigbang mandala" role="img" aria-label="Mandala">
+    <div class="gravity-spot">
+      <!-- Three rings of copies, written by the JS tab, and a target in the middle. -->
+      <div class="orbit-8 triangles" style="--o-size-ratio: 8"></div>
+      <div class="orbit-8 stacks" style="--o-size-ratio: 6"></div>
+      <div class="orbit-4 stacks small" style="--o-size-ratio: 2.8"></div>
+      <div class="orbit-0">
+        <div class="satellite at-center circle" style="--o-size-ratio: 3.2"></div>
+        <div class="satellite at-center circle" style="--o-size-ratio: 2.4"></div>
+        <div class="satellite at-center circle" style="--o-size-ratio: 1.6"></div>
+        <div class="satellite at-center dot" style="--o-size-ratio: .6"></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls" role="group" aria-label="Symmetry">
+    <span>Folds</span>
+    <button type="button" aria-pressed="false">6</button>
+    <button type="button" aria-pressed="true">8</button>
+    <button type="button" aria-pressed="false">12</button>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.circle { border: 1px solid var(--c, var(--accent)); background: var(--panel); }
+.stacks .circle:nth-child(even) { --c: var(--violet); }
+.triangles .side { background: var(--amber); }
+.dot { background: var(--amber); }
+.controls button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+// A copy: a satellite with its own system inside, so its circles are counted in its own lanes.
+const stack = (sizes) => `
+  <div class="satellite"><div class="gravity-spot"><div class="orbit-0">
+    ${sizes.map((s) => `<div class="satellite at-center circle" style="--o-size-ratio: ${s}"></div>`).join('')}
+  </div></div></div>`;
+// A triangle: three sides on the outer ring of a nested system. spin-lock turns it with its place.
+const triangle = `
+  <div class="satellite spin-lock"><div class="gravity-spot"><div class="orbit-12">
+    <div class="side"></div><div class="side"></div><div class="side"></div>
+  </div></div></div>`;
+
+const $ = (s) => document.querySelector(s);
+const buttons = document.querySelectorAll('.controls button');
+function folds(n) {
+  $('.stacks').innerHTML = stack([24, 18, 12, 6]).repeat(n);
+  $('.stacks.small').innerHTML = stack([24, 14]).repeat(n);
+  $('.triangles').innerHTML = triangle.repeat(n);
+  // Half a step round, so the triangles show between the stacks.
+  $('.triangles').style.setProperty('--o-from', `${180 / n}deg`);
+  $('.mandala').setAttribute('aria-label', `Mandala with ${n}-fold symmetry`);
+  buttons.forEach((b) => b.setAttribute('aria-pressed', b.textContent === String(n)));
+}
+buttons.forEach((b) => b.addEventListener('click', () => folds(Number(b.textContent))));
+folds(8);
+  </script>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Copies of a satellite on one ring are spread evenly, so the symmetry needs no angles: the buttons only change how many copies the script writes.</li>
+<li>Each copy holds its own <code>.gravity-spot</code>, which reaches the edge of the satellite. Its circles are <code>at-center</code> satellites sized in the copy's own lanes: 24 is as wide as the copy. See <a href="../../reference/gravity-spot.html">gravity spot</a>.</li>
+<li>The triangles are three <a href="../../reference/side.html"><code>.side</code></a> elements on <code>orbit-12</code> of the nested system. <code>spin-lock</code> turns each copy with its place on the ring, so all of them point outward.</li>
+<li><code>--o-from</code> on the triangle ring turns it half a step, so the corners show between the stacks. The stacks have a background and sit above it, hiding the rest.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="geometric-square-mandala.html">Geometric square mandala</a></li>
+<li><a href="index.html#starters">Starter patterns</a></li>
+<li><a href="../../demos/07-satellites.html">Team map demo</a>: satellites spread on three rings</li>
+<li><a href="../../reference/side.html">Sides</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

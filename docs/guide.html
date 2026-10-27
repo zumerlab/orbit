@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build a knob · Orbit</title>
+  <meta name="description" content="Build a volume knob with Orbit step by step: a universe, a center, rings, ticks, a progress band and a body that is a system of its own.">
+  <link rel="icon" href="brand/favicon.svg">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Build a knob</h1>
+<p class="lede">A volume knob: a ring of ticks, a band that shows the level, a body with a dot that turns, and the number under it. On the way you meet every piece of Orbit. Each step below is live: open its code and change it.</p>
+
+<h2>1. Make a universe</h2>
+<p>Everything starts with a <a href="reference/bigbang.html"><code>.bigbang</code></a>. It is the space the knob lives in, and its box is the only size you set: the knob will be as big as this box. Here it is 260px wide and square by default. It is invisible; the dashed outline is only there so you can see it.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang knob"></div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  place-items: center;
+}
+/* The only size you set. */
+.knob {
+  width: 260px;
+  outline: 1px dashed var(--faint);
+}
+  </script>
+</figure>
+
+<h2>2. Give it a center</h2>
+<p>A <a href="reference/gravity-spot.html"><code>.gravity-spot</code></a> is the center of the system. Its gravity reaches the shorter side of the universe, and that reach is split into 12 lanes: the rings you will place things on. It is invisible too. The circle drawn here is its reach, <code>--o-force</code>.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang knob">
+  <div class="gravity-spot"></div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  place-items: center;
+}
+.knob {
+  width: 260px;
+  outline: 1px dashed var(--faint);
+}
+/* Only to see it: the reach of the gravity spot. */
+.gravity-spot::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  width: var(--o-force);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px dashed var(--accent);
+}
+  </script>
+</figure>
+
+<h2>3. Draw the orbits</h2>
+<p><a href="reference/orbit.html">Rings</a> go straight inside the gravity spot. <code>orbit-N</code> sits N lanes from the center: <code>orbit-6</code> halfway, <code>orbit-12</code> at the edge. The knob needs three: <code>orbit-11</code> for the ticks, <code>orbit-10</code> for the band, and <code>orbit-0</code>, the center itself, for the body.</p>
+<p class="note">Rings are transparent. The dashed lines here come from a <code>border</code> in the example CSS.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang knob">
+  <div class="gravity-spot">
+    <div class="orbit-11"></div>
+    <div class="orbit-10"></div>
+    <div class="orbit-0"></div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  place-items: center;
+}
+.knob {
+  width: 260px;
+}
+/* Only to see them. */
+.orbit-11, .orbit-10 {
+  border: 1px dashed var(--accent);
+}
+  </script>
+  <figcaption><code>orbit-11</code> outside, <code>orbit-10</code> just inside it. <code>orbit-0</code> is the center point, with no size of its own.</figcaption>
+</figure>
+
+<h2>4. Put things on them</h2>
+<p>Rings hold <a href="reference/satellite.html">satellites</a> carrying your content, <a href="reference/vector.html">ticks</a>, <a href="reference/side.html">chords</a>, <a href="reference/arc.html">arcs</a> and <a href="reference/progress.html">progress bands</a>, and Orbit spreads them evenly around their ring. Here: 21 ticks on <code>orbit-11</code>, a progress band on <code>orbit-10</code> and the number in the middle. The ticks are the same element 21 times, so one line of JavaScript writes them.</p>
+<p>Centered content goes in <code>.orbit-0 &gt; .satellite.at-center &gt; .capsule</code>. Every element on a ring is one lane thick, so the center satellite gets <code>--o-size-ratio: 6</code> to make room for the number.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang knob">
+  <div class="gravity-spot">
+    <div class="orbit-11 ticks"></div>
+    <div class="orbit-10">
+      <o-progress value="64"></o-progress>
+    </div>
+    <div class="orbit-0" style="--o-size-ratio: 6">
+      <div class="satellite at-center">
+        <div class="capsule readout"><strong>64</strong><span>volume</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  place-items: center;
+}
+.knob {
+  width: 260px;
+}
+.orbit-11, .orbit-10 {
+  border: 1px dashed var(--faint);
+}
+.ticks .vector {
+  background: var(--muted);
+}
+o-progress {
+  --o-fill: var(--accent);
+  --o-stroke: none;
+}
+.readout strong {
+  font-size: 26px;
+}
+  </script>
+  <script type="text/plain" data-js>
+document.querySelector('.ticks').innerHTML = '<div class="vector"></div>'.repeat(21);
+  </script>
+</figure>
+
+<h2>5. Shape it</h2>
+<p>Now the details. The ticks and the band use 270° of the circle starting at 225° (<code>range-270 from-225</code>), so the knob has a gap at the bottom, and <code>fit-range</code> puts the first and last tick on the two ends of the range. <code>--o-size-ratio</code> makes the ticks a little shorter and the band a little thinner than a lane, and <code>shape="rounded"</code> rounds the band's ends. The track behind the band is <code>--o-back-fill</code>.</p>
+<p>The number moves into the gap: a satellite on <code>orbit-11</code> with <code>angle-180</code> sits straight down. The dashed guides are gone.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang knob">
+  <div class="gravity-spot">
+    <!-- Ticks and band share range and start, so they line up. -->
+    <div class="orbit-11 range-270 from-225 fit-range ticks" style="--o-size-ratio: .8"></div>
+    <div class="orbit-10 range-270 from-225" style="--o-size-ratio: .9">
+      <o-progress value="64" shape="rounded"></o-progress>
+    </div>
+    <div class="orbit-11">
+      <div class="satellite angle-180">
+        <div class="capsule readout"><strong>64</strong><span>volume</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  place-items: center;
+}
+.knob {
+  width: 260px;
+}
+.ticks .vector {
+  background: #3a4757;
+}
+o-progress {
+  --o-stroke: none;
+  --o-fill: var(--accent);
+  --o-back-fill: #1d2630;
+}
+.readout strong {
+  font-size: 22px;
+}
+  </script>
+  <script type="text/plain" data-js>
+document.querySelector('.ticks').innerHTML = '<div class="vector"></div>'.repeat(21);
+  </script>
+</figure>
+
+<h2>6. A system inside a satellite</h2>
+<p>A satellite is a universe too: put a <code>.gravity-spot</code> inside it and its rings are measured against the satellite. The body of the knob is a satellite 15 lanes wide on <code>orbit-0</code>. Its capsule paints the body, and the system inside it carries the dot on its own <code>orbit-9</code>, with the same range as the dial.</p>
+<p>With one satellite on a partial range, the dot sits at the start, 225°. Turning that inner ring with <code>rotate</code> moves it along: 64% of 270° is about 173°.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang knob">
+  <div class="gravity-spot">
+    <div class="orbit-11 range-270 from-225 fit-range ticks" style="--o-size-ratio: .8"></div>
+    <div class="orbit-10 range-270 from-225" style="--o-size-ratio: .9">
+      <o-progress value="64" shape="rounded"></o-progress>
+    </div>
+    <!-- The body: a satellite 15 lanes wide, and a universe of its own. -->
+    <div class="orbit-0" style="--o-size-ratio: 15">
+      <div class="satellite at-center">
+        <div class="capsule body"></div>
+        <div class="gravity-spot">
+          <div class="orbit-9 range-270 from-225 turn" style="--o-size-ratio: 1.2">
+            <div class="satellite"><div class="capsule dot"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="orbit-11">
+      <div class="satellite angle-180">
+        <div class="capsule readout"><strong>64</strong><span>volume</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  place-items: center;
+}
+.knob {
+  width: 260px;
+}
+.ticks .vector {
+  background: #3a4757;
+}
+o-progress {
+  --o-stroke: none;
+  --o-fill: var(--accent);
+  --o-back-fill: #1d2630;
+}
+.body {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, #2b3542, #151b22 70%);
+  box-shadow: 0 14px 30px -10px #000, inset 0 1px 0 #3b4655, inset 0 -6px 14px #0a0d11;
+}
+.dot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+/* 64% of the 270° range. */
+.turn {
+  rotate: 173deg;
+}
+.readout strong {
+  font-size: 22px;
+}
+  </script>
+  <script type="text/plain" data-js>
+document.querySelector('.ticks').innerHTML = '<div class="vector"></div>'.repeat(21);
+  </script>
+</figure>
+
+<h2>7. Make it turn</h2>
+<p>The drawing is done; the rest is a few lines of JavaScript. One function sets the value: it changes <code>value</code> on the <code>&lt;o-progress&gt;</code>, turns the inner ring through a <code>--turn</code> custom property, lights the ticks up to the value and keeps <code>aria-valuenow</code> in sync. The pointer, the wheel and the arrow keys all call it.</p>
+<p>The <code>.bigbang</code> is the control: <code>role="slider"</code>, a name and <code>tabindex="0"</code>, so it works with a keyboard and a screen reader. Orbit draws; the behavior is yours.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<div class="bigbang knob" tabindex="0" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="64">
+  <div class="gravity-spot">
+    <div class="orbit-11 range-270 from-225 fit-range ticks" style="--o-size-ratio: .8"></div>
+    <div class="orbit-10 range-270 from-225" style="--o-size-ratio: .9">
+      <o-progress value="64" shape="rounded"></o-progress>
+    </div>
+    <div class="orbit-0" style="--o-size-ratio: 15">
+      <div class="satellite at-center">
+        <div class="capsule body"></div>
+        <div class="gravity-spot">
+          <div class="orbit-9 range-270 from-225 turn" style="--o-size-ratio: 1.2">
+            <div class="satellite"><div class="capsule dot"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="orbit-11">
+      <div class="satellite angle-180">
+        <div class="capsule readout"><strong id="level">64</strong><span>volume</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+body {
+  display: grid;
+  place-items: center;
+}
+.knob {
+  width: 300px;
+  touch-action: none;
+  cursor: grab;
+}
+.knob:active { cursor: grabbing; }
+.knob:focus-visible { outline: none; }
+.ticks .vector { background: #3a4757; }
+.ticks .vector.lit { background: var(--accent); }
+o-progress {
+  --o-stroke: none;
+  --o-fill: var(--accent);
+  --o-back-fill: #1d2630;
+}
+.body {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, #2b3542, #151b22 70%);
+  box-shadow: 0 14px 30px -10px #000, inset 0 1px 0 #3b4655, inset 0 -6px 14px #0a0d11;
+}
+.knob:focus-visible .body { box-shadow: 0 0 0 3px var(--accent), 0 14px 30px -10px #000; }
+.dot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+.turn {
+  rotate: var(--turn, 0deg);
+  transition: rotate .08s linear;
+}
+.readout strong { font-size: 24px; }
+  </script>
+  <script type="text/plain" data-js>
+const knob = document.querySelector('.knob');
+const ticksRing = knob.querySelector('.ticks');
+ticksRing.innerHTML = '<div class="vector"></div>'.repeat(21);
+const ticks = [...ticksRing.children];
+let value = 0;
+
+const set = (v) => {
+  value = Math.max(0, Math.min(100, Math.round(v)));
+  knob.querySelector('o-progress').setAttribute('value', value);
+  knob.style.setProperty('--turn', value * 2.7 + 'deg');
+  knob.setAttribute('aria-valuenow', value);
+  document.getElementById('level').textContent = value;
+  ticks.forEach((tick, i) => tick.classList.toggle('lit', value > 0 && i * 5 <= value));
+};
+
+// Pointer angle around the center, 0 at the start of the 270° range.
+const fromPointer = (event) => {
+  const box = knob.getBoundingClientRect();
+  const x = event.clientX - (box.left + box.width / 2);
+  const y = (box.top + box.height / 2) - event.clientY;
+  const along = (Math.atan2(x, y) * 180 / Math.PI + 360 + 135) % 360;
+  if (along <= 270) set(along / 2.7);
+};
+
+knob.addEventListener('pointerdown', (e) => { knob.setPointerCapture(e.pointerId); fromPointer(e); });
+knob.addEventListener('pointermove', (e) => { if (knob.hasPointerCapture(e.pointerId)) fromPointer(e); });
+knob.addEventListener('wheel', (e) => { e.preventDefault(); set(value - Math.sign(e.deltaY) * 2); }, { passive: false });
+knob.addEventListener('keydown', (e) => {
+  const step = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 10, PageDown: -10 }[e.key];
+  if (step) { e.preventDefault(); set(value + step); }
+  if (e.key === 'Home') set(0);
+  if (e.key === 'End') set(100);
+});
+
+set(64);
+  </script>
+  <figcaption>Drag around the knob, scroll over it, or focus it and use the arrow keys.</figcaption>
+</figure>
+<p>Change <code>width</code> on <code>.knob</code> and all of it scales together, ticks, band, body and dot. Every element has more options like these: the pages under Elements list them. The same knob is also a <a href="demos/05-knob.html">full-page demo</a>, and <a href="kit/knob.html"><code>&lt;o-knob&gt;</code></a> in Orbit Kit is a ready-made one.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="assets/site.js" data-root=""></script>
+</body>
+</html>

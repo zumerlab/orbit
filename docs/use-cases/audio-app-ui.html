@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audio app interfaces · Orbit</title>
+  <meta name="description" content="Knobs, meters and progress rings for web audio tools, synth prototypes and device companion apps, built with Orbit.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Audio app interfaces</h1>
+<p>Audio software never gave up the knob. It maps a wide range to a small gesture, and your hand remembers where it was. Orbit gives you the knob, its ticks, its arc and the meters around it as HTML, so the only script you write maps a drag to a value.</p>
+<h2>Where it fits</h2>
+<ul>
+<li>Web audio tools and plugins built on Web Audio or AudioWorklet.</li>
+<li>Synth and effect layouts you want to try with users before building them natively.</li>
+<li>Companion apps for controllers, interfaces and MIDI gear.</li>
+<li>Controls that need to be accessible: a knob is a DOM element, so it can be a <code>role="slider"</code> with <code>aria-valuenow</code> and arrow keys.</li>
+</ul>
+<h2>Where it does not</h2>
+<ul>
+<li>A large mixer with hundreds of meters moving at audio rate. Draw those on a canvas.</li>
+<li>Photographic knobs. Use an image for the texture and Orbit for the value around it.</li>
+</ul>
+<h2>Start from</h2>
+<ul class="cards">
+<li><a class="card" href="../demos/05-knob.html"><img class="thumb dark" src="../demos/thumbs/05-knob.webp" alt="" loading="lazy"><strong>Knob</strong><span>Drag, scroll or use the keys.</span></a></li>
+<li><a class="card" href="../examples/knobs/knob-with-progress-bar.html"><img class="thumb" src="../examples/thumbs/knob-with-progress-bar.webp" alt="" loading="lazy"><strong>Knob with progress bar</strong><span>A continuous value with ticks and an arc.</span></a></li>
+<li><a class="card" href="../examples/knobs/led-knob.html"><img class="thumb" src="../examples/thumbs/led-knob.webp" alt="" loading="lazy"><strong>LED knob</strong><span>Stepped values, one light per step.</span></a></li>
+<li><a class="card" href="../examples/gauges/240-degree-gauge.html"><img class="thumb" src="../examples/thumbs/240-degree-gauge.webp" alt="" loading="lazy"><strong>240° gauge</strong><span>A level meter with zones.</span></a></li>
+</ul>
+<p>An EQ, for example, is four knobs in a row with their values in the middle, an input and an output meter, and a ring around the bypass button. <a href="../guide.html">Build a knob</a> covers drag, wheel and keyboard. The <a href="../kit/knob.html">Kit knob</a> has all of it ready.</p>
+
+<h2>Related</h2>
+<ul>
+<li><a href="dashboards.html">Dashboards</a></li>
+<li><a href="fitness-and-health-apps.html">Fitness and health apps</a></li>
+<li><a href="iot-and-hardware-ui.html">IoT and hardware interfaces</a></li>
+<li><a href="sci-fi-game-uis.html">Sci-fi and game interfaces</a></li>
+<li><a href="../examples/index.html">All examples</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

@@ -15,17 +15,11 @@ export class OrbitProgress extends OrbitBase {
           --o-back-stroke: none;
           --o-back-stroke-width: 1;
         }
-        :host(:hover) {
-          --o-fill: var(--o-gray-light);
-          --o-stroke: var(--o-fill);
-          --o-stroke-width: 1;
-          --o-back-fill: transparent;
-          --o-back-stroke: none;
-          --o-back-stroke-width: 1;
-        }
         svg {
-          width: 100%;
-          height: 100%;
+          position: absolute;
+          inset: 0;
+          width: auto;
+          height: auto;
           overflow: visible;
           pointer-events: none;
         }
@@ -36,6 +30,14 @@ export class OrbitProgress extends OrbitBase {
         }
         :host([interactive]) svg * {
           pointer-events: visiblePainted;
+        }
+        /* The touch area covers the whole track, whatever its colors. */
+        .hit {
+          fill: none;
+          stroke: transparent;
+        }
+        :host([interactive]) .hit {
+          pointer-events: stroke;
         }
         :host([interactive]) {
           cursor: pointer;
@@ -52,11 +54,17 @@ export class OrbitProgress extends OrbitBase {
           stroke: var(--o-back-stroke);
           stroke-width: var(--o-back-stroke-width);
         }
-        /* variant="stroke": the thin, legible gauge (registro "medidor").
+        /* variant="stroke": the thin, legible gauge.
            The default band is a FILLED donut wedge, so everyone building a
            thin gauge tripped on --o-fill/--o-back-fill. With this variant the
            paths are open arcs and the data color lives where you expect it:
            --o-stroke for the bar, --o-back-stroke for the track. */
+        /* The stroke variant draws a 2px bar over a gray 1px track unless you
+           set your own values on the element. */
+        :host([variant="stroke"]) {
+          --o-stroke-width: 2;
+          --o-back-stroke: var(--o-gray-light);
+        }
         :host([variant="stroke"]) .progress-bar {
           fill: none;
           stroke: var(--o-stroke);
@@ -71,6 +79,7 @@ export class OrbitProgress extends OrbitBase {
         }
       </style>
       <svg viewBox="0 0 100 100">
+        <path class="hit" vector-effect="non-scaling-stroke"></path>
         <path class="progress-bg" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
         <path class="progress-bar" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
       </svg>
@@ -84,6 +93,7 @@ export class OrbitProgress extends OrbitBase {
     const dBar = isStroke ? this.calculateStrokeArc(attrs, false) : this.calculateArcParameters(attrs, false);
     this.shadowRoot.querySelector('.progress-bg').setAttribute('d', dBg);
     this.shadowRoot.querySelector('.progress-bar').setAttribute('d', dBar);
+    this.updateHitArea(this.shadowRoot.querySelector('.hit'), attrs, 0, attrs.range);
   }
 
   /**
@@ -94,31 +104,16 @@ export class OrbitProgress extends OrbitBase {
     const { realRadius } = attrs;
     const arcAngle = Math.max(0, Math.min(this.getProgressAngle(attrs, full), 360));
     if (!(arcAngle > 0) || !(attrs.orbitRadius > 0)) return '';
-    // A single SVG arc whose endpoints (almost) coincide is numerically
-    // unstable: Chrome resolves it around the wrong center. Draw a full
-    // circle as two half arcs (top -> bottom -> top) instead.
-    if (arcAngle >= 359.9) {
-      const top = 50 - realRadius;
-      const bottom = 50 + realRadius;
-      return `M 50,${top} A ${realRadius},${realRadius} 0 1 1 50,${bottom} A ${realRadius},${realRadius} 0 1 1 50,${top}`;
-    }
-    const a0 = -90 * (Math.PI / 180);
-    const a1 = (-90 + arcAngle) * (Math.PI / 180);
-    const x0 = 50 + realRadius * Math.cos(a0);
-    const y0 = 50 + realRadius * Math.sin(a0);
-    const x1 = 50 + realRadius * Math.cos(a1);
-    const y1 = 50 + realRadius * Math.sin(a1);
-    const largeArcFlag = arcAngle > 180 ? 1 : 0;
-    return `M ${x0},${y0} A ${realRadius},${realRadius} 0 ${largeArcFlag} 1 ${x1},${y1}`;
+    const start = -Math.PI / 2;
+    return this.linePath(realRadius, start, start + arcAngle * Math.PI / 180);
   }
 
   getAttributes() {
     const common = super.getCommonAttributes(this);
     const range = Math.max(0, Math.min(360, this.readAngle(common.style, '--o-range', 360)));
     const rawValue = common.style.getPropertyValue('--o-progress').trim();
-    const progress = rawValue ? this.readNumber(common.style, '--o-progress', 0) : Number(this.getAttribute('value') || 0);
-    const rawMax = this.getAttribute('max');
-    const maxValue = rawMax === null ? 100 : Number(rawMax);
+    const progress = rawValue ? this.readNumber(common.style, '--o-progress', 0) : this.readValue();
+    const maxValue = this.readMax();
     
     return {
       ...common,
@@ -148,6 +143,6 @@ export class OrbitProgress extends OrbitBase {
       arcHeight
     );
     
-    return super.generatePathData(shape, params, arcHeight, orbitNumber);
+    return super.generatePathData(shape, params);
   }
 }

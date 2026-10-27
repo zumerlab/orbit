@@ -18,9 +18,18 @@ for (const file of ['dist/orbit.css', 'dist/orbit.js']) {
   }
 }
 
-const roots = new Map(await Promise.all(['examples', 'dist'].map(async (name) => [
-  name, await realpath(join(root, name)),
-])));
+// The docs site is served from docs/. Its orbit/ folder is replaced by the
+// live build in dist/, and kit/src/ by a sibling orbit-kit checkout when there
+// is one, so you always see your latest changes. lab/ is the examples/ folder.
+const exists = async (path) => access(path).then(() => true, () => false);
+const kitSource = join(root, '..', 'orbit-kit', 'src');
+const mounts = [
+  ['/orbit/', join(root, 'dist')],
+  ['/kit/src/', (await exists(kitSource)) ? kitSource : join(root, 'docs', 'kit', 'src')],
+  ['/lab/', join(root, 'examples')],
+  ['/', join(root, 'docs')],
+];
+for (const mount of mounts) mount[1] = await realpath(mount[1]);
 const mime = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -56,15 +65,15 @@ const server = createServer(async (req, res) => {
   } catch {
     return fail(400, 'Invalid URL');
   }
-  if (pathname === '/') pathname = '/examples/playground.html';
+  if (pathname.endsWith('/')) pathname += 'index.html';
   const parts = pathname.split('/');
-  const base = roots.get(parts[1]);
-  if (!base || pathname.includes('\\') || pathname.includes('\0') || parts.some((part) => part === '..' || part.startsWith('.'))) {
+  const [prefix, base] = mounts.find(([p]) => pathname.startsWith(p));
+  if (pathname.includes('\\') || pathname.includes('\0') || parts.some((part) => part === '..' || part.startsWith('.'))) {
     return fail(404, 'Not found');
   }
 
   try {
-    const file = await realpath(join(base, ...parts.slice(2)));
+    const file = await realpath(join(base, ...pathname.slice(prefix.length).split('/')));
     const local = relative(base, file);
     if (!local || local.startsWith(`..${sep}`) || local === '..' || !(await stat(file)).isFile()) {
       return fail(404, 'Not found');
@@ -72,7 +81,7 @@ const server = createServer(async (req, res) => {
     const type = mime[extname(file)] ?? 'application/octet-stream';
     let body = await readFile(file);
     if (extname(file) === '.html') {
-      body = Buffer.from(body.toString('utf8').replaceAll('https://unpkg.com/@zumer/orbit@latest/dist/', '/dist/'));
+      body = Buffer.from(body.toString('utf8').replaceAll('https://unpkg.com/@zumer/orbit@latest/dist/', '/orbit/'));
     }
     res.writeHead(200, { 'Content-Type': type, 'Content-Length': body.length });
     res.end(req.method === 'HEAD' ? undefined : body);
@@ -90,6 +99,6 @@ server.on('error', (error) => {
   process.exitCode = 1;
 });
 server.listen(port, host, () => {
-  console.log(`Orbit core demo: http://${host}:${port}`);
+  console.log(`Orbit docs: http://${host}:${port}  (the repo examples/ folder is at /lab/)`);
   console.log('Serving the local build. Press Ctrl+C to stop.');
 });

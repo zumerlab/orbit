@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How Orbit thinks · Orbit</title>
+  <meta name="description" content="The Orbit model in one page. A bigbang is the universe, a gravity-spot its center, orbits are lanes, satellites travel them. Everything is a fraction of one box.">
+  <link rel="icon" href="brand/favicon.svg">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>How Orbit thinks</h1>
+<p>Every Orbit layout is a tiny universe. Once the four words in this page click, the rest of Orbit is details.</p>
+<h2>The universe</h2>
+<p>A <code>.bigbang</code> is the universe: the space your layout lives in. It is square by default, as wide as its parent, and a parent with a height keeps it from growing taller. Its box is the only size you ever set.</p>
+<p>Inside it, a <code>.gravity-spot</code> is the center. Its gravity reaches as far as the shorter side of the universe, and that reach is split into 12 lanes. <code>orbit-12</code> touches the edge, <code>orbit-6</code> is halfway, <code>orbit-1</code> hugs the center.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-1"></div>
+    <div class="orbit-2"></div>
+    <div class="orbit-3"></div>
+    <div class="orbit-4"></div>
+    <div class="orbit-5"></div>
+    <div class="orbit-6 half">
+      <div class="satellite angle-90"><div class="capsule tag">orbit-6</div></div>
+    </div>
+    <div class="orbit-7"></div>
+    <div class="orbit-8"></div>
+    <div class="orbit-9"></div>
+    <div class="orbit-10"></div>
+    <div class="orbit-11"></div>
+    <div class="orbit-12 edge">
+      <div class="satellite angle-90"><div class="capsule tag">orbit-12</div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* The universe, tinted so you can see it. */
+.bigbang {
+  background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+}
+/* Rings are invisible; these borders only draw the lanes. */
+[class*="orbit-"] {
+  border: 1px dashed color-mix(in srgb, var(--faint) 70%, transparent);
+}
+.half, .edge {
+  border: 1.5px solid var(--accent);
+}
+.tag {
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--accent);
+  font: 12px var(--mono);
+  white-space: nowrap;
+}
+  </script>
+</figure>
+<p>The light area is the universe. The preview is wider than it is tall, so the shorter side, 300px, sets the reach. There is also <code>orbit-0</code>, the center itself, and <code>orbit-13</code> to <code>orbit-24</code> past the edge, for things that should stick out.</p>
+<h2>Things on the lanes</h2>
+<p>Rings hold things. A <code>.satellite</code> carries your content in a <code>.capsule</code>; Orbit spreads all the satellites of a ring evenly around it, and the capsule keeps the content upright wherever it ends up.</p>
+<p>Every element on a ring is <strong>one lane thick</strong>. A satellite on <code>orbit-8</code> is a circle one lane across. To make things bigger or smaller, set <code>--o-size-ratio</code>, counted in lanes, on the element, on its ring or on the whole <code>.gravity-spot</code>:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-3">
+      <div class="satellite"><div class="capsule">1</div></div>
+      <div class="satellite"><div class="capsule">1</div></div>
+      <div class="satellite"><div class="capsule">1</div></div>
+    </div>
+    <div class="orbit-7" style="--o-size-ratio: 2">
+      <div class="satellite"><div class="capsule">2</div></div>
+      <div class="satellite"><div class="capsule">2</div></div>
+      <div class="satellite"><div class="capsule">2</div></div>
+      <div class="satellite"><div class="capsule">2</div></div>
+    </div>
+    <div class="orbit-10" style="--o-size-ratio: 3">
+      <div class="satellite"><div class="capsule">3</div></div>
+      <div class="satellite"><div class="capsule">3</div></div>
+      <div class="satellite"><div class="capsule">3</div></div>
+      <div class="satellite"><div class="capsule">3</div></div>
+      <div class="satellite"><div class="capsule">3</div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+[class*="orbit-"] {
+  border: 1px dashed var(--faint);
+}
+.satellite {
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--bg);
+  color: var(--bg);
+  font: 600 12px/1 var(--mono);
+}
+/* The number is the thickness, in lanes. */
+.orbit-7 .satellite { font-size: 14px; }
+.orbit-10 .satellite { font-size: 18px; }
+  </script>
+</figure>
+<p>An element on <code>orbit-N</code> reaches half its thickness past lane N, so a band two lanes thick on <code>orbit-11</code> ends exactly at the edge.</p>
+<h2>One box, any size</h2>
+<p>Because every ring, satellite and band is a fraction of the universe, a layout scales as one piece. You do not write breakpoints for it, and you do not call anything. Drag the corner of the dotted box:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="box">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10" style="--o-size-ratio: 2">
+        <o-progress value="64" shape="rounded"></o-progress>
+      </div>
+      <div class="orbit-6" style="--o-size-ratio: 2">
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+        <div class="satellite"></div>
+      </div>
+      <div class="orbit-0" style="--o-size-ratio: 6">
+        <div class="satellite at-center"><div class="capsule readout"><strong>64</strong></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* Drag the corner: the system follows the box. */
+.box {
+  width: 220px;
+  height: 220px;
+  margin: 20px;
+  resize: both;
+  overflow: hidden;
+  border: 1px dashed var(--faint);
+  border-radius: 10px;
+}
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.orbit-6 .satellite {
+  border-radius: 50%;
+  background: var(--amber);
+}
+  </script>
+</figure>
+<p>If you need a fixed size instead, give the reach a length on the <code>.gravity-spot</code>: <code>--o-force: 400px</code>.</p>
+<h2>Universes inside universes</h2>
+<p>A satellite is a universe too. Put a <code>.gravity-spot</code> inside one and its reach is the satellite's edge, like a moon system around a planet. Every <code>.gravity-spot</code> starts from the defaults, so the inner system does not inherit sizes or angles from the outer one.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-0" style="--o-size-ratio: 3">
+      <div class="satellite at-center sun"></div>
+    </div>
+    <div class="orbit-8 path" style="--o-size-ratio: 5">
+      <div class="satellite system">
+        <!-- A system inside a satellite: the planet and its moons. -->
+        <div class="gravity-spot">
+          <div class="orbit-0" style="--o-size-ratio: 9">
+            <div class="satellite at-center planet"></div>
+          </div>
+          <div class="orbit-10 moons" style="--o-size-ratio: 3">
+            <div class="satellite moon"></div>
+            <div class="satellite moon"></div>
+          </div>
+        </div>
+      </div>
+      <div class="satellite system">
+        <div class="gravity-spot">
+          <div class="orbit-0" style="--o-size-ratio: 7">
+            <div class="satellite at-center planet"></div>
+          </div>
+          <div class="orbit-10 moons" style="--o-size-ratio: 3">
+            <div class="satellite moon"></div>
+            <div class="satellite moon"></div>
+            <div class="satellite moon"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.satellite { border-radius: 50%; }
+.sun {
+  background: var(--amber);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--amber) 60%, transparent);
+}
+.path { border: 1px dashed var(--line); }
+.moons { border: 1px dashed var(--faint); }
+.planet { background: var(--accent); }
+.moon { background: var(--muted); }
+/* Turning a ring turns everything on it, inner systems included. */
+.path { animation: turn 40s linear infinite; }
+.moons { animation: turn 6s linear infinite; }
+@keyframes turn { to { rotate: 1turn; } }
+  </script>
+</figure>
+<p>Each planet is a satellite of the sun's <code>orbit-8</code>, five lanes thick. Inside it, a whole new system: the planet in its center and its moons on its own <code>orbit-10</code>, measured against the planet's satellite, not against the page.</p>
+<h2>Angles</h2>
+<p>Angles start at the top and grow clockwise. <code>--o-range</code> is how much of the circle a ring uses and <code>--o-from</code> where it starts. A speedometer is a ring that uses 240° and starts at 240°, so its gap sits at the bottom:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-10 whole"></div>
+    <div class="orbit-10" style="--o-range: 240deg; --o-from: 240deg; --o-size-ratio: 2">
+      <o-arc class="ok"></o-arc>
+      <o-arc class="ok"></o-arc>
+      <o-arc class="ok"></o-arc>
+      <o-arc class="warn"></o-arc>
+      <o-arc class="bad"></o-arc>
+    </div>
+    <div class="orbit-8 fit-range" style="--o-range: 240deg; --o-from: 240deg">
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div>
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div>
+      <div class="vector"></div><div class="vector"></div><div class="vector"></div>
+    </div>
+    <div class="orbit-0" style="--o-size-ratio: 8">
+      <div class="satellite at-center"><div class="capsule readout"><strong>240°</strong><span>from 240°</span></div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+/* The full circle, for reference: the unused 120° is the gap. */
+.whole { border: 1px dashed var(--line); }
+o-arc { --o-gap: 3; --o-stroke: none; }
+.ok { --o-fill: var(--accent); }
+.warn { --o-fill: var(--amber); }
+.bad { --o-fill: var(--coral); }
+.vector { height: 2px; background: var(--faint); }
+.readout strong { font-size: 30px; }
+  </script>
+</figure>
+<p>Without <code>value</code>, sibling arcs share the ring equally. <code>fit-range</code> puts the first and last tick on the two ends of the range instead of leaving a step at the end. Classes like <code>range-240</code>, <code>from-240</code> and <code>ccw</code> cover the usual values.</p>
+<h2>Which way is out</h2>
+<p>Each satellite also knows where it sits: <code>--o-dir-x</code> and <code>--o-dir-y</code> are its direction from the center, from <code>-1</code> to <code>1</code> (<code>y</code> grows down). Use them to hang labels outward, here above the satellites of the upper half and below the rest:</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-8" style="--o-size-ratio: 1.5">
+      <div class="satellite"><div class="capsule"><span class="dot"></span><span class="label">Mercury</span></div></div>
+      <div class="satellite"><div class="capsule"><span class="dot"></span><span class="label">Venus</span></div></div>
+      <div class="satellite"><div class="capsule"><span class="dot"></span><span class="label">Earth</span></div></div>
+      <div class="satellite"><div class="capsule"><span class="dot"></span><span class="label">Mars</span></div></div>
+      <div class="satellite"><div class="capsule"><span class="dot"></span><span class="label">Jupiter</span></div></div>
+      <div class="satellite"><div class="capsule"><span class="dot"></span><span class="label">Saturn</span></div></div>
+    </div>
+  </div>
+</div>
+<label class="controls">Turn the ring <input type="range" min="0" max="360" value="0"> <output>0°</output></label>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 { border: 1px dashed var(--line); }
+.capsule { aspect-ratio: 1; }
+.dot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.label {
+  /* -1 in the upper half, 1 in the lower half */
+  --side: clamp(-1, var(--o-dir-y) * 1000, 1);
+  position: absolute;
+  left: 50%;
+  top: calc(50% + var(--side) * (50% + 4px));
+  translate: -50% calc((var(--side) - 1) * 50%);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.controls {
+  position: fixed;
+  left: 16px;
+  bottom: 14px;
+}
+  </script>
+  <script type="text/plain" data-js>
+// Move the ring's start angle: labels switch sides as they cross the middle.
+const ring = document.querySelector('.orbit-8');
+const input = document.querySelector('input');
+input.addEventListener('input', () => {
+  ring.style.setProperty('--o-from', input.value + 'deg');
+  document.querySelector('output').value = input.value + '°';
+});
+  </script>
+</figure>
+<h2>The whole map</h2>
+<pre><code>.bigbang                          the universe: its box sets the size
+└── .gravity-spot                 the center; reaches the shorter side
+    ├── .orbit-N                  a lane, N twelfths of the way out
+    │   ├── .satellite &gt; .capsule ← your content
+    │   ├── .vector · .side       rays and chords
+    │   └── &lt;o-arc&gt; · &lt;o-progress&gt;
+    └── .orbit-M …
+</code></pre>
+<ul>
+<li>Rings are direct children of a <code>.gravity-spot</code>, never of another ring.</li>
+<li>A ring holds only <code>.satellite</code>, <code>.vector</code>, <code>.side</code>, <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code>.</li>
+<li>Content goes in a <code>.capsule</code> inside a <code>.satellite</code>. Centered content goes in <code>.orbit-0 &gt; .satellite.at-center &gt; .capsule</code>.</li>
+</ul>
+<p>Add <code>dev-orbit</code> to the <code>.bigbang</code> while you build: it draws the lanes, outlines anything in the wrong place and explains it in the console. More in <a href="craft/visual-aids.html">Visual aids</a>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="assets/site.js" data-root=""></script>
+</body>
+</html>

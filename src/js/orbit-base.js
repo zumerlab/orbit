@@ -1,4 +1,4 @@
-import { cssNumber, requestLayout } from './orbit-layout.js';
+import { cssNumber, requestLayout, warnOnce } from './orbit-layout.js';
 
 export class OrbitBase extends (globalThis.HTMLElement || class {}) {
   constructor() {
@@ -6,7 +6,37 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
   }
 
   connectedCallback() {
+    // A framework may set .value or .max before the element is defined; apply
+    // those now so they reach the attribute.
+    for (const name of ['value', 'max']) {
+      if (Object.prototype.hasOwnProperty.call(this, name)) {
+        const pending = this[name];
+        delete this[name];
+        this[name] = pending;
+      }
+    }
     requestLayout(this);
+  }
+
+  /** value and max mirror their attributes, so property bindings redraw too. */
+  get value() {
+    const raw = this.getAttribute('value');
+    return raw === null || raw.trim() === '' ? null : Number(raw);
+  }
+
+  set value(next) {
+    if (next === null || next === undefined || next === '') this.removeAttribute('value');
+    else this.setAttribute('value', String(next));
+  }
+
+  get max() {
+    const raw = this.getAttribute('max');
+    return raw === null ? 100 : Number(raw);
+  }
+
+  set max(next) {
+    if (next === null || next === undefined || next === '') this.removeAttribute('max');
+    else this.setAttribute('max', String(next));
   }
 
   disconnectedCallback() {
@@ -20,6 +50,30 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
 
   readAngle(style, name, fallback = 0) {
     return cssNumber(this, style.getPropertyValue(name), fallback, 'angle');
+  }
+
+  /** The value attribute as a number. Invalid values draw nothing, and say why. */
+  readValue() {
+    const raw = this.getAttribute('value');
+    if (raw === null || raw.trim() === '') return 0;
+    const value = Number(raw);
+    if (!Number.isFinite(value)) {
+      warnOnce(this, 'value:' + raw, `<${this.localName} value="${raw}"> is not a number, so nothing is drawn.`);
+      return 0;
+    }
+    return value;
+  }
+
+  /** The max attribute (default 100). It must be a positive number. */
+  readMax() {
+    const raw = this.getAttribute('max');
+    if (raw === null) return 100;
+    const max = Number(raw);
+    if (!(max > 0)) {
+      warnOnce(this, 'max:' + raw, `<${this.localName} max="${raw}"> must be a positive number, so nothing is drawn.`);
+      return 0;
+    }
+    return max;
   }
 
   getCommonAttributes(element) {
@@ -51,7 +105,7 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
       orbitRadius,
       arcHeight,
       realRadius,
-      arcAngle: 0, // Se sobrescribe en cada componente
+      arcAngle: 0, // set by each component
       shape,
       arcHeightPercentage,
       orbitNumber,
@@ -66,25 +120,6 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
     return Math.min(1, Math.max(0, value / maxValue)) * Math.max(0, Math.min(360, maxAngle));
   }
 
-  getControlPoint(x, y, x1, y1, direction = "clockwise") {
-    const xm = (x + x1) / 2;
-    const ym = (y + y1) / 2;
-    const dx = x1 - x;
-    const dy = y1 - y;
-
-    if (direction === "clockwise") {
-      return {
-        xc: xm + dy * 0.4,
-        yc: ym - dx * 0.4
-      };
-    }
-    
-    return {
-      xc: xm - dy * 0.4,
-      yc: ym + dx * 0.4
-    };
-  }
-
   arcPoint(radius, angle, radiusAdjustment = 0, angleOffsetDegrees = 0) {
     const adjustedRadius = radius + radiusAdjustment;
     const adjustedAngle = angle + (angleOffsetDegrees * Math.PI / 180);
@@ -96,7 +131,7 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
 
   calculateCommonArcParameters(arcAngle, radius, arcHeightPercentage, orbitNumber, shape, strokeWidth, arcHeight, gap = 0) {
     const offset = Math.PI / 2;
-    const fangle = Math.max(0, Math.min(359.999999, arcAngle)) * Math.PI / 180;
+    const fangle = Math.max(0, Math.min(360, arcAngle)) * Math.PI / 180;
     const bigRadius = radius + arcHeightPercentage;
     const smallRadius = Math.max(.001, radius - arcHeightPercentage);
     const bigGap = Math.min(fangle * .49, (gap + strokeWidth * 1.25) / orbitNumber / bigRadius);
@@ -111,32 +146,11 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
     const innerArcStart = this.arcPoint(smallRadius, innerAngleStart);
     const innerArcEnd = this.arcPoint(smallRadius, innerAngleEnd);
 
-    // SVG large-arc flags, derived from the angle each arc ACTUALLY spans.
-    // The endpoints are pulled inward by the stroke gap, which is a constant
-    // arc-LENGTH and therefore subtends a larger angle at the smaller radius
-    // (smallGap > bigGap). So the outer and inner arcs span slightly different
-    // angles and, straddling 180°, can need DIFFERENT flags. A single shared
-    // flag leaves a thin window where one of the two arcs renders its reflex
-    // side — visible e.g. animating a 270° gauge through ~67%. Compute one flag
-    // per arc from its own swept angle.
-    const upperSweep = upperAngleEnd - upperAngleStart; // fangle - 2*bigGap
-    const innerSweep = innerAngleEnd - innerAngleStart; // fangle - 2*smallGap
-    const largeArcFlagUpper = upperSweep > Math.PI ? 1 : 0;
-    const largeArcFlagInner = innerSweep > Math.PI ? 1 : 0;
-    // A closed band (no gap left at either radius) has endpoints that almost
-    // coincide; a single SVG arc between them is numerically unstable and
-    // Chrome may not paint it at all. generatePathData draws it as a ring.
-    const full = innerSweep >= 359.9 * Math.PI / 180;
-
     return {
       upperArcStart,
       upperArcEnd,
       innerArcStart,
       innerArcEnd,
-      largeArcFlag: largeArcFlagUpper, // back-compat alias; prefer the two below
-      largeArcFlagUpper,
-      largeArcFlagInner,
-      full,
       bigRadius,
       smallRadius,
       radius,
@@ -147,194 +161,167 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
     };
   }
 
-  generatePathData(shape, params, arcHeight, orbitNumber) {
-    let d = '';
-    // A full ring has no ends, so end shapes do not apply.
-    if (params.full) return this.generateFullRingPath(params);
-
+  generatePathData(shape, params) {
     switch (shape) {
-      case "rounded":
-        d = this.generateRoundedPath(params, arcHeight, orbitNumber);
-        break;
-      case "circle":
-      case "circle-a":
-      case "bullet":
-        d = this.generateCirclePath(params, shape);
-        break;
-      case "circle-b":
-        d = this.generateCircleBPath(params, arcHeight, orbitNumber);
-        break;
-      case "arrow":
-        d = this.generateArrowPath(params, orbitNumber);
-        break;
-      case "backslash":
-      case "slash":
-        d = this.generateSlashPath(params, shape, orbitNumber);
-        break;
-      case "zigzag":
-        d = this.generateZigzagPath(params, arcHeight, orbitNumber);
-        break;
-      default:
-        d = this.generateDefaultPath(params);
+      case 'rounded': return this.generateRoundedPath(params);
+      case 'circle':
+      case 'circle-a':
+      case 'bullet': return this.generateCirclePath(params, shape);
+      case 'circle-b': return this.generateCircleBPath(params);
+      case 'arrow': return this.generateArrowPath(params);
+      case 'backslash':
+      case 'slash': return this.generateSlashPath(params, shape);
+      case 'zigzag': return this.generateZigzagPath(params);
+      default: return this.generateDefaultPath(params);
     }
-    
+  }
+
+  /** "x,y" of a point at radius and angle (radians), in viewBox units. */
+  pt(radius, angle) {
+    const point = this.arcPoint(radius, angle);
+    return `${point.x},${point.y}`;
+  }
+
+  /**
+   * SVG arc commands from the current point (at `from`) to `to`, along one
+   * circle. Every arc in Orbit goes through here. Splitting into pieces of at
+   * most 90° means no large-arc flag to get wrong and no arc whose endpoints
+   * coincide, so a full 360° circle is just another arc.
+   */
+  arcTo(radius, from, to) {
+    const steps = Math.max(1, Math.ceil(Math.abs(to - from) / (Math.PI / 2) - 1e-9));
+    const sweep = to >= from ? 1 : 0;
+    let d = '';
+    for (let i = 1; i <= steps; i++) {
+      d += ` A ${radius},${radius} 0 0 ${sweep} ${this.pt(radius, from + (to - from) * i / steps)}`;
+    }
     return d;
   }
 
-  generateRoundedPath(params, arcHeight, orbitNumber) {
+  /** An open arc along one radius: strokes, curved text and touch areas. */
+  linePath(radius, from, to) {
+    return `M ${this.pt(radius, from)}${this.arcTo(radius, from, to)}`;
+  }
+
+  /**
+   * Shape endings are sized from the band itself (h = half its thickness, in
+   * viewBox units), so they look the same on every ring and at every size.
+   * Angles are in radians, as in calculateCommonArcParameters().
+   */
+  ending(params, factor) {
     const { bigRadius, smallRadius } = params;
-    const available = Math.min(params.upperAngleEnd - params.upperAngleStart, params.innerAngleEnd - params.innerAngleStart);
-    const curve = Math.min(arcHeight < 5 ? 2.5 : arcHeight < 10 ? 5 : 10, available * 180 / Math.PI * orbitNumber * .49);
+    const h = (bigRadius - smallRadius) / 2;
+    const middle = (bigRadius + smallRadius) / 2;
+    const span = Math.min(params.upperAngleEnd - params.upperAngleStart, params.innerAngleEnd - params.innerAngleStart);
+    // Never let an ending use more than half of the band's length.
+    const length = Math.max(0, Math.min(h * factor, span * smallRadius * .49));
+    return { h, middle, length, angle: length / middle };
+  }
 
-    // The rounded caps inset the arc endpoints by an extra curve/orbitNumber
-    // degrees per side, so the drawn arc spans less than the bare gap arc. The
-    // shared large-arc flags don't account for that, leaving a window around
-    // 180° where the cap-inset span is <180° but the flag says "long way",
-    // rendering the reflex arc (visible ~v=69 on a 270° gauge). Derive the
-    // flags from the actual cap-inset endpoints instead.
-    const capRad = (curve / orbitNumber) * Math.PI / 180;
-    const flagU = (params.upperAngleEnd - params.upperAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
-    const flagI = (params.innerAngleEnd - params.innerAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
+  generateDefaultPath(params) {
+    const { bigRadius: R, smallRadius: r, upperAngleStart: uS, upperAngleEnd: uE, innerAngleStart: iS, innerAngleEnd: iE } = params;
+    return `M ${this.pt(R, uS)}${this.arcTo(R, uS, uE)} L ${this.pt(r, iE)}${this.arcTo(r, iE, iS)} Z`;
+  }
 
-    const newUpperStart = this.arcPoint(bigRadius, params.upperAngleStart, 0, curve / orbitNumber);
-    const newUpperEnd = this.arcPoint(bigRadius, params.upperAngleEnd, 0, -curve / orbitNumber);
-    const newInnerStart = this.arcPoint(smallRadius, params.innerAngleStart, 0, curve / orbitNumber);
-    const newInnerEnd = this.arcPoint(smallRadius, params.innerAngleEnd, 0, -curve / orbitNumber);
-
-    const upperPointStart = this.arcPoint(bigRadius, params.upperAngleStart, -(curve / 2) / orbitNumber, 0);
-    const upperPointEnd = this.arcPoint(bigRadius, params.upperAngleEnd, -(curve / 2) / orbitNumber, 0);
-    const innerPointStart = this.arcPoint(smallRadius, params.innerAngleStart, (curve / 2) / orbitNumber, 0);
-    const innerPointEnd = this.arcPoint(smallRadius, params.innerAngleEnd, (curve / 2) / orbitNumber, 0);
-
-    const Q = this.getControlPoint(newUpperEnd.x, newUpperEnd.y, upperPointEnd.x, upperPointEnd.y);
-    const Q1 = this.getControlPoint(innerPointEnd.x, innerPointEnd.y, newInnerEnd.x, newInnerEnd.y);
-    const Q2 = this.getControlPoint(newInnerStart.x, newInnerStart.y, innerPointStart.x, innerPointStart.y);
-    const Q3 = this.getControlPoint(upperPointStart.x, upperPointStart.y, newUpperStart.x, newUpperStart.y);
-
-    let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${flagU} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
-    d += `Q ${Q.xc},${Q.yc} ${upperPointEnd.x},${upperPointEnd.y} L ${innerPointEnd.x},${innerPointEnd.y}`;
-    d += `Q ${Q1.xc},${Q1.yc} ${newInnerEnd.x},${newInnerEnd.y}`;
-    d += `A ${smallRadius},${smallRadius} 0 ${flagI} 0 ${newInnerStart.x},${newInnerStart.y}`;
-    d += `Q ${Q2.xc},${Q2.yc} ${innerPointStart.x},${innerPointStart.y} L ${upperPointStart.x},${upperPointStart.y}`;
-    d += ` Q ${Q3.xc},${Q3.yc} ${newUpperStart.x},${newUpperStart.y}`;
-    d += ` Z`;
-    
+  generateRoundedPath(params) {
+    const { bigRadius: R, smallRadius: r, upperAngleStart: uS, upperAngleEnd: uE, innerAngleStart: iS, innerAngleEnd: iE } = params;
+    const { length: c } = this.ending(params, .5);
+    // Clockwise outline with a corner arc of radius c at each of the four corners.
+    const corner = (radius, angle) => ` A ${c},${c} 0 0 1 ${this.pt(radius, angle)}`;
+    let d = `M ${this.pt(R, uS + c / R)}${this.arcTo(R, uS + c / R, uE - c / R)}`;
+    d += `${corner(R - c, uE)} L ${this.pt(r + c, iE)}${corner(r, iE - c / r)}`;
+    d += this.arcTo(r, iE - c / r, iS + c / r);
+    d += `${corner(r + c, iS)} L ${this.pt(R - c, uS)}${corner(R, uS + c / R)} Z`;
     return d;
   }
 
-  // Dentro de la clase OrbitCommon en orbit-common.js
+  generateCirclePath(params, shape) {
+    // Round caps past both ends; "bullet" hollows the start cap.
+    const { bigRadius: R, smallRadius: r, upperAngleStart: uS, upperAngleEnd: uE, innerAngleStart: iS, innerAngleEnd: iE } = params;
+    const startSweep = shape === 'bullet' ? 0 : 1;
+    let d = `M ${this.pt(R, uS)}${this.arcTo(R, uS, uE)} A 1,1 0 0 1 ${this.pt(r, iE)}`;
+    d += `${this.arcTo(r, iE, iS)} A 1,1 0 0 ${startSweep} ${this.pt(R, uS)} Z`;
+    return d;
+  }
 
-generateCirclePath(params, shape) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner } = params;
+  generateCircleBPath(params) {
+    // Round caps that stay inside the band's range.
+    const { bigRadius: R, smallRadius: r } = params;
+    const { h, angle } = this.ending(params, 1);
+    const a0 = params.upperAngleStart + angle;
+    const a1 = params.upperAngleEnd - angle;
+    let d = `M ${this.pt(R, a0)}${this.arcTo(R, a0, a1)} A ${h},${h} 0 0 1 ${this.pt(r, a1)}`;
+    d += `${this.arcTo(r, a1, a0)} A ${h},${h} 0 0 1 ${this.pt(R, a0)} Z`;
+    return d;
+  }
 
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
-  d += ` A 1,1 0 0 1 ${innerArcEnd.x},${innerArcEnd.y} `;
-  d += ` A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x},${innerArcStart.y}`;
-  d += ` A 1,1 0 0 ${shape === "circle" || shape === "circle-a" ? 1 : 0} ${upperArcStart.x},${upperArcStart.y} `;
-  d += ` Z`;
-  
-  return d;
-}
+  generateArrowPath(params) {
+    // Pointed end at the value, notched start.
+    const { bigRadius: R, smallRadius: r } = params;
+    const { middle, angle } = this.ending(params, 1.6);
+    const a0 = params.upperAngleStart;
+    const a1 = params.upperAngleEnd;
+    let d = `M ${this.pt(R, a0)}${this.arcTo(R, a0, a1 - angle)}`;
+    d += ` L ${this.pt(middle, a1)} L ${this.pt(r, a1 - angle)}`;
+    d += `${this.arcTo(r, a1 - angle, a0)} L ${this.pt(middle, a0 + angle)} Z`;
+    return d;
+  }
 
-generateCircleBPath(params, arcHeight, orbitNumber) {
-  const { upperAngleStart, upperAngleEnd, innerAngleStart, innerAngleEnd, bigRadius, smallRadius } = params;
-  const available = Math.min(upperAngleEnd - upperAngleStart, innerAngleEnd - innerAngleStart);
-  const segment = Math.min(arcHeight * 1.36, available * 180 / Math.PI * orbitNumber * .49);
+  generateSlashPath(params, shape) {
+    // Parallel slanted ends: "slash" leans forward at the outer edge, "backslash" at the inner one.
+    const { bigRadius: R, smallRadius: r } = params;
+    const { angle } = this.ending(params, 1);
+    const a0 = params.upperAngleStart;
+    const a1 = params.upperAngleEnd;
+    const [outer0, outer1, inner0, inner1] = shape === 'backslash'
+      ? [a0, a1 - angle, a0 + angle, a1]
+      : [a0 + angle, a1, a0, a1 - angle];
+    return `M ${this.pt(R, outer0)}${this.arcTo(R, outer0, outer1)} L ${this.pt(r, inner1)}${this.arcTo(r, inner1, inner0)} Z`;
+  }
 
-  // Like rounded, circle-b insets its arc endpoints (by segment/orbitNumber
-  // degrees per side), so its large-arc flags must come from those endpoints.
-  const capRad = (segment / orbitNumber) * Math.PI / 180;
-  const flagU = (upperAngleEnd - upperAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
-  const flagI = (innerAngleEnd - innerAngleStart) - 2 * capRad > Math.PI ? 1 : 0;
+  generateZigzagPath(params) {
+    // A ribbon: pointed start, notched end.
+    const { bigRadius: R, smallRadius: r } = params;
+    const { middle, angle } = this.ending(params, 1.6);
+    const a0 = params.upperAngleStart;
+    const a1 = params.upperAngleEnd;
+    let d = `M ${this.pt(R, a0 + angle)}${this.arcTo(R, a0 + angle, a1)}`;
+    d += ` L ${this.pt(middle, a1 - angle)} L ${this.pt(r, a1)}`;
+    d += `${this.arcTo(r, a1, a0 + angle)} L ${this.pt(middle, a0)} Z`;
+    return d;
+  }
 
-  const newUpperStart = this.arcPoint(bigRadius, upperAngleStart, 0, segment / orbitNumber);
-  const newUpperEnd = this.arcPoint(bigRadius, upperAngleEnd, 0, -segment / orbitNumber);
-  const newInnerStart = this.arcPoint(smallRadius, innerAngleStart, 0, segment / orbitNumber);
-  const newInnerEnd = this.arcPoint(smallRadius, innerAngleEnd, 0, -segment / orbitNumber);
+  /**
+   * The touch area of an interactive arc or progress: an invisible stroke
+   * along the middle of the band, from `from` to `to` degrees (0 = start of
+   * the element). It is as wide as the band plus `hit-width` px on each side,
+   * and catches the pointer whatever the fill, so transparent bands work.
+   */
+  updateHitArea(hit, attrs, from, to) {
+    const extra = Math.max(0, Number(this.getAttribute('hit-width')) || 0);
+    this.fitCanvas(attrs, this.hasAttribute('interactive') ? extra : 0);
+    if (!this.hasAttribute('interactive') || !(to > from) || !(attrs.orbitRadius > 0)) {
+      hit.removeAttribute('d');
+      return;
+    }
+    const radians = degrees => (degrees - 90) * Math.PI / 180;
+    hit.setAttribute('d', this.linePath(attrs.realRadius, radians(from), radians(Math.min(to, from + 360))));
+    hit.style.strokeWidth = `${attrs.arcHeight + attrs.strokeWidth + 2 * extra}px`;
+  }
 
-  let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${flagU} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
-  d += ` A 1,1 0 0 1 ${newInnerEnd.x},${newInnerEnd.y} `;
-  d += ` A ${smallRadius},${smallRadius} 0 ${flagI} 0 ${newInnerStart.x},${newInnerStart.y}`;
-  d += ` A 1,1 0 0 1 ${newUpperStart.x},${newUpperStart.y} `;
-  d += ` Z`;
-  
-  return d;
-}
-
-generateArrowPath(params, orbitNumber) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner, radius } = params;
-
-  const middleEnd = this.arcPoint(radius, params.upperAngleEnd, 0, 24 / orbitNumber / 2);
-  const middleStart = this.arcPoint(radius, params.upperAngleStart, 0, 24 / orbitNumber / 2);
-
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
-  d += `L ${middleEnd.x} ${middleEnd.y}`;
-  d += `L ${innerArcEnd.x} ${innerArcEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
-  d += `L ${middleStart.x} ${middleStart.y}`;
-  d += `Z`;
-  
-  return d;
-}
-
-generateSlashPath(params, shape, orbitNumber) {
-  const { upperAngleStart, upperAngleEnd, innerAngleStart, innerAngleEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner } = params;
-
-  const newUpperStart = this.arcPoint(bigRadius, upperAngleStart, 0, shape === "backslash" ? 0 : 24 / orbitNumber / 2);
-  const newUpperEnd = this.arcPoint(bigRadius, upperAngleEnd, 0, shape === "backslash" ? 0 : 24 / orbitNumber / 2);
-  const newInnerStart = this.arcPoint(smallRadius, innerAngleStart, 0, shape === "backslash" ? 24 / orbitNumber / 2 : 0);
-  const newInnerEnd = this.arcPoint(smallRadius, innerAngleEnd, 0, shape === "backslash" ? 24 / orbitNumber / 2 : 0);
-
-  let d = `M ${newUpperStart.x},${newUpperStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${newUpperEnd.x},${newUpperEnd.y}`;
-  d += `L ${newInnerEnd.x} ${newInnerEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${newInnerStart.x}, ${newInnerStart.y}`;
-  d += `Z`;
-  
-  return d;
-}
-
-generateZigzagPath(params, arcHeight, orbitNumber) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner, radius } = params;
-  
-  const h2 = arcHeight / orbitNumber / 2;
-  const s2 = this.arcPoint(radius, params.upperAngleStart, -h2, 3);
-  const s3 = this.arcPoint(radius, params.upperAngleStart, 0, 0);
-  const s4 = this.arcPoint(radius, params.upperAngleStart, h2, 3);
-  const e2 = this.arcPoint(radius, params.innerAngleEnd, h2, 3);
-  const e3 = this.arcPoint(radius, params.innerAngleEnd, 0, 0);
-  const e4 = this.arcPoint(radius, params.innerAngleEnd, -h2, 3);
-
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
-  d += `L ${e2.x} ${e2.y}`;
-  d += `L ${e3.x} ${e3.y}`;
-  d += `L ${e4.x} ${e4.y}`;
-  d += `L ${innerArcEnd.x} ${innerArcEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
-  d += `L ${s2.x} ${s2.y}`;
-  d += `L ${s3.x} ${s3.y}`;
-  d += `L ${s4.x} ${s4.y}`;
-  d += `Z`;
-  
-  return d;
-}
-
-// Two circles in opposite directions, each drawn as two half arcs, so the
-// nonzero fill leaves the hole and no arc has coincident endpoints.
-generateFullRingPath(params) {
-  const { bigRadius, smallRadius } = params;
-  const circle = (r, sweep) =>
-    `M 50,${50 - r} A ${r},${r} 0 1 ${sweep} 50,${50 + r} A ${r},${r} 0 1 ${sweep} 50,${50 - r} Z`;
-  return `${circle(bigRadius, 1)} ${circle(smallRadius, 0)}`;
-}
-
-generateDefaultPath(params) {
-  const { upperArcStart, upperArcEnd, innerArcStart, innerArcEnd, bigRadius, smallRadius, largeArcFlagUpper, largeArcFlagInner } = params;
-
-  let d = `M ${upperArcStart.x},${upperArcStart.y} A ${bigRadius},${bigRadius} 0 ${largeArcFlagUpper} 1 ${upperArcEnd.x},${upperArcEnd.y}`;
-  d += `L ${innerArcEnd.x} ${innerArcEnd.y}`;
-  d += `A ${smallRadius},${smallRadius} 0 ${largeArcFlagInner} 0 ${innerArcStart.x}, ${innerArcStart.y}`;
-  d += `Z`;
-  
-  return d;
-}
+  /**
+   * Grow the SVG canvas past the ring's box so it covers the whole band, its
+   * stroke and touch area. Some engines (WebKit) neither paint reliably nor
+   * hit-test SVG content that overflows its box.
+   */
+  fitCanvas(attrs, extra) {
+    const svg = this.shadowRoot.querySelector('svg');
+    const scale = attrs.orbitRadius / 50;
+    if (!svg || !(scale > 0)) return;
+    const outer = (attrs.realRadius + attrs.arcHeightPercentage) * scale + attrs.strokeWidth + extra;
+    const pad = Math.max(0, Math.ceil(outer - attrs.orbitRadius));
+    const units = pad / scale;
+    svg.setAttribute('viewBox', `${-units} ${-units} ${100 + 2 * units} ${100 + 2 * units}`);
+    svg.style.inset = `${-pad}px`;
+  }
 }

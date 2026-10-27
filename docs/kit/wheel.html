@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wheel · Orbit</title>
+  <meta name="description" content="o-wheel is a prize wheel: it spins, slows down and lands on a result picked by weight.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Wheel</h1>
+<p class="lede"><code>&lt;o-wheel&gt;</code> is a prize wheel: it spins, slows down and lands on a result picked by weight.</p>
+<figure class="example" data-kit data-height="420">
+  <script type="text/plain" data-html>
+<o-wheel id="lunch" items='["Pizza", "Tacos", "Sushi", "Ramen", "Curry", "Burgers", "Salad", "Pho"]'></o-wheel>
+<p class="readout"><strong id="pick">Lunch?</strong><span>Press Spin, or click the wheel</span></p>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 14px; height: 100vh; }
+.readout { margin: 0; }
+  </script>
+  <script type="text/plain" data-js>
+const pick = document.getElementById('pick');
+const lunch = document.getElementById('lunch');
+lunch.addEventListener('spin', () => { pick.textContent = '…'; });
+lunch.addEventListener('result', (e) => { pick.textContent = e.detail.label; });
+  </script>
+</figure>
+<p>The segments are <code>&lt;o-arc&gt;</code>s with a <code>value</code>, so Orbit stacks them around one ring, each as wide as its weight. The turning part is a universe inside the universe: a nested <code>.bigbang</code> that the Web Animations API rotates, so Orbit has nothing to redraw during a spin. The pointer and the button stay in the outer system. Each label is a satellite on its own ring, with <code>--o-from</code> at the middle of its segment.</p>
+<p>The result is picked first, fairly by weight with <code>crypto.getRandomValues</code>, and the wheel then turns a few times and slows down onto it with a long ease-out. Every time a peg passes, the pointer flicks and a <code>tick</code> event fires. When it stops, labels on the left half turn over to read upright.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>items</code></td><td><code>[]</code></td><td>JSON: strings, or <code>{ label, color?, weight?, value? }</code>. <code>weight</code> (default <code>1</code>) sets both the size of the segment and its odds; <code>0</code> leaves an item out. Up to 100 items.</td></tr>
+<tr><td><code>labels</code></td><td><code>across</code></td><td><code>across</code> writes labels from the middle out, <code>along</code> writes them along the rim, <code>none</code> hides them. Long labels are shortened with an ellipsis.</td></tr>
+<tr><td><code>duration</code></td><td><code>5</code></td><td>Length of a spin, in seconds (<code>4</code>, <code>4s</code> or <code>4000ms</code>).</td></tr>
+<tr><td><code>turns</code></td><td><code>5</code></td><td>Full turns before the wheel settles.</td></tr>
+<tr><td><code>remove-winner</code></td><td>off</td><td>For raffles: the winner stays highlighted, then leaves the wheel when the next spin starts.</td></tr>
+<tr><td><code>controls</code></td><td>on</td><td><code>controls=&quot;false&quot;</code> hides the Spin button. The wheel itself then becomes the button.</td></tr>
+<tr><td><code>label</code></td><td><code>Spin</code></td><td>Text of the button.</td></tr>
+<tr><td><code>pegs</code></td><td>up to 36 items</td><td>Dots on the rim at each boundary. <code>pegs=&quot;false&quot;</code> hides them.</td></tr>
+<tr><td><code>gap</code></td><td><code>0.4</code></td><td>Space between segments, in percent of the widget width.</td></tr>
+<tr><td><code>disabled</code></td><td>off</td><td>No spins from the button, the pointer, keys or <code>spin()</code>.</td></tr>
+<tr><td><code>size</code></td><td><code>300px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+<p>Without a <code>color</code>, items take the six accents of the demos in turn, never the same color twice in a row. Label text is dark or white, whichever reads better on its segment.</p>
+
+<h2>Properties, methods and events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>spin(index?)</code></td><td>Spins and returns a promise with the result. Without an index the result is random, weighted; with one, the wheel lands on that item. While spinning it returns the same promise. It resolves with <code>null</code> when the wheel is empty or disabled.</td></tr>
+<tr><td><code>items</code></td><td>The items, as given. Setting it writes the attribute.</td></tr>
+<tr><td><code>spinning</code></td><td><code>true</code> during a spin.</td></tr>
+<tr><td><code>result</code></td><td>The last result, or <code>null</code>.</td></tr>
+<tr><td><code>spin</code></td><td>A spin started. <code>event.detail.duration</code> is its length in seconds.</td></tr>
+<tr><td><code>tick</code></td><td>A boundary passed the pointer. <code>event.detail</code> has the <code>index</code> and <code>label</code> now under it. Good for a click sound.</td></tr>
+<tr><td><code>result</code></td><td>The wheel stopped. <code>event.detail</code> has <code>index</code>, <code>label</code>, <code>value</code> and <code>item</code>.</td></tr>
+</tbody>
+</table></div>
+<pre><code>wheel.addEventListener('result', (e) =&gt; claim(e.detail.value))
+const { label } = await wheel.spin()</code></pre>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-wheel-rim</code></td><td><code>--ok-bezel</code>, <code>#232b35</code></td><td>Rim, lines between segments and the button's ring.</td></tr>
+<tr><td><code>--ok-wheel-pointer</code></td><td><code>--ok-hand</code>, <code>#e8edf2</code></td><td>The pointer.</td></tr>
+<tr><td><code>--ok-wheel-peg</code></td><td><code>--ok-hand</code>, <code>#e8edf2</code></td><td>Pegs on the rim.</td></tr>
+<tr><td><code>--ok-wheel-hub</code></td><td><code>--ok-surface</code>, <code>#161b22</code></td><td>The button.</td></tr>
+<tr><td><code>--ok-wheel-hub-text</code></td><td><code>--ok-text</code>, <code>#e8edf2</code></td><td>Text of the button.</td></tr>
+<tr><td><code>--ok-focus</code></td><td><code>#3da9fc</code></td><td>Focus ring.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>8cqmin</code></td><td>Base font size of the button, as a share of the widget.</td></tr>
+</tbody>
+</table></div>
+<p>During a spin the element has the class <code>is-spinning</code>; after one, <code>has-result</code>, and the winning segment <code>is-winner</code> while the others fade.</p>
+
+<h2>More examples</h2>
+<h3>Labels along the rim, and weights</h3>
+<p>The jackpot is half as wide as the others, so it comes up half as often.</p>
+<figure class="example" data-kit data-height="400">
+  <script type="text/plain" data-html>
+<o-wheel id="show" labels="along" size="320px" items='[
+  {"label": "100"}, {"label": "500"}, {"label": "200"},
+  {"label": "Bankrupt", "color": "#222a33"},
+  {"label": "300"}, {"label": "Free spin"}, {"label": "Jackpot", "weight": 0.5}
+]'></o-wheel>
+<p class="controls">Last: <output id="last">none</output></p>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 10px; height: 100vh; }
+p { margin: 0; }
+  </script>
+  <script type="text/plain" data-js>
+const last = document.getElementById('last');
+document.getElementById('show').addEventListener('result', (e) => { last.textContent = e.detail.label; });
+  </script>
+</figure>
+
+<h3>A raffle</h3>
+<p>With <code>remove-winner</code> every name can win once. Setting <code>items</code> again starts over.</p>
+<figure class="example" data-kit data-height="420">
+  <script type="text/plain" data-html>
+<o-wheel id="raffle" remove-winner duration="4" size="280px"></o-wheel>
+<p class="controls">
+  <button id="again">Start over</button>
+  <span>Winners: <output id="winners">none yet</output></span>
+</p>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 14px; height: 100vh; }
+p { margin: 0; justify-content: center; }
+  </script>
+  <script type="text/plain" data-js>
+const names = ['Ana', 'Ben', 'Chen', 'Dara', 'Eli', 'Femi', 'Gus', 'Hana', 'Iris', 'Jon'];
+const raffle = document.getElementById('raffle');
+const winners = document.getElementById('winners');
+const list = [];
+const restart = () => { raffle.items = names; list.length = 0; winners.textContent = 'none yet'; };
+raffle.addEventListener('result', (e) => {
+  list.push(e.detail.label);
+  winners.textContent = list.join(', ');
+});
+document.getElementById('again').addEventListener('click', restart);
+restart();
+  </script>
+</figure>
+
+<h3>A result decided elsewhere</h3>
+<p>When the outcome comes from a server, ask it first and pass the index to <code>spin()</code>. Here the buttons stand in for the server, and the wheel is the button itself.</p>
+<figure class="example" data-kit data-height="400">
+  <script type="text/plain" data-html>
+<o-wheel id="prize" controls="false" pegs="false" size="280px" items='[
+  {"label": "10% off", "value": "TEN"}, {"label": "Free shipping", "value": "SHIP"},
+  {"label": "Try again"}, {"label": "20% off", "value": "TWENTY"},
+  {"label": "Try again"}, {"label": "A gift", "value": "GIFT"}
+]'></o-wheel>
+<p class="controls">
+  <button data-index="1">Land on shipping</button>
+  <button data-index="5">Land on the gift</button>
+</p>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; align-content: center; gap: 14px; height: 100vh; }
+p { margin: 0; }
+  </script>
+  <script type="text/plain" data-js>
+const prize = document.getElementById('prize');
+for (const button of document.querySelectorAll('[data-index]')) {
+  button.addEventListener('click', async () => {
+    const { label, value } = await prize.spin(Number(button.dataset.index));
+    button.textContent = value ? `${label}: ${value}` : label;
+  });
+}
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The wheel is a <code>role="group"</code> named after its items, with a real button in the middle. Enter or Space on the button spins it. With <code>controls="false"</code> the wheel itself is a <code>role="button"</code> in the tab order, and Enter or Space spin it. During a spin the button is <code>aria-disabled</code> and the wheel <code>aria-busy</code>; the result is announced through a polite live region, as “Result: Pizza”.</p>
+<p>With reduced motion the spin takes under a second, without extra turns or the flicking pointer. The <code>result</code> event and the announcement are the same.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

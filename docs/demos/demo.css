@@ -1,0 +1,122 @@
+/* Shared look of the Orbit demos. Each page adds only what its pattern needs. */
+
+:root {
+  color-scheme: dark;
+  --bg: #0c0f13;
+  --panel: #12161c;
+  --line: #222a33;
+  --text: #e8edf2;
+  --muted: #8a97a5;
+  --faint: #4a5562;
+  /* The accent of this visit (assets/accent.js); teal until it runs. */
+  --accent: #4fd1c5;
+  --teal: #4fd1c5;
+  --amber: #ffb547;
+  --coral: #ff7a6b;
+  --violet: #a78bfa;
+  --blue: #60a5fa;
+  --lime: #a3e635;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(120% 80% at 30% 0%, #151b23 0%, var(--bg) 60%);
+  color: var(--text);
+  font: 15px/1.55 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+a { color: var(--accent); text-underline-offset: 3px; }
+code { font-family: var(--mono); font-size: .88em; color: var(--accent); }
+
+.demo-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+.demo-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.demo-head .back { color: var(--muted); text-decoration: none; }
+.demo-head .back:hover, .demo-head .back:focus-visible { color: var(--text); }
+.demo-head .num { font-family: var(--mono); color: var(--faint); margin-left: auto; }
+
+.stage {
+  display: grid;
+  place-items: center;
+  padding: 40px 28px;
+  min-width: 0;
+  overflow: hidden;
+}
+.stage > .bigbang { width: min(100%, 460px); }
+
+.notes {
+  padding: 32px 28px;
+  border-left: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+}
+.notes h1 { margin: 0 0 8px; font-size: 26px; line-height: 1.2; letter-spacing: -.02em; }
+.notes h2 { margin: 28px 0 10px; font-size: 15px; font-weight: 600; color: var(--text); }
+.notes p { margin: 0 0 12px; color: #c3ccd6; }
+.notes ul { margin: 0; padding-left: 18px; color: #c3ccd6; }
+.notes li { margin: 6px 0; }
+
+.controls { display: grid; gap: 14px; margin-top: 22px; }
+.controls label { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.controls output { font-family: var(--mono); color: var(--text); }
+.controls input[type=range] { width: 100%; accent-color: var(--accent); }
+.controls .row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+button {
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #1a2029;
+  color: var(--text);
+  cursor: pointer;
+}
+button:hover { background: #222a35; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Orbit elements in the demos carry no default borders. */
+.stage .satellite { border: none; }
+
+/* Stacked text in a capsule: a number with a caption under it. */
+.readout { display: grid; justify-items: center; gap: 2px; white-space: nowrap; text-align: center; }
+.readout strong { font-size: 40px; font-weight: 650; letter-spacing: -.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+.readout span { font-size: 13px; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .demo-page { grid-template-columns: 1fr; }
+  .notes { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
+}
+
+/* Embedded on the home page (#embed): the drawing and its controls, nothing else. */
+.embed body { background: transparent; overflow: hidden; }
+.embed .demo-head { display: none; }
+.embed .demo-page { display: flex; flex-direction: column; height: 100vh; min-height: 0; }
+.embed .stage { flex: 1; min-height: 0; padding: 16px; container-type: size; }
+.embed .stage > .bigbang { width: min(100cqw, 100cqh); }
+/* Depth layers grow toward the back, so the tilted stack needs room around it. */
+.embed .stage > .tilt { width: min(60cqw, 60cqh); }
+.embed .notes { padding: 0 16px 14px; border: 0; background: none; }
+.embed .notes > :not(.controls) { display: none; }
+.embed .controls { margin: 0; gap: 8px; }
+.embed .controls .row { justify-content: center; }

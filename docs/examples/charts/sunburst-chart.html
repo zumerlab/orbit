@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunburst chart · Orbit</title>
+  <meta name="description" content="A two-level sunburst: categories on the inner ring, their parts on the outer one, lined up because arcs with values stack in order.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Sunburst chart</h1>
+<p class="lede">Nested data, one ring per level: if both rings count out of the same total, each part lines up with its category on its own.</p>
+<figure class="example" data-height="420">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang sunburst">
+    <div class="gravity-spot" style="--o-size-ratio: 3.6; --o-gap: 1.5">
+      <div class="orbit-6 level" id="inner" role="list" aria-label="A week, by category"></div>
+      <div class="orbit-10 level" id="outer" role="list" aria-label="A week, by activity"></div>
+      <div class="orbit-0" style="--o-size-ratio: 8">
+        <div class="satellite at-center"><div class="capsule readout"><strong id="hours">0 h</strong><span id="what">awake, one week</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage > .sunburst { width: min(100%, 100vh - 32px); }
+
+.level o-arc {
+  --o-stroke: none; --o-fill: var(--c); --o-color: var(--bg);
+  font: 600 12px system-ui, sans-serif;
+  transition: opacity .2s;
+}
+.level o-arc:focus-visible { outline: none; --o-stroke: var(--text); --o-stroke-width: 2; }
+/* A branch in focus: everything else steps back. */
+.sunburst[data-focus] o-arc:not(.on) { opacity: .3; }
+.sunburst .readout strong { font-size: clamp(22px, 16cqmin, 40px); }
+  </script>
+  <script type="text/plain" data-js>
+// Hours in a week, awake. Categories and their parts.
+const data = [
+  ['Work', 'var(--blue)', [['Meetings', 12], ['Focus', 22], ['Email', 8]]],
+  ['Home', 'var(--amber)', [['Cooking', 8], ['Chores', 9], ['Family', 14]]],
+  ['Rest', 'var(--accent)', [['Reading', 7], ['Sport', 6], ['Friends', 10], ['Screens', 16]]],
+];
+const sum = list => list.reduce((total, [, hours]) => total + hours, 0);
+const total = data.reduce((all, [, , parts]) => all + sum(parts), 0);
+const inner = document.getElementById('inner'), outer = document.getElementById('outer');
+let before = 0;
+// Text on the lower half is flipped to read the right way up.
+const arc = (name, hours, color, branch) => {
+  const share = hours / total * 100, middle = (before + share / 2) * 3.6;
+  const flip = middle > 90 && middle < 270 ? 'flip' : '';
+  return `<o-arc class="${flip}" value="${share}" interactive tabindex="0" role="listitem" data-branch="${branch}"
+    aria-label="${name}, ${hours} hours" data-hours="${hours}" style="--c: ${color}">${name}</o-arc>`;
+};
+data.forEach(([name, color, parts], b) => {
+  const start = before;
+  inner.insertAdjacentHTML('beforeend', arc(name, sum(parts), color, b));
+  // The parts: lighter shades of the category, in the same order.
+  parts.forEach(([part, hours], i) => {
+    outer.insertAdjacentHTML('beforeend', arc(part, hours, `color-mix(in srgb, ${color} ${85 - i * 12}%, var(--bg))`, b));
+    before += hours / total * 100;
+  });
+  before = start + sum(parts) / total * 100;
+});
+
+const chart = document.querySelector('.sunburst'), arcs = [...chart.querySelectorAll('o-arc')];
+const focus = target => {
+  if (target) chart.dataset.focus = ''; else delete chart.dataset.focus;
+  // A category lights its parts; a part lights itself and its category.
+  arcs.forEach(a => a.classList.toggle('on', !!target && a.dataset.branch === target.dataset.branch &&
+    (target.parentElement === inner || a === target || a.parentElement === inner)));
+  document.getElementById('hours').textContent = (target ? target.dataset.hours : total) + ' h';
+  document.getElementById('what').textContent = target ? target.textContent.trim().toLowerCase() : 'awake, one week';
+};
+arcs.forEach(a => {
+  a.addEventListener('pointerenter', () => focus(a));
+  a.addEventListener('focus', () => focus(a));
+  a.addEventListener('pointerleave', () => focus(null));
+  a.addEventListener('blur', () => focus(null));
+});
+focus(null);
+  </script>
+  <figcaption>Hover or Tab through the rings: a category lights up its parts.</figcaption>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>Two rings, two levels: <code>orbit-6</code> for categories and <code>orbit-10</code> for their parts. <code>--o-size-ratio: 3.6</code> on the <a href="../../reference/gravity-spot.html"><code>.gravity-spot</code></a> makes each band 3.6 lanes thick; the rings are four lanes apart, which leaves a thin line between levels.</li>
+<li>Every <a href="../../reference/arc.html"><code>&lt;o-arc&gt;</code></a> gets its share of the whole week as <code>value</code>. Arcs with values stack in DOM order, so when the parts are listed in the same order as their categories, each one lands inside its parent with no angles to compute.</li>
+<li>The names are the arcs' own text. <code>flip</code> turns the text of arcs on the lower half so it reads the right way up, and <code>--o-color</code> sets its color.</li>
+<li>Each part is a shade of its category made with <code>color-mix()</code>, so a branch reads as one without a legend.</li>
+<li><code>interactive</code> and <code>tabindex</code> make every slice hoverable and focusable; the center tells you what you are on.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="donut-chart.html">Donut chart</a>: one level</li>
+<li><a href="pie-chart.html">Pie chart</a></li>
+<li><a href="../../reference/arc.html">Arcs</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

@@ -1,15 +1,26 @@
 {
   "name": "@zumer/orbit",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "Orbit builds radial interfaces with CSS geometry and a small JavaScript layout runtime",
   "main": "./dist/orbit.js",
   "module": "./dist/orbit.mjs",
+  "types": "./dist/orbit.d.ts",
+  "customElements": "./dist/custom-elements.json",
   "exports": {
     ".": {
+      "types": "./dist/orbit.d.ts",
       "import": "./dist/orbit.mjs",
       "default": "./dist/orbit.js"
     },
-    "./style": "./dist/orbit.css"
+    "./style": {
+      "types": "./dist/style.d.ts",
+      "default": "./dist/orbit.css"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts"
+    },
+    "./custom-elements.json": "./dist/custom-elements.json",
+    "./vscode.html-custom-data.json": "./dist/vscode.html-custom-data.json"
   },
   "files": [
     "dist/",
@@ -18,9 +29,12 @@
   "scripts": {
     "compile": "node esbuild.config.mjs",
     "demo": "npm run compile && node scripts/demo.mjs",
+    "docs": "npm run compile && node scripts/docs-sync.mjs && node scripts/demo.mjs",
+    "docs:sync": "node scripts/docs-sync.mjs",
     "bump:dry": "npx @zumerbox/bump -d",
     "bump": "npx @zumerbox/bump && npx @zumerbox/changelog",
     "build": "npm run compile && npm pack",
+    "prepublishOnly": "npm run compile",
     "test": "npm run compile && npm run test:package && npm run test:browser && npm run test:shadow",
     "test:package": "node test/package.mjs",
     "test:browser": "node test/browser.mjs",
@@ -46,10 +60,14 @@
   "bugs": {
     "url": "https://github.com/zumerlab/orbit/issues"
   },
-  "homepage": "https://github.com/zumerlab/orbit#readme",
+  "homepage": "https://zumerlab.com/orbit/",
   "devDependencies": {
     "esbuild": "^0.25.12",
     "playwright": "^1.55.1",
     "sass": "^1.77.0"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/tinchox5"
   }
 }

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found · Orbit</title>
+  <meta name="description" content="This page does not exist.">
+  <script>
+    // This page is served at any address, so find the site root: /orbit/ on
+    // GitHub Pages, / when docs/ is served locally.
+    window.ORBIT_ROOT = location.pathname.startsWith('/orbit/') ? '/orbit/' : '/';
+    document.write(`<link rel="icon" href="${ORBIT_ROOT}brand/favicon.svg"><link rel="stylesheet" href="${ORBIT_ROOT}assets/site.css"><script src="${ORBIT_ROOT}assets/accent.js"><\/script>`);
+  </script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Lost in space</h1>
+<p class="lede">This page drifted out of orbit. It may have moved when the docs changed for Orbit 2.</p>
+<p><a class="button primary" data-root-link href="index.html">Back to the start</a> <a class="button" data-root-link href="examples/index.html">Browse the examples</a></p>
+<p>Looking for the 1.x documentation? It stays at <a href="https://zumerlab.com/orbit-docs/">zumerlab.com/orbit-docs</a>.</p>
+    </article>
+  </main>
+</div>
+<script>
+  for (const a of document.querySelectorAll('[data-root-link]')) a.href = ORBIT_ROOT + a.getAttribute('href');
+  const s = document.createElement('script');
+  s.src = ORBIT_ROOT + 'assets/site.js';
+  s.dataset.root = ORBIT_ROOT;
+  document.body.append(s);
+</script>
+</body>
+</html>

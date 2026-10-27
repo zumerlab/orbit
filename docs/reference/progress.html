@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Progress · Orbit</title>
+  <meta name="description" content="<o-progress> fills a lane up to a value: progress rings, gauges and meters.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Progress</h1>
+<p class="lede"><code>&lt;o-progress&gt;</code> fills a lane up to a value, over a track that shows the whole range. It is the base of progress rings, gauges and meters.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10" style="--o-size-ratio: 2">
+        <o-progress id="bar" value="0" shape="rounded" role="progressbar"
+          aria-label="Upload" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></o-progress>
+      </div>
+      <div class="orbit-0" style="--o-size-ratio: 12">
+        <div class="satellite at-center"><div class="capsule readout"><strong id="value">0%</strong><span>uploaded</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Value <input id="input" type="range" min="0" max="100" value="72"></label>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+.readout strong { font-size: 40px; }
+  </script>
+  <script type="text/plain" data-js>
+const bar = document.getElementById('bar'), input = document.getElementById('input');
+const set = value => {
+  bar.setAttribute('value', value);
+  bar.setAttribute('aria-valuenow', value);
+  document.getElementById('value').textContent = value + '%';
+};
+input.addEventListener('input', () => set(input.value));
+// Fill up on load.
+const target = Number(input.value), start = performance.now();
+const grow = now => {
+  const t = Math.min(1, (now - start) / 900);
+  set(Math.round(target * (1 - (1 - t) ** 3)));
+  if (t < 1) requestAnimationFrame(grow);
+};
+requestAnimationFrame(grow);
+  </script>
+</figure>
+<p>A progress goes straight into a ring, one per ring: put each bar of a multi-bar meter on its own ring. It is drawn by the runtime, so it needs the Orbit script. For screen readers, give it <code>role="progressbar"</code> and the <code>aria-</code> values, as above.</p>
+
+<h2>Reference</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td><code>0</code></td><td>Progress, out of <code>max</code>.</td></tr>
+<tr><td><code>max</code></td><td><code>100</code></td><td>The value that fills the ring's range.</td></tr>
+<tr><td><code>shape</code></td><td><code>none</code></td><td>The ending. See <a href="#endings">Endings</a>.</td></tr>
+<tr><td><code>variant</code></td><td></td><td><code>stroke</code> draws thin lines instead of filled bands. See <a href="#stroke">Stroke variant</a>.</td></tr>
+<tr><td><code>interactive</code></td><td></td><td>Makes the whole track clickable, whatever its colors. See <a href="#pointer">Pointer interaction</a>.</td></tr>
+<tr><td><code>hit-width</code></td><td><code>0</code></td><td>Extra touch area, in px, on each side of an <code>interactive</code> track.</td></tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Property or class</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--o-progress</code></td><td></td><td>The value, set from CSS. Wins over <code>value</code>.</td></tr>
+<tr><td><code>--o-fill</code></td><td><code>var(--o-gray-light)</code></td><td>Bar color. Not used by <code>variant="stroke"</code>.</td></tr>
+<tr><td><code>--o-stroke</code></td><td><code>var(--o-fill)</code></td><td>Bar outline, or the line color with <code>variant="stroke"</code>.</td></tr>
+<tr><td><code>--o-stroke-width</code></td><td><code>1</code> (<code>2</code> with <code>stroke</code>)</td><td>Bar outline width, or the line width, in px.</td></tr>
+<tr><td><code>--o-back-fill</code></td><td><code>transparent</code></td><td>Track color. Not used by <code>variant="stroke"</code>.</td></tr>
+<tr><td><code>--o-back-stroke</code></td><td><code>none</code> (gray with <code>stroke</code>)</td><td>Track outline, or the track line color.</td></tr>
+<tr><td><code>--o-back-stroke-width</code></td><td><code>1</code></td><td>Track outline or line width, in px.</td></tr>
+<tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Thickness, in lanes. <code>.grow-*</code> and <code>.shrink-*</code> work as on <a href="satellite.html">satellites</a>.</td></tr>
+<tr><td><code>.inner-orbit</code>, <code>.outer-orbit</code>, <code>.quarter-*-orbit</code></td><td></td><td>Moves the band in or out from its lane.</td></tr>
+<tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>Starts the bar at that angle instead of the ring's <code>--o-from</code>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Value and color</h2>
+<p><code>value</code> runs from 0 to <code>max</code> (100 by default) and fills that share of the ring's range. <code>--o-fill</code> colors the bar and <code>--o-back-fill</code> the track behind it; <code>--o-stroke</code> and <code>--o-back-stroke</code> outline them.</p>
+<p><code>--o-progress</code> sets the value from CSS and wins over the attribute. Use it when a class or a parent owns the state:</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <!-- The value comes from CSS: a class on the universe changes it. -->
+      <div class="orbit-10" style="--o-size-ratio: 2">
+        <o-progress class="level"></o-progress>
+      </div>
+      <div class="orbit-6" style="--o-size-ratio: 2">
+        <o-progress value="50" max="80" class="other"></o-progress>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <button type="button" id="toggle" aria-pressed="false">Toggle full</button>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+o-progress { --o-stroke: none; }
+o-progress.level {
+  --o-progress: 30;
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.full o-progress.level {
+  --o-progress: 90;
+}
+o-progress.other {
+  --o-fill: var(--amber);
+  --o-back-stroke: var(--faint);
+}
+  </script>
+  <script type="text/plain" data-js>
+const toggle = document.getElementById('toggle');
+toggle.addEventListener('click', () => {
+  const full = document.querySelector('.bigbang').classList.toggle('full');
+  toggle.setAttribute('aria-pressed', full);
+});
+  </script>
+  <figcaption>Outer ring: <code>--o-progress</code> from a class. Inner ring: <code>value="50" max="80"</code>, with an outlined track.</figcaption>
+</figure>
+<p>Orbit redraws when the element's or an ancestor's <code>class</code> or <code>style</code> changes. After a change it cannot see, such as editing a stylesheet rule, call <code>Orbit.refresh()</code>. The value does not animate: a <code>transition</code> on <code>--o-progress</code> jumps straight to the new value.</p>
+
+<h2>Gauges</h2>
+<p>A progress fills the ring's range, so a partial range makes a gauge. <code>range-240 from-240</code> leaves the gap at the bottom:</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang" role="meter" aria-label="Speed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="64">
+    <div class="gravity-spot">
+      <!-- 240° with the gap at the bottom. -->
+      <div class="orbit-10 range-240 from-240" style="--o-size-ratio: 2">
+        <o-progress id="bar" value="64" shape="rounded"></o-progress>
+      </div>
+      <div class="orbit-0" style="--o-size-ratio: 10">
+        <div class="satellite at-center"><div class="capsule readout"><strong id="value">64</strong><span>km/h</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>Speed <input id="input" type="range" min="0" max="100" value="64"></label>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: var(--line);
+  --o-stroke: none;
+}
+.readout strong { font-size: 36px; }
+  </script>
+  <script type="text/plain" data-js>
+const input = document.getElementById('input');
+input.addEventListener('input', () => {
+  document.getElementById('bar').setAttribute('value', input.value);
+  document.querySelector('.bigbang').setAttribute('aria-valuenow', input.value);
+  document.getElementById('value').textContent = input.value;
+});
+  </script>
+</figure>
+
+<h2 id="endings">Endings</h2>
+<p><code>shape</code> sets how the bar ends: <code>circle</code> (or <code>circle-a</code>), <code>circle-b</code>, <code>bullet</code>, <code>arrow</code>, <code>slash</code>, <code>backslash</code>, <code>rounded</code> and <code>zigzag</code>. Endings are sized from the band, so they look the same on every ring and at every size.</p>
+<figure class="example" data-height="330">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="grid" id="grid"></div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 92px);
+  justify-content: center;
+  justify-items: center;
+  width: min(100%, 560px);
+  gap: 14px 24px;
+}
+.cell { display: grid; justify-items: center; gap: 4px; }
+.cell code { color: var(--muted); }
+.bigbang { width: 92px; }
+.gravity-spot { --o-size-ratio: 3; }
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 18%, transparent);
+  --o-stroke: none;
+}
+  </script>
+  <script type="text/plain" data-js>
+const shapes = ['none', 'circle', 'circle-b', 'bullet', 'arrow', 'slash', 'backslash', 'rounded', 'zigzag'];
+document.getElementById('grid').innerHTML = shapes.map(shape => `
+  <div class="cell">
+    <div class="bigbang"><div class="gravity-spot"><div class="orbit-9">
+      <o-progress value="70" shape="${shape}"></o-progress>
+    </div></div></div>
+    <code>${shape}</code>
+  </div>`).join('');
+  </script>
+</figure>
+
+<h2 id="stroke">Stroke variant</h2>
+<p>By default the bar is a filled band. For a thin gauge line, add <code>variant="stroke"</code>: the bar and the track become lines along the middle of the lane, with round caps.</p>
+<ul>
+<li><code>--o-stroke</code> colors the line and <code>--o-back-stroke</code> the track. <code>--o-fill</code> and <code>--o-back-fill</code> are not used.</li>
+<li>The line is 2px wide (<code>--o-stroke-width</code>) and the track 1px (<code>--o-back-stroke-width</code>), in screen pixels at any size.</li>
+<li>The track is gray by default; set <code>--o-back-stroke</code> to color it, or <code>none</code> to hide it.</li>
+<li><code>shape</code> does not apply. A full value on a 360° range draws a closed circle.</li>
+</ul>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-11">
+        <o-progress variant="stroke" value="72" class="thick"></o-progress>
+      </div>
+      <div class="orbit-9">
+        <o-progress variant="stroke" value="45" class="tinted"></o-progress>
+      </div>
+      <div class="orbit-7">
+        <o-progress variant="stroke" value="100" class="full"></o-progress>
+      </div>
+      <div class="orbit-5 range-270 from-225">
+        <o-progress variant="stroke" value="60" class="gauge"></o-progress>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-progress { --o-stroke: var(--accent); }
+o-progress.thick {
+  --o-stroke-width: 8;
+  --o-back-stroke: var(--line);
+  --o-back-stroke-width: 4;
+}
+o-progress.tinted {
+  --o-stroke: var(--amber);
+  --o-back-stroke: color-mix(in srgb, var(--amber) 30%, transparent);
+}
+o-progress.full { --o-stroke: var(--muted); }
+o-progress.gauge {
+  --o-stroke-width: 4;
+  --o-back-stroke: var(--line);
+}
+  </script>
+  <figcaption>From the outside in: an 8px line, a tinted track, a full circle, and a 270° gauge.</figcaption>
+</figure>
+
+<h2>Thickness and position</h2>
+<p>A progress is one lane thick. Set <code>--o-size-ratio</code> in lanes on the element, its ring or the <code>.gravity-spot</code>, or use the <code>.grow-*</code> and <code>.shrink-*</code> classes on the element. <code>.inner-orbit</code> and <code>.outer-orbit</code> move the band in or out so one of its edges sits on the lane, and the <code>.quarter-</code> versions go part of the way. A band two lanes thick on <code>orbit-11</code> ends exactly at the edge of the universe.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <!-- One thickness for every ring, set once on the system. -->
+    <div class="gravity-spot" id="system" style="--o-size-ratio: 2">
+      <div class="orbit-11"><o-progress value="80" shape="circle" class="move"></o-progress></div>
+      <div class="orbit-9"><o-progress value="60" shape="circle" class="exercise"></o-progress></div>
+      <div class="orbit-7"><o-progress value="45" shape="circle" class="stand"></o-progress></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label>--o-size-ratio <input id="size" type="range" min=".5" max="2" step=".1" value="2"></label>
+    <output id="out">2</output>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+o-progress {
+  --o-stroke: none;
+  --o-fill: var(--c);
+  --o-back-fill: color-mix(in srgb, var(--c) 16%, transparent);
+}
+.move { --c: var(--coral); }
+.exercise { --c: var(--lime); }
+.stand { --c: var(--accent); }
+  </script>
+  <script type="text/plain" data-js>
+const size = document.getElementById('size');
+size.addEventListener('input', () => {
+  document.getElementById('system').style.setProperty('--o-size-ratio', size.value);
+  document.getElementById('out').value = size.value;
+});
+  </script>
+  <figcaption>Three rings, their thickness set once on the <code>.gravity-spot</code>. At 2 lanes they touch each other and the edge.</figcaption>
+</figure>
+
+<h2 id="pointer">Pointer interaction</h2>
+<p><code>&lt;o-progress&gt;</code> is decorative by default, so it never steals clicks from controls nearby. <code>interactive</code> makes the whole track clickable, including the part the bar does not cover, whatever its colors. <code>hit-width</code> adds touch area in px on each side, which helps with thin bars on touch screens.</p>
+<figure class="example" data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8">
+        <o-progress id="bar" interactive hit-width="12" variant="stroke" value="30"
+          tabindex="0" role="slider" aria-label="Level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30"></o-progress>
+      </div>
+      <div class="orbit-0" style="--o-size-ratio: 10">
+        <div class="satellite at-center"><div class="capsule readout"><strong id="value">30</strong><span>click the ring</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-progress {
+  --o-stroke: var(--accent);
+  --o-stroke-width: 4;
+  --o-back-stroke: var(--line);
+  --o-back-stroke-width: 4;
+  cursor: pointer;
+}
+o-progress:focus-visible { outline: none; --o-back-stroke: var(--faint); }
+.readout strong { font-size: 30px; }
+  </script>
+  <script type="text/plain" data-js>
+const bar = document.getElementById('bar');
+const set = value => {
+  bar.setAttribute('value', value);
+  bar.setAttribute('aria-valuenow', value);
+  document.getElementById('value').textContent = value;
+};
+// A click adds 10 and wraps after 100; the arrow keys step by 10 too.
+bar.addEventListener('click', () => set((Number(bar.getAttribute('value')) + 10) % 110));
+bar.addEventListener('keydown', event => {
+  const step = { ArrowUp: 10, ArrowRight: 10, ArrowDown: -10, ArrowLeft: -10 }[event.key];
+  if (step) { event.preventDefault(); set(Math.max(0, Math.min(100, Number(bar.getAttribute('value')) + step))); }
+});
+  </script>
+  <figcaption>Each click on the thin track, or up to 12px around it, adds 10.</figcaption>
+</figure>
+<p>When a progress acts as a control, you bring the keyboard behavior and the accessible name. It is placed with the <code>rotate</code> property, so your own <code>transform</code> or <code>scale</code> adds to it instead of replacing it.</p>
+
+<h2>After drawing</h2>
+<p>Each <code>&lt;o-progress&gt;</code> fires a bubbling <code>o-rendered</code> event after it redraws. To wait for everything on the page, for example before measuring, use <code>await Orbit.ready()</code>. See <a href="../craft/runtime.html">Runtime and resizing</a>.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

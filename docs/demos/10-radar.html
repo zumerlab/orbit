@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script>
+    // #embed shows only the drawing, for the rotating stage on the home page.
+    if (location.hash === '#embed') document.documentElement.classList.add('embed');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>10 — Radar | Orbit</title>
+  <link rel="stylesheet" href="../orbit/orbit.css" />
+  <link rel="stylesheet" href="demo.css" />
+  <script src="../assets/accent.js"></script>
+  <script src="../orbit/orbit.js"></script>
+  <style>
+    .radar { --g: var(--accent); --period: 4s; }
+    .radar .scope { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, color-mix(in oklab, var(--g) 9%, #070a0c), #06080a 70%); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--g) 25%, #07100d), 0 0 80px -20px color-mix(in srgb, var(--g) 20%, transparent); }
+    .radar .range { border: 1px solid color-mix(in oklab, var(--g) 22%, #07100d); }
+    .radar .cross .vector { background: color-mix(in oklab, var(--g) 22%, #07100d); }
+    .radar .minor .vector { background: color-mix(in oklab, var(--g) 32%, #07100d); }
+    .radar .major .vector { background: color-mix(in oklab, var(--g) 60%, #07100d); }
+    .radar .bearing { font: 10px var(--mono); color: color-mix(in oklab, var(--g) 60%, #07100d); }
+    .radar .distance { font: 10px var(--mono); color: color-mix(in oklab, var(--g) 45%, #07100d); white-space: nowrap; translate: 18px -6px; }
+    /* The beam: a ring painted with a conic gradient, turning forever. */
+    .radar .beam { border-radius: 50%; background: conic-gradient(from 0deg, transparent 0 290deg, color-mix(in srgb, var(--g) 10%, transparent) 320deg, color-mix(in srgb, var(--g) 40%, transparent) 359deg, var(--g) 360deg); animation: sweep var(--period) linear infinite; }
+    @keyframes sweep { to { rotate: 360deg; } }
+    .radar .contact { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--g); box-shadow: 0 0 10px var(--g); animation: blip var(--period) linear infinite; animation-delay: calc(var(--at) / 360 * var(--period) - var(--period)); }
+    .radar .contact.hostile { --g: var(--coral); }
+    @keyframes blip { 0% { opacity: 1; scale: 1.5; } 8% { scale: 1; } 85% { opacity: .12; } 100% { opacity: .12; } }
+    .radar .readout strong { font: 600 13px var(--mono); color: var(--g); }
+    .contacts { list-style: none; padding: 0; margin: 16px 0 0; font: 13px var(--mono); display: grid; gap: 6px; }
+    .contacts li { display: grid; grid-template-columns: 10px 1fr auto auto; gap: 10px; align-items: center; }
+    .contacts i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .contacts .hostile i { background: var(--coral); }
+    .contacts span { color: var(--muted); }
+  </style>
+</head>
+<body>
+<main class="demo-page">
+  <header class="demo-head"><a class="back" href="../examples/index.html#demos">← All examples</a><span class="num">10 / 11</span></header>
+  <section class="stage">
+    <div class="bigbang radar" role="img" aria-label="Radar with five contacts">
+      <div class="gravity-spot">
+        <div class="orbit-0" style="--o-size-ratio: 24"><div class="satellite at-center"><div class="capsule scope"></div></div></div>
+        <div class="orbit-4 range"></div><div class="orbit-8 range"></div>
+        <!-- Crosshair: four vectors centered on lane 6, twelve lanes long. -->
+        <div class="orbit-6 cross" style="--o-size-ratio: 12"><div class="vector"></div><div class="vector"></div><div class="vector"></div><div class="vector"></div></div>
+        <div class="orbit-11 minor" id="minor" style="--o-size-ratio: .4"></div>
+        <div class="orbit-11 major" id="major" style="--o-size-ratio: .9"></div>
+        <div class="orbit-10" id="bearings"></div>
+        <div class="orbit-4"><div class="satellite angle-45"><div class="capsule distance">10 nm</div></div></div>
+        <div class="orbit-8"><div class="satellite angle-45"><div class="capsule distance">20 nm</div></div></div>
+        <div class="orbit-12 beam"></div>
+        <div id="contacts"></div>
+        <div class="orbit-0" style="--o-size-ratio: 4"><div class="satellite at-center"><div class="capsule readout"><strong>Scan</strong></div></div></div>
+      </div>
+    </div>
+  </section>
+  <aside class="notes">
+    <h1>Radar</h1>
+    <p>A beam sweeps the scope every four seconds; each contact flashes as the beam passes it, then fades.</p>
+    <ul class="contacts" id="list"></ul>
+    <h2>How it's built</h2>
+    <ul>
+      <li>Range rings are empty rings with a border, every 4 lanes; the crosshair is four <code>.vector</code>s twelve lanes long.</li>
+      <li>The beam is the <code>orbit-12</code> ring itself, painted with a <code>conic-gradient</code> and turned by a CSS animation.</li>
+      <li>Each contact is a satellite at a fixed bearing (<code>.angle-N</code>) on the lane of its distance. Its animation delay comes from that bearing, so it lights up in time with the beam.</li>
+    </ul>
+  </aside>
+</main>
+<script>
+  document.getElementById('minor').innerHTML = '<div class="vector"></div>'.repeat(72);
+  document.getElementById('major').innerHTML = '<div class="vector"></div>'.repeat(12);
+  document.getElementById('bearings').innerHTML = Array.from({ length: 12 }, (_, i) => `<div class="satellite"><div class="capsule bearing">${String(i * 30).padStart(3, '0')}</div></div>`).join('');
+  // bearing (degrees), lane (distance), kind
+  const contacts = [[38, 6, 'friendly', 'TANKER'], [112, 9, 'friendly', 'FERRY'], [167, 4, 'hostile', 'UNKNOWN'], [245, 10, 'friendly', 'TRAWLER'], [310, 7, 'friendly', 'PATROL']];
+  document.getElementById('contacts').outerHTML = contacts.map(([at, lane, kind]) =>
+    `<div class="orbit-${lane}"><div class="satellite angle-${at}" style="--o-size-ratio: .7"><div class="capsule contact ${kind === 'hostile' ? 'hostile' : ''}" style="--at: ${at}"></div></div></div>`).join('');
+  document.getElementById('list').innerHTML = contacts.map(([at, lane, kind, name]) =>
+    `<li class="${kind}"><i></i>${name}<span>${String(at).padStart(3, '0')}°</span><span>${lane * 2.5} nm</span></li>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install · Orbit</title>
+  <meta name="description" content="Install Orbit 2 from npm or a CDN, what each file in the package is for, the [orbit] console messages and browser support.">
+  <link rel="icon" href="brand/favicon.svg">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Install</h1>
+<p class="lede">Orbit is two files: a stylesheet and a small runtime. Load both. The CSS does the geometry and the look; the runtime registers <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code>, numbers the rings and keeps everything drawn as your layout changes.</p>
+
+<h2>From npm</h2>
+<pre><code class="language-sh">npm install @zumer/orbit
+</code></pre>
+<p>Then, in the entry file of your app:</p>
+<pre><code class="language-js">import '@zumer/orbit/style';
+import '@zumer/orbit';
+</code></pre>
+<p>The package is safe to import during server rendering. Import it in the browser entry too, so it can register the elements and watch the page. It exports <code>Orbit</code>, <code>OrbitArc</code>, <code>OrbitProgress</code> and <code>registerOrbit</code>; registration happens on import.</p>
+
+<h2>From a CDN</h2>
+<p>Load it from unpkg. This always gets the latest release; add a version after the name (<code>@zumer/orbit@2</code>) if you want it to change only when you decide.</p>
+<pre><code class="language-html">&lt;link rel="stylesheet" href="https://unpkg.com/@zumer/orbit/dist/orbit.min.css"&gt;
+&lt;script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"&gt;&lt;/script&gt;
+</code></pre>
+<p>The script puts the API on <code>window.Orbit</code>. To load it as an ES module instead: <code>import { Orbit } from 'https://unpkg.com/@zumer/orbit/dist/orbit.mjs'</code>.</p>
+
+<h2>What is in the package</h2>
+<p>Everything lives in <code>dist/</code>. You can <a href="https://unpkg.com/browse/@zumer/orbit/dist/">browse it on unpkg</a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>File</th><th>Import as</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><code>orbit.css</code>, <code>orbit.min.css</code></td><td><code>@zumer/orbit/style</code></td><td>The stylesheet: geometry, reset, default theme, <code>theme-cyan</code>, the color palette and <code>dev-orbit</code>. About 18&nbsp;kB gzipped.</td></tr>
+<tr><td><code>orbit.mjs</code></td><td><code>@zumer/orbit</code> (import)</td><td>The runtime as an ES module.</td></tr>
+<tr><td><code>orbit.js</code>, <code>orbit.min.js</code></td><td><code>@zumer/orbit</code> (require)</td><td>The runtime as a classic script that sets <code>window.Orbit</code>. About 9&nbsp;kB gzipped.</td></tr>
+<tr><td><code>orbit.d.ts</code>, <code>style.d.ts</code></td><td></td><td>TypeScript types for the API, the elements and the stylesheet import.</td></tr>
+<tr><td><code>react.d.ts</code></td><td><code>@zumer/orbit/react</code></td><td>JSX types for <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code>. Types only, no code. See <a href="frameworks/react.html">React</a>.</td></tr>
+<tr><td><code>custom-elements.json</code></td><td><code>@zumer/orbit/custom-elements.json</code></td><td>A <a href="https://custom-elements-manifest.open-wc.org/">Custom Elements Manifest</a> for tools that read one.</td></tr>
+<tr><td><code>vscode.html-custom-data.json</code></td><td><code>@zumer/orbit/vscode.html-custom-data.json</code></td><td>Attribute completion for VS Code.</td></tr>
+</tbody>
+</table></div>
+<p>To get that completion, add this to <code>.vscode/settings.json</code>:</p>
+<pre><code class="language-json">{ "html.customData": ["./node_modules/@zumer/orbit/dist/vscode.html-custom-data.json"] }
+</code></pre>
+
+<h2>Try it</h2>
+<p>A layout is a <code>.bigbang</code> with a <code>.gravity-spot</code> inside, and rings inside that. Put things on the rings: satellites with your content, arcs, progress, ticks. This one is a ring of eight satellites around a label. Edit it here, or press <em>Copy page</em> and save it as an <code>index.html</code>: it loads Orbit from unpkg and needs nothing else.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-0" style="--o-size-ratio: 8">
+      <div class="satellite at-center"><div class="capsule label">Orbit</div></div>
+    </div>
+    <!-- Eight satellites: Orbit spreads them around the ring. -->
+    <div class="orbit-8" style="--o-size-ratio: 2.5">
+      <div class="satellite"><div class="capsule">1</div></div>
+      <div class="satellite"><div class="capsule">2</div></div>
+      <div class="satellite"><div class="capsule">3</div></div>
+      <div class="satellite"><div class="capsule">4</div></div>
+      <div class="satellite"><div class="capsule">5</div></div>
+      <div class="satellite"><div class="capsule">6</div></div>
+      <div class="satellite"><div class="capsule">7</div></div>
+      <div class="satellite"><div class="capsule">8</div></div>
+    </div>
+  </div>
+</div>
+  </script>
+  <script type="text/plain" data-css>
+.orbit-8 {
+  border: 1px dashed var(--faint);
+}
+.orbit-8 .satellite {
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+  color: var(--accent);
+  font: 600 15px var(--mono);
+  transition: background .2s, color .2s;
+}
+.orbit-8 .satellite:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+.label {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -.02em;
+}
+  </script>
+</figure>
+
+<h2 id="console">When something looks wrong</h2>
+<p>Orbit explains common mistakes in the browser console, in messages that start with <code>[orbit]</code>. Messages about structure appear when <code>dev-orbit</code> is on the <code>.bigbang</code>; the others always appear. <a href="craft/visual-aids.html">Visual aids</a> shows what <code>dev-orbit</code> draws.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>You see</th><th>Because</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Nothing, and the console says <em>has no size</em></td><td>The <code>.bigbang</code> is 0px wide or tall, usually in a parent that shrinks to fit.</td><td>Give the <code>.bigbang</code> or its parent a width.</td></tr>
+<tr><td>A layout as big as the window</td><td>The <code>.gravity-spot</code> is not inside a <code>.bigbang</code>, so it measures the viewport.</td><td>Wrap it in a <code>.bigbang</code>.</td></tr>
+<tr><td>An empty arc or ring</td><td><code>value</code> is not a number, or <code>max</code> is not positive.</td><td>Fix the attribute; the console names it.</td></tr>
+<tr><td>Content overlapping or off the ring</td><td>It sits directly in a ring instead of a <code>.satellite</code>.</td><td>Add <code>dev-orbit</code> to see where, then wrap it.</td></tr>
+<tr><td>Curved text cut off</td><td>The text is longer than its arc.</td><td>Shorten it, widen <code>--o-range</code>, use <code>range="auto"</code>, or <code>fit-range</code>.</td></tr>
+<tr><td>Everything thin</td><td>Elements are one lane thick.</td><td>Raise <code>--o-size-ratio</code> on the ring or the system.</td></tr>
+<tr><td>An arc that ignores clicks</td><td>Arcs are decorative by default.</td><td>Add <code>interactive</code>, and <code>hit-width</code> for a bigger target.</td></tr>
+<tr><td>The console says <em>Orbit.resize() has nothing to do here</em></td><td>The system already scales with its <code>.bigbang</code>.</td><td>Remove the call. See <a href="craft/runtime.html">Runtime and resizing</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Browser support</h2>
+<p>Orbit needs CSS <code>sin()</code>, <code>cos()</code> and container query units, which current versions of Chrome, Edge, Firefox and Safari all have. In a browser without trigonometric functions, each <code>.bigbang</code> turns into a red box that asks for an update.</p>
+<p>Without JavaScript, a CSS fallback still places simple layouts: up to 24 rings and 60 children of each kind per ring. The fallback also needs <code>:has()</code> and <code>:nth-child(… of …)</code>. <code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code> always need the runtime.</p>
+
+<h2>Next</h2>
+<ul>
+<li><a href="universe.html">How Orbit thinks</a> explains the model in one page.</li>
+<li><a href="guide.html">Build a knob</a> puts it to work step by step.</li>
+<li>With a framework: <a href="frameworks/react.html">React</a>, <a href="frameworks/vue.html">Vue</a>, <a href="frameworks/svelte.html">Svelte</a>, <a href="frameworks/angular.html">Angular</a>, <a href="frameworks/astro.html">Astro</a>.</li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="assets/site.js" data-root=""></script>
+</body>
+</html>

@@ -10,12 +10,6 @@
   --o-pink: hsl(348, 100%, 60%);
   --o-gray: hsl(240, 2%, 60%);
 
-  --o-color-white: color-mix(in oklab, var(--o-color), white 95%);
-  --o-color-lighter: color-mix(in oklab, var(--o-color), white 75%);
-  --o-color-light: color-mix(in oklab, var(--o-color), white 30%);
-  --o-color-dark: color-mix(in oklab, var(--o-color), black 20%);
-  --o-color-darker: color-mix(in oklab, var(--o-color), black 40%);
-  --o-color-black: color-mix(in oklab, var(--o-color), black 78%);
 
   --o-red-white: color-mix(in oklab, var(--o-red), white 95%);
   --o-red-lighter: color-mix(in oklab, var(--o-red), white 75%);
@@ -87,4 +81,16 @@
   --o-gray-darker: color-mix(in oklab, var(--o-gray), black 40%);
   --o-gray-black: color-mix(in oklab, var(--o-gray), black 78%);
 
+}
+
+/* The --o-color shades are worked out again inside every system, so setting
+   --o-color on a system, ring or satellite gives it its own shades. Arcs and
+   progress keep the shades of their ring: on them --o-color is the text color. */
+:where(:root, .bigbang, .gravity-spot, .gravity-spot *:not(o-arc, o-progress)) {
+  --o-color-white: color-mix(in oklab, var(--o-color), white 95%);
+  --o-color-lighter: color-mix(in oklab, var(--o-color), white 75%);
+  --o-color-light: color-mix(in oklab, var(--o-color), white 30%);
+  --o-color-dark: color-mix(in oklab, var(--o-color), black 20%);
+  --o-color-darker: color-mix(in oklab, var(--o-color), black 40%);
+  --o-color-black: color-mix(in oklab, var(--o-color), black 78%);
 }

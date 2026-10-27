@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbit · HTML on circles</title>
+  <meta name="description" content="Orbit is a CSS layout system for radial interfaces: gauges, dials, knobs, radial menus, charts and watch faces, in plain HTML.">
+  <link rel="icon" href="brand/favicon.svg">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/accent.js"></script>
+  <style>
+    .home { max-width: 1120px; margin: 0 auto; padding: 32px 24px 96px; }
+    /* The stage on the right: the demos themselves, one after another. */
+    .showcase { position: relative; width: min(100%, 460px); margin: 0 auto; }
+    .showcase .screen { position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; background: radial-gradient(120% 80% at 30% 0%, #151b23 0%, #0c0f13 60%); box-shadow: 0 30px 80px -40px #000a, inset 0 0 0 1px #222a33; }
+    .showcase iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; pointer-events: none; transition: opacity .6s; }
+    /* Only the visible demo takes the pointer; the others wait underneath. */
+    .showcase iframe.on { opacity: 1; pointer-events: auto; z-index: 1; }
+    .showcase .bar { display: flex; align-items: center; gap: 14px; margin-top: 14px; font-size: 14px; }
+    .showcase .bar a { color: var(--text); text-decoration: none; font-weight: 600; }
+    .showcase .bar a span { color: var(--muted); font-weight: 400; }
+    .showcase .dots { display: flex; gap: 6px; margin-left: auto; }
+    .showcase .dots button { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 0; background: var(--line-2); cursor: pointer; }
+    .showcase .dots button[aria-current="true"] { background: var(--accent); }
+
+    .home .terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 24px 0 8px; padding: 0; list-style: none; }
+    .terms li { margin: 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+    .terms code { font-size: 15px; }
+    .terms p { margin: 6px 0 0; font-size: 15px; }
+    .home h2 { margin-top: 72px; }
+    .closing { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+  </style>
+</head>
+<body>
+<header data-site-head></header>
+
+<main class="home page">
+  <section class="hero">
+    <div>
+      <h1>HTML on circles.</h1>
+      <p class="lede">Orbit is a CSS layout system for things that grow around a center: gauges, dials, knobs, radial menus, donut charts, watch faces. You write plain HTML with a few classes. Orbit does the trigonometry.</p>
+      <div class="actions">
+        <a class="button primary" href="universe.html">How Orbit thinks</a>
+        <a class="button" href="examples/index.html">See examples</a>
+        <a class="button" data-repo="zumerlab/orbit" href="https://github.com/zumerlab/orbit"><span class="gh"></span>Star on GitHub<b hidden></b></a>
+      </div>
+      <code class="install-line">npm install @zumer/orbit</code>
+    </div>
+
+    <div class="hero-stage">
+      <div class="showcase" id="showcase" aria-roledescription="carousel" aria-label="Demos">
+        <div class="screen"></div>
+        <div class="bar"><a href="#" id="showcase-link"></a><div class="dots" role="group" aria-label="Choose a demo"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <h2>A small solar system</h2>
+  <p class="lede">Orbit borrows its words from the sky. It sounds like a gimmick for about a minute. After that it is the easiest way to remember what each piece does.</p>
+  <ul class="terms">
+    <li><code>.bigbang</code><p>The universe. Its box is the only size you set.</p></li>
+    <li><code>.gravity-spot</code><p>The center. Its gravity reaches the edge of the universe.</p></li>
+    <li><code>.orbit-1</code> … <code>.orbit-12</code><p>Twelve lanes from the center out to that edge.</p></li>
+    <li><code>.satellite</code><p>Travels a lane. Orbit spreads them around it and keeps your content upright.</p></li>
+  </ul>
+
+  <figure class="example" data-height="320">
+    <script type="text/plain" data-html>
+<div class="bigbang">
+  <div class="gravity-spot">
+    <div class="orbit-10" style="--o-size-ratio: 2">
+      <o-progress value="72" shape="rounded" role="progressbar" aria-label="Upload" aria-valuenow="72"></o-progress>
+    </div>
+    <div class="orbit-0" style="--o-size-ratio: 12">
+      <div class="satellite at-center">
+        <div class="capsule readout"><strong>72%</strong><span>uploaded</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<label class="controls">Value <input type="range" min="0" max="100" value="72"></label>
+    </script>
+    <script type="text/plain" data-css>
+body {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100vh;
+  padding: 20px 16px 14px;
+}
+.bigbang { max-height: 100%; }
+.controls { justify-content: center; }
+/* cqmin: a share of the satellite, so the number scales with the ring. */
+.readout strong { font-size: 22cqmin; }
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: color-mix(in srgb, var(--accent) 14%, transparent);
+  --o-stroke: none;
+}
+    </script>
+    <script type="text/plain" data-js>
+const ring = document.querySelector('o-progress');
+document.querySelector('input').addEventListener('input', (e) => {
+  ring.setAttribute('value', e.target.value);
+  ring.setAttribute('aria-valuenow', e.target.value);
+  document.querySelector('strong').textContent = e.target.value + '%';
+});
+    </script>
+    <figcaption>A whole Orbit: a progress ring and a label. Nothing in it has a size in pixels, so the same markup works as a badge or a full-screen dial. Move the slider, or open the code and change it.</figcaption>
+  </figure>
+
+  <h2>Start somewhere</h2>
+  <ul class="cards">
+    <li><a class="card" href="universe.html"><strong>How Orbit thinks</strong><span>The model in one page, with live examples. Read this first.</span></a></li>
+    <li><a class="card" href="guide.html"><strong>Build a knob</strong><span>From an empty box to a control you can drag, step by step.</span></a></li>
+    <li><a class="card" href="examples/index.html"><strong>Examples</strong><span>Full pages with live controls, and small layouts to copy: gauges, a radar, watches, depth in 3D.</span></a></li>
+    <li><a class="card" href="kit/index.html"><strong>Orbit Kit</strong><span>Ready-made gauges, donuts, knobs and clocks, one tag each.</span></a></li>
+    <li><a class="card" href="migrating.html"><strong>Coming from 1.x</strong><span>What changed in 2.0, and one line to keep everything as it was.</span></a></li>
+  </ul>
+
+  <p class="closing">Orbit is open source under the MIT license, made by <a href="https://github.com/zumerlab">Zumerlab</a>. If it saves you time, you can <a href="https://github.com/sponsors/tinchox5">sponsor its development</a>. Using Orbit 1.x? Its <a href="https://zumerlab.com/orbit-docs/">documentation</a> stays online.</p>
+</main>
+
+<script src="assets/site.js" data-root=""></script>
+<script>
+  // The hero shows the demos themselves (#embed hides their notes), one after
+  // another. It stops on hover or focus, and never moves on its own if the
+  // visitor asked for reduced motion.
+  const shows = [
+    ['04-arrow-gauge.html', 'Speedometer', 'zones, ticks and a needle'],
+    ['11-depth-layers.html', 'Depth layers', 'move the pointer, click a face'],
+    ['10-radar.html', 'Radar', 'a sweeping beam'],
+    ['01-minimal-gauge.html', 'Progress rings', 'three goals'],
+    ['05-knob.html', 'Knob', 'drag it'],
+    ['09-compass.html', 'Compass', 'a card that turns'],
+    ['02-donut-multilayer.html', 'Donut chart', 'hover the legend'],
+    ['08-nested-orbits.html', 'Nested systems', 'a moon around a planet'],
+  ];
+  const box = document.getElementById('showcase'), screen = box.querySelector('.screen');
+  const link = document.getElementById('showcase-link'), dots = box.querySelector('.dots');
+  const frames = [];
+  let current = -1, timer = 0, held = false;
+  const frame = (i) => {
+    if (frames[i]) return frames[i];
+    const f = frames[i] = Object.assign(screen.appendChild(document.createElement('iframe')), {
+      src: `demos/${shows[i][0]}#embed`, title: shows[i][1], loading: 'eager', tabIndex: -1,
+    });
+    // The demos are on the same site, so we can listen inside them: hovering
+    // holds the rotation, and touching a demo stops it for good.
+    f.addEventListener('load', () => {
+      const doc = f.contentDocument;
+      if (!doc) return;
+      doc.documentElement.addEventListener('pointerenter', () => hold(true));
+      doc.documentElement.addEventListener('pointerleave', () => hold(false));
+      for (const type of ['pointerdown', 'keydown', 'wheel']) doc.addEventListener(type, stop, { passive: true });
+    });
+    return f;
+  };
+  const show = (i) => {
+    current = (i + shows.length) % shows.length;
+    frame(current);
+    frames.forEach((f, n) => { if (!f) return; f.classList.toggle('on', n === current); f.tabIndex = n === current ? 0 : -1; });
+    frame((current + 1) % shows.length); // load the next one ahead
+    link.href = `demos/${shows[current][0]}`;
+    link.innerHTML = `${shows[current][1]} <span>· ${shows[current][2]}</span>`;
+    [...dots.children].forEach((d, n) => d.setAttribute('aria-current', String(n === current)));
+  };
+  shows.forEach(([, name], i) => {
+    const b = dots.appendChild(document.createElement('button'));
+    b.type = 'button';
+    b.setAttribute('aria-label', name);
+    b.onclick = () => { show(i); stop(); };
+  });
+  let still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const restart = () => { clearInterval(timer); if (!still && !held) timer = setInterval(() => show(current + 1), 7000); };
+  const stop = () => { still = true; clearInterval(timer); };
+  const hold = (on) => { held = on; restart(); };
+  box.addEventListener('pointerenter', () => hold(true));
+  box.addEventListener('pointerleave', () => hold(false));
+  box.addEventListener('focusin', () => hold(true));
+  box.addEventListener('focusout', () => hold(false));
+  show(0);
+  restart();
+</script>
+</body>
+</html>

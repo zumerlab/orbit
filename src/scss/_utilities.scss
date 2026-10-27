@@ -3,46 +3,48 @@
 
 /* radial elements alignment utilities */
 .at-top-left {
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .at-top {
-  align-items: flex-start !important;
-  justify-content: center !important;
+  align-items: flex-start;
+  justify-content: center;
 }
 .at-top-right {
-  align-items: flex-start !important;
-  justify-content: flex-end !important;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 .at-bottom-left {
-  align-items: flex-end !important;
-  justify-content: flex-start !important;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 .at-bottom {
-  align-items: flex-end !important;
-  justify-content: center !important;
+  align-items: flex-end;
+  justify-content: center;
 }
 .at-bottom-right {
-  align-items: flex-end !important;
-  justify-content: flex-end !important;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 .at-center-left {
-  align-items: center !important;
-  justify-content: flex-start !important;
+  align-items: center;
+  justify-content: flex-start;
 }
 .at-center {
-  align-items: center !important;
-  justify-content: center !important;
+  align-items: center;
+  justify-content: center;
 }
 .at-center-right {
-  align-items: center !important;
-  justify-content: flex-end !important;
+  align-items: center;
+  justify-content: flex-end;
 }
-/* 
-  initial orbit ratio class 
+/*
+  core-N: an empty core N lanes wide in the center. The radius is split into
+  12 + N lanes and orbit-N lands on lane N + core, so orbit-12 still touches
+  the edge. from-Nx is the old name and still works.
 */
 @for $i from 1 through $max-orbits {
-  .gravity-spot.from-#{$i}x {
+  .gravity-spot.core-#{$i}, .gravity-spot.from-#{$i}x {
   --o-initial-orbit: #{$i};
   }
 }
@@ -60,17 +62,23 @@ $max-grade: 360;
     --o-from: #{$i}deg;
   }
 }
-[class*=angle-] {
-  --o-from: 0deg !important;
+[class^="angle-"], [class*=" angle-"] {
+  --o-from: 0deg;
 }
 @for $i from 0 through $max-grade {
   .angle-#{$i} {
-    --o-angle-composite: calc(#{$i}deg - 90deg) !important; 
+    --o-angle-composite: calc(#{$i}deg - 90deg); 
+  }
+}
+/* A side is turned and then pushed down its own axis, half a turn from a satellite. */
+@for $i from 0 through $max-grade {
+  .side.angle-#{$i} {
+    --o-angle-composite: calc(#{$i}deg + 180deg);
   }
 }
 @for $i from 0 through $max-grade {
   o-arc.angle-#{$i}, o-progress.angle-#{$i} {
-    --o-angle-composite: calc(#{$i}deg) !important; 
+    --o-angle-composite: calc(#{$i}deg); 
   }
 }
 
@@ -104,8 +112,9 @@ Can be used in parent elements or in each orbiter class
 @for $i from 0 through  20  {
   $percent: calc($i * 5);
   $value: calc(1 - ($i * 5 / 100));
-  .shrink-#{$percent} {
-    --o-size-ratio: #{$value} !important; 
+  // On a ring, shrink-N changes ring spacing (above), not the size of its elements.
+  :not(.orbit, [data-orbit-ring], [class^="orbit-"], [class*=" orbit-"]).shrink-#{$percent} {
+    --o-size-ratio: #{$value}; 
   }
 }
 
@@ -113,19 +122,19 @@ Can be used in parent elements or in each orbiter class
   $percent: calc($f);
   $value: calc($f / 10);
 .grow-0\.#{$percent}x {
-  --o-size-ratio: #{calc(1 + $value)} !important; 
+  --o-size-ratio: #{calc(1 + $value)}; 
 }
 }
 @for $i from 1 through $max-orbits {
   .grow-#{$i}x {
-    --o-size-ratio: #{calc($i * 2)} !important;
+    --o-size-ratio: #{calc($i * 2)};
   }
 
   @for $f from 1 through  9  {
     $percent: calc($f);
     $value: calc($f / 5);
   .grow-#{$i}\.#{$percent}x {
-    --o-size-ratio: #{calc($i * 2 + $value)} !important; 
+    --o-size-ratio: #{calc($i * 2 + $value)}; 
   }
 }
 
@@ -135,23 +144,23 @@ Can be used in parent elements or in each orbiter class
   Orbit child elements could be placed at low / middle / high-orbit
 */ 
 .inner-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / 2;
 }
 .quarter-inner-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / 3.75;
 }
 .quarter-outer-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / -3.75;
 }
 
 .outer-orbit {
-  --o-aligment: calc(
+  --o-alignment: calc(
     var(--o-radius) / (var(--o-orbit-number) + var(--o-initial-orbit, 0)) * var(--o-size-ratio, 1)
   ) / -2;
 }
@@ -161,8 +170,8 @@ Can be used in parent elements or in each orbiter class
 */ 
 
 .ccw{
-  --o-direction: -1 !important;
-  --o-offset: 90deg !important;
+  --o-direction: -1;
+  --o-offset: 90deg;
 }
 
 /* 
@@ -170,7 +179,7 @@ Can be used in parent elements or in each orbiter class
 */ 
 
 .fit-range {
-  --o-fit-range: 1 !important;
+  --o-fit-range: 1;
 }
 
 
@@ -180,16 +189,16 @@ Can be used in parent elements or in each orbiter class
 
 
 .capsule.flip {
-  --o-angle-composite: 180deg !important;
+  --o-angle-composite: 180deg;
 }
 
 .capsule.turn-left {
   margin-top: 25%;
-  --o-angle-composite: 90deg !important;
+  --o-angle-composite: 90deg;
 }
 .capsule.turn-right  {
   margin-top: 25%;
-  --o-angle-composite: 270deg !important;
+  --o-angle-composite: 270deg;
 }
 
 .side>.capsule.horizontal  {
@@ -197,10 +206,10 @@ Can be used in parent elements or in each orbiter class
 }
 
 .satellite.spin-lock>.capsule  {
-  --o-angle-composite: calc(-90deg + var(--o-from)) !important;
+  --o-angle-composite: calc(-90deg + var(--o-from));
 }
 .satellite.spin-lock>.capsule.flip  {
-  --o-angle-composite: calc(90deg + var(--o-from)) !important;
+  --o-angle-composite: calc(90deg + var(--o-from));
 }
 
 .satellite>.capsule.turn-left {

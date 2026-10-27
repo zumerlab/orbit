@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knob with progress bar · Orbit</title>
+  <meta name="description" content="A gain knob from −12 to +12 dB whose arc grows from the center position, left or right, built with a ring whose range follows the value.">
+  <link rel="icon" href="../../brand/favicon.svg">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Knob with progress bar</h1>
+<p class="lede">A gain knob whose arc grows from the center position, to the left for cuts and to the right for boosts.</p>
+<figure class="example" data-height="380">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang knob" tabindex="0" role="slider" aria-label="Gain"
+       aria-valuemin="-12" aria-valuemax="12" aria-valuenow="0">
+    <div class="gravity-spot">
+      <div class="orbit-11 range-270 from-225 fit-range ticks" id="ticks" style="--o-size-ratio: .7"></div>
+      <div class="orbit-10 range-270 from-225 track" style="--o-size-ratio: .8"><o-arc></o-arc></div>
+      <!-- The arc fills its ring; the script moves the ring's start and range. -->
+      <div class="orbit-10 gain" style="--o-size-ratio: .8"><o-arc shape="rounded"></o-arc></div>
+      <!-- The body is a satellite 15 lanes wide, with a system of its own for the pointer. -->
+      <div class="orbit-0" style="--o-size-ratio: 15">
+        <div class="satellite at-center">
+          <div class="capsule body"></div>
+          <div class="gravity-spot turn">
+            <div class="orbit-8" style="--o-size-ratio: 3"><div class="vector pointer"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="orbit-11">
+        <div class="satellite angle-180"><div class="capsule readout"><strong id="db">0 dB</strong><span>gain</span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage > .knob { width: min(100%, 100vh - 40px); touch-action: none; cursor: grab; }
+.knob:active { cursor: grabbing; }
+
+.ticks .vector { background: var(--faint); }
+.ticks .vector:is(:first-child, :nth-child(13), :last-child) { background: var(--muted); height: 2px; }
+.track o-arc { --o-stroke: none; --o-fill: #1d2630; }
+.gain o-arc { --o-stroke: none; --o-fill: var(--c, var(--accent)); }
+.knob.cut { --c: var(--coral); }
+
+/* Brushed metal: a conic gradient on a round capsule. */
+.body {
+  width: 100%; aspect-ratio: 1; border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 58%, #0a0d11 60%, #0a0d11 61%, transparent 63%),
+    conic-gradient(#3a4552, #222a33, #4a5664, #20272f, #3a4552, #222a33, #4a5664, #20272f, #3a4552);
+  box-shadow: 0 18px 40px -12px #000, inset 0 1px 0 #55606e;
+}
+.turn { rotate: var(--turn, 0deg); transition: rotate .08s linear; }
+.pointer { height: 4px; border-radius: 2px; background: var(--text); }
+.knob:focus-visible { outline: none; }
+.knob:focus-visible .body { box-shadow: 0 0 0 3px var(--accent), 0 18px 40px -12px #000; }
+.knob .readout strong { font-size: clamp(20px, 7cqmin, 30px); }
+  </script>
+  <script type="text/plain" data-js>
+document.getElementById('ticks').innerHTML = '<div class="vector"></div>'.repeat(25);
+const knob = document.querySelector('.knob'), gain = knob.querySelector('.gain');
+let value = 0;
+const set = v => {
+  value = Math.max(-12, Math.min(12, Math.round(v * 2) / 2));
+  const angle = value / 12 * 135; // ±135° from the top
+  // The arc's ring starts at the top for a boost, and at the value for a cut.
+  gain.style.setProperty('--o-from', `${value < 0 ? 360 + angle : 0}deg`);
+  gain.style.setProperty('--o-range', `${Math.abs(angle)}deg`);
+  knob.classList.toggle('cut', value < 0);
+  knob.style.setProperty('--turn', angle + 'deg');
+  knob.setAttribute('aria-valuenow', value);
+  document.getElementById('db').textContent = `${value > 0 ? '+' : value < 0 ? '−' : ''}${Math.abs(value)} dB`;
+};
+// Pointer angle around the center, -135° to 135°.
+const fromPointer = event => {
+  const box = knob.getBoundingClientRect();
+  const angle = Math.atan2(event.clientX - (box.left + box.width / 2), (box.top + box.height / 2) - event.clientY) * 180 / Math.PI;
+  if (Math.abs(angle) <= 135) set(angle / 135 * 12);
+};
+knob.addEventListener('pointerdown', event => { knob.setPointerCapture(event.pointerId); fromPointer(event); });
+knob.addEventListener('pointermove', event => { if (knob.hasPointerCapture(event.pointerId)) fromPointer(event); });
+knob.addEventListener('dblclick', () => set(0));
+knob.addEventListener('wheel', event => { event.preventDefault(); set(value - Math.sign(event.deltaY) * .5); }, { passive: false });
+knob.addEventListener('keydown', event => {
+  const step = { ArrowUp: .5, ArrowRight: .5, ArrowDown: -.5, ArrowLeft: -.5, PageUp: 3, PageDown: -3 }[event.key];
+  if (step) { event.preventDefault(); set(value + step); }
+  if (event.key === 'Home') set(-12);
+  if (event.key === 'End') set(12);
+});
+set(4.5);
+  </script>
+  <figcaption>Drag, scroll or use the arrow keys. Double-click to reset to 0 dB.</figcaption>
+</figure>
+<h2>How it's built</h2>
+<ul>
+<li>The ticks and the dark track share <code>range-270 from-225</code>, the usual knob sweep with the gap at the bottom. <code>fit-range</code> puts the first and last of the 25 <a href="../../reference/vector.html"><code>.vector</code></a>s on the two ends.</li>
+<li>The colored arc is one <a href="../../reference/arc.html"><code>&lt;o-arc&gt;</code></a> without <code>value</code>, so it fills its ring's range. The script sets that ring's <code>--o-from</code> and <code>--o-range</code>: from the top for a boost, from the value back to the top for a cut.</li>
+<li>The body is a <a href="../../reference/satellite.html">satellite</a> fifteen lanes wide on <code>orbit-0</code>. A satellite is a universe too, so the <code>.gravity-spot</code> inside it places the pointer relative to the knob, and <code>rotate</code> on that system turns it.</li>
+<li>The universe is the <code>role="slider"</code>, with pointer capture for dragging and the usual keys.</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li><a href="led-knob.html">LED knob</a>: discrete steps</li>
+<li><a href="../progress/circular-progress-with-handle.html">Circular progress with handle</a></li>
+<li><a href="../../demos/05-knob.html">Knob demo</a>: a 0 to 100 volume knob</li>
+<li><a href="../../guide.html">Build a knob</a>: a step-by-step guide</li>
+<li><a href="../../kit/knob.html">Orbit Kit knob</a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../../assets/site.js" data-root="../../"></script>
+</body>
+</html>

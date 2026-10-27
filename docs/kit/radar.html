@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radar · Orbit</title>
+  <meta name="description" content="o-radar is a scope with range rings, spokes, a rotating sweep and blips.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Radar</h1>
+<p class="lede"><code>&lt;o-radar&gt;</code> is a scope with range rings, spokes, a rotating sweep and blips.</p>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-radar rings="4" spokes="12" label="Scan" targets='[
+  {"angle": 60, "dist": 0.8, "label": "Alpha"},
+  {"angle": 200, "dist": 0.45, "label": "Bravo"},
+  {"angle": 310, "dist": 0.65, "color": "#ff7a6b", "label": "Unknown"}
+]'></o-radar>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<p>Each blip is a satellite on <code>orbit-12</code>: <code>--o-angle-composite</code> points it and <code>--o-alignment</code> pulls it in toward the center. Spokes are vectors from the center, one radius long. Updating <code>targets</code> only touches the blips, so the sweep never restarts.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>targets</code></td><td><code>[]</code></td><td>Blips: <code>[{ angle, dist, color?, label? }]</code>. <code>angle</code> in degrees clockwise from the top, <code>dist</code> from <code>min</code> (center) to <code>max</code> (edge).</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td><code>0</code> / <code>1</code></td><td>The distance range, so blips can be in kilometers or miles.</td></tr>
+<tr><td><code>rings</code></td><td><code>4</code></td><td>Range rings.</td></tr>
+<tr><td><code>spokes</code></td><td><code>8</code></td><td>Lines from the center.</td></tr>
+<tr><td><code>sweep</code></td><td>on</td><td><code>sweep=&quot;false&quot;</code> hides the beam.</td></tr>
+<tr><td><code>sweep-width</code></td><td><code>110</code></td><td>Width of the beam, in degrees.</td></tr>
+<tr><td><code>speed</code></td><td><code>4</code></td><td>Seconds per turn.</td></tr>
+<tr><td><code>color</code></td><td><code>#22d3ee</code></td><td>Color of the whole scope. <code>accent</code> works too.</td></tr>
+<tr><td><code>label</code></td><td></td><td>Text under the center dot.</td></tr>
+<tr><td><code>size</code></td><td><code>240px</code></td><td>Width of the widget.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code></td><td></td><td>Number format of distances in the accessible name, through <code>Intl.NumberFormat</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-radar-color</code></td><td><code>#22d3ee</code></td><td>Rings, spokes, beam, blips and label.</td></tr>
+<tr><td><code>--ok-radar-speed</code></td><td><code>4s</code></td><td>Duration of one turn of the beam.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>6cqmin</code></td><td>Label size.</td></tr>
+</tbody>
+</table></div>
+
+<h2>More examples</h2>
+<h3>Moving targets</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-radar id="r" color="#a3e635" spokes="4" rings="3"></o-radar>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+  <script type="text/plain" data-js>
+const radar = document.getElementById('r');
+const ships = [0, 1, 2, 3].map((i) => ({ angle: i * 90, dist: 0.3 + i * 0.15 }));
+setInterval(() => {
+  ships.forEach((s, i) => { s.angle = (s.angle + 2 + i) % 360; });
+  radar.setAttribute('targets', JSON.stringify(ships));
+}, 100);
+  </script>
+</figure>
+<h3>Narrow, fast beam</h3>
+<figure class="example" data-kit data-height="280">
+  <script type="text/plain" data-html>
+<o-radar color="#a78bfa" rings="6" spokes="0" sweep-width="40" speed="1.5" size="220px"></o-radar>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+<h3>No sweep, as a static map</h3>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<o-radar sweep="false" color="#8a97a5" rings="2" spokes="6" label="Base" targets='[
+  {"angle": 60, "dist": 0.8, "label": "Alpha"},
+  {"angle": 200, "dist": 0.45, "label": "Bravo"},
+  {"angle": 310, "dist": 0.65, "color": "#ff7a6b", "label": "Unknown"}
+]'></o-radar>
+  </script>
+  <script type="text/plain" data-css>
+body { display: grid; place-items: center; height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The radar has <code>role="img"</code> and a name that lists the targets, like “Scan; Alpha: 60 degrees, 80% distance; …”. Give targets a <code>label</code> so the list makes sense. With reduced motion, the beam and the pings stand still.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

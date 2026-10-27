@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spinner · Orbit</title>
+  <meta name="description" content="o-spinner is a circular loading indicator in five variants, with determinate progress and a calm version for reduced motion.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>Spinner</h1>
+<p class="lede"><code>&lt;o-spinner&gt;</code> tells people something is loading, in five variants that share one size, speed and color.</p>
+<figure class="example" data-kit data-height="250">
+  <script type="text/plain" data-html>
+<main class="row">
+  <figure><o-spinner size="72px"></o-spinner><figcaption>ring</figcaption></figure>
+  <figure><o-spinner variant="dots" size="72px"></o-spinner><figcaption>dots</figcaption></figure>
+  <figure><o-spinner variant="segments" size="72px"></o-spinner><figcaption>segments</figcaption></figure>
+  <figure><o-spinner variant="orbit" size="72px"></o-spinner><figcaption>orbit</figcaption></figure>
+  <figure><o-spinner variant="progress" value="64" readout size="72px"></o-spinner><figcaption>progress</figcaption></figure>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.row { display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 28px 36px; min-height: 100vh; padding: 16px; }
+figure { margin: 0; display: grid; justify-items: center; gap: 12px; }
+figcaption { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  </script>
+</figure>
+<p>Each variant is a small Orbit universe. The ring is two equal <code>&lt;o-arc&gt;</code>s turning at two paces, so the arc they draw together stretches and shrinks. Dots are satellites on one ring, segments are vectors, and the orbit variant turns two rings of satellites around a core. All of it moves with CSS, so a spinner runs no script while it turns.</p>
+
+<h2>Attributes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>variant</code></td><td><code>ring</code></td><td><code>ring</code>, <code>dots</code>, <code>segments</code>, <code>orbit</code> or <code>progress</code>.</td></tr>
+<tr><td><code>value</code></td><td></td><td>With <code>variant=&quot;progress&quot;</code>, how much is done. Without it the progress ring turns like <code>ring</code>; set it and it fills to the value. Remove it to go back.</td></tr>
+<tr><td><code>min</code> / <code>max</code></td><td><code>0</code> / <code>100</code></td><td>The range of <code>value</code>. See <a href="options.html#range">min, max and step</a>.</td></tr>
+<tr><td><code>readout</code></td><td>off</td><td>Shows the value in the middle of a progress ring: the share done, like <code>64%</code>, unless a format is set.</td></tr>
+<tr><td><code>label</code></td><td><code>Loading</code></td><td>The accessible name: what is loading.</td></tr>
+<tr><td><code>size</code></td><td><code>48px</code></td><td>Width of the spinner. Everything inside scales with it, from <code>16px</code> in a button to a full screen.</td></tr>
+<tr><td><code>speed</code></td><td><code>1</code></td><td>Seconds per cycle. Each variant keeps its own rhythm around it.</td></tr>
+<tr><td><code>color</code></td><td><code>#4fd1c5</code></td><td>Arcs, dots and ticks. Sets <code>--ok-spinner-color</code>.</td></tr>
+<tr><td><code>track</code></td><td>faint gray</td><td>The ring behind the arcs and the orbit lines. Sets <code>--ok-spinner-track</code>.</td></tr>
+<tr><td><code>accent</code></td><td><code>#ffb547</code></td><td>The small moons of the orbit variant. Sets <code>--ok-spinner-accent</code>.</td></tr>
+<tr><td><code>count</code></td><td><code>8</code> dots, <code>12</code> segments, <code>2</code> moons</td><td>How many dots, ticks or moons.</td></tr>
+<tr><td><code>thickness</code></td><td><code>2</code>, <code>1.8</code> for progress</td><td>Ring thickness in lanes. A lane is a twelfth of the radius.</td></tr>
+<tr><td><code>shape</code></td><td><code>rounded</code></td><td>Ending of the arcs: any Orbit shape.</td></tr>
+<tr><td><code>paused</code></td><td>off</td><td>Stops every animation where it is.</td></tr>
+<tr><td><code>format</code>, <code>decimals</code>, <code>currency</code>, <code>locale</code>, <code>unit</code></td><td></td><td>Number format of the readout and <code>aria-valuetext</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+<tr><td><code>theme</code></td><td></td><td><code>dark</code>, <code>light</code> or <code>glass</code>. Also inherited from an <code>ok-theme-*</code> class on a container. See <a href="options.html#themes">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Properties</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>value</code></td><td>The progress value, kept in range, or <code>undefined</code> while there is none. Setting it writes the attribute; <code>null</code> removes it.</td></tr>
+<tr><td><code>formatter</code></td><td>A function <code>(value, { kind, min, max }) =&gt; string</code> for the readout and <code>aria-valuetext</code>. See <a href="options.html#format">Shared options</a>.</td></tr>
+</tbody>
+</table></div>
+
+<h2>Progress</h2>
+<p>When you know how far along a task is, say so. The progress ring turns while there is no <code>value</code> and fills once there is one, gliding from one value to the next.</p>
+<figure class="example" data-kit data-height="300">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <o-spinner id="upload" variant="progress" readout size="150px" label="Uploading photos"></o-spinner>
+  <div class="controls">
+    <button id="go">Upload</button>
+    <span id="status">Waiting</span>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { gap: 18px; align-content: center; }
+#status { min-width: 9ch; font-variant-numeric: tabular-nums; }
+  </script>
+  <script type="text/plain" data-js>
+const upload = document.getElementById('upload');
+const status = document.getElementById('status');
+document.getElementById('go').addEventListener('click', () => {
+  // Preparing: no value yet, so the ring turns.
+  upload.value = null;
+  status.textContent = 'Preparing';
+  let done = 0;
+  setTimeout(function step() {
+    done = Math.min(100, done + 6 + Math.random() * 14);
+    upload.value = Math.round(done);
+    status.textContent = done < 100 ? 'Uploading' : 'Done';
+    if (done < 100) setTimeout(step, 450);
+  }, 1200);
+});
+  </script>
+</figure>
+
+<h2>Styling</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Property</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>--ok-spinner-color</code></td><td><code>var(--ok-fill, #4fd1c5)</code></td><td>Arcs, dots, ticks and the orbit planet.</td></tr>
+<tr><td><code>--ok-spinner-track</code></td><td><code>var(--ok-track, rgba(127,127,127,.2))</code></td><td>Track and orbit lines.</td></tr>
+<tr><td><code>--ok-spinner-accent</code></td><td><code>var(--ok-accent, #ffb547)</code></td><td>Moons of the orbit variant.</td></tr>
+<tr><td><code>--ok-spinner-speed</code></td><td><code>1s</code></td><td>Seconds per cycle.</td></tr>
+<tr><td><code>--ok-spinner-weight</code></td><td><code>1</code></td><td>Thickness of the segment ticks.</td></tr>
+<tr><td><code>--ok-font-size</code></td><td><code>17cqmin</code></td><td>Size of the readout, as a share of the spinner.</td></tr>
+</tbody>
+</table></div>
+<figure class="example" data-kit data-height="220">
+  <script type="text/plain" data-html>
+<main class="row">
+  <o-spinner variant="segments" size="64px" class="ios"></o-spinner>
+  <o-spinner variant="dots" size="64px" count="12" color="#ff7a6b" speed="1.4"></o-spinner>
+  <o-spinner size="64px" thickness="1" color="#a78bfa" track="transparent"></o-spinner>
+  <o-spinner variant="orbit" size="64px" color="#60a5fa" accent="#a3e635" count="3"></o-spinner>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 36px; min-height: 100vh; }
+/* A gray, thinner set of ticks, like the system spinner on a phone. */
+.ios { --ok-spinner-color: var(--text); --ok-spinner-weight: .7; }
+  </script>
+  <figcaption>Each spinner restyled with an attribute or a custom property.</figcaption>
+</figure>
+
+<h2>More examples</h2>
+<h3>Inside a button</h3>
+<figure class="example" data-kit data-height="200">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <button id="save" class="save">Save changes</button>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.save { display: inline-flex; align-items: center; gap: 10px; min-width: 156px; justify-content: center; font-size: 15px; padding: 10px 18px; }
+.save o-spinner { --ok-spinner-color: currentColor; }
+  </script>
+  <script type="text/plain" data-js>
+const save = document.getElementById('save');
+save.addEventListener('click', () => {
+  save.disabled = true;
+  // The button's own text already says what is going on, so the spinner is hidden from screen readers.
+  save.innerHTML = '<o-spinner size="16px" thickness="2.6" aria-hidden="true"></o-spinner>Saving';
+  setTimeout(() => { save.textContent = 'Saved'; save.disabled = false; }, 2200);
+});
+  </script>
+</figure>
+<h3>A full-screen loader</h3>
+<figure class="example" data-kit data-height="320">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="loader">
+    <o-spinner variant="orbit" size="132px" speed="1.4" label="Loading your dashboard"></o-spinner>
+    <p>Loading your dashboard</p>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.loader { display: grid; justify-items: center; gap: 18px; }
+.loader p { margin: 0; color: var(--muted); }
+  </script>
+</figure>
+<h3>On a light page</h3>
+<figure class="example" data-kit data-light data-height="200">
+  <script type="text/plain" data-html>
+<main class="row ok-theme-light">
+  <o-spinner size="56px"></o-spinner>
+  <o-spinner variant="dots" size="56px"></o-spinner>
+  <o-spinner variant="segments" size="56px"></o-spinner>
+  <o-spinner variant="progress" value="0.35" max="1" format="percent" readout size="56px"></o-spinner>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 36px; min-height: 100vh; }
+  </script>
+</figure>
+
+<h2>Accessibility</h2>
+<p>The spinner has <code>role="progressbar"</code> and <code>aria-busy="true"</code>, named by <code>label</code> (“Loading” by default; say what is loading). While there is no value it has no <code>aria-valuenow</code>, which is how a progress bar says it does not know how far along it is. With a value it gets <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code> and an <code>aria-valuetext</code> in the number format, and <code>aria-busy</code> turns <code>false</code> at the end. Set <code>role="status"</code> yourself if the spinner should be announced as it appears; the spinner keeps it. It is never a tab stop.</p>
+<p>With <code>prefers-reduced-motion</code> nothing turns or swells. The arcs, dots, ticks and moons stay in place and breathe slowly in and out, so the page still shows it is working, and a progress ring jumps straight to each new value.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>

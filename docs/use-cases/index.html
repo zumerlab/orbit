@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>
+    // Opened as /demos instead of /demos/? Relative links need the slash.
+    if (!/(\/|index(\.html)?)$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Use cases · Orbit</title>
+  <meta name="description" content="Where Orbit fits: dashboards, IoT and hardware, fitness apps, audio tools and game interfaces.">
+  <link rel="icon" href="../brand/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="wide">
+<h1>Use cases</h1>
+<p class="lede">Where Orbit fits, where it does not, and which examples to start from.</p>
+<ul class="cards">
+<li><a class="card" href="dashboards.html"><img class="thumb dark" src="../demos/thumbs/04-arrow-gauge.webp" alt="" loading="lazy"><strong>Dashboards</strong><span>Headline numbers, breakdowns and goals.</span></a></li>
+<li><a class="card" href="iot-and-hardware-ui.html"><img class="thumb dark" src="../demos/thumbs/06-semicircle.webp" alt="" loading="lazy"><strong>IoT and hardware interfaces</strong><span>Thermostats, levels and live telemetry.</span></a></li>
+<li><a class="card" href="fitness-and-health-apps.html"><img class="thumb dark" src="../demos/thumbs/01-minimal-gauge.webp" alt="" loading="lazy"><strong>Fitness and health apps</strong><span>Activity rings and workout readouts.</span></a></li>
+<li><a class="card" href="audio-app-ui.html"><img class="thumb dark" src="../demos/thumbs/05-knob.webp" alt="" loading="lazy"><strong>Audio app interfaces</strong><span>Knobs and meters for audio tools.</span></a></li>
+<li><a class="card" href="sci-fi-game-uis.html"><img class="thumb dark" src="../demos/thumbs/10-radar.webp" alt="" loading="lazy"><strong>Sci-fi and game interfaces</strong><span>HUDs, menus and decorative geometry.</span></a></li>
+</ul>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="../assets/site.js" data-root="../"></script>
+</body>
+</html>
