@@ -1,4 +1,5 @@
 import { OrbitBase } from './orbit-base.js';
+import { setLayoutProperty } from './orbit-layout.js';
 
 export class OrbitProgress extends OrbitBase {
   constructor() {
@@ -94,6 +95,18 @@ export class OrbitProgress extends OrbitBase {
     this.shadowRoot.querySelector('.progress-bg').setAttribute('d', dBg);
     this.shadowRoot.querySelector('.progress-bar').setAttribute('d', dBar);
     this.updateHitArea(this.shadowRoot.querySelector('.hit'), attrs, 0, attrs.range);
+    // The angle of the value goes on the ring, so a .satellite.at-value there
+    // sits on it.
+    const ring = this.parentElement;
+    if (this._valueRing && this._valueRing !== ring) this._valueRing.style.removeProperty('--o-value-angle');
+    this._valueRing = ring;
+    if (ring) setLayoutProperty(ring, '--o-value-angle', `${this.getProgressAngle(attrs, false)}deg`);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._valueRing?.style.removeProperty('--o-value-angle');
+    this._valueRing = null;
   }
 
   /**
@@ -113,7 +126,7 @@ export class OrbitProgress extends OrbitBase {
     const range = Math.max(0, Math.min(360, this.readAngle(common.style, '--o-range', 360)));
     const rawValue = common.style.getPropertyValue('--o-progress').trim();
     const progress = rawValue ? this.readNumber(common.style, '--o-progress', 0) : this.readValue();
-    const maxValue = this.readMax();
+    const maxValue = this.readMax(common.style);
     
     return {
       ...common,

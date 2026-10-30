@@ -219,6 +219,33 @@ Can be used in parent elements or in each orbiter class
   margin-top:unset;
 }
 
+/*
+  Labels outside their satellite, away from the center (--o-dir-x/-y). Put
+  the class on a capsule or on an element inside one. 50cqw and 50cqh are half
+  the satellite; --o-outward-gap is the space between it and the label.
+*/
+.outward, .outward-y {
+  position: absolute;
+  width: max-content;
+}
+
+/* Along the direction. The translate scales the direction so its larger
+   component is 1: the label's nearest edge or corner touches the circle. */
+.outward {
+  --o-out: max(var(--o-dir-x), -1 * var(--o-dir-x), var(--o-dir-y), -1 * var(--o-dir-y), .001);
+  left: calc(50% + var(--o-dir-x) * (50cqw + var(--o-outward-gap, 4px)));
+  top: calc(50% + var(--o-dir-y) * (50cqh + var(--o-outward-gap, 4px)));
+  translate: calc(-50% + 50% * var(--o-dir-x) / var(--o-out)) calc(-50% + 50% * var(--o-dir-y) / var(--o-out));
+}
+
+/* Only up or down: above the satellites of the upper half, below the rest. */
+.outward-y {
+  --o-out: clamp(-1, (var(--o-dir-y) + .01) * 1000, 1);
+  left: 50%;
+  top: calc(50% + var(--o-out) * (50cqh + var(--o-outward-gap, 4px)));
+  translate: -50% calc((var(--o-out) - 1) * 50%);
+}
+
 /*  Satellite  gyro */
 .satellite.spin-lock {
   transform: var(--o-transform) rotate(calc(var(--o-angle-composite)));

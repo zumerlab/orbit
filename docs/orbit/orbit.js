@@ -1,6 +1,6 @@
 /*
 * orbit
-* v.1.6.0
+* v.2.0.1
 * Author Juan Martin Muda - Zumerlab
 * License MIT
 */
@@ -100,7 +100,7 @@
     return Number.isFinite(resolved) ? resolved : fallback;
   }
   function group(element) {
-    if (element.localName === "o-arc") return "arc";
+    if (element.localName === "o-arc") return element.hasAttribute("start") ? null : "arc";
     for (const name of ["satellite", "vector", "side"]) if (element.classList.contains(name)) return name;
     return null;
   }
@@ -445,10 +445,22 @@
       }
       return value;
     }
-    /** The max attribute (default 100). It must be a positive number. */
-    readMax() {
+    /**
+     * The max attribute, else --o-max from the ring or system (default 100).
+     * It must be a positive number.
+     */
+    readMax(style) {
       const raw = this.getAttribute("max");
-      if (raw === null) return 100;
+      if (raw === null) {
+        const css = style == null ? void 0 : style.getPropertyValue("--o-max").trim();
+        if (!css) return 100;
+        const max2 = cssNumber(this, css, NaN);
+        if (!(max2 > 0)) {
+          warnOnce(this, "o-max:" + css, `--o-max: ${css} on <${this.localName}> must be a positive number, so nothing is drawn.`);
+          return 0;
+        }
+        return max2;
+      }
       const max = Number(raw);
       if (!(max > 0)) {
         warnOnce(this, "max:" + raw, `<${this.localName} max="${raw}"> must be a positive number, so nothing is drawn.`);
@@ -668,14 +680,15 @@
     }
     /**
      * Grow the SVG canvas past the ring's box so it covers the whole band, its
-     * stroke and touch area. Some engines (WebKit) neither paint reliably nor
-     * hit-test SVG content that overflows its box.
+     * stroke and touch area, and as far as a ripple reaches (attrs.reach).
+     * Some engines (WebKit) neither paint reliably nor hit-test SVG content that
+     * overflows its box.
      */
     fitCanvas(attrs, extra) {
       const svg = this.shadowRoot.querySelector("svg");
       const scale = attrs.orbitRadius / 50;
       if (!svg || !(scale > 0)) return;
-      const outer = (attrs.realRadius + attrs.arcHeightPercentage) * scale + attrs.strokeWidth + extra;
+      const outer = ((attrs.realRadius + attrs.arcHeightPercentage) * scale + attrs.strokeWidth) * (attrs.reach || 1) + extra;
       const pad = Math.max(0, Math.ceil(outer - attrs.orbitRadius));
       const units = pad / scale;
       svg.setAttribute("viewBox", `${-units} ${-units} ${100 + 2 * units} ${100 + 2 * units}`);
@@ -776,6 +789,16 @@
       this.shadowRoot.querySelector(".progress-bg").setAttribute("d", dBg);
       this.shadowRoot.querySelector(".progress-bar").setAttribute("d", dBar);
       this.updateHitArea(this.shadowRoot.querySelector(".hit"), attrs, 0, attrs.range);
+      const ring = this.parentElement;
+      if (this._valueRing && this._valueRing !== ring) this._valueRing.style.removeProperty("--o-value-angle");
+      this._valueRing = ring;
+      if (ring) setLayoutProperty(ring, "--o-value-angle", `${this.getProgressAngle(attrs, false)}deg`);
+    }
+    disconnectedCallback() {
+      var _a;
+      super.disconnectedCallback();
+      (_a = this._valueRing) == null ? void 0 : _a.style.removeProperty("--o-value-angle");
+      this._valueRing = null;
     }
     /**
      * variant="stroke": open arc along the orbit radius (no closed band),
@@ -793,7 +816,7 @@
       const range = Math.max(0, Math.min(360, this.readAngle(common.style, "--o-range", 360)));
       const rawValue = common.style.getPropertyValue("--o-progress").trim();
       const progress = rawValue ? this.readNumber(common.style, "--o-progress", 0) : this.readValue();
-      const maxValue = this.readMax();
+      const maxValue = this.readMax(common.style);
       return {
         ...common,
         range,
@@ -882,9 +905,32 @@
       stroke: none;
       pointer-events: none;
     }
+    /* .ripple: a copy of the band grows out from the center of the ring and
+       fades, over and over. The band itself stays. */
+    #orbitWave {
+      display: none;
+      fill: var(--o-ripple-color, var(--o-fill));
+      stroke: none;
+      pointer-events: none;
+      transform-origin: 50px 50px;
+    }
+    :host(.ripple) #orbitWave {
+      display: inline;
+      animation: orbit-ripple var(--o-ripple-duration, 1.6s) ease-out infinite;
+    }
+    @keyframes orbit-ripple {
+      from { transform: scale(1); opacity: .9; }
+      to { transform: scale(var(--o-ripple-scale, 1.14)); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :host(.ripple) #orbitWave {
+        display: none;
+      }
+    }
   </style>
   <svg viewBox="0 0 100 100">
     <path id="orbitHit" vector-effect="non-scaling-stroke"></path>
+    <path id="orbitWave" shape-rendering="geometricPrecision"></path>
     <path id="orbitShape" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
     <path id="orbitPath" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke"></path>
     <text>
@@ -913,7 +959,9 @@
       const orbitPath = this.shadowRoot.querySelector("#orbitPath");
       const orbitShape = this.shadowRoot.querySelector("#orbitShape");
       const textPath = this.shadowRoot.querySelector("textPath");
-      orbitShape.setAttribute("d", this.calculateArcParameters(attrs).dShape);
+      const { dShape } = this.calculateArcParameters(attrs);
+      orbitShape.setAttribute("d", dShape);
+      this.shadowRoot.querySelector("#orbitWave").setAttribute("d", dShape);
       orbitPath.setAttribute("d", this.calculateTextArcParameters(attrs).dPath);
       this.updateHitArea(this.shadowRoot.querySelector("#orbitHit"), attrs, 0, attrs.arcAngle);
       const textAnchor = attrs.textAnchor;
@@ -974,26 +1022,45 @@
       const gap = Math.max(0, this.readNumber(style, "--o-gap", 1));
       const svgFontSize = `calc(${fontSize} * (100 / (${length}) * (12 / var(--o-orbit-number)))`;
       const auto = this.getAttribute("range") === "auto";
-      const stacked = auto || this.hasAttribute("value");
+      const valued = this.hasAttribute("value");
+      const placed = this.hasAttribute("start");
+      const stacked = auto || valued || placed;
+      const max = this.readMax(style);
       let arcAngle;
       if (auto) arcAngle = this.measureTextAngle(svgFontSize, common.realRadius, gap);
-      else if (this.hasAttribute("value")) arcAngle = super.getProgressAngle(range, this.readValue(), this.readMax());
+      else if (valued) arcAngle = super.getProgressAngle(range, this.readValue(), max);
       else arcAngle = Math.max(0, Math.min(360, this.readAngle(style, "--o-angle", 0)));
       this._autoAngle = auto ? arcAngle : 0;
       let stackOffset = 0;
-      if (stacked) {
+      if (placed) {
+        stackOffset = max > 0 ? this.readStart() / max * range : 0;
+        if (!auto && range < 360) {
+          const end = Math.min(range, stackOffset + arcAngle);
+          stackOffset = Math.max(0, stackOffset);
+          arcAngle = Math.max(0, end - stackOffset);
+        }
+      } else if (stacked) {
         for (let prev = this.previousElementSibling; prev; prev = prev.previousElementSibling) {
-          if (prev.localName !== "o-arc") continue;
+          if (prev.localName !== "o-arc" || prev.hasAttribute("start")) continue;
           const previousStyle = this.ownerDocument.defaultView.getComputedStyle(prev);
           if (prev.getAttribute("range") === "auto") stackOffset += prev._autoAngle || 0;
           else if (prev.hasAttribute("value")) {
-            const prevMax = prev.hasAttribute("max") ? Number(prev.getAttribute("max")) : 100;
+            const prevMax = this.readMax.call(prev, previousStyle);
             const prevRange = cssNumber(prev, previousStyle.getPropertyValue("--o-range"), range, "angle");
             stackOffset += super.getProgressAngle(prevRange, Number(prev.getAttribute("value")), prevMax);
           } else stackOffset += cssNumber(prev, previousStyle.getPropertyValue("--o-angle"), 0, "angle");
         }
       }
-      return { ...common, gap, arcAngle, stackOffset, flip, fitRange, length, fontSize, svgFontSize, textAnchor, auto, stacked };
+      const reach = this.classList.contains("ripple") ? Math.max(1, this.readNumber(style, "--o-ripple-scale", 1.14)) : 1;
+      return { ...common, gap, max, arcAngle, stackOffset, flip, fitRange, length, fontSize, svgFontSize, textAnchor, auto, placed, stacked, reach };
+    }
+    /** The start attribute: where a placed arc begins, on the ring's scale. */
+    readStart() {
+      const raw = this.getAttribute("start");
+      const start = Number(raw);
+      if (Number.isFinite(start)) return start;
+      warnOnce(this, "start:" + raw, `<o-arc start="${raw}"> is not a number, so the arc starts at 0.`);
+      return 0;
     }
     /** range="auto": the angle that fits this arc's text, with half an em of room at each end. */
     measureTextAngle(svgFontSize, radius, gap) {

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### Unreleased
+
+**Features**
+
+- `.satellite.at-value` sits on the value of the `<o-progress>` in its ring, like the knob of a dial. The progress writes the angle on its ring as `--o-value-angle`.
+- `.outward` and `.outward-y` put a label just outside its satellite, along its direction or only above and below. `--o-outward-gap` sets the space.
+- `class="ripple"` on `<o-arc>`: waves grow out of the band and fade, to call for attention. `--o-ripple-color`, `--o-ripple-duration` and `--o-ripple-scale` tune them; reduced motion turns them off.
+- `start` on `<o-arc>` places it at a point of the ring's scale. A placed arc takes no slot and moves no other arc, so text and segments can go over a ring that already has arcs.
+- `--o-max` sets the scale of a ring or system for every arc and progress without a `max` attribute, so values stay in their own units (hours, for example).
+
 #### [v2.0.1](https://github.com/zumerlab/orbit/compare/v2.0.0...v2.0.1)
 
 > 27 October 2026

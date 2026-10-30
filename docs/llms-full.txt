@@ -397,6 +397,8 @@ input.addEventListener('input', () => {
 });
 ```
 
+This is common enough to have a class: [`.outward-y`](https://zumerlab.com/orbit/reference/satellite.html#outward) does the same, and `.outward` follows the direction all the way round.
+
 ## The whole map
 
 ```
@@ -2104,7 +2106,47 @@ push.addEventListener('input', () => {
 
 Each label moves away from the center along its own direction.
 
-[How Orbit thinks](https://zumerlab.com/orbit/universe.html) shows the other common use: labels that hang above the satellites of the upper half and below the rest.
+For labels there are two classes. Put either on a capsule, or on an element inside one. `.outward` sets it just outside the satellite along its direction, with its nearest edge or corner `--o-outward-gap` (4px) away. `.outward-y` only goes up or down: above the satellites of the upper half and below the rest, so long labels stay inside a narrow screen.
+
+```html
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-7" id="rooms" style="--o-size-ratio: 1.6"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <label><input id="vertical" type="checkbox"> Only up or down</label>
+  </div>
+</main>
+```
+
+```css
+.stage { gap: 12px; align-content: center; }
+.stage > .bigbang { width: min(100%, 100vh - 84px); }
+.satellite { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+.label { display: grid; justify-items: center; font-size: 13px; line-height: 1.3; }
+.label strong { color: var(--text); font-weight: 600; }
+.label span { color: var(--muted); font-size: 12px; }
+```
+
+```js
+const rooms = [['Kitchen', 'on'], ['Living room', 'on'], ['Office', 'off'], ['Bedroom', 'off'], ['Hall', 'on'], ['Porch', 'off'], ['Garage', 'on']];
+document.getElementById('rooms').innerHTML = rooms.map(([name, state]) =>
+  `<div class="satellite"><div class="capsule"><span class="label outward"><strong>${name}</strong><span>${state}</span></span></div></div>`).join('');
+document.getElementById('vertical').addEventListener('change', event => {
+  for (const label of document.querySelectorAll('.label')) {
+    label.classList.toggle('outward', !event.target.checked);
+    label.classList.toggle('outward-y', event.target.checked);
+  }
+});
+```
+
+Seven labels with `.outward`. Check the box to switch them to `.outward-y`.
+
+## On the value of a progress
+
+A `.satellite.at-value` sits on the value of the `<o-progress>` in its ring and follows it: the knob of a dial. See [A satellite on the value](https://zumerlab.com/orbit/reference/progress.html#on-the-value).
 
 ## A satellite is a universe
 
@@ -2122,8 +2164,11 @@ Put a `.gravity-spot` directly inside a satellite and it reaches the satellite's
 | `.angle-0` … `.angle-360` | | An exact angle, clockwise from the top. |
 | `.spin-lock` | | Turns with its angle instead of staying upright. |
 | `.at-center` | | In `orbit-0`: the satellite sits at the center. |
+| `.at-value` | | Sits on the value of the `<o-progress>` in its ring. |
 | `.at-top-left` … `.at-bottom-right` | | Where the capsule sits inside the satellite. |
 | `--o-dir-x` / `--o-dir-y` | read only | Direction from the center, from -1 to 1. |
+| `.outward`, `.outward-y` | | On a capsule or inside one: a label just outside the satellite, along its direction or only up and down. |
+| `--o-outward-gap` | `4px` | Space between the satellite and an `.outward` label. |
 
 ---
 
@@ -2586,7 +2631,8 @@ Arcs go straight into a ring, next to satellites or vectors if you like. They ar
 
 | Attribute | Default | What it does |
 | `value` | | Share of the ring's range, out of `max`. Without it, arcs split the range equally. See Split or stack. |
-| `max` | `100` | The value that fills the whole range. |
+| `max` | `100` | The value that fills the whole range. Without it, `--o-max` of the ring or system. |
+| `start` | | Where the arc begins, on the same scale as `value`. A placed arc takes no slot and moves no other arc. See Placed arcs. |
 | `range` | | `auto` makes the arc as long as its text. See Arcs that fit their text. |
 | `shape` | `none` | The ending. See Endings. |
 | `text-anchor` | `middle` | Text along the arc: `start`, `middle` or `end`. On a `range="auto"` arc, where the arc sits around its angle. |
@@ -2600,13 +2646,16 @@ Arcs go straight into a ring, next to satellites or vectors if you like. They ar
 | `--o-stroke-width` | `1` | Outline width, in px. |
 | `color` or `--o-color` | `currentcolor` | Text color. Other font properties apply too. |
 | `--o-gap`, `.gap-0` … `.gap-30` | `1` | Space at each end of the arc. Cascades from the ring and the system. |
+| `--o-max` | `100` | The scale: the value that fills the range when there is no `max` attribute. Cascades from the ring and the system. |
+| `.ripple` | | Waves grow out of the band, to call for attention. See Ripple. |
+| `--o-ripple-color`, `--o-ripple-duration`, `--o-ripple-scale` | `--o-fill`, `1.6s`, `1.14` | The color of a wave, how long it takes and how far it grows. |
 | `--o-size-ratio` | `1` | Thickness, in lanes. `.grow-*` and `.shrink-*` work as on [satellites](https://zumerlab.com/orbit/reference/satellite.html). |
 | `.inner-orbit`, `.outer-orbit`, `.quarter-*-orbit` | | Moves the band in or out from its lane. |
 | `.angle-0` … `.angle-360` | | Starts the arc at that angle. |
 
 ## Split or stack
 
-Without `value`, sibling arcs share the ring equally: a segmented ring, or a pie when they are thick. With `value`, each takes its share of the range and starts where the previous one ended: a donut chart. Values are not normalized, so make them add up to `max` for a full ring. With `max="24"`, `value="6"` is a quarter. An explicit `value="0"` draws nothing and takes no room.
+Without `value`, sibling arcs share the ring equally: a segmented ring, or a pie when they are thick. With `value`, each takes its share of the range and starts where the previous one ended: a donut chart. Values are not normalized, so make them add up to `max` for a full ring. With `max="24"`, or `--o-max: 24` on the ring, `value="6"` is a quarter. An explicit `value="0"` draws nothing and takes no room.
 
 ```html
 <main class="stage">
@@ -2962,6 +3011,84 @@ o-arc {
 
 The amber line points at 0°.
 
+## Placed arcs
+
+`start` puts an arc at a point of its ring, on the same scale as `value`: `0` is the start of the range and `max` its end. A placed arc takes no slot and moves no other arc, so it can go over a ring that already has arcs: a name on a ring of segments, or a segment on a timeline.
+
+`--o-max` sets the scale for every arc and progress below it that has no `max` attribute, so values stay in their own units. Here a whole system counts hours: 12 of them fill 320°, from 12 hours ago to now.
+
+```html
+<main class="stage">
+  <div class="bigbang">
+    <!-- Every ring: 12 hours over 320°, leaving a gap at the top. -->
+    <div class="gravity-spot" style="--o-max: 12; --o-from: 40deg; --o-range: 320deg">
+      <div class="orbit-11 scale">
+        <o-arc range="auto" start="0" text-anchor="start">12 h ago</o-arc>
+        <o-arc range="auto" start="6" text-anchor="middle" flip>6 h ago</o-arc>
+        <o-arc range="auto" start="12" text-anchor="end">now</o-arc>
+      </div>
+      <div class="orbit-9 row">
+        <o-arc class="track" value="12"></o-arc>
+        <o-arc class="on" start="1" value="2.5"></o-arc>
+        <o-arc class="on" start="7.25" value="1.5"></o-arc>
+        <o-arc class="on" start="10.5" value="1.5"></o-arc>
+        <!-- The name ends where the row begins. -->
+        <o-arc class="name" range="auto" start="0" text-anchor="end">Lights</o-arc>
+      </div>
+      <div class="orbit-7 row">
+        <o-arc class="track" value="12"></o-arc>
+        <o-arc class="on" start="0" value="4"></o-arc>
+        <o-arc class="on" start="5.5" value="0.75"></o-arc>
+        <o-arc class="name" range="auto" start="0" text-anchor="end">Heating</o-arc>
+      </div>
+    </div>
+  </div>
+</main>
+```
+
+```css
+.scale o-arc, .name { --o-fill: transparent; color: var(--muted); font-size: 12px; }
+.row { --o-size-ratio: .6; --o-gap: 0; }
+.row .track { --o-fill: var(--line); --o-stroke: none; }
+.row .on { --o-fill: var(--accent); --o-stroke: none; }
+```
+
+Two rings of history. Every segment says when it started and how long it lasted, in hours. The labels sit on the same rings as the arcs.
+
+With `range="auto"`, a placed arc is a label. With `text-anchor` it is anchored at its point, as above: `start` begins there, `middle` centers on it and `end` ends there. A segment stays inside a partial range; on a full ring it wraps around, so with `--o-max: 24`, `start="22" value="4"` runs from 22:00 to 2:00.
+
+## Ripple
+
+`.ripple` sends waves out of an arc: a copy of the band grows from the center of the ring and fades, over and over, while the band itself stays. Use it for the one thing that needs attention now. `--o-ripple-color` sets its color (the band's fill by default), `--o-ripple-duration` how long a wave takes, and `--o-ripple-scale` how far it grows. With reduced motion, there are no waves.
+
+```html
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 status" style="--o-size-ratio: 1.2; --o-gap: 6">
+        <o-arc></o-arc>
+        <o-arc class="ripple warn"></o-arc>
+        <o-arc></o-arc>
+        <o-arc></o-arc>
+        <o-arc class="ripple alarm"></o-arc>
+        <o-arc></o-arc>
+      </div>
+    </div>
+  </div>
+</main>
+```
+
+```css
+.status o-arc { --o-fill: var(--line); --o-stroke: none; }
+.status .warn { --o-fill: var(--amber); }
+/* The serious one calls faster. */
+.status .alarm { --o-fill: var(--coral); --o-ripple-duration: .9s; }
+```
+
+Six segments, two of them calling: amber every 1.6 seconds, coral every 0.9.
+
+To make a whole dial call, place a transparent arc over it and give it the color of the wave: `<o-arc class="ripple" start="0" value="100" style="--o-fill: transparent; --o-ripple-color: var(--coral)">`.
+
 ## Pointer interaction
 
 Arcs are decorative by default, so they never steal clicks from controls nearby. `interactive` makes the whole band clickable, even where its fill is transparent, and `hit-width` adds touch area in px on each side, which helps with thin arcs on touch screens.
@@ -3066,13 +3193,15 @@ A progress goes straight into a ring, one per ring: put each bar of a multi-bar 
 
 | Attribute | Default | What it does |
 | `value` | `0` | Progress, out of `max`. |
-| `max` | `100` | The value that fills the ring's range. |
+| `max` | `100` | The value that fills the ring's range. Without it, `--o-max` of the ring or system. |
 | `shape` | `none` | The ending. See Endings. |
 | `variant` | | `stroke` draws thin lines instead of filled bands. See Stroke variant. |
 | `interactive` | | Makes the whole track clickable, whatever its colors. See Pointer interaction. |
 | `hit-width` | `0` | Extra touch area, in px, on each side of an `interactive` track. |
 | Property or class | Default | What it does |
 | `--o-progress` | | The value, set from CSS. Wins over `value`. |
+| `--o-max` | `100` | The scale: the value that fills the range when there is no `max` attribute. Cascades from the ring and the system. |
+| `--o-value-angle` | read only | Written on the ring: the angle of the value from the start of the range. A `.satellite.at-value` sits there. See A satellite on the value. |
 | `--o-fill` | `var(--o-gray-light)` | Bar color. Not used by `variant="stroke"`. |
 | `--o-stroke` | `var(--o-fill)` | Bar outline, or the line color with `variant="stroke"`. |
 | `--o-stroke-width` | `1` (`2` with `stroke`) | Bar outline width, or the line width, in px. |
@@ -3085,7 +3214,7 @@ A progress goes straight into a ring, one per ring: put each bar of a multi-bar 
 
 ## Value and color
 
-`value` runs from 0 to `max` (100 by default) and fills that share of the ring's range. `--o-fill` colors the bar and `--o-back-fill` the track behind it; `--o-stroke` and `--o-back-stroke` outline them.
+`value` runs from 0 to `max` (100 by default) and fills that share of the ring's range. `--o-max` on a ring or system sets `max` for every progress and arc below it that has none. `--o-fill` colors the bar and `--o-back-fill` the track behind it; `--o-stroke` and `--o-back-stroke` outline them.
 
 `--o-progress` sets the value from CSS and wins over the attribute. Use it when a class or a parent owns the state:
 
@@ -3180,6 +3309,74 @@ input.addEventListener('input', () => {
   document.getElementById('value').textContent = input.value;
 });
 ```
+
+## A satellite on the value
+
+A `.satellite.at-value` in the same ring sits on the value of the progress: the knob of a dial, a marker, a tip. The progress writes the angle of its value on its ring as `--o-value-angle`, so the satellite follows every change. It sits on the middle of the band; `outer-orbit` or `--o-alignment` move it in or out, as on any satellite.
+
+```html
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10 range-270 from-225" style="--o-size-ratio: 1.2">
+        <o-progress id="dial" value="46" interactive hit-width="14" tabindex="0" role="slider"
+          aria-label="Temperature" aria-valuemin="0" aria-valuemax="100" aria-valuenow="46"></o-progress>
+        <!-- The knob: it sits on the value of the progress in its ring. -->
+        <div class="satellite at-value knob" style="--o-size-ratio: 3">
+          <div class="capsule" id="knob-value">46</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+```
+
+```css
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: var(--line);
+  --o-stroke: none;
+  cursor: grab;
+  touch-action: none;
+}
+o-progress:focus-visible { outline: none; --o-back-fill: var(--faint); }
+/* The knob lets the pointer through, so dragging it drags the dial. */
+.knob {
+  pointer-events: none;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 0 0 4px var(--bg);
+}
+```
+
+```js
+const dial = document.getElementById('dial');
+const set = value => {
+  value = Math.round(Math.min(100, Math.max(0, value)));
+  dial.setAttribute('value', value);
+  dial.setAttribute('aria-valuenow', value);
+  document.getElementById('knob-value').textContent = value;
+};
+// The pointer's angle along the dial: 0 at 225°, where the range starts.
+const fromPointer = event => {
+  const box = dial.getBoundingClientRect();
+  const angle = Math.atan2(event.clientX - (box.left + box.width / 2), (box.top + box.height / 2) - event.clientY) * 180 / Math.PI;
+  const along = (angle + 360 - 225) % 360;
+  set(along <= 270 ? along / 270 * 100 : along > 315 ? 0 : 100);
+};
+dial.addEventListener('pointerdown', event => { dial.setPointerCapture(event.pointerId); fromPointer(event); });
+dial.addEventListener('pointermove', event => { if (dial.hasPointerCapture(event.pointerId)) fromPointer(event); });
+dial.addEventListener('keydown', event => {
+  const step = { ArrowUp: 2, ArrowRight: 2, ArrowDown: -2, ArrowLeft: -2 }[event.key];
+  if (step) { event.preventDefault(); set(Number(dial.getAttribute('value')) + step); }
+});
+```
+
+Drag along the band, or focus it and use the arrow keys. The knob is a satellite with `at-value`; nothing computes its angle.
+
+Progress always fills clockwise, so `at-value` ignores `ccw`. With more than one progress in a ring, the satellite follows the last one drawn.
 
 ## Endings
 

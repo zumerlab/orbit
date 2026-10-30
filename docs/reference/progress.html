@@ -73,7 +73,7 @@ requestAnimationFrame(grow);
 <thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
 <tbody>
 <tr><td><code>value</code></td><td><code>0</code></td><td>Progress, out of <code>max</code>.</td></tr>
-<tr><td><code>max</code></td><td><code>100</code></td><td>The value that fills the ring's range.</td></tr>
+<tr><td><code>max</code></td><td><code>100</code></td><td>The value that fills the ring's range. Without it, <code>--o-max</code> of the ring or system.</td></tr>
 <tr><td><code>shape</code></td><td><code>none</code></td><td>The ending. See <a href="#endings">Endings</a>.</td></tr>
 <tr><td><code>variant</code></td><td></td><td><code>stroke</code> draws thin lines instead of filled bands. See <a href="#stroke">Stroke variant</a>.</td></tr>
 <tr><td><code>interactive</code></td><td></td><td>Makes the whole track clickable, whatever its colors. See <a href="#pointer">Pointer interaction</a>.</td></tr>
@@ -84,6 +84,8 @@ requestAnimationFrame(grow);
 <thead><tr><th>Property or class</th><th>Default</th><th>What it does</th></tr></thead>
 <tbody>
 <tr><td><code>--o-progress</code></td><td></td><td>The value, set from CSS. Wins over <code>value</code>.</td></tr>
+<tr><td><code>--o-max</code></td><td><code>100</code></td><td>The scale: the value that fills the range when there is no <code>max</code> attribute. Cascades from the ring and the system.</td></tr>
+<tr><td><code>--o-value-angle</code></td><td>read only</td><td>Written on the ring: the angle of the value from the start of the range. A <code>.satellite.at-value</code> sits there. See <a href="#on-the-value">A satellite on the value</a>.</td></tr>
 <tr><td><code>--o-fill</code></td><td><code>var(--o-gray-light)</code></td><td>Bar color. Not used by <code>variant="stroke"</code>.</td></tr>
 <tr><td><code>--o-stroke</code></td><td><code>var(--o-fill)</code></td><td>Bar outline, or the line color with <code>variant="stroke"</code>.</td></tr>
 <tr><td><code>--o-stroke-width</code></td><td><code>1</code> (<code>2</code> with <code>stroke</code>)</td><td>Bar outline width, or the line width, in px.</td></tr>
@@ -97,7 +99,7 @@ requestAnimationFrame(grow);
 </table></div>
 
 <h2>Value and color</h2>
-<p><code>value</code> runs from 0 to <code>max</code> (100 by default) and fills that share of the ring's range. <code>--o-fill</code> colors the bar and <code>--o-back-fill</code> the track behind it; <code>--o-stroke</code> and <code>--o-back-stroke</code> outline them.</p>
+<p><code>value</code> runs from 0 to <code>max</code> (100 by default) and fills that share of the ring's range. <code>--o-max</code> on a ring or system sets <code>max</code> for every progress and arc below it that has none. <code>--o-fill</code> colors the bar and <code>--o-back-fill</code> the track behind it; <code>--o-stroke</code> and <code>--o-back-stroke</code> outline them.</p>
 <p><code>--o-progress</code> sets the value from CSS and wins over the attribute. Use it when a class or a parent owns the state:</p>
 <figure class="example" data-height="340">
   <script type="text/plain" data-html>
@@ -186,6 +188,70 @@ input.addEventListener('input', () => {
 });
   </script>
 </figure>
+
+<h2 id="on-the-value">A satellite on the value</h2>
+<p>A <code>.satellite.at-value</code> in the same ring sits on the value of the progress: the knob of a dial, a marker, a tip. The progress writes the angle of its value on its ring as <code>--o-value-angle</code>, so the satellite follows every change. It sits on the middle of the band; <code>outer-orbit</code> or <code>--o-alignment</code> move it in or out, as on any satellite.</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10 range-270 from-225" style="--o-size-ratio: 1.2">
+        <o-progress id="dial" value="46" interactive hit-width="14" tabindex="0" role="slider"
+          aria-label="Temperature" aria-valuemin="0" aria-valuemax="100" aria-valuenow="46"></o-progress>
+        <!-- The knob: it sits on the value of the progress in its ring. -->
+        <div class="satellite at-value knob" style="--o-size-ratio: 3">
+          <div class="capsule" id="knob-value">46</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+o-progress {
+  --o-fill: var(--accent);
+  --o-back-fill: var(--line);
+  --o-stroke: none;
+  cursor: grab;
+  touch-action: none;
+}
+o-progress:focus-visible { outline: none; --o-back-fill: var(--faint); }
+/* The knob lets the pointer through, so dragging it drags the dial. */
+.knob {
+  pointer-events: none;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 0 0 4px var(--bg);
+}
+  </script>
+  <script type="text/plain" data-js>
+const dial = document.getElementById('dial');
+const set = value => {
+  value = Math.round(Math.min(100, Math.max(0, value)));
+  dial.setAttribute('value', value);
+  dial.setAttribute('aria-valuenow', value);
+  document.getElementById('knob-value').textContent = value;
+};
+// The pointer's angle along the dial: 0 at 225°, where the range starts.
+const fromPointer = event => {
+  const box = dial.getBoundingClientRect();
+  const angle = Math.atan2(event.clientX - (box.left + box.width / 2), (box.top + box.height / 2) - event.clientY) * 180 / Math.PI;
+  const along = (angle + 360 - 225) % 360;
+  set(along <= 270 ? along / 270 * 100 : along > 315 ? 0 : 100);
+};
+dial.addEventListener('pointerdown', event => { dial.setPointerCapture(event.pointerId); fromPointer(event); });
+dial.addEventListener('pointermove', event => { if (dial.hasPointerCapture(event.pointerId)) fromPointer(event); });
+dial.addEventListener('keydown', event => {
+  const step = { ArrowUp: 2, ArrowRight: 2, ArrowDown: -2, ArrowLeft: -2 }[event.key];
+  if (step) { event.preventDefault(); set(Number(dial.getAttribute('value')) + step); }
+});
+  </script>
+  <figcaption>Drag along the band, or focus it and use the arrow keys. The knob is a satellite with <code>at-value</code>; nothing computes its angle.</figcaption>
+</figure>
+<p>Progress always fills clockwise, so <code>at-value</code> ignores <code>ccw</code>. With more than one progress in a ring, the satellite follows the last one drawn.</p>
 
 <h2 id="endings">Endings</h2>
 <p><code>shape</code> sets how the bar ends: <code>circle</code> (or <code>circle-a</code>), <code>circle-b</code>, <code>bullet</code>, <code>arrow</code>, <code>slash</code>, <code>backslash</code>, <code>rounded</code> and <code>zigzag</code>. Endings are sized from the band, so they look the same on every ring and at every size.</p>

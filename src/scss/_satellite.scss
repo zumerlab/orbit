@@ -40,10 +40,24 @@
   pointer-events: all;
 }
 
+/* The angle of the value of the <o-progress> in a ring, from the start of its
+   range. The progress writes it on its ring. */
+@property --o-value-angle {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
 .satellite.at-center {
   --o-transform: rotate(0deg);
   --o-dir-x: 0;
   --o-dir-y: 0;
+}
+
+/* Sits on the value of the <o-progress> in the same ring, like the knob of a
+   dial. Progress always fills clockwise, so this ignores .ccw. */
+.satellite.at-value {
+  --o-angle-composite: calc(var(--o-value-angle) + 270deg);
 }
 .satellite.circle {
   border-radius: 50%;

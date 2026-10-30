@@ -65,7 +65,8 @@ document.getElementById('segments').innerHTML = '<o-arc interactive></o-arc>'.re
 <thead><tr><th>Attribute</th><th>Default</th><th>What it does</th></tr></thead>
 <tbody>
 <tr><td><code>value</code></td><td></td><td>Share of the ring's range, out of <code>max</code>. Without it, arcs split the range equally. See <a href="#split-or-stack">Split or stack</a>.</td></tr>
-<tr><td><code>max</code></td><td><code>100</code></td><td>The value that fills the whole range.</td></tr>
+<tr><td><code>max</code></td><td><code>100</code></td><td>The value that fills the whole range. Without it, <code>--o-max</code> of the ring or system.</td></tr>
+<tr><td><code>start</code></td><td></td><td>Where the arc begins, on the same scale as <code>value</code>. A placed arc takes no slot and moves no other arc. See <a href="#placed">Placed arcs</a>.</td></tr>
 <tr><td><code>range</code></td><td></td><td><code>auto</code> makes the arc as long as its text. See <a href="#fit-the-text">Arcs that fit their text</a>.</td></tr>
 <tr><td><code>shape</code></td><td><code>none</code></td><td>The ending. See <a href="#endings">Endings</a>.</td></tr>
 <tr><td><code>text-anchor</code></td><td><code>middle</code></td><td>Text along the arc: <code>start</code>, <code>middle</code> or <code>end</code>. On a <code>range="auto"</code> arc, where the arc sits around its angle.</td></tr>
@@ -83,6 +84,9 @@ document.getElementById('segments').innerHTML = '<o-arc interactive></o-arc>'.re
 <tr><td><code>--o-stroke-width</code></td><td><code>1</code></td><td>Outline width, in px.</td></tr>
 <tr><td><code>color</code> or <code>--o-color</code></td><td><code>currentcolor</code></td><td>Text color. Other font properties apply too.</td></tr>
 <tr><td><code>--o-gap</code>, <code>.gap-0</code> … <code>.gap-30</code></td><td><code>1</code></td><td>Space at each end of the arc. Cascades from the ring and the system.</td></tr>
+<tr><td><code>--o-max</code></td><td><code>100</code></td><td>The scale: the value that fills the range when there is no <code>max</code> attribute. Cascades from the ring and the system.</td></tr>
+<tr><td><code>.ripple</code></td><td></td><td>Waves grow out of the band, to call for attention. See <a href="#ripple">Ripple</a>.</td></tr>
+<tr><td><code>--o-ripple-color</code>, <code>--o-ripple-duration</code>, <code>--o-ripple-scale</code></td><td><code>--o-fill</code>, <code>1.6s</code>, <code>1.14</code></td><td>The color of a wave, how long it takes and how far it grows.</td></tr>
 <tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Thickness, in lanes. <code>.grow-*</code> and <code>.shrink-*</code> work as on <a href="satellite.html">satellites</a>.</td></tr>
 <tr><td><code>.inner-orbit</code>, <code>.outer-orbit</code>, <code>.quarter-*-orbit</code></td><td></td><td>Moves the band in or out from its lane.</td></tr>
 <tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>Starts the arc at that angle.</td></tr>
@@ -90,7 +94,7 @@ document.getElementById('segments').innerHTML = '<o-arc interactive></o-arc>'.re
 </table></div>
 
 <h2 id="split-or-stack">Split or stack</h2>
-<p>Without <code>value</code>, sibling arcs share the ring equally: a segmented ring, or a pie when they are thick. With <code>value</code>, each takes its share of the range and starts where the previous one ended: a donut chart. Values are not normalized, so make them add up to <code>max</code> for a full ring. With <code>max="24"</code>, <code>value="6"</code> is a quarter. An explicit <code>value="0"</code> draws nothing and takes no room.</p>
+<p>Without <code>value</code>, sibling arcs share the ring equally: a segmented ring, or a pie when they are thick. With <code>value</code>, each takes its share of the range and starts where the previous one ended: a donut chart. Values are not normalized, so make them add up to <code>max</code> for a full ring. With <code>max="24"</code>, or <code>--o-max: 24</code> on the ring, <code>value="6"</code> is a quarter. An explicit <code>value="0"</code> draws nothing and takes no room.</p>
 <figure class="example" data-height="300">
   <script type="text/plain" data-html>
 <main class="stage">
@@ -421,6 +425,77 @@ o-arc {
   </script>
   <figcaption>The amber line points at 0°.</figcaption>
 </figure>
+
+<h2 id="placed">Placed arcs</h2>
+<p><code>start</code> puts an arc at a point of its ring, on the same scale as <code>value</code>: <code>0</code> is the start of the range and <code>max</code> its end. A placed arc takes no slot and moves no other arc, so it can go over a ring that already has arcs: a name on a ring of segments, or a segment on a timeline.</p>
+<p><code>--o-max</code> sets the scale for every arc and progress below it that has no <code>max</code> attribute, so values stay in their own units. Here a whole system counts hours: 12 of them fill 320°, from 12 hours ago to now.</p>
+<figure class="example" data-height="360">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <!-- Every ring: 12 hours over 320°, leaving a gap at the top. -->
+    <div class="gravity-spot" style="--o-max: 12; --o-from: 40deg; --o-range: 320deg">
+      <div class="orbit-11 scale">
+        <o-arc range="auto" start="0" text-anchor="start">12 h ago</o-arc>
+        <o-arc range="auto" start="6" text-anchor="middle" flip>6 h ago</o-arc>
+        <o-arc range="auto" start="12" text-anchor="end">now</o-arc>
+      </div>
+      <div class="orbit-9 row">
+        <o-arc class="track" value="12"></o-arc>
+        <o-arc class="on" start="1" value="2.5"></o-arc>
+        <o-arc class="on" start="7.25" value="1.5"></o-arc>
+        <o-arc class="on" start="10.5" value="1.5"></o-arc>
+        <!-- The name ends where the row begins. -->
+        <o-arc class="name" range="auto" start="0" text-anchor="end">Lights</o-arc>
+      </div>
+      <div class="orbit-7 row">
+        <o-arc class="track" value="12"></o-arc>
+        <o-arc class="on" start="0" value="4"></o-arc>
+        <o-arc class="on" start="5.5" value="0.75"></o-arc>
+        <o-arc class="name" range="auto" start="0" text-anchor="end">Heating</o-arc>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.scale o-arc, .name { --o-fill: transparent; color: var(--muted); font-size: 12px; }
+.row { --o-size-ratio: .6; --o-gap: 0; }
+.row .track { --o-fill: var(--line); --o-stroke: none; }
+.row .on { --o-fill: var(--accent); --o-stroke: none; }
+  </script>
+  <figcaption>Two rings of history. Every segment says when it started and how long it lasted, in hours. The labels sit on the same rings as the arcs.</figcaption>
+</figure>
+<p>With <code>range="auto"</code>, a placed arc is a label. With <code>text-anchor</code> it is anchored at its point, as above: <code>start</code> begins there, <code>middle</code> centers on it and <code>end</code> ends there. A segment stays inside a partial range; on a full ring it wraps around, so with <code>--o-max: 24</code>, <code>start="22" value="4"</code> runs from 22:00 to 2:00.</p>
+
+<h2 id="ripple">Ripple</h2>
+<p><code>.ripple</code> sends waves out of an arc: a copy of the band grows from the center of the ring and fades, over and over, while the band itself stays. Use it for the one thing that needs attention now. <code>--o-ripple-color</code> sets its color (the band's fill by default), <code>--o-ripple-duration</code> how long a wave takes, and <code>--o-ripple-scale</code> how far it grows. With reduced motion, there are no waves.</p>
+<figure class="example" data-height="320">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-8 status" style="--o-size-ratio: 1.2; --o-gap: 6">
+        <o-arc></o-arc>
+        <o-arc class="ripple warn"></o-arc>
+        <o-arc></o-arc>
+        <o-arc></o-arc>
+        <o-arc class="ripple alarm"></o-arc>
+        <o-arc></o-arc>
+      </div>
+    </div>
+  </div>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.status o-arc { --o-fill: var(--line); --o-stroke: none; }
+.status .warn { --o-fill: var(--amber); }
+/* The serious one calls faster. */
+.status .alarm { --o-fill: var(--coral); --o-ripple-duration: .9s; }
+  </script>
+  <figcaption>Six segments, two of them calling: amber every 1.6 seconds, coral every 0.9.</figcaption>
+</figure>
+<p>To make a whole dial call, place a transparent arc over it and give it the color of the wave: <code>&lt;o-arc class="ripple" start="0" value="100" style="--o-fill: transparent; --o-ripple-color: var(--coral)"&gt;</code>.</p>
 
 <h2 id="pointer">Pointer interaction</h2>
 <p>Arcs are decorative by default, so they never steal clicks from controls nearby. <code>interactive</code> makes the whole band clickable, even where its fill is transparent, and <code>hit-width</code> adds touch area in px on each side, which helps with thin arcs on touch screens.</p>

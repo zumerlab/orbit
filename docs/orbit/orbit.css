@@ -1148,6 +1148,8 @@
   --o-gap: 1;
   --o-initial-orbit: 0;
   --o-angle: 0;
+  /* The value that fills a ring's range, for arcs and progress without a max attribute. */
+  --o-max: 100;
   width: 0;
   aspect-ratio: 1;
   position: relative;
@@ -1214,10 +1216,23 @@
   pointer-events: all;
 }
 
+/* The angle of the value of the <o-progress> in a ring, from the start of its
+   range. The progress writes it on its ring. */
+@property --o-value-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
 .satellite.at-center {
   --o-transform: rotate(0deg);
   --o-dir-x: 0;
   --o-dir-y: 0;
+}
+
+/* Sits on the value of the <o-progress> in the same ring, like the knob of a
+   dial. Progress always fills clockwise, so this ignores .ccw. */
+.satellite.at-value {
+  --o-angle-composite: calc(var(--o-value-angle) + 270deg);
 }
 
 .satellite.circle {
@@ -9636,6 +9651,33 @@ Can be used in parent elements or in each orbiter class
 
 .satellite > .capsule.turn-right {
   margin-top: unset;
+}
+
+/*
+  Labels outside their satellite, away from the center (--o-dir-x/-y). Put
+  the class on a capsule or on an element inside one. 50cqw and 50cqh are half
+  the satellite; --o-outward-gap is the space between it and the label.
+*/
+.outward, .outward-y {
+  position: absolute;
+  width: max-content;
+}
+
+/* Along the direction. The translate scales the direction so its larger
+   component is 1: the label's nearest edge or corner touches the circle. */
+.outward {
+  --o-out: max(var(--o-dir-x), -1 * var(--o-dir-x), var(--o-dir-y), -1 * var(--o-dir-y), .001);
+  left: calc(50% + var(--o-dir-x) * (50cqw + var(--o-outward-gap, 4px)));
+  top: calc(50% + var(--o-dir-y) * (50cqh + var(--o-outward-gap, 4px)));
+  translate: calc(-50% + 50% * var(--o-dir-x) / var(--o-out)) calc(-50% + 50% * var(--o-dir-y) / var(--o-out));
+}
+
+/* Only up or down: above the satellites of the upper half, below the rest. */
+.outward-y {
+  --o-out: clamp(-1, (var(--o-dir-y) + .01) * 1000, 1);
+  left: 50%;
+  top: calc(50% + var(--o-out) * (50cqh + var(--o-outward-gap, 4px)));
+  translate: -50% calc((var(--o-out) - 1) * 50%);
 }
 
 /*  Satellite  gyro */
