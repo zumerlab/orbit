@@ -2,15 +2,29 @@
 
 All notable changes to this project will be documented in this file. 
 
-#### Unreleased
+#### [v2.1.0](https://github.com/zumerlab/orbit/compare/v2.0.1...v2.1.0)
+
+> 30 October 2026
 
 **Features**
 
+- satellite on a progress value, outward labels, arc ripple, placed arcs and --o-max [`23d7fe7`](https://github.com/zumerlab/orbit/commit/23d7fe7697f0ab8184b5e7d5da00ab2a72236ae6)
 - `.satellite.at-value` sits on the value of the `<o-progress>` in its ring, like the knob of a dial. The progress writes the angle on its ring as `--o-value-angle`.
 - `.outward` and `.outward-y` put a label just outside its satellite, along its direction or only above and below. `--o-outward-gap` sets the space.
 - `class="ripple"` on `<o-arc>`: waves grow out of the band and fade, to call for attention. `--o-ripple-color`, `--o-ripple-duration` and `--o-ripple-scale` tune them; reduced motion turns them off.
 - `start` on `<o-arc>` places it at a point of the ring's scale. A placed arc takes no slot and moves no other arc, so text and segments can go over a ring that already has arcs.
 - `--o-max` sets the scale of a ring or system for every arc and progress without a `max` attribute, so values stay in their own units (hours, for example).
+
+**Fixes**
+
+- **deps:** update source-map-js to 1.2.2 [`dcbb5e2`](https://github.com/zumerlab/orbit/commit/dcbb5e20538c2de3cd53e826ba431ab0958841ac)
+- **deps:** update source-map-js to 1.2.2 [`3a14e02`](https://github.com/zumerlab/orbit/commit/3a14e02ff4dd5f77cd74c265bbaebdb08372712e)
+
+**Docs**
+
+- refresh sitemap dates after merging dev [`c455887`](https://github.com/zumerlab/orbit/commit/c4558879c0b1fc396fdbe118f15f10082b7821f1)
+
+
 
 #### [v2.0.1](https://github.com/zumerlab/orbit/compare/v2.0.0...v2.0.1)
 
