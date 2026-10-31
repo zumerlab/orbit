@@ -252,7 +252,9 @@ Orbit.refresh(panel)                // update now, e.g. after editing a styleshe
 
 `Orbit.resize(target)` only matters for systems with a fixed px `--o-force`: it scales them with the target's width, taking 500px as 1×, and returns a function that stops it.
 
-For shadow DOM, include the stylesheet inside each shadow root. Arcs and progress register their shadow root on their own; for a shadow tree with only CSS elements, call `Orbit.refresh(shadowRoot)` once.
+For shadow DOM, include the stylesheet inside each shadow root. Arcs and progress register their shadow root on their own; for a shadow tree with only CSS elements, call `Orbit.refresh(shadowRoot)` once. The custom properties Orbit registers with `@property` do not register from a stylesheet inside a shadow root, so the runtime registers them itself; without the runtime, load `@zumer/orbit/properties` (`dist/orbit-properties.css`) in the page.
+
+The runtime redraws for added, removed and reordered elements, `class` changes, inline `--o-*` and font properties, the attributes of `<o-arc>` and `<o-progress>`, and containers that change size. Other attributes, inline properties it does not read and the pointer or focus moving over a ring leave the drawing alone: hover styles are plain CSS.
 
 Override Orbit through the documented custom properties. The runtime manages `data-orbit-ring`, `--o-layout-*` and `--o-arc-start` itself.
 

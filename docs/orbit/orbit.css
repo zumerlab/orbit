@@ -2,6 +2,45 @@
 /*================
     ORBIT CORE
 ==================*/
+/* The custom properties Orbit registers. They are here, apart from the rules
+   that use them, because a stylesheet inside a shadow root registers nothing
+   with @property: src/properties.scss builds this partial alone as
+   dist/orbit-properties.css, for the page of a shadow DOM app, and the runtime
+   registers the same five with CSS.registerProperty (src/js/orbit-properties.js;
+   keep both lists equal). */
+/* Direction from the center to the satellite, as a unit vector: x grows to
+   the right and y grows down. Registered so they are computed on the satellite
+   and its content inherits the numbers (a .capsule resets its own angle). */
+@property --o-dir-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --o-dir-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+/* The angle of the value of the <o-progress> in a ring, from the start of its
+   range. The progress writes it on its ring; .satellite.at-value sits on it. */
+@property --o-value-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+/* Arcs and progress hide on a ring that is stretched into an ellipse (see
+   _support.scss). Registered as numbers, so 1 and 1.0 compare equal, and an
+   arc outside any gravity spot (where nothing sets them) still counts as round. */
+@property --o-ellipse-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --o-ellipse-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
 /* Orbit basic reset.
    Zero specificity, like the theme: any rule of yours wins, also on content
    inside a .capsule. */
@@ -1175,19 +1214,10 @@
   pointer-events: none;
 }
 
-/* Direction from the center to the satellite, as a unit vector: x grows to
-   the right and y grows down. Registered so they are computed on the satellite
-   and its content inherits the numbers (a .capsule resets its own angle). */
-@property --o-dir-x {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --o-dir-y {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
+/* --o-dir-x / --o-dir-y: the direction from the center to the satellite, as a
+   unit vector (x grows to the right, y down). Registered in _properties.scss
+   so they are computed on the satellite and its content inherits the numbers
+   (a .capsule resets its own angle). */
 .satellite {
   container-name: satellite;
   /* A satellite is the space of any system nested in it. */
@@ -1216,13 +1246,9 @@
   pointer-events: all;
 }
 
-/* The angle of the value of the <o-progress> in a ring, from the start of its
-   range. The progress writes it on its ring. */
-@property --o-value-angle {
-  syntax: "<angle>";
-  inherits: true;
-  initial-value: 0deg;
-}
+/* --o-value-angle: the angle of the value of the <o-progress> in a ring, from
+   the start of its range. The progress writes it on its ring. Registered in
+   _properties.scss. */
 .satellite.at-center {
   --o-transform: rotate(0deg);
   --o-dir-x: 0;
@@ -9717,16 +9743,6 @@ Can be used in parent elements or in each orbiter class
     color: red;
     text-align: center;
   }
-}
-@property --o-ellipse-x {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 1;
-}
-@property --o-ellipse-y {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 1;
 }
 @container not style(--o-ellipse-x: 1) {
   o-arc, o-progress {

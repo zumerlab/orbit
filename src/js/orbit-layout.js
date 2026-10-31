@@ -1,6 +1,8 @@
 // CSS owns presentation; this scheduler owns discovery, ordering and invalidation.
 // One observer per document batches related changes into one animation frame.
 // Shared across repeated classic-script loads and ESM/classic entrypoints.
+import { registerProperties } from './orbit-properties.js';
+
 const STATE = Symbol.for('zumer.orbit.layout.state.v1');
 const REGISTRY = Symbol.for('zumer.orbit.layout.registry.v1');
 const PROBE = Symbol.for('zumer.orbit.layout.probe.v1');
@@ -77,6 +79,12 @@ function diagnose(ring) {
       }
     }
   }
+}
+
+/** Write an attribute only when it changes: a same-value write still repaints SVG. */
+export function setAttributeIfChanged(element, name, value) {
+  const text = String(value);
+  if (element.getAttribute(name) !== text) element.setAttribute(name, text);
 }
 
 export function setLayoutProperty(element, name, value) {
@@ -211,6 +219,41 @@ function hasStylesheet(node) {
     !!node.querySelector('style, link[rel~="stylesheet"]'));
 }
 
+// The inline properties the drawing reads: Orbit's own, and the font (arc
+// text is measured). Sizes reach the ResizeObserver on their own.
+const READ_INLINE = /^(?:--o-|font|letter-spacing|word-spacing)/;
+
+function readDeclarations(text) {
+  const declarations = new Map();
+  for (const part of String(text || '').split(';')) {
+    const colon = part.indexOf(':');
+    if (colon < 0) continue;
+    const name = part.slice(0, colon).trim();
+    if (READ_INLINE.test(name)) declarations.set(name, part.slice(colon + 1).trim());
+  }
+  return declarations;
+}
+
+/** Did an inline style change touch something the drawing reads? */
+function inlineStyleChanged(before, after) {
+  if (before === after) return false;
+  const was = readDeclarations(before), is = readDeclarations(after);
+  if (was.size !== is.size) return true;
+  for (const [name, value] of was) if (is.get(name) !== value) return true;
+  return false;
+}
+
+// An attribute change matters when it can change geometry: a class (selectors),
+// an inline --o-* or font property, or an attribute of an arc or progress.
+// Anything else, like a transform or a custom property of the page written on
+// an ancestor, leaves the drawing alone.
+function attributeMatters(record, target) {
+  const name = record.attributeName;
+  if (name === 'class') return true;
+  if (name === 'style') return inlineStyleChanged(record.oldValue, target.getAttribute('style'));
+  return !!target.matches?.(VISUALS);
+}
+
 function needsDiscovery(record, state) {
   if (record.type === 'childList') {
     return [...record.addedNodes, ...record.removedNodes].some(hasLayoutStructure);
@@ -226,6 +269,8 @@ function createState(scope) {
   const doc = scope.nodeType === 9 ? scope : scope.ownerDocument;
   const view = doc.defaultView;
   const registry = registryFor(doc);
+  // Components adopted into another document bring the properties along.
+  registerProperties(view);
   const state = { scope, doc, view, registry, rings: new Set(), visuals: new Set(), dirty: new Set(),
     scan: true, all: true, frame: 0, disposed: false, listeners: [], waiters: [] };
   const listen = (target, event, listener, options) => {
@@ -257,6 +302,7 @@ function createState(scope) {
     for (const record of records) {
       const target = record.target.nodeType === 3 ? record.target.parentElement : record.target;
       if (!target || target.hasAttribute?.('data-orbit-measure')) continue;
+      if (record.type === 'attributes' && !attributeMatters(record, target)) continue;
       const structural = needsDiscovery(record, state);
       if (structural) state.scan = true;
       const stylesheetChange = record.type === 'childList' &&
@@ -293,12 +339,8 @@ function createState(scope) {
   listen(scope, 'load', event => {
     if (event.target.localName === 'link') invalidateAll();
   }, true);
-  for (const event of ['pointerover', 'pointerout', 'focusin', 'focusout']) {
-    listen(scope, event, e => {
-      state.invalidate(e.target);
-      invalidateDescendants(state, e.target);
-    }, true);
-  }
+  // Hover and focus never redraw: their styles are CSS (--o-fill, scale). A
+  // :hover rule that changes geometry needs Orbit.refresh(element) by hand.
   Object.defineProperty(scope, STATE, { value: state, configurable: true });
   registry.states.add(state);
   queue();

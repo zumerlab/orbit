@@ -31,6 +31,9 @@ function buildCss() {
   writeFileSync('dist/orbit.css', fixCharset(expanded.css))
   const compressed = sass.compile('src/orbit.scss', { loadPaths: ['src'], style: 'compressed' })
   writeFileSync('dist/orbit.min.css', fixCharset(compressed.css))
+  // Only the @property rules, for the page of an app that keeps orbit.css in shadow roots.
+  const properties = sass.compile('src/properties.scss', { loadPaths: ['src'] })
+  writeFileSync('dist/orbit-properties.css', fixCharset(properties.css))
 }
 
 async function buildJs() {

@@ -1,5 +1,5 @@
 import { OrbitBase } from './orbit-base.js';
-import { cssNumber, setLayoutProperty, warnOnce } from './orbit-layout.js';
+import { cssNumber, setAttributeIfChanged, setLayoutProperty, warnOnce } from './orbit-layout.js';
 
 const template = typeof document === 'undefined' ? null : document.createElement('template');
 if (template) template.innerHTML = `
@@ -123,31 +123,26 @@ export class OrbitArc extends OrbitBase {
     const textPath = this.shadowRoot.querySelector('textPath');
 
     const { dShape } = this.calculateArcParameters(attrs);
-    orbitShape.setAttribute('d', dShape);
-    this.shadowRoot.querySelector('#orbitWave').setAttribute('d', dShape);
-    orbitPath.setAttribute('d', this.calculateTextArcParameters(attrs).dPath);
+    setAttributeIfChanged(orbitShape, 'd', dShape);
+    setAttributeIfChanged(this.shadowRoot.querySelector('#orbitWave'), 'd', dShape);
+    setAttributeIfChanged(orbitPath, 'd', this.calculateTextArcParameters(attrs).dPath);
     this.updateHitArea(this.shadowRoot.querySelector('#orbitHit'), attrs, 0, attrs.arcAngle);
     const textAnchor = attrs.textAnchor;
 
-    if (textAnchor === 'start') {
-      textPath.setAttribute('startOffset', '0%');
-      textPath.setAttribute('text-anchor', 'start');
-    } else if (textAnchor === 'middle') {
-      textPath.setAttribute('startOffset', '50%');
-      textPath.setAttribute('text-anchor', 'middle');
-    } else if (textAnchor === 'end') {
-      textPath.setAttribute('startOffset', '100%');
-      textPath.setAttribute('text-anchor', 'end');
+    const startOffset = { start: '0%', middle: '50%', end: '100%' }[textAnchor];
+    if (startOffset) {
+      setAttributeIfChanged(textPath, 'startOffset', startOffset);
+      setAttributeIfChanged(textPath, 'text-anchor', textAnchor);
     }
 
     if (fitRange) {
-      textPath.parentElement.setAttribute('textLength', orbitPath.getTotalLength());
+      setAttributeIfChanged(textPath.parentElement, 'textLength', orbitPath.getTotalLength());
     } else {
       textPath.parentElement.removeAttribute('textLength');
     }
 
-    textPath.parentElement.style.fontSize = attrs.svgFontSize;
-    textPath.textContent = this.textContent;
+    setLayoutProperty(textPath.parentElement, 'font-size', attrs.svgFontSize);
+    if (textPath.textContent !== this.textContent) textPath.textContent = this.textContent;
     if (!attrs.auto) this.warnIfTextOverflows(orbitPath, textPath, fitRange);
   }
 

@@ -146,7 +146,7 @@ toggle.addEventListener('click', () => {
   </script>
   <figcaption>Outer ring: <code>--o-progress</code> from a class. Inner ring: <code>value="50" max="80"</code>, with an outlined track.</figcaption>
 </figure>
-<p>Orbit redraws when the element's or an ancestor's <code>class</code> or <code>style</code> changes. After a change it cannot see, such as editing a stylesheet rule, call <code>Orbit.refresh()</code>. The value does not animate: a <code>transition</code> on <code>--o-progress</code> jumps straight to the new value.</p>
+<p>Orbit redraws when the element's attributes change, and when a <code>class</code> or an inline <code>--o-*</code> property changes on it or on an ancestor. After a change it cannot see, such as editing a stylesheet rule or a <code>:hover</code> rule that changes the geometry, call <code>Orbit.refresh()</code>. The value does not animate: a <code>transition</code> on <code>--o-progress</code> jumps straight to the new value.</p>
 
 <h2>Gauges</h2>
 <p>A progress fills the ring's range, so a partial range makes a gauge. <code>range-240 from-240</code> leaves the gap at the bottom:</p>

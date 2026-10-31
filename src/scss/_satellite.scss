@@ -1,16 +1,7 @@
-/* Direction from the center to the satellite, as a unit vector: x grows to
-   the right and y grows down. Registered so they are computed on the satellite
-   and its content inherits the numbers (a .capsule resets its own angle). */
-@property --o-dir-x {
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
-@property --o-dir-y {
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
+/* --o-dir-x / --o-dir-y: the direction from the center to the satellite, as a
+   unit vector (x grows to the right, y down). Registered in _properties.scss
+   so they are computed on the satellite and its content inherits the numbers
+   (a .capsule resets its own angle). */
 
 .satellite {
   container-name: satellite;
@@ -40,13 +31,9 @@
   pointer-events: all;
 }
 
-/* The angle of the value of the <o-progress> in a ring, from the start of its
-   range. The progress writes it on its ring. */
-@property --o-value-angle {
-  syntax: '<angle>';
-  inherits: true;
-  initial-value: 0deg;
-}
+/* --o-value-angle: the angle of the value of the <o-progress> in a ring, from
+   the start of its range. The progress writes it on its ring. Registered in
+   _properties.scss. */
 
 .satellite.at-center {
   --o-transform: rotate(0deg);

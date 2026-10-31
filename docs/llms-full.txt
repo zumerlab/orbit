@@ -457,6 +457,7 @@ Everything lives in `dist/`. You can [browse it on unpkg](https://unpkg.com/brow
 
 | File | Import as | What it is |
 | `orbit.css`, `orbit.min.css` | `@zumer/orbit/style` | The stylesheet: geometry, reset, default theme, `theme-cyan`, the color palette and `dev-orbit`. About 18 kB gzipped. |
+| `orbit-properties.css` | `@zumer/orbit/properties` | Only the five `@property` rules, for the page of an app that keeps `orbit.css` inside shadow roots and runs without the runtime. The runtime registers them itself, so with it this file is not needed. |
 | `orbit.mjs` | `@zumer/orbit` (import) | The runtime as an ES module. |
 | `orbit.js`, `orbit.min.js` | `@zumer/orbit` (require) | The runtime as a classic script that sets `window.Orbit`. About 9 kB gzipped. |
 | `orbit.d.ts`, `style.d.ts` | | TypeScript types for the API, the elements and the stylesheet import. |
@@ -3265,7 +3266,7 @@ toggle.addEventListener('click', () => {
 
 Outer ring: `--o-progress` from a class. Inner ring: `value="50" max="80"`, with an outlined track.
 
-Orbit redraws when the element's or an ancestor's `class` or `style` changes. After a change it cannot see, such as editing a stylesheet rule, call `Orbit.refresh()`. The value does not animate: a `transition` on `--o-progress` jumps straight to the new value.
+Orbit redraws when the element's attributes change, and when a `class` or an inline `--o-*` property changes on it or on an ancestor. After a change it cannot see, such as editing a stylesheet rule or a `:hover` rule that changes the geometry, call `Orbit.refresh()`. The value does not animate: a `transition` on `--o-progress` jumps straight to the new value.
 
 ## Gauges
 
@@ -4153,7 +4154,9 @@ The `.bigbang` is square and as wide as its parent, and a parent with a height k
 
 ## What the runtime watches
 
-Orbit watches the page for added, removed and reordered elements, attribute and style changes, and containers that change size. It batches what it sees into the next animation frame. That is why a framework can re-render a layout, or you can change `value` on an `<o-progress>`, and the drawing follows with no extra call.
+Orbit watches the page for added, removed and reordered elements, for `class` changes, for inline `--o-*` and font properties, for the attributes of `<o-arc>` and `<o-progress>`, and for containers that change size. It batches what it sees into the next animation frame. That is why a framework can re-render a layout, or you can change `value` on an `<o-progress>`, and the drawing follows with no extra call.
+
+Everything else leaves the drawing alone: another attribute, an inline property Orbit does not read (a `transform`, a custom property of yours), and the pointer or the focus moving over a ring. So hover and focus styles are plain CSS, `o-arc:hover { --o-fill: … }`, and cost no redraw. When a hover, a `data-` attribute or a custom property of yours should change the geometry (`--o-range`, `--o-size-ratio`, `--o-stroke-width`), use a class, or call `Orbit.refresh()` with the element.
 
 ## Waiting for the drawing
 
@@ -4222,7 +4225,7 @@ sheet.cssRules[0].style.setProperty('--o-range', '180deg');
 Orbit.refresh(panel);
 ```
 
-For shadow DOM, include the stylesheet inside each shadow root. Arcs and progress register their shadow root on their own; for a shadow tree with only CSS elements, call `Orbit.refresh(shadowRoot)` once.
+For shadow DOM, include the stylesheet inside each shadow root. Arcs and progress register their shadow root on their own; for a shadow tree with only CSS elements, call `Orbit.refresh(shadowRoot)` once. The five custom properties Orbit registers with `@property` (`--o-dir-x`, `--o-dir-y`, `--o-value-angle`, `--o-ellipse-x`, `--o-ellipse-y`) do not register from a stylesheet inside a shadow root, so the runtime registers them itself when it loads. Without the runtime, load `orbit-properties.css` (`@zumer/orbit/properties`) in the page.
 
 ## Fixed sizes and Orbit.resize()
 
@@ -4972,6 +4975,8 @@ Or in a plain page:
 ```
 
 The entry registers every component. To load only some, import their files: `import '@zumer/orbit-kit/o-gauge.js'`. Orbit 2 is a peer dependency; the kit does not work with Orbit 1.x.
+
+Inside a shadow root (a card, a component of yours) the page's stylesheets do not reach the components. The kit adopts its own stylesheets into that root on its own. Orbit's stylesheet is yours to put there, as for any Orbit layout in shadow DOM: `root.adoptedStyleSheets = [orbitSheet]`, or a `<link>` inside the root.
 
 ## Components
 

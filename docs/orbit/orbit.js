@@ -1,10 +1,31 @@
 /*
 * orbit
-* v.2.0.1
+* v.2.1.0
 * Author Juan Martin Muda - Zumerlab
 * License MIT
 */
 (() => {
+  // src/js/orbit-properties.js
+  var ORBIT_PROPERTIES = [
+    { name: "--o-dir-x", syntax: "<number>", inherits: true, initialValue: "0" },
+    { name: "--o-dir-y", syntax: "<number>", inherits: true, initialValue: "0" },
+    { name: "--o-value-angle", syntax: "<angle>", inherits: true, initialValue: "0deg" },
+    { name: "--o-ellipse-x", syntax: "<number>", inherits: true, initialValue: "1" },
+    { name: "--o-ellipse-y", syntax: "<number>", inherits: true, initialValue: "1" }
+  ];
+  var REGISTERED = Symbol.for("zumer.orbit.properties.v1");
+  function registerProperties(view = globalThis) {
+    const css = view == null ? void 0 : view.CSS;
+    if (!(css == null ? void 0 : css.registerProperty) || view[REGISTERED]) return;
+    Object.defineProperty(view, REGISTERED, { value: true, configurable: true });
+    for (const property of ORBIT_PROPERTIES) {
+      try {
+        css.registerProperty(property);
+      } catch (e) {
+      }
+    }
+  }
+
   // src/js/orbit-layout.js
   var STATE = Symbol.for("zumer.orbit.layout.state.v1");
   var REGISTRY = Symbol.for("zumer.orbit.layout.registry.v1");
@@ -67,6 +88,10 @@
         }
       }
     }
+  }
+  function setAttributeIfChanged(element, name, value) {
+    const text = String(value);
+    if (element.getAttribute(name) !== text) element.setAttribute(name, text);
   }
   function setLayoutProperty(element, name, value) {
     const text = String(value);
@@ -182,6 +207,31 @@
   function hasStylesheet(node) {
     return node.nodeType === 1 && (node.matches('style, link[rel~="stylesheet"]') || !!node.querySelector('style, link[rel~="stylesheet"]'));
   }
+  var READ_INLINE = /^(?:--o-|font|letter-spacing|word-spacing)/;
+  function readDeclarations(text) {
+    const declarations = /* @__PURE__ */ new Map();
+    for (const part of String(text || "").split(";")) {
+      const colon = part.indexOf(":");
+      if (colon < 0) continue;
+      const name = part.slice(0, colon).trim();
+      if (READ_INLINE.test(name)) declarations.set(name, part.slice(colon + 1).trim());
+    }
+    return declarations;
+  }
+  function inlineStyleChanged(before, after) {
+    if (before === after) return false;
+    const was = readDeclarations(before), is = readDeclarations(after);
+    if (was.size !== is.size) return true;
+    for (const [name, value] of was) if (is.get(name) !== value) return true;
+    return false;
+  }
+  function attributeMatters(record, target) {
+    var _a;
+    const name = record.attributeName;
+    if (name === "class") return true;
+    if (name === "style") return inlineStyleChanged(record.oldValue, target.getAttribute("style"));
+    return !!((_a = target.matches) == null ? void 0 : _a.call(target, VISUALS));
+  }
   function needsDiscovery(record, state) {
     if (record.type === "childList") {
       return [...record.addedNodes, ...record.removedNodes].some(hasLayoutStructure);
@@ -194,6 +244,7 @@
     const doc = scope.nodeType === 9 ? scope : scope.ownerDocument;
     const view = doc.defaultView;
     const registry = registryFor(doc);
+    registerProperties(view);
     const state = {
       scope,
       doc,
@@ -239,6 +290,7 @@
       for (const record of records) {
         const target = record.target.nodeType === 3 ? record.target.parentElement : record.target;
         if (!target || ((_a = target.hasAttribute) == null ? void 0 : _a.call(target, "data-orbit-measure"))) continue;
+        if (record.type === "attributes" && !attributeMatters(record, target)) continue;
         const structural = needsDiscovery(record, state);
         if (structural) state.scan = true;
         const stylesheetChange = record.type === "childList" && [...record.addedNodes, ...record.removedNodes].some(hasStylesheet);
@@ -272,12 +324,6 @@
     listen(scope, "load", (event) => {
       if (event.target.localName === "link") invalidateAll();
     }, true);
-    for (const event of ["pointerover", "pointerout", "focusin", "focusout"]) {
-      listen(scope, event, (e) => {
-        state.invalidate(e.target);
-        invalidateDescendants(state, e.target);
-      }, true);
-    }
     Object.defineProperty(scope, STATE, { value: state, configurable: true });
     registry.states.add(state);
     queue();
@@ -675,8 +721,8 @@
         return;
       }
       const radians = (degrees) => (degrees - 90) * Math.PI / 180;
-      hit.setAttribute("d", this.linePath(attrs.realRadius, radians(from), radians(Math.min(to, from + 360))));
-      hit.style.strokeWidth = `${attrs.arcHeight + attrs.strokeWidth + 2 * extra}px`;
+      setAttributeIfChanged(hit, "d", this.linePath(attrs.realRadius, radians(from), radians(Math.min(to, from + 360))));
+      setLayoutProperty(hit, "stroke-width", `${attrs.arcHeight + attrs.strokeWidth + 2 * extra}px`);
     }
     /**
      * Grow the SVG canvas past the ring's box so it covers the whole band, its
@@ -691,8 +737,8 @@
       const outer = ((attrs.realRadius + attrs.arcHeightPercentage) * scale + attrs.strokeWidth) * (attrs.reach || 1) + extra;
       const pad = Math.max(0, Math.ceil(outer - attrs.orbitRadius));
       const units = pad / scale;
-      svg.setAttribute("viewBox", `${-units} ${-units} ${100 + 2 * units} ${100 + 2 * units}`);
-      svg.style.inset = `${-pad}px`;
+      setAttributeIfChanged(svg, "viewBox", `${-units} ${-units} ${100 + 2 * units} ${100 + 2 * units}`);
+      setLayoutProperty(svg, "inset", `${-pad}px`);
     }
   };
 
@@ -786,8 +832,8 @@
       const isStroke = this.getAttribute("variant") === "stroke";
       const dBg = isStroke ? this.calculateStrokeArc(attrs, true) : this.calculateArcParameters(attrs, true);
       const dBar = isStroke ? this.calculateStrokeArc(attrs, false) : this.calculateArcParameters(attrs, false);
-      this.shadowRoot.querySelector(".progress-bg").setAttribute("d", dBg);
-      this.shadowRoot.querySelector(".progress-bar").setAttribute("d", dBar);
+      setAttributeIfChanged(this.shadowRoot.querySelector(".progress-bg"), "d", dBg);
+      setAttributeIfChanged(this.shadowRoot.querySelector(".progress-bar"), "d", dBar);
       this.updateHitArea(this.shadowRoot.querySelector(".hit"), attrs, 0, attrs.range);
       const ring = this.parentElement;
       if (this._valueRing && this._valueRing !== ring) this._valueRing.style.removeProperty("--o-value-angle");
@@ -960,28 +1006,23 @@
       const orbitShape = this.shadowRoot.querySelector("#orbitShape");
       const textPath = this.shadowRoot.querySelector("textPath");
       const { dShape } = this.calculateArcParameters(attrs);
-      orbitShape.setAttribute("d", dShape);
-      this.shadowRoot.querySelector("#orbitWave").setAttribute("d", dShape);
-      orbitPath.setAttribute("d", this.calculateTextArcParameters(attrs).dPath);
+      setAttributeIfChanged(orbitShape, "d", dShape);
+      setAttributeIfChanged(this.shadowRoot.querySelector("#orbitWave"), "d", dShape);
+      setAttributeIfChanged(orbitPath, "d", this.calculateTextArcParameters(attrs).dPath);
       this.updateHitArea(this.shadowRoot.querySelector("#orbitHit"), attrs, 0, attrs.arcAngle);
       const textAnchor = attrs.textAnchor;
-      if (textAnchor === "start") {
-        textPath.setAttribute("startOffset", "0%");
-        textPath.setAttribute("text-anchor", "start");
-      } else if (textAnchor === "middle") {
-        textPath.setAttribute("startOffset", "50%");
-        textPath.setAttribute("text-anchor", "middle");
-      } else if (textAnchor === "end") {
-        textPath.setAttribute("startOffset", "100%");
-        textPath.setAttribute("text-anchor", "end");
+      const startOffset = { start: "0%", middle: "50%", end: "100%" }[textAnchor];
+      if (startOffset) {
+        setAttributeIfChanged(textPath, "startOffset", startOffset);
+        setAttributeIfChanged(textPath, "text-anchor", textAnchor);
       }
       if (fitRange) {
-        textPath.parentElement.setAttribute("textLength", orbitPath.getTotalLength());
+        setAttributeIfChanged(textPath.parentElement, "textLength", orbitPath.getTotalLength());
       } else {
         textPath.parentElement.removeAttribute("textLength");
       }
-      textPath.parentElement.style.fontSize = attrs.svgFontSize;
-      textPath.textContent = this.textContent;
+      setLayoutProperty(textPath.parentElement, "font-size", attrs.svgFontSize);
+      if (textPath.textContent !== this.textContent) textPath.textContent = this.textContent;
       if (!attrs.auto) this.warnIfTextOverflows(orbitPath, textPath, fitRange);
     }
     /**
@@ -1163,6 +1204,7 @@
   // src/orbit.js
   function registerOrbit() {
     if (typeof customElements === "undefined" || typeof document === "undefined") return;
+    registerProperties(window);
     if (!customElements.get("o-progress")) customElements.define("o-progress", OrbitProgress);
     if (!customElements.get("o-arc")) customElements.define("o-arc", OrbitArc);
     requestLayout(document);

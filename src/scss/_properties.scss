@@ -1,0 +1,34 @@
+/* The custom properties Orbit registers. They are here, apart from the rules
+   that use them, because a stylesheet inside a shadow root registers nothing
+   with @property: src/properties.scss builds this partial alone as
+   dist/orbit-properties.css, for the page of a shadow DOM app, and the runtime
+   registers the same five with CSS.registerProperty (src/js/orbit-properties.js;
+   keep both lists equal). */
+
+/* Direction from the center to the satellite, as a unit vector: x grows to
+   the right and y grows down. Registered so they are computed on the satellite
+   and its content inherits the numbers (a .capsule resets its own angle). */
+@property --o-dir-x {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+@property --o-dir-y {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+/* The angle of the value of the <o-progress> in a ring, from the start of its
+   range. The progress writes it on its ring; .satellite.at-value sits on it. */
+@property --o-value-angle {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+/* Arcs and progress hide on a ring that is stretched into an ellipse (see
+   _support.scss). Registered as numbers, so 1 and 1.0 compare equal, and an
+   arc outside any gravity spot (where nothing sets them) still counts as round. */
+@property --o-ellipse-x { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --o-ellipse-y { syntax: '<number>'; inherits: true; initial-value: 1; }

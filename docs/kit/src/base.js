@@ -207,6 +207,8 @@ export class OrbitKitElement extends HTMLElementBase {
       }
     }
     this._render();
+    // build() injected this component's stylesheet; a shadow root needs it too.
+    adoptKitStyles(this.getRootNode?.());
     this.onConnected?.();
   }
 
@@ -557,13 +559,53 @@ export function define(tag, cls) {
   }
 }
 
+/** The kit's stylesheets by id: the page gets a <style>, a shadow root adopts them. */
+const SHEETS = new Map();
+
 /** Inject a stylesheet once, keyed by id. */
 export function injectStyleOnce(id, css) {
+  if (!SHEETS.has(id)) SHEETS.set(id, { css, sheets: new WeakMap() });
   if (typeof document === 'undefined' || !document.head || document.getElementById(id)) return;
   const style = document.createElement('style');
   style.id = id;
   style.textContent = css;
   document.head.appendChild(style);
+}
+
+/**
+ * The page's stylesheets stop at a shadow root, so a component inside one
+ * adopts the kit's stylesheets into that root (every component does this when
+ * it connects): constructed sheets, one per document, or a <style> where the
+ * browser has none. Orbit's own stylesheet is yours to put in that root, as
+ * for any Orbit layout in shadow DOM.
+ */
+export function adoptKitStyles(root) {
+  if (!root || root.nodeType !== 11 || !root.host) return;
+  const doc = root.ownerDocument;
+  const Sheet = doc?.defaultView?.CSSStyleSheet;
+  if (Array.isArray(root.adoptedStyleSheets) && Sheet) {
+    try {
+      const missing = [];
+      for (const entry of SHEETS.values()) {
+        let sheet = entry.sheets.get(doc);
+        if (!sheet) {
+          sheet = new Sheet();
+          sheet.replaceSync(entry.css);
+          entry.sheets.set(doc, sheet);
+        }
+        if (!root.adoptedStyleSheets.includes(sheet)) missing.push(sheet);
+      }
+      if (missing.length) root.adoptedStyleSheets = [...root.adoptedStyleSheets, ...missing];
+      return;
+    } catch { /* no constructed sheets here: fall back to <style> */ }
+  }
+  for (const [id, entry] of SHEETS) {
+    if (root.querySelector(`style[data-orbit-kit="${id}"]`)) continue;
+    const style = doc.createElement('style');
+    style.dataset.orbitKit = id;
+    style.textContent = entry.css;
+    root.prepend(style);
+  }
 }
 
 export const KIT_TAGS = 'o-gauge,o-donut,o-rings,o-meter,o-knob,o-menu,o-compass,o-radar,o-spinner,o-radar-chart,o-clock,o-instrument,o-timer,o-status,o-range,o-time-picker,o-sunburst,o-wheel,o-color-wheel';

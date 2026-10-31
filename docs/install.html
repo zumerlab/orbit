@@ -42,6 +42,7 @@ import '@zumer/orbit';
 <thead><tr><th>File</th><th>Import as</th><th>What it is</th></tr></thead>
 <tbody>
 <tr><td><code>orbit.css</code>, <code>orbit.min.css</code></td><td><code>@zumer/orbit/style</code></td><td>The stylesheet: geometry, reset, default theme, <code>theme-cyan</code>, the color palette and <code>dev-orbit</code>. About 18&nbsp;kB gzipped.</td></tr>
+<tr><td><code>orbit-properties.css</code></td><td><code>@zumer/orbit/properties</code></td><td>Only the five <code>@property</code> rules, for the page of an app that keeps <code>orbit.css</code> inside shadow roots and runs without the runtime. The runtime registers them itself, so with it this file is not needed.</td></tr>
 <tr><td><code>orbit.mjs</code></td><td><code>@zumer/orbit</code> (import)</td><td>The runtime as an ES module.</td></tr>
 <tr><td><code>orbit.js</code>, <code>orbit.min.js</code></td><td><code>@zumer/orbit</code> (require)</td><td>The runtime as a classic script that sets <code>window.Orbit</code>. About 9&nbsp;kB gzipped.</td></tr>
 <tr><td><code>orbit.d.ts</code>, <code>style.d.ts</code></td><td></td><td>TypeScript types for the API, the elements and the stylesheet import.</td></tr>

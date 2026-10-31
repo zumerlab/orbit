@@ -1,5 +1,5 @@
 import { OrbitBase } from './orbit-base.js';
-import { setLayoutProperty } from './orbit-layout.js';
+import { setAttributeIfChanged, setLayoutProperty } from './orbit-layout.js';
 
 export class OrbitProgress extends OrbitBase {
   constructor() {
@@ -92,8 +92,8 @@ export class OrbitProgress extends OrbitBase {
     const isStroke = this.getAttribute('variant') === 'stroke';
     const dBg = isStroke ? this.calculateStrokeArc(attrs, true) : this.calculateArcParameters(attrs, true);
     const dBar = isStroke ? this.calculateStrokeArc(attrs, false) : this.calculateArcParameters(attrs, false);
-    this.shadowRoot.querySelector('.progress-bg').setAttribute('d', dBg);
-    this.shadowRoot.querySelector('.progress-bar').setAttribute('d', dBar);
+    setAttributeIfChanged(this.shadowRoot.querySelector('.progress-bg'), 'd', dBg);
+    setAttributeIfChanged(this.shadowRoot.querySelector('.progress-bar'), 'd', dBar);
     this.updateHitArea(this.shadowRoot.querySelector('.hit'), attrs, 0, attrs.range);
     // The angle of the value goes on the ring, so a .satellite.at-value there
     // sits on it.

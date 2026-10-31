@@ -16,6 +16,10 @@
       "types": "./dist/style.d.ts",
       "default": "./dist/orbit.css"
     },
+    "./properties": {
+      "types": "./dist/style.d.ts",
+      "default": "./dist/orbit-properties.css"
+    },
     "./react": {
       "types": "./dist/react.d.ts"
     },

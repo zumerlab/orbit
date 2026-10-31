@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 // Build in memory so this focused regression suite does not overwrite dist.
 const project = fileURLToPath(new URL('..', import.meta.url));
 const css = sass.compile(`${project}/src/orbit.scss`).css;
+const propertyNames = [...sass.compile(`${project}/src/properties.scss`).css.matchAll(/@property\s+(--[\w-]+)/g)].map(match => match[1]);
 const built = await build({ absWorkingDir: project, entryPoints: ['src/orbit.js'], bundle: true, write: false, format: 'iife' });
 const js = built.outputFiles[0].text;
 const browsers = (process.env.BROWSERS || 'chromium').split(',').map(name => name.trim());
@@ -43,7 +44,7 @@ try {
     window.host = document.createElement('section');
     host.id = 'shadow-host';
     window.root = host.attachShadow({ mode: 'open' });
-    root.innerHTML = `<style>${styles}\n.gravity-spot { --o-range:var(--test-range,360deg); }</style><div class="bigbang"><div class="gravity-spot"><div class="orbit-30"><o-progress id="progress" value="50"></o-progress><o-arc id="text">One</o-arc></div></div></div>`;
+    root.innerHTML = `<style>${styles}\n.gravity-spot { --o-range:var(--o-host-range,360deg); }</style><div class="bigbang"><div class="gravity-spot"><div class="orbit-30"><o-progress id="progress" value="50"></o-progress><o-arc id="text">One</o-arc></div></div></div>`;
     document.body.append(host);
     window.progress = root.querySelector('#progress');
     window.textArc = root.querySelector('#text');
@@ -53,9 +54,14 @@ try {
   assert(await page.evaluate(() => !!progress.shadowRoot.querySelector('.progress-bar').getAttribute('d')), 'shadow progress paints');
   assert.deepEqual(await page.evaluate(() => [activeMutations.size, activeResizes.size]), withShadow, 'the shadow scope adds one observer of each type');
 
-  await page.evaluate(() => host.style.setProperty('--test-range', '180deg'));
+  await page.evaluate(() => host.style.setProperty('--o-host-range', '180deg'));
   await settle();
   assert.equal(await page.evaluate(() => progress.getAttributes().range), 180, 'host CSS changes refresh the shadow SVG');
+  // The stylesheet is inside the shadow root, where @property registers nothing: the runtime registers the properties.
+  assert.equal(propertyNames.length, 5, 'properties.scss holds the five properties');
+  assert.deepEqual(await page.evaluate(names => names.filter(name => {
+    try { CSS.registerProperty({ name, syntax: '*', inherits: false, initialValue: '' }); return true; } catch (e) { return false; }
+  }), propertyNames), [], 'every property of properties.scss is registered by the runtime');
   await page.evaluate(() => {
     window.addedStyle = document.createElement('style');
     addedStyle.textContent = '.gravity-spot { --o-range:90deg; }';
@@ -93,6 +99,16 @@ try {
   });
   await settle();
   assert.equal(await page.evaluate(() => Number(getComputedStyle(root.querySelector('.satellite')).getPropertyValue('--o-orbit-child-number'))), 0, 'orbiter changes update without rediscovering rings');
+  assert.match(await page.evaluate(() => getComputedStyle(root.querySelector('.satellite')).getPropertyValue('--o-dir-x').trim()), /^-?\d*\.?\d+(?:e[+-]?\d+)?$/i, 'registered properties compute to numbers inside the shadow root');
+
+  await page.evaluate(() => {
+    progress.updates = 0;
+    host.style.setProperty('--tilt', '8deg');
+    host.style.transform = 'rotate(8deg)';
+    host.setAttribute('data-state', 'open');
+  });
+  await settle();
+  assert.equal(await page.evaluate(() => progress.updates), 0, 'inline properties and attributes Orbit does not read on the host do not redraw');
 
   await page.evaluate(() => {
     progress.updates = 0;
@@ -149,7 +165,7 @@ try {
   assert.equal(await page.evaluate(() => innerProgress.getAttributes().range), 135, 'adopted nested scopes use the new document for host invalidation');
   assert.deepEqual(await page.evaluate(() => [activeMutations.size, activeResizes.size]), baseline, 'adoption releases observers from the former document');
   assert.deepEqual(errors, [], 'shadow updates produce no browser errors');
-  console.log(`${name}: shadow rendering, host stylesheets, nested/closed roots, disposal, adoption, repeated loading and scoped invalidation passed`);
+  console.log(`${name}: shadow rendering, host stylesheets, registered properties, nested/closed roots, disposal, adoption, repeated loading and scoped invalidation passed`);
 } finally {
   await browser.close();
 }

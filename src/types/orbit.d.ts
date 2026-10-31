@@ -98,7 +98,11 @@ export interface OrbitApi {
 
 export declare const Orbit: OrbitApi;
 
-/** Define `<o-arc>` and `<o-progress>`. Runs on import; repeated calls are safe. */
+/**
+ * Define `<o-arc>` and `<o-progress>` and register Orbit's custom properties
+ * (`@property` in a stylesheet inside a shadow root registers nothing).
+ * Runs on import; repeated calls are safe.
+ */
 export declare function registerOrbit(): void;
 
 declare global {

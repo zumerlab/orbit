@@ -19,7 +19,7 @@ try {
   const files = new Set(packed.files.map(file => file.path))
   for (const file of [
     'package.json', 'README.md', 'LICENSE',
-    'dist/orbit.css', 'dist/orbit.min.css',
+    'dist/orbit.css', 'dist/orbit.min.css', 'dist/orbit-properties.css',
     'dist/orbit.js', 'dist/orbit.min.js', 'dist/orbit.mjs',
     'dist/orbit.d.ts', 'dist/react.d.ts', 'dist/style.d.ts',
     'dist/custom-elements.json', 'dist/vscode.html-custom-data.json',
@@ -46,6 +46,7 @@ try {
     assert.equal(typeof core.Orbit.ready, 'function');
     assert.ok(import.meta.resolve('@zumer/orbit').endsWith('/dist/orbit.mjs'));
     assert.ok(import.meta.resolve('@zumer/orbit/style').endsWith('/dist/orbit.css'));
+    assert.ok(import.meta.resolve('@zumer/orbit/properties').endsWith('/dist/orbit-properties.css'));
     const manifest = (await import('@zumer/orbit/custom-elements.json', { with: { type: 'json' } })).default;
     assert.deepEqual(manifest.modules[0].declarations.map(d => d.tagName), ['o-arc', 'o-progress']);
     assert.equal(typeof globalThis.window, 'undefined');

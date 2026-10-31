@@ -53,6 +53,7 @@ import '@zumer/orbit-kit'</code></pre>
 &lt;script defer src="https://unpkg.com/@zumer/orbit/dist/orbit.min.js"&gt;&lt;/script&gt;
 &lt;script type="module" src="https://unpkg.com/@zumer/orbit-kit/src/orbit-kit.js"&gt;&lt;/script&gt;</code></pre>
 <p>The entry registers every component. To load only some, import their files: <code>import '@zumer/orbit-kit/o-gauge.js'</code>. Orbit 2 is a peer dependency; the kit does not work with Orbit 1.x.</p>
+<p>Inside a shadow root (a card, a component of yours) the page's stylesheets do not reach the components. The kit adopts its own stylesheets into that root on its own. Orbit's stylesheet is yours to put there, as for any Orbit layout in shadow DOM: <code>root.adoptedStyleSheets = [orbitSheet]</code>, or a <code>&lt;link&gt;</code> inside the root.</p>
 
 <h2>Components</h2>
 <ul class="cards kit-cards">

@@ -9,7 +9,7 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const docs = join(root, 'docs');
 
 await mkdir(join(docs, 'orbit'), { recursive: true });
-for (const file of ['orbit.css', 'orbit.min.css', 'orbit.js', 'orbit.min.js']) {
+for (const file of ['orbit.css', 'orbit.min.css', 'orbit-properties.css', 'orbit.js', 'orbit.min.js']) {
   await cp(join(root, 'dist', file), join(docs, 'orbit', file));
 }
 console.log('docs/orbit ← dist');

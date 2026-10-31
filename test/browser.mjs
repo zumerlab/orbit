@@ -91,6 +91,32 @@ for (const name of browsers) {
     await settle();
     assert.equal(await page.locator('#lifecycle').evaluate(el => el.updates), 1, 'reconnections do not duplicate observers');
 
+    // What redraws and what does not: only changes the drawing can read.
+    await fixture('<div id="outer"><div class="bigbang" style="width:400px;height:400px"><div class="gravity-spot"><div class="orbit-4"><o-arc id="counted" value="30">Label</o-arc></div></div></div></div>');
+    await page.locator('#counted').evaluate(el => { const original = el.update; el.updates = 0; el.update = function () { this.updates++; return original.call(this); }; });
+    const redraws = () => page.locator('#counted').evaluate(el => el.updates);
+    await page.locator('#outer').evaluate(el => { el.style.setProperty('--tilt', '12deg'); el.style.transform = 'rotate(12deg)'; el.setAttribute('data-state', 'active'); el.setAttribute('aria-busy', 'true'); });
+    await settle();
+    assert.equal(await redraws(), 0, 'attributes and inline properties Orbit does not read leave the drawing alone');
+    const edge = await page.locator("#counted").evaluate(el => { const box = el.getBoundingClientRect(); return { x: box.left + box.width / 2, y: box.top + 4 }; });
+    await page.mouse.move(edge.x, edge.y);
+    await page.mouse.move(edge.x + 20, edge.y + 20);
+    await page.locator('#counted').evaluate(el => { el.dispatchEvent(new PointerEvent('pointerover', { bubbles: true })); el.dispatchEvent(new FocusEvent('focusin', { bubbles: true })); el.dispatchEvent(new PointerEvent('pointerout', { bubbles: true })); });
+    await settle();
+    assert.equal(await redraws(), 0, 'hover and focus do not redraw');
+    await page.locator('#outer').evaluate(el => el.style.setProperty('--o-range', '180deg'));
+    await settle();
+    assert.equal(await redraws(), 1, 'an inline --o-* property on an ancestor redraws');
+    await page.locator('#outer').evaluate(el => { el.style.fontSize = '20px'; });
+    await settle();
+    assert.equal(await redraws(), 2, 'an inline font size on an ancestor redraws: arc text is measured');
+    await page.locator('#outer').evaluate(el => el.classList.add('compact'));
+    await settle();
+    assert.equal(await redraws(), 3, 'a class on an ancestor redraws');
+    await page.locator('#counted').evaluate(el => el.setAttribute('text-anchor', 'start'));
+    await settle();
+    assert.equal(await redraws(), 4, 'an attribute of the arc itself redraws');
+
     for (const shape of ['none', 'rounded', 'circle-a', 'circle-b', 'arrow', 'slash', 'zigzag']) {
       await fixture(ring(`<o-progress id="shape" shape="${shape}" value="0"></o-progress>`));
       for (const value of ['0', '.01', '49.99', '50.01', '100', '150', '-1', 'invalid']) {

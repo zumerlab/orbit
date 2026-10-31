@@ -1,0 +1,6 @@
+/*==========================
+    ORBIT CUSTOM PROPERTIES
+============================*/
+/* Only the @property rules, for the page of an app that keeps orbit.css inside
+   shadow roots and runs without the runtime. See scss/_properties.scss. */
+@use './scss/properties';

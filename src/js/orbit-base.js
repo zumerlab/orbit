@@ -1,4 +1,4 @@
-import { cssNumber, requestLayout, warnOnce } from './orbit-layout.js';
+import { cssNumber, requestLayout, setAttributeIfChanged, setLayoutProperty, warnOnce } from './orbit-layout.js';
 
 export class OrbitBase extends (globalThis.HTMLElement || class {}) {
   constructor() {
@@ -317,8 +317,8 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
       return;
     }
     const radians = degrees => (degrees - 90) * Math.PI / 180;
-    hit.setAttribute('d', this.linePath(attrs.realRadius, radians(from), radians(Math.min(to, from + 360))));
-    hit.style.strokeWidth = `${attrs.arcHeight + attrs.strokeWidth + 2 * extra}px`;
+    setAttributeIfChanged(hit, 'd', this.linePath(attrs.realRadius, radians(from), radians(Math.min(to, from + 360))));
+    setLayoutProperty(hit, 'stroke-width', `${attrs.arcHeight + attrs.strokeWidth + 2 * extra}px`);
   }
 
   /**
@@ -334,7 +334,7 @@ export class OrbitBase extends (globalThis.HTMLElement || class {}) {
     const outer = ((attrs.realRadius + attrs.arcHeightPercentage) * scale + attrs.strokeWidth) * (attrs.reach || 1) + extra;
     const pad = Math.max(0, Math.ceil(outer - attrs.orbitRadius));
     const units = pad / scale;
-    svg.setAttribute('viewBox', `${-units} ${-units} ${100 + 2 * units} ${100 + 2 * units}`);
-    svg.style.inset = `${-pad}px`;
+    setAttributeIfChanged(svg, 'viewBox', `${-units} ${-units} ${100 + 2 * units} ${100 + 2 * units}`);
+    setLayoutProperty(svg, 'inset', `${-pad}px`);
   }
 }

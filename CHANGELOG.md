@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### Unreleased
+
+**Features**
+
+- `@zumer/orbit/properties` (`dist/orbit-properties.css`): only the five `@property` rules, for the page of an app that keeps `orbit.css` inside shadow roots and runs without the runtime. `@property` in a stylesheet inside a shadow root registers nothing.
+- The runtime registers the same five custom properties with `CSS.registerProperty` when it loads, so layouts inside shadow roots get `.outward`, `.at-value` and the ellipse check without help from the app.
+
+**Fixes**
+
+- Far fewer redraws. The runtime now redraws only for what the drawing reads: added, removed and reordered elements, `class` changes, inline `--o-*` and font properties, the attributes of `<o-arc>` and `<o-progress>`, and sizes. Any other attribute, or an inline property it does not read (a `transform`, a custom property of the app) written on an ancestor, used to measure and redraw every ring below it on each change.
+- Hover and focus no longer redraw the ring under the pointer. Hover styles are CSS (`--o-fill`, `scale`); a `:hover` rule that changes the geometry needs `Orbit.refresh(element)`.
+- Arcs and progress write their SVG only when it changes, so a redraw with the same result repaints nothing.
+
 #### [v2.1.0](https://github.com/zumerlab/orbit/compare/v2.0.1...v2.1.0)
 
 > 30 October 2026
