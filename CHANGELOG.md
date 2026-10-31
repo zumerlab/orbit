@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file. 
 
-#### Unreleased
+#### [v2.2.0](https://github.com/zumerlab/orbit/compare/v2.1.0...v2.2.0)
+
+> 31 October 2026
 
 **Features**
 
@@ -11,6 +13,7 @@ All notable changes to this project will be documented in this file.
 
 **Fixes**
 
+- redraw only for what the drawing reads; register properties from the runtime [`71f8995`](https://github.com/zumerlab/orbit/commit/71f8995393ef6a558a8c34a296dab107a4f260c0)
 - Far fewer redraws. The runtime now redraws only for what the drawing reads: added, removed and reordered elements, `class` changes, inline `--o-*` and font properties, the attributes of `<o-arc>` and `<o-progress>`, and sizes. Any other attribute, or an inline property it does not read (a `transform`, a custom property of the app) written on an ancestor, used to measure and redraw every ring below it on each change.
 - Hover and focus no longer redraw the ring under the pointer. Hover styles are CSS (`--o-fill`, `scale`); a `:hover` rule that changes the geometry needs `Orbit.refresh(element)`.
 - Arcs and progress write their SVG only when it changes, so a redraw with the same result repaints nothing.
