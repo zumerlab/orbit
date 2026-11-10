@@ -216,6 +216,22 @@ for (const name of browsers) {
     const auto = await page.evaluate(() => ['short', 'long'].map(id => document.getElementById(id).getAttributes()));
     assert(auto[0].arcAngle > 0 && auto[1].arcAngle > auto[0].arcAngle * 3, 'range="auto" sizes arcs to their text');
     assert(Math.abs(auto[1].stackOffset - auto[0].arcAngle) < 1e-6, 'auto arcs follow each other');
+    // flip="auto": only the arcs whose middle sits on the lower half run the other way, and they follow the ring.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-10" id="quarters"><o-arc flip="auto">One</o-arc><o-arc flip="auto">Two</o-arc><o-arc class="flip-auto">Three</o-arc><o-arc flip="auto">Four</o-arc><o-arc flip id="always" range="auto" start="0">Always</o-arc></div></div></div>');
+    const flips = () => page.locator('#quarters o-arc').evaluateAll(els => els.map(el => {
+      // A flipped path is drawn from its end to its start: its first point lies clockwise of its last.
+      const path = el.shadowRoot.querySelector('#orbitPath'), length = path.getTotalLength();
+      const a = path.getPointAtLength(0), b = path.getPointAtLength(length);
+      return (a.x - 50) * (b.y - 50) - (a.y - 50) * (b.x - 50) < 0;
+    }));
+    assert.deepEqual(await flips(), [false, true, true, false, true], 'flip="auto" flips the arcs on the lower half; a plain flip always does');
+    await page.locator('#quarters').evaluate(el => el.style.setProperty('--o-from', '180deg'));
+    await settle();
+    assert.deepEqual(await flips(), [true, false, false, true, true], 'flip="auto" follows the ring when it turns');
+    await page.locator('#quarters o-arc').first().evaluate(el => el.setAttribute('flip', ''));
+    await settle();
+    assert.equal((await flips())[0], true, 'flip without a value still always flips');
+
     await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot"><div class="orbit-10" style="--o-from:-30deg"><o-arc id="centered" range="auto" text-anchor="middle">Label</o-arc></div><div class="orbit-8" style="--o-from:-30deg"><o-arc id="ended" range="auto" text-anchor="end">Label</o-arc></div></div></div>');
     const anchored = await page.evaluate(() => ['centered', 'ended'].map(id => {
       const el = document.getElementById(id);

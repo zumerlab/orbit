@@ -32,8 +32,11 @@ export interface OrbitArcAttributes {
    * `middle` centers it there, `end` ends it there.
    */
   'text-anchor'?: 'start' | 'middle' | 'end';
-  /** Reverse the direction of curved text. */
-  flip?: BooleanAttribute;
+  /**
+   * Reverse the direction of curved text, so it reads upright at the bottom of a ring.
+   * `auto` does it only for an arc whose middle sits on the lower half.
+   */
+  flip?: BooleanAttribute | 'auto';
   /** Squeeze curved text to the length of the arc. */
   'fit-range'?: BooleanAttribute;
   /** Size the arc to its text. Consecutive `range="auto"` arcs follow each other. */

@@ -27,7 +27,7 @@ export const elements = [
       value: { type: 'number', description: 'Share of the ring\'s range, relative to max. Without it, sibling arcs split the range equally.' },
       start: { type: 'number', description: 'Where the arc begins, on the same scale as value. A placed arc takes no slot and moves no other arc: text over a ring that already has arcs, or segments on a timeline.' },
       'text-anchor': { type: "'start' | 'middle' | 'end'", default: 'middle', values: ['start', 'middle', 'end'], description: 'Where curved text sits on the arc. With range="auto", an explicit value anchors the arc at its angle: middle centers it, end ends it there.' },
-      flip: { type: 'boolean', description: 'Reverse the direction of curved text.' },
+      flip: { type: "boolean | 'auto'", values: ['auto'], description: 'Reverse the direction of curved text, so it reads upright at the bottom of a ring. flip="auto" does it only for an arc whose middle sits on the lower half, and follows the arc when it moves.' },
       'fit-range': { type: 'boolean', description: 'Squeeze curved text to the length of the arc.' },
       range: { type: "'auto'", values: ['auto'], description: 'Size the arc to its text. Consecutive range="auto" arcs follow each other.' },
     },

@@ -70,7 +70,7 @@ document.getElementById('segments').innerHTML = '<o-arc interactive></o-arc>'.re
 <tr><td><code>range</code></td><td></td><td><code>auto</code> makes the arc as long as its text. See <a href="#fit-the-text">Arcs that fit their text</a>.</td></tr>
 <tr><td><code>shape</code></td><td><code>none</code></td><td>The ending. See <a href="#endings">Endings</a>.</td></tr>
 <tr><td><code>text-anchor</code></td><td><code>middle</code></td><td>Text along the arc: <code>start</code>, <code>middle</code> or <code>end</code>. On a <code>range="auto"</code> arc, where the arc sits around its angle.</td></tr>
-<tr><td><code>flip</code></td><td></td><td>Runs the text the other way, so it reads upright at the bottom. Also works as a class.</td></tr>
+<tr><td><code>flip</code></td><td></td><td>Runs the text the other way, so it reads upright at the bottom. Also works as a class. <code>flip="auto"</code> (or the class <code>flip-auto</code>) does it only for an arc whose middle sits on the lower half of the ring.</td></tr>
 <tr><td><code>fit-range</code></td><td></td><td>Stretches or squeezes the text to the whole arc. Also works as a class.</td></tr>
 <tr><td><code>interactive</code></td><td></td><td>Makes the whole band clickable, even where it is transparent. See <a href="#pointer">Pointer interaction</a>.</td></tr>
 <tr><td><code>hit-width</code></td><td><code>0</code></td><td>Extra touch area, in px, on each side of an <code>interactive</code> band.</td></tr>
@@ -312,6 +312,41 @@ document.getElementById('months').innerHTML = months.map((month, i) =>
   </script>
   <figcaption>April to September, in amber, have <code>flip</code>.</figcaption>
 </figure>
+<p>When the arcs come from data, or the ring turns, working out which ones land on the lower half is Orbit's job: <code>flip="auto"</code> flips an arc only while its middle sits there, and decides again when the arc moves (a new <code>--o-from</code>, a sibling added, a different <code>value</code>).</p>
+<figure class="example" data-height="340">
+  <script type="text/plain" data-html>
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10" id="year" style="--o-size-ratio: 1.6"></div>
+    </div>
+  </div>
+  <label>Turn the ring <input id="turn" type="range" min="0" max="360" value="0"></label>
+</main>
+  </script>
+  <script type="text/plain" data-css>
+.stage { flex-direction: column; gap: 12px; }
+o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 18%, transparent);
+  --o-stroke: none;
+  --o-gap: 3;
+  color: var(--text);
+  font-size: 13px;
+}
+label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+  </script>
+  <script type="text/plain" data-js>
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const year = document.getElementById('year');
+// Every month asks the same thing; the ones on the lower half are flipped.
+year.innerHTML = months.map((month) => `<o-arc flip="auto">${month}</o-arc>`).join('');
+document.getElementById('turn').addEventListener('input', (e) => {
+  year.style.setProperty('--o-from', `${e.target.value}deg`);
+});
+  </script>
+  <figcaption>Every month has <code>flip="auto"</code>. Turn the ring: each one flips as it crosses the sides.</figcaption>
+</figure>
+<p><code>flip="auto"</code> reads the arc's own place on its ring. It does not see a rotation applied to an ancestor with <code>rotate</code> or <code>transform</code>; there, set <code>flip</code> yourself.</p>
 <p>Text longer than its arc is cut off, and the console says so with an <code>[orbit]</code> message. Shorten it, widen the range, let the arc fit the text with <code>range="auto"</code>, or add <code>fit-range</code> to squeeze or stretch the text to the arc:</p>
 <figure class="example" data-height="340">
   <script type="text/plain" data-html>

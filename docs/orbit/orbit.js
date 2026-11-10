@@ -1,6 +1,6 @@
 /*
 * orbit
-* v.2.1.0
+* v.2.2.0
 * Author Juan Martin Muda - Zumerlab
 * License MIT
 */
@@ -1002,6 +1002,7 @@
         this.style.removeProperty("--o-arc-start");
         this.style.removeProperty("--o_stack");
       }
+      if (attrs.flipAuto) attrs.flip = this.readsUpsideDown(attrs);
       const orbitPath = this.shadowRoot.querySelector("#orbitPath");
       const orbitShape = this.shadowRoot.querySelector("#orbitShape");
       const textPath = this.shadowRoot.querySelector("textPath");
@@ -1055,7 +1056,8 @@
       const common = super.getCommonAttributes(this);
       const { style } = common;
       const range = Math.max(0, Math.min(360, this.readAngle(style, "--o-range", 360)));
-      const flip = this.hasAttribute("flip") || this.classList.contains("flip");
+      const flipAuto = this.getAttribute("flip") === "auto" || this.classList.contains("flip-auto");
+      const flip = !flipAuto && (this.hasAttribute("flip") || this.classList.contains("flip"));
       const fitRange = this.hasAttribute("fit-range") || this.classList.contains("fit-range");
       const length = common.orbitRadius * 24 / common.orbitNumber || 100;
       const textAnchor = this.getAttribute("text-anchor") || "middle";
@@ -1093,7 +1095,7 @@
         }
       }
       const reach = this.classList.contains("ripple") ? Math.max(1, this.readNumber(style, "--o-ripple-scale", 1.14)) : 1;
-      return { ...common, gap, max, arcAngle, stackOffset, flip, fitRange, length, fontSize, svgFontSize, textAnchor, auto, placed, stacked, reach };
+      return { ...common, gap, max, arcAngle, stackOffset, flip, flipAuto, fitRange, length, fontSize, svgFontSize, textAnchor, auto, placed, stacked, reach };
     }
     /** The start attribute: where a placed arc begins, on the ring's scale. */
     readStart() {
@@ -1133,6 +1135,18 @@
       );
       const dShape = super.generatePathData(shape, params);
       return { dShape };
+    }
+    /**
+     * Whether the middle of the arc sits on the lower half of its ring, where
+     * clockwise text reads upside down. The arc's own turn (the ring's --o-from
+     * plus its place among its siblings, as the stylesheet resolves it) says
+     * where it starts; a rotation of an ancestor is not seen from here.
+     */
+    readsUpsideDown(attrs) {
+      const turn = attrs.style.rotate;
+      const start = !turn || turn === "none" ? 0 : cssNumber(this, turn, 0, "angle");
+      const middle = ((start + attrs.arcAngle / 2) % 360 + 360) % 360;
+      return middle > 90 && middle < 270;
     }
     calculateTextArcParameters(attrs) {
       const { arcAngle, realRadius, gap, flip } = attrs;

@@ -2637,7 +2637,7 @@ Arcs go straight into a ring, next to satellites or vectors if you like. They ar
 | `range` | | `auto` makes the arc as long as its text. See Arcs that fit their text. |
 | `shape` | `none` | The ending. See Endings. |
 | `text-anchor` | `middle` | Text along the arc: `start`, `middle` or `end`. On a `range="auto"` arc, where the arc sits around its angle. |
-| `flip` | | Runs the text the other way, so it reads upright at the bottom. Also works as a class. |
+| `flip` | | Runs the text the other way, so it reads upright at the bottom. Also works as a class. `flip="auto"` (or the class `flip-auto`) does it only for an arc whose middle sits on the lower half of the ring. |
 | `fit-range` | | Stretches or squeezes the text to the whole arc. Also works as a class. |
 | `interactive` | | Makes the whole band clickable, even where it is transparent. See Pointer interaction. |
 | `hit-width` | `0` | Extra touch area, in px, on each side of an `interactive` band. |
@@ -2890,6 +2890,45 @@ document.getElementById('months').innerHTML = months.map((month, i) =>
 ```
 
 April to September, in amber, have `flip`.
+
+When the arcs come from data, or the ring turns, working out which ones land on the lower half is Orbit's job: `flip="auto"` flips an arc only while its middle sits there, and decides again when the arc moves (a new `--o-from`, a sibling added, a different `value`).
+
+```html
+<main class="stage">
+  <div class="bigbang">
+    <div class="gravity-spot">
+      <div class="orbit-10" id="year" style="--o-size-ratio: 1.6"></div>
+    </div>
+  </div>
+  <label>Turn the ring <input id="turn" type="range" min="0" max="360" value="0"></label>
+</main>
+```
+
+```css
+.stage { flex-direction: column; gap: 12px; }
+o-arc {
+  --o-fill: color-mix(in srgb, var(--accent) 18%, transparent);
+  --o-stroke: none;
+  --o-gap: 3;
+  color: var(--text);
+  font-size: 13px;
+}
+label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+```
+
+```js
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const year = document.getElementById('year');
+// Every month asks the same thing; the ones on the lower half are flipped.
+year.innerHTML = months.map((month) => `<o-arc flip="auto">${month}</o-arc>`).join('');
+document.getElementById('turn').addEventListener('input', (e) => {
+  year.style.setProperty('--o-from', `${e.target.value}deg`);
+});
+```
+
+Every month has `flip="auto"`. Turn the ring: each one flips as it crosses the sides.
+
+`flip="auto"` reads the arc's own place on its ring. It does not see a rotation applied to an ancestor with `rotate` or `transform`; there, set `flip` yourself.
 
 Text longer than its arc is cut off, and the console says so with an `[orbit]` message. Shorten it, widen the range, let the arc fit the text with `range="auto"`, or add `fit-range` to squeeze or stretch the text to the arc:
 
