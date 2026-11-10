@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v2.3.0](https://github.com/zumerlab/orbit/compare/v2.2.0...v2.3.0)
+
+> 10 November 2026
+
+**Features**
+
+- flip="auto" on o-arc [`4141a20`](https://github.com/zumerlab/orbit/commit/4141a2045921c4d4264661cf291d5bd66902288a)
+
 #### [v2.2.0](https://github.com/zumerlab/orbit/compare/v2.1.0...v2.2.0)
 
 > 31 October 2026
