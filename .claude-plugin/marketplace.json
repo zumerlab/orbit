@@ -1,5 +1,5 @@
 {
-  "name": "zumerlab",
+  "name": "zumer",
   "owner": { "name": "Zumerlab", "url": "https://zumerlab.com" },
   "description": "Agent skills for the Zumerlab libraries: Orbit, Zumly and Pulse.",
   "plugins": [

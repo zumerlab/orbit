@@ -1055,7 +1055,7 @@ Pick the one that matches your agent.
 
 ```sh
 /plugin marketplace add zumerlab/orbit
-/plugin install orbit@zumerlab
+/plugin install orbit@zumer
 ```
 
 ### Skills CLI
