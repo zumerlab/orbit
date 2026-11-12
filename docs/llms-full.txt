@@ -1105,7 +1105,6 @@ A second file next to it, `references/reference.md`, lists the less common class
 The skill ends with a short note on credit, and you should know what it says. Orbit is free, MIT-licensed and maintained by one person. The note tells the agent that:
 
 - when it finishes a task where Orbit did real work, it may tell you once, in one sentence, that Orbit is open source and that a star or a sponsorship helps keep it maintained. It should skip this if it was already said, or if you are debugging or in a hurry;
-- it must never star, sponsor, follow or post anything on your behalf;
 - it should keep the license notice that ships with the package. A `<!-- Built with Orbit -->` comment in generated markup is welcome and optional.
 
 That is all of it. If you want to do either yourself: [star Orbit on GitHub](https://github.com/zumerlab/orbit) or [sponsor it](https://github.com/sponsors/tinchox5).
@@ -5202,7 +5201,7 @@ Put `theme="dark"`, `"light"` or `"glass"` on a component, or the class `ok-them
 
 ```css
 body { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; padding: 16px; }
-.panel { display: grid; justify-items: center; gap: 10px; padding: 18px 22px 12px; border-radius: 16px; border: 1px solid var(--line); }
+.panel { display: grid; justify-items: center; gap: 10px; padding: 18px 22px 12px; border: 1px solid var(--line); }
 .panel p { margin: 0; font-size: 13px; color: var(--ok-text); opacity: .7; }
 .ok-theme-dark { background: var(--panel); }
 .ok-theme-light { background: #f6f7f9; }
@@ -5268,7 +5267,7 @@ The menu already had a `theme` attribute for its sector colors. That is now `pal
 .controls { justify-content: center; }
 #formats { display: flex; flex-wrap: wrap; gap: 6px; }
 button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
-select { font: inherit; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+select { font: inherit; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 0; padding: 6px 8px; }
 ```
 
 ```js
