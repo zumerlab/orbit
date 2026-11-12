@@ -120,3 +120,7 @@ button:hover { background: #222a35; }
 .embed .notes > :not(.controls) { display: none; }
 .embed .controls { margin: 0; gap: 8px; }
 .embed .controls .row { justify-content: center; }
+/* The home page's Orbit view shows the demo in a disc (class "round"): only
+   the drawing, with air around it. */
+.embed.round .stage { padding: 7%; }
+.embed.round .notes { display: none; }
