@@ -28,6 +28,7 @@
   },
   "files": [
     "dist/",
+    "skills/",
     "README.md"
   ],
   "scripts": {

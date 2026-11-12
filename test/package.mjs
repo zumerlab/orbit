@@ -23,6 +23,7 @@ try {
     'dist/orbit.js', 'dist/orbit.min.js', 'dist/orbit.mjs',
     'dist/orbit.d.ts', 'dist/react.d.ts', 'dist/style.d.ts',
     'dist/custom-elements.json', 'dist/vscode.html-custom-data.json',
+    'skills/orbit/SKILL.md', 'skills/orbit/references/reference.md',
   ]) {
     assert.ok(files.has(file), `Missing published file: ${file}`)
   }
