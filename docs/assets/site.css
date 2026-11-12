@@ -51,7 +51,8 @@ body {
 }
 a { color: var(--accent-ink); text-underline-offset: 3px; }
 code, pre, kbd { font-family: var(--mono); }
-:not(pre) > code { font-size: .88em; color: var(--accent-ink); background: color-mix(in srgb, var(--panel-2) 70%, transparent); padding: .08em .3em; border-radius: 4px; }
+/* A long unbroken token (a URL, a path) wraps instead of widening the page on a phone. */
+:not(pre) > code { overflow-wrap: break-word; font-size: .88em; color: var(--accent-ink); background: color-mix(in srgb, var(--panel-2) 70%, transparent); padding: .08em .3em; border-radius: 4px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 img, svg { max-width: 100%; }
 
