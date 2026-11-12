@@ -1,0 +1,9 @@
+{
+  "name": "orbit",
+  "description": "Agent skill for Orbit 2 (@zumer/orbit): build gauges, dials, knobs, radial menus, donut charts, progress rings and watch faces in plain HTML and CSS.",
+  "author": { "name": "Juan Martin Muda", "url": "https://zumerlab.com" },
+  "homepage": "https://zumerlab.com/orbit/agents.html",
+  "repository": "https://github.com/zumerlab/orbit",
+  "license": "MIT",
+  "keywords": ["orbit", "css", "radial", "gauge", "knob", "donut", "progress"]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "zumerlab",
+  "owner": { "name": "Zumerlab", "url": "https://zumerlab.com" },
+  "description": "Agent skills for the Zumerlab libraries: Orbit, Zumly and Pulse.",
+  "plugins": [
+    {
+      "name": "orbit",
+      "source": "./",
+      "description": "Radial interfaces with Orbit 2: gauges, dials, knobs, radial menus, donut charts, progress rings."
+    },
+    {
+      "name": "zumly",
+      "source": { "source": "github", "repo": "zumerlab/zumly" },
+      "description": "Zooming user interfaces with Zumly: zoom into a trigger to open a view, depth and lateral navigation."
+    },
+    {
+      "name": "pulse",
+      "source": { "source": "github", "repo": "zumerlab/pulse" },
+      "description": "Radial monitoring and control interfaces with Pulse, built on Orbit and Zumly."
+    }
+  ]
+}

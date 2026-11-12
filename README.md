@@ -331,6 +331,13 @@ Orbit ships an agent skill, [`skills/orbit/`](skills/orbit/SKILL.md), that teach
 npx skills add zumerlab/orbit
 ```
 
+In Claude Code it is a plugin:
+
+```
+/plugin marketplace add zumerlab/orbit
+/plugin install orbit@zumerlab
+```
+
 It is also in the npm package, at `node_modules/@zumer/orbit/skills/orbit/`. Other ways to install it, and what it covers, are on the [AI agents page](https://zumerlab.com/orbit/agents.html). For any other assistant, [llms.txt](https://zumerlab.com/orbit/llms.txt) is a short reference and [llms-full.txt](https://zumerlab.com/orbit/llms-full.txt) the complete one.
 
 ## Sponsor
