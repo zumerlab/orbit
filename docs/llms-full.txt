@@ -2730,7 +2730,7 @@ Arcs go straight into a ring, next to satellites or vectors if you like. They ar
 | `--o-ripple-color`, `--o-ripple-duration`, `--o-ripple-scale` | `--o-fill`, `1.6s`, `1.14` | The color of a wave, how long it takes and how far it grows. |
 | `--o-size-ratio` | `1` | Thickness, in lanes. `.grow-*` and `.shrink-*` work as on [satellites](https://zumerlab.com/orbit/reference/satellite.html). |
 | `.inner-orbit`, `.outer-orbit`, `.quarter-*-orbit` | | Moves the band in or out from its lane. |
-| `.angle-0` … `.angle-360` | | Starts the arc at that angle. |
+| `.angle-0` … `.angle-360` | | Starts the arc at that angle. A `range="auto"` arc with a `text-anchor` is anchored there. |
 
 ## Split or stack
 
@@ -3097,7 +3097,7 @@ items.forEach(item => {
 
 Three auto arcs, one after another. Click one, or tab to it and press Enter.
 
-An auto arc starts at its angle. `text-anchor="middle"` centers it there instead, and `text-anchor="end"` ends it there. Both labels here are anchored at the top:
+An auto arc starts at its angle. `text-anchor="middle"` centers it there instead, and `text-anchor="end"` ends it there. It works the same wherever the angle comes from: the ring's `--o-from`, a `start`, or an `.angle-N` class on the arc. Both labels here are anchored at the top:
 
 ```html
 <main class="stage">

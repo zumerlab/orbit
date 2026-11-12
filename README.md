@@ -256,7 +256,7 @@ For shadow DOM, include the stylesheet inside each shadow root. Arcs and progres
 
 The runtime redraws for added, removed and reordered elements, `class` changes, inline `--o-*` and font properties, the attributes of `<o-arc>` and `<o-progress>`, and containers that change size. Other attributes, inline properties it does not read and the pointer or focus moving over a ring leave the drawing alone: hover styles are plain CSS.
 
-Override Orbit through the documented custom properties. The runtime manages `data-orbit-ring`, `--o-layout-*` and `--o-arc-start` itself.
+Override Orbit through the documented custom properties. The runtime manages `data-orbit-ring`, `--o-layout-*`, `--o-arc-start` and `--o-arc-anchor` itself.
 
 ### TypeScript and editors
 

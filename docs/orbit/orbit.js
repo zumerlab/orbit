@@ -1,6 +1,6 @@
 /*
 * orbit
-* v.2.2.0
+* v.2.3.0
 * Author Juan Martin Muda - Zumerlab
 * License MIT
 */
@@ -997,9 +997,12 @@
       if (stacked) {
         const anchor = attrs.auto && this.hasAttribute("text-anchor") ? { middle: -0.5, end: -1 }[attrs.textAnchor] || 0 : 0;
         setLayoutProperty(this, "--o-arc-start", `${attrs.stackOffset + anchor * attrs.arcAngle}deg`);
+        if (anchor) setLayoutProperty(this, "--o-arc-anchor", `${anchor * attrs.arcAngle}deg`);
+        else this.style.removeProperty("--o-arc-anchor");
         setLayoutProperty(this, "--o_stack", attrs.stackOffset + attrs.arcAngle);
       } else {
         this.style.removeProperty("--o-arc-start");
+        this.style.removeProperty("--o-arc-anchor");
         this.style.removeProperty("--o_stack");
       }
       if (attrs.flipAuto) attrs.flip = this.readsUpsideDown(attrs);

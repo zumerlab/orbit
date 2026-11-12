@@ -90,7 +90,7 @@ document.getElementById('segments').innerHTML = '<o-arc interactive></o-arc>'.re
 <tr><td><code>--o-ripple-color</code>, <code>--o-ripple-duration</code>, <code>--o-ripple-scale</code></td><td><code>--o-fill</code>, <code>1.6s</code>, <code>1.14</code></td><td>The color of a wave, how long it takes and how far it grows.</td></tr>
 <tr><td><code>--o-size-ratio</code></td><td><code>1</code></td><td>Thickness, in lanes. <code>.grow-*</code> and <code>.shrink-*</code> work as on <a href="satellite.html">satellites</a>.</td></tr>
 <tr><td><code>.inner-orbit</code>, <code>.outer-orbit</code>, <code>.quarter-*-orbit</code></td><td></td><td>Moves the band in or out from its lane.</td></tr>
-<tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>Starts the arc at that angle.</td></tr>
+<tr><td><code>.angle-0</code> … <code>.angle-360</code></td><td></td><td>Starts the arc at that angle. A <code>range="auto"</code> arc with a <code>text-anchor</code> is anchored there.</td></tr>
 </tbody>
 </table></div>
 
@@ -431,7 +431,7 @@ items.forEach(item => {
   </script>
   <figcaption>Three auto arcs, one after another. Click one, or tab to it and press Enter.</figcaption>
 </figure>
-<p>An auto arc starts at its angle. <code>text-anchor="middle"</code> centers it there instead, and <code>text-anchor="end"</code> ends it there. Both labels here are anchored at the top:</p>
+<p>An auto arc starts at its angle. <code>text-anchor="middle"</code> centers it there instead, and <code>text-anchor="end"</code> ends it there. It works the same wherever the angle comes from: the ring's <code>--o-from</code>, a <code>start</code>, or an <code>.angle-N</code> class on the arc. Both labels here are anchored at the top:</p>
 <figure class="example" data-height="300">
   <script type="text/plain" data-html>
 <main class="stage">

@@ -133,7 +133,7 @@ A `.side` is a straight line between neighbors on a ring. N sides on a ring clos
 | `.ripple` | | Waves grow out of the band. `--o-ripple-color`, `--o-ripple-duration` (`1.6s`), `--o-ripple-scale` (`1.14`). |
 | `--o-size-ratio`, `.grow-*`, `.shrink-*` | `1` | Thickness, in lanes. |
 | `.inner-orbit`, `.outer-orbit`, `.quarter-*-orbit` | | Moves the band in or out from its lane. |
-| `.angle-0` … `.angle-360` | | Starts the arc at that angle. |
+| `.angle-0` … `.angle-360` | | Starts the arc at that angle. A `range="auto"` arc with a `text-anchor` is anchored there (after 2.3.0). |
 
 ## Curved text
 
@@ -157,7 +157,7 @@ o-arc { --o-fill: transparent; --o-stroke: none; font-size: 13px; letter-spacing
 ```
 
 - Text runs clockwise, so on the lower half it reads upside down unless the arc has `flip`. Use `flip="auto"` when arcs come from data or the ring's `--o-from` changes. `flip="auto"` does not see a `rotate` or `transform` on an ancestor.
-- A `range="auto"` arc starts at its angle; `text-anchor="middle"` centers it there and `text-anchor="end"` ends it there. Set that angle with `from-N` on the ring or `start` on the arc. With an `.angle-N` class on the arc itself the arc starts at that angle whatever the anchor.
+- A `range="auto"` arc starts at its angle; `text-anchor="middle"` centers it there and `text-anchor="end"` ends it there. The angle can come from `from-N` on the ring, `start` on the arc, or an `.angle-N` class on the arc. In Orbit 2.3.0 and earlier an `.angle-N` arc ignores the anchor and always starts at its angle, so use `from-N` or `start` when the installed version may be that old.
 - Consecutive `range="auto"` arcs follow each other: a curved menu.
 - Labels over segments: two rings with the same range and start, one with N empty arcs, one with N text arcs. Each label lands over its segment.
 - Text longer than its arc is clipped and reported in the console.
