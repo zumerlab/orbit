@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. 
 
+#### [v2.3.1](https://github.com/zumerlab/orbit/compare/v2.3.0...v2.3.1)
+
+> 12 November 2026
+
+**Fixes**
+
+- text-anchor on a range="auto" arc placed with angle-N [`3c52f39`](https://github.com/zumerlab/orbit/commit/3c52f393bd86ae12634cbcb21f86fa1ad654344e)
+
+**Docs**
+
+- sitemap [`50ea54c`](https://github.com/zumerlab/orbit/commit/50ea54caa8f0509ee412589e8a37e20e3a7457cc)
+- AI agents page, skill in llms.txt and README [`524cb0f`](https://github.com/zumerlab/orbit/commit/524cb0fdcfebbc5c67792470b03339b3e986a4ba)
+- canonical link on every page, drop links to the retired 1.x docs [`989e7ea`](https://github.com/zumerlab/orbit/commit/989e7ea6f86e586b6d2ad062ad3deb092f04b48b)
+- angle-N anchors auto arcs like from-N and start [`c92121e`](https://github.com/zumerlab/orbit/commit/c92121eac5889884a9c90d54ec2477bdab810b4b)
+- link the Zumly and Pulse agent pages [`a6b9329`](https://github.com/zumerlab/orbit/commit/a6b93295f4c453cf7c58ed4fd58703e580b27bc6)
+
+**Other**
+
+- Add agent skill for Orbit and ship it in the npm package [`b6ce661`](https://github.com/zumerlab/orbit/commit/b6ce66165cd72cd22dfe468b0e63f123bcd87e6c)
+- Add Claude Code plugin and marketplace manifests [`5d602cd`](https://github.com/zumerlab/orbit/commit/5d602cd910318650d7996ce678bc88793008971f)
+- Name the plugin marketplace zumer, like the npm scope [`55a4140`](https://github.com/zumerlab/orbit/commit/55a4140dbf9dc1e3ccce7da872908738b28e30b9)
+
 #### [v2.3.0](https://github.com/zumerlab/orbit/compare/v2.2.0...v2.3.0)
 
 > 10 November 2026
