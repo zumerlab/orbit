@@ -1111,7 +1111,7 @@ That is all of it. If you want to do either yourself: [star Orbit on GitHub](htt
 
 ## Sibling projects
 
-[Zumly](https://zumerlab.com/zumly/) and [Pulse](https://zumerlab.com/pulse/) each have a page like this one, with a skill of their own.
+[Zumly](https://zumerlab.com/zumly/agents.html) and [Pulse](https://zumerlab.com/pulse/agents.html) each have a page like this one, with a skill of their own.
 
 ---
 
