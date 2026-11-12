@@ -81,6 +81,12 @@ $max-grade: 360;
     --o-angle-composite: calc(#{$i}deg); 
   }
 }
+/* angle-N replaces the turn the runtime gives an arc, which carries the
+   text-anchor shift of a range="auto" arc. Add the shift back, so "middle"
+   centers the arc on N and "end" ends it there, as with from-N or start. */
+o-arc:where([class^="angle-"], [class*=" angle-"]) {
+  rotate: calc(var(--o-from) + var(--o-angle-composite) + var(--o-arc-anchor, 0deg));
+}
 
 /* 
   Sector, Progress and Vector utilities 

@@ -113,9 +113,14 @@ export class OrbitArc extends OrbitBase {
         ? { middle: -.5, end: -1 }[attrs.textAnchor] || 0
         : 0;
       setLayoutProperty(this, '--o-arc-start', `${attrs.stackOffset + anchor * attrs.arcAngle}deg`);
+      // The same shift on its own, for an arc whose angle comes from angle-N:
+      // that class replaces --o-arc-start, and the anchor must survive it.
+      if (anchor) setLayoutProperty(this, '--o-arc-anchor', `${anchor * attrs.arcAngle}deg`);
+      else this.style.removeProperty('--o-arc-anchor');
       setLayoutProperty(this, '--o_stack', attrs.stackOffset + attrs.arcAngle);
     } else {
       this.style.removeProperty('--o-arc-start');
+      this.style.removeProperty('--o-arc-anchor');
       this.style.removeProperty('--o_stack');
     }
     // flip="auto": decided once the arc has its place on the ring.

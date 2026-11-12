@@ -241,6 +241,23 @@ for (const name of browsers) {
     assert(Math.abs(anchored[1].start + anchored[1].angle) < 1e-6, 'text-anchor="end" ends an auto arc at its angle');
     assert(Math.abs(anchored[0].rotate - (-30 - anchored[0].angle / 2)) < .01, 'so a label centered at -30° starts half its length before');
 
+    // The anchor holds however the angle is given: from-N on the ring, start, or angle-N on the arc.
+    await fixture('<div class="bigbang" style="width:400px"><div class="gravity-spot">' + ['start', 'middle', 'end'].map(anchor =>
+      `<div class="orbit-10 from-120"><o-arc data-anchor="${anchor}" range="auto" text-anchor="${anchor}">Label</o-arc></div>` +
+      `<div class="orbit-10"><o-arc data-anchor="${anchor}" range="auto" text-anchor="${anchor}" start="${100 / 3}">Label</o-arc></div>` +
+      `<div class="orbit-10"><o-arc data-anchor="${anchor}" class="angle-120" range="auto" text-anchor="${anchor}">Label</o-arc></div>` +
+      `<div class="orbit-10"><o-arc data-anchor="${anchor}" class="angle-120" range="auto" text-anchor="${anchor}" flip>Label</o-arc></div>`).join('') +
+      '<div class="orbit-8"><o-arc id="angled-plain" class="angle-120" range="auto">Label</o-arc><o-arc id="angled-value" class="angle-120" value="25"></o-arc></div></div></div>');
+    const turns = await page.evaluate(() => [...document.querySelectorAll('o-arc[data-anchor]')].map(el =>
+      ({ anchor: el.dataset.anchor, rotate: parseFloat(getComputedStyle(el).rotate), angle: el.getAttributes().arcAngle })));
+    for (const { anchor, rotate, angle } of turns) {
+      const expected = 120 - { start: 0, middle: .5, end: 1 }[anchor] * angle;
+      assert(angle > 0 && Math.abs(rotate - expected) < .01, `text-anchor="${anchor}" anchors an auto arc at 120° with from-N, start and angle-N alike (got ${rotate}, expected ${expected})`);
+    }
+    for (const id of ['angled-plain', 'angled-value']) {
+      assert.equal(await page.locator('#' + id).evaluate(el => parseFloat(getComputedStyle(el).rotate)), 120, `${id}: angle-N alone still starts the arc at that angle`);
+    }
+
     const events = await page.evaluate(async () => {
       document.body.innerHTML = '<div class="bigbang" style="width:300px"><div class="gravity-spot"><div class="orbit-8"><o-progress id="late" value="40"></o-progress></div></div></div>';
       let fired = 0;
