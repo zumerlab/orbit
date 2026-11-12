@@ -1057,7 +1057,7 @@ Pick the one that matches your agent.
 /plugin install orbit --marketplace zumerlab/orbit
 ```
 
-This needs Claude Code 2.1.275 or later. `zumerlab/orbit` is the GitHub repository that holds the catalog for Orbit, Zumly and Pulse; the plugin installed is `orbit`.
+This needs Claude Code 2.1.275 or later. `zumerlab/orbit` is the GitHub repository that holds the catalog for Orbit, Zumly, Pulse and SnapDOM; the plugin installed is `orbit`.
 
 ### Skills CLI
 
@@ -1112,7 +1112,7 @@ That is all of it. If you want to do either yourself: [star Orbit on GitHub](htt
 
 ## Sibling projects
 
-[Zumly](https://zumerlab.com/zumly/agents.html) and [Pulse](https://zumerlab.com/pulse/agents.html) each have a page like this one, with a skill of their own.
+[Zumly](https://zumerlab.com/zumly/agents.html), [Pulse](https://zumerlab.com/pulse/agents.html) and [SnapDOM](https://snapdom.dev/docs/agents/) each have a page like this one, with a skill of their own.
 
 ---
 

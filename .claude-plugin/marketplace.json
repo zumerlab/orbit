@@ -1,7 +1,10 @@
 {
   "name": "zumer",
-  "owner": { "name": "Zumerlab", "url": "https://zumerlab.com" },
-  "description": "Agent skills for the Zumerlab libraries: Orbit, Zumly and Pulse.",
+  "owner": {
+    "name": "Zumerlab",
+    "url": "https://zumerlab.com"
+  },
+  "description": "Agent skills for the Zumerlab libraries: Orbit, Zumly, Pulse and SnapDOM.",
   "plugins": [
     {
       "name": "orbit",
@@ -10,13 +13,27 @@
     },
     {
       "name": "zumly",
-      "source": { "source": "github", "repo": "zumerlab/zumly" },
+      "source": {
+        "source": "github",
+        "repo": "zumerlab/zumly"
+      },
       "description": "Zooming user interfaces with Zumly: zoom into a trigger to open a view, depth and lateral navigation."
     },
     {
       "name": "pulse",
-      "source": { "source": "github", "repo": "zumerlab/pulse" },
+      "source": {
+        "source": "github",
+        "repo": "zumerlab/pulse"
+      },
       "description": "Radial monitoring and control interfaces with Pulse, built on Orbit and Zumly."
+    },
+    {
+      "name": "snapdom",
+      "source": {
+        "source": "github",
+        "repo": "zumerlab/snapdom"
+      },
+      "description": "Capture DOM elements in the browser with SnapDOM 3: PNG, JPG, WebP, SVG, canvas or Blob, and PDF, vector, GIF and video through plugins."
     }
   ]
 }
