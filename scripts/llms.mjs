@@ -158,7 +158,6 @@ ${examples.length ? `\n## Examples\n\n${examples.map(line).join('\n')}\n` : ''}$
 
 - [llms-full.txt](${SITE}llms-full.txt): the text and code of every page above in one file
 - [Source on GitHub](https://github.com/zumerlab/orbit)
-- [1.x documentation](https://zumerlab.com/orbit-docs/v1/)
 `;
 
 // ─── llms-full.txt ─────────────────────────────────────────

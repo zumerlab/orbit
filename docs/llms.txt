@@ -147,4 +147,3 @@ Install: `npm install @zumer/orbit`, then `import '@zumer/orbit/style'` and `imp
 
 - [llms-full.txt](https://zumerlab.com/orbit/llms-full.txt): the text and code of every page above in one file
 - [Source on GitHub](https://github.com/zumerlab/orbit)
-- [1.x documentation](https://zumerlab.com/orbit-docs/v1/)
