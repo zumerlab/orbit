@@ -323,7 +323,15 @@ The [documentation site](https://zumerlab.com/orbit/) has many more: [gauges](ht
 
 Report bugs in [Issues](https://github.com/zumerlab/orbit/issues), share what you made or ask in [Discussions](https://github.com/zumerlab/orbit/discussions), or say hi in the [Telegram group](https://t.me/ZumlyCommunity). To work on Orbit itself, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-For coding assistants, [llms.txt](https://zumerlab.com/orbit/llms.txt) is a short reference and [llms-full.txt](https://zumerlab.com/orbit/llms-full.txt) the complete one.
+## AI agents
+
+Orbit ships an agent skill, [`skills/orbit/`](skills/orbit/SKILL.md), that teaches coding agents the Orbit 2 model so they write gauges, menus and rings with the right structure. Install it with the skills CLI:
+
+```sh
+npx skills add zumerlab/orbit
+```
+
+It is also in the npm package, at `node_modules/@zumer/orbit/skills/orbit/`. Other ways to install it, and what it covers, are on the [AI agents page](https://zumerlab.com/orbit/agents.html). For any other assistant, [llms.txt](https://zumerlab.com/orbit/llms.txt) is a short reference and [llms-full.txt](https://zumerlab.com/orbit/llms-full.txt) the complete one.
 
 ## Sponsor
 

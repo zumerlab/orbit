@@ -13,6 +13,7 @@ const NAV = [
     ['Install', 'install.html'],
     ['Build a knob', 'guide.html'],
     ['Coming from 1.x', 'migrating.html'],
+    ['AI agents', 'agents.html'],
   ]],
   ['Elements', [
     ['Bigbang', 'reference/bigbang.html'],

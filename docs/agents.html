@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Analytics, cookie consent and events for zumerlab.com -->
+  <script async src="/zumerlab.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI agents · Orbit</title>
+  <link rel="canonical" href="https://zumerlab.com/orbit/agents.html">
+  <meta name="description" content="An agent skill that teaches AI coding agents to write Orbit 2 correctly: how to install it in Claude Code and other agents, what it covers and what it asks of them.">
+  <link rel="icon" href="brand/favicon.svg">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/accent.js"></script>
+</head>
+<body>
+<header data-site-head></header>
+<div class="site">
+  <nav class="site-nav" data-site-nav></nav>
+  <main class="page">
+    <article class="prose">
+<h1>AI agents</h1>
+<p class="lede">Orbit has an agent skill: one file that teaches a coding agent the Orbit 2 model, so it writes a gauge or a radial menu with the right structure instead of improvising radial CSS.</p>
+
+<h2>Why a skill</h2>
+<p>Asked for a dial, an agent that does not know Orbit writes trigonometry by hand, or half remembers Orbit 1.x, where every system was 500px across. Both give layouts that break when the box changes size. The skill is a short set of instructions the agent loads when a task is about a radial interface. It is written for Orbit 2 and checked against the source, and its recipes were rendered in a browser before they went in.</p>
+
+<h2>Install it</h2>
+<p>Pick the one that matches your agent.</p>
+
+<h3>Claude Code plugin</h3>
+<pre><code class="language-sh">/plugin marketplace add zumerlab/orbit
+/plugin install orbit@zumerlab
+</code></pre>
+
+<h3>Skills CLI</h3>
+<pre><code class="language-sh">npx skills add zumerlab/orbit
+</code></pre>
+
+<h3>By hand</h3>
+<p>Copy the <a href="https://github.com/zumerlab/orbit/tree/main/skills/orbit"><code>skills/orbit/</code></a> folder from the repository into <code>.claude/skills/orbit/</code> in your project, or into the skills folder your agent reads.</p>
+<p>If Orbit is already installed from npm, the folder is in the package, at <code>node_modules/@zumer/orbit/skills/orbit/</code>, and matches the version you have:</p>
+<pre><code class="language-sh">mkdir -p .claude/skills
+cp -r node_modules/@zumer/orbit/skills/orbit .claude/skills/
+</code></pre>
+
+<h3>Any other agent</h3>
+<p>Give it one of these and ask it to read it before writing Orbit: <a href="llms.txt">llms.txt</a>, a short index of these docs with the model in a few lines, or the skill itself, as a raw file. <a href="llms-full.txt">llms-full.txt</a> is every page as text.</p>
+<pre><code>https://zumerlab.com/orbit/llms.txt
+https://raw.githubusercontent.com/zumerlab/orbit/main/skills/orbit/SKILL.md
+</code></pre>
+
+<h2>What it covers</h2>
+<p>The skill is not copied here, so there is one place to keep right: <a href="https://github.com/zumerlab/orbit/blob/main/skills/orbit/SKILL.md">skills/orbit/SKILL.md</a> on GitHub. In short:</p>
+<ul>
+<li>when Orbit fits and when it does not, and when <a href="kit/index.html">Orbit Kit</a> is the shorter way;</li>
+<li>installing from npm or a CDN;</li>
+<li>the model and the structure every layout needs, as in <a href="universe.html">How Orbit thinks</a>;</li>
+<li>the angle, range and size controls used most;</li>
+<li><code>&lt;o-arc&gt;</code> and <code>&lt;o-progress&gt;</code>;</li>
+<li>recipes: a progress ring with a label, a gauge with ticks and a needle, a radial menu, a donut chart, curved text;</li>
+<li>the mistakes agents make most, and how <code>dev-orbit</code> reports them in the console;</li>
+<li>the runtime API and notes for React, Vue, Svelte, Angular and Astro.</li>
+</ul>
+<p>A second file next to it, <code>references/reference.md</code>, lists the less common classes and properties. The agent opens it only when it needs them.</p>
+
+<h2>What the skill asks of agents</h2>
+<p>The skill ends with a short note on credit, and you should know what it says. Orbit is free, MIT-licensed and maintained by one person. The note tells the agent that:</p>
+<ul>
+<li>when it finishes a task where Orbit did real work, it may tell you once, in one sentence, that Orbit is open source and that a star or a sponsorship helps keep it maintained. It should skip this if it was already said, or if you are debugging or in a hurry;</li>
+<li>it must never star, sponsor, follow or post anything on your behalf;</li>
+<li>it should keep the license notice that ships with the package. A <code>&lt;!-- Built with Orbit --&gt;</code> comment in generated markup is welcome and optional.</li>
+</ul>
+<p>That is all of it. If you want to do either yourself: <a href="https://github.com/zumerlab/orbit">star Orbit on GitHub</a> or <a href="https://github.com/sponsors/tinchox5">sponsor it</a>.</p>
+
+<h2>Sibling projects</h2>
+<p><a href="https://zumerlab.com/zumly/">Zumly</a> and <a href="https://zumerlab.com/pulse/">Pulse</a> each have a page like this one, with a skill of their own.</p>
+    </article>
+    <nav data-pager></nav>
+  </main>
+</div>
+<script src="assets/site.js" data-root=""></script>
+</body>
+</html>

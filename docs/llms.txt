@@ -29,6 +29,7 @@ Install: `npm install @zumer/orbit`, then `import '@zumer/orbit/style'` and `imp
 - [Install](https://zumerlab.com/orbit/install.html): Install Orbit 2 from npm or a CDN, what each file in the package is for, the [orbit] console messages and browser support.
 - [Build a knob](https://zumerlab.com/orbit/guide.html): Build a volume knob with Orbit step by step: a universe, a center, rings, ticks, a progress band and a body that is a system of its own.
 - [Coming from 1.x](https://zumerlab.com/orbit/migrating.html): What changed in Orbit 2 and how to move a 1.x layout to the new model, or keep it exactly as it was.
+- [AI agents](https://zumerlab.com/orbit/agents.html): An agent skill that teaches AI coding agents to write Orbit 2 correctly: how to install it in Claude Code and other agents, what it covers and what it asks of them.
 
 ## Elements
 
@@ -146,4 +147,5 @@ Install: `npm install @zumer/orbit`, then `import '@zumer/orbit/style'` and `imp
 ## Optional
 
 - [llms-full.txt](https://zumerlab.com/orbit/llms-full.txt): the text and code of every page above in one file
+- [Agent skill](https://raw.githubusercontent.com/zumerlab/orbit/main/skills/orbit/SKILL.md): instructions for coding agents, with tested recipes and common mistakes. Also in the npm package, at `skills/orbit/SKILL.md`
 - [Source on GitHub](https://github.com/zumerlab/orbit)

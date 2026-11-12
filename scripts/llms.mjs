@@ -157,6 +157,7 @@ ${examples.length ? `\n## Examples\n\n${examples.map(line).join('\n')}\n` : ''}$
 ## Optional
 
 - [llms-full.txt](${SITE}llms-full.txt): the text and code of every page above in one file
+- [Agent skill](https://raw.githubusercontent.com/zumerlab/orbit/main/skills/orbit/SKILL.md): instructions for coding agents, with tested recipes and common mistakes. Also in the npm package, at \`skills/orbit/SKILL.md\`
 - [Source on GitHub](https://github.com/zumerlab/orbit)
 `;
 
