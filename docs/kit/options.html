@@ -44,7 +44,7 @@
   </script>
   <script type="text/plain" data-css>
 body { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; padding: 16px; }
-.panel { display: grid; justify-items: center; gap: 10px; padding: 18px 22px 12px; border-radius: 16px; border: 1px solid var(--line); }
+.panel { display: grid; justify-items: center; gap: 10px; padding: 18px 22px 12px; border: 1px solid var(--line); }
 .panel p { margin: 0; font-size: 13px; color: var(--ok-text); opacity: .7; }
 .ok-theme-dark { background: var(--panel); }
 .ok-theme-light { background: #f6f7f9; }
@@ -105,7 +105,7 @@ for (const panel of document.querySelectorAll('.panel')) {
 .controls { justify-content: center; }
 #formats { display: flex; flex-wrap: wrap; gap: 6px; }
 button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
-select { font: inherit; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+select { font: inherit; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 0; padding: 6px 8px; }
   </script>
   <script type="text/plain" data-js>
 const dial = document.getElementById('dial');

@@ -63,7 +63,7 @@ button {
   font: inherit;
   font-size: 13px;
   padding: 7px 13px;
-  border-radius: 8px;
+  border-radius: 0;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--panel) 80%, var(--text) 6%);
   color: var(--text);
