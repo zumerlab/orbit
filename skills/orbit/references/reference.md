@@ -133,7 +133,7 @@ A `.side` is a straight line between neighbors on a ring. N sides on a ring clos
 | `.ripple` | | Waves grow out of the band. `--o-ripple-color`, `--o-ripple-duration` (`1.6s`), `--o-ripple-scale` (`1.14`). |
 | `--o-size-ratio`, `.grow-*`, `.shrink-*` | `1` | Thickness, in lanes. |
 | `.inner-orbit`, `.outer-orbit`, `.quarter-*-orbit` | | Moves the band in or out from its lane. |
-| `.angle-0` … `.angle-360` | | Starts the arc at that angle. A `range="auto"` arc with a `text-anchor` is anchored there (after 2.3.0). |
+| `.angle-0` … `.angle-360` | | Starts the arc at that angle. A `range="auto"` arc with a `text-anchor` is anchored there (from 2.3.1). |
 
 ## Curved text
 

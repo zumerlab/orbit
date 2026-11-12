@@ -1054,9 +1054,10 @@ Pick the one that matches your agent.
 ### Claude Code plugin
 
 ```sh
-/plugin marketplace add zumerlab/orbit
-/plugin install orbit@zumer
+/plugin install orbit --marketplace zumerlab/orbit
 ```
+
+This needs Claude Code 2.1.275 or later. `zumerlab/orbit` is the GitHub repository that holds the catalog for Orbit, Zumly and Pulse; the plugin installed is `orbit`.
 
 ### Skills CLI
 
